@@ -1,0 +1,13 @@
+<module>
+
+	<!-- Inherit the core Web Toolkit stuff.                  -->
+	<inherits name='com.google.gwt.user.User'/>
+
+	<!-- Specify the app entry point class.                   -->
+	<entry-point class='com.tribling.gwt.RPC.basic.client.RPCbasic'/>
+  
+  	<!-- the path is arbitrary or you could say the servlet makes it, and is defined in provider call -->
+  	<!-- class is the server class -->
+  	<servlet path='/BasicService' class='com.tribling.gwt.RPC.basic.server.BasicServiceImpl'/>
+  	
+</module>
