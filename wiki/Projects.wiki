@@ -1,14 +1,14 @@
 #labels gwteclipse,gwt,gwteclipseexamples
 = Google Web Toolkit Examples with Eclipse =
 
-Basic RPC - http://gwt-examples.googlecode.com/svn/trunk/gwt-test-RPC-basic/
+  * Basic RPC Example - I used this to figure out how to setup a basic remote procedure call  to the server. http://gwt-examples.googlecode.com/svn/trunk/gwt-test-RPC-basic/
 
 
 = Eclipse FAQs =
 
-1. You can import these projects into your Eclipse.org IDE. 
-SVN URL: https://gwt-examples.googlecode.com/svn/trunk/
+== Import ==
+  # You can import these projects into your Eclipse.org IDE. SVN URL: https://gwt-examples.googlecode.com/svn/trunk/
+  # Once imported, change your project's build path to the correct libraries. Change the build path library for gwt-linux home directory. I set mine to /opt/gwt-linux which is linked to the current Google Web toolkit download that I have.
 
-2. Once imported, change your project's build path to the correct libraries. Change the build path library for gwt-linux home directory. I set mine to /opt/gwt-linux which is linked to the current Google Web toolkit download that I have.
-
+== 32bit JVM ==
 Another thing to make a note of. I am using Ubuntu AMD64 and I used galternatives program to change the jvm to a 32bit for runtime. I talk about it in more depth in my code tips blog. More info on galternatives and running a 32bit jvm at runtime. More info here http://codintips.blogspot.com/2007/11/getting-gwt-working-on-ubuntu-amd64.html
