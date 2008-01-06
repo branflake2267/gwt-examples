@@ -1,6 +1,4 @@
 #labels gwteclipse,gwt,gwteclipseexamples
-#Example Project Here
-
 = Google Web Toolkit Examples with Eclipse =
 
 Basic RPC - http://gwt-examples.googlecode.com/svn/trunk/gwt-test-RPC-basic/
