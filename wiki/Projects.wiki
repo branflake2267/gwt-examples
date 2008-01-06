@@ -1,7 +1,7 @@
 #labels gwteclipse,gwt,gwteclipseexamples
 = Google Web Toolkit Examples with Eclipse =
 
-  * Basic RPC Example - I used this to figure out how to setup a basic remote procedure call  to the server. http://gwt-examples.googlecode.com/svn/trunk/gwt-test-RPC-basic/
+  * *Basic RPC Example* - I used this to figure out how to setup a basic remote procedure call  to the server. http://gwt-examples.googlecode.com/svn/trunk/gwt-test-RPC-basic/
 
 
 = Eclipse FAQs =
