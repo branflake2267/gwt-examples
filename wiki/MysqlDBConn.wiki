@@ -8,7 +8,7 @@
  
  * Import the MySQL database query project link here - http://code.google.com/p/gwt-examples/wiki/Projects
 
- * Eclipse Project Source code - http://gwt-examples.googlecode.com/svn/trunk/gwt-test-MySQLConn/
+ * Eclipse Project Source code - http://gwt-examples.googlecode.com/svn/trunk/gwt-test-MySQLConn/src/com/tribling/gwt/test/mysqlconn/server/
 
 = Links =
   * http://www.mysql.com/products/connector/j/
