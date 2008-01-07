@@ -3,8 +3,10 @@
 
   * *RPC Example Basic* - I used this to figure out how to setup a basic remote procedure call  to the server. http://gwt-examples.googlecode.com/svn/trunk/gwt-test-RPC-basic/
   * *RPC Example2 More Advanced* - I used this to figure out how to pass an object from the server to the client side. http://gwt-examples.googlecode.com/svn/trunk/gwt-test-RPC-adv/
-  * *MySQL Connection/Query Example* - I used this to test connecting to mysql database and how I could query it. http://gwt-examples.googlecode.com/svn/trunk/gwt-test-MySQLConn/ 
-More MySQL Notes here: http://code.google.com/p/gwt-examples/wiki/MysqlDBConn
+  * *MySQL Connection/Query Example* - I used this to test connecting to mysql database and how I could query it. http://gwt-examples.googlecode.com/svn/trunk/gwt-test-MySQLConn/    
+   * More MySQL Notes here: http://code.google.com/p/gwt-examples/wiki/MysqlDBConn
+
+
 = Eclipse FAQs =
 
 == Import ==
