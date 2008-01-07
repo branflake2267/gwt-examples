@@ -7,7 +7,7 @@
  # *RPC Example2 More Advanced* - I used this to figure out how to pass an object from the server to the client side. [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-RPC-adv/ gwt-test-RPC-adv] 
  # *MySQL Connection/Query Example* - I used this to test connecting to mysql database and how I could query it. [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-MySQLConn/ gwt-test-MySQLConn]   
   * More MySQL Notes here: [MysqlDBConn wiki MysqlDB]
- # *Clicklistener on Widget Example* - I used this to figure out how to observe a widget with clicklistener. [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-Clicklistener/ gwt-test-Clicklistener]
+ # *Clicklistener on Widget Example* - I used this to figure out how to observe a widget with clicklistener. (good widget init example here too) [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-Clicklistener/ gwt-test-Clicklistener]
 
 = Eclipse FAQs =
 
