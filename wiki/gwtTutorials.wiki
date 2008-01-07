@@ -1,4 +1,4 @@
-#summary Google Web Toolkit Tutorial Links
+#summary GWT Tutorial Links
 
 = Links To Tutorials =
 
