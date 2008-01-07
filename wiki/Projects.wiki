@@ -2,7 +2,8 @@
 = Google Web Toolkit Examples with Eclipse =
 
   * *RPC Example Basic* - I used this to figure out how to setup a basic remote procedure call  to the server. http://gwt-examples.googlecode.com/svn/trunk/gwt-test-RPC-basic/
- * *RPC Example2 More Advanced* - I used this to figure out how to pass an object from the server to the client side. http://gwt-examples.googlecode.com/svn/trunk/gwt-test-RPC-adv/
+  * *RPC Example2 More Advanced* - I used this to figure out how to pass an object from the server to the client side. http://gwt-examples.googlecode.com/svn/trunk/gwt-test-RPC-adv/
+  * *Clicklistener on Widget Example* - I used this to figure out how to  listen to buttons in a widget I created. http://gwt-examples.googlecode.com/svn/trunk/gwt-test-Clicklistener/
 
 = Eclipse FAQs =
 
