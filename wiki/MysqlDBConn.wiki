@@ -10,5 +10,5 @@
 
 
 
-= Details =
+= Links =
  * http://mysql.com http://www.mysql.com/products/connector/j/
