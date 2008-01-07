@@ -11,4 +11,5 @@
  * Eclipse Project Source code - http://gwt-examples.googlecode.com/svn/trunk/gwt-test-MySQLConn/src/com/tribling/gwt/test/mysqlconn/server/
 
 = Links =
-  * http://www.mysql.com/products/connector/j/
+ * JDBC Connector - http://www.mysql.com/products/connector/j/
+ * MySQL Database The King James Bible; link to download sql dump script - tp://sourceforge.net/project/showfiles.php?group_id=186532&package_id=249676&release_id=548680
