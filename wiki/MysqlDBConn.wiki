@@ -1,4 +1,4 @@
-#summary How to connect to mysql database
+#summary More notes on how to connect to mysql database
 #labels gwtmysql,gwtmysqlconn,gwtmysqleclipse
 
 = JDBC Connector =
