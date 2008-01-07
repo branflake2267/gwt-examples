@@ -1,6 +1,4 @@
 #summary GWT wiget links
-#labels gwtwidgets
+#labels gwtwidget,gwtwidgets,gwtwidgetlink
 
 = GWT Links =
-
-
