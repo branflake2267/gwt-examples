@@ -6,9 +6,9 @@
  * I use /opt/gwt-linux/mysql-connector-java-5.0.8-bin.jar
  * You can see if its there in your Eclipse referenced libraries
  
-
+ * Import the MySQL database query project link here - http://code.google.com/p/gwt-examples/wiki/Projects
 
 
 
 = Links =
- * http://mysql.com http://www.mysql.com/products/connector/j/
+  * http://www.mysql.com/products/connector/j/
