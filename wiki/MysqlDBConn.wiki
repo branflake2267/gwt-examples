@@ -12,4 +12,4 @@
 
 = Links =
  * JDBC Connector - http://www.mysql.com/products/connector/j/
- * MySQL Database The King James Bible; link to download sql dump script - tp://sourceforge.net/project/showfiles.php?group_id=186532&package_id=249676&release_id=548680
+ * MySQL Database The King James Bible; link to download sql dump script - http://sourceforge.net/project/showfiles.php?group_id=186532&package_id=249676&release_id=548680
