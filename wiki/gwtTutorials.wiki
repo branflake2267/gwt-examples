@@ -1,5 +1,5 @@
 #summary GWT Tutorial Links
-#labels gwttutorial
+#labels Featured
 
 = Links To Tutorials =
 
