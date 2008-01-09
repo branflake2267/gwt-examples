@@ -18,4 +18,4 @@
  If you want to use my build path from this project install GWT to */opt/gwt-linux*. Or  right click on the eclipse project and select "Build Path", and change the library to the correct location for your GWT Home directory.
 
 == 32bit JVM ==
-Another thing to make a note of. I am using Ubuntu AMD64 and I used galternatives program to change the jvm to a 32bit for runtime. I talk about it in more depth in my code tips blog. More info on galternatives and running a 32bit jvm at runtime. More info here [http://codintips.blogspot.com/2007/11/getting-gwt-working-on-ubuntu-amd64.html More @ My Blog Entry]
+ Another thing to make a note of. I am using Ubuntu AMD64 and I used galternatives program to change the jvm to a 32bit for runtime. I talk about it in more depth in my code tips blog. More info on galternatives and running a 32bit jvm at runtime. More info here [http://codintips.blogspot.com/2007/11/getting-gwt-working-on-ubuntu-amd64.html More @ My Blog Entry]
