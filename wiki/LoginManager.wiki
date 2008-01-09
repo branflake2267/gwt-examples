@@ -2,3 +2,19 @@
 #labels Featured
 
 = Login Manger =
+
+
+== MySQL Setup ==
+
+Session Table - this is how I set it up.
+{{{
+CREATE TABLE `session` (
+  `ID` int(11) NOT NULL auto_increment,
+  `UserID` int(11) NOT NULL,
+  `SessionID` varchar(200) NOT NULL,
+  `LastAccessed` int(11) NOT NULL COMMENT 'unix timestamp',
+  `DateCreated` int(11) NOT NULL COMMENT 'unix timestamp',
+  PRIMARY KEY  (`ID`),
+  KEY `SessionID` (`SessionID`)
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=latin1
+}}}
