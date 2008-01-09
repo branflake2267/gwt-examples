@@ -7,7 +7,7 @@
  I installed the mysql jdbc connector to */opt/gwt-linux* directory.
  /opt/gwt-linux/mysql-connector-java-5.0.8-bin.jar
 
-== Import ==
+== Project Import ==
   # You can import these projects into your Eclipse.org IDE. SVN URL: http://gwt-examples.googlecode.com/svn/trunk/
   # Once imported, change your project's build path to the correct libraries. Change the build path library for gwt-linux home directory. I set mine to /opt/gwt-linux which is linked to the current Google Web toolkit download that I have.
   # Open the debug dialog in eclipse and look for java application. Select the gwt application and hit debug.
