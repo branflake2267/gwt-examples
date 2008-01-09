@@ -3,7 +3,7 @@
 
 = Login Manger =
 
- I setup a example login manager to control User access by Username and Password. There are many ways you can do this. I followed Google's incubator. You can import my eclipse project or get it via svn. Hope it helps.
+ I setup this example to test login manager, to control User access by Username and Password and SessionID. There are many ways you can do this. I followed Google's incubator. You can import my eclipse project or get it via svn. Hope it helps.
 
  I wanted to not this project is still a bit rough on the edges. :)
 
