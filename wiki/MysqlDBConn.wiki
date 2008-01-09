@@ -1,5 +1,5 @@
 #summary More notes on how to connect to mysql database
-#labels gwtmysql,gwtmysqlconn,gwtmysqleclipse
+#labels Featured
 
 = JDBC Connector =
  * You will need to add a JDBC connector jar to your Build Path
