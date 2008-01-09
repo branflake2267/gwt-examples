@@ -1,0 +1,11 @@
+<module>
+
+	<!-- Inherit the core Web Toolkit stuff.                  -->
+	<inherits name='com.google.gwt.user.User'/>
+
+	<!-- Specify the app entry point class.                   -->
+	<entry-point class='com.tribling.gwt.test.loginmanager.client.LoginManager'/>
+  
+  	<stylesheet src='style.css'/>
+  	<servlet path='/LoginManager' class='com.tribling.gwt.test.loginmanager.server.LoginManagerServiceImpl'/>
+</module>
