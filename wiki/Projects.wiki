@@ -6,7 +6,7 @@
  # *RPC Example Basic* - I used this to figure out how to setup a basic remote procedure call  to the server. [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-RPC-basic/ gwt-test-RPC-basic]
  # *RPC Example2 More Advanced* - I used this to figure out how to pass an object from the server to the client side. [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-RPC-adv/ gwt-test-RPC-adv] 
  # *MySQL Connection/Query Example* - I used this to test connecting to mysql database and how I could query it. [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-MySQLConn/ gwt-test-MySQLConn]   
-  * More MySQL Notes here: [project_MysqlDBConn]
+  * More MySQL Notes here: [project_MySQLConn]
  # *Clicklistener on Widget Example* - I used this to figure out how to observe a widget with clicklistener. (good widget init example here too) [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-Clicklistener/ gwt-test-Clicklistener]
  # *Login Manager* - I am working on this to figure login manager. There is more than one way to do this. But this way is working for me. I'll tweak it more over time. I followed the incubator method. ([http://code.google.com/p/google-web-toolkit-incubator/wiki/LoginSecurityFAQ Google Page Incubator]) svn:[http://gwt-examples.googlecode.com/svn/trunk/gwt-test-Login-Manager/ gwt-test-Login-Manager]
 
