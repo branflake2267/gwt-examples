@@ -3,6 +3,10 @@
 
 = Login Manger =
 
+ == Notes ==
+ Google Login Manager Incubator [http://code.google.com/p/google-web-toolkit-incubator/wiki/LoginSecurityFAQ]
+
+ SVN Repository Link [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-Login-Manager/ gwt-test-Login-Manager]
 
 == MySQL Setup ==
 
