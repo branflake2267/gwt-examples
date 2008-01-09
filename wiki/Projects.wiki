@@ -1,5 +1,5 @@
 #summary Eclipse projects listed in trunk
-#labels gwteclipse,gwt,gwteclipseexamples
+#labels Featured
 
 = Google Web Toolkit Examples with Eclipse =
 
