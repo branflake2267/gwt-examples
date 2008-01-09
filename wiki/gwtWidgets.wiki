@@ -1,5 +1,5 @@
 #summary GWT wiget links
-#labels gwtwidget,gwtwidgets,gwtwidgetlink
+#labels Featured
 
 = GWT Links =
 
