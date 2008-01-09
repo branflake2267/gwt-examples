@@ -38,7 +38,7 @@ public abstract class DB_Conn {
 		    String db 		= "hostdb";
 		    String driver 	= "com.mysql.jdbc.Driver";
 		    String user 	= "Branflake2267";
-		    String pass 	= "83kg923m**89";
+		    String pass 	= "";
 		    
 		    try {
 		      
