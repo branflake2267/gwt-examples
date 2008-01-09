@@ -3,6 +3,8 @@
 
 = Login Manger =
 
+ I setup a example login manager to control access User access. There are many ways to do this I think. I followed Google's incubator. I wanted to post this to give others an example method of signing in. Hope it helps. 
+
  == Eclipse Referenced Libraries ==
  Remember to add JDBC to the build path. Remember to add gwt-user.jar to the build path.
  More info here [gwtEclipseFaqs]
