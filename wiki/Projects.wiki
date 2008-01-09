@@ -10,16 +10,7 @@
  # *Clicklistener on Widget Example* - I used this to figure out how to observe a widget with clicklistener. (good widget init example here too) [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-Clicklistener/ gwt-test-Clicklistener]
  # *Login Manager* - I am working on this to figure login manager. There is more than one way to do this. But this way is working for me. I'll tweak it more over time. I followed the incubator method. ([http://code.google.com/p/google-web-toolkit-incubator/wiki/LoginSecurityFAQ Google Page Incubator]) svn:[http://gwt-examples.googlecode.com/svn/trunk/gwt-test-Login-Manager/ gwt-test-Login-Manager]
 
-= Eclipse FAQs =
-
-== Import ==
-  # You can import these projects into your Eclipse.org IDE. SVN URL: http://gwt-examples.googlecode.com/svn/trunk/
-  # Once imported, change your project's build path to the correct libraries. Change the build path library for gwt-linux home directory. I set mine to /opt/gwt-linux which is linked to the current Google Web toolkit download that I have.
-  # Open the debug dialog in eclipse and look for java application. Select the gwt application and hit debug.
-
-== 32bit JVM ==
-Another thing to make a note of. I am using Ubuntu AMD64 and I used galternatives program to change the jvm to a 32bit for runtime. I talk about it in more depth in my code tips blog. More info on galternatives and running a 32bit jvm at runtime. More info here [http://codintips.blogspot.com/2007/11/getting-gwt-working-on-ubuntu-amd64.html More @ My Blog Entry]
-
-
+== Eclipse Configuration ==
+ [gwtEclipseFaqs How to configure eclipse for these projects.]
 == Comments ==
 Please send me any comments about my examples. Do you have an example you would like to post?
