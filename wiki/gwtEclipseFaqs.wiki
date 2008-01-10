@@ -80,3 +80,6 @@ sudo update-alternatives --config java
 }}}
 
  OR
+
+ # Change or Add 
+  Eclipse > Window (Top Menu) > Preferences > Java > Installed JREs > 
