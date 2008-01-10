@@ -27,3 +27,5 @@
  # Edit /etc/enviroment (sudo gedit enviroment on ubuntu)
  # Add this
   GWT_EXTERNAL_BROWSER="/usr/local/firefox32/firefox"
+ # or add it to ~/.profile (user home directory)
+  export GWT_EXTERNAL_BROWSER="/usr/local/firefox32/firefox"
