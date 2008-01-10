@@ -24,6 +24,6 @@
 
  How to add GWT External Browser envirotmental variable for Eclipse.
 
- # Create new file in ~/.gnomerc (Users home directory for gnome session)
+ # Edit /etc/enviroment (sudo gedit enviroment on ubuntu)
  # Add this
-  export GWT_EXTERNAL_BROWSER="/usr/local/firefox32/firefox"
+  GWT_EXTERNAL_BROWSER="/usr/local/firefox32/firefox"
