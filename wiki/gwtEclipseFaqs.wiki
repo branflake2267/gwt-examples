@@ -27,7 +27,10 @@ GWT_HOME="/opt/gwt-linux"
 {{{
  export GWT_HOME="/opt/gwt-linux" 
 }}}
-
+  # Test it in bash/shell
+{{{
+echo $GWT_HOME
+}}}
 == 32bit JVM ==
  Another thing to make a note of. I am using Ubuntu AMD64 and I used galternatives program to change the jvm to a 32bit for runtime. I talk about it in more depth in my code tips blog. More info on galternatives and running a 32bit jvm at runtime. More info here [http://codintips.blogspot.com/2007/11/getting-gwt-working-on-ubuntu-amd64.html More @ My Blog Entry]
 
@@ -43,4 +46,8 @@ GWT_EXTERNAL_BROWSER="/usr/local/firefox32/firefox"
  # or add it to ~/.profile (user home directory)
 {{{
 export GWT_EXTERNAL_BROWSER="/usr/local/firefox32/firefox"
+}}}
+ # Test it in bash/shell
+{{{
+echo $GWT_EXTERNAL_BROWSER
 }}}
