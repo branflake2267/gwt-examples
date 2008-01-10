@@ -13,7 +13,7 @@
 == JDBC Connector ==
  If you want to use this project's mysql jdbc connector make sure you have it in */opt/gwt-linux*. /opt/gwt-linux/mysql-connector-java-5.0.8-bin.jar
  Or change the build path by right clicking on the eclipse project, select "Build Path", then change or add the mysql jdb connectory library.
-
+ * Get JConnector MySQL JDBC [http://dev.mysql.com/downloads/connector/j/5.1.html Link To MySQL]
  * Eclipse > Right Click Project > Build Path > Libraries Tab > Add External Jar > Add /opt/gwt-linux/mysql-connector-java-5.0.8-bin.jar
 
 == GWT Home Directory ==
