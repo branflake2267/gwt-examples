@@ -16,6 +16,11 @@
 
 == GWT Home Directory ==
  If you want to use my build path from this project install GWT to */opt/gwt-linux*. Or  right click on the eclipse project and select "Build Path", and change the library to the correct location for your GWT Home directory.
+ === Setting Enviromental Variable GWT_HOME ===
+ If you want to use a enviromental variable
+ # Edit /etc/enviroment
+ # Add
+  GWT_HOME="/opt/gwt-linux" 
 
 == 32bit JVM ==
  Another thing to make a note of. I am using Ubuntu AMD64 and I used galternatives program to change the jvm to a 32bit for runtime. I talk about it in more depth in my code tips blog. More info on galternatives and running a 32bit jvm at runtime. More info here [http://codintips.blogspot.com/2007/11/getting-gwt-working-on-ubuntu-amd64.html More @ My Blog Entry]
@@ -24,7 +29,7 @@
 
  How to add GWT External Browser envirotmental variable for Eclipse.
 
- # Edit /etc/enviroment (sudo gedit enviroment on ubuntu)
+ # Edit /etc/enviroment (sudo gedit enviroment)
  # Add this
   GWT_EXTERNAL_BROWSER="/usr/local/firefox32/firefox"
  # or add it to ~/.profile (user home directory)
