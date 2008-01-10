@@ -56,7 +56,7 @@ echo $GWT_EXTERNAL_BROWSER
 == 32bit JVM ==
  You will need use a 32bit JVM in your build path / Referenced Libaries to work with GWT.
 
- * Change or add a 32bit JVM here
+ # Change or add a 32bit JVM here
  Eclipse > Window (Top Menu) > Preferences > Java > Installed JREs > 
 
 == Problems GWT and AMD64 ==
