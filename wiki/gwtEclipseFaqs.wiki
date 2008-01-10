@@ -14,7 +14,7 @@
  If you want to use this project's mysql jdbc connector make sure you have it in */opt/gwt-linux*. /opt/gwt-linux/mysql-connector-java-5.0.8-bin.jar
  Or change the build path by right clicking on the eclipse project, select "Build Path", then change or add the mysql jdb connectory library.
 
-== GWT_Home Directory ==
+== GWT Home Directory ==
  If you want to use my build path from this project install GWT to */opt/gwt-linux*. Or  right click on the eclipse project and select "Build Path", and change the library to the correct location for your GWT Home directory.
 
 == 32bit JVM ==
