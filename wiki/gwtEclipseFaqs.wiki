@@ -55,3 +55,33 @@ echo $GWT_EXTERNAL_BROWSER
 
 == 32bit JVM ==
  Another thing to make a note of. I am using Ubuntu AMD64 and I used galternatives program to change the jvm to a 32bit for runtime. I talk about it in more depth in my code tips blog. More info on galternatives and running a 32bit jvm at runtime. More info here [http://codintips.blogspot.com/2007/11/getting-gwt-working-on-ubuntu-amd64.html More @ My Blog Entry]
+
+== AMD64 with GWT ==
+
+ Get this error?
+{{{
+/gwt-linux/libswt-pi-gtk-3235.so: wrong ELF class: ELFCLASS32 (Possible cause: architecture word width mismatch)
+}}}
+
+  Error comes from running 64bit java and trying to use 32bit java compiled libraries.
+
+== Changing the default JVM ==
+
+ # Optional: Install sun-java-6-bin and remove gij... (this will replace the with suns java)
+ # Install ia32-sun-java6-bin
+ # Install galternatives (this is the progam to have for defaults!!!)
+ # Run galternatives from shell (don't sudo this, b/c it will change roots defaults and not yours.)
+ # Find java in galternatives, choose the default jvm (Find em located in /usr/lib/jvm)
+Install as many JVMs as you want to, and choose the one you want to use with galternatives.
+
+{{{
+#This is a must have!!
+sudo apt-get galternatives
+
+#Another way to do it in shell
+#sudo update-alternatives --config java
+}}}
+
+If you have the same problem in Eclipse. Configure the JRE. Goto Installed JREs..., Hit Add, and find another jvm in /usr/lib/jvm.
+or
+In Run > Java Application > Your Application Configuration > JRE > Installed JREs... > (Preferences) Add > /usr/lib/jvm/ia32...jvm
