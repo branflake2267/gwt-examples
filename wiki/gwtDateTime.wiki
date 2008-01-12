@@ -8,8 +8,8 @@
  * get the end of day unix time stamp (11:59:59 pm)
 
 == Eclipse Project ==
- Download this as an eclipse project from the svn repository - [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-DisplayDate/ Goto SVN: ~/gwt-test-DisplayDate/]
- Note: the time zone offset isn't working in my eclipse gwt popuup debugger. Don't let that throw you for a loop. Push the compile and browse and see it work in firefox.
+ * Download this as an eclipse project from the svn repository - [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-DisplayDate/ Goto SVN: ~/gwt-test-DisplayDate/]
+ * Note: the time zone offset isn't working in my eclipse gwt popuup debugger. Don't let that throw you for a loop. Push the compile and browse and see it work in firefox.
 
 {{{
 private int TimeStamp; //pass around a timestamp in the class
