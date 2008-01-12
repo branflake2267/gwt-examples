@@ -1,0 +1,30 @@
+#summary gwt getting date/time
+
+= How to get Date/Time with/in GWT =
+ * get unix time stamp
+ * get year, month, day, date, today, current date, timezone offset from gmt, hours, minutes, seconds, milliseconds
+
+{{{
+//Get the browsers date (!!!note: I can't get gmt time zone in eclipse debugger)
+Date date = new Date();
+int Month = date.getMonth();
+int Day = date.getDate();
+int Year = date.getYear();
+int Hour = date.getHours();
+int min = date.getMinutes();
+int sec = date.getSeconds();
+int tz = date.getTimezoneOffset();
+int UnixTimeStamp = (int) (date.getTime() * .001);
+       
+//get unix time stamp example (seconds)
+Long lTimeStamp = date.getTime(); //time in milleseconds since the epoch
+int iTimeStamp = (int) (lTimeStamp * .001); //(Cast) to Int from Long, Seconds since epoch
+String sTimeStamp = Integer.toString(iTimeStamp); //seconds to string
+  
+//get the gmt date - will show tz offset in string in browser, not eclipse debug window
+String TheDate = date.toString();
+     
+//render date to root panel in gwt
+Label label = new Label(TheDate);  
+RootPanel.get().add(label);
+}}}
