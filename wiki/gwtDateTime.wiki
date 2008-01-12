@@ -8,8 +8,10 @@
  * get the end of day unix time stamp (11:59:59 pm)
 
 == Eclipse Project ==
+ Test this easily by downloading it via the svn. You will need to change your build path for the gwt-user.jar to from /opt/gwt-linux, unless that exists on your computer.
  * Download this as an eclipse project from the svn repository - [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-DisplayDate/ Goto SVN: ~/gwt-test-DisplayDate/]
  * Note: The GMT time zone offset (java.util.Date) isn't working in my eclipse gwt popuup debugger. Don't let that throw you for a loop. Push the compile and browse and see it work in firefox.
+
 
 {{{
 private int TimeStamp; //pass around a timestamp in the class
@@ -88,7 +90,6 @@ vp.add(htmlProofEndOfDay);
 RootPanel.get().add(vp);
 }}}
 
-Eclipse Project you can download [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-DisplayDate/]
 
 
 Get the start of the day 12:00:00 am in seconds
