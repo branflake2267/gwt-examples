@@ -25,7 +25,7 @@ long lTimeStamp = date.getTime(); //time in milleseconds since the epoch
 int iTimeStamp = (int) (lTimeStamp * .001); //(Cast) to Int from Long, Seconds since epoch
 String sTimeStamp = Integer.toString(iTimeStamp); //seconds to string
  
-	//convert Unix Time Stamp (seconds) back to Java Time Stamp (milliseconds)
+//convert Unix Time Stamp (seconds) back to Java Time Stamp (milliseconds)
 long longJavaTime =  (long) (iTimeStamp / .001);
 
 //get start and end of day (seconds)
