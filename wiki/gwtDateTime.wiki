@@ -29,7 +29,7 @@ long longJavaTime =  (long) (iTimeStamp / .001);
 //Date To String - will show tz offset in string in browser, not eclipse debug window
 HTML htmlGMTDate = new HTML("<b>GMT Date as String:</b> " + date.toString());
   
-	//java time (milliseconds since epoch)
+//java time (milliseconds since epoch)
 HTML htmlJavaTime = new HTML("<b>Java Date/Time (milliseconds since epoch):</b> " + date.getTime());
 
 //Unix Time Stamp (seconds)
