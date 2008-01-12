@@ -5,6 +5,7 @@ import java.util.Date;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -29,7 +30,7 @@ public class DisplayDate implements EntryPoint {
 	  	 * 
 	  	 */
 	  
-	  	//get the date stuff to work with
+	  	//Get Date Values
 		Date date = new Date();
 		int Month = date.getMonth();
 		int Day = date.getDate();
@@ -45,27 +46,30 @@ public class DisplayDate implements EntryPoint {
 		int iTimeStamp = (int) (lTimeStamp * .001); //(Cast) to Int from Long, Seconds since epoch
 		String sTimeStamp = Integer.toString(iTimeStamp); //seconds to string
 	 
+		//convert Unix Time Stamp (seconds) back to Java Time Stamp (milliseconds)
+		long longJavaTime =  (long) (iTimeStamp / .001);
 		
 		
-		
-		
-		/* Labels */
-		
+		/* HTML */
 		//Date To String - will show tz offset in string in browser, not eclipse debug window
-		Label labelGMTDate = new Label("GMT Date as String: " + date.toString());
+		HTML htmlGMTDate = new HTML("<b>GMT Date as String:</b> " + date.toString());
 	  
-		//Unix Time Stamp
-		Label labelUnixTimeStamp = new Label("Unix Time Stamp: " + sTimeStamp);
+		//java time (milliseconds since epoch)
+		HTML htmlJavaTime = new HTML("<b>Java Date/Time (milliseconds since epoch):</b> " + date.getTime());
+		
+		//Unix Time Stamp (seconds)
+		HTML htmlUnixTimeStamp = new HTML("<b>Unix Time Stamp (seconds sinc epoch):</b> " + sTimeStamp);
+		
+		//Java Time Stamp from Unix Time Stamp
+		HTML htmlTimeMilliSeconds2TimeSeconds = new HTML("<b>Convert back to Time in milliseconds to time in seconds:</b> " + Long.toString(longJavaTime));
 		
 		
 		/* make panel */
-		
 		VerticalPanel vp = new VerticalPanel();
-		vp.add(labelGMTDate);
-		vp.add(labelUnixTimeStamp);
-		
-		
-		
+		vp.add(htmlGMTDate);
+		vp.add(htmlJavaTime);
+		vp.add(htmlUnixTimeStamp);
+		vp.add(htmlTimeMilliSeconds2TimeSeconds);
 		RootPanel.get().add(vp);
     
   	}
