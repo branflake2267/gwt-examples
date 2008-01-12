@@ -36,18 +36,16 @@ public class DisplayDate implements EntryPoint {
 		int Hour = date.getHours();
 		int min = date.getMinutes();
 		int sec = date.getSeconds();
-		int TZ = date.getTimezoneOffset();
-		int TimeStamp = (int) (date.getTime() * .001);
+		int tz = date.getTimezoneOffset();
+		int UnixTimeStamp = (int) (date.getTime() * .001);
 		
 		//get unix time stamp (seconds)
-		Long lStart_TimeStamp = date.getTime(); //time in milleseconds since the epoch
-		int Start_TimeStamp = (int) (lStart_TimeStamp * .001); //(Cast) to Int from Long, Seconds since epoch
-		String sStart_TimeStamp = Integer.toString(Start_TimeStamp); //seconds to string
-	  
-	  
+		Long lTimeStamp = date.getTime(); //time in milleseconds since the epoch
+		int iTimeStamp = (int) (lTimeStamp * .001); //(Cast) to Int from Long, Seconds since epoch
+		String sTimeStamp = Integer.toString(iTimeStamp); //seconds to string
+	 
 		//get the gmt date - will show tz offset in string in browser, not eclipse debug window
 		String TheDate = date.toString();
-	  
 	  
 		//render date
 		Label label = new Label(TheDate);   
