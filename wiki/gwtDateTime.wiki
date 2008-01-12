@@ -21,15 +21,29 @@ long lTimeStamp = date.getTime(); //time in milleseconds since the epoch
 int iTimeStamp = (int) (lTimeStamp * .001); //(Cast) to Int from Long, Seconds since epoch
 String sTimeStamp = Integer.toString(iTimeStamp); //seconds to string
  
-//convert Unix Time Stamp (seconds) back to Java Time Stamp (milliseconds)
+	//convert Unix Time Stamp (seconds) back to Java Time Stamp (milliseconds)
 long longJavaTime =  (long) (iTimeStamp / .001);
+
+//get start and end of day (seconds)
+this.TimeStamp = UnixTimeStamp; //this will allow u to change the start and end day
+String sStartOfDayTimeStamp = this.getDateStart_TimeStamp();
+String sEndOfDayTimeStamp = this.getDateEnd_TimeStamp();
+
+
+//proof the Start of Day timestamp to date - Today 12:00:00 am
+long StartDateStamp = (long) (Integer.parseInt(sStartOfDayTimeStamp) / .001); //have to change back to milli for java time stamp
+Date StartDate = new Date(StartDateStamp);
+
+//proof the End of Day timestamp to date - Today 11:59:59 pm
+long EndDateStamp = (long) (Integer.parseInt(sEndOfDayTimeStamp) / .001); //have to change back to milli for java time stamp
+Date EndDate = new Date(EndDateStamp);
 
 
 /* HTML */
 //Date To String - will show tz offset in string in browser, not eclipse debug window
 HTML htmlGMTDate = new HTML("<b>GMT Date as String:</b> " + date.toString());
   
-//java time (milliseconds since epoch)
+	//java time (milliseconds since epoch)
 HTML htmlJavaTime = new HTML("<b>Java Date/Time (milliseconds since epoch):</b> " + date.getTime());
 
 //Unix Time Stamp (seconds)
@@ -38,6 +52,17 @@ HTML htmlUnixTimeStamp = new HTML("<b>Unix Time Stamp (seconds sinc epoch):</b> 
 //Java Time Stamp from Unix Time Stamp
 HTML htmlTimeMilliSeconds2TimeSeconds = new HTML("<b>Convert back to Time in milliseconds to time in seconds:</b> " + Long.toString(longJavaTime));
 
+//Start of Day Time Stamp (seconds)
+HTML htmlStartOfDay = new HTML("<b>Start Of Day Time Stamp Today 12:00:00 am (seconds since epoch):</b> " + sStartOfDayTimeStamp);
+
+//End of Day Time Stamp (seconds)
+HTML htmlEndOfDay = new HTML("<b>End of Day Time Stamp 11:59:59 pm (seconds since epoch):</b> " + sEndOfDayTimeStamp);
+
+//proof Start of Day Time Stamp
+HTML htmlProofStartOfDay = new HTML("<b>Proof Start of Day Time Stamp (Today 12:00:00 am):</b> " + StartDate.toString());
+
+//proof End of Day Time Stamp
+HTML htmlProofEndOfDay = new HTML("<b>Proof Start of Day Time Stamp (Today 11:59:59 pm):</b> " + EndDate.toString());
 
 /* make panel */
 VerticalPanel vp = new VerticalPanel();
@@ -45,8 +70,13 @@ vp.add(htmlGMTDate);
 vp.add(htmlJavaTime);
 vp.add(htmlUnixTimeStamp);
 vp.add(htmlTimeMilliSeconds2TimeSeconds);
-RootPanel.get().add(vp);
 
+vp.add(htmlStartOfDay);
+vp.add(htmlEndOfDay);
+vp.add(htmlProofStartOfDay);
+vp.add(htmlProofEndOfDay);
+
+RootPanel.get().add(vp);
 }}}
 
 Eclipse Project you can download [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-DisplayDate/]
