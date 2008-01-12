@@ -17,7 +17,7 @@ int tz = date.getTimezoneOffset();
 int UnixTimeStamp = (int) (date.getTime() * .001);
        
 //get unix time stamp example (seconds)
-Long lTimeStamp = date.getTime(); //time in milleseconds since the epoch
+long lTimeStamp = date.getTime(); //time in milleseconds since the epoch
 int iTimeStamp = (int) (lTimeStamp * .001); //(Cast) to Int from Long, Seconds since epoch
 String sTimeStamp = Integer.toString(iTimeStamp); //seconds to string
   
