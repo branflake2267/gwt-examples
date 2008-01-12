@@ -122,7 +122,7 @@ private String getDateStart_TimeStamp() {
 }
 }}}
 
-Get the end of the day in seconds 11:59:59 pm
+Get the end of the day 11:59:59 pm in seconds
 {{{
 /**
  * Get End of Day Time Stamp
