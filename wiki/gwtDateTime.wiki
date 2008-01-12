@@ -28,3 +28,5 @@ String TheDate = date.toString();
 Label label = new Label(TheDate);  
 RootPanel.get().add(label);
 }}}
+
+Eclipse Project you can download [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-DisplayDate/]
