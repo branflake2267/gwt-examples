@@ -5,28 +5,48 @@
  * get year, month, day, date, today, current date, timezone offset from gmt, hours, minutes, seconds, milliseconds
 
 {{{
-//Get the browsers date (!!!note: I can't get gmt time zone in eclipse debugger)
-Date date = new Date();
-int Month = date.getMonth();
-int Day = date.getDate();
-int Year = date.getYear();
-int Hour = date.getHours();
-int min = date.getMinutes();
-int sec = date.getSeconds();
-int tz = date.getTimezoneOffset();
-int UnixTimeStamp = (int) (date.getTime() * .001);
-       
-//get unix time stamp example (seconds)
-long lTimeStamp = date.getTime(); //time in milleseconds since the epoch
-int iTimeStamp = (int) (lTimeStamp * .001); //(Cast) to Int from Long, Seconds since epoch
-String sTimeStamp = Integer.toString(iTimeStamp); //seconds to string
-  
-//get the gmt date - will show tz offset in string in browser, not eclipse debug window
-String TheDate = date.toString();
-     
-//render date to root panel in gwt
-Label label = new Label(TheDate);  
-RootPanel.get().add(label);
+  	//Get Date Values
+		Date date = new Date();
+		int Month = date.getMonth();
+		int Day = date.getDate();
+		int Year = date.getYear();
+		int Hour = date.getHours();
+		int min = date.getMinutes();
+		int sec = date.getSeconds();
+		int tz = date.getTimezoneOffset();
+		int UnixTimeStamp = (int) (date.getTime() * .001); //unix time stamp
+		
+		//get unix time stamp (seconds)
+		long lTimeStamp = date.getTime(); //time in milleseconds since the epoch
+		int iTimeStamp = (int) (lTimeStamp * .001); //(Cast) to Int from Long, Seconds since epoch
+		String sTimeStamp = Integer.toString(iTimeStamp); //seconds to string
+	 
+		//convert Unix Time Stamp (seconds) back to Java Time Stamp (milliseconds)
+		long longJavaTime =  (long) (iTimeStamp / .001);
+		
+		
+		/* HTML */
+		//Date To String - will show tz offset in string in browser, not eclipse debug window
+		HTML htmlGMTDate = new HTML("<b>GMT Date as String:</b> " + date.toString());
+	  
+		//java time (milliseconds since epoch)
+		HTML htmlJavaTime = new HTML("<b>Java Date/Time (milliseconds since epoch):</b> " + date.getTime());
+		
+		//Unix Time Stamp (seconds)
+		HTML htmlUnixTimeStamp = new HTML("<b>Unix Time Stamp (seconds sinc epoch):</b> " + sTimeStamp);
+		
+		//Java Time Stamp from Unix Time Stamp
+		HTML htmlTimeMilliSeconds2TimeSeconds = new HTML("<b>Convert back to Time in milliseconds to time in seconds:</b> " + Long.toString(longJavaTime));
+		
+		
+		/* make panel */
+		VerticalPanel vp = new VerticalPanel();
+		vp.add(htmlGMTDate);
+		vp.add(htmlJavaTime);
+		vp.add(htmlUnixTimeStamp);
+		vp.add(htmlTimeMilliSeconds2TimeSeconds);
+		RootPanel.get().add(vp);
+    
 }}}
 
 Eclipse Project you can download [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-DisplayDate/]
