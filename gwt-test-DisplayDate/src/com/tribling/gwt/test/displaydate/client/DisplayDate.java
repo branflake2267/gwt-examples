@@ -44,6 +44,7 @@ public class DisplayDate implements EntryPoint {
 		int iTimeStamp = (int) (lTimeStamp * .001); //(Cast) to Int from Long, Seconds since epoch
 		String sTimeStamp = Integer.toString(iTimeStamp); //seconds to string
 	 
+		
 		//get the gmt date - will show tz offset in string in browser, not eclipse debug window
 		String TheDate = date.toString();
 	  
