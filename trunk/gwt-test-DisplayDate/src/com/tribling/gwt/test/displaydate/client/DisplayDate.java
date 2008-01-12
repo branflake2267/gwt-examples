@@ -123,10 +123,12 @@ public class DisplayDate implements EntryPoint {
 		Date DC = new Date(ltime); //get current Year, Month
 		int year = DC.getYear(); //current Year
 		int month = DC.getMonth(); //current Month
+		int day = DC.getDate();// current Day
 		
 		Date dateStart = new Date(); //Today @ 12:00:00 am to unix time stamp 
-		dateStart.setYear(year); //year current Year
-		dateStart.setDate(month+1); //month current Month
+		dateStart.setYear(year); //set year current Year
+		dateStart.setMonth(month); //set month current Month
+		dateStart.setDate(day); //set current day of month
 		dateStart.setMinutes(0); // minute 0
 		dateStart.setHours(0);	 // hour 0
 		dateStart.setSeconds(0); // second 0
@@ -152,10 +154,12 @@ public class DisplayDate implements EntryPoint {
 		Date DC = new Date(ltime); //get current Year, Month
 		int year = DC.getYear(); //current Year
 		int month = DC.getMonth(); //current Month
+		int day = DC.getDate();// current Day
 		
 		Date dateEnd = new Date(); //Today @ 11:59:59 to unix time stamp 
-		dateEnd.setYear(year); //year current Year
-		dateEnd.setDate(month+1); //month current Month
+		dateEnd.setYear(year); //set year current Year
+		dateEnd.setMonth(month); //set month current Month
+		dateEnd.setDate(day); //set current day of month
 		dateEnd.setHours(11);	// hour 11
 		dateEnd.setMinutes(59); // minute 59
 		dateEnd.setSeconds(59); // second 59
