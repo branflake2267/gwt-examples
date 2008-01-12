@@ -10,7 +10,7 @@
  # *Clicklistener on Widget Example* - I used this to figure out how to observe a widget with clicklistener. (good widget init example here too) [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-Clicklistener/ gwt-test-Clicklistener]
  # *Login Manager* - I am working on this to figure login manager. There is more than one way to do this. But this way is working for me. I'll tweak it more over time.  svn:[http://gwt-examples.googlecode.com/svn/trunk/gwt-test-Login-Manager/ gwt-test-Login-Manager] 
   * More Login Manager notes here: [project_LoginManager]
-
+ # *Date/Time Example* - test gwt date time to browser [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-DisplayDate/ Date Time Project]
 == Eclipse Configuration ==
  [gwtEclipseFaqs How to configure eclipse for these projects.]
 == Comments ==
