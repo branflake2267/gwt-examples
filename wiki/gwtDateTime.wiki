@@ -4,7 +4,11 @@
  * get unix time stamp
  * get year, month, day, date, today, current date, timezone offset from gmt, hours, minutes, seconds, milliseconds
 
+
+
 {{{
+private int TimeStamp; //pass around a timestamp in the class
+
 //Get Date Values
 Date date = new Date();
 int Month = date.getMonth();
