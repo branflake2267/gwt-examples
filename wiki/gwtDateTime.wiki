@@ -12,7 +12,7 @@
  * Download this as an eclipse project from the svn repository - [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-DisplayDate/ Goto SVN: ~/gwt-test-DisplayDate/]
  * Note: The GMT time zone offset (java.util.Date) isn't working in my eclipse gwt popuup debugger. Don't let that throw you for a loop. Push the compile and browse and see it work in firefox.
 
-
+== Example Code From SVN ==
 {{{
 private int TimeStamp; //pass around a timestamp in the class
 
