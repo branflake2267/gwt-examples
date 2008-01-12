@@ -5,7 +5,7 @@
  * get year, month, day, date, today, current date, timezone offset from gmt, hours, minutes, seconds, milliseconds
 
 == Eclipse Project ==
- Download eclipse project [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-DisplayDate/ Goto SVN: ~/gwt-test-DisplayDate/]
+ Download this as an eclipse project from the svn repository - [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-DisplayDate/ Goto SVN: ~/gwt-test-DisplayDate/]
 
 {{{
 private int TimeStamp; //pass around a timestamp in the class
