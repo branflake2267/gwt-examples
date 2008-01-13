@@ -1,6 +1,10 @@
 #summary GWT wiget links
 #labels Featured
 
+= google-web-toolkit-incubator =
+ [http://code.google.com/p/google-web-toolkit-incubator/] -  google-web-toolkit-incubator
+Likely additions to Google Web Toolkit 
+
 = GWT Widgets =
 
  * [http://code.google.com/p/gwt-ext/ GWT-Ext Widget Library] - On Google Code. Nice GWT Widget Library.
