@@ -1,13 +1,11 @@
 #summary More notes on how to connect to mysql database
 
 = JDBC Connector =
- * You will need to add a JDBC connector jar to your Build Path
- * I use /opt/gwt-linux/mysql-connector-java-5.0.8-bin.jar
- * You can see if its there in your Eclipse referenced libraries
+ * Add a JDBC connector jar to your Build Path
+ * I use it like this: /opt/gwt-linux/mysql-connector-java-5.0.8-bin.jar
+ * Check your Eclipse referenced libraries for jar
  
- * Import the MySQL database query project link here - http://code.google.com/p/gwt-examples/wiki/Projects
-
- * Eclipse Project Source code - http://gwt-examples.googlecode.com/svn/trunk/gwt-test-MySQLConn/src/com/tribling/gwt/test/mysqlconn/server/
+ * Look at the Eclipse Project Source code - http://gwt-examples.googlecode.com/svn/trunk/gwt-test-MySQLConn/src/com/tribling/gwt/test/mysqlconn/server/
 
 = Links =
  * JDBC Connector - http://www.mysql.com/products/connector/j/
