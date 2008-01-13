@@ -3,7 +3,7 @@
 
 = Links To Tutorials =
 
- * Login Page - [http://code.google.com/p/google-web-toolkit-incubator/wiki/LoginSecurityFAQ Google Page] - How to build a login manager widget
+ * [http://code.google.com/p/google-web-toolkit-incubator/wiki/LoginSecurityFAQ Google Incumbator Login] - How to build a login manager widget
  * [http://www.thescreencast.com/2007/08/gwt-rpc-in-eclipse.html RPC Screen Cast] - nice screen cast rpc tutorial.
 
  == Comments == 
