@@ -1,5 +1,4 @@
 #summary More info on login manager project.
-#labels Featured
 
 = Login Manger =
 
