@@ -46,7 +46,24 @@ private Connection getConn() {
 
     return conn;
 }
-}}}  
+}}}
 
-= Comments =
- I'd be happy to hear what you have to say. Comment below. Want to post your sample project?
+=== Get Row Count ===
+{{{
+	/*
+	 * get row count
+	 */
+	protected static int getResultSetSize(ResultSet resultSet) {
+	    int size = -1;
+
+	    try {
+	        resultSet.last();
+	        size = resultSet.getRow();
+	        resultSet.beforeFirst();
+	    } catch(SQLException e) {
+	        return size;
+	    }
+
+	    return size;
+	}
+}}}
