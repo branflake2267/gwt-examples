@@ -1,4 +1,4 @@
-#summary getting date and time, unix time stamp, start and end of day.
+#summary getting date and time, unix time stamp, start and end of day with Java and GWT.
 
 = How to get Date/Time with/in GWT =
  * get unix time stamp
