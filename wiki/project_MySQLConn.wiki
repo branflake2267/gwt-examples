@@ -14,6 +14,7 @@
 = Code Snippets =
 
  == MySQL Connection ==
+ Connect to db. Don't forget to change the parameters.
 {{{
 /**
  * db conn
@@ -48,22 +49,22 @@ private Connection getConn() {
 }
 }}}
 
-=== Get Row Count ===
+ == Get Row Count ==
+ Use this to size an array for your values
 {{{
-	/*
-	 * get row count
-	 */
-	protected static int getResultSetSize(ResultSet resultSet) {
-	    int size = -1;
+/*
+ * get row count
+ */
+protected static int getResultSetSize(ResultSet resultSet) {
+    int size = -1;
 
-	    try {
-	        resultSet.last();
-	        size = resultSet.getRow();
-	        resultSet.beforeFirst();
-	    } catch(SQLException e) {
-	        return size;
-	    }
+    try {
+        resultSet.last();
+        size = resultSet.getRow();
+        resultSet.beforeFirst();
+    } catch(SQLException e) {
+        return size;
+    }
 
-	    return size;
-	}
-}}}
+    return size;
+}
