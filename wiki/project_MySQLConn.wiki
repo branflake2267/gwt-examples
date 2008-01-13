@@ -11,6 +11,42 @@
  * JDBC Connector - http://www.mysql.com/products/connector/j/
  * Example MySQL Database, The King James Bible [http://sourceforge.net/project/showfiles.php?group_id=186532&package_id=249676&release_id=548680 Download Bible Database Here] (It comes as a MySQL Dump)
 
+= Code Snippets =
+
+ == MySQL Connection ==
+{{{
+/**
+ * db conn
+ * 
+ * Make sure you add a reference library (external jar in build path) JDBC Connector - 
+ * You will see I put it in /opt/gwt-linux/mysql-connector-java-5.0.8-bin.jar
+ * 
+ * @return Connection
+ */
+private Connection getConn() {
+
+    Connection conn	= null;
+    String url 		= "jdbc:mysql://192.168.12.81:3306/";
+    String db 		= "hostdb";
+    String driver 	= "com.mysql.jdbc.Driver";
+    String user 	= "Replace Me";
+    String pass 	= "Replace Me";
+    
+    try {
+      
+    	Class.forName(driver).newInstance();
+    	conn = DriverManager.getConnection(url+db, user, pass);
+      
+    } catch (Exception e) {
+    	
+    	//error
+    	System.err.println("Mysql Connection Error: ");
+    	//e.printStackTrace();
+    }
+
+    return conn;
+}
+}}}  
 
 = Comments =
  I'd be happy to hear what you have to say. Comment below. Want to post your sample project?
