@@ -2,7 +2,7 @@
 
 = JDBC Connector =
  * Add a JDBC connector jar to your Build Path
- * I use it like this: /opt/gwt-linux/mysql-connector-java-5.0.8-bin.jar
+ * I put it here. My Projects are configured like: /opt/gwt-linux/mysql-connector-java-5.0.8-bin.jar
  * Check your Eclipse referenced libraries for jar
  
  * Look at the Eclipse Project Source code - http://gwt-examples.googlecode.com/svn/trunk/gwt-test-MySQLConn/src/com/tribling/gwt/test/mysqlconn/server/
