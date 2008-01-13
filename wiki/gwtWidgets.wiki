@@ -1,7 +1,9 @@
 #summary GWT wiget links
 #labels Featured
 
-= GWT Links =
+= GWT Widgets =
+
+[http://code.google.com/p/gwt-ext/ GWT-Ext Widget Library] - Nice GWT Widget Library.
 
 = Comments =
 Do you have a link?
