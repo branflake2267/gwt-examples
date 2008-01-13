@@ -68,8 +68,10 @@ protected static int getResultSetSize(ResultSet resultSet) {
 
     return size;
 }
+}}}
 
  == Query ==
+ Query statement, with connection, statement, resultset, and get record.
 {{{
 /**
  * method to test query
