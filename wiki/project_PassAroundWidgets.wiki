@@ -1,0 +1,5 @@
+#summary Pass around widgets in an array.
+
+= more coming soon =
+
+Download Eclipse Project From SVN: [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-ObjectReference/ ~/gwt-test-ObjectReference/]
