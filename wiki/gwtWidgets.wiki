@@ -3,8 +3,8 @@
 
 = GWT Widgets =
 
-[http://code.google.com/p/gwt-ext/ GWT-Ext Widget Library] - Nice GWT Widget Library.
-[http://gwt-widget.sourceforge.net/?q=node/39]
+ [http://code.google.com/p/gwt-ext/ GWT-Ext Widget Library] - Nice GWT Widget Library.
+ [http://gwt-widget.sourceforge.net/ GWT Widget Library]
 
  == Comments ==
  Do you have a link? What do you think?
