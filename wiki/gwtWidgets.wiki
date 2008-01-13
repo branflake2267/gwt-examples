@@ -7,10 +7,10 @@
 = GWT Widgets =
 
  * [http://code.google.com/p/gwt-ext/ gwt-ext] - ...Tree's with Drag & Drop support, highly customizable Combo Boxes, Tab Panels, Menus & Toolbars, Dialogs, Forms and a lot more right out of the box...
- * [http://gwt.components.googlepages.com/ GWT Component Library] - ...Canvas, Round Corners, Simple Calendar, Rate It, Script.aculo.us, Auto Completions Textbox, XML Parser...
  * [http://code.google.com/p/gwt-yui-carousel/ gwt-yui-carousel] - Picture carosel.
  * [http://code.google.com/p/gwt-scheduler/ gwt-scheduler] - Scheduler, GWT widget that provides an easy event scheduling UI 
  * [http://code.google.com/p/gwt-dnd/ gwt-dnd] - Drag and Drop
+ * [http://gwt.components.googlepages.com/ GWT Component Library] - ...Canvas, Round Corners, Simple Calendar, Rate It, Script.aculo.us, Auto Completions Textbox, XML Parser...
 
  == Comments ==
  Do you have a link? What do you think?
