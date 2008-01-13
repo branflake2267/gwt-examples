@@ -79,7 +79,7 @@ public void queryMyDB() {
 	String Query = this.BookQuery;
 	
     try {
-    	Connection connection = this.getConn2();
+    	Connection connection = this.getConn();
         Statement select = connection.createStatement();
         ResultSet result = select.executeQuery(Query);
         
