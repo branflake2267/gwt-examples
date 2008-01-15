@@ -4,8 +4,8 @@
  * get unix time stamp
  * get year, month, day, date, today, current date, timezone offset from gmt, hours, minutes, seconds, milliseconds
  * convert from unix time stamp to java time stamp
- * get the start of day unix time stamp (12:00:00 am)
- * get the end of day unix time stamp (11:59:59 pm)
+ * get the start of day unix time stamp (0:00:00)(12:00:00am)
+ * get the end of day unix time stamp (23:59:59) (11:59:59pm)
 
 == Eclipse Project ==
  Test this easily by downloading it via the svn. You will need to change your build path for the gwt-user.jar to from /opt/gwt-linux, unless that exists on your computer.
@@ -41,11 +41,11 @@ String sStartOfDayTimeStamp = this.getDateStart_TimeStamp();
 String sEndOfDayTimeStamp = this.getDateEnd_TimeStamp();
 
 
-//proof the Start of Day timestamp to date - Today 12:00:00 am
+//proof the Start of Day timestamp to date - Today 00:00:00
 long StartDateStamp = (long) (Integer.parseInt(sStartOfDayTimeStamp) / .001); //have to change back to milli for java time stamp
 Date StartDate = new Date(StartDateStamp);
 
-//proof the End of Day timestamp to date - Today 11:59:59 pm
+//proof the End of Day timestamp to date - Today 23:59:59
 long EndDateStamp = (long) (Integer.parseInt(sEndOfDayTimeStamp) / .001); //have to change back to milli for java time stamp
 Date EndDate = new Date(EndDateStamp);
 
@@ -64,16 +64,16 @@ HTML htmlUnixTimeStamp = new HTML("<b>Unix Time Stamp (seconds sinc epoch):</b> 
 HTML htmlTimeMilliSeconds2TimeSeconds = new HTML("<b>Convert back to Time in milliseconds to time in seconds:</b> " + Long.toString(longJavaTime));
 
 //Start of Day Time Stamp (seconds)
-HTML htmlStartOfDay = new HTML("<b>Start Of Day Time Stamp Today 12:00:00 am (seconds since epoch):</b> " + sStartOfDayTimeStamp);
+HTML htmlStartOfDay = new HTML("<b>Start Of Day Time Stamp Today 0:00:00 (seconds since epoch):</b> " + sStartOfDayTimeStamp);
 
 //End of Day Time Stamp (seconds)
-HTML htmlEndOfDay = new HTML("<b>End of Day Time Stamp 11:59:59 pm (seconds since epoch):</b> " + sEndOfDayTimeStamp);
+HTML htmlEndOfDay = new HTML("<b>End of Day Time Stamp 23:59:59 (seconds since epoch):</b> " + sEndOfDayTimeStamp);
 
 //proof Start of Day Time Stamp
-HTML htmlProofStartOfDay = new HTML("<b>Proof Start of Day Time Stamp (Today 12:00:00 am):</b> " + StartDate.toString());
+HTML htmlProofStartOfDay = new HTML("<b>Proof Start of Day Time Stamp (Today 00:00:00):</b> " + StartDate.toString());
 
 //proof End of Day Time Stamp
-HTML htmlProofEndOfDay = new HTML("<b>Proof Start of Day Time Stamp (Today 11:59:59 pm):</b> " + EndDate.toString());
+HTML htmlProofEndOfDay = new HTML("<b>Proof Start of Day Time Stamp (Today 23:59:59):</b> " + EndDate.toString());
 
 /* make panel */
 VerticalPanel vp = new VerticalPanel();
@@ -92,7 +92,7 @@ RootPanel.get().add(vp);
 
 
 
-Get the start of the day 12:00:00 am in seconds
+Get the start of the day 0:00:00 am in seconds
 {{{
 /**
  * get Start of Day Time Stamp
@@ -108,7 +108,7 @@ private String getDateStart_TimeStamp() {
 	int month = DC.getMonth(); //current Month
 	int day = DC.getDate();// current Day
 	
-	Date dateStart = new Date(); //Today @ 12:00:00 am to unix time stamp 
+	Date dateStart = new Date(); //Today @ 0:00:00 am to unix time stamp 
 	dateStart.setYear(year); //set year current Year
 	dateStart.setMonth(month); //set month current Month
 	dateStart.setDate(day); //set current day of month
@@ -126,7 +126,7 @@ private String getDateStart_TimeStamp() {
 }
 }}}
 
-Get the end of the day 11:59:59 pm in seconds
+Get the end of the day 23:59:59 in seconds
 {{{
 /**
  * Get End of Day Time Stamp
@@ -142,11 +142,11 @@ private String getDateEnd_TimeStamp() {
 	int month = DC.getMonth(); //current Month
 	int day = DC.getDate();// current Day
 	
-	Date dateEnd = new Date(); //Today @ 11:59:59 to unix time stamp 
+	Date dateEnd = new Date(); //Today @ 23:59:59 to unix time stamp 
 	dateEnd.setYear(year); //set year current Year
 	dateEnd.setMonth(month); //set month current Month
 	dateEnd.setDate(day); //set current day of month
-	dateEnd.setHours(11);	// hour 11
+	dateEnd.setHours(23);	// hour 23
 	dateEnd.setMinutes(59); // minute 59
 	dateEnd.setSeconds(59); // second 59
 	int iTimeStamp = (int) (dateEnd.getTime() * .001);
