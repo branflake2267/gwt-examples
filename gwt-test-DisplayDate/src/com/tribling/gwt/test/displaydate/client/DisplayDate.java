@@ -59,11 +59,11 @@ public class DisplayDate implements EntryPoint {
 		String sEndOfDayTimeStamp = this.getDateEnd_TimeStamp();
 		
 		
-		//proof the Start of Day timestamp to date - Today 12:00:00 am
+		//proof the Start of Day timestamp to date - Today 0:00:00 am
 		long StartDateStamp = (long) (Integer.parseInt(sStartOfDayTimeStamp) / .001); //have to change back to milli for java time stamp
 		Date StartDate = new Date(StartDateStamp);
 		
-		//proof the End of Day timestamp to date - Today 11:59:59 pm
+		//proof the End of Day timestamp to date - Today 23:59:59 pm
 		long EndDateStamp = (long) (Integer.parseInt(sEndOfDayTimeStamp) / .001); //have to change back to milli for java time stamp
 		Date EndDate = new Date(EndDateStamp);
 		
@@ -82,16 +82,16 @@ public class DisplayDate implements EntryPoint {
 		HTML htmlTimeMilliSeconds2TimeSeconds = new HTML("<b>Convert back to Time in milliseconds to time in seconds:</b> " + Long.toString(longJavaTime));
 		
 		//Start of Day Time Stamp (seconds)
-		HTML htmlStartOfDay = new HTML("<b>Start Of Day Time Stamp Today 12:00:00 am (seconds since epoch):</b> " + sStartOfDayTimeStamp);
+		HTML htmlStartOfDay = new HTML("<b>Start Of Day Time Stamp Today 0:00:00 (seconds since epoch):</b> " + sStartOfDayTimeStamp);
 		
 		//End of Day Time Stamp (seconds)
-		HTML htmlEndOfDay = new HTML("<b>End of Day Time Stamp 11:59:59 pm (seconds since epoch):</b> " + sEndOfDayTimeStamp);
+		HTML htmlEndOfDay = new HTML("<b>End of Day Time Stamp 23:59:59 (seconds since epoch):</b> " + sEndOfDayTimeStamp);
 		
 		//proof Start of Day Time Stamp
-		HTML htmlProofStartOfDay = new HTML("<b>Proof Start of Day Time Stamp (Today 12:00:00 am):</b> " + StartDate.toString());
+		HTML htmlProofStartOfDay = new HTML("<b>Proof Start of Day Time Stamp (Today 0:00:00 am):</b> " + StartDate.toString());
 		
 		//proof End of Day Time Stamp
-		HTML htmlProofEndOfDay = new HTML("<b>Proof Start of Day Time Stamp (Today 11:59:59 pm):</b> " + EndDate.toString());
+		HTML htmlProofEndOfDay = new HTML("<b>Proof Start of Day Time Stamp (Today 23:59:59 pm):</b> " + EndDate.toString());
 		
 		/* make panel */
 		VerticalPanel vp = new VerticalPanel();
@@ -125,7 +125,7 @@ public class DisplayDate implements EntryPoint {
 		int month = DC.getMonth(); //current Month
 		int day = DC.getDate();// current Day
 		
-		Date dateStart = new Date(); //Today @ 12:00:00 am to unix time stamp 
+		Date dateStart = new Date(); //Today @ 0:00:00 to unix time stamp 
 		dateStart.setYear(year); //set year current Year
 		dateStart.setMonth(month); //set month current Month
 		dateStart.setDate(day); //set current day of month
@@ -156,11 +156,11 @@ public class DisplayDate implements EntryPoint {
 		int month = DC.getMonth(); //current Month
 		int day = DC.getDate();// current Day
 		
-		Date dateEnd = new Date(); //Today @ 11:59:59 to unix time stamp 
+		Date dateEnd = new Date(); //Today @ 23:59:59 to unix time stamp 
 		dateEnd.setYear(year); //set year current Year
 		dateEnd.setMonth(month); //set month current Month
 		dateEnd.setDate(day); //set current day of month
-		dateEnd.setHours(11);	// hour 11
+		dateEnd.setHours(23);	// hour 23
 		dateEnd.setMinutes(59); // minute 59
 		dateEnd.setSeconds(59); // second 59
 		int iTimeStamp = (int) (dateEnd.getTime() * .001);
@@ -168,5 +168,7 @@ public class DisplayDate implements EntryPoint {
 		
 		return sEnd_TimeStamp;
 	}
-  
+
+	
+
 }
