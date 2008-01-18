@@ -102,7 +102,7 @@ Change your file "/usr/lib/eclipse/eclipse.ini". This will change the startup pa
 
 Or 
 
-Change the way it start up with /usr/bin/eclipse
+Change the way it start up with "/usr/bin/eclipse"
 {{{
 #/usr/bin/eclipse - bottom of file
 exec /usr/lib/eclipse/eclipse \
