@@ -6,6 +6,7 @@
  * [http://code.google.com/p/google-web-toolkit-incubator/wiki/LoginSecurityFAQ Google Incumbator Login] - How to build a login manager widget
  * [http://www.thescreencast.com/2007/08/gwt-rpc-in-eclipse.html RPC Screen Cast] - nice screen cast rpc tutorial.
  * [http://code.google.com/p/gwtpetstore/ gwtpetstore] - A GWT implementation of the classic Sun Java petstore
+ * [http://code.google.com/p/gwt-maven/ gwt-maven]
 
  == Comments == 
  Do you have a link?
