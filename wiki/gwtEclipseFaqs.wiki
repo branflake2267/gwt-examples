@@ -59,7 +59,7 @@ echo $GWT_EXTERNAL_BROWSER
  # Change or add a 32bit JVM here
  Eclipse > Window (Top Menu) > Preferences > Java > Installed JREs > 
 
-=== Problems GWT and AMD64 ===
+ === Problems GWT and AMD64 ===
 
  Get this error trying to run a GWT project?
 {{{
@@ -68,7 +68,7 @@ echo $GWT_EXTERNAL_BROWSER
 
   This Error comes from running 64bit JVM and then GWT tries to use 32bit compiled libraries.
 
-=== Changing the default JVM ===
+ === Changing the default JVM ===
  # Install ia32-sun-java6-bin (install 32bit JVM)
  # Install galternatives (this is how we will change the default JVM)
  # Run galternatives
