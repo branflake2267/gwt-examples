@@ -119,6 +119,8 @@ exec /usr/lib/eclipse/eclipse \
 }}}
 
 Or
+
+Change the eclipse parameters from command line. This a good way to trace a class note loading correctly.
 {{{
 #command line
 eclipse -XX:PermSize=128m -XX:MaxPermSize=512m
