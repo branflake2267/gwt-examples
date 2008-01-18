@@ -60,7 +60,6 @@ echo $GWT_EXTERNAL_BROWSER
  Eclipse > Window (Top Menu) > Preferences > Java > Installed JREs > 
 
  === Problems GWT and AMD64 ===
-
  Get this error trying to run a GWT project?
 {{{
 /gwt-linux/libswt-pi-gtk-3235.so: wrong ELF class: ELFCLASS32 (Possible cause: architecture word width mismatch)
