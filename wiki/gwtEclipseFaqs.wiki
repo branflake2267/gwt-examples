@@ -86,3 +86,33 @@ sudo update-alternatives --config java
 
  # Change or Add 
   Eclipse > Window (Top Menu) > Preferences > Java > Installed JREs > 
+
+=== Eclipse Memory ===
+Are you getting a eclipse out of memory error? 
+
+Change your file "/usr/lib/eclipse/eclipse.ini". This will change the startup parameters.
+{{{
+#eclipse.ini file - changes start up parameters
+-vmargs
+-Xms512m
+-Xmx1024m
+-XX:PermSize=128m
+-XX:MaxPermSize=512m
+}}}
+
+Or 
+
+Change the way it start up with /usr/bin/eclipse
+{{{
+exec /usr/lib/eclipse/eclipse \
+    -vm "${JAVACMD}" \
+    -install "${INSTALL}" \
+    -startup "${STARTUP}" \
+    ${CMDLINEARGS} \
+    -vmargs -Djava.library.path=/usr/lib/jni \
+            -Dgnu.gcj.precompiled.db.path=/var/lib/gcj-4.2/classmap.db \
+            -Dgnu.gcj.runtime.VMClassLoader.library_control=never \
+            -Dosgi.locking=none ${VMARGS} \
+    -XX:PermSize=1024M -XX:MaxPermSize=1024M
+#ADD -> -XX:PermSize=1024M -XX:MaxPermSize=1024M
+}}}
