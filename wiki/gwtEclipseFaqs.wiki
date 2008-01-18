@@ -117,3 +117,9 @@ exec /usr/lib/eclipse/eclipse \
     -XX:PermSize=1024M -XX:MaxPermSize=1024M
 #ADD -> -XX:PermSize=1024M -XX:MaxPermSize=1024M
 }}}
+
+Or
+{{{
+#command line
+eclipse -XX:PermSize=128m -XX:MaxPermSize=512m
+}}}
