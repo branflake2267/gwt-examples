@@ -1,4 +1,5 @@
 #summary gwt Tomcat War Builder
+#labels Featured
 
 = Tomcat War Builder =
  Compile gwt project for tomcat. Make your rpc happen. Archive, zip up your project in a war file. Deploy it to a tomcat server. I built this script to build my war files for my gwt projects. This helps deploying a project for production testing.
@@ -97,6 +98,10 @@ public class TomcatWarBuilder {
 	//private static String TempWarFileLocation = "/home/branflake2267"; 
 	private static String TempWarFileLocation = null; 
 	
+	//add this if your project-compile class path is relative
+	//Add trailing slash "/dir/dir/gwt-linux/"
+	//private static String GWT_HOME_Manual = "/opt/gwt-linux/";
+	private static String GWT_HOME_Manual = null;
 	
 	/**
 	 * main method
@@ -115,9 +120,10 @@ public class TomcatWarBuilder {
 		
 		
 		// project directory
-		ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
+		//ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-DisplayDate";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Clicklistener";
+		ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RPC-adv";
 		
 		
 		//Compile project??????
@@ -642,9 +648,19 @@ public class TomcatWarBuilder {
 
 	/**
 	 * get the location for the gwt files from eclipse class path contents
+	 * 
+	 * errors when the class path is relative. 
+	 * 
+	 * TODO - look up the relative path
+	 * 
 	 */
 	public static void getGWT_HOME() {
 
+		if (GWT_HOME_Manual != null) {
+			GWT_HOME = GWT_HOME_Manual;
+			return;
+		}
+		
 		Pattern p = Pattern.compile(":(/.*)gwt-user.jar:");
 		Matcher m = p.matcher(ProjectCompileFileContents);
 		boolean found = m.find();
