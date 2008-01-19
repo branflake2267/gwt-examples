@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cache-entry>
+	<generated-type-hash class="com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException_FieldSerializer" hash="FF198044879E67E1ACF2E0C29CC58CB5"/>
+	<generated-type-hash class="com.tribling.gwt.RPC.adv.client.Person_FieldSerializer" hash="ADE1D8F9049B4F281075EB5DCAE66117"/>
+	<generated-type-hash class="com.tribling.gwt.RPC.adv.client.RPCService_Proxy" hash="1D5C1595DFA814B1B32BE963ABB85EC2"/>
+	<generated-type-hash class="com.tribling.gwt.RPC.adv.client.RPCService_TypeSerializer" hash="B7BE1C295E74A6476CE3ED3F3957E395"/>
+	<rebind-decision in="com.google.gwt.user.client.ui.impl.TextBoxImpl" out="com.google.gwt.user.client.ui.impl.TextBoxImplIE6"/>
+	<rebind-decision in="com.google.gwt.user.client.impl.HTTPRequestImpl" out="com.google.gwt.user.client.impl.HTTPRequestImplIE6"/>
+	<rebind-decision in="com.google.gwt.user.client.impl.DOMImpl" out="com.google.gwt.user.client.impl.DOMImplIE6"/>
+	<rebind-decision in="com.google.gwt.user.client.impl.HistoryImpl" out="com.google.gwt.user.client.impl.HistoryImplIE6"/>
+	<rebind-decision in="com.google.gwt.user.client.ui.ListBox.Impl" out="com.google.gwt.user.client.ui.ListBox.Impl"/>
+	<rebind-decision in="com.google.gwt.user.client.ui.impl.FormPanelImpl" out="com.google.gwt.user.client.ui.impl.FormPanelImplIE6"/>
+	<rebind-decision in="com.tribling.gwt.RPC.adv.client.RPCService" out="com.tribling.gwt.RPC.adv.client.RPCService_Proxy"/>
+	<rebind-decision in="com.google.gwt.user.client.ui.impl.FocusImpl" out="com.google.gwt.user.client.ui.impl.FocusImplIE6"/>
+	<rebind-decision in="com.tribling.gwt.RPC.adv.client.RPCadv" out="com.tribling.gwt.RPC.adv.client.RPCadv"/>
+	<rebind-decision in="com.google.gwt.user.client.ui.impl.PopupImpl" out="com.google.gwt.user.client.ui.impl.PopupImplIE6"/>
+</cache-entry>

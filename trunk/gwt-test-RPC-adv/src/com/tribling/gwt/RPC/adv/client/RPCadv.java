@@ -22,10 +22,5 @@ public class RPCadv implements EntryPoint {
 	cS.getServerData();
 	
 	
-	//test buttons
-	TestButtonWidget btnW = new TestButtonWidget();
-
-	btnW.renderButtons();
-	
   }
 }
