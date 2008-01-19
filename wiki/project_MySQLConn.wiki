@@ -8,7 +8,7 @@
  * Look at the Eclipse Project Source code - http://gwt-examples.googlecode.com/svn/trunk/gwt-test-MySQLConn/src/com/tribling/gwt/test/mysqlconn/server/
 
 == Tomcat Setup ==
- Fix this problem: java.security.AccessControlException: access denied (java.net.SocketPermission localhost resolve)
+ Fix this problem: java.security.AccessControlException: access denied ('java.net.SocketPermission' localhost resolve)
  You will need to change Tomcat configuration.
 {{{
 #for debian/ubuntu
