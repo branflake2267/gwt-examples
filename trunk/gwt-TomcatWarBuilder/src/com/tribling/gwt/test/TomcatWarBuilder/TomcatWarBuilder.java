@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
@@ -31,7 +32,6 @@ import java.util.zip.ZipOutputStream;
  * TODO - add var for production folder
  * TODO - add index page 
  * TODO - upload to server via tomcat deploy
- * TODO - add a version number to Name - see what build u have on the server
  * 
  * Maybes
  * TODO - var for www files location? hmmmm
@@ -100,11 +100,11 @@ public class TomcatWarBuilder {
 		
 		
 		// project directory
-		//ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
+		ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-DisplayDate";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Clicklistener";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RPC-adv";
-		ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Login-Manager";
+		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Login-Manager";
 		
 		//Compile project??????
 		//do this with eclipse debugger button
@@ -212,7 +212,7 @@ public class TomcatWarBuilder {
 		String WebXML = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
 		"<web-app>\n" +
 		  "<display-name>gwt-" + ProjectName + "</display-name>\n" +
-		  "<description>Google Web Toolkit Project</description>\n" +
+		  "<description>Compiled:" + getDate() + " Google Web Toolkit Project</description>\n" +
 		  "<servlet>\n" +
 		    "<servlet-name>" + ProjectName + "</servlet-name>\n" +
 		    "<servlet-class>" + ServletClassName + "</servlet-class>\n" +
@@ -224,6 +224,14 @@ public class TomcatWarBuilder {
 		"</web-app>\n";
 		return WebXML;
 	}
+	
+	
+	public static String getDate() {
+		Date date = new Date();
+		String now = date.toString();
+		return now;
+	}
+	
 	
 	/**
 	 * create an index page for easy module access
