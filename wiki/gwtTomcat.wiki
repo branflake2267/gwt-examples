@@ -1,4 +1,4 @@
-#gwt tomcat setup
+#summary gwt tomcat setup
 
 = Tomcat Setup =
 
