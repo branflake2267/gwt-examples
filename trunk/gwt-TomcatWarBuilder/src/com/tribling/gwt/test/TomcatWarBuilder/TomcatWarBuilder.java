@@ -31,6 +31,7 @@ import java.util.zip.ZipOutputStream;
  * TODO - add var for production folder
  * TODO - add index page 
  * TODO - upload to server via tomcat deploy
+ * TODO - add a version number to Name - see what build u have on the server
  * 
  * Maybes
  * TODO - var for www files location? hmmmm
@@ -102,8 +103,8 @@ public class TomcatWarBuilder {
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-DisplayDate";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Clicklistener";
-		ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RPC-adv";
-		
+		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RPC-adv";
+		ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Login-Manager";
 		
 		//Compile project??????
 		//do this with eclipse debugger button
