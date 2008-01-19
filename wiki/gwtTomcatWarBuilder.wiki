@@ -43,6 +43,8 @@ import java.util.zip.ZipOutputStream;
  *
  * Watch Console for output. Vars will be outputted there.  
  *
+ * !!!!!!!!!!!Compile your project in the eclipse gwt debugger before you run this
+ *
  * Wants
  * TODO - figure out what project directory this file is in when ran as java application
  * TODO - Compile project first
@@ -59,7 +61,6 @@ import java.util.zip.ZipOutputStream;
  * TODO - maybe add a little more error checking in spots
  */
 public class TomcatWarBuilder {
-
 
 	// project vars
 	private static String ProjectDirectory;
@@ -108,6 +109,10 @@ public class TomcatWarBuilder {
 	 * 
 	 */
 	public static void main(String[] args) throws IOException {
+		
+		//FIRST
+		//Compile your project in the eclipse gwt debugger before you run this
+		
 		
 		// project directory
 		ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
@@ -999,5 +1004,4 @@ public class TomcatWarBuilder {
 	
 	
 }//end
-
 }}}
