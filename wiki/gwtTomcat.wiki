@@ -1,4 +1,4 @@
-#gwt tomcat setup (ubuntu)
+#gwt tomcat setup
 
 = Tomcat Setup =
 
