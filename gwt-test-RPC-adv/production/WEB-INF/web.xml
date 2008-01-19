@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app>
+<display-name>gwt-RPCadv</display-name>
+<description>Google Web Toolkit Project</description>
+<servlet>
+<servlet-name>RPCadv</servlet-name>
+<servlet-class>com.tribling.gwt.RPC.adv.server.RPCServiceImpl</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>RPCadv</servlet-name>
+<url-pattern>/AdvService</url-pattern>
+</servlet-mapping>
+</web-app>
