@@ -24,10 +24,10 @@ sudo /etc/init.d/tomcat5.5 force-reload
 }}}
 
  == Test Tomcat Install ==
- load tomcat via http
- http://localhost:8180
- * /admin -tomcat administrator
- * /manager - tomcat manager - deploy war by upload
+  load tomcat via http
+  http://localhost:8180
+   * /admin -tomcat administrator
+   * /manager - tomcat manager - deploy war by upload
 
 
 
