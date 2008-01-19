@@ -8,15 +8,17 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ChangeListenerCollection;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
+import com.google.gwt.user.client.ui.PushButton;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -25,15 +27,21 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class LoginPanelWidget extends Composite implements ClickListener {
 
+	//rpc init Var 
 	private LoginManagerServiceAsync callProvider;
 	
+	//widget main panel
+	private final VerticalPanel WidgetPanel = new VerticalPanel();
+	
 	//Login Items to work with
-	private Label SignInTxt = new Label("Sign into your account here.");
+	private Label SignInTxt = new Label("Account Sign In");
 	private TextBox UserName = new TextBox();
 	private PasswordTextBox Password = new PasswordTextBox();
 	private CheckBox cbRememberMe = new CheckBox("Remember Me");
-	private Button bSignIn = new Button("Sign In");
+	private PushButton bSignIn = new PushButton("Sign In");
 
+	private String SessionID = null;
+	private boolean LoginStatus = false;
 	
 	//use this to display the errors
 	private HorizontalPanel pDisplayError = new HorizontalPanel();
@@ -49,24 +57,37 @@ public class LoginPanelWidget extends Composite implements ClickListener {
 	 */
 	public LoginPanelWidget() {
 		
-		//pDisplayError.setStyleName("LoginManager-DisplayError");
-		pDisplayError.setStyleName("LoginManager-DisplayError");
+		pDisplayError.setStyleName("LoginPanelWidget-DisplayError");
 		pDisplayError.add(displayError);
 		//pDisplayError.add(new Label("display error here"));
 		
 		//add ClickListener
+		//bSignIn.setStyleName("LoginPanelWidget-Button-SignIn");
 		bSignIn.addClickListener(this);
-	
-		//setup the widget's panel
-		VerticalPanel WidgetPanel = new VerticalPanel();
-		WidgetPanel.setStyleName("Login-Panel");
+		HorizontalPanel pSignIn = new HorizontalPanel();
+		pSignIn.setStyleName("LoginPanelWidget-Button-Panel");
+		pSignIn.add(bSignIn);
 		
+		//username panel
+		HorizontalPanel pUser = new HorizontalPanel();
+		pUser.add(UserName);
+		pUser.add(new Label("User Name"));
+		
+		//password panel
+		HorizontalPanel pPassword = new HorizontalPanel();
+		pPassword.add(Password);
+		pPassword.add(new Label("Password"));
+		
+
+		
+		//setup the widget's panel
+		WidgetPanel.setStyleName("LoginPanelWidget");
 		WidgetPanel.add(SignInTxt);
 		WidgetPanel.add(pDisplayError);
-		WidgetPanel.add(UserName);
-		WidgetPanel.add(Password);
+		WidgetPanel.add(pUser);
+		WidgetPanel.add(pPassword);
 		WidgetPanel.add(cbRememberMe);
-		WidgetPanel.add(bSignIn);
+		WidgetPanel.add(pSignIn);
 	
 		initWidget(WidgetPanel);
 		
@@ -91,13 +112,20 @@ public class LoginPanelWidget extends Composite implements ClickListener {
 		return Password.getText();
 	}
 	
-
+	/**
+	 * clear widget panel when logged in
+	 */
+	public void clearWidgetPanel() {
+		WidgetPanel.clear();
+	}
 
 	
 	public void processCallBack(SignInStatus sis) {
 				
-		String SessionID = sis.getSessionID();
+		//vars from rpc
+		setSessionID(sis.getSessionID());
 		String sDisplayError = sis.getDisplayError();
+		
 		
 		//login failure notify
 		if (sDisplayError != null) {
@@ -105,39 +133,69 @@ public class LoginPanelWidget extends Composite implements ClickListener {
 			pDisplayError.add(new Label(sDisplayError));
 		}
 		
-		//Can log in, do what??
-		if (SessionID != null) {
-			
-			//save cookie
-			saveLoginCookie(SessionID);
-			
-			//goto where
-		}
 		
+		//Can log in, //save cookie
+		if (getSessionID() != null) {
+			this.saveLoginCookie();
+			this.LoginStatus = true;
+			
+			//clear the panel for sign out and login popup not to duplicate itself
+			clearWidgetPanel();
+			
+			//notify the session manager listener something has changed
+			if (changeListeners != null) {
+				changeListeners.fireChange(this);
+			}
+		}
+
 	}
 
+	/**
+	 * set SessionID
+	 */
+	private void setSessionID(String SessionID) {
+		this.SessionID = SessionID;
+	}
+	
+	/**
+	 * get SessionID
+	 * @return
+	 */
+	public String getSessionID() {
+		return this.SessionID;
+	}
+	
+	
+	/**
+	 * get cookied session id
+	 */
+	public String getCookieSessionID() {
+		return Cookies.getCookie("sid");
+	}
+	
+
+	
 	/**
 	 * save cookie if remember me is checked
 	 */
-	public void saveLoginCookie(String SessionID) {
+	public void saveLoginCookie() {
 		if (cbRememberMe.isChecked()) {
 		    final long DURATION = 1000 * 60 * 60 * 24 * 14; //duration remembering login. 2 weeks in this example.
 		    Date expires = new Date(System.currentTimeMillis() + DURATION);
-		    Cookies.setCookie("sid", SessionID, expires, null, "/", false);
+		    Cookies.setCookie("sid", getSessionID(), expires, null, "/", false);
 		}
 	}
 
+
+
 	/**
-	 * 
+	 * set the login status for session manager notification
+	 * @param LoginStatus
 	 */
-	public void lookupLoginCookie() {
-		
-		String SessionID = Cookies.getCookie("sid");
-		
-	    //if ( sessionID != null ) checkWithServerIfSessionIdIsStillLegal();
-	    //else displayLoginBox();
-		
+	public boolean getLoginStatus() {
+		return this.LoginStatus;
 	}
+	
 
 	
 	/**
@@ -146,7 +204,10 @@ public class LoginPanelWidget extends Composite implements ClickListener {
 	public void onClick(Widget sender) {
 
 		//process the sign in
-		this.processSignIn();
+		if (sender == bSignIn) {
+			this.processSignIn();
+		}
+		
 		
 		if (changeListeners != null) {
 			changeListeners.fireChange(this);
@@ -174,7 +235,7 @@ public class LoginPanelWidget extends Composite implements ClickListener {
 	/* ajax stuff below */
 	
 	/**
-	 * init the rpc manager
+	 * Init the RPC provider
 	 */
     public void LoginManagerProvider() {
         // Initialize the service.
@@ -184,7 +245,8 @@ public class LoginPanelWidget extends Composite implements ClickListener {
         // Use a module-relative URLs to ensure that this client code can find
         // its way home, even when the URL changes (as might happen when you
         // deploy this as a webapp under an external servlet container).
-        String moduleRelativeURL = GWT.getModuleBaseURL() + "LoginManager";
+        String moduleRelativeURL = GWT.getModuleBaseURL() + "LoginManagerService";
+        //String moduleRelativeURL = "/LoginManagerService";
         target.setServiceEntryPoint(moduleRelativeURL);
     }
     
@@ -203,6 +265,7 @@ public class LoginPanelWidget extends Composite implements ClickListener {
 				//change something in widgets panel noting failure of rpc
 				pDisplayError.clear();
 				pDisplayError.add(new Label("Ajax/RPC Connection Error"));
+				RootPanel.get().add(new HTML(ex.toString()));
 			}
 
 			//ajax rpc success
@@ -218,7 +281,7 @@ public class LoginPanelWidget extends Composite implements ClickListener {
     
 
     
-	
+
 	
 	
 }//end class

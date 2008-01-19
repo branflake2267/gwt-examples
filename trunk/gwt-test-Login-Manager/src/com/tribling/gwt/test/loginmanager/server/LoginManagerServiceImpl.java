@@ -36,4 +36,6 @@ public class LoginManagerServiceImpl extends RemoteServiceServlet implements Log
 		return sis;
 	}
 	
+
+	
 }
