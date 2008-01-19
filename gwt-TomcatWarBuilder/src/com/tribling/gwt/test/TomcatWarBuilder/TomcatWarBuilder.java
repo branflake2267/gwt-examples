@@ -211,8 +211,8 @@ public class TomcatWarBuilder {
 	public static String createWebXMLFileContents() {
 		String WebXML = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
 		"<web-app>\n" +
-		  "<display-name>gwt-" + ProjectName + "</display-name>\n" +
-		  "<description>Compiled:" + getDate() + " Google Web Toolkit Project</description>\n" +
+		  "<display-name>gwt-" + ProjectName + " Compiled: " + getDate() + "</display-name>\n" +
+		  "<description>Google Web Toolkit Project</description>\n" +
 		  "<servlet>\n" +
 		    "<servlet-name>" + ProjectName + "</servlet-name>\n" +
 		    "<servlet-class>" + ServletClassName + "</servlet-class>\n" +
