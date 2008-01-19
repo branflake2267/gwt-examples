@@ -7,5 +7,5 @@
 	<entry-point class='com.tribling.gwt.test.loginmanager.client.LoginManager'/>
   
   	<stylesheet src='style.css'/>
-  	<servlet path='/LoginManager' class='com.tribling.gwt.test.loginmanager.server.LoginManagerServiceImpl'/>
+  	<servlet path='/LoginManagerService' class='com.tribling.gwt.test.loginmanager.server.LoginManagerServiceImpl'/>
 </module>

@@ -20,4 +20,5 @@ public interface LoginManagerServiceAsync {
 	 */
 	public void checkSessionIsStillLegal(String SessionID, AsyncCallback callback);
 	
+	
 }

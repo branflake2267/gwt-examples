@@ -9,6 +9,7 @@ import com.tribling.gwt.test.loginmanager.client.SignInStatus;
 
 
 
+
 /**
  * I was building a class to get the books of the bible from my mysql database
  *
@@ -51,6 +52,9 @@ public class DB_SignIn extends DB_Conn {
 		public SignInStatus processSignIn(String UserName, String Password) {
 			
 			//set the class var UserName for use in the methods
+			if (UserName.equals("")) {
+				UserName = "None";
+			}
 			this.UserName = UserName;
 			
 			//get UserName hash from db to compare to the password submitted
@@ -108,6 +112,8 @@ public class DB_SignIn extends DB_Conn {
 		 */
 		private void getUserHashFromDB() {
 		
+			
+			
 			String Query = "SELECT UserID, Password_Hash FROM `user` WHERE (UserName='" + this.UserName + "');";
 			
 	        try {
@@ -127,7 +133,6 @@ public class DB_SignIn extends DB_Conn {
 	            result.close();
 	            connection.close();
 	        } catch(Exception e) {
-	        	
 	        	//debug out output this way
 	        	System.err.println("Mysql Statement Error: " + Query);
 	        	e.printStackTrace();
@@ -216,7 +221,6 @@ public class DB_SignIn extends DB_Conn {
 	            connection.close();
 	            
 	        } catch(Exception e) {
-	        	
 	        	//debug out output this way
 	        	System.err.println("Mysql Statement Error: " + Query);
 	        	e.printStackTrace();

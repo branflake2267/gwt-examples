@@ -1,6 +1,5 @@
 package com.tribling.gwt.test.loginmanager.server;
 
-import java.util.UUID;
 
 
 
