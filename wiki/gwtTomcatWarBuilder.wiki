@@ -2,7 +2,7 @@
 #labels Featured
 
 = Tomcat War Builder =
- Compile gwt project for tomcat. Make your rpc happen. Archive, zip up your project in a war file. Deploy it to a tomcat server. I built this script to build my war files for my gwt projects. This helps deploying a project for production testing.
+ Build, Compile gwt project, into a servlet for tomcat. Make your rpc happen. Archive, zip up your project in a war file. Deploy it to a tomcat server. I built this script to build my war files for my gwt projects. This helps deploying a project for production testing.
 
  # Compile your project in the eclipse gwt debugger before running this.
  # Import project or script into eclipse
