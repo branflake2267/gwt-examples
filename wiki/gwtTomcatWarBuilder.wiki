@@ -5,7 +5,7 @@
 
  # Import project or script into eclipse
  # Set Script var  directory like "/home/branflake2267/workspace/gwt-Project";
- # Right click on TomcatWarBuilder.java and Debug as java application
+ # Right click on "TomcatWarBuilder.java" and Debug as java application
  # Watch Debug Console for notification output
  # Tweak script to your like
 
