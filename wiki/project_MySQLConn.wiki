@@ -7,6 +7,17 @@
  
  * Look at the Eclipse Project Source code - http://gwt-examples.googlecode.com/svn/trunk/gwt-test-MySQLConn/src/com/tribling/gwt/test/mysqlconn/server/
 
+== Tomcat Setup ==
+ Fix this problem: java.security.AccessControlException: access denied (java.net.SocketPermission localhost resolve)
+ You will need to change Tomcat configuration.
+{{{
+#for debian/ubuntu
+#add to /etc/tomcat5.5/policy.d/04webapps.policy
+grant codeBase "file:${catalina.home}/webapps/-" {
+      permission java.net.SocketPermission "192.168.12.81:3306", "connect";
+};
+}}} 
+
 = Links =
  * JDBC Connector - http://www.mysql.com/products/connector/j/
  * Example MySQL Database, The King James Bible [http://sourceforge.net/project/showfiles.php?group_id=186532&package_id=249676&release_id=548680 Download Bible Database Here] (It comes as a MySQL Dump)
