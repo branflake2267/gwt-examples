@@ -1,4 +1,4 @@
-#summary Leave feedback and comments here if you like?
+#summary Leave feedback and comments here if you like
 #labels Featured
 
 = Comments / Suggestions =
