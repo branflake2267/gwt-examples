@@ -19,9 +19,11 @@ import java.util.zip.ZipOutputStream;
 
 /**
  * build the war file for tomcat gwt server deploy
- * @author branflake2267
+ * @author branflake2267 - Brandon Donnelson
  *
  * Watch Console for output. Vars will be outputted there.  
+ *
+ * !!!!!!!!!!!Compile your project in the eclipse gwt debugger before you run this
  *
  * Wants
  * TODO - figure out what project directory this file is in when ran as java application
@@ -38,7 +40,7 @@ import java.util.zip.ZipOutputStream;
  * TODO - better name space for some of the vars like change ProjectClassName
  * TODO - maybe add a little more error checking in spots
  */
-public class TomcatProductionBuilder {
+public class TomcatWarBuilder {
 
 	// project vars
 	private static String ProjectDirectory;
@@ -75,6 +77,10 @@ public class TomcatProductionBuilder {
 	//private static String TempWarFileLocation = "/home/branflake2267"; 
 	private static String TempWarFileLocation = null; 
 	
+	//add this if your project-compile class path is relative
+	//Add trailing slash "/dir/dir/gwt-linux/"
+	//private static String GWT_HOME_Manual = "/opt/gwt-linux/";
+	private static String GWT_HOME_Manual = null;
 	
 	/**
 	 * main method
@@ -88,10 +94,15 @@ public class TomcatProductionBuilder {
 	 */
 	public static void main(String[] args) throws IOException {
 		
+		//FIRST
+		//Compile your project in the eclipse gwt debugger before you run this
+		
+		
 		// project directory
-		ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
+		//ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-DisplayDate";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Clicklistener";
+		ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RPC-adv";
 		
 		
 		//Compile project??????
@@ -616,9 +627,19 @@ public class TomcatProductionBuilder {
 
 	/**
 	 * get the location for the gwt files from eclipse class path contents
+	 * 
+	 * errors when the class path is relative. 
+	 * 
+	 * TODO - look up the relative path
+	 * 
 	 */
 	public static void getGWT_HOME() {
 
+		if (GWT_HOME_Manual != null) {
+			GWT_HOME = GWT_HOME_Manual;
+			return;
+		}
+		
 		Pattern p = Pattern.compile(":(/.*)gwt-user.jar:");
 		Matcher m = p.matcher(ProjectCompileFileContents);
 		boolean found = m.find();
