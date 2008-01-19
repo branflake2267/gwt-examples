@@ -1,5 +1,0 @@
-#summary Session and Login Manager
-
-= Session and Login Manager =
-
-Code being compiled, coming soon...
