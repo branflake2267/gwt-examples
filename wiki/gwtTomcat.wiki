@@ -23,11 +23,11 @@ sudo apt-get install tomcat5.5 tomcat5.5-admin tomcat5.5-webapps
 sudo /etc/init.d/tomcat5.5 force-reload
 }}}
 
-
-load tomcat via http
-http://localhost:8180
- >tomcat administrator
- >tomcat manager - deploy war by upload
+ == Test Tomcat Install ==
+ load tomcat via http
+ http://localhost:8180
+  >tomcat administrator
+  >tomcat manager - deploy war by upload
 
 
 
