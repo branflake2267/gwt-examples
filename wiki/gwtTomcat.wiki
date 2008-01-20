@@ -1,7 +1,7 @@
 #summary gwt tomcat setup
 
 = Tomcat Setup =
- This is my install on Ubuntu Linux
+ This is my install on Ubuntu Linux which is quite simple. When running a servlet with jdbc connector I got socket access denied. This stumped me for a bit and I found that Tomcat controls socket access.
 
  == Install Java ==
 {{{
