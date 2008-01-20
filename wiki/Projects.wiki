@@ -7,14 +7,14 @@
  * You may have to add a mysql jdbc connector jar. 
  * Check my [gwt-examples] for more eclipse tips and info.
 
- # TomcatWarBuilder
- # Clicklistener on Widget Example
- # DisplayDate - date and time examples
- # Login Manager
- # MySQL Connection/Query Example
- # ObjectReference - pass around widgets
- # RPC Example Basic
- # RPC Example2 More Advanced
+ # *TomcatWarBuilder*
+ # *Clicklistener* on Widget Example
+ # *DisplayDate* - date and time examples
+ # *Login Manager*
+ # *MySQL Connection* - Query Examples
+ # *Object Reference* - pass around widgets
+ # *RPC Example Basic*
+ # *RPC Example2* - More Advanced rpc passing an object
 
 
 == Eclipse Configuration ==
