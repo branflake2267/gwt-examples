@@ -10,6 +10,7 @@
  # Right click on TomcatWarBuilder_java and Debug as java application
  # Watch Debug Console for notification output
  # Tweak script to your like
+ # TimeStamps display name so you know when you deployed it.
 
 
  == SVN Location ==
