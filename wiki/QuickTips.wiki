@@ -9,7 +9,7 @@
 System.out.println("MyMethod has this var: " + this.MyVar);
 }}}
 
- == Print Serialized Response ==
+ == Print RPCs Serialized Response ==
  I found this in GWT sample Dynamic Table. I love this function b/c it prints out the object that will be sent in the RPC. Put this snippet in your server side of the rpc call, MyServerImpl.java class. 
 {{{
 //stick this in your server side, MyServiceImpl.java class
