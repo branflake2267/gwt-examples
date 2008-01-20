@@ -33,7 +33,9 @@ GWT_HOME="/opt/gwt-linux"
 {{{
 echo $GWT_HOME
 }}}
-
+ === Eclispe Build Path To gwt-user.jar ===
+ This is my gwt-linux home directory location, and I use this build path for my projects.
+ * Eclipse > Right Click Project > Build Path > Libraries Tab > Add External Jar > Add /opt/gwt-linux/
 
 == GWT_EXTERNAL_BROWSER ==
 
