@@ -30,9 +30,9 @@ sudo /etc/init.d/tomcat5.5 force-reload
    * /manager - tomcat manager - deploy war by upload
 
 
-
-test servlet path - get 405
-
+ == Test Servlet ==
+ * test servlet url-pattern - you will get page 405 error, cant use get
+ * TomcatServer/webapps/YourProject/Url-Pattern
 
  == JDBC Socket Permission ==
  Fix this problem: java.security.AccessControlException access denied (java.net.SocketPermission localhost resolve)
