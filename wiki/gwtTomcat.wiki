@@ -1,7 +1,7 @@
 #summary gwt tomcat setup
 
 = Tomcat Setup =
- This is my install on Ubuntu AMD64
+ This is my install on Ubuntu Linux
 
  == Install Java ==
 {{{
