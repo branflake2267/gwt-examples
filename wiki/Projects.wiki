@@ -2,7 +2,7 @@
 
 = GWT Example Projects =
 
- == Installation Notes ==
+ == Project Import Notes ==
  * After project import, change the referenced gwt-linux/gwt-user.jar location if yours isn't /opt/gwt-linux/gwt-user.jar
  * You may have to add a mysql jdbc connector jar. 
  * Check my [gwt-examples] for more eclipse tips and info.
