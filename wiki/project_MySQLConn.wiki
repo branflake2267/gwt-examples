@@ -127,6 +127,7 @@ public void queryMyDB() {
 }}}
 
  == Update ==
+ UUID gets you a unique session id to work with. 
 {{{
 //create a unique session id to store
 UUID uID = UUID.randomUUID();
