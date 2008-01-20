@@ -2,12 +2,12 @@
 
 = Tomcat Setup =
 
- == install java ==
+ == Install Java ==
 {{{
 sudo apt-get install sun-java6-bin sun-java6-jdk sun-java6-jre sun-java6-fonts
 }}}
 
- == install tomcat5.5 ==
+ == Install Tomcat5.5 ==
 {{{
 sudo apt-get install tomcat5.5 tomcat5.5-admin tomcat5.5-webapps
 }}}
@@ -18,7 +18,7 @@ sudo apt-get install tomcat5.5 tomcat5.5-admin tomcat5.5-webapps
 <user username="branflake2267" password="password" fullName="" roles="admin,manager,role1,tomcat"/>
 }}}
 
- == restart tomcat ==
+ == Restart Tomcat ==
 {{{
 sudo /etc/init.d/tomcat5.5 force-reload
 }}}
