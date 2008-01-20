@@ -3,13 +3,13 @@
 = Quick Tips =
  Quick tips that might help you. These are things that I have learned along the way that make my job easier.
 
- == Console/Syslog Debugging ==
+== Console/Syslog Debugging ==
  Using System.out.println to print to debugger console or when running it on the server it will print to the /var/log/Syslog which is very helpful for debugging.
 {{{
 System.out.println("MyMethod has this var: " + this.MyVar);
 }}}
 
- == Print RPCs Serialized Response ==
+== Print RPCs Serialized Response ==
  I found this in GWT sample Dynamic Table. I love this function b/c it prints out the object that will be sent in the RPC. Put this snippet in your server side of the rpc call, MyServerImpl.java class. 
 {{{
 //stick this in your server side, MyServiceImpl.java class
