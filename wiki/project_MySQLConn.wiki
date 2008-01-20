@@ -5,8 +5,11 @@
  * I put it here. My Projects are configured like: /opt/gwt-linux/mysql-connector-java-5.0.8-bin.jar
  * Check your Eclipse referenced libraries for jar
  * Example Eclipse Project Source code of Mysql Conn - http://gwt-examples.googlecode.com/svn/trunk/gwt-test-MySQLConn/src/com/tribling/gwt/test/mysqlconn/server/
+ == Links ==
+ * JDBC Connector - http://www.mysql.com/products/connector/j/
+ * Example MySQL Database, The King James Bible [http://sourceforge.net/project/showfiles.php?group_id=186532&package_id=249676&release_id=548680 Download Bible Database Here] (It comes as a MySQL Dump)
 
- == Tomcat Setup ==
+= Tomcat Setup =
  Fix this problem: java.security.AccessControlException access denied (java.net.SocketPermission localhost resolve)
  You will need to change Tomcat configuration.
 {{{
@@ -17,9 +20,6 @@ grant codeBase "file:${catalina.home}/webapps/-" {
 };
 }}} 
 
- == Links ==
- * JDBC Connector - http://www.mysql.com/products/connector/j/
- * Example MySQL Database, The King James Bible [http://sourceforge.net/project/showfiles.php?group_id=186532&package_id=249676&release_id=548680 Download Bible Database Here] (It comes as a MySQL Dump)
 
 = Code Snippets =
 
