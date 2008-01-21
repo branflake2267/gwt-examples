@@ -37,8 +37,8 @@ public abstract class DB_Conn {
 	    
 	    String db 		= "hostdb";
 	    String driver 	= "com.mysql.jdbc.Driver";
-	    String user 	= "Branflake2267";
-	    String pass 	= "83kg923m**89";
+	    String user 	= "test";
+	    String pass 	= "password*7";
 	    
 	    String url 		= "jdbc:mysql://192.168.12.81:3306/hostdb?user=Branflake2267&password=83kg923m**89";
 		
