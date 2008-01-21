@@ -100,11 +100,11 @@ public class TomcatWarBuilder {
 		
 		
 		// project directory
-		ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
+		//ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-DisplayDate";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Clicklistener";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RPC-adv";
-		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Login-Manager";
+		ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Login-Manager";
 		
 		//Compile project??????
 		//do this with eclipse debugger button
