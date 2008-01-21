@@ -15,7 +15,7 @@ sudo apt-get install tomcat5.5 tomcat5.5-admin tomcat5.5-webapps
 
  == Add Your User Name To Tomcat Config ==
 {{{
-#In /etc/tomcat5.5/tomcat-users.xml
+//In /etc/tomcat5.5/tomcat-users.xml
 <user username="branflake2267" password="password" fullName="" roles="admin,manager,role1,tomcat"/>
 }}}
 
