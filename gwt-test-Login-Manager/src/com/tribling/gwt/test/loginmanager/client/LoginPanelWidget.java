@@ -7,6 +7,8 @@ import java.util.Date;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException;
+import com.google.gwt.user.client.rpc.InvocationException;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ChangeListenerCollection;
@@ -261,11 +263,28 @@ public class LoginPanelWidget extends Composite implements ClickListener {
 		AsyncCallback callback = new AsyncCallback() {
 			
 			//ajax rpc fail
-			public void onFailure(Throwable ex) {
+			public void onFailure(Throwable caught) {
 				//change something in widgets panel noting failure of rpc
 				pDisplayError.clear();
 				pDisplayError.add(new Label("Ajax/RPC Connection Error"));
-				RootPanel.get().add(new HTML(ex.toString()));
+				RootPanel.get().add(new HTML("lpw caught: " + caught.toString()));
+			     try {
+				       throw caught;
+				     } catch (IncompatibleRemoteServiceException e) {
+				        // this client is not compatible with the server; cleanup and refresh the 
+				        // browser
+				    	RootPanel.get().add(new HTML("1RPC ERROR: " + e.toString()));
+						System.out.println("1RPC ERROR: " + e.toString());
+				     } catch (InvocationException e) {
+				    	 // the call didn't complete cleanly
+					     RootPanel.get().add(new HTML("2RPC ERROR: " + e.toString()));
+						 System.out.println("2RPC ERROR: " + e.toString());
+				     } catch (Throwable e) {
+				    	 // last resort -- a very unexpected exception
+				    	 RootPanel.get().add(new HTML("3RPC ERROR: " + e.toString()));
+				    	 System.out.println("3RPC ERROR: " + e.toString());
+				     }
+			
 			}
 
 			//ajax rpc success

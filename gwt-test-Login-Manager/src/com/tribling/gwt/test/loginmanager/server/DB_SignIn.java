@@ -65,10 +65,10 @@ public class DB_SignIn extends DB_Conn {
 			if (this.dbPassword_Hash == null) {
 				System.out.println("No Password_Hash exists in db. Returning");
 				
-				SignInStatus ls = new SignInStatus();
-				ls.setDisplayError(this.DisplayError);
+				SignInStatus sis = new SignInStatus();
+				sis.setDisplayError(this.DisplayError);
 				
-				return ls;
+				return sis;
 			}
 			
 			

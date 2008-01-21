@@ -11,14 +11,14 @@ public interface LoginManagerServiceAsync {
 	 * @param Password
 	 * @param callback
 	 */
-	public void processSignIn(String UserName, String Password, AsyncCallback callback);
+	public void processSignIn(String UserName, String Password, AsyncCallback callback_processSignIn);
 	
 	/**
 	 * check if the session is still legal to use
 	 * @param SessionID
 	 * @param callback
 	 */
-	public void checkSessionIsStillLegal(String SessionID, AsyncCallback callback);
+	public void checkSessionIsStillLegal(String SessionID, AsyncCallback callback_checkSessionIsStillLegal);
 	
 	
 }

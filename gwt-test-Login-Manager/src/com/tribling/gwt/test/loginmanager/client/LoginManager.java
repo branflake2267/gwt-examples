@@ -19,15 +19,11 @@ public class LoginManager implements EntryPoint {
 	public void onModuleLoad() {
 
 		//debugging
-		RootPanel.get().add(new Label("My URL-Path: /GoneVerticalService"));
-
-		RootPanel.get().add(new Label("GWT getModuleBaseURL: " + GWT.getModuleBaseURL()));
-
-		RootPanel.get().add(new Label("GWT getHostPageBaseURL: " + GWT.getHostPageBaseURL()));
-
-		RootPanel.get().add(new Label("GWT getModuleBaseURL: " + GWT.getModuleBaseURL()));
-		
-		RootPanel.get().add(new Label("GWT getModuleName: " + GWT.getModuleName()));
+		//RootPanel.get().add(new Label("My URL-Path: /GoneVerticalService"));
+		//RootPanel.get().add(new Label("GWT getModuleBaseURL: " + GWT.getModuleBaseURL()));
+		//RootPanel.get().add(new Label("GWT getHostPageBaseURL: " + GWT.getHostPageBaseURL()));
+		//RootPanel.get().add(new Label("GWT getModuleBaseURL: " + GWT.getModuleBaseURL()));
+		//RootPanel.get().add(new Label("GWT getModuleName: " + GWT.getModuleName()));
 
 		//check session cookie first
 		final SessionManagerWidget sm = new SessionManagerWidget();

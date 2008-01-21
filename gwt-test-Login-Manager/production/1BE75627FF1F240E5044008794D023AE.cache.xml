@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cache-entry>
+	<generated-type-hash class="com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException_FieldSerializer" hash="FF198044879E67E1ACF2E0C29CC58CB5"/>
+	<generated-type-hash class="com.tribling.gwt.test.loginmanager.client.SignInStatus_FieldSerializer" hash="4B11AD7897A8EBA4B953C3434FC930C5"/>
+	<generated-type-hash class="com.tribling.gwt.test.loginmanager.client.LoginManagerService_TypeSerializer" hash="F0D57CAFBEE4331C9175DA7368028663"/>
+	<generated-type-hash class="com.tribling.gwt.test.loginmanager.client.LoginManagerService_Proxy" hash="F7E105451AEA42B5B89E411E3F25B3C3"/>
+	<rebind-decision in="com.tribling.gwt.test.loginmanager.client.LoginManagerService" out="com.tribling.gwt.test.loginmanager.client.LoginManagerService_Proxy"/>
+	<rebind-decision in="com.google.gwt.user.client.ui.impl.TextBoxImpl" out="com.google.gwt.user.client.ui.impl.TextBoxImpl"/>
+	<rebind-decision in="com.google.gwt.user.client.impl.HTTPRequestImpl" out="com.google.gwt.user.client.impl.HTTPRequestImpl"/>
+	<rebind-decision in="com.google.gwt.user.client.impl.DOMImpl" out="com.google.gwt.user.client.impl.DOMImplMozilla"/>
+	<rebind-decision in="com.google.gwt.user.client.impl.HistoryImpl" out="com.google.gwt.user.client.impl.HistoryImplMozilla"/>
+	<rebind-decision in="com.google.gwt.user.client.ui.ListBox.Impl" out="com.google.gwt.user.client.ui.ListBox.Impl"/>
+	<rebind-decision in="com.google.gwt.user.client.ui.impl.FormPanelImpl" out="com.google.gwt.user.client.ui.impl.FormPanelImpl"/>
+	<rebind-decision in="com.google.gwt.user.client.ui.impl.ClippedImageImpl" out="com.google.gwt.user.client.ui.impl.ClippedImageImpl"/>
+	<rebind-decision in="com.tribling.gwt.test.loginmanager.client.LoginManager" out="com.tribling.gwt.test.loginmanager.client.LoginManager"/>
+	<rebind-decision in="com.google.gwt.user.client.ui.impl.FocusImpl" out="com.google.gwt.user.client.ui.impl.FocusImpl"/>
+	<rebind-decision in="com.google.gwt.user.client.ui.impl.PopupImpl" out="com.google.gwt.user.client.ui.impl.PopupImplMozilla"/>
+</cache-entry>
