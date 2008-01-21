@@ -2,7 +2,7 @@
 
 = My Ideas For Google Code =
 
- * Add Adsense, like blogspot add element adsense
+ * Add Adsense, like blogspot add element adsense - win win deal for owner/moderator and Google!
  * Add tab for Google Groups for this project
  * Add tab for Google Forums for this project
  * Fix the ? marks that show up when the parser doesn't recognize something.
