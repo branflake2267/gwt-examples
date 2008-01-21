@@ -13,7 +13,7 @@
  # TimeStamps display name so you know when you deployed it.
 
  == Tomcat Setup == 
- [gwtTomcat] = how to setup tomcat up.
+ [gwtTomcat] - how to setup tomcat up.
 
  == SVN Location ==
  Download the latest version from SVN. I fix things now and then, and might forget to update it here.
