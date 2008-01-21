@@ -40,7 +40,7 @@ public abstract class DB_Conn {
 	    String user 	= "test";
 	    String pass 	= "password*7";
 	    
-	    String url 		= "jdbc:mysql://192.168.12.81:3306/hostdb?user=Branflake2267&password=83kg923m**89";
+	    String url 		= "jdbc:mysql://192.168.12.81:3306/hostdb?user=Branflake2267&password=";
 		
         try {
                 Class.forName(driver).newInstance();
