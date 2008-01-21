@@ -39,8 +39,8 @@ sudo /etc/init.d/tomcat5.5 force-reload
  Fix this problem: java.security.AccessControlException access denied (java.net.SocketPermission localhost resolve)
  You will need to change Tomcat configuration.
 {{{
-#On my debian/ubuntu tomcat config
-#add to /etc/tomcat5.5/policy.d/04webapps.policy
+//On my debian/ubuntu tomcat config
+//add to /etc/tomcat5.5/policy.d/04webapps.policy
 grant codeBase "file:${catalina.home}/webapps/-" {
       permission java.net.SocketPermission "192.168.12.81:3306", "connect";
 };
