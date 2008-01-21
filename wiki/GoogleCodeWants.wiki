@@ -1,0 +1,10 @@
+#summary Google Code Wants
+
+= My Ideas For Google Code =
+
+ * Add Adsense, like blogspot add element adsense
+ * Add tab for Google Groups for this project
+ * Add tab for Google Forums for this project
+ * Fix the ? marks that show up when the parser doesn't recognize something.
+ * Edit Pages in blocks like wikipedia.
+ * Blow up window for editing in a bigger window, for bigger resolutions
