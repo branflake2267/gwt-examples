@@ -33,28 +33,36 @@ public abstract class DB_Conn {
 	 */
 	protected Connection getConn() {
 	
-		    Connection conn	= null;
-		    String url 		= "jdbc:mysql://192.168.12.81:3306/";
-		    String db 		= "hostdb";
-		    String driver 	= "com.mysql.jdbc.Driver";
-		    String user 	= "";
-		    String pass 	= "";
-		    
-		    try {
-		      
-		    	Class.forName(driver).newInstance();
-		    	conn = DriverManager.getConnection(url+db, user, pass);
-		      
-		    } catch (Exception e) {
-		    	
-		    	//error
-		    	System.err.println("Mysql Connection Error: ");
-		    	//e.printStackTrace();
-		    }
+	    Connection conn	= null;
+	    
+	    String db 		= "hostdb";
+	    String driver 	= "com.mysql.jdbc.Driver";
+	    String user 	= "Branflake2267";
+	    String pass 	= "83kg923m**89";
+	    
+	    String url 		= "jdbc:mysql://192.168.12.81:3306/hostdb?user=Branflake2267&password=83kg923m**89";
 		
-		    return conn;
+        try {
+                Class.forName(driver).newInstance();
+        } catch (InstantiationException e) {
+                e.printStackTrace();
+        } catch (IllegalAccessException e) {
+                e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+        }
+        try {
+        		
+        		conn = DriverManager.getConnection(url);
+        } catch (SQLException e) {
+        		System.err.println("Mysql Connection Error: ");
+                e.printStackTrace();
+        }
+		return conn;
 	}
 	
+
+
 	
 	/**
 	 * db conn2 - for my Bible DB

@@ -16,11 +16,18 @@ public class LoginManagerServiceImpl extends RemoteServiceServlet implements Log
 	 * @return
 	 */
 	public SignInStatus processSignIn(String UserName, String Password) {
+		SignInStatus sis;
 		
-		DB_SignIn db = new DB_SignIn();
-		SignInStatus sis = db.processSignIn(UserName, Password);
-		
-		return sis;
+		try {
+			DB_SignIn db = new DB_SignIn();
+			sis = db.processSignIn(UserName, Password);
+			return sis;
+		 } catch(Exception e) {
+			 System.out.println("SignInStatus processSignIn Error: ");
+			 e.printStackTrace();
+		 }
+		 
+		 return null;
 	}
 	
 	/**
@@ -29,11 +36,18 @@ public class LoginManagerServiceImpl extends RemoteServiceServlet implements Log
 	 * @return
 	 */
 	public SignInStatus checkSessionIsStillLegal(String SessionID) {
+		SignInStatus sis;
 		
-		DB_SignIn db = new DB_SignIn();
-		SignInStatus sis = db.checkSessionIsStillLegal(SessionID);
+		try {
+			DB_SignIn db = new DB_SignIn();
+			sis = db.checkSessionIsStillLegal(SessionID);
+			return sis;
+		 } catch(Exception e) {
+			 System.out.println("SignInStatus checkSessionIsStillLegal Error: ");
+			 e.printStackTrace();
+		 }
 		
-		return sis;
+		return null;
 	}
 	
 
