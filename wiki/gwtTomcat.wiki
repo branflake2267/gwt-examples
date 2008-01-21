@@ -59,5 +59,5 @@ grant codeBase "file:${catalina.home}/webapps/-" {
 };
 
 //reload your tomcat config 
-sudo /etc/init.d/tomcat5.5 force-reload
+//sudo /etc/init.d/tomcat5.5 force-reload
 }}}
