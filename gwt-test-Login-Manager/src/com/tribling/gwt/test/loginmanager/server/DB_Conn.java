@@ -39,11 +39,11 @@ public abstract class DB_Conn {
 	    String driver 	= "com.mysql.jdbc.Driver";
 	    String user 	= "test";
 	    String pass 	= "password*7";
-	    
-	    String url 		= "jdbc:mysql://192.168.12.81:3306/hostdb?user=Branflake2267&password=";
+	    //server here
+	    String url 		= "jdbc:mysql://192.168.12.81:3306";
 		
         try {
-                Class.forName(driver).newInstance();
+                Class.forName(driver).newInstance(); 
         } catch (InstantiationException e) {
                 e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -52,8 +52,7 @@ public abstract class DB_Conn {
                 e.printStackTrace();
         }
         try {
-        		
-        		conn = DriverManager.getConnection(url);
+        		conn = DriverManager.getConnection(url+db, user, pass);
         } catch (SQLException e) {
         		System.err.println("Mysql Connection Error: ");
                 e.printStackTrace();
