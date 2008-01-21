@@ -52,8 +52,7 @@ grant codeBase "file:${catalina.home}/webapps/-" {
  == RPC Failure ==
  If you get a rpc failure it might be this. I found it by using firefox tamper data, finding the page request died at 500 internal server error. This guy narrowed it down [http://rdews.com/?cat=20]. It has to do with security of the serialization. This will fix it if you add it to your tomcat configuration. 
 {{{
-// adding this to my webapps - seems that the java.lang.reflect serialization isn't 
-happening, so I try this
+// adding this to my webapps - seems that the java.lang.reflect serialization isn't happening, so I try this
 //add to /etc/tomcat5.5/policy.d/04webapps.policy
 grant codeBase "file:${catalina.home}/webapps/-" {
   permission java.security.AllPermission;
