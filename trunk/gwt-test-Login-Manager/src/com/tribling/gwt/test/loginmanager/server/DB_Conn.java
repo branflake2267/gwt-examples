@@ -80,17 +80,20 @@ public abstract class DB_Conn {
 		    String driver 	= "com.mysql.jdbc.Driver";
 		    String user 	= "Replace Me";
 		    String pass 	= "Replace Me";
-		    
+	        try {
+                Class.forName(driver).newInstance(); 
+	        } catch (InstantiationException e) {
+	                e.printStackTrace();
+	        } catch (IllegalAccessException e) {
+	                e.printStackTrace();
+	        } catch (ClassNotFoundException e) {
+	                e.printStackTrace();
+	        }
 		    try {
-		      
-		    	Class.forName(driver).newInstance();
 		    	conn = DriverManager.getConnection(url+db, user, pass);
-		      
 		    } catch (Exception e) {
-		    	
-		    	//error
 		    	System.err.println("Mysql Connection Error: ");
-		    	//e.printStackTrace();
+		    	e.printStackTrace();
 		    }
 		
 		    return conn;
