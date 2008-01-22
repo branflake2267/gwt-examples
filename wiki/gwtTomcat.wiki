@@ -51,7 +51,7 @@ grant codeBase "file:${catalina.home}/webapps/-" {
 //sudo /etc/init.d/tomcat5.5 force-reload
 }}}
 
- == RPC Failure ==
+ == RPC Failure 500 ==
  If you get a rpc failure on a production server and it works in the debugger, it might be this. I found it by using firefox tamper data, finding the page request died at 500 internal server error. This guy narrowed it down [http://rdews.com/?cat=20]. It has to do with security of the serialization. This will fix it if you add it to your tomcat configuration. 
 {{{
 //add to /etc/tomcat5.5/policy.d/04webapps.policy
