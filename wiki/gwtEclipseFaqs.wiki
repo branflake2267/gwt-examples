@@ -119,11 +119,12 @@ exec /usr/lib/eclipse/eclipse \
             -Dosgi.locking=none ${VMARGS} \
             -XX:PermSize=1024M -XX:MaxPermSize=1024M
 #ADD -> -XX:PermSize=1024M -XX:MaxPermSize=1024M
+#this is the one I use on my ubuntu amd64, force quit to see if it loaded
 }}}
 
 Or
 
-Change the eclipse parameters from command line. This a good way to trace a class note loading correctly.
+Change the eclipse parameters from command line. This a good way to trace a class not loading correctly.
 {{{
 #command line
 eclipse -XX:PermSize=128m -XX:MaxPermSize=512m
