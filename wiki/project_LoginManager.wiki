@@ -4,20 +4,21 @@
  I setup this example to test login manager, to control User access by Username and Password and SessionID. There are many ways you can do this. I followed Google's incubator. You can import my eclipse project or get it via svn. Hope it helps.
 
  I wanted to not this project is still a bit rough on the edges. :)
-
+ 
  == Eclipse Referenced Libraries ==
  Remember to add JDBC to the build path. Remember to add gwt-user.jar to the build path.
  More info here [gwtEclipseFaqs]
 
  == Notes ==
- Google Login Manager Incubator [http://code.google.com/p/google-web-toolkit-incubator/wiki/LoginSecurityFAQ]
+ Google Login Manager Incubator  [http://code.google.com/p/google-web-toolkit-incubator/wiki/LoginSecurityFAQ]
 
  SVN Repository Link [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-Login-Manager/ gwt-test-Login-Manager]
 
-== Next Version Goal ==
- Jan 22 - I am making more changes to the code. I will post a more complete version in the next couple of days. I am checking the code on a production server. I am modularizing a of the internal components, and will be adding more style to it. Check back shortly for new stuff. I will also post a demo online in the future.
+ == Next Version Goal ==
+ Jan 22 - I am making more changes to the code. I will post a more complete version in the next couple of days. I am checking the code on a production server. I am modularizing a few of the internal methods, and will be adding more style to it. Added a little more error checking. Check back shortly for new stuff. I will also post a demo of it online in the future.
  
-== MySQL Setup ==
+ == MySQL Setup ==
+ I post the scripts for both the user and session tables. I changing namespace a bit to make it easier on the  project.
 
 Session Table - this is how I set it up.
 {{{
