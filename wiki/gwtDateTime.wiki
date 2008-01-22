@@ -4,7 +4,7 @@
  * get unix time stamp
  * get year, month, day, date, today, current date, timezone offset from gmt, hours, minutes, seconds, milliseconds
  * convert from unix time stamp to java time stamp
- * get the start of day unix time stamp (0:00:00)(12:00:00am)
+ * get the start of day unix time stamp (0:00:00) (12:00:00am)
  * get the end of day unix time stamp (23:59:59) (11:59:59pm)
 
 == Eclipse Project ==
