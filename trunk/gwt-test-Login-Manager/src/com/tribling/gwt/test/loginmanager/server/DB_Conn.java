@@ -39,8 +39,7 @@ public abstract class DB_Conn {
 	    String driver 	= "com.mysql.jdbc.Driver";
 	    String user 	= "test";
 	    String pass 	= "password*7";
-	    //server here
-	    String url 		= "jdbc:mysql://192.168.12.81:3306";
+	    String url 		= "jdbc:mysql://192.168.12.81:3306/";
 		
         try {
                 Class.forName(driver).newInstance(); 
@@ -54,7 +53,7 @@ public abstract class DB_Conn {
         try {
         		conn = DriverManager.getConnection(url+db, user, pass);
         } catch (SQLException e) {
-        		System.err.println("Mysql Connection Error: ");
+        		System.err.println("Mysql Connection Error:");
                 e.printStackTrace();
         }
 		return conn;

@@ -4,8 +4,8 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class SignInStatus implements IsSerializable{
 
-	private String SessionID;
-	private String DisplayError;
+	public String SessionID;
+	public String DisplayError;
 	
 	public SignInStatus() {
 	}
