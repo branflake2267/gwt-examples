@@ -5,9 +5,8 @@
 
  I wanted to not this project is still a bit rough on the edges. :)
  
- == Eclipse Referenced Libraries ==
- Remember to add JDBC to the build path. Remember to add gwt-user.jar to the build path.
- More info here [gwtEclipseFaqs]
+ == JDBC ==
+ Remember to add JDBC to the build path. More info here [gwtEclipseFaqs]
 
  == Notes ==
  Google Login Manager Incubator  [http://code.google.com/p/google-web-toolkit-incubator/wiki/LoginSecurityFAQ]
