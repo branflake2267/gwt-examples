@@ -21,7 +21,7 @@
  [http://gwt-examples.googlecode.com/svn/trunk/gwt-TomcatWarBuilder/src/com/tribling/gwt/test/TomcatWarBuilder/TomcatProductionBuilder.java SVN Project Source]
 
  == Windows OS ==
- This should work fine on windows if you change the forward slashes to back slashes.
+ This should work fine on windows if you change the path forward slashes to back slashes.
 
  == Example War Created ==
  [http://code.google.com/p/gwt-examples/downloads/list Downloads] - War file created from the RPC Advanced Eclipse project
