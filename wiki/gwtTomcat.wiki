@@ -34,7 +34,7 @@ sudo /etc/init.d/tomcat5.5 force-reload
  == Test Servlet ==
  To test your url-pattern in your servlet to see if you have the correct path context. 
  * Goto http://localhost:8180/YourProject/Url-Pattern
- * If you get 405 Error, you got it correct. (You will get page 405 error, cant use get)
+ * If you get Page 405 error, you got url-pattern correct. (page 405 error, cant use Get)
  
 
  == JDBC Socket Permission ==
