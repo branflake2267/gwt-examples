@@ -62,8 +62,8 @@ grant codeBase "file:${catalina.home}/webapps/-" {
 //sudo /etc/init.d/tomcat5.5 force-reload
 }}}
 
-OR
-Make sure all variables in the object you are going to pass are Public. Like so:
+ * OR
+ Make sure all variables in the object you are going to pass are Public. Like so:
 {{{
 package com.tribling.gwt.test.loginmanager.client;
 import com.google.gwt.user.client.rpc.IsSerializable;
