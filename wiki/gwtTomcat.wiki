@@ -61,3 +61,36 @@ grant codeBase "file:${catalina.home}/webapps/-" {
 //reload your tomcat config 
 //sudo /etc/init.d/tomcat5.5 force-reload
 }}}
+
+OR
+Make sure all variables in the object you are going to pass are Public. Like so:
+{{{
+package com.tribling.gwt.test.loginmanager.client;
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class SignInStatus implements IsSerializable{
+        //NOT private String SessionID;
+        //NOT private String DisplayError;
+	public String SessionID;
+	public String DisplayError;
+	
+	public SignInStatus() {
+	}
+	
+	public void setSessionID(String SessionID) {
+		this.SessionID = SessionID;
+	}
+	
+	public void setDisplayError(String DisplayError) {
+		this.DisplayError = DisplayError;
+	}
+	
+	public String getSessionID() {
+		return this.SessionID;
+	}
+	
+	public String getDisplayError() {
+		return this.DisplayError;
+	}
+
+}
