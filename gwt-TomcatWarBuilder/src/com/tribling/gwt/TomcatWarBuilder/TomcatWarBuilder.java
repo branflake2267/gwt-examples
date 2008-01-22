@@ -106,6 +106,7 @@ public class TomcatWarBuilder {
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RPC-adv";
 		ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Login-Manager";
 		
+		
 		//Compile project??????
 		//do this with eclipse debugger button
 		
