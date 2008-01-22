@@ -9,3 +9,4 @@
  * Edit Pages in blocks like wikipedia.
  * Blow up wiki editor window (overlay), nice for bigger resolutions
  * Seperate the HomePage Summary and other blog settings elements to a another tab. Its annoying to not be able to preview hompage/summary before save. Make it show up in the wiki list. Making the homepage/firstpage easier to edit. Maybe allow which wiki page is the first page to show?
+ * Demo area (tab) would be really cool, where I could show off the demo
