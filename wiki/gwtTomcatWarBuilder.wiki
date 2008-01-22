@@ -6,6 +6,7 @@
  * Time Stamps display name so you know when you deployed it.
  * Compiles your project into a ~/production folder
  * Imports your dependency jars into the ~/production/WEB-INF/libs folder
+ * Imports Your dependency classes into the ~/production/WEB-INF/classes folder
  * Creates a home page for easy navigation
  * This script makes it easy to quickly deploy newly compiled gwt code
 
