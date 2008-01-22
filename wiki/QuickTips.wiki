@@ -27,8 +27,8 @@ protected void onAfterResponseSerialized(String serializedResponse) {
  Show an external image on your page.
 {{{
 //stick the image in the ~/www folder
-HorizontalPanel loading = new HorizontalPanel();
+HorizontalPanel pLoading = new HorizontalPanel();
 String sImage = GWT.getModuleBaseURL() + "loading2.gif";
 Image image = new Image(sImage);
-pLoadingStatus.add(image);
+pLoading.add(image);
 }}}
