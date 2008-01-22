@@ -32,8 +32,10 @@ sudo /etc/init.d/tomcat5.5 force-reload
 
 
  == Test Servlet ==
- * test servlet url-pattern - you will get page 405 error, cant use get
- * TomcatServer/webapps/YourProject/Url-Pattern
+ To test your url-pattern in your servlet to see if you have the correct path context. 
+ * Goto http://localhost:8180/YourProject/Url-Pattern
+ * You will get page 405 error, cant use get
+ 
 
  == JDBC Socket Permission ==
  Fix this problem: java.security.AccessControlException access denied (java.net.SocketPermission localhost resolve)
