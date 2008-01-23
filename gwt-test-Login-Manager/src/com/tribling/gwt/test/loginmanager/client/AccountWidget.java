@@ -106,6 +106,8 @@ public class AccountWidget extends Composite implements ClickListener{
 			NewAccountPanel.add(TitleEdit);
 		}
 		
+		//This cause me major problems, b/c I forgot to call this ....
+		LoginManagerProvider();
 		
 		NewAccountPanel.add(pDisplayError);
 		NewAccountPanel.add(hpFN);
@@ -197,7 +199,7 @@ public class AccountWidget extends Composite implements ClickListener{
 
 		
 		//init rpc request - send the data
-		SaveAccount();
+		saveAccount(account);
 	}
 	
 
@@ -216,9 +218,9 @@ public class AccountWidget extends Composite implements ClickListener{
 			
 			Window.alert("debug: fire change");
 			
-			//if (changeListeners != null) {
-				//changeListeners.fireChange(this);
-			//}
+			if (changeListeners != null) {
+				changeListeners.fireChange(this);
+			}
 		}
 		
 		
@@ -276,7 +278,7 @@ public class AccountWidget extends Composite implements ClickListener{
 	 * @param listener
 	 */
 	
-	/*
+	
 	public void addChangeListener(ChangeListener listener) {
 		if (changeListeners == null)
 			changeListeners = new ChangeListenerCollection();
@@ -287,7 +289,7 @@ public class AccountWidget extends Composite implements ClickListener{
 		if (changeListeners != null)
 			changeListeners.remove(listener);
 	}
-	*/
+	
 	
 	
 	
@@ -309,32 +311,29 @@ public class AccountWidget extends Composite implements ClickListener{
 	 * Process the sign in
 	 * 
 	 */
-    public void SaveAccount() {
-    	//this.drawLoading();
+    public void saveAccount(Account account) {
+    	this.drawLoading();
     	
 		// service returns a result
-		AsyncCallback callback_SaveAccount = new AsyncCallback() {
+		AsyncCallback callback = new AsyncCallback() {
 			
 			//ajax rpc fail
 			public void onFailure(Throwable caught) {
+				
+				// TODO - add something here
+				
 			}
 
 			//ajax rpc success
 			public void onSuccess(Object result) {
-				//Account account = (Account) result; //cast the result into the object to use
-				//processCallBack(account);
-				//clearLoading();
+				Account account = (Account) result; //cast the result into the object to use
+				processCallBack(account);
+				clearLoading();
 			}
 		};
 
 		// execute the service and request for rpc method
-		try {
-			Account account = new Account();
-			callProvider.saveAccount(account, callback_SaveAccount);
-		} catch (RuntimeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		callProvider.saveAccount(account, callback);
     }
 
     
@@ -342,7 +341,6 @@ public class AccountWidget extends Composite implements ClickListener{
 		if (this.SessionID != null)	{
 			return true;
 		}
-		
 		return false;
 	}
     

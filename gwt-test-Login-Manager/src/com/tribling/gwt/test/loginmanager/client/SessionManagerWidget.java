@@ -275,7 +275,6 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 		this.clearLoginPanel();
 		
 		final AccountWidget Account = new AccountWidget(SessionID);
-		/*
 		Account.addChangeListener(new ChangeListener() {
 			public void onChange(Widget sender) {
 				boolean LoginStatus = Account.getLoginStatus();
@@ -286,7 +285,7 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 				}
 			}
 		});
-		*/
+		
 		
 		RootPanel.get().add(Account);
 		

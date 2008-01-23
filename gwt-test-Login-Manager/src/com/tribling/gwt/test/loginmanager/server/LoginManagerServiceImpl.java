@@ -57,12 +57,12 @@ public class LoginManagerServiceImpl extends RemoteServiceServlet implements Log
 	 * @return
 	 */
 	public Account saveAccount(Account account) {
-		/*
+		
 		System.out.println("Processing Account:");
 		
 		DB_Account dba = new DB_Account();
-		account = dba.SaveAccount(account);
-		*/
+		account = dba.saveAccount(account);
+		
 		return account;
 	}
 	

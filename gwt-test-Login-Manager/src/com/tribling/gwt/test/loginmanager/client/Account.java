@@ -5,19 +5,19 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 public class Account implements IsSerializable {
 
 	//use this to tell the server what the clients time is
-	private int TimeStamp;
+	public int TimeStamp;
 	
 	//use this once the account is created
-	private String SessionID;
+	public String SessionID;
 
 	//use this to send back any errors
-	private String DisplayError;
+	public String DisplayError;
 	
 	//user account info
-	private String FirstName;
-	private String LastName;
-	private String UserName;
-	private String Password;
+	public String FirstName;
+	public String LastName;
+	public String UserName;
+	public String Password;
 	
 	/** 
 	 * constructor

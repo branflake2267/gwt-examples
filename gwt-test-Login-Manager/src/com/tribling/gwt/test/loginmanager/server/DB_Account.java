@@ -20,7 +20,7 @@ public class DB_Account extends DB_Conn {
 	 * @param account
 	 * @return
 	 */
-	public Account SaveAccount(Account account) {
+	public Account saveAccount(Account account) {
 		
 		System.out.println("Saving Account Logic Running");
 		
