@@ -23,6 +23,10 @@
 .Session-Button-Logout {
 }
 
+/* account */
+.account-Fields {
+	width: 75px;
+}
 
 
 body {

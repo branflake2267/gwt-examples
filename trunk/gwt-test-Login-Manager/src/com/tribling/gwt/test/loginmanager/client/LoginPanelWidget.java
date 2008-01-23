@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.PushButton;
@@ -41,6 +42,7 @@ public class LoginPanelWidget extends Composite implements ClickListener {
 	private PasswordTextBox Password = new PasswordTextBox();
 	private CheckBox cbRememberMe = new CheckBox("Remember Me");
 	private PushButton bSignIn = new PushButton("Sign In");
+	private HorizontalPanel pLoadingStatus = new HorizontalPanel();
 
 	private String SessionID = null;
 	private boolean LoginStatus = false;
@@ -69,6 +71,7 @@ public class LoginPanelWidget extends Composite implements ClickListener {
 		HorizontalPanel pSignIn = new HorizontalPanel();
 		pSignIn.setStyleName("LoginPanelWidget-Button-Panel");
 		pSignIn.add(bSignIn);
+		pSignIn.add(pLoadingStatus);
 		
 		//username panel
 		HorizontalPanel pUser = new HorizontalPanel();
@@ -118,12 +121,16 @@ public class LoginPanelWidget extends Composite implements ClickListener {
 	 * clear widget panel when logged in
 	 */
 	public void clearWidgetPanel() {
-		WidgetPanel.clear();
+		
+		//do this in the session manager
+		//WidgetPanel.clear();
 	}
 
 	
 	public void processCallBack(SignInStatus sis) {
-				
+		
+		this.clearLoading();
+		
 		//vars from rpc
 		setSessionID(sis.getSessionID());
 		String sDisplayError = sis.getDisplayError();
@@ -198,6 +205,16 @@ public class LoginPanelWidget extends Composite implements ClickListener {
 		return this.LoginStatus;
 	}
 	
+	public void drawLoading() {
+		String sImage = GWT.getModuleBaseURL() + "loading2.gif";
+	    Image image = new Image(sImage);
+	    pLoadingStatus.setTitle("Checking your user account.");
+		pLoadingStatus.add(image);
+	}
+	
+	public void clearLoading() {
+		pLoadingStatus.clear();
+	}
 
 	
 	/**
@@ -207,6 +224,7 @@ public class LoginPanelWidget extends Composite implements ClickListener {
 
 		//process the sign in
 		if (sender == bSignIn) {
+			this.drawLoading();
 			this.processSignIn();
 		}
 		
@@ -258,10 +276,8 @@ public class LoginPanelWidget extends Composite implements ClickListener {
 	 * 
 	 */
     public void processSignIn() {
-    	
 		// service returns a result
 		AsyncCallback callback = new AsyncCallback() {
-			
 			//ajax rpc fail
 			public void onFailure(Throwable caught) {
 				//change something in widgets panel noting failure of rpc
