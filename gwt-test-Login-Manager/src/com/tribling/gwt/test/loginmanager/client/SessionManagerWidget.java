@@ -80,8 +80,7 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 		initWidget(pLoginStatusPanel);
 		
 		
-		//draw loading
-		this.drawLoading();
+
 		
 		//draw the default Sign in button to start with
 		this.drawSignInButton();
@@ -142,9 +141,7 @@ public class SessionManagerWidget extends Composite implements ClickListener {
      * @param SessionID
      */
     public void processSignIn(String SessionID, boolean bolFromCookie) {
-    	
-    	this.clearLoading();
-    	
+
     	//set the session id for using in other  methods
     	this.setSessionID(SessionID);
     	
@@ -273,10 +270,26 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 	
 
 	public void drawAccount() {
+		
+		//this doesn't work if it happens before rpc call back - need to set a var so rpc comes back it wont load
 		this.clearLoginPanel();
 		
-		AccountWidget Account = new AccountWidget();
+		final AccountWidget Account = new AccountWidget(SessionID);
+		/*
+		Account.addChangeListener(new ChangeListener() {
+			public void onChange(Widget sender) {
+				boolean LoginStatus = Account.getLoginStatus();
+				String SessionID = Account.getSessionID();
+				
+				if (SessionID != null) {
+					processSignIn(SessionID, false);
+				}
+			}
+		});
+		*/
+		
 		RootPanel.get().add(Account);
+		
 	}
 	
     
@@ -345,6 +358,10 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 	 * check if the current session id is still legal
 	 */
     public void checkSessionIsStillLegal(String SessionID) {
+    	
+		//draw loading
+		this.drawLoading();
+    	
 		// service returns a result
 		AsyncCallback callback = new AsyncCallback() {
 			//ajax rpc fail
@@ -373,6 +390,9 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 			public void onSuccess(Object result) {
 				SignInStatus sis = (SignInStatus) result; //cast the result into the object to use
 				processSignIn(sis.getSessionID(), true); //process the SessionID
+				
+				//clear loading icon
+				clearLoading();
 			}
 		};
 		// execute the service and request for rpc method

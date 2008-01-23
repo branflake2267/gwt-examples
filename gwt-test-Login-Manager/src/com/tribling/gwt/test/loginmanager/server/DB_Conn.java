@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * create a db_conn - this is just an example of one way to do this.
@@ -31,7 +32,7 @@ public abstract class DB_Conn {
 	 * 
 	 * @return Connection
 	 */
-	protected Connection getConn() {
+	protected static Connection getConn() {
 	
 	    Connection conn	= null;
 	    
@@ -61,15 +62,13 @@ public abstract class DB_Conn {
 	
 
 
-	
-
-	
-	/*
-	 * get row count
+	/**
+	 * Get row count from resultset
+	 * @param Resultset
+	 * @return size
 	 */
 	protected static int getResultSetSize(ResultSet resultSet) {
 	    int size = -1;
-
 	    try {
 	        resultSet.last();
 	        size = resultSet.getRow();
@@ -77,9 +76,31 @@ public abstract class DB_Conn {
 	    } catch(SQLException e) {
 	        return size;
 	    }
-
 	    return size;
 	}
-		
+
+	/**
+	 * Get userID from session
+	 * @param SessionID
+	 * @return UserID
+	 */
+	protected static int getUserID(String SessionID) {
+		int UserID = 0;
+		String Query = "SELECT UserID FROM `session` WHERE (SessionID = '" + SessionID + "')";
+		try {
+        	//SQL connection
+        	Connection connection = getConn();
+            Statement select = connection.createStatement();
+            ResultSet result = select.executeQuery(Query);
+            while (result.next()) {
+               UserID = result.getInt(1);
+            }
+            connection.close();
+        } catch(Exception e) {
+        	System.err.println("Mysql Statement Error: ");
+        	e.printStackTrace();
+        }
+		return UserID;
+	}
 
 }

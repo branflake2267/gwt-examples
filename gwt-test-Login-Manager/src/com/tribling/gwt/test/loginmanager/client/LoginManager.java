@@ -18,7 +18,7 @@ public class LoginManager implements EntryPoint {
 	public void onModuleLoad() {
 
 
-
+		/*
 		//Control the users session, UserID = Unique SessionID
 		final SessionManagerWidget SessionManager = new SessionManagerWidget();
 		SessionManager.addChangeListener(new ChangeListener() {
@@ -34,7 +34,25 @@ public class LoginManager implements EntryPoint {
 			}
 		});
 		RootPanel.get("LoginStatus").add(SessionManager);
+		*/
 		
+		
+		
+		AccountWidget2 Account = new AccountWidget2();
+		/*
+		Account.addChangeListener(new ChangeListener() {
+			public void onChange(Widget sender) {
+				boolean LoginStatus = Account.getLoginStatus();
+				String SessionID = Account.getSessionID();
+				
+				if (SessionID != null) {
+					processSignIn(SessionID, false);
+				}
+			}
+		});
+		*/
+		
+		RootPanel.get().add(Account);
 	}
 	
 	

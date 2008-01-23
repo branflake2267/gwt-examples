@@ -112,8 +112,6 @@ public class DB_SignIn extends DB_Conn {
 		 */
 		private void getUserHashFromDB() {
 		
-			
-			
 			String Query = "SELECT UserID, Password_Hash FROM `user` WHERE (UserName='" + this.UserName + "');";
 			
 	        try {

@@ -1,0 +1,4 @@
+com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException, true
+com.tribling.gwt.test.loginmanager.client.Account, true
+com.tribling.gwt.test.loginmanager.client.SignInStatus, true
+java.lang.String, true
