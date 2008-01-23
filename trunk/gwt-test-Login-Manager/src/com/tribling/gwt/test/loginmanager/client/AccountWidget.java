@@ -187,9 +187,6 @@ public class AccountWidget extends Composite implements ClickListener{
 		Account account = new Account();
 		
 		//prep for transport
-		
-		//SET TIME STAMP~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		
 		account.setSessionID(this.SessionID);
 		account.setFirstName(sFirstName);
 		account.setLastName(sLastName);
@@ -197,7 +194,6 @@ public class AccountWidget extends Composite implements ClickListener{
 		account.setPassword(sPas1);
 
 
-		
 		//init rpc request - send the data
 		saveAccount(account);
 	}
