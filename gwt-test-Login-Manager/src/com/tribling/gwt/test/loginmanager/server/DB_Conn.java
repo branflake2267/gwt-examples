@@ -35,26 +35,26 @@ public abstract class DB_Conn {
 	
 	    Connection conn	= null;
 	    
-	    String db 		= "hostdb";
+	    String db 		= "gwt";
 	    String driver 	= "com.mysql.jdbc.Driver";
 	    String user 	= "test";
 	    String pass 	= "password*7";
 	    String url 		= "jdbc:mysql://192.168.12.81:3306/";
 		
         try {
-                Class.forName(driver).newInstance(); 
+        	Class.forName(driver).newInstance(); 
         } catch (InstantiationException e) {
-                e.printStackTrace();
+            e.printStackTrace();
         } catch (IllegalAccessException e) {
-                e.printStackTrace();
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+            e.printStackTrace();
         }
         try {
-        		conn = DriverManager.getConnection(url+db, user, pass);
+        	conn = DriverManager.getConnection(url+db, user, pass);
         } catch (SQLException e) {
-        		System.err.println("Mysql Connection Error:");
-                e.printStackTrace();
+        	System.err.println("Mysql Connection Error:");
+            e.printStackTrace();
         }
 		return conn;
 	}
@@ -62,42 +62,7 @@ public abstract class DB_Conn {
 
 
 	
-	/**
-	 * db conn2 - for my Bible DB
-	 * 
-	 * Make sure you add a reference library (external jar in build path) JDBC Connector - 
-	 * You will see I put it in /opt/gwt-linux/mysql-connector-java-5.0.8-bin.jar
-	 *
-	 * 
-	 * @return Connection
-	 */
-	protected Connection getConn2() {
-	
-		    Connection conn	= null;
-		    String url 		= "jdbc:mysql://192.168.12.81:3306/";
-		    String db 		= "Bible";
-		    String driver 	= "com.mysql.jdbc.Driver";
-		    String user 	= "Replace Me";
-		    String pass 	= "Replace Me";
-	        try {
-                Class.forName(driver).newInstance(); 
-	        } catch (InstantiationException e) {
-	                e.printStackTrace();
-	        } catch (IllegalAccessException e) {
-	                e.printStackTrace();
-	        } catch (ClassNotFoundException e) {
-	                e.printStackTrace();
-	        }
-		    try {
-		    	conn = DriverManager.getConnection(url+db, user, pass);
-		    } catch (Exception e) {
-		    	System.err.println("Mysql Connection Error: ");
-		    	e.printStackTrace();
-		    }
-		
-		    return conn;
-	}
-	
+
 	
 	/*
 	 * get row count

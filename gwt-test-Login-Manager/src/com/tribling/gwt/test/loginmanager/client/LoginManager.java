@@ -1,7 +1,6 @@
 package com.tribling.gwt.test.loginmanager.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -18,30 +17,24 @@ public class LoginManager implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 
-		//debugging
-		//RootPanel.get().add(new Label("My URL-Path: /GoneVerticalService"));
-		//RootPanel.get().add(new Label("GWT getModuleBaseURL: " + GWT.getModuleBaseURL()));
-		//RootPanel.get().add(new Label("GWT getHostPageBaseURL: " + GWT.getHostPageBaseURL()));
-		//RootPanel.get().add(new Label("GWT getModuleBaseURL: " + GWT.getModuleBaseURL()));
-		//RootPanel.get().add(new Label("GWT getModuleName: " + GWT.getModuleName()));
 
-		//check session cookie first
-		final SessionManagerWidget sm = new SessionManagerWidget();
-		sm.addChangeListener(new ChangeListener() {
+
+		//Control the users session, UserID = Unique SessionID
+		final SessionManagerWidget SessionManager = new SessionManagerWidget();
+		SessionManager.addChangeListener(new ChangeListener() {
 
 			public void onChange(Widget sender) {
-
-				if (sm.getLoginStatus() == true) {
-					loadPanel(sm.getSessionID());
+				if (SessionManager.getLoginStatus() == true) {
+					loadPanel(SessionManager.getSessionID());
 				}
 
-				if (sm.getLoginStatus() == false) {
+				if (SessionManager.getLoginStatus() == false) {
 					//unloadWidgets();
 				}
-
 			}
 		});
-
+		RootPanel.get("LoginStatus").add(SessionManager);
+		
 	}
 	
 	

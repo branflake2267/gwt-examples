@@ -21,4 +21,10 @@ public interface LoginManagerServiceAsync {
 	public void checkSessionIsStillLegal(String SessionID, AsyncCallback callback_checkSessionIsStillLegal);
 	
 	
+	/**
+	 * Save Account
+	 * @param account
+	 * @param callback_SaveAccount
+	 */
+	public void SaveAccount(Account account, AsyncCallback callback_SaveAccount);
 }

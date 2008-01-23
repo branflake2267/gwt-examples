@@ -1,6 +1,7 @@
 package com.tribling.gwt.test.loginmanager.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.tribling.gwt.test.loginmanager.client.Account;
 import com.tribling.gwt.test.loginmanager.client.LoginManagerService;
 import com.tribling.gwt.test.loginmanager.client.SignInStatus;
 
@@ -50,6 +51,16 @@ public class LoginManagerServiceImpl extends RemoteServiceServlet implements Log
 		return null;
 	}
 	
-
+	/**
+	 * Save User Account information
+	 * @param account
+	 * @return
+	 */
+	public Account SaveAccount(Account account) {
+		DB_Account dba = new DB_Account();
+		account = dba.SaveAccount(account);
+		return account;
+	}
+	
 	
 }

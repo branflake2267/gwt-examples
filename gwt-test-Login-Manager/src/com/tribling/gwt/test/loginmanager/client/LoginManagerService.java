@@ -20,5 +20,5 @@ public interface LoginManagerService extends RemoteService {
 	public SignInStatus checkSessionIsStillLegal(String SessionID);
 
 
-
+	public Account SaveAccount(Account account);
 }
