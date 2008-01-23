@@ -6,6 +6,7 @@ public class SignInStatus implements IsSerializable{
 
 	public String SessionID;
 	public String DisplayError;
+	public String UserName;
 	
 	public SignInStatus() {
 	}

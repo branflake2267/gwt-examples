@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cache-entry>
 	<generated-type-hash class="com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException_FieldSerializer" hash="FF198044879E67E1ACF2E0C29CC58CB5"/>
-	<generated-type-hash class="com.tribling.gwt.test.loginmanager.client.SignInStatus_FieldSerializer" hash="4B11AD7897A8EBA4B953C3434FC930C5"/>
+	<generated-type-hash class="com.tribling.gwt.test.loginmanager.client.SignInStatus_FieldSerializer" hash="51AF1C0A94FB17A2D0D65873AB19966C"/>
 	<generated-type-hash class="com.tribling.gwt.test.loginmanager.client.LoginManagerService_TypeSerializer" hash="F0D57CAFBEE4331C9175DA7368028663"/>
 	<generated-type-hash class="com.tribling.gwt.test.loginmanager.client.LoginManagerService_Proxy" hash="F7E105451AEA42B5B89E411E3F25B3C3"/>
 	<rebind-decision in="com.tribling.gwt.test.loginmanager.client.LoginManagerService" out="com.tribling.gwt.test.loginmanager.client.LoginManagerService_Proxy"/>

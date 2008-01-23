@@ -26,5 +26,5 @@ public interface LoginManagerServiceAsync {
 	 * @param account
 	 * @param callback_SaveAccount
 	 */
-	public void SaveAccount(Account account, AsyncCallback callback_SaveAccount);
+	public void saveAccount(Account account, AsyncCallback callback_SaveAccount);
 }
