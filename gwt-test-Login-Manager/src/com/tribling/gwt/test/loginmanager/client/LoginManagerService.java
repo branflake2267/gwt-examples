@@ -21,4 +21,6 @@ public interface LoginManagerService extends RemoteService {
 
 
 	public Account saveAccount(Account account);
+	
+	public Account getAccount(String SessionID);
 }

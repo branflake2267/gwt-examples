@@ -45,7 +45,7 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 	private HorizontalPanel pLoadingStatus = new HorizontalPanel();
 	
 	//login panel
-	private  LoginPanelWidget lpw = new LoginPanelWidget();
+	private  LoginPanelWidget pLoginWidget = new LoginPanelWidget();
 	
 	//sign in button
 	private PushButton bSignIn = new PushButton("Sign In");
@@ -55,13 +55,17 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 	
 	//new account button
 	private PushButton bNewAccount = new PushButton("New Account");
-	
 	private PushButton bMyAccount = new PushButton("My Account");
 
 	//Login Status
 	private boolean LoginStatus;
 	
-
+	//stop the auto popup of the loginpanelwidget
+	private boolean bolAccountButtonPushed = false;
+	
+	//edit account
+	private AccountWidget pAccountWidget = new AccountWidget();
+	
 	
 	/**
 	 * constructor
@@ -109,31 +113,7 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 	}
 	
 	
-	private void drawNewAccountButton() {
-		pAccount.clear();
-		bNewAccount.addClickListener(this);
-		pAccount.add(bNewAccount);
-	}
-	
-	private void drawMyAccountButton() {
-		pAccount.clear();
-		bMyAccount.addClickListener(this);
-		pAccount.add(bMyAccount);
-	}
-	
-	
-	private void drawSignInButton() {
-		pSignInStatus.clear();
-		bSignIn.addClickListener(this);
-		pSignInStatus.add(bSignIn);	
-	}
-	
-	
-    private void drawSignOutButton() {
-		pSignInStatus.clear();
-    	bSignOut.addClickListener(this);
-    	pSignInStatus.add(bSignOut);
-    }
+
 	
     
     /**
@@ -155,7 +135,7 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 			this.removeSessionCookies();
 			
 			//don't redraw panel if this is activated by panel widget
-			if (bolFromCookie == true) {
+			if (bolFromCookie == true && bolAccountButtonPushed == false) {
 				//draw Login Manager widget so we can login
 				this.drawLoginPanel();
 			}
@@ -201,7 +181,9 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 		//draw Login Manager widget so we can login
 		this.drawLoginPanel();
     	
-;
+		//close my account if open
+		pAccountWidget.processSignOut();
+		pAccountWidget.removeFromParent();
 		
     	//is the cookie getting deleted?? 	
     }
@@ -210,13 +192,12 @@ public class SessionManagerWidget extends Composite implements ClickListener {
     /**
      * draw login panel - to sign in
      */
-    public void drawLoginPanel() {//display the LoginManager widget - for loggin in
+    public void drawLoginPanel() { // display the LoginManager widget - for loggin in
 		
-    	//start with clean slate
-		lpw.addChangeListener(new ChangeListener() {
+		pLoginWidget.addChangeListener(new ChangeListener() {
 				public void onChange(Widget sender) {
-					boolean LoginStatus = lpw.getLoginStatus();
-					String SessionID = lpw.getSessionID();
+					boolean LoginStatus = pLoginWidget.getLoginStatus();
+					String SessionID = pLoginWidget.getSessionID();
 					
 					if (SessionID != null) {
 						processSignIn(SessionID, false);
@@ -224,11 +205,59 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 				}
 			});
 		//move this?
-		RootPanel.get().add(lpw);
+		RootPanel.get("LoginPanel").add(pLoginWidget);
+    }
+    
+    /**
+     * draw account widget - on New Account or My Account
+     */
+	public void drawAccount() {
+		
+		this.clearLoginPanel();
+				
+		pAccountWidget.setSessionID(this.SessionID);
+		pAccountWidget.draw();
+		pAccountWidget.addChangeListener(new ChangeListener() {
+			public void onChange(Widget sender) {
+				boolean LoginStatus = pAccountWidget.getLoginStatus();
+				String SessionID = pAccountWidget.getSessionID();
+				
+				if (SessionID != null) {
+					processSignIn(SessionID, false);
+				}
+			}
+		});
+		RootPanel.get("LoginPanel").add(pAccountWidget);
+	}
+	
+	private void drawNewAccountButton() {
+		pAccount.clear();
+		bNewAccount.addClickListener(this);
+		pAccount.add(bNewAccount);
+	}
+	
+	private void drawMyAccountButton() {
+		pAccount.clear();
+		bMyAccount.addClickListener(this);
+		pAccount.add(bMyAccount);
+	}
+	
+	
+	private void drawSignInButton() {
+		pSignInStatus.clear();
+		bSignIn.addClickListener(this);
+		pSignInStatus.add(bSignIn);	
+	}
+	
+	
+    private void drawSignOutButton() {
+		pSignInStatus.clear();
+    	bSignOut.addClickListener(this);
+    	pSignInStatus.add(bSignOut);
     }
     
     public void clearLoginPanel() {
-    	lpw.removeFromParent();
+    	pLoginWidget.removeFromParent();
     }
     
     public void setSessionID(String SessionID) {
@@ -269,29 +298,11 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 	}
 	
 
-	public void drawAccount() {
-		
-		//this doesn't work if it happens before rpc call back - need to set a var so rpc comes back it wont load
-		this.clearLoginPanel();
-		
-		final AccountWidget Account = new AccountWidget(SessionID);
-		Account.addChangeListener(new ChangeListener() {
-			public void onChange(Widget sender) {
-				boolean LoginStatus = Account.getLoginStatus();
-				String SessionID = Account.getSessionID();
-				
-				if (SessionID != null) {
-					processSignIn(SessionID, false);
-				}
-			}
-		});
-		
-		
-		RootPanel.get().add(Account);
-		
-	}
+
 	
-    
+    public void clearAccountWidget() {
+    	pAccountWidget.removeFromParent();
+    }
     
     
     
@@ -300,14 +311,24 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 	 */
 	public void onClick(Widget sender) {
 
+		//sign out button
 		if (sender == bSignOut) {
 			this.processSignOut();
-		} else if (sender == bSignIn) {
-			this.drawLoginPanel();
-		} else if (sender == bNewAccount) {
-			this.drawAccount();
-		} else if (sender == bMyAccount) {
 			
+		//sign in button
+		} else if (sender == bSignIn) {
+			this.clearAccountWidget();
+			bolAccountButtonPushed = false; //for rpc auto loading login panel
+			this.drawLoginPanel();
+			
+		//new account button
+		} else if (sender == bNewAccount) {
+			bolAccountButtonPushed = true; 
+			this.drawAccount();
+			
+		} else if (sender == bMyAccount) {
+			bolAccountButtonPushed = true; 
+			this.drawAccount();
 		}
 		
 		if (changeListeners != null) {

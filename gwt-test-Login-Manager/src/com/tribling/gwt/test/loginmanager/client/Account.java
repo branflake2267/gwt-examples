@@ -3,9 +3,6 @@ package com.tribling.gwt.test.loginmanager.client;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class Account implements IsSerializable {
-
-	//use this to tell the server what the clients time is
-	public int TimeStamp;
 	
 	//use this once the account is created
 	public String SessionID;
@@ -25,10 +22,6 @@ public class Account implements IsSerializable {
 	public Account() {
 	}
 	
-	public void setTimeStamp(int TimeStamp) {
-		this.TimeStamp = TimeStamp;
-	}
-
 	public void setSessionID(String SessionID) {
 		this.SessionID = SessionID;
 	}
@@ -54,9 +47,7 @@ public class Account implements IsSerializable {
 	}
 	
 	
-	public int getTimeStamp() {
-		return this.TimeStamp;
-	}
+
 	
 	public String getSessionID() {
 		return this.SessionID;

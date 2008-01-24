@@ -27,4 +27,11 @@ public interface LoginManagerServiceAsync {
 	 * @param callback_SaveAccount
 	 */
 	public void saveAccount(Account account, AsyncCallback callback_SaveAccount);
+	
+	/**
+	 * get Account Data
+	 * @param SessionID
+	 * @param callback_getAccount
+	 */
+	public void getAccount(String SessionID, AsyncCallback callback_getAccount);
 }

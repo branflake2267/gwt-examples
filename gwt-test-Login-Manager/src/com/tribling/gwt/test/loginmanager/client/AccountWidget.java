@@ -3,8 +3,6 @@ package com.tribling.gwt.test.loginmanager.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException;
-import com.google.gwt.user.client.rpc.InvocationException;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ChangeListenerCollection;
@@ -16,7 +14,6 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.PushButton;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -31,18 +28,19 @@ public class AccountWidget extends Composite implements ClickListener{
 	//rpc init Var 
 	private LoginManagerServiceAsync callProvider;
 	
-	private VerticalPanel NewAccountPanel = new VerticalPanel();
+	private VerticalPanel pAccountPanel = new VerticalPanel();
 
 	private Label TitleNew = new Label("Make A New Account");
 	private Label TitleEdit = new Label("Edit Your Account");
 	
 	private HorizontalPanel pDisplayError = new HorizontalPanel();
 	
-	private HorizontalPanel pLoadingStatus = new HorizontalPanel();
+	private HorizontalPanel pSavingStatus = new HorizontalPanel();
 	
 	//Inputs
 	private TextBox FirstName = new TextBox();
 	private TextBox LastName = new TextBox();
+	private HorizontalPanel hpUserInput = new HorizontalPanel();
 	private TextBox UserName = new TextBox();
 	private PasswordTextBox Password1 = new PasswordTextBox();
 	private PasswordTextBox Password2 = new PasswordTextBox();
@@ -58,9 +56,59 @@ public class AccountWidget extends Composite implements ClickListener{
 	/**
 	 * constructor
 	 */
-	public AccountWidget(String SessionID) {
+	public AccountWidget() {
 		
-		this.SessionID = SessionID;
+		//rpc init
+		LoginManagerProvider();
+
+		//init the Account Widget
+		initWidget(pAccountPanel);
+	}
+	
+	public void draw() {
+		
+		if (this.SessionID == null) {
+			Window.alert("test" + this.SessionID);
+			this.drawInputs();
+		} else {
+			this.getAccount(this.SessionID);
+		}
+	}
+	
+	public void updateAccountData(Account account) {
+		
+		hpUserInput.clear();
+		String sUserName = account.getUserName();
+		hpUserInput.add(new Label(sUserName));
+		
+		FirstName.setText(account.getFirstName());
+		LastName.setText(account.getLastName());
+		
+	}
+	
+	/**
+	 * draw on loading account data
+	 */
+	private void drawLoadingAccountData() {
+		pAccountPanel.clear();
+		
+		HorizontalPanel loading = new HorizontalPanel();
+		loading.setHorizontalAlignment(HorizontalPanel.ALIGN_CENTER);
+		String sImage = GWT.getModuleBaseURL() + "loading.gif";
+	    Image image = new Image(sImage);
+	    
+	    pAccountPanel.add(image);
+	}
+	
+	/**
+	 * clear loading account data
+	 */
+	private void clearLoadingAccountData() {
+		pAccountPanel.clear();
+	}
+
+	public void drawInputs() {
+		pAccountPanel.clear();
 		
 		HorizontalPanel hpFN = new HorizontalPanel();
 		Label lFN = new Label("First Name:");
@@ -74,11 +122,15 @@ public class AccountWidget extends Composite implements ClickListener{
 		hpLN.add(lLN);
 		hpLN.add(LastName);
 		
-		HorizontalPanel hpUN = new HorizontalPanel();
+		HorizontalPanel hpUserName = new HorizontalPanel();
 		Label lUserName = new Label("User Name");
 		lUserName.setStyleName("account-Fields");
-		hpUN.add(lUserName);
-		hpUN.add(UserName);
+		hpUserName.add(lUserName);
+		hpUserInput.add(UserName); //can change this to label
+		hpUserName.add(hpUserInput);
+		
+		
+		
 		
 		
 		HorizontalPanel hpP1 = new HorizontalPanel();
@@ -96,34 +148,38 @@ public class AccountWidget extends Composite implements ClickListener{
 		HorizontalPanel hpSave = new HorizontalPanel();
 		hpSave.setHorizontalAlignment(HorizontalPanel.ALIGN_RIGHT);
 		hpSave.add(Save);
-		hpSave.add(pLoadingStatus);
+		hpSave.add(pSavingStatus);
 		
 		
 		//New User or Editing Account via SessionID
-		if (SessionID != null) {
-			NewAccountPanel.add(TitleNew);
+		if (this.SessionID == null) {
+			TitleNew.setStyleName("account-Title");
+			pAccountPanel.add(TitleNew);
 		} else {
-			NewAccountPanel.add(TitleEdit);
+			TitleEdit.setStyleName("account-Title");
+			pAccountPanel.add(TitleEdit);
 		}
 		
-		//This cause me major problems, b/c I forgot to call this ....
-		LoginManagerProvider();
+
 		
-		NewAccountPanel.add(pDisplayError);
-		NewAccountPanel.add(hpFN);
-		NewAccountPanel.add(hpLN);
-		NewAccountPanel.add(hpUN);
-		NewAccountPanel.add(hpP1);
-		NewAccountPanel.add(hpP2);
-		NewAccountPanel.add(hpSave);
-		
-		//init the Account Widget
-		initWidget(NewAccountPanel);
+		pAccountPanel.add(pDisplayError);
+	
+		pAccountPanel.add(hpUserName);
+		pAccountPanel.add(new HTML("&nbsp;"));
+		pAccountPanel.add(hpFN);
+		pAccountPanel.add(hpLN);
+		pAccountPanel.add(new HTML("&nbsp;"));
+		pAccountPanel.add(hpP1);
+		pAccountPanel.add(hpP2);
+		pAccountPanel.add(hpSave);
 		
 		Save.addClickListener(this);
-		
 	}
-
+	
+	public void processSignOut() {
+		this.SessionID = null;
+	}
+	
 	/**
 	 * prep for transport of data
 	 */
@@ -182,7 +238,7 @@ public class AccountWidget extends Composite implements ClickListener{
 		}
 		
 		
-		
+	
 		//init object that we are going to use to pass rpc data through
 		Account account = new Account();
 		
@@ -254,19 +310,20 @@ public class AccountWidget extends Composite implements ClickListener{
 	}
 	
 	
-	private void drawLoading() {
+	private void drawSavingAnime() {
 		HorizontalPanel loading = new HorizontalPanel();
 		loading.setHorizontalAlignment(HorizontalPanel.ALIGN_CENTER);
 		String sImage = GWT.getModuleBaseURL() + "loading2.gif";
 	    Image image = new Image(sImage);
-	    pLoadingStatus.setTitle("Talking to server.");
-		pLoadingStatus.add(image);
+	    pSavingStatus.setTitle("Talking to server.");
+		pSavingStatus.add(image);
 	}
 	
-	private void clearLoading() {
-		pLoadingStatus.clear();
+	private void clearSavingAnime() {
+		pSavingStatus.clear();
 	}
 	
+
 	
 	/**
 	 * use this to listen/observe to the widget
@@ -304,34 +361,57 @@ public class AccountWidget extends Composite implements ClickListener{
     
 	
 	/**
-	 * Process the sign in
-	 * 
+	 * Save Account Data
 	 */
     public void saveAccount(Account account) {
-    	this.drawLoading();
+    	this.drawSavingAnime();
     	
 		// service returns a result
 		AsyncCallback callback = new AsyncCallback() {
 			
 			//ajax rpc fail
 			public void onFailure(Throwable caught) {
-				
 				// TODO - add something here
-				
 			}
-
 			//ajax rpc success
 			public void onSuccess(Object result) {
 				Account account = (Account) result; //cast the result into the object to use
 				processCallBack(account);
-				clearLoading();
+				clearSavingAnime();
 			}
 		};
-
 		// execute the service and request for rpc method
 		callProvider.saveAccount(account, callback);
     }
 
+    
+	/**
+	 * Save Account Data
+	 */
+    public void getAccount(String SessionID) {
+    	this.drawLoadingAccountData();    	
+    	
+		// service returns a result
+		AsyncCallback callback_getAccount = new AsyncCallback() {
+			
+			//ajax rpc fail
+			public void onFailure(Throwable caught) {
+				// TODO - add something here
+			}
+			//ajax rpc success
+			public void onSuccess(Object result) {
+				Account account = (Account) result; //cast the result into the object to use
+				
+				//draw inputs
+				drawInputs();
+				
+				//update inputs
+				updateAccountData(account);
+			}
+		};
+		// execute the service and request for rpc method
+		callProvider.getAccount(SessionID, callback_getAccount);
+    }
     
 	public boolean getLoginStatus() {
 		if (this.SessionID != null)	{
@@ -340,6 +420,9 @@ public class AccountWidget extends Composite implements ClickListener{
 		return false;
 	}
     
+	public void setSessionID(String SessionID) {
+		this.SessionID = SessionID;
+	}
 
 	
 }
