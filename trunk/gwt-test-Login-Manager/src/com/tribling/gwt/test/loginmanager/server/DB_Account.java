@@ -61,7 +61,7 @@ public class DB_Account extends DB_Conn {
 		}
 		
 		//make new hash for password
-		if (sPassword != null) {
+		if (sPassword.equals("") == false) {
 			
 			System.out.println("making password hash");
 			
@@ -107,6 +107,8 @@ public class DB_Account extends DB_Conn {
         	SignInStatus sis = SignIn.processSignIn(sUserName, sPassword);
         	
         	accountReturn.setSessionID(sis.getSessionID());
+        } else {
+        	accountReturn.setSessionID(account.SessionID);
         }
 		
         
