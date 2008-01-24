@@ -36,11 +36,10 @@ pLoading.add(image);
 == String Comparison ==
  You can compare strings like this.
 {{{
+//myString.equals(OtherString) is boolean
 
 //init all strings = null if using ".equals"!
 String myString = null;
-
-//myString.equals(OtherString) is boolean
 
 //like (this == that)
 if (myString.equals(myOtherString)) {
