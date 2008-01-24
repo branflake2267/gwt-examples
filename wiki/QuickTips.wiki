@@ -37,7 +37,7 @@ pLoading.add(image);
  You can compare strings like this.
 {{{
 
-//init all strings like null if using .equals!
+//init all strings = null if using ".equals"!
 String myString = null;
 
 //myString.equals(OtherString) is boolean
