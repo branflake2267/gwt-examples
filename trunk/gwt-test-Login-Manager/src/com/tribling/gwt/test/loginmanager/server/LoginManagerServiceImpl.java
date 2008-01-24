@@ -57,23 +57,33 @@ public class LoginManagerServiceImpl extends RemoteServiceServlet implements Log
 	 * @return
 	 */
 	public Account saveAccount(Account account) {
-		
 		System.out.println("Processing Account:");
-		
 		DB_Account dba = new DB_Account();
 		account = dba.saveAccount(account);
-		
+		return account;
+	}
+	
+	/**
+	 * Get user Account information
+	 * @param SessionID
+	 * @return
+	 */
+	public Account getAccount(String SessionID) {
+		System.out.println("Getting Account:");
+		DB_Account dba = new DB_Account();
+		Account account = dba.getAccountData(SessionID);
 		return account;
 	}
 	
 	
-	  /**
-	   * debug output
-	   * 
-	   * Write the serialized response out to stdout. This is a very unusual thing
-	   * to do, but it allows us to create a static file version of the response
-	   * without deploying a servlet.
-	   */
+	
+	 /**
+	  * debug output
+	  * 
+	  * Write the serialized response out to stdout. This is a very unusual thing
+	  * to do, but it allows us to create a static file version of the response
+	  * without deploying a servlet.
+	  */
 	  protected void onAfterResponseSerialized(String serializedResponse) {
 		  System.out.println(serializedResponse);
 	  }

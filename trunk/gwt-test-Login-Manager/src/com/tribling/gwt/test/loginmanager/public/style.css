@@ -23,9 +23,14 @@
 .Session-Button-Logout {
 }
 
-/* account */
+/* AccountWidget */
+.account-Title {
+ 	font-weight:bold;
+	text-align: center;
+}
 .account-Fields {
 	width: 75px;
+	font-weight: bold;
 }
 
 

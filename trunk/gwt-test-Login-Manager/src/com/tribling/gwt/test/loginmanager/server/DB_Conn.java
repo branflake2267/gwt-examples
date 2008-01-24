@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 
 /**
  * create a db_conn - this is just an example of one way to do this.
@@ -103,4 +104,14 @@ public abstract class DB_Conn {
 		return UserID;
 	}
 
+	
+	/**
+	 * get a unix time stamp for current day
+	 */
+	protected static int getUnixTimeStamp() {
+		Date date = new Date();
+		int TimeStamp = (int) (date.getTime() * .001);
+		return TimeStamp;
+	}
+	
 }

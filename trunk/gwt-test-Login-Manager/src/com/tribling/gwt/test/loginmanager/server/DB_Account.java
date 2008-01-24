@@ -33,7 +33,9 @@ public class DB_Account extends DB_Conn {
 		boolean UserNameExists = false;
 		
 		//get the account object vars
-		String sDateCreated = Integer.toString(account.getTimeStamp());
+		//String sDateCreated = Integer.toString(account.getTimeStamp());
+		String sDateCreated = Integer.toString(getUnixTimeStamp());
+		
 		String sFirstName = account.getFirstName();
 		String sLastName = account.getLastName();
 		String sUserName = account.getUserName();
@@ -65,7 +67,7 @@ public class DB_Account extends DB_Conn {
 			
 			sPassword_Hash = hashPassword(sPassword);
 			
-			sPassAdd = " ,Password='"+sPassword_Hash+"' ";
+			sPassAdd = " ,Password_Hash='"+sPassword_Hash+"' ";
 		}
 		
 		
@@ -154,5 +156,42 @@ public class DB_Account extends DB_Conn {
 	}
 	
 	
+	public Account getAccountData(String SessionID) {
+		
+		//get user id
+		int UserID = getUserID(SessionID);
+		String sUserID = Integer.toString(UserID);
+		
+		//prep for rpc 
+		Account account = new Account();
+		
+		String Query = "SELECT FirstName, LastName, UserName FROM `user` WHERE (UserID='"+sUserID+"')";
+        
+		try {
+        	Connection connection = getConn();
+        	Statement select = connection.createStatement();
+        	ResultSet result = select.executeQuery(Query);
+
+        	//debug
+        	System.out.println("Select session Query:" + Query);
+            
+        	//get db fields from record
+        	while (result.next ()) {
+            	account.setFirstName(result.getString(1));
+            	account.setLastName(result.getString(2));
+            	account.setUserName(result.getString(3));
+        	}
+
+            result.close();
+            connection.close();
+        } catch(Exception e) {
+        	
+        	//debug out output this way
+        	System.err.println("Mysql Statement Error: " + Query);
+        	e.printStackTrace();
+        }
+		
+		return account;
+	}
 	
 }
