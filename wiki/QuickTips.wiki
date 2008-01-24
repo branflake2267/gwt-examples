@@ -32,3 +32,24 @@ String sImage = GWT.getModuleBaseURL() + "loading2.gif";
 Image image = new Image(sImage);
 pLoading.add(image);
 }}}
+
+== String Comparison ==
+ You can compare strings like this.
+{{{
+//myString.equals(null) is boolean
+
+//like (this == that)
+if (myString.equals(myOtherString)) {
+    //do this
+}
+
+//like (this != nothing)
+if (myString.equals(null) == false) {
+    //do this
+}
+
+//like (this != nothing)
+if (myString.equals("") == false) {
+    //do this
+}
+}}}
