@@ -18,22 +18,25 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * 
+ * @author branflake2267
+ *
+ *
+ * TODO green red box depending on critieria of input
+ * TODO Display Error to methods, draw and clear
+ */
 public class AccountWidget extends Composite implements ClickListener{
-
-	
-	//GET TIMESTAMP
-	
-	
 	
 	//rpc init Var 
 	private LoginManagerServiceAsync callProvider;
 	
 	private VerticalPanel pAccountPanel = new VerticalPanel();
+	private VerticalPanel pAccountpanelLoading = new VerticalPanel();
 
-	private Label TitleNew = new Label("Make A New Account");
-	private Label TitleEdit = new Label("Edit Your Account");
-	
-	private HorizontalPanel pDisplayError = new HorizontalPanel();
+	private HorizontalPanel pAccountPanelTitle = new HorizontalPanel();
+
+	private HorizontalPanel pDisplayNotify = new HorizontalPanel();
 	
 	private HorizontalPanel pSavingStatus = new HorizontalPanel();
 	
@@ -47,123 +50,68 @@ public class AccountWidget extends Composite implements ClickListener{
 	
 	private PushButton Save = new PushButton("Save");
 		
-	private String SessionID;
+	private String SessionID = null;
 	
 	// change listeners for this widget
 	private ChangeListenerCollection changeListeners;
 	
 	
 	/**
-	 * constructor
+	 * widget maker constructor
 	 */
 	public AccountWidget() {
-		
-		//rpc init
-		LoginManagerProvider();
-
-		//init the Account Widget
-		initWidget(pAccountPanel);
-	}
 	
-	public void draw() {
+		pAccountPanelTitle.add(new Label("New Account"));
 		
-		if (this.SessionID == null) {
-			Window.alert("test" + this.SessionID);
-			this.drawInputs();
-		} else {
-			this.getAccount(this.SessionID);
-		}
-	}
-	
-	public void updateAccountData(Account account) {
-		
-		hpUserInput.clear();
-		String sUserName = account.getUserName();
-		hpUserInput.add(new Label(sUserName));
-		
-		FirstName.setText(account.getFirstName());
-		LastName.setText(account.getLastName());
-		
-	}
-	
-	/**
-	 * draw on loading account data
-	 */
-	private void drawLoadingAccountData() {
-		pAccountPanel.clear();
-		
-		HorizontalPanel loading = new HorizontalPanel();
-		loading.setHorizontalAlignment(HorizontalPanel.ALIGN_CENTER);
-		String sImage = GWT.getModuleBaseURL() + "loading.gif";
-	    Image image = new Image(sImage);
-	    
-	    pAccountPanel.add(image);
-	}
-	
-	/**
-	 * clear loading account data
-	 */
-	private void clearLoadingAccountData() {
-		pAccountPanel.clear();
-	}
-
-	public void drawInputs() {
-		pAccountPanel.clear();
-		
+		//FirstName
 		HorizontalPanel hpFN = new HorizontalPanel();
 		Label lFN = new Label("First Name:");
 		lFN.setStyleName("account-Fields");
 		hpFN.add(lFN);
 		hpFN.add(FirstName);
 	
+		//LastName
 		HorizontalPanel hpLN = new HorizontalPanel();
 		Label lLN = new Label("Last Name:");
 		lLN.setStyleName("account-Fields");
 		hpLN.add(lLN);
 		hpLN.add(LastName);
 		
+		//UserName
 		HorizontalPanel hpUserName = new HorizontalPanel();
 		Label lUserName = new Label("User Name");
 		lUserName.setStyleName("account-Fields");
 		hpUserName.add(lUserName);
-		hpUserInput.add(UserName); //can change this to label
-		hpUserName.add(hpUserInput);
+		hpUserInput.add(UserName); //can hpUserInput this to label
+		hpUserName.add(hpUserInput); //changeable from input to label
 		
 		
 		
-		
-		
+		//Password 1
 		HorizontalPanel hpP1 = new HorizontalPanel();
 		Label lP1 = new Label("Password:");
 		lP1.setStyleName("account-Fields");
 		hpP1.add(lP1);
 		hpP1.add(Password1);
 		
+		//Password 2
 		HorizontalPanel hpP2 = new HorizontalPanel();
 		Label lP2 = new Label("Confirm:");
 		lP2.setStyleName("account-Fields");
 		hpP2.add(lP2);
 		hpP2.add(Password2);
 		
+		//Saving Anime
 		HorizontalPanel hpSave = new HorizontalPanel();
 		hpSave.setHorizontalAlignment(HorizontalPanel.ALIGN_RIGHT);
 		hpSave.add(Save);
 		hpSave.add(pSavingStatus);
 		
 		
-		//New User or Editing Account via SessionID
-		if (this.SessionID == null) {
-			TitleNew.setStyleName("account-Title");
-			pAccountPanel.add(TitleNew);
-		} else {
-			TitleEdit.setStyleName("account-Title");
-			pAccountPanel.add(TitleEdit);
-		}
-		
 
-		
-		pAccountPanel.add(pDisplayError);
-	
+
+		pAccountPanel.add(pAccountPanelTitle);
+		pAccountPanel.add(pDisplayNotify);
 		pAccountPanel.add(hpUserName);
 		pAccountPanel.add(new HTML("&nbsp;"));
 		pAccountPanel.add(hpFN);
@@ -173,72 +121,119 @@ public class AccountWidget extends Composite implements ClickListener{
 		pAccountPanel.add(hpP2);
 		pAccountPanel.add(hpSave);
 		
+		VerticalPanel vp = new VerticalPanel();
+		vp.add(pAccountPanel); //inputs panel
+		vp.add(pAccountpanelLoading); //for loading icon
+		
+		//init the Account Widget
+		initWidget(vp);
+		
 		Save.addClickListener(this);
+		
+		//rpc init
+		LoginManagerProvider();
 	}
 	
-	public void processSignOut() {
-		this.SessionID = null;
+
+	
+
+
+
+
+	
+	
+	/**
+	 * update inputs
+	 * @param account
+	 */
+	public void updateAccountData(Account account) {
+		
+		pAccountPanelTitle.clear();
+		pAccountPanelTitle.add(new Label("Edit Profile"));
+		
+		hpUserInput.clear(); //clear the username input or label user name
+		
+		String sUserName = account.getUserName();
+		hpUserInput.add(new Label(sUserName));
+		FirstName.setText(account.getFirstName());
+		LastName.setText(account.getLastName());	
 	}
+	
+	/**
+	 * draw on loading account data
+	 */
+	private void drawLoadingAccountData() {
+		
+		HorizontalPanel loading = new HorizontalPanel();
+		loading.setHorizontalAlignment(HorizontalPanel.ALIGN_CENTER);
+		String sImage = GWT.getModuleBaseURL() + "loading.gif";
+	    Image image = new Image(sImage);
+	    pAccountpanelLoading.add(image);
+	    
+		pAccountPanel.setVisible(false);
+		pAccountpanelLoading.setVisible(true);
+	}
+	
+	/**
+	 * clear loading account data
+	 */
+	private void clearLoadingAccountData() {
+		pAccountPanel.setVisible(true);
+		pAccountpanelLoading.setVisible(false);
+	}
+
 	
 	/**
 	 * prep for transport of data
 	 */
 	private void saveData() {
-		//clear the previous error for new one?
-		pDisplayError.clear();
+
+		//this.clearDisplayNotify(); //clear display notification
 		
 		String DisplayError = null;
 		boolean Flag = false;
+		String sUserName = null;
 		
 		//prep for transport
 		String sFirstName = FirstName.getText();
 		String sLastName = LastName.getText();
-		
-		//get UserName
-		String sUserName = UserName.getText();
-		
-		//check passwords match
 		String sPas1 = Password1.getText();
 		String sPas2 = Password2.getText();
 		
+		// check user name if no session - new account
+		if (SessionID == null) {
+			sUserName = UserName.getText();
+			
+			if (sUserName.equals("")) {
+				Flag = true;
+				DisplayError = "No User Name";
+			}
+		}
+
 		if (sFirstName.equals("")) {
 			Flag = true;
 			DisplayError = "No First Name";
 		}
-		
+
 		if (sLastName.equals("")) {
 			Flag = true;
 			DisplayError = "No Last Name";
 		}
-		
-		if (sUserName.equals("")) {
-			Flag = true;
-			DisplayError = "No User Name";
+
+		if (sPas1.equals(null) == false | sPas1.equals(null) == false) {
+			if (sPas2.equals(sPas1) == false) {
+				Flag = true;
+				DisplayError = "Passwords do not match";
+			}
 		}
 		
-		if (sPas1.equals("")) {
-			Flag = true;
-			DisplayError = "No Password";
-		}
-		
-		if (sPas2.equals("")) {
-			Flag = true;
-			DisplayError = "No Password";
-		}
-		
-		if (sPas2.equals("")) {
-			Flag = true;
-			DisplayError = "Passwords do not match";
-		}
-		
+		//show error in panel if something isnt correct
 		if (Flag == true) {
-			Window.alert("test");
-			pDisplayError.add(new Label(DisplayError));
+			this.drawDisplayNotify(DisplayError);
 			return;
 		}
 		
-		
-	
+
 		//init object that we are going to use to pass rpc data through
 		Account account = new Account();
 		
@@ -248,7 +243,6 @@ public class AccountWidget extends Composite implements ClickListener{
 		account.setLastName(sLastName);
 		account.setUserName(sUserName);
 		account.setPassword(sPas1);
-
 
 		//init rpc request - send the data
 		saveAccount(account);
@@ -260,55 +254,46 @@ public class AccountWidget extends Composite implements ClickListener{
 	 * process the rpc response
 	 * @param account
 	 */
-	private void processCallBack(Account account) {
+	private void processCallBackOnSaveAccount(Account account) {
 		
-		//get session id - set cookie
-		this.SessionID = account.getSessionID();
+		//IS ther an Error - get display error from RPC
+		String DisplayError = account.getDisplayError();
+		if (DisplayError != "") {
+			this.drawDisplayNotify(DisplayError);
+		}
+		
+		//set SessionID from RPC
+		if (account.getSessionID().equals(null) == false) {
+			this.SessionID = account.getSessionID();
+		}
+		
 		
 		//fire change to set SessionID in session manager
 		if (SessionID != null) {
-			
-			Window.alert("debug: fire change");
-			
 			if (changeListeners != null) {
 				changeListeners.fireChange(this);
 			}
+			
+			//show saved if there is a sessionid
+			this.drawDisplayNotify("Saved");
+			
+			//new account?? show new account created
+			
 		}
-		
-		
-		//get display error
-		String DisplayError = account.getDisplayError();
-		if (DisplayError != null) {
-			pDisplayError.add(new Label(DisplayError));
-		}
-		
-		//mark Saved
-		pDisplayError.add(new Label("Saved"));
-		
-		//have to add logic from the begging of the cycle
-		//pDisplayError.add(new Label("New Account Created"));
-		
 	}
+	
 	
 	public String getSessionID() {
 		return this.SessionID;
 	}
 	
-	
-	/**
-	 * 
-	 */
-	public void onClick(Widget sender) {
-		
-		if (sender == Save) {
-			this.saveData();
-		}
-		
-		//if (changeListeners != null) {
-			//changeListeners.fireChange(this);
-		//}
+	public void drawDisplayNotify(String s) {
+		pDisplayNotify.add(new Label(s));
 	}
-	
+
+	public void clearDisplayNotify() {
+		pDisplayNotify.clear();
+	}
 	
 	private void drawSavingAnime() {
 		HorizontalPanel loading = new HorizontalPanel();
@@ -324,14 +309,25 @@ public class AccountWidget extends Composite implements ClickListener{
 	}
 	
 
+	/**
+	 * 
+	 */
+	public void onClick(Widget sender) {
+		
+		if (sender == Save) {
+			this.saveData();
+		}
+		
+		//if (changeListeners != null) {
+			//changeListeners.fireChange(this);
+		//}
+	}
 	
 	/**
 	 * use this to listen/observe to the widget
 	 * 
 	 * @param listener
 	 */
-	
-	
 	public void addChangeListener(ChangeListener listener) {
 		if (changeListeners == null)
 			changeListeners = new ChangeListenerCollection();
@@ -343,7 +339,25 @@ public class AccountWidget extends Composite implements ClickListener{
 			changeListeners.remove(listener);
 	}
 	
-	
+	/**
+	 * on signout clear this values, incase this session comes back to this widget
+	 */
+	public void processSignOut() {
+		this.SessionID = null;
+		
+		//change back to original
+		pAccountPanelTitle.clear();
+		pAccountPanelTitle.add(new Label("New Account"));
+		hpUserInput.clear();
+		hpUserInput.add(UserName);
+		
+		UserName.setText("");
+		FirstName.setText("");
+		LastName.setText("");
+		Password1.setText("");
+		Password2.setText("");
+		this.clearDisplayNotify();
+	}
 	
 	
 /* ajax stuff below */
@@ -364,7 +378,7 @@ public class AccountWidget extends Composite implements ClickListener{
 	 * Save Account Data
 	 */
     public void saveAccount(Account account) {
-    	this.drawSavingAnime();
+    	this.drawSavingAnime(); //start loading icon
     	
 		// service returns a result
 		AsyncCallback callback = new AsyncCallback() {
@@ -376,8 +390,11 @@ public class AccountWidget extends Composite implements ClickListener{
 			//ajax rpc success
 			public void onSuccess(Object result) {
 				Account account = (Account) result; //cast the result into the object to use
-				processCallBack(account);
-				clearSavingAnime();
+				
+				clearSavingAnime(); //end loading icon
+				
+				processCallBackOnSaveAccount(account);
+				
 			}
 		};
 		// execute the service and request for rpc method
@@ -388,8 +405,11 @@ public class AccountWidget extends Composite implements ClickListener{
 	/**
 	 * Save Account Data
 	 */
-    public void getAccount(String SessionID) {
+    public void getAccountData(String SessionID) {
+    	
+    	this.clearDisplayNotify();
     	this.drawLoadingAccountData();    	
+    	
     	
 		// service returns a result
 		AsyncCallback callback_getAccount = new AsyncCallback() {
@@ -402,11 +422,11 @@ public class AccountWidget extends Composite implements ClickListener{
 			public void onSuccess(Object result) {
 				Account account = (Account) result; //cast the result into the object to use
 				
-				//draw inputs
-				drawInputs();
-				
 				//update inputs
 				updateAccountData(account);
+			
+				//clear loading icon
+				clearLoadingAccountData();
 			}
 		};
 		// execute the service and request for rpc method
@@ -420,8 +440,12 @@ public class AccountWidget extends Composite implements ClickListener{
 		return false;
 	}
     
-	public void setSessionID(String SessionID) {
+	public void loadAccountData(String SessionID) {
 		this.SessionID = SessionID;
+		
+		if (SessionID.equals(null) == false) {
+			this.getAccountData(this.SessionID);
+		}
 	}
 
 	

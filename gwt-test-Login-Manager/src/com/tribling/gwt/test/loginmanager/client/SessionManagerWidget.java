@@ -35,7 +35,7 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 	private ChangeListenerCollection changeListeners;
 	
 	//unique user session confirmed with db
-	private String SessionID;
+	private String SessionID = null;
 	
 	
 	//Login Status Panel
@@ -208,15 +208,18 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 		RootPanel.get("LoginPanel").add(pLoginWidget);
     }
     
+    
+    
     /**
      * draw account widget - on New Account or My Account
      */
 	public void drawAccount() {
 		
 		this.clearLoginPanel();
-				
-		pAccountWidget.setSessionID(this.SessionID);
-		pAccountWidget.draw();
+		
+		if (SessionID != null) { //string comparison ??
+			pAccountWidget.loadAccountData(this.SessionID);
+		}
 		pAccountWidget.addChangeListener(new ChangeListener() {
 			public void onChange(Widget sender) {
 				boolean LoginStatus = pAccountWidget.getLoginStatus();
@@ -313,22 +316,35 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 
 		//sign out button
 		if (sender == bSignOut) {
+			
 			this.processSignOut();
+			
+			bolAccountButtonPushed = false;
 			
 		//sign in button
 		} else if (sender == bSignIn) {
+			
 			this.clearAccountWidget();
-			bolAccountButtonPushed = false; //for rpc auto loading login panel
+			
 			this.drawLoginPanel();
+			
+			bolAccountButtonPushed = false;
 			
 		//new account button
 		} else if (sender == bNewAccount) {
-			bolAccountButtonPushed = true; 
+
+
 			this.drawAccount();
 			
-		} else if (sender == bMyAccount) {
+			
 			bolAccountButtonPushed = true; 
+			
+		} else if (sender == bMyAccount) {
+			
 			this.drawAccount();
+
+			
+			bolAccountButtonPushed = true;
 		}
 		
 		if (changeListeners != null) {

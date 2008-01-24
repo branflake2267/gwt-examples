@@ -17,6 +17,9 @@ public class LoginManagerServiceImpl extends RemoteServiceServlet implements Log
 	 * @return
 	 */
 	public SignInStatus processSignIn(String UserName, String Password) {
+		
+		System.out.println("Sign In: UserName: " + UserName);
+		
 		SignInStatus sis;
 		
 		try {
@@ -37,6 +40,9 @@ public class LoginManagerServiceImpl extends RemoteServiceServlet implements Log
 	 * @return
 	 */
 	public SignInStatus checkSessionIsStillLegal(String SessionID) {
+		
+		System.out.println("Check Session Still Legal");
+		
 		SignInStatus sis;
 		
 		try {
@@ -57,7 +63,7 @@ public class LoginManagerServiceImpl extends RemoteServiceServlet implements Log
 	 * @return
 	 */
 	public Account saveAccount(Account account) {
-		System.out.println("Processing Account:");
+		System.out.println("Processing Save Account:");
 		DB_Account dba = new DB_Account();
 		account = dba.saveAccount(account);
 		return account;
