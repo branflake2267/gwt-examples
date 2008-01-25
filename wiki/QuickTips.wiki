@@ -57,7 +57,7 @@ if (myString.equals("") == false) {
 }
 }}}
 
-== Clicklistener Multiples ==
+== Clicklistener ==
  Avoid calling a listener more than once! Add the clicklistener in the constructor of the widget not a method called over and over. Every time you call a method with a clicklister, you add another observer to that object. Then if you want to do something with that object, you may cause multiples of something to happen, which is annoying!
 {{{
 private HorizontalPanel pWidgetContent = new HorizontalPanel();
