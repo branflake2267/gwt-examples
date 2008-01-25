@@ -106,7 +106,6 @@ public class TomcatWarBuilder {
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RPC-adv";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Login-Manager";
 		
-		
 		//Compile project??????
 		//do this with eclipse debugger button
 		
@@ -527,7 +526,7 @@ public class TomcatWarBuilder {
 	 */
 	public static void getServletClassFromXMLFile() {
 
-		Pattern p = Pattern.compile("<servlet.*class=['|\"](.*)['|\"]/>");
+		Pattern p = Pattern.compile("<servlet.*?class=['|\"](.*?)['|\"].*?path.*?/>");
 		Matcher m = p.matcher(ProjectGWTxmlFileContents);
 		boolean found = m.find();
 
@@ -537,6 +536,7 @@ public class TomcatWarBuilder {
 
 		//debug
 		System.out.println("ServletClassName: " + ServletClassName);
+		System.out.println("");
 	}
 
 	
