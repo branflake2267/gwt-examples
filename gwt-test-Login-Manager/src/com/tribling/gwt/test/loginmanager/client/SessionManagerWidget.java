@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -41,10 +42,14 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 	
 	//Login controls and content panels
 	private HorizontalPanel pLoginControls = new HorizontalPanel();
+	private HorizontalPanel pUser = new HorizontalPanel();
 	private HorizontalPanel pSignInStatus = new HorizontalPanel();
 	private HorizontalPanel pAccountButtons = new HorizontalPanel();
 	private HorizontalPanel pLoadingStatus = new HorizontalPanel();
 	private HorizontalPanel pContent = new HorizontalPanel();
+	
+	//user name
+	private String sUserName = null;
 	
 	//login panel
 	private  LoginWidget pLoginWidget = new LoginWidget();
@@ -79,6 +84,7 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 	public SessionManagerWidget() {
 
 		//setup the widget
+		pLoginControls.add(pUser);
 		pLoginControls.add(pSignInStatus);
 		pLoginControls.add(pAccountButtons);
 		pLoginControls.add(pLoadingStatus); //track rpc status??
@@ -112,7 +118,8 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 					pContent.clear();
 				} else {
 					if (SessionID != null) {
-						processSignIn(SessionID);
+						setSessionID(SessionID);
+						processSignIn();
 					}
 				}
 			}
@@ -130,7 +137,8 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 				} else {
 				
 					if (SessionID != null) {
-						processSignIn(SessionID);
+						setSessionID(SessionID);
+						processSignIn();
 					}
 				}
 			}
@@ -148,7 +156,9 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 	
 
     
-    
+    private void drawUser() {
+    	pUser.add(new Label(this.sUserName));
+    }
    
 	
 	
@@ -211,9 +221,7 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 		//Go right to login if no cookie
 		if (SessionID != null) {
 			this.checkSessionIsStillLegal(SessionID);
-		} else {
-			//drawLoginWidget(); //auto load login panel if no session
-		}
+		} 
 	}
 	
 
@@ -222,10 +230,7 @@ public class SessionManagerWidget extends Composite implements ClickListener {
      * Process the Session either by Cookie OR BY Login Manager
      * @param SessionID
      */
-    public void processSignIn(String SessionID) {
-
-    	//set the session id for using in other  methods
-    	this.setSessionID(SessionID);
+    public void processSignIn() {
     	
     	//need to login
 		if (SessionID == null) { 
@@ -248,6 +253,8 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 			//change Account Button
 			this.drawMyAccountButton();
 		
+			this.drawUser();
+			
 			//don't need the panel anymore
 			//this.clearLoginPanel();
 			
@@ -444,7 +451,10 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 			//ajax rpc success
 			public void onSuccess(Object result) {
 				SignInStatus sis = (SignInStatus) result; //cast the result into the object to use
-				processSignIn(sis.getSessionID()); //process the SessionID
+				
+				setSessionID(sis.getSessionID());
+				setUserName(sis.getUserName());
+				processSignIn(); 
 				
 				//clear loading icon
 				clearLoading();
@@ -455,6 +465,9 @@ public class SessionManagerWidget extends Composite implements ClickListener {
     }
     
     
+    public void setUserName(String sUserName) {
+    	this.sUserName = sUserName;
+    }
     
     
     

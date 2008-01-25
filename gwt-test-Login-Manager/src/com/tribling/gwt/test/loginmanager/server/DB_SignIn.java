@@ -235,11 +235,12 @@ public class DB_SignIn extends DB_Conn {
 		public SignInStatus checkSessionIsStillLegal(String SessionID) {
 			
 			int UserID = 0;
+			String UserName = null;
 			
 			SignInStatus sis = new SignInStatus();
 			
 			//String Query = "SELECT UserID FROM `session` WHERE (SessionID='" + SessionID + "');"; //add 2 weeks into this query
-			String Query = "SELECT UserID FROM `session` s WHERE (SessionID='" + SessionID + "') AND DateCreated < s.DateCreated + " + this.getSessionIntervalEnd() + ";";
+			String Query = "SELECT UserID, UserName FROM `session` s WHERE (SessionID='" + SessionID + "') AND DateCreated < s.DateCreated + " + this.getSessionIntervalEnd() + ";";
 	        
 			try {
 	        	Connection connection = this.getConn();
@@ -252,6 +253,7 @@ public class DB_SignIn extends DB_Conn {
 	        	//get db fields from record
 	        	while (result.next ()) {
 	            	UserID = result.getInt(1);
+	            	UserName = result.getString(2);
 	        	}
 
 	            result.close();
@@ -265,6 +267,7 @@ public class DB_SignIn extends DB_Conn {
 			
 	        if (UserID > 0) {
 	        	sis.setSessionID(SessionID);
+	        	sis.setUserName(UserName);
 	        } else {
 	        	sis.setSessionID(null);
 	        }
