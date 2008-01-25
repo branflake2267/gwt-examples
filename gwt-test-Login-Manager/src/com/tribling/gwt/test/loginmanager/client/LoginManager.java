@@ -12,6 +12,8 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class LoginManager implements EntryPoint {
 
+	final SessionManagerWidget SessionManager = new SessionManagerWidget();
+	
 	/**
 	 * This is the entry point method.
 	 */
@@ -20,16 +22,16 @@ public class LoginManager implements EntryPoint {
 
 
 		//Control the users session, UserID = Unique SessionID
-		final SessionManagerWidget SessionManager = new SessionManagerWidget();
 		SessionManager.addChangeListener(new ChangeListener() {
-
 			public void onChange(Widget sender) {
 				if (SessionManager.getLoginStatus() == true) {
+					//load widgets with session
 					loadPanel(SessionManager.getSessionID());
 				}
 
 				if (SessionManager.getLoginStatus() == false) {
-					//unloadWidgets();
+					//unload widgets
+					
 				}
 			}
 		});
@@ -40,7 +42,7 @@ public class LoginManager implements EntryPoint {
 	
 	public void loadPanel(String SessionID) {
 		
-		RootPanel.get().add(new Label("Logged In: SessionID" + SessionID));
+		RootPanel.get().add(new Label("LoadWidgets b/c Logged In: SessionID: " + SessionID));
 		
 	}
 	

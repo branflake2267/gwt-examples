@@ -49,7 +49,10 @@ public class AccountWidget extends Composite implements ClickListener{
 	private PasswordTextBox Password2 = new PasswordTextBox();
 	
 	private PushButton Save = new PushButton("Save");
+	private PushButton Finished = new PushButton("Finished");
 		
+	private boolean bolFinished = false;
+	
 	private String SessionID = null;
 	
 	// change listeners for this widget
@@ -105,6 +108,7 @@ public class AccountWidget extends Composite implements ClickListener{
 		HorizontalPanel hpSave = new HorizontalPanel();
 		hpSave.setHorizontalAlignment(HorizontalPanel.ALIGN_RIGHT);
 		hpSave.add(Save);
+		hpSave.add(Finished);
 		hpSave.add(pSavingStatus);
 		
 		
@@ -129,6 +133,7 @@ public class AccountWidget extends Composite implements ClickListener{
 		initWidget(vp);
 		
 		Save.addClickListener(this);
+		Finished.addClickListener(this);
 		
 		//rpc init
 		LoginManagerProvider();
@@ -163,7 +168,7 @@ public class AccountWidget extends Composite implements ClickListener{
 	 * draw on loading account data
 	 */
 	private void drawLoadingAccountData() {
-		
+		pAccountpanelLoading.clear();
 		HorizontalPanel loading = new HorizontalPanel();
 		loading.setHorizontalAlignment(HorizontalPanel.ALIGN_CENTER);
 		String sImage = GWT.getModuleBaseURL() + "loading.gif";
@@ -187,8 +192,6 @@ public class AccountWidget extends Composite implements ClickListener{
 	 * prep for transport of data
 	 */
 	private void saveData() {
-
-		//this.clearDisplayNotify(); //clear display notification
 		
 		String DisplayError = null;
 		boolean Flag = false;
@@ -288,6 +291,7 @@ public class AccountWidget extends Composite implements ClickListener{
 	}
 	
 	public void drawDisplayNotify(String s) {
+		pDisplayNotify.clear();
 		pDisplayNotify.add(new Label(s));
 	}
 
@@ -316,6 +320,14 @@ public class AccountWidget extends Composite implements ClickListener{
 		
 		if (sender == Save) {
 			this.saveData();
+		}
+		
+		if (sender == Finished) {
+			bolFinished = true;
+			//notify orginator to clear this widget
+			if (changeListeners != null) {
+				changeListeners.fireChange(this);
+			}
 		}
 		
 		//if (changeListeners != null) {
@@ -407,7 +419,6 @@ public class AccountWidget extends Composite implements ClickListener{
 	 */
     public void getAccountData(String SessionID) {
     	
-    	this.clearDisplayNotify();
     	this.drawLoadingAccountData();    	
     	
     	
@@ -448,5 +459,17 @@ public class AccountWidget extends Composite implements ClickListener{
 		}
 	}
 
+	/**
+	 * use this to notify originator object
+	 * @return
+	 */
+	public boolean getFinished() {
+		
+		boolean rtnFinished = bolFinished;
+		
+		this.bolFinished = false;
+		
+		return rtnFinished;
+	}
 	
 }
