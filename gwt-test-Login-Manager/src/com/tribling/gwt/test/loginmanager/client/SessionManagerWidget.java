@@ -77,8 +77,6 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 	
 	/**
 	 * constructor
-	 * 
-	 * 
 	 * init widget??
 	 */
 	public SessionManagerWidget() {
@@ -88,17 +86,11 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 		pLoginControls.add(pSignInStatus);
 		pLoginControls.add(pAccountButtons);
 		pLoginControls.add(pLoadingStatus); //track rpc status??
-
-		//init widgets for use
-		//pContent.add(pLoginWidget);
-		//pContent.add(pAccountWidget);
-		
 		
 		VerticalPanel vp = new VerticalPanel();
 		vp.add(pLoginControls);
 		vp.add(pContent);
-		
-		
+				
 		//init the widget
 		initWidget(vp);
 		
@@ -119,6 +111,7 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 				} else {
 					if (SessionID != null) {
 						setSessionID(SessionID);
+						setUserName(pLoginWidget.getUserName());
 						processSignIn();
 					}
 				}
@@ -255,6 +248,11 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 		
 			this.drawUser();
 			
+	    	
+	    	//update panel
+	    	pUser.clear();
+	    	pUser.add(new Label(sUserName));
+	    	
 			//don't need the panel anymore
 			//this.clearLoginPanel();
 			
@@ -291,6 +289,10 @@ public class SessionManagerWidget extends Composite implements ClickListener {
 		//close my account if open
 		pAccountWidget.processSignOut();
 		pAccountWidget.removeFromParent();
+		
+		
+		//signout of login widget, clear vars
+		pLoginWidget.processSignOut();
 		
     		
 		//is the cookie getting deleted?? 

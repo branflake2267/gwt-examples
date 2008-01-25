@@ -32,6 +32,8 @@ public class DB_SignIn extends DB_Conn {
 		private boolean isLegitUser = false;
 		private String SessionID = null;
 		
+		//private String sUserName = null;
+		
 		//send this error back for display
 		private String DisplayError = null;
 		
@@ -78,11 +80,9 @@ public class DB_SignIn extends DB_Conn {
 			//if the user is not legit return null
 			if (this.isLegitUser == false) {
 				System.out.println("Passwords do not match. Returning");
-				
-				SignInStatus ls = new SignInStatus();
-				ls.setDisplayError(this.DisplayError);
-				
-				return ls;
+				SignInStatus sis = new SignInStatus();
+				sis.setDisplayError(this.DisplayError);		
+				return sis;
 			}
 			
 			
@@ -91,11 +91,10 @@ public class DB_SignIn extends DB_Conn {
 			
 			//debug
 			System.out.println("processSignIn method successfull. Returning");
-			
 			//if we made it this far, we must have a SessionID - which is a row in a session table
 			SignInStatus ls = new SignInStatus();
 			ls.setSessionID(this.SessionID);
-			
+			ls.setUserName(this.UserName);
 			return ls;
 		}
 		
@@ -240,7 +239,8 @@ public class DB_SignIn extends DB_Conn {
 			SignInStatus sis = new SignInStatus();
 			
 			//String Query = "SELECT UserID FROM `session` WHERE (SessionID='" + SessionID + "');"; //add 2 weeks into this query
-			String Query = "SELECT UserID, UserName FROM `session` s WHERE (SessionID='" + SessionID + "') AND DateCreated < s.DateCreated + " + this.getSessionIntervalEnd() + ";";
+			String Query = "SELECT UserID, (SELECT UserName FROM user WHERE (UserID = s.UserID)) FROM `session` s " +
+					"WHERE (s.SessionID='" + SessionID + "') AND DateCreated < s.DateCreated + " + this.getSessionIntervalEnd() + ";";
 	        
 			try {
 	        	Connection connection = this.getConn();
