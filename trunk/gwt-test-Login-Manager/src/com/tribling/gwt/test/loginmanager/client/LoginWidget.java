@@ -6,6 +6,7 @@ import java.util.Date;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException;
 import com.google.gwt.user.client.rpc.InvocationException;
@@ -46,6 +47,7 @@ public class LoginWidget extends Composite implements ClickListener {
 
 	private String SessionID = null;
 	private boolean LoginStatus = false;
+	private String sUserName = null;
 	
 	//use this to display the errors
 	private HorizontalPanel pDisplayError = new HorizontalPanel();
@@ -101,20 +103,33 @@ public class LoginWidget extends Composite implements ClickListener {
 		LoginManagerProvider();
 	}
 
+	/**
+	 * get rid of these vars
+	 */
+	public void processSignOut() {
+		
+		this.UserName.setText(null);
+		this.Password.setText(null);
+		this.sUserName = null; 
+		this.SessionID = null;
+		this.bolFinished = false;
+		this.LoginStatus = false;
+		this.cbRememberMe.setChecked(false);
+	}
 
 	/**
-	 * get username text
+	 * get username text from text box
 	 * @return
 	 */
-	public String getUserName() {
+	private String getUserNameText() {
 		return UserName.getText();
 	}
 	
 	/**
-	 * get password text
+	 * get password text box
 	 * @return
 	 */
-	public String getPassword() {
+	private String getPasswordText() {
 		return Password.getText();
 	}
 	
@@ -211,14 +226,14 @@ public class LoginWidget extends Composite implements ClickListener {
 		return this.LoginStatus;
 	}
 	
-	public void drawLoading() {
+	private void drawLoading() {
 		String sImage = GWT.getModuleBaseURL() + "loading2.gif";
 	    Image image = new Image(sImage);
 	    pLoadingStatus.setTitle("Checking your user account.");
 		pLoadingStatus.add(image);
 	}
 	
-	public void clearLoading() {
+	private void clearLoading() {
 		pLoadingStatus.clear();
 	}
 
@@ -245,13 +260,13 @@ public class LoginWidget extends Composite implements ClickListener {
 	 * 
 	 * @param listener
 	 */
-	public void addChangeListener(ChangeListener listener) {
+	protected void addChangeListener(ChangeListener listener) {
 		if (changeListeners == null)
 			changeListeners = new ChangeListenerCollection();
 		changeListeners.add(listener);
 	}
 
-	public void removeChangeListener(ChangeListener listener) {
+	protected void removeChangeListener(ChangeListener listener) {
 		if (changeListeners != null)
 			changeListeners.remove(listener);
 	}
@@ -263,7 +278,7 @@ public class LoginWidget extends Composite implements ClickListener {
 	/**
 	 * Init the RPC provider
 	 */
-    public void LoginManagerProvider() {
+    private void LoginManagerProvider() {
         // Initialize the service.
     	callProvider = (LoginManagerServiceAsync) GWT.create(LoginManagerService.class);
         ServiceDefTarget target = (ServiceDefTarget) callProvider;
@@ -281,7 +296,7 @@ public class LoginWidget extends Composite implements ClickListener {
 	 * Process the sign in
 	 * 
 	 */
-    public void processSignIn() {
+    private void processSignIn() {
 		// service returns a result
 		AsyncCallback callback = new AsyncCallback() {
 			//ajax rpc fail
@@ -312,29 +327,37 @@ public class LoginWidget extends Composite implements ClickListener {
 			//ajax rpc success
 			public void onSuccess(Object result) {
 				SignInStatus sis = (SignInStatus) result; //cast the result into the object to use
+				setUserName(sis.getUserName());
 				processCallBackSignIn(sis);
 			}
+
+
 		};
 
 		// execute the service and request for rpc method
-		callProvider.processSignIn(getUserName(), getPassword(), callback);
+		callProvider.processSignIn(getUserNameText(), getPasswordText(), callback);
     }
     
 
     
 	/**
-	 * use this to notify originator object
+	 * use this to notify originator object and return with out signing in
 	 * @return
 	 */
 	public boolean getFinished() {
-		
 		boolean rtnFinished = bolFinished;
-		
 		this.bolFinished = false;
-		
 		return rtnFinished;
 	}
 	
+    public void setUserName(String sUserName) {
+    	this.sUserName = sUserName;
+    }
+    
+    public String getUserName() {
+    	return this.sUserName;
+    }
+    
 	
 	
 }//end class
