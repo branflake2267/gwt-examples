@@ -92,7 +92,7 @@ public class LoginManagerSessionCheck {
     public void drawLogin() {
     
   	  //display the widget
-  	  LoginPanelWidget lpw = new LoginPanelWidget();
+  	  LoginWidget lpw = new LoginWidget();
   	  lpw.addChangeListener(new ChangeListener() {
 
   			public void onChange(Widget sender) {

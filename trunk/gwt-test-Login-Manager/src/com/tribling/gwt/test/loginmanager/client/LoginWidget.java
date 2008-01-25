@@ -28,7 +28,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 
 
-public class LoginPanelWidget extends Composite implements ClickListener {
+public class LoginWidget extends Composite implements ClickListener {
 
 	//rpc init Var 
 	private LoginManagerServiceAsync callProvider;
@@ -51,6 +51,7 @@ public class LoginPanelWidget extends Composite implements ClickListener {
 	private HorizontalPanel pDisplayError = new HorizontalPanel();
 	private Label displayError = new Label();
 	
+	private boolean bolFinished = false;
 	
 	// change listeners for this widget
 	private ChangeListenerCollection changeListeners;
@@ -59,7 +60,7 @@ public class LoginPanelWidget extends Composite implements ClickListener {
 	/**
 	 * constructor widget setup
 	 */
-	public LoginPanelWidget() {
+	public LoginWidget() {
 		
 		pDisplayError.setStyleName("LoginPanelWidget-DisplayError");
 		pDisplayError.add(displayError);
@@ -124,10 +125,14 @@ public class LoginPanelWidget extends Composite implements ClickListener {
 		
 		//do this in the session manager
 		//WidgetPanel.clear();
+		bolFinished = true;
+		if (changeListeners != null) {
+			changeListeners.fireChange(this);
+		}
 	}
 
 	
-	public void processCallBack(SignInStatus sis) {
+	public void processCallBackSignIn(SignInStatus sis) {
 		
 		this.clearLoading();
 		
@@ -191,7 +196,8 @@ public class LoginPanelWidget extends Composite implements ClickListener {
 		if (cbRememberMe.isChecked()) {
 		    final long DURATION = 1000 * 60 * 60 * 24 * 14; //duration remembering login. 2 weeks in this example.
 		    Date expires = new Date(System.currentTimeMillis() + DURATION);
-		    Cookies.setCookie("sid", getSessionID(), expires, null, "/", false);
+		    //Cookies.setCookie("sid", getSessionID(), expires, null, "/", false);
+		    Cookies.setCookie("sid", getSessionID(), expires);
 		}
 	}
 
@@ -283,21 +289,21 @@ public class LoginPanelWidget extends Composite implements ClickListener {
 				//change something in widgets panel noting failure of rpc
 				pDisplayError.clear();
 				pDisplayError.add(new Label("Ajax/RPC Connection Error"));
-				RootPanel.get().add(new HTML("lpw caught: " + caught.toString()));
+				//RootPanel.get().add(new HTML("lpw caught: " + caught.toString()));
 			     try {
 				       throw caught;
 				     } catch (IncompatibleRemoteServiceException e) {
 				        // this client is not compatible with the server; cleanup and refresh the 
 				        // browser
-				    	RootPanel.get().add(new HTML("1RPC ERROR: " + e.toString()));
+				    	//RootPanel.get().add(new HTML("1RPC ERROR: " + e.toString()));
 						System.out.println("1RPC ERROR: " + e.toString());
 				     } catch (InvocationException e) {
 				    	 // the call didn't complete cleanly
-					     RootPanel.get().add(new HTML("2RPC ERROR: " + e.toString()));
+					     //RootPanel.get().add(new HTML("2RPC ERROR: " + e.toString()));
 						 System.out.println("2RPC ERROR: " + e.toString());
 				     } catch (Throwable e) {
 				    	 // last resort -- a very unexpected exception
-				    	 RootPanel.get().add(new HTML("3RPC ERROR: " + e.toString()));
+				    	 //RootPanel.get().add(new HTML("3RPC ERROR: " + e.toString()));
 				    	 System.out.println("3RPC ERROR: " + e.toString());
 				     }
 			
@@ -306,7 +312,7 @@ public class LoginPanelWidget extends Composite implements ClickListener {
 			//ajax rpc success
 			public void onSuccess(Object result) {
 				SignInStatus sis = (SignInStatus) result; //cast the result into the object to use
-				processCallBack(sis);
+				processCallBackSignIn(sis);
 			}
 		};
 
@@ -316,7 +322,19 @@ public class LoginPanelWidget extends Composite implements ClickListener {
     
 
     
-
+	/**
+	 * use this to notify originator object
+	 * @return
+	 */
+	public boolean getFinished() {
+		
+		boolean rtnFinished = bolFinished;
+		
+		this.bolFinished = false;
+		
+		return rtnFinished;
+	}
+	
 	
 	
 }//end class
