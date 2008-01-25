@@ -1,8 +1,7 @@
 
 #LoginPanel {
 }
-#LoginStatus {
-}
+
 
 .LoginPanelWidget {
 	border: 1px solid #c6caff;
@@ -10,7 +9,6 @@
 	padding: 4px;
 	background-color: #C0D9FF;
 }
-
 	.LoginPanelWidget-DisplayError {
 		font-weight: bold;
 		color: #00ff00;
@@ -32,6 +30,7 @@
 	width: 75px;
 	font-weight: bold;
 }
+
 
 
 body {

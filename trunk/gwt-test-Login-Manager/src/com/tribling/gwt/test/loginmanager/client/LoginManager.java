@@ -35,7 +35,7 @@ public class LoginManager implements EntryPoint {
 				}
 			}
 		});
-		RootPanel.get("LoginStatus").add(SessionManager);
+		RootPanel.get("LoginPanel").add(SessionManager);
 		
 	}
 	

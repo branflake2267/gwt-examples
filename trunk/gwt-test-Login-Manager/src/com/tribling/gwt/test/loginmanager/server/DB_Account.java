@@ -49,24 +49,17 @@ public class DB_Account extends DB_Conn {
 		}
 		
 		
-		//check UserName exists, if new user 
-		if (UserID < 0) {
-			UserNameExists = checkUserNameExists(sUserName);
-		
-			System.out.println("User Exists");
-			
-			if (UserNameExists == true) {
-				sDisplayError = "User name already exists.";
-			}
+		//check if user already exists
+		UserNameExists = checkUserNameExists(sUserName);
+		if (UserNameExists == true) {
+			sDisplayError = "User name already exists.";
 		}
+		
 		
 		//make new hash for password
 		if (sPassword.equals("") == false) {
-			
 			System.out.println("making password hash");
-			
-			sPassword_Hash = hashPassword(sPassword);
-			
+			sPassword_Hash = hashPassword(sPassword);			
 			sPassAdd = " ,Password_Hash='"+sPassword_Hash+"' ";
 		}
 		
@@ -122,7 +115,7 @@ public class DB_Account extends DB_Conn {
 	
 	public boolean checkUserNameExists(String UserName) {
         
-		String Query = "SELECT UserID FROM `user` WHERE (UserName='"+UserName+"')";
+		String Query = "SELECT UserID FROM `user` WHERE (UserName='" + UserName + "')";
 		
 		boolean Flag = false;
 		

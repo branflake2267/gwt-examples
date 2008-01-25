@@ -240,7 +240,8 @@ public class DB_SignIn extends DB_Conn {
 			
 			//String Query = "SELECT UserID FROM `session` WHERE (SessionID='" + SessionID + "');"; //add 2 weeks into this query
 			String Query = "SELECT UserID, (SELECT UserName FROM user WHERE (UserID = s.UserID)) FROM `session` s " +
-					"WHERE (s.SessionID='" + SessionID + "') AND DateCreated < s.DateCreated + " + this.getSessionIntervalEnd() + ";";
+							"WHERE (s.SessionID='" + SessionID + "') AND (DateCreated < s.DateCreated + " + this.getSessionIntervalEnd() + ") " +
+							"AND UserID IN (SELECT UserID FROM `user` WHERE (UserID = s.UserID));";
 	        
 			try {
 	        	Connection connection = this.getConn();
