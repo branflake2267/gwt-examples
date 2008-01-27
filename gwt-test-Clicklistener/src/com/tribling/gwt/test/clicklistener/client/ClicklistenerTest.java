@@ -16,7 +16,9 @@ public class ClicklistenerTest implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
+		
 		Combine c = new Combine();
 		c.draw();
+		
 	}
 }
