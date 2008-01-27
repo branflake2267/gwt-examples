@@ -10,10 +10,12 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class Combine implements ClickListener {
 
+	//panel to work with
 	private HorizontalPanel pColorTrack = new HorizontalPanel();
 
-	// panels work with
+	// panel work with
 	private HorizontalPanel pMenu = new HorizontalPanel();
+	
 	// panel widget
 	private PanelWidget pw = new PanelWidget();
 
