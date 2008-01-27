@@ -39,7 +39,7 @@ pLoading.add(image);
 //myString.equals(OtherString) is boolean
 
 //init all strings = "" if using ".equals"!
-String myString = ""
+String myString = "";
 
 //like (this == that)
 if (myString.equals(myOtherString)) {
