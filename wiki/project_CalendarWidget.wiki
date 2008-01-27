@@ -4,12 +4,12 @@
  This is more than a date picker to me. So I wrote a DayWidget class to fit inside of every grid, day. This DayWidget observes for clicks and will contain the content that I intend to put in each cell.
 
  == Demo ==
- This is the demo of the source code in the repository.
+  This is the demo of the source code in the repository.
  [http://tribling.com:8180/Calendar/Calendar.html]
 
  == SVN ==
- Download the eclipse project from the repository. [http://gwt-examples.googlecode.com/svn/trunk/gwt-Calendar/src/com/tribling/gwt/test/calendar/client/ SVN Source]
+  Download the eclipse project from the repository. [http://gwt-examples.googlecode.com/svn/trunk/gwt-Calendar/src/com/tribling/gwt/test/calendar/client/ SVN Source]
  == Code from Calendar Widget ==
- Download the latest revision from the repository.
+  Download the latest revision from the repository.
 {{{
 }}}
