@@ -10,3 +10,6 @@
  == SVN ==
  Download the eclipse project from the repository. [http://gwt-examples.googlecode.com/svn/trunk/gwt-Calendar/src/com/tribling/gwt/test/calendar/client/ SVN Source]
  == Code from Calendar Widget ==
+ Download the latest revision from the repository.
+{{{
+}}}
