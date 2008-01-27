@@ -51,7 +51,7 @@ public class CalendarWidget extends Composite implements ClickListener {
 		 */
 		public DayWidget() {
 
-			//TODO - set cursor over text
+			
 
 			//create focus panels that observe
 			pDayNumber.add(new Label(Integer.toString(SelectedDay)));
