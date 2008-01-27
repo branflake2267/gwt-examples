@@ -27,19 +27,13 @@ import java.util.zip.ZipOutputStream;
  * !!!!!!!!!!!Compile your project in the eclipse gwt debugger before you run this
  *
  * Wants
- * TODO - figure out what project directory this file is in when ran as java application
- * TODO - Compile project first
- * TODO - add var for production folder
- * TODO - add index page 
- * TODO - upload to server via tomcat deploy
+ * TODO - Figure out what project directory this file is in when ran as java application
+ * TODO - Auto Compile project first
+ * TODO - upload to server via tomcat url deploy
  * 
  * Maybes
- * TODO - var for www files location? hmmmm
  * TODO - dont zip .svn*
- * TODO - move www files to root maybe
  * TODO - Ask for username and password for tomcat deploy, instead of static var
- * TODO - better name space for some of the vars like change ProjectClassName
- * TODO - maybe add a little more error checking in spots
  */
 public class TomcatWarBuilder {
 
