@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app>
+<display-name>gwt-Calendar Compiled: Sun Jan 27 05:30:16 GMT 2008</display-name>
+<description>Google Web Toolkit Project</description>
+<servlet>
+<servlet-name>Calendar</servlet-name>
+<servlet-class>null</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>Calendar</servlet-name>
+<url-pattern>null</url-pattern>
+</servlet-mapping>
+</web-app>
