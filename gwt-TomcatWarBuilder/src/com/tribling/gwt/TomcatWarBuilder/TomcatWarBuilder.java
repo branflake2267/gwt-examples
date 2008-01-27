@@ -100,11 +100,13 @@ public class TomcatWarBuilder {
 		
 		
 		// project directory
-		ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
+		//ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-DisplayDate";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Clicklistener";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RPC-adv";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Login-Manager";
+		ProjectDirectory = "/home/branflake2267/workspace/gwt-Calendar";
+		
 		
 		//Compile project??????
 		//do this with eclipse debugger button
@@ -212,16 +214,21 @@ public class TomcatWarBuilder {
 		String WebXML = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
 		"<web-app>\n" +
 		  "<display-name>gwt-" + ProjectName + " Compiled: " + getDate() + "</display-name>\n" +
-		  "<description>Google Web Toolkit Project</description>\n" +
-		  "<servlet>\n" +
-		    "<servlet-name>" + ProjectName + "</servlet-name>\n" +
-		    "<servlet-class>" + ServletClassName + "</servlet-class>\n" +
+		  "<description>Google Web Toolkit Project</description>\n";
+		
+		if (ServletClassName != null) {
+		 WebXML += "<servlet>\n" + 
+		   "<servlet-name>" + ProjectName + "</servlet-name>\n" +
+		   "<servlet-class>" + ServletClassName + "</servlet-class>\n" +
 		 "</servlet>\n" +
-		  "<servlet-mapping>\n" +
+		    "<servlet-mapping>\n" +
 		    "<servlet-name>" + ProjectName + "</servlet-name>\n" +
 		    "<url-pattern>" + ServletPath + "</url-pattern>\n" +
-		  "</servlet-mapping>\n" +
-		"</web-app>\n";
+		  "</servlet-mapping>\n";
+		}
+		
+		WebXML += "</web-app>\n";
+		
 		return WebXML;
 	}
 	
