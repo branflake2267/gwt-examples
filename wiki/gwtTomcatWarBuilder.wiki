@@ -2,13 +2,13 @@
 #labels Featured
 
 = Tomcat War Builder =
- Build, Compile gwt project, into a servlet for tomcat. Make your rpc happen. Archive, zip up your project in a war file. Deploy it to a tomcat server. I built this script to build my war files for my gwt projects. This helps deploying a project for production testing.
- * Time Stamps display name so you know when you deployed it.
- * Compiles your project into a ~/production folder
- * Imports your dependency jars into the ~/production/WEB-INF/libs folder
- * Imports Your dependency classes into the ~/production/WEB-INF/classes folder
- * Creates a home page for easy navigation
- * This script makes it easy to quickly deploy newly compiled gwt code
+ Build or Compile a gwt project, into a servlet package ready for tomcat. Make your rpc or non rpc project happen with this script. Archive (zip up) your project into a war file. Deploy it by uploading the war file to your tomcat server. I built this to compile my gwt projects into a war package for my tomcat server. This helps with quickly deploying a project to a tomcat server.
+ * It time stamps the display name so you know when you deployed the gwt module.
+ * It auto compiles the files into a ~/production folder ready for war archive
+ * It auto Imports your dependency jars into the ~/production/WEB-INF/libs folder
+ * It auto imports your dependency classes into the ~/production/WEB-INF/classes folder
+ * it auto creates a home page for easy navigation
+ * This script makes it easy to quickly deploy newly compiled gwt projects server for production testing.
 
  == Directions ==
  # Import this Project into eclipse or other java IDE (this script does not depend on eclipse)
