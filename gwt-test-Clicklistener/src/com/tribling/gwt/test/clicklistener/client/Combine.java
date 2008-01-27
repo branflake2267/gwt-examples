@@ -52,6 +52,7 @@ public class Combine implements ClickListener {
 		});
 
 		// add the panel widget to the page
+		RootPanel.get().add(pw);
 	}
 
 	// not used yet
