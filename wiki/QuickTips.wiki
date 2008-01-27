@@ -38,8 +38,8 @@ pLoading.add(image);
 {{{
 //myString.equals(OtherString) is boolean
 
-//init all strings = null if using ".equals"!
-String myString = null;
+//init all strings = "" if using ".equals"!
+String myString = ""
 
 //like (this == that)
 if (myString.equals(myOtherString)) {
