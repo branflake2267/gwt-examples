@@ -38,7 +38,7 @@
  == Here is the script for look over == 
  This script works on my system. I do have some todos, wants, maybes to add later over time.
 {{{
-package com.tribling.gwt.test.TomcatWarBuilder;
+package com.tribling.gwt.TomcatWarBuilder;
 
 
 import java.io.BufferedReader;
@@ -49,6 +49,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
@@ -66,18 +67,13 @@ import java.util.zip.ZipOutputStream;
  * !!!!!!!!!!!Compile your project in the eclipse gwt debugger before you run this
  *
  * Wants
- * TODO - figure out what project directory this file is in when ran as java application
- * TODO - Compile project first
- * TODO - add var for production folder
- * TODO - upload to server via tomcat deploy
+ * TODO - Figure out what project directory this file is in when ran as java application
+ * TODO - Auto Compile project first
+ * TODO - upload to server via tomcat url deploy
  * 
  * Maybes
- * TODO - var for www files location? hmmmm
  * TODO - dont zip .svn*
- * TODO - move www files to root maybe
  * TODO - Ask for username and password for tomcat deploy, instead of static var
- * TODO - better name space for some of the vars like change ProjectClassName
- * TODO - maybe add a little more error checking in spots
  */
 public class TomcatWarBuilder {
 
@@ -141,7 +137,9 @@ public class TomcatWarBuilder {
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-DisplayDate";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Clicklistener";
-		ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RPC-adv";
+		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RPC-adv";
+		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Login-Manager";
+		ProjectDirectory = "/home/branflake2267/workspace/gwt-Calendar";
 		
 		
 		//Compile project??????
@@ -249,19 +247,32 @@ public class TomcatWarBuilder {
 	public static String createWebXMLFileContents() {
 		String WebXML = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
 		"<web-app>\n" +
-		  "<display-name>gwt-" + ProjectName + "</display-name>\n" +
-		  "<description>Google Web Toolkit Project</description>\n" +
-		  "<servlet>\n" +
-		    "<servlet-name>" + ProjectName + "</servlet-name>\n" +
-		    "<servlet-class>" + ServletClassName + "</servlet-class>\n" +
+		  "<display-name>gwt-" + ProjectName + " Compiled: " + getDate() + "</display-name>\n" +
+		  "<description>Google Web Toolkit Project</description>\n";
+		
+		if (ServletClassName != null) {
+		 WebXML += "<servlet>\n" + 
+		   "<servlet-name>" + ProjectName + "</servlet-name>\n" +
+		   "<servlet-class>" + ServletClassName + "</servlet-class>\n" +
 		 "</servlet>\n" +
-		  "<servlet-mapping>\n" +
+		    "<servlet-mapping>\n" +
 		    "<servlet-name>" + ProjectName + "</servlet-name>\n" +
 		    "<url-pattern>" + ServletPath + "</url-pattern>\n" +
-		  "</servlet-mapping>\n" +
-		"</web-app>\n";
+		  "</servlet-mapping>\n";
+		}
+		
+		WebXML += "</web-app>\n";
+		
 		return WebXML;
 	}
+	
+	
+	public static String getDate() {
+		Date date = new Date();
+		String now = date.toString();
+		return now;
+	}
+	
 	
 	/**
 	 * create an index page for easy module access
@@ -556,7 +567,7 @@ public class TomcatWarBuilder {
 	 */
 	public static void getServletClassFromXMLFile() {
 
-		Pattern p = Pattern.compile("<servlet.*class=['|\"](.*)['|\"]/>");
+		Pattern p = Pattern.compile("<servlet.*?class=['|\"](.*?)['|\"].*?path.*?/>");
 		Matcher m = p.matcher(ProjectGWTxmlFileContents);
 		boolean found = m.find();
 
@@ -566,6 +577,7 @@ public class TomcatWarBuilder {
 
 		//debug
 		System.out.println("ServletClassName: " + ServletClassName);
+		System.out.println("");
 	}
 
 	
@@ -1038,4 +1050,5 @@ public class TomcatWarBuilder {
 	
 	
 }//end
+
 }}}
