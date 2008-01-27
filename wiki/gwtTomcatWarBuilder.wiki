@@ -7,7 +7,7 @@
  * It auto compiles the files into a ~/production folder ready for war archive
  * It auto Imports your dependency jars into the ~/production/WEB-INF/libs folder
  * It auto imports your dependency classes into the ~/production/WEB-INF/classes folder
- * it auto creates a home page for easy navigation
+ * It auto creates a home page for easy navigation
  * This script makes it easy to quickly deploy newly compiled gwt projects server for production testing.
 
  == Directions ==
