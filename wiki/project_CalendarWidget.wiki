@@ -5,7 +5,7 @@
 
  == Demo ==
   This is the demo of the source code in the repository.
- [http://tribling.com:8180/Calendar/Calendar.html]
+  [http://tribling.com:8180/Calendar/Calendar.html]
 
  == SVN ==
   Download the eclipse project from the repository.  [http://gwt-examples.googlecode.com/svn/trunk/gwt-Calendar/src/com/tribling/gwt/test/calendar/client/ SVN Source]
