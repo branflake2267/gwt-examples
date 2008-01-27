@@ -1,19 +1,34 @@
 package com.tribling.gwt.test.clicklistener.client;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class Combine implements ClickListener {
 
-	String sAlert = null;
+	private HorizontalPanel pColorTrack = new HorizontalPanel();
+
+	// panels work with
+	private HorizontalPanel pMenu = new HorizontalPanel();
+	// panel widget
+	private PanelWidget pw = new PanelWidget();
 
 	/**
 	 * constructor
 	 */
 	public Combine() {
+
+		pMenu.add(new HTML("Track:&nbsp;"));
+
+		HorizontalPanel hp = new HorizontalPanel();
+		hp.add(pMenu);
+		hp.add(pColorTrack);
+
+		RootPanel.get().add(hp);
 	}
 
 	/**
@@ -21,33 +36,23 @@ public class Combine implements ClickListener {
 	 */
 	public void draw() {
 
-		// Panel Reload Widget
-		final PanelReloadWidget prw = new PanelReloadWidget();
-
-		// panel reload widget clicklistener
-		prw.addChangeListener(new ChangeListener() {
+		// this observes events in panel widget
+		pw.addChangeListener(new ChangeListener() {
 
 			public void onChange(Widget sender) {
+				String color = pw.getColor();
 
-				String Id = prw.getMyID();
-				String color = prw.getColor();
+				// Window.alert(color);
 
-				if (Id != null) {
-					sAlert = Id;
-				} else if (color != null) {
-					sAlert = color;
-					prw.changePanelColor(color);
-				}
-
-				Window.alert("Selected: " + sAlert);
+				pColorTrack.clear();
+				pColorTrack.add(new Label(color));
 			}
 		});
 
-		// add the panel reload widget to the text panel id
-		RootPanel.get("testPanel").add(prw);
-
+		// add the panel widget to the page
 	}
 
+	// not used yet
 	public void onClick(Widget sender) {
 	}
 
