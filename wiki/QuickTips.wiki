@@ -148,7 +148,7 @@ public class CalculatorWidget extends Composite implements ClickListener, Keyboa
 		default:
 			
 			//Dont press numlock in debugger or u get a Gnome session error, and have to restart session
-			//ten key numbers - number pad
+			//ten key numbers - numlock on - number pad
 			String keyPressed = Character.toString(keyCode);
 			if (keyPressed.equals("`")) {//0
 			} else if (keyPressed.equals("a")) { //1
