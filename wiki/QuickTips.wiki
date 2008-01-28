@@ -87,8 +87,8 @@ public void onClick(Widget sender) {
 }}}
 
 == Keyboardlistener ==
-* Example of a keyboard listener. Listen to ten key or number pad with numlock on.
-* [http://google-web-toolkit.googlecode.com/svn/javadoc/1.4/com/google/gwt/user/client/ui/KeyboardListener.html GWT LIB Reference]
+ * Example of a keyboard listener. Listen to ten key or number pad with numlock on.
+ * [http://google-web-toolkit.googlecode.com/svn/javadoc/1.4/com/google/gwt/user/client/ui/KeyboardListener.html GWT Keyboardlistener Class Reference]
 {{{
 public class CalculatorWidget extends Composite implements ClickListener, KeyboardListener {
         TextBox tbDisplay = new TextBox();
