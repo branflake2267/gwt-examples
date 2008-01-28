@@ -103,14 +103,14 @@ public class CalculatorWidget extends Composite implements ClickListener, Keyboa
 	}
 
 
+public void onClick(Widget sender) {
+	}
+	
 	public void onKeyDown(Widget sender, char keyCode, int modifiers) {
 	}
 	
 	public void onKeyPress(Widget sender, char keyCode, int modifiers) {
-	}
 	
-	public void onKeyUp(Widget sender, char keyCode, int modifiers) {
-
 		RootPanel.get().add(new Label("key pressed: " + keyCode + " modifier: " + modifiers));
 		
 		switch (keyCode) {
@@ -149,17 +149,25 @@ public class CalculatorWidget extends Composite implements ClickListener, Keyboa
 		default:
 			
 			String keyPressed = Character.toString(keyCode);
-			if (keyPressed.equals("=") & (modifiers == 1)) { //+	
-			} else if (keyPressed.equals("8") & (modifiers == 1)) { //*
-			} else	if (keyPressed.equals("-")) { //-
+		
+			if (keyPressed.equals("+") & (modifiers == 1) | keyPressed.equals("+")) { // +	
+			} else if ((keyPressed.equals("8") & (modifiers == 1)) | keyPressed.equals("*")) { // *
+			} else if (keyPressed.equals("-")) { // -
 			} else if (keyPressed.equals("/")) { // /
 			} else if (keyPressed.equals("=")) { // =
 			} else if (Character.isDigit(keyCode)) { //0-9
+			} else if (keyPressed.equals("=") | keyPressed.equals("")) { // - and enter
 			} else { //all other characters
 				Window.alert("others");
 			}
 
 			break;
 		}//end case
+	}//end onKeyPress
+	
+	public void onKeyUp(Widget sender, char keyCode, int modifiers) {	
+	}
+		
+	
 }
 }}}
