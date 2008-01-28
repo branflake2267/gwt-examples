@@ -85,3 +85,93 @@ public void onClick(Widget sender) {
   }
 }
 }}}
+
+== Keyboardlistener ==
+Example of a keyboard listener. 
+{{{
+	public void onKeyDown(Widget sender, char keyCode, int modifiers) {
+	}
+	
+	public void onKeyPress(Widget sender, char keyCode, int modifiers) {
+	}
+	
+	public void onKeyUp(Widget sender, char keyCode, int modifiers) {
+
+		RootPanel.get().add(new Label("key pressed: " + keyCode + " modifier: " + modifiers));
+		
+		switch (keyCode) {
+		case KeyboardListener.KEY_ALT: 
+			break;
+		case KeyboardListener.KEY_BACKSPACE:
+			break;
+		case KeyboardListener.KEY_CTRL:
+			break;
+		case KeyboardListener.KEY_DELETE:
+			break;
+		case KeyboardListener.KEY_DOWN:
+			break;
+		case KeyboardListener.KEY_END:
+			break;
+		case KeyboardListener.KEY_ENTER:
+			break;
+		case KeyboardListener.KEY_ESCAPE:
+			break;
+		case KeyboardListener.KEY_HOME:
+			break;
+		case KeyboardListener.KEY_LEFT:
+			break;
+		case KeyboardListener.KEY_PAGEDOWN:
+			break;
+		case KeyboardListener.KEY_PAGEUP:
+			break;
+		case KeyboardListener.KEY_RIGHT:
+			break;
+		case KeyboardListener.KEY_SHIFT:
+			break;
+		case KeyboardListener.KEY_TAB:
+			break;
+		case KeyboardListener.KEY_UP:
+			break;
+		default:
+			
+			//Dont press numlock in debugger or u get a Gnome session error, and have to restart session
+			//ten key numbers - number pad
+			String keyPressed = Character.toString(keyCode);
+			if (keyPressed.equals("`")) {//0
+		
+			} else if (keyPressed.equals("a")) { //1
+			} else if (keyPressed.equals("b")) { //2
+			} else if (keyPressed.equals("c")) { //3
+			} else if (keyPressed.equals("d")) { //4
+			} else if (keyPressed.equals("e")) { //5
+			} else if (keyPressed.equals("f")) { //6
+			} else if (keyPressed.equals("g")) { //7
+			} else if (keyPressed.equals("h")) { //8
+			} else if (keyPressed.equals("i")) { //9
+			} else if (keyPressed.equals("i")) { //.
+			} else if (keyPressed.equals("o")) { // /
+			} else if (keyPressed.equals("j")) { // *
+			} else if (keyPressed.equals("m")) { // -
+			} else if (keyPressed.equals("k")) { // +
+			} else if (keyPressed.equals("")) { // enter - no keyCode
+			}
+			
+			//regular keyboard
+			//shift chars
+			if (keyPressed.equals("=") & (modifiers == 1)) { //+
+				
+			} else if (keyPressed.equals("8") & (modifiers == 1)) { //*
+			
+			} else
+			
+			//regular keyboard
+			//non shift chars
+			if (keyPressed.equals("-")) { //-
+				
+			} else if (keyPressed.equals("¿")) {
+				
+			}
+			
+			break;
+		}
+}}}
