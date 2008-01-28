@@ -152,7 +152,7 @@ public class CalculatorWidget extends Composite implements ClickListener, Keyboa
 			if (keyPressed.equals("=") & (modifiers == 1)) { //+	
 			} else if (keyPressed.equals("8") & (modifiers == 1)) { //*
 			} else	if (keyPressed.equals("-")) { //-
-			} else if (keyPressed.equals("¿")) { // /
+			} else if (keyPressed.equals("/")) { // /
 			} else if (keyPressed.equals("=")) { // =
 			} else if (Character.isDigit(keyCode)) { //0-9
 			} else { //all other characters
