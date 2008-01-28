@@ -97,6 +97,8 @@ public class CalculatorWidget extends Composite implements ClickListener, Keyboa
 
 		//listen to display
 		tbDisplay.addKeyboardListener(this);
+
+                RootPanel.get().add(tbDisplay);
 	}
 
 
@@ -149,7 +151,6 @@ public class CalculatorWidget extends Composite implements ClickListener, Keyboa
 			//ten key numbers - number pad
 			String keyPressed = Character.toString(keyCode);
 			if (keyPressed.equals("`")) {//0
-		
 			} else if (keyPressed.equals("a")) { //1
 			} else if (keyPressed.equals("b")) { //2
 			} else if (keyPressed.equals("c")) { //3
@@ -170,17 +171,13 @@ public class CalculatorWidget extends Composite implements ClickListener, Keyboa
 			//regular keyboard
 			//shift chars
 			if (keyPressed.equals("=") & (modifiers == 1)) { //+
-				
 			} else if (keyPressed.equals("8") & (modifiers == 1)) { //*
-			
 			} else
 			
 			//regular keyboard
 			//non shift chars
 			if (keyPressed.equals("-")) { //-
-				
-			} else if (keyPressed.equals("¿")) {
-				
+			} else if (keyPressed.equals("¿")) {// /
 			}
 			
 			break;
