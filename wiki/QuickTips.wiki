@@ -87,8 +87,19 @@ public void onClick(Widget sender) {
 }}}
 
 == Keyboardlistener ==
-Example of a keyboard listener. 
+* Example of a keyboard listener. 
+* [http://google-web-toolkit.googlecode.com/svn/javadoc/1.4/com/google/gwt/user/client/ui/KeyboardListener.html GWT LIB Reference]
 {{{
+public class CalculatorWidget extends Composite implements ClickListener, KeyboardListener {
+        TextBox tbDisplay = new TextBox();
+
+   	public CalculatorWidget() {
+
+		//listen to display
+		tbDisplay.addKeyboardListener(this);
+	}
+
+
 	public void onKeyDown(Widget sender, char keyCode, int modifiers) {
 	}
 	
@@ -174,4 +185,5 @@ Example of a keyboard listener.
 			
 			break;
 		}
+}
 }}}
