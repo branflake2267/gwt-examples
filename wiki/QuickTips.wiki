@@ -154,9 +154,8 @@ public void onClick(Widget sender) {
 			} else if ((keyPressed.equals("8") & (modifiers == 1)) | keyPressed.equals("*")) { // *
 			} else if (keyPressed.equals("-")) { // -
 			} else if (keyPressed.equals("/")) { // /
-			} else if (keyPressed.equals("=")) { // =
 			} else if (Character.isDigit(keyCode)) { //0-9
-			} else if (keyPressed.equals("=") | keyPressed.equals("")) { // - and enter
+			} else if (keyPressed.equals("=")) { // =
 			} else { //all other characters
 				Window.alert("others");
 			}
