@@ -172,7 +172,7 @@ public void onClick(Widget sender) {
 }}}
 
 == Get ListBox Value's Index ==
-  Here is a method used to find the value's index, so then you can setSelected for listbox by value. 
+ Here is a method used to find the value's index, so then you can setSelected for listbox by value. 
 {{{
 /**
  * get list box value's index
@@ -194,5 +194,36 @@ public int getListBoxIndexByValue(ListBox lb, String SelectedValue) {
 	}
 	return 0;
 }
-
 }}}
+
+== Get Widgets Data In a Panel ==
+ Getting Widgets in a panel is a nice way to interact with widgets you make. You can add several widgets into a panel, and get all of them by looping through the widgets in the panel. I make a specific panel to put all my reminder widgets in. Then I gather data and use it elsewhere.
+{{{
+/**
+ * get my reminders
+ * @return ReminderData
+ */
+private ReminderData[] getReminderData() {
+	
+        //count my reminders i have in the verticalpanel pReminder
+	int count = pReminder.getWidgetCount();
+	
+        //I use ReminderData object to transport my data around
+	ReminderData[] reminderData = new ReminderData[count];
+	
+        //loop through my ReminderWidget(s) in the pReminderPanel
+	for (int i=0; i < count; i++) {
+
+                //cast the widget to my ReminderWidget
+		ReminderWidget rw = (ReminderWidget) pReminder.getWidget(i);
+
+                //I use a method to gather up the values in the reminder Widget
+		reminderData[i] = rw.getReminderData();
+	}
+
+        //then I return the values to the next object, and then to rpc
+	return reminderData;
+}
+}}}
+
+
