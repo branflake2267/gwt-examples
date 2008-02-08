@@ -196,7 +196,7 @@ public int getListBoxIndexByValue(ListBox lb, String SelectedValue) {
 }
 }}}
 
-== Get Widgets Data In a Panel ==
+== Get Widget(s) Data In a Panel ==
  Getting Widgets in a panel is a nice way to interact with widgets you make. You can add several widgets into a panel, and get all of them by looping through the widgets in the panel. I make a specific panel to put all my reminder widgets in. Then I gather data and use it elsewhere.
 {{{
 /**
@@ -225,5 +225,3 @@ private ReminderData[] getReminderData() {
 	return reminderData;
 }
 }}}
-
-
