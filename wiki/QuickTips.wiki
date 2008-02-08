@@ -103,7 +103,7 @@ public class CalculatorWidget extends Composite implements ClickListener, Keyboa
 	}
 
 
-public void onClick(Widget sender) {
+        public void onClick(Widget sender) {
 	}
 	
 	public void onKeyDown(Widget sender, char keyCode, int modifiers) {
