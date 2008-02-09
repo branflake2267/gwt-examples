@@ -162,3 +162,26 @@ try {
 	
 }
 }}}
+
+
+ == Escape String For SQL ==
+ Apache has some cool functions for escaping strings. This can only be run on server side, preparing the sql data for insert. You don't have to unescape b/c it comes out as is. It just allows you to save with "'" '"' in the string.
+ * Right Click Project > Build Path > Configure Build Path > Libraries > Add External Jar
+ * Link to Apache jar documentation: [http://commons.apache.org/lang/api-release/index.html?org/apache/commons/lang/StringEscapeUtils.html Classes Documentation]
+ * Download Jar: [http://commons.apache.org/lang/ Goto Download]
+
+{{{
+import org.apache.commons.lang.StringEscapeUtils;
+
+/**
+ * escape string to db
+ * @param s
+ * @return
+ */
+protected static String escapeForSql(String s) {
+
+	String rtn = StringEscapeUtils.escapeSql(s);
+	
+	return rtn;
+}
+}}}
