@@ -169,7 +169,6 @@ try {
  * Right Click Project > Build Path > Configure Build Path > Libraries > Add External Jar
  * Link to Apache jar documentation: [http://commons.apache.org/lang/api-release/index.html?org/apache/commons/lang/StringEscapeUtils.html Classes Documentation]
  * Download Jar: [http://commons.apache.org/lang/ Goto Download]
-
 {{{
 import org.apache.commons.lang.StringEscapeUtils;
 
