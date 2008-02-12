@@ -2,5 +2,4 @@
 
 = Good GWT documentation =
 
-[http://code.google.com/p/bunsenandbeaker/w/list Good Docs]
-
+[http://code.google.com/p/bunsenandbeaker/w/list Official Google Docs]
