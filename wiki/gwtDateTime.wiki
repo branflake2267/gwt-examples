@@ -14,6 +14,7 @@
 == Unix Time Stamp with TimeZone Offset ==
 {{{
 Date date = new Date();
+int timezoneMin = date.getTimezoneOffset();
 int TimeStamp = (int) (date.getTime() * .001) - timezoneMin * 60; //do timestamp with timzone
 }}}
 
