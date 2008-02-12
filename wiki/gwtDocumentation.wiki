@@ -1,0 +1,6 @@
+#summary gwt Documentation links
+
+= Good GWT documentation =
+
+[http://code.google.com/p/bunsenandbeaker/w/list Good Docs]
+
