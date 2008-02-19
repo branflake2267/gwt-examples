@@ -17,5 +17,5 @@
 
 
 
-== GOOD JOB ==
+== Good Job ==
  * wow, cool svn browsing now!
