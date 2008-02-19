@@ -17,6 +17,7 @@
  * add apis to ubuntu repository so updater could notify of the latest updates, and could be auto download via repository. (same for rpm repository). Make it easy for developers to stay uptodate with the latest api downloads. Stick the downloads in /opt/Google/api, add link to desktop
  * I would really like to see stats. how many api (gwt,android) downloads have happened.  
  * Show project popularity, like sourceforge. Show project activity, show project downloads? 
+ * Google analytics didn't allow me to rename the domain code.google.com when I set that up. (this may have changed)
 
 == Good Job ==
  * wow, cool svn browsing now!
