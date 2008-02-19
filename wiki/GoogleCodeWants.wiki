@@ -15,7 +15,8 @@
  * this is a dream, but would be nice if you have tomcat server access with project for your GWT projects. For instance i develop a tutorial, it would be cool to upload it to your tomcat server, so I could breg about it. As well it would be popular as well if I could mesh that in with adsense. Overall it would lead to more people coming to your services.
  * Color code wiki code in textarea box, like eclipse IDE would color code, this would help in wiki editing, OR make your own a wiki rich text editor.
  * add apis to ubuntu repository so updater could notify of the latest updates, and could be auto download via repository. (same for rpm repository). Make it easy for developers to stay uptodate with the latest api downloads. Stick the downloads in /opt/Google/api, add link to desktop
-
+ * I would really like to see stats. how many api (gwt,android) downloads have happened.  
+ * Show project popularity, like sourceforge. Show project activity, show project downloads? 
 
 == Good Job ==
  * wow, cool svn browsing now!
