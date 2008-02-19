@@ -13,8 +13,7 @@
  * include code snippet from svn repository into wiki via include tag <include lines='25-50'  file='source/file/file.java'/ >
  * private project would be really cool!
  * this is a dream, but would be nice if you have tomcat server access with project for your GWT projects. For instance i develop a tutorial, it would be cool to upload it to your tomcat server, so I could breg about it. As well it would be popular as well if I could mesh that in with adsense. Overall it would lead to more people coming to your services.
- * Colorcode wiki syntax like eclipse IDE, this would help in wiki editing, OR make your own a wiki rich text editor. I am sure those two GWT developers that said it was hard to make the gwt rich text editor would love that challenge :).
-
+ * Colorcode wiki syntax like eclipse IDE, this would help in wiki editing, OR make your own a wiki rich text editor.
 
 
 == Good Job ==
