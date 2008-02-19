@@ -7,6 +7,15 @@
  * Add tab for Google Forums for this project
  * Fix the ? marks that show up when the parser doesn't recognize something.
  * Edit Pages in blocks like wikipedia.
- * Blow up wiki editor window (overlay), nice for bigger resolutions
- * Seperate the HomePage Summary and other blog settings elements to a another tab. Its annoying to not be able to preview hompage/summary before save. Make it show up in the wiki list. Making the homepage/firstpage easier to edit. Maybe allow which wiki page is the first page to show?
+ * Blow up wiki editor window (overlay) when eidting, like gmail, when composing, nice for bigger resolutions
+ * Separate the HomePage Summary (into its own wiki page) and other blog settings elements to a another tab. Its annoying to not be able to preview hompage/summary before save. Make it show up in the wiki list. Making the homepage/firstpage easier to edit. Maybe allow which wiki page is the first page to show?
  * Demo area (tab) would be really cool, where I could show off the demo
+ * include code snippet from svn repository into wiki via include tag <include lines='25-50'  file='source/file/file.java'/ >
+ * private project would be really cool!
+ * this is a dream, but would be nice if you have tomcat server access with project for your GWT projects. For instance i develop a tutorial, it would be cool to upload it to your tomcat server, so I could breg about it. As well it would be popular as well if I could mesh that in with adsense. Overall it would lead to more people coming to your services.
+ 
+
+
+
+== GOOD JOB ==
+ * wow, cool svn browsing now!
