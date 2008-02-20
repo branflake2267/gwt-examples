@@ -27,13 +27,19 @@ import java.util.zip.ZipOutputStream;
  * !!!!!!!!!!!Compile your project in the eclipse gwt debugger before you run this
  *
  * Wants
- * TODO - Figure out what project directory this file is in when ran as java application
- * TODO - Auto Compile project first
- * TODO - upload to server via tomcat url deploy
+ * TODO - figure out what project directory this file is in when ran as java application
+ * TODO - Compile project first
+ * TODO - add var for production folder
+ * TODO - add index page 
+ * TODO - upload to server via tomcat deploy
  * 
  * Maybes
+ * TODO - var for www files location? hmmmm
  * TODO - dont zip .svn*
+ * TODO - move www files to root maybe
  * TODO - Ask for username and password for tomcat deploy, instead of static var
+ * TODO - better name space for some of the vars like change ProjectClassName
+ * TODO - maybe add a little more error checking in spots
  */
 public class TomcatWarBuilder {
 
@@ -77,6 +83,10 @@ public class TomcatWarBuilder {
 	//private static String GWT_HOME_Manual = "/opt/gwt-linux/";
 	private static String GWT_HOME_Manual = null;
 	
+	//acts like .htaccess security - popup login
+	//add security xml - uses tomcat-users.xml user security
+	private static boolean askForLogin = false;
+	
 	/**
 	 * main method
 	 * 
@@ -89,21 +99,34 @@ public class TomcatWarBuilder {
 	 */
 	public static void main(String[] args) throws IOException {
 		
-		//FIRST
-		//Compile your project in the eclipse gwt debugger before you run this
 		
+		/********************/
+		/* User Configuration Vars */
+		/********************/
+		
+		//FIRST -> Compile your project in the eclipse gwt debugger before you run this
+		
+		//Ask for authorization to use this servlet application. 
+		askForLogin = false;
 		
 		// project directory
-		//ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
+		ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-DisplayDate";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Clicklistener";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RPC-adv";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Login-Manager";
-		ProjectDirectory = "/home/branflake2267/workspace/gwt-Calendar";
+		//ProjectDirectory = "/home/branflake2267/workspace/gwt-Calendar";
+		
+
+		
+		/********************/
+		/* Setup Project Vars */
+		/********************/
 		
 		
-		//Compile project??????
-		//do this with eclipse debugger button
+		//Compile Project
+		//TODO - compile the projectdirectory project
+		
 		
 		
 		//testing - todo
@@ -146,7 +169,7 @@ public class TomcatWarBuilder {
 		zipProject();
 
 		
-		//upload to production/design tomcat server
+		//TODO - upload to production/design tomcat server
 		//http://localhost:8080/manager/deploy?path=/footoo&war=file:/path/to/foo
 
 		
@@ -199,6 +222,7 @@ public class TomcatWarBuilder {
 		getClassLibs();
 	}
 	
+
 	
 	
 	/**
@@ -215,17 +239,57 @@ public class TomcatWarBuilder {
 		   "<servlet-name>" + ProjectName + "</servlet-name>\n" +
 		   "<servlet-class>" + ServletClassName + "</servlet-class>\n" +
 		 "</servlet>\n" +
-		    "<servlet-mapping>\n" +
+		  "<servlet-mapping>\n" +
 		    "<servlet-name>" + ProjectName + "</servlet-name>\n" +
 		    "<url-pattern>" + ServletPath + "</url-pattern>\n" +
 		  "</servlet-mapping>\n";
-		}
+		 }
 		
+		//add user security if turned on
+		WebXML += createWebXMLFileContents_Security();
 		WebXML += "</web-app>\n";
 		
 		return WebXML;
 	}
 	
+	/**
+	 * add security to web.xml file - Need to login to view servlet application
+	 * @return
+	 * 
+	 * Roles are in /etc/tomcat5.5/tomcat-users.xml - roles are like groups - user needs to be apart of role
+	 * You can change role below to a different role in the list, 
+	 * as long as the users are part of that role that want to login
+	 */
+	public static String createWebXMLFileContents_Security() {
+		String WebXML = "" +
+			"\n<!-- Define a Security Constraint on this Application -->\n" +
+			"<security-constraint>\n" +
+				"<web-resource-collection>" +
+				"<web-resource-name>Entire Application</web-resource-name>\n" +
+				"<url-pattern>/*</url-pattern>\n" +
+				"</web-resource-collection>\n" +
+				"<auth-constraint>\n" +
+				"<role-name>admin</role-name>\n" +
+				"</auth-constraint>\n" +
+			"</security-constraint>\n\n" +
+
+			"<login-config>\n" +
+				"<auth-method>BASIC</auth-method>\n" +
+				"<realm-name>Your Realm Name</realm-name>\n" +
+			"</login-config>\n\n" +
+
+			"<security-role>\n" +
+				"<description>The role that is required to log in to the Manager Application</description>\n" +
+				"<role-name>admin</role-name>\n" +
+			"</security-role>\n\n";
+		
+		if (askForLogin == true) {
+			return WebXML;
+		} else {
+			return null;
+		}
+
+	}
 	
 	public static String getDate() {
 		Date date = new Date();
@@ -442,7 +506,7 @@ public class TomcatWarBuilder {
 	public static void getClassLibs() {
 
 		//kind=['|\"]lib['|\"].*?
-		Pattern p = Pattern.compile("path=['|\"](/.*?jar)['|\"]");
+		Pattern p = Pattern.compile("path=['\"](/.*?jar)['\"]");
 		Matcher matcher = p.matcher(ClassFileContents);
 
 		// Count the matches
@@ -527,7 +591,7 @@ public class TomcatWarBuilder {
 	 */
 	public static void getServletClassFromXMLFile() {
 
-		Pattern p = Pattern.compile("<servlet.*?class=['|\"](.*?)['|\"].*?path.*?/>");
+		Pattern p = Pattern.compile("<servlet.*?class=[\"'](.*?)[\"'].*?>");
 		Matcher m = p.matcher(ProjectGWTxmlFileContents);
 		boolean found = m.find();
 
@@ -546,7 +610,7 @@ public class TomcatWarBuilder {
 	 */
 	public static void getServeletUrlPath() {
 
-		Pattern p = Pattern.compile("path=['|\"](.*?)['|\"]");
+		Pattern p = Pattern.compile("path=['\"](.*?)['\"]");
 		Matcher m = p.matcher(ProjectGWTxmlFileContents);
 		boolean found = m.find();
 
@@ -624,7 +688,7 @@ public class TomcatWarBuilder {
 
 	public static void getProjectClassName() {
 
-		Pattern p = Pattern.compile("\"\\$@\"\040(.*);");
+		Pattern p = Pattern.compile("\"\\$@\"\040(.*?);");
 		Matcher m = p.matcher(ProjectCompileFileContents);
 		boolean found = m.find();
 
