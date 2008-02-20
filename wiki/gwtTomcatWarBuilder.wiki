@@ -34,5 +34,5 @@
  [http://code.google.com/p/gwt-examples/downloads/list Downloads] - War file created from the RPC Advanced Eclipse project
 
  == Added ==
- 01/18/2008 - Added time stamp in the name so I could tell when I deployed it. [http://gwt-examples.googlecode.com/svn/trunk/gwt-TomcatWarBuilder/src/com/tribling/gwt/test/TomcatWarBuilder/TomcatProductionBuilder.java Download Most Recent From SVN Repository]
- 02/20/2008 - added servlet application security. fixed regexp.
+ * 01/18/2008 - Added time stamp in the name so I could tell when I deployed it. [http://gwt-examples.googlecode.com/svn/trunk/gwt-TomcatWarBuilder/src/com/tribling/gwt/test/TomcatWarBuilder/TomcatProductionBuilder.java Download Most Recent From SVN Repository]
+ * 02/20/2008 - added servlet application security. fixed regexp.
