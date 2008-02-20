@@ -23,9 +23,7 @@
  [gwtTomcat] - how to setup tomcat up.
 
  == SVN Location ==
- Download the latest version from SVN. I fix things now and then, and might forget to update it here.
- [http://gwt-examples.googlecode.com/svn/trunk/gwt-TomcatWarBuilder/ SVN Project Home]
- [http://gwt-examples.googlecode.com/svn/trunk/gwt-TomcatWarBuilder/src/com/tribling/gwt/test/TomcatWarBuilder/TomcatProductionBuilder.java SVN Project Source]
+ Download the latest version from SVN.
 
  == Windows OS ==
  This should work fine on windows if you change the path forward slashes to back slashes.
