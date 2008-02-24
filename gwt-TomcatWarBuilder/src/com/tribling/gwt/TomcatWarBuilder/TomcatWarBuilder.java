@@ -101,7 +101,7 @@ public class TomcatWarBuilder {
 		//FIRST -> Compile your project in the eclipse gwt debugger before you run this
 		
 		//Ask for authorization to use this servlet application. 
-		askForLogin = false;
+		askForLogin = true;
 		
 		// project directory
 		ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
