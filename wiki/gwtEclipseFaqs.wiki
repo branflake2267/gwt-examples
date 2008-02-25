@@ -117,7 +117,7 @@ exec /usr/lib/eclipse/eclipse \
             -Dgnu.gcj.precompiled.db.path=/var/lib/gcj-4.2/classmap.db \
             -Dgnu.gcj.runtime.VMClassLoader.library_control=never \
             -Dosgi.locking=none ${VMARGS} \
-            -XX:PermSize=1024M -XX:MaxPermSize=1024M
+            -XX:PermSize=1024M -XX:MaxPermSize=1024M \ #<-add "\" too
 #ADD -> -XX:PermSize=1024M -XX:MaxPermSize=1024M
 #this is the one I use on my ubuntu amd64, force quit to see if it loaded
 }}}
