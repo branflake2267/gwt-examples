@@ -4,7 +4,7 @@
 = Eclipse FAQs =
 
 
-== Project Import ==
+== Importing My Projects Settings ==
   # You can import these projects into your Eclipse.org IDE. SVN URL: http://gwt-examples.googlecode.com/svn/trunk/
   # Once imported, change your project's build path to the correct libraries. Change the build path library for gwt-linux home directory. I set mine to /opt/gwt-linux which is linked to the current Google Web toolkit download that I have.
    # Location: Eclipse > Right Click Project > Build Path > Libraries Tab >
