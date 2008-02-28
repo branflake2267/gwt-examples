@@ -56,21 +56,19 @@ export GWT_EXTERNAL_BROWSER="/usr/local/firefox32/firefox"
 echo $GWT_EXTERNAL_BROWSER
 }}}
 
-== 32bit JVM ==
+== Running 32bit JVM for GWT ==
+
  You will need use a 32bit JVM in your build path / Referenced Libaries to work with GWT.
 
- # Change or add a 32bit JVM here
- Eclipse > Window (Top Menu) > Preferences > Java > Installed JREs > 
+ * This is the easiest way.
+ * Change or add a 32bit JVM in Eclipse project preferences
+ * install a 32bit jvm from your linux repository. like ia32-sun-java6-bin
+ * Goto: Eclipse > Window (Top Menu) > Preferences > Java > Installed JREs > Add JVM 
 
- === Problems GWT and AMD64 ===
- Get this error trying to run a GWT project?
-{{{
-/gwt-linux/libswt-pi-gtk-3235.so: wrong ELF class: ELFCLASS32 (Possible cause: architecture word width mismatch)
-}}}
+OR
 
-  This Error comes from running 64bit JVM and then GWT tries to use 32bit compiled libraries.
-
- === Changing the default JVM ===
+ === Changing the default System JVM ===
+ # for ubuntu - use galternatives
  # Install ia32-sun-java6-bin (install 32bit JVM)
  # Install galternatives (this is how we will change the default JVM)
  # Run galternatives
@@ -80,14 +78,22 @@ echo $GWT_EXTERNAL_BROWSER
 #Ubuntu method of getting galterantives
 sudo apt-get galternatives
 
+#run
+galternatives
+
+#OR
+
 #Another way to do it in shell
 sudo update-alternatives --config java
 }}}
 
- OR
+ === Problems that Occur with GWT and AMD64 ===
+ Get this error trying to run a GWT project? like: wrong ELF class: ELFCLASS32
+{{{
+/gwt-linux/libswt-pi-gtk-3235.so: wrong ELF class: ELFCLASS32 (Possible cause: architecture word width mismatch)
+}}}
 
- # Change or Add 
-  Eclipse > Window (Top Menu) > Preferences > Java > Installed JREs > 
+  This Error comes from running 64bit JVM and then GWT tries to use 32bit compiled libraries.
 
 == Eclipse Memory ==
  * Are you getting a eclipse out of memory error?  
