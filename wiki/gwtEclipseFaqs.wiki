@@ -138,3 +138,12 @@ Change the eclipse parameters from command line. This a good way to trace a clas
 #command line
 eclipse -XX:PermSize=128m -XX:MaxPermSize=512m
 }}}
+
+== Watching Traces of Eclipse Crashes ==
+ Does eclipse glitch when you load it. Does eclipse fail to load? Does eclipse crash on loading up or in the middle of operating?
+
+ * Run eclipse from a shell, it will output trace on crash.
+ * You can also check log in: /usr/lib/eclipse/configuration
+ * User settings are in and user log: ~/workspace/.metadata
+ * I suggest only installing one feature at a time then testing it. If you get carried away  you could find yourself reinstalling eclipse.
+ * Just a tip I have learned. Install the features from the Europa or Eclipse update sites first, then, install the other features.
