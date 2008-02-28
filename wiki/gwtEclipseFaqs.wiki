@@ -101,6 +101,7 @@ sudo update-alternatives --config java
 
 Change your file "/usr/lib/eclipse/eclipse.ini". This will change the startup parameters.
 {{{
+# you may have to change permissions to the file - "sudo chmod 777 /usr/lib/eclipse/eclipse.ini"
 #eclipse.ini file - changes start up parameters
 -vmargs
 -Xms512m
@@ -113,6 +114,7 @@ Or
 
 Change the way it start up with "/usr/bin/eclipse"
 {{{
+# you may have to change permissions to the file - "sudo chmod 777 /usr/bin/eclipse"
 #/usr/bin/eclipse - bottom of file
 exec /usr/lib/eclipse/eclipse \
     -vm "${JAVACMD}" \
@@ -126,7 +128,7 @@ exec /usr/lib/eclipse/eclipse \
             -XX:PermSize=256M -XX:MaxPermSize=1024M 
 #ADD -> -XX:PermSize=512M -XX:MaxPermSize=1024M like the line above
 #this is the one I use on my ubuntu amd64, force quit to see if it loaded
-#sizes represent min max
+#(memory sizes represent start with minimum MB to and go to maximum MB)
 }}}
 
 Or
