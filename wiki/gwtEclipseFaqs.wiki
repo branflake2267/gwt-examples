@@ -125,7 +125,7 @@ exec /usr/lib/eclipse/eclipse \
             -Dgnu.gcj.precompiled.db.path=/var/lib/gcj-4.2/classmap.db \
             -Dgnu.gcj.runtime.VMClassLoader.library_control=never \
             -Dosgi.locking=none ${VMARGS} \ # <-add "\" too
-            -XX:PermSize=256M -XX:MaxPermSize=1024M 
+            -XX:PermSize=512M -XX:MaxPermSize=1024M 
 #ADD -> -XX:PermSize=512M -XX:MaxPermSize=1024M like the line above
 #this is the one I use on my ubuntu amd64, force quit to see if it loaded
 #(memory sizes represent start with minimum MB to and go to maximum MB)
