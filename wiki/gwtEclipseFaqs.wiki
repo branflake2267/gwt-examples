@@ -97,7 +97,7 @@ sudo update-alternatives --config java
 
 == Eclipse Memory ==
  * Are you getting a eclipse out of memory error?  
- * [http://help.eclipse.org/help33/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/running_eclipse.htm Eclipse Help Link] Eclipse Help
+ * [http://help.eclipse.org/help33/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/running_eclipse.htm Eclipse Reference Help Link]
 
 Change your file "/usr/lib/eclipse/eclipse.ini". This will change the startup parameters.
 {{{
