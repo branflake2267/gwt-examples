@@ -17,7 +17,7 @@
  == MySQL Setup ==
  I will post the mysql scripts for both the user and session tables soon. I am changing the name-space on alot of code to make it easier on the  project.
 
-Session Table - this is how I set it up.
+Session Table - store sessions in mysql so it matters not what server rpc request goes too.
 {{{
 CREATE TABLE `session` (
   `ID` int(11) NOT NULL auto_increment,
