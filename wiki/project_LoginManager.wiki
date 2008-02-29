@@ -30,7 +30,7 @@ CREATE TABLE `session` (
 ) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=latin1
 }}}
 
- User Table
+ User Table - user identity, I am using Email as Username, but thats easy to change
 {{{
 CREATE TABLE `user` (
   `UserID` int(11) NOT NULL auto_increment,
@@ -46,4 +46,16 @@ CREATE TABLE `user` (
   KEY `password` (`Password_Hash`),
   KEY `userpass` (`UserName`,`Password_Hash`)
 ) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=latin1
+}}}
+
+ Email Table - user email's
+{{{
+CREATE TABLE `email` (
+  `EmailID` int(11) NOT NULL auto_increment,
+  `UserID` int(11) NOT NULL,
+  `Email` varchar(200) NOT NULL,
+  `DateCreated` int(11) NOT NULL,
+  `LastUpdated` int(11) default NULL,
+  PRIMARY KEY  (`EmailID`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1
 }}}
