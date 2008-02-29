@@ -57,7 +57,7 @@ CREATE TABLE `email` (
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1
 }}}
 
- user personal info Table - collect some things about the user
+ User Personal Info Table - collect some things about the user
 {{{
 CREATE TABLE `user_personal` (
   `PersonalID` int(11) NOT NULL auto_increment,
