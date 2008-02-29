@@ -1,9 +1,7 @@
 #summary More info on login manager project.
 
 = Login Manger =
- I setup this example to test login manager, to control User access by Username and Password and SessionID. There are many ways you can do this. I followed Google's incubator. You can import my eclipse project or get it via svn. Hope it helps.
-
- I wanted to not this project is still a bit rough on the edges. :)
+ I setup this example to test login manager, to control User access by Username and Password and SessionID. There are many ways you can do this. I followed Google's incubator. You can import my eclipse project or get it via svn. Hope it helps. 
  
  == JDBC ==
  Remember to add JDBC to the build path. More info here [gwtEclipseFaqs]
@@ -14,7 +12,7 @@
  SVN Repository Link [http://gwt-examples.googlecode.com/svn/trunk/gwt-test-Login-Manager/ gwt-test-Login-Manager]
 
  == Next Version Goal ==
- Jan 22 - I am making more changes to the code. I will post a more complete version in the next couple of days. I am checking the code on a production server. I am modularizing a few of the internal methods, and will be adding more style to it. Added a little more error checking. Check back shortly for new stuff. I will also post a demo of it online in the future.
+ I have a more advanced version coming in the near future that I have built for another project and will release it here in march. I have been a little to busy to move it all over into its own project.
  
  == MySQL Setup ==
  I will post the mysql scripts for both the user and session tables soon. I am changing the name-space on alot of code to make it easier on the  project.
