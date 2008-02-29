@@ -59,3 +59,20 @@ CREATE TABLE `email` (
   PRIMARY KEY  (`EmailID`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1
 }}}
+
+ user personal info Table - collect some things about the user
+{{{
+CREATE TABLE `user_personal` (
+  `PersonalID` int(11) NOT NULL auto_increment,
+  `UserID` int(11) NOT NULL default '0',
+  `BirthMonth` int(11) default '0',
+  `BirthDay` int(11) default '0',
+  `BirthYear` int(11) default '0',
+  `Gender` tinyint(4) default '0',
+  `Zip` int(11) default '0',
+  `TimeZone` varchar(10) NOT NULL,
+  `DateCreated` int(11) NOT NULL default '0',
+  `LastUpdated` int(11) default '0',
+  PRIMARY KEY  (`PersonalID`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1
+}}}
