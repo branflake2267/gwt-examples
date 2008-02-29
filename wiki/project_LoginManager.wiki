@@ -17,7 +17,7 @@
  == MySQL Setup ==
  I will post the mysql scripts for both the user and session tables soon. I am changing the name-space on alot of code to make it easier on the  project.
 
-Session Table - store sessions in mysql so it matters not what server rpc request goes too.
+ Session Table - store sessions in mysql so it matters not what server rpc request goes too.
 {{{
 CREATE TABLE `session` (
   `ID` int(11) NOT NULL auto_increment,
@@ -28,4 +28,22 @@ CREATE TABLE `session` (
   PRIMARY KEY  (`ID`),
   KEY `SessionID` (`SessionID`)
 ) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=latin1
+}}}
+
+ User Table
+{{{
+CREATE TABLE `user` (
+  `UserID` int(11) NOT NULL auto_increment,
+  `NickName` varchar(50) default NULL,
+  `FirstName` varchar(50) NOT NULL,
+  `LastName` varchar(50) NOT NULL,
+  `UserName` varchar(150) NOT NULL,
+  `Password_Hash` varchar(255) NOT NULL,
+  `DateCreated` int(11) NOT NULL,
+  `LastUpdated` int(11) default '0',
+  PRIMARY KEY  (`UserID`),
+  KEY `user` (`UserName`),
+  KEY `password` (`Password_Hash`),
+  KEY `userpass` (`UserName`,`Password_Hash`)
+) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=latin1
 }}}
