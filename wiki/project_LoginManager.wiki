@@ -45,7 +45,7 @@ CREATE TABLE `user` (
 ) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=latin1
 }}}
 
- Email Table - user email's
+ Email Table - user emails
 {{{
 CREATE TABLE `email` (
   `EmailID` int(11) NOT NULL auto_increment,
