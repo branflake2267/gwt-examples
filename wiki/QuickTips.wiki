@@ -55,6 +55,16 @@ if (myString.equals(null) == false) {
 if (myString.equals("") == false) {
     //do this
 }
+
+//my favorite way to compare so far
+if (myString == null || myString == "") {
+   //usually don't need this, but helps me skip erros when I don't have an object to comapre too.
+} else if (myString.equals("some string")) {
+   //do stuff
+} else {
+   //do stuff
+}
+
 }}}
 
 == Clicklistener ==
