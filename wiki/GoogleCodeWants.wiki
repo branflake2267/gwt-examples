@@ -2,6 +2,7 @@
 
 = My Ideas For Google Code =
 
+ * *Add Developer toolbar* - add a developer toolbar to debugger, so you can see the div layout, widget layout, tags. Highlight div containers with red border, like firefox developer toolbar. Help determine css style design quickly.
  * Add Adsense, like blogspot add element adsense - win win deal for owner/moderator and Google!
  * Fix the ? marks that show up when the parser doesn't recognize something.
  * Edit Pages in blocks like wikipedia.
