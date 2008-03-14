@@ -95,7 +95,7 @@ sudo update-alternatives --config java
 
   This Error comes from running 64bit JVM and then GWT tries to use 32bit compiled libraries.
 
-== Eclipse Memory ==
+== Configuring Eclipse Memory ==
  * Are you getting a eclipse out of memory error?  
  * [http://help.eclipse.org/help33/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/running_eclipse.htm Eclipse Reference Help Link]
 
@@ -153,3 +153,22 @@ eclipse -XX:PermSize=128m -XX:MaxPermSize=512m
  * User settings are in and user log: ~/workspace/.metadata
  * I suggest only installing one feature at a time then testing it. If you get carried away  you could find yourself reinstalling eclipse.
  * Just a tip I have learned. Install the features from the Europa or Eclipse update sites first, then, install the other features.
+
+== Error: To Many Files Open ==
+ You have to run eclipse from shell to get this error output. 
+
+ Test how many files can be open
+{{{
+ulimit -n
+}}}
+
+{{{
+#In /etc/security/limits.conf (on my ubuntu linux box)
+
+#I adjusted this so eclipse will work with more java files
+*       soft    nofile          10000
+*       hard    nofile          10000
+
+#user specific
+#username hard nofile 10000
+}}}
