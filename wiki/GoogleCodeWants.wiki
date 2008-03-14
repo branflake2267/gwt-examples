@@ -1,4 +1,5 @@
 #summary Google Code Wants
+#labels Featured
 
 = My Ideas For Google Code =
 
