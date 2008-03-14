@@ -1,5 +1,6 @@
 #summary Google Code Wants
 #labels Featured
+#name cool
 
 = My Ideas For Google Code =
 
