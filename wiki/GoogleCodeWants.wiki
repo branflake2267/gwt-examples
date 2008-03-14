@@ -1,6 +1,6 @@
 #summary Google Code Wants
 #labels Featured
-#name cool
+
 
 = My Ideas For Google Code =
 
@@ -19,6 +19,7 @@
  * I would really like to see stats. how many api (gwt,android) downloads have happened.  
  * Show project popularity, like sourceforge. Show project activity, show project downloads? 
  * Google analytics didn't allow me to rename the domain code.google.com when I set that up. - customize the name for each domain. 
+ * Featured wiki links -change link name to liking, in that, add "#Name 'My Cool Code wiki page'" (like #Summary) to wiki
 
 == Global Google Suggestions ==
  * On Google help page - link to form for reporting a error of any google app!
