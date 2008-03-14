@@ -164,6 +164,7 @@ ulimit -n
 
 {{{
 #In /etc/security/limits.conf (on my ubuntu linux box)
+#sudo pico /etc/security/limits.conf - edit it from shell
 
 #I adjusted this so eclipse will work with more java files
 *       soft    nofile          10000
