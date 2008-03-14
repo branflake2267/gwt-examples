@@ -235,3 +235,59 @@ private ReminderData[] getReminderData() {
 	return reminderData;
 }
 }}}
+
+== Observe Events On Vertical Panel ==
+ Add this class and use it just like you would a vertical panel. This extends vertical panel and allows you to watch for events on the panel. This class below is only watching for clicks, but you can watch for all the events by adding them to sink events.
+
+{{{
+public class WatchEventPanel extends VerticalPanel {
+
+	/**
+	 * change listener to watch for fired events
+	 */
+	private ChangeListenerCollection changeListeners;
+	
+	/**
+	 * constructor - extending VerticalPanel with event watching
+	 */
+	public WatchEventPanel() {
+		
+		//watch this widgets events
+		sinkEvents(Event.ONCLICK);
+		
+	}
+
+	/**
+	 * watch for particular browser events - sinkEvents(Events.[ONCLICK|etc])
+	 */
+    public void onBrowserEvent(Event event) {
+        switch (DOM.eventGetType(event)) {
+        	case Event.ONCLICK:
+        		if (changeListeners != null) {
+        			changeListeners.fireChange(this);
+        		}
+        		break;
+        }
+    }
+    
+	/**
+	 * add change listener - watch for changes in this widget
+	 * @param listener
+	 */
+	public void addChangeListener(ChangeListener listener) {
+		if (changeListeners == null)
+			changeListeners = new ChangeListenerCollection();
+		changeListeners.add(listener);
+	}
+
+	/**
+	 * remove change listener - remove watching for changes in this widget
+	 * @param listener
+	 */
+	public void removeChangeListener(ChangeListener listener) {
+		if (changeListeners != null)
+			changeListeners.remove(listener);
+	}
+
+}
+}}}
