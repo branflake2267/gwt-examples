@@ -19,11 +19,11 @@
  * Google analytics didn't allow me to rename the domain code.google.com when I set that up. (this may have changed)
 
 == Global Google Suggestions ==
- * On Google help page - link to form for report Error
- * On Google help page - link to form for making suggestions
- * On Google help page - link to form for saying good job
- * search for google suggestion, rank it to the top
- * ERROR 500: tells you to report error, get the link to goto form to report it
+ * On Google help page - link to form for reporting a error of any google app!
+ * On Google help page - link to form for making suggestions for any google app!
+ * On Google help page - link to form for saying good job for any app!
+ * search for google suggestion, rank it to the top!
+ * ERROR 500: tells you to report error, get the link to goto form to report it!
 
 == Good Job ==
  * wow, cool svn browsing now!
