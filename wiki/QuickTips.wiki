@@ -1,4 +1,5 @@
 #summary Quick Tips about how things work
+#labels Featured
 
 = Quick Tips =
  Quick tips that might help you. These are things that I have learned along the way that make my job easier.
