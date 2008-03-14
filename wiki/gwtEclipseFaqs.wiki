@@ -157,7 +157,7 @@ eclipse -XX:PermSize=128m -XX:MaxPermSize=512m
 == Error: To Many Files Open ==
  You have to run eclipse from shell to get this error output. 
 
- Test how many files can be open
+ Test how many files can be open during your session
 {{{
 ulimit -n
 }}}
