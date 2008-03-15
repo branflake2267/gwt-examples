@@ -1,5 +1,8 @@
 #summary tips using gwt-dnd
 
+= GWT-DND Library =
+ [http://code.google.com/p/gwt-dnd/] - very nice drag n drop library
+
 = Dragging a Composite Widget =
  In order to drag a composite widget you must make your own dragHandler. In this case, I make a custom vertical panel with sinkEvents in order to watch for clicks(mouseEvents) on the verticalpanel. 
 
