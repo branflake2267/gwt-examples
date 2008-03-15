@@ -292,3 +292,96 @@ public class WatchEventPanel extends VerticalPanel {
 
 }
 }}}
+
+ Another way to watch for events on a vertical panel using sinkEvents
+{{{
+/**
+ * I use this panel for the drag handler for my composite widgets
+ * dragHandler = where the mouse holds the widget while dragging
+ * 
+ * @author Brandon Donnelson
+ * 
+ * I extend the vertical panel - not a composite widget
+ */
+public class WatchEventPanel extends VerticalPanel implements SourcesMouseEvents {
+
+	private MouseListenerCollection mouseListeners;
+	private ChangeListenerCollection changeListeners;
+
+	/**
+	 * constructor - extending VerticalPanel with event watching
+	 */
+	public WatchEventPanel() {
+		
+		//watch this widget's mouse events
+		sinkEvents(Event.MOUSEEVENTS);
+	}
+
+	/**
+	 * watch for browser events - from sinkEvents([MouseEvents])
+	 */
+    public void onBrowserEvent(Event event) {
+
+        switch (DOM.eventGetType(event)) {
+        	case Event.ONMOUSEDOWN:
+	        	if (mouseListeners != null) {
+					mouseListeners.fireMouseEvent(this, event);
+				}
+	        	if (changeListeners != null) {
+	        		changeListeners.fireChange(this);
+	        	}
+        		break;
+        	case Event.ONMOUSEMOVE:
+	        	if (mouseListeners != null) {
+					mouseListeners.fireMouseEvent(this, event);
+				}
+        		break;
+        	case Event.ONMOUSEOUT:
+        		break;
+        	case Event.ONMOUSEOVER:
+        		break;
+        	case Event.ONMOUSEUP:
+	        	if (mouseListeners != null) {
+					mouseListeners.fireMouseEvent(this, event);
+				} 
+        		break;
+        	case Event.ONMOUSEWHEEL:
+        		break;
+        } 
+    }
+    
+    /**
+     * observer stuff
+     */
+	public void addMouseListener(MouseListener listener) {
+		if (mouseListeners == null)
+			mouseListeners = new MouseListenerCollection();
+		mouseListeners.add(listener);
+	}
+
+	public void removeMouseListener(MouseListener listener) {
+		if (mouseListeners != null)
+			mouseListeners.remove(listener);
+	} 
+
+	/**
+	 * add change listener - watch for changes in this widget
+	 * @param listener
+	 */
+	public void addChangeListener(ChangeListener listener) {
+		if (changeListeners == null)
+			changeListeners = new ChangeListenerCollection();
+		changeListeners.add(listener);
+	}
+
+	/**
+	 * remove change listener - remove watching for changes in this widget
+	 * @param listener
+	 */
+	public void removeChangeListener(ChangeListener listener) {
+		if (changeListeners != null)
+			changeListeners.remove(listener);
+	}
+
+}
+}}}
