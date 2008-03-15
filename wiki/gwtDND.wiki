@@ -6,6 +6,8 @@
 = Dragging a Composite Widget =
  In order to drag a composite widget you must make your own dragHandler. In this case, I make a custom vertical panel with sinkEvents in order to watch for clicks(mouseEvents) on the verticalpanel. 
 
+
+Make your composite widget consisting of this panel somewhere in the composite widget. 
 {{{
 /**
  * I use this panel for the drag handler for my composite widgets
