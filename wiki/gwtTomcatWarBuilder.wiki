@@ -11,6 +11,9 @@
  * It auto creates a index.jsp home page for easy navigation to project
  * Make your servlet application private, configure var in script.
 
+ == added ==
+ * added gwt 1.5 support for directory /std ouput march 14, 2008
+
  == Directions ==
  # Import this Project into eclipse or other java IDE
  # Compile your GWT project in the eclipse GWT debugger before running this script.
