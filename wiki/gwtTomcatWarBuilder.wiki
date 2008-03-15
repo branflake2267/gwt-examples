@@ -11,8 +11,6 @@
  * It auto creates a index.jsp home page for easy navigation to project
  * Make your servlet application private, configure var in script.
 
- == added ==
- * added gwt 1.5 support for directory /std ouput march 14, 2008
 
  == Directions ==
  # Import this Project into eclipse or other java IDE
@@ -35,5 +33,6 @@
  [http://code.google.com/p/gwt-examples/downloads/list Downloads] - War file created from the RPC Advanced Eclipse project
 
  == Added ==
+ * 03/14/2008 - added gwt 1.5 support for directory /std ouput
  * 01/18/2008 - Added time stamp in the name so I could tell when I deployed it. [http://gwt-examples.googlecode.com/svn/trunk/gwt-TomcatWarBuilder/src/com/tribling/gwt/test/TomcatWarBuilder/TomcatProductionBuilder.java Download Most Recent From SVN Repository]
  * 02/20/2008 - added servlet application security. fixed regexp.
