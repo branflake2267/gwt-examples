@@ -95,3 +95,129 @@ pVerticalPanel.add(wCompositeWidget);
 //make Vertical Panel draggable
 widgetDragController.makeDraggable(pVerticalPanel, wDrag);
 }}}
+
+
+ = Test Drag In Drop =
+ Add the gwt-dnd lib to your class path.
+
+{{{
+
+/**
+ * test drag and drop
+ * @author branflake2267
+ *
+ */
+public class Drag extends Composite implements DragHandler {
+
+	private PickupDragController dragController;
+
+
+	//constructor 
+	public Drag() {
+
+		// boundary - has to be absolute panel
+		AbsolutePanel boundaryPanel = new AbsolutePanel();
+		boundaryPanel.setSize("300px", "500px");
+		boundaryPanel.addStyleName("test1");
+
+	    // instantiate the common drag controller used the less specific examples
+	    dragController = new PickupDragController(boundaryPanel, true);
+	    dragController.setBehaviorMultipleSelection(false);
+		
+
+		//init widget - its boundary
+		initWidget(boundaryPanel);
+
+		// instantiate drag handler to listen for events
+		dragController.addDragHandler(this);
+		
+		
+		// initialize our widget drag controller
+		PickupDragController widgetDragController = new PickupDragController(boundaryPanel, false);
+		widgetDragController.setBehaviorMultipleSelection(false);
+		widgetDragController.addDragHandler(this);
+
+		
+		// initialize horizontal panel to hold our columns
+		HorizontalPanel horizontalPanel = new HorizontalPanel();
+		horizontalPanel.addStyleName("test4");
+		horizontalPanel.setSpacing(6);
+		horizontalPanel.setHeight("100%");
+		boundaryPanel.add(horizontalPanel);
+		
+
+		// initialize inner vertical panel to hold individual widgets
+		VerticalPanel verticalPanel = new VerticalPanel();
+		verticalPanel.addStyleName("test1");
+		verticalPanel.setSpacing(5);
+		horizontalPanel.add(verticalPanel);
+
+		// initialize a widget drop controller for the current column
+		NoInsertAtEndIndexedDropController widgetDropController = new NoInsertAtEndIndexedDropController(verticalPanel);
+		widgetDragController.registerDropController(widgetDropController);
+
+		for (int row = 1; row <= 5; row++) {
+			// initialize a widget
+			HTML widget = new HTML("Draggable&nbsp;#" + row);
+			widget.addStyleName("test3");
+			widget.setHeight(Random.nextInt(4) + 2 + "em");
+			verticalPanel.add(widget);
+
+			// make the widget draggable
+			widgetDragController.makeDraggable(widget);
+		}
+	}
+
+
+	/**
+	 * drag done do
+	 */
+	public void onDragEnd(DragEndEvent event) {
+	}
+
+	/**
+	 * drag start do
+	 */
+	public void onDragStart(DragStartEvent event) {
+	}
+	
+	/**
+	 * preview drag end do 
+	 */
+	public void onPreviewDragEnd(DragEndEvent event) throws VetoDragException {
+	}
+
+	/**
+	 * preview drag start do
+	 */
+	public void onPreviewDragStart(DragStartEvent event) throws VetoDragException {	
+	}
+
+}
+
+}}}
+
+ You will also need this file
+{{{
+/**
+ * IndexedDropController that disallows dropping after the last child, which is
+ * assumed to be dummy spacer widget preventing parent collapse.
+ */
+public class NoInsertAtEndIndexedDropController extends IndexedDropController {
+
+  private IndexedPanel dropTarget;
+
+  public NoInsertAtEndIndexedDropController(IndexedPanel dropTarget) {
+    super(dropTarget);
+    this.dropTarget = dropTarget;
+  }
+
+  @Override
+  protected void insert(Widget widget, int beforeIndex) {
+    if (beforeIndex == dropTarget.getWidgetCount()) {
+      beforeIndex--;
+    }
+    super.insert(widget, beforeIndex);
+  }
+}
+}}}
