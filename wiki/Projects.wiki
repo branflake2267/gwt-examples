@@ -1,5 +1,4 @@
 #summary Eclipse projects listed in trunk
-#labels Featured
 
 = GWT Example Projects =
 
