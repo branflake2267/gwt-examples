@@ -43,6 +43,9 @@ public class TomcatWarBuilder {
 	// GWT-linux location
 	private static String GWT_HOME;
 
+	// GWT-linux Version
+	private static boolean isGWT15 = false;
+	
 	// Project vars
 	private static String ProjectCompileFile; // project compile file location
 	private static String ProjectCompileFileContents;
@@ -93,6 +96,8 @@ public class TomcatWarBuilder {
 	 */
 	public static void main(String[] args) throws IOException {
 		
+		//is GWT version 1.5?
+		isGWT15 = true; //they put the compiled files in a different directory
 		
 		/********************/
 		/* User Configuration Vars */
@@ -436,9 +441,14 @@ public class TomcatWarBuilder {
 	 */
 	public static void copyWWWFiles() throws IOException {
 		
+		String addDir = "";
+		if (isGWT15 == true) {
+			addDir = "/std";
+		}
+		
 		System.out.println("Copying WWW Files");
 		
-		String src = ProjectDirectory + "/www/" + ProjectModuleName;
+		String src = ProjectDirectory + "/www/" + ProjectModuleName + addDir;
 		
 		//Archive/www/*files - have to change the servelt context path if you change this
 		//String dest = TempBuildFolder + "/www";
