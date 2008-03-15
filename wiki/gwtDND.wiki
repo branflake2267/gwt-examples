@@ -97,11 +97,10 @@ widgetDragController.makeDraggable(pVerticalPanel, wDrag);
 }}}
 
 
- = Test Drag In Drop =
- Add the gwt-dnd lib to your class path.
+= Test Drag In Drop =
+  Add the gwt-dnd lib to your class path.
 
 {{{
-
 /**
  * test drag and drop
  * @author branflake2267
