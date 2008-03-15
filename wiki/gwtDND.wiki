@@ -79,7 +79,7 @@ public class WatchEventPanel extends VerticalPanel implements SourcesMouseEvents
 }
 }}}
 
- == Getting the DragHandler From The Composite ==
+ == Getting the DragHandler From The Composite Widget In Order To Drag It==
  I make a method to get my dragHandler (WatchEventPanel) from my composite widget.
 {{{
 Widget wDrag = wCompositeWidget.getDragHandler();
