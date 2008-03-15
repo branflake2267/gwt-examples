@@ -293,7 +293,7 @@ public class WatchEventPanel extends VerticalPanel {
 }
 }}}
 
- Another way to watch for events on a vertical panel using sinkEvents
+Another way to watch for events on a vertical panel using sinkEvents. In this class, I watch for Click using a changelistener. I observe mouse events using mouselistener. You can observe this verticalPanel widget via using the mouselistener and/or change listener. There are lots of different ways you can configure listeners.
 {{{
 /**
  * I use this panel for the drag handler for my composite widgets
