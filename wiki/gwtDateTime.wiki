@@ -76,7 +76,7 @@ private String getDateEnd_TimeStamp() {
 }
 }}}
 
-= Client's Time Zone =
+= Get Client's Time Zone =
  This is how I get the client's time zone. 
 
  This is the easiest way to get the client's time zone. 
