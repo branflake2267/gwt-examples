@@ -1,6 +1,6 @@
 #summary getting date and time, unix time stamp, start and end of day with Java and GWT.
 
-= How to get Date/Time with/in GWT =
+= How to use Date/Time with/in GWT =
  * get unix time stamp
  * get year, month, day, date, today, current date, timezone offset from gmt, hours, minutes, seconds, milliseconds
  * convert from unix time stamp to java time stamp
