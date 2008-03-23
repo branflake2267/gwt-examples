@@ -115,7 +115,7 @@ private String getTimeZone(int type) {
 }}}
 
 = Format Minutes to GMT =
- Format minutes to gmt GMT[+|-]hh:mm. I was going to use this and didn't but thought it would be useful if you had to convert minutes
+ Format minutes to gmt GMT[+|-]hh:mm. The "Date" object timezone minutes offset is positive when it should be negative therefore, would have to change logic below.
 
 {{{
 /**
