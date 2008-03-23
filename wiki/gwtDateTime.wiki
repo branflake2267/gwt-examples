@@ -82,7 +82,7 @@ private String getDateEnd_TimeStamp() {
  This is the easiest way to get the client's time zone. 
 {{{
 TimeZone tz = TimeZone.getDefault();
-timezone = tz.getID(); //like "America/Vancouver"
+String timezone = tz.getID(); //like "America/Vancouver"
 }}}
 
 {{{
