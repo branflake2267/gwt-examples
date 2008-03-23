@@ -162,6 +162,52 @@ public static String formatGmtID(int gmtOffSetMinutes) {
 
 	return gmt;
 }
+
+//You will also need this method for the above to work
+/**
+ * get a double digit int from a single
+ * @param i
+ * @return
+ */
+protected static String getDoubleDigit(int i) {
+	String newI = null;
+	switch (i) {
+	case 0:
+		newI = "00";
+		break;
+	case 1:
+		newI = "01";
+		break;
+	case 2:
+		newI = "02";
+		break;
+	case 3:
+		newI = "03";
+		break;
+	case 4:
+		newI = "04";
+		break;
+	case 5:
+		newI = "05";
+		break;
+	case 6:
+		newI = "06";
+		break;
+	case 7:
+		newI = "07";
+		break;
+	case 8:
+		newI = "08";
+		break;
+	case 9:
+		newI = "09";
+		break;
+	default:
+		newI = Integer.toString(i);
+	}
+	return newI;
+}
+
 }}}
 
 = Linux Timezone =
