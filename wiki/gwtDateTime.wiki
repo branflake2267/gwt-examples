@@ -113,3 +113,51 @@ private String getTimeZone(int type) {
 	return timezone;
 }
 }}}
+
+= Format Minutes to GMT =
+ Format minutes to gmt GMT[+|-]hh:mm. I was going to use this and didn't but thought it would be useful if you had to convert minutes
+
+{{{
+/**
+ * format date TimeZone (minutes) to "GMT[+|-]hh:mm"
+ * create GMT ID for calendar object to use
+ * 
+ * @param gmtOffSetMinutes - gmt offset in minutes "[+|-]int"
+ * @return gmt string
+ */
+public static String formatGmtID(int gmtOffSetMinutes) {
+	int min = gmtOffSetMinutes;
+	
+	//test
+	//int min = 450; //minutes (Positive or negative Int) (Date Object TimeZone OffSet in Minutes)
+
+	int hh = (int) min / 60; //get hour
+	int mm = (int) min % 60; //get minutes (minutes remainder)
+	
+	int phh = Math.abs(hh); //convert to positive int
+	int pmm = Math.abs(mm); //convert to positive int
+	
+	String shh = getDoubleDigit(phh); //convert it to double digit string '1' = '01', '2' = '02'
+	String smm = getDoubleDigit(pmm);
+	
+	//is int positive or negative?
+	String sIsN = Integer.toString(hh);
+	boolean isNegative = sIsN.matches("[-].*"); //look for negative symbol in int
+	
+	//add pos/neg symbol to gmt string
+	String addNeg = "";
+	if (isNegative == true) {
+		addNeg = "-";
+	} else {
+		addNeg = "+";
+	}
+	
+	//make GMT ID - for calendar object
+	String gmt = "GMT" + addNeg + shh + ":" + smm;
+	
+	//debug
+	System.out.println("gmt Test: " + gmt);
+
+	return gmt;
+}
+}}}
