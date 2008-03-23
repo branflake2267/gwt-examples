@@ -20,7 +20,7 @@
  * Show project popularity, like sourceforge. Show project activity, show project downloads? 
  * Google analytics didn't allow me to rename the domain code.google.com when I set that up. - customize the name for each domain. 
  * Featured wiki links -change link name to liking, in that, add "#Name 'My Cool Code wiki page'" (like #Summary) to wiki
- * 03/22/2008 - wiki syntax, add syntax for links to headings in page
+ * 03/22/2008 - wiki syntax, add syntax for links to headings in page - this would help when you use the wiki for documentation and the page is huge.
 
 == Global Google Suggestions ==
  * On Google help page - link to form for reporting a error of any google app!
@@ -31,3 +31,4 @@
 
 == Good Job ==
  * wow, cool svn browsing now!
+ * cool spelling right click!
