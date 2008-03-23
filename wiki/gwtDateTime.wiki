@@ -6,6 +6,8 @@
  * convert from unix time stamp to java time stamp
  * get the start of day unix time stamp (0:00:00) (12:00:00am)
  * get the end of day unix time stamp (23:59:59) (11:59:59pm)
+ * GMT Convert
+ * Timezone
 
 
 
@@ -160,4 +162,14 @@ public static String formatGmtID(int gmtOffSetMinutes) {
 
 	return gmt;
 }
+}}}
+
+= Linux Timezone =
+ The timezone ID matches a file in /usr/share/zoneinfo. 
+
+ For Instance if you get use PDT (not a correct timezone name(ID)) for Timezone ID, it will cause an error to be thrown. 
+{{{
+//This will cause a file I/O Error b/c PDT doesn't exist as a timezone file
+DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+df1.setTimeZone(TimeZone.getTimeZone("PDT"));
 }}}
