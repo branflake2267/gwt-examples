@@ -161,3 +161,43 @@ private String getDateEnd_TimeStamp() {
 	return sEnd_TimeStamp;
 }
 }}}
+
+= Client's Time Zone =
+ This is how I get the client's time zone. 
+
+ This is the easiest way to get the client's time zone. 
+{{{
+TimeZone tz = TimeZone.getDefault();
+timezone = tz.getID(); //like "America/Vancouver"
+}}}
+
+{{{
+/**
+ * get client's time zone
+ * @param type
+ * @return
+ */
+private String getTimeZone(int type) {
+	Date today = new Date();
+	String timezone = null;
+	switch (type) {
+		case 1: // date timeZoneMinOffset in minutes
+			timezone = Integer.toString(today.getTimezoneOffset()); //like "420"
+			break;
+		case 2: // time zone RFC822
+			timezone = DateTimeFormat.getFormat("Z").format(today); //like "-0700"
+			break;
+		case 3: //time zone TextShort
+			timezone = DateTimeFormat.getFormat("v").format(today); //like "GMT-07:00"
+			break;
+		case 4: //time zone Name 
+			TimeZone tz = TimeZone.getDefault();
+			timezone = tz.getID(); //like "America/Vancouver"
+			break;
+		case 5: //timezone TextLong
+			timezone = DateTimeFormat.getLongDateTimeFormat().format(today); //like "March 22, 2008 5:39:22 PM GMT-07:00"
+			break;
+	}
+	return timezone;
+}
+}}}
