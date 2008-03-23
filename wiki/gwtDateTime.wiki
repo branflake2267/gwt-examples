@@ -11,7 +11,7 @@
 
 
 
-= Start and End Of Day =
+= TimeStamp - Start and End Of Day =
  Get the start of the day 0:00:00 am in seconds
 {{{
 /**
@@ -46,7 +46,7 @@ private String getDateStart_TimeStamp() {
 }
 }}}
 
-Get the end of the day 23:59:59 in seconds
+ Get the end of the day 23:59:59 in seconds
 {{{
 /**
  * Get End of Day Time Stamp
