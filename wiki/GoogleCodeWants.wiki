@@ -22,7 +22,8 @@
  * Featured wiki links -change link name to liking, in that, add "#Name 'My Cool Code wiki page'" (like #Summary) to wiki
  * 03/22/2008 - wiki syntax, add syntax for links to headings in page - this would help when you use the wiki for documentation and the page is huge.
  * 03/24/2008 - GWT project - date time format, consolidate links for it, to all date time format links - all links to date object and locatization of it
- * 03/24/2008 - [http://code.google.com/webtoolkit/documentation/com.google.gwt.doc.DeveloperGuide.Internationalization.html#PropertiesFiles] - in the GWT Project, have a search bar, to search only files within that project
+ * 03/24/2008 - [http://code.google.com/webtoolkit/overview.html] - in the GWT Docs, have a search bar, to search only Docs within that GWT Project
+
 
 == Global Google Suggestions ==
  * On Google help page - link to form for reporting a error of any google app!
@@ -30,6 +31,11 @@
  * On Google help page - link to form for saying good job for any app!
  * search for google suggestion, rank it to the top!
  * ERROR 500: tells you to report error, get the link to goto form to report it!
+
+== Might Be Good Ideas ==
+ Ideas that might be good?
+ * rank wiki article
+ * for user that is logged in - history link - of where you last visited in project
 
 == Good Job ==
  * wow, cool svn browsing now!
