@@ -10,10 +10,10 @@
  * Timezone
 
  == Documentation Date/Time Links ==
-  * [http://java.sun.com/j2se/1.4.2/docs/api/java/util/Date.html Java Date Object]
-  * [http://google-web-toolkit.googlecode.com/svn/javadoc/1.4/com/google/gwt/i18n/client/DateTimeFormat.html GWT Date Time Format]
-  * [http://www.gwtapps.com/doc/html/com.google.gwt.i18n.client.DateTimeFormat.html Class DateTimeFormat]
-  * [http://code.google.com/p/bunsenandbeaker/wiki/DevGuideDateAndNumberFormat GWT Date Time Format Incubation]
+  * [http://java.sun.com/j2se/1.4.2/docs/api/java/util/Date.html Java Date Object] - Reference
+  * [http://google-web-toolkit.googlecode.com/svn/javadoc/1.4/com/google/gwt/i18n/client/DateTimeFormat.html GWT Date Time Format] - Reference
+  * [http://www.gwtapps.com/doc/html/com.google.gwt.i18n.client.DateTimeFormat.html Class DateTimeFormat] - Documentation
+  * [http://code.google.com/p/bunsenandbeaker/wiki/DevGuideDateAndNumberFormat GWT Date Time Format Incubation] - Documentation
 
 
 = TimeStamp - Start and End Of Day =
