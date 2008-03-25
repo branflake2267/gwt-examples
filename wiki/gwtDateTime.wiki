@@ -110,6 +110,8 @@ private String getTimeZone(int type) {
 			timezone = DateTimeFormat.getFormat("v").format(today); //like "GMT-07:00"
 			break;
 		case 4: //time zone Name 
+
+                        THIS WONT COMPILE - WORKS IN DEBUGGER
 			TimeZone tz = TimeZone.getDefault();
 			timezone = tz.getID(); //like "America/Vancouver"
 			break;
