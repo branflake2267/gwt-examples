@@ -84,8 +84,9 @@ private String getDateEnd_TimeStamp() {
 = Get Client's Time Zone =
  This is how I get the client's time zone. 
 
- This is the easiest way to get the client's time zone. 
+ You can only do this on the server side. Although this is nice todo, you can not do this on the client side.. 
 {{{
+//will not work on the client side
 TimeZone tz = TimeZone.getDefault();
 String timezone = tz.getID(); //like "America/Vancouver"
 }}}
@@ -111,9 +112,11 @@ private String getTimeZone(int type) {
 			break;
 		case 4: //time zone Name 
 
-                        THIS WONT COMPILE - WORKS IN DEBUGGER
-			TimeZone tz = TimeZone.getDefault();
-			timezone = tz.getID(); //like "America/Vancouver"
+                        //THIS WONT COMPILE - WORKS IN DEBUGGER - this will not work on client side
+			//TimeZone tz = TimeZone.getDefault();
+			//timezone = tz.getID(); //like "America/Vancouver"
+                        timezone = DateTimeFormat.getFormat("z").format(today); //like "GMT-07:00";
+
 			break;
 		case 5: //timezone TextLong
 			timezone = DateTimeFormat.getLongDateTimeFormat().format(today); //like "March 22, 2008 5:39:22 PM GMT-07:00"
