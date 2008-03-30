@@ -44,7 +44,7 @@ sudo /etc/init.d/tomcat5.5 force-reload
  * If you get Page 405 error, you got url-pattern error (url=context). (page 405 error, cant use Get)
  
 
-= JDBC Socket Permission =
+= JDBC Socket Permission - Security Error =
  Fix this problem: java.security.AccessControlException access denied (java.net.SocketPermission localhost resolve)
  You will need to change Tomcat configuration.
 {{{
