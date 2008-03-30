@@ -102,3 +102,23 @@ public class SignInStatus implements IsSerializable{
 	}
 
 }
+}}}
+
+= Tomcat Apache and Regular Apache On The Same Server =
+ I was wondering how I could run both Apache Tomcat and the regular Apache on the same server. How do you run multiple instances of Apache with the same port? What you do is, use different IP addresses for Apache Tomcat and Apache. 
+
+ Apache Tomcat configuration
+{{{
+#Both the ip and port have changed from default setup
+#In this case the ip is a class C private IP, on private network behind a firewall.
+<Connector address="192.168.12.83" port="80" maxHttpHeaderSize="8192"
+               maxThreads="150" minSpareThreads="25" maxSpareThreads="75"
+               enableLookups="false" redirectPort="8443" acceptCount="100"
+               connectionTimeout="20000" disableUploadTimeout="true" />
+}}}
+
+ Apache Configuration
+{{{
+<VirtualHost 192.168.12.82:80>
+ #~...
+</VirutalHost>
