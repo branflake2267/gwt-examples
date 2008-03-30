@@ -144,3 +144,6 @@ netmask 255.255.255.0
 <VirtualHost 192.168.12.82:80>
  #~...
 </VirutalHost>
+
+= War File =
+ Check the example war file for correct servlet configuration. [http://code.google.com/p/gwt-examples/downloads/list Downloads]
