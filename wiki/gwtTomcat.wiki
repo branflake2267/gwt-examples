@@ -7,6 +7,12 @@
 {{{
 sudo apt-get install sun-java6-bin sun-java6-jdk sun-java6-jre sun-java6-fonts
 }}}
+  === Optional - Choose JVM ===
+   On ubuntu, use galternatives to choose your JVM
+{{{
+#run this
+galternatives
+}}}
 
  == Install Tomcat5.5 ==
 {{{
@@ -14,6 +20,7 @@ sudo apt-get install tomcat5.5 tomcat5.5-admin tomcat5.5-webapps
 }}}
 
  == Add Your User Name To Tomcat Config ==
+ You will have to find your tomcat users and add yourself, and delete anybody else.
 {{{
 //In /etc/tomcat5.5/tomcat-users.xml
 <user username="branflake2267" password="password" fullName="" roles="admin,manager,role1,tomcat"/>
@@ -34,10 +41,10 @@ sudo /etc/init.d/tomcat5.5 force-reload
  == Test Servlet ==
  To test your url-pattern in your servlet to see if you have the correct path context. 
  * Goto http://localhost:8180/YourProject/Url-Pattern
- * If you get Page 405 error, you got url-pattern correct. (page 405 error, cant use Get)
+ * If you get Page 405 error, you got url-pattern error (url=context). (page 405 error, cant use Get)
  
 
- == JDBC Socket Permission ==
+= JDBC Socket Permission =
  Fix this problem: java.security.AccessControlException access denied (java.net.SocketPermission localhost resolve)
  You will need to change Tomcat configuration.
 {{{
@@ -51,8 +58,8 @@ grant codeBase "file:${catalina.home}/webapps/-" {
 //sudo /etc/init.d/tomcat5.5 force-reload
 }}}
 
- == RPC Failure 500 ==
- If you get a rpc failure on a production server and it works in the debugger, it might be this. I found it by using firefox tamper data, finding the page request died at 500 internal server error. This guy narrowed it down [http://rdews.com/?cat=20]. It has to do with security of the serialization. This will fix it if you add it to your tomcat configuration. 
+= Security Failure/Error (RPC Failure 500) =
+ Are you getting errors in your apache server log? Do they look like mysql authentication problem? If you get a rpc failure on a production server and it works in the debugger, it might be this. I found it by using firefox tamper data, finding the page request died at 500 internal server error. This guy narrowed it down [http://rdews.com/?cat=20]. It has to do with security of the serialization. This will fix it if you add it to your tomcat configuration. 
 {{{
 //add to /etc/tomcat5.5/policy.d/04webapps.policy
 grant codeBase "file:${catalina.home}/webapps/-" {
