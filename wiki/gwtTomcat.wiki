@@ -107,6 +107,28 @@ public class SignInStatus implements IsSerializable{
 = Tomcat Apache and Regular Apache On The Same Server =
  I was wondering how I could run both Apache Tomcat and the regular Apache on the same server. How do you run multiple instances of Apache with the same port? What you do is, use different IP addresses for Apache Tomcat and Apache. 
 
+ You need to setup another IP in interfaces.
+{{{
+
+#main web server
+# The primary network interface
+auto eth0
+iface eth0 inet static
+address 192.168.12.82
+netmask 255.255.255.0
+gateway 192.168.12.1
+broadcast 192.168.12.255
+network 192.168.12.0
+
+#Secondary IP / Alias
+#For Apache Tomcat
+auto eth0:1
+iface eth0:1 inet static
+address 192.168.12.83
+netmask 255.255.255.0
+}}}
+
+
  Apache Tomcat configuration
 {{{
 #Both the ip and port have changed from default setup
