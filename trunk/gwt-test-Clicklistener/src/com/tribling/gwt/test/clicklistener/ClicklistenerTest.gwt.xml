@@ -5,5 +5,5 @@
 
 	<!-- Specify the app entry point class.                   -->
 	<entry-point class='com.tribling.gwt.test.clicklistener.client.ClicklistenerTest'/>
-  	<stylesheet src='style.css'/>
+  
 </module>

@@ -12,13 +12,27 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ClicklistenerTest implements EntryPoint {
 
-	/**
-	 * This is the entry point method.
-	 */
-	public void onModuleLoad() {
-		
-		Combine c = new Combine();
-		c.draw();
-		
-	}
+  /**
+   * This is the entry point method.
+   */
+  public void onModuleLoad() {
+    final Button button = new Button("Click me");
+    final Label label = new Label();
+
+    button.addClickListener(new ClickListener() {
+      public void onClick(Widget sender) {
+        if (label.getText().equals(""))
+          label.setText("Hello World!");
+        else
+          label.setText("");
+      }
+    });
+
+    /* Assume that the host HTML has elements defined whose
+     * IDs are "slot1", "slot2". You must be careful to ensure
+     * that all IDs are unique if you use this approach.
+     */
+    RootPanel.get("slot1").add(button);
+    RootPanel.get("slot2").add(label);
+  }
 }
