@@ -3,6 +3,9 @@
 	<!-- Inherit the core Web Toolkit stuff.                  -->
 	<inherits name='com.google.gwt.user.User'/>
 
+	<!-- Style for my gwt application -->
+	<stylesheet src="style.css"/>
+
 	<!-- Specify the app entry point class.                   -->
 	<entry-point class='com.tribling.gwt.test.clicklistener.client.ClicklistenerTest'/>
   
