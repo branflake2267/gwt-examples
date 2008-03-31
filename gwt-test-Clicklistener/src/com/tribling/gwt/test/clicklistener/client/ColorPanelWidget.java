@@ -12,7 +12,15 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class PanelWidget extends Composite implements ClickListener {
+/**
+ *  Making a panel that changes color on click of a button
+ *  
+ *  using composite to make this a widget in it self
+ *  
+ * @author branflake2267
+ *
+ */
+public class ColorPanelWidget extends Composite implements ClickListener {
 
 	// my buttons to listen to
 	private Button bChangeColor = new Button("Change Color");
@@ -26,43 +34,37 @@ public class PanelWidget extends Composite implements ClickListener {
 	// main widget panel
 	VerticalPanel pMain = new VerticalPanel();
 
+	// Var to remember
 	private String randomColor = null;
 
+	
+	
 	/**
 	 * constructor - setup this widget
 	 */
-	public PanelWidget() {
+	public ColorPanelWidget() {
 
 		// make a menu of buttons
 		HorizontalPanel menu = new HorizontalPanel();
-		menu.setStyleName("prw-Menu");
-		menu.add(new Label("Buttons to listen to: "));
+		menu.setStyleName("cpw-Menu");
+		menu.add(new Label("(ColorPanelWidget) Keep Clicking"));
 		menu.add(bChangeColor);
 
-		// content panel - for color
-		pContent.setStyleName("prw-Content");
-
-		// main widget panel
+		// main widget panel 
 		pMain.add(menu);
 		pMain.add(pContent);
 
 		// init the widget - has to be done before methods used on it
 		initWidget(pMain);
 
-		// Observe to the button
+		// content panel - for color
+		pContent.setStyleName("cpw-Content");
+
+		// Observe the button
 		bChangeColor.addClickListener(this);
 	}
 
-	/**
-	 * use this to observe this widget from another widget
-	 * 
-	 * @param listener
-	 */
-	public void addChangeListener(ChangeListener listener) {
-		if (changeListeners == null)
-			changeListeners = new ChangeListenerCollection();
-		changeListeners.add(listener);
-	}
+
 
 	/**
 	 * change the color of the background of the content element
@@ -77,10 +79,18 @@ public class PanelWidget extends Composite implements ClickListener {
 		pContent.add(new Label("Color: " + this.randomColor));
 	}
 
+	/**
+	 * get random color from this widget
+	 * @return
+	 */
 	public String getColor() {
 		return this.randomColor;
 	}
 
+	/**
+	 * generate a random hex
+	 * @return
+	 */
 	private String getRandomColor() {
 
 		String hex1 = getRandomHex();
@@ -110,13 +120,16 @@ public class PanelWidget extends Composite implements ClickListener {
 		return sHex;
 	}
 
+	
 	/**
-	 * when clicked then process the ID
+	 * Observers - when clicked then process the ID
+	 * 
+	 * Used to fire a change listener
 	 */
 	public void onClick(Widget sender) {
 
 		if (sender == bChangeColor) { // if the change color button was
-										
+
 			this.changePanelColor();
 
 		}
@@ -128,6 +141,22 @@ public class PanelWidget extends Composite implements ClickListener {
 		}
 	}
 
+	
+	/**
+	 * Add change listener to watch for changes
+	 * 
+	 * @param listener
+	 */
+	public void addChangeListener(ChangeListener listener) {
+		if (changeListeners == null)
+			changeListeners = new ChangeListenerCollection();
+		changeListeners.add(listener);
+	}
+	
+	/**
+	 * Remove Change Listener
+	 * @param listener
+	 */
 	public void removeChangeListener(ChangeListener listener) {
 		if (changeListeners != null)
 			changeListeners.remove(listener);

@@ -2,61 +2,80 @@ package com.tribling.gwt.test.clicklistener.client;
 
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class Combine implements ClickListener {
+public class Combine  extends Composite implements ClickListener, ChangeListener {
 
-	//panel to work with
-	private HorizontalPanel pColorTrack = new HorizontalPanel();
+
 
 	// panel work with
 	private HorizontalPanel pMenu = new HorizontalPanel();
 	
-	// panel widget
-	private PanelWidget pw = new PanelWidget();
+	// place to change text of changed color
+	private HorizontalPanel pChangedColor = new HorizontalPanel();
+	
+	// color panel widget
+	private ColorPanelWidget wColorPanel = new ColorPanelWidget();
 
+	private VerticalPanel pHelp = new VerticalPanel();
+	
 	/**
-	 * constructor
+	 * constructor - init this widget
 	 */
 	public Combine() {
 
-		pMenu.add(new HTML("Track:&nbsp;"));
+		pMenu.add(new Label("(Combine Widget) Color:"));
+		pMenu.add(pChangedColor);
 
-		HorizontalPanel hp = new HorizontalPanel();
-		hp.add(pMenu);
-		hp.add(pColorTrack);
+		//setup the widget panels
+		VerticalPanel wCombine = new VerticalPanel();
+		wCombine.setSpacing(10);
+		wCombine.add(pMenu);
+		wCombine.add(wColorPanel);
+		wCombine.add(pHelp);
 
-		RootPanel.get().add(hp);
+		//init widget (using the composite class)
+		initWidget(wCombine);
+		
+		wCombine.addStyleName("combineWidget");
+		
+		// this observes events in panel widget
+		wColorPanel.addChangeListener(this);
+		
+		setHelp();
 	}
 
 	/**
-	 * draw stuff on screen to work with
+	 * set some help text in the main widget
 	 */
-	public void draw() {
-
-		// this observes events in panel widget
-		pw.addChangeListener(new ChangeListener() {
-
-			public void onChange(Widget sender) {
-				String color = pw.getColor();
-
-				// Window.alert(color);
-
-				pColorTrack.clear();
-				pColorTrack.add(new Label(color));
-			}
-		});
-
-		// add the panel widget to the page
-		RootPanel.get().add(pw);
+	private void setHelp() {
+		
+		pHelp.add(new HTML("The Combine widget observes changes in the ColorPanelWidget"));
 	}
 
-	// not used yet
+	
+	// observer of click events in this widget
 	public void onClick(Widget sender) {
+	}
+
+	
+	// observer for change events using changelistener
+	public void onChange(Widget sender) {
+		
+		//if the sender (sender is a widget) is wColorPanel
+		if (sender == wColorPanel) {
+			String color = wColorPanel.getColor();
+			
+			pChangedColor.clear();
+			pChangedColor.add(new Label(color));
+		}
+		
 	}
 
 }
