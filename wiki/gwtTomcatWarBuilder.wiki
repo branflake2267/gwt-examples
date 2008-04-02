@@ -8,9 +8,10 @@
  * It auto compiles the files into a ~/production folder ready for archiving
  * It auto Imports your dependency jars into the ~/production/WEB-INF/libs folder
  * It auto imports your dependency classes into the ~/production/WEB-INF/classes folder
- * It auto creates a index.jsp home page for easy navigation to project
+ * It auto creates a index.jsp home page for easy navigation to project - this is used just in case now
  * Make your servlet application private, configure var in script.
- * Choose the context of your application - ROOT.war or anyName.war to setup the context of your virtualhost
+ * Choose the context of your application - ROOT.war or anyName.war to setup the context of your virtual host
+ * sets up the welcome page, so it loads whatever.html as the homepage for your applications context.
 
 
  == Directions ==
