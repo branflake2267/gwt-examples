@@ -10,6 +10,7 @@
  * It auto imports your dependency classes into the ~/production/WEB-INF/classes folder
  * It auto creates a index.jsp home page for easy navigation to project
  * Make your servlet application private, configure var in script.
+ * Choose the context of your application - ROOT.war or anyName.war to setup the context of your virtualhost
 
 
  == Directions ==
@@ -36,3 +37,6 @@
  * 03/14/2008 - added gwt 1.5 support for directory /std ouput
  * 01/18/2008 - Added time stamp in the name so I could tell when I deployed it. [http://gwt-examples.googlecode.com/svn/trunk/gwt-TomcatWarBuilder/src/com/tribling/gwt/test/TomcatWarBuilder/TomcatProductionBuilder.java Download Most Recent From SVN Repository]
  * 02/20/2008 - added servlet application security. fixed regexp.
+ * 04/02/2008 - added War rename, so that I could rename application context (like ROOT.war)
+ * 04/02/2008 - fixed code up a bit
+ * 04/02/2008 - added welcome file list, and or directly redirects to application whatever the name is - doesn't have to be index.jsp, it can be whatever.html as the welcome page
