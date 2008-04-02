@@ -243,7 +243,7 @@ public class TomcatWarBuilder {
 		String WebXML = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
 		"<web-app>\n" +
 		  "<display-name>gwt-" + ProjectName + " Compiled: " + getDate() + "</display-name>\n" +
-		  "description>Google Web Toolkit Project</description>\n";
+		  "<description>Google Web Toolkit Project</description>\n";
 		
 		if (ServletClassName != null) {
 		 WebXML += "<servlet>\n" + 
