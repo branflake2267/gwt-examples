@@ -234,3 +234,6 @@ netmask 255.255.255.0
  Now this seemed hard at first, but its the easiest. Use the Tomcat Web Server Administration tool to add virtual hosts. You won't have to edit a bit a xml code to configure this. 
  * [http://tribling.com/tomcat.php Tomcat vhosts setup Images] - These are snapshots of my tomcat setup. I installed a virtual host and installed the manager in each virtual host to quickly deploy and maintain the wars.
  * Note - vhosts directory path "/path/to/vhost/webapps" has correct permissions, and doesn't have trailing slash.
+
+ == ROOT application ==
+ Name your root application ROOT.war and it will be the root app for the virtual host.
