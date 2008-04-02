@@ -9,7 +9,7 @@
 = Reference =
  Some details to note.
  * [http://tomcat.apache.org/tomcat-6.0-doc/ Tomcat Documentation] 
- * /var/lib/tomcat5.5 - (Ubuntu) most of the files reside here
+ * /var/lib/tomcat5.5 - (Ubuntu) some of the files reside here
  * /usr/share/tomcat5.5 - (Ubuntu)
  * /etc/tomcat5.5 - (Ubuntu) configuration files, tomcat-users.xml, server.xml
  * /usr/share/tomcat5.5-webapps (Ubuntu) - example web aps directory
