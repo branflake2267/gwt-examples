@@ -136,7 +136,7 @@ public class TomcatWarBuilder {
 		
 		// For virtual hosting - rename your war file to what you want the application context to be
 		// OR rename to ROOT.war for hosts root app
-		renameWarFile = true;
+		renameWarFile = false; //true = turn on rename
 		renameWarFileNameTo = "ROOT.war";
 
 		
