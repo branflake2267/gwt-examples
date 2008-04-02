@@ -1,7 +1,7 @@
 #summary gwt tomcat setup
 
 = Tomcat Details =
- Tomcat has got to be the easiest platform to deploy GWT application in the most efficient system. There are so many positives with tomcat, after you use the system to breg about.
+ Tomcat has got to be the easiest platform to deploy GWT application in the most efficient system. If you switch to Tomcat, you love it.
 
 = Reference =
  Some details to note.
