@@ -2,6 +2,9 @@
 #labels Featured
 
 
+= Reference =
+  [http://code.google.com/p/support/issues/list Google Code]
+
 = My Ideas For Google Code =
 
  * *Add Developer toolbar* - add a developer toolbar to debugger, so you can see the div layout, widget layout, tags. Highlight div containers with red border, like firefox developer toolbar. Help determine css style design quickly.
