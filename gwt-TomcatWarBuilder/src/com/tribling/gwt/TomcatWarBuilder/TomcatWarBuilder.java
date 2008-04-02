@@ -34,6 +34,9 @@ import java.util.zip.ZipOutputStream;
  * Maybes
  * TODO - dont zip .svn*
  * TODO - Ask for username and password for tomcat deploy, instead of static var
+ * 
+ * Documentation
+ * http://tomcat.apache.org/tomcat-6.0-doc/index.html
  */
 public class TomcatWarBuilder {
 
@@ -106,12 +109,12 @@ public class TomcatWarBuilder {
 		//FIRST -> Compile your project in the eclipse gwt debugger before you run this
 		
 		//Ask for authorization to use this servlet application. 
-		askForLogin = true;
+		askForLogin = false;
 		
 		// project directory
-		ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
+		//ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-DisplayDate";
-		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Clicklistener";
+		ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Clicklistener";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RPC-adv";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Login-Manager";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-Calendar";
@@ -226,21 +229,30 @@ public class TomcatWarBuilder {
 	
 	/**
 	 * create the servlet /WEB-INF/web.xml file
+	 * 
+	 * Reference
+	 * http://tomcat.apache.org/tomcat-6.0-doc/config/context.html
+	 * 
+	 * change
+	 * <web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+		version="2.4">
 	 */
 	public static String createWebXMLFileContents() {
 		String WebXML = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
 		"<web-app>\n" +
 		  "<display-name>gwt-" + ProjectName + " Compiled: " + getDate() + "</display-name>\n" +
-		  "<description>Google Web Toolkit Project</description>\n";
+		  "description>Google Web Toolkit Project</description>\n";
 		
 		if (ServletClassName != null) {
 		 WebXML += "<servlet>\n" + 
-		   "<servlet-name>" + ProjectName + "</servlet-name>\n" +
-		   "<servlet-class>" + ServletClassName + "</servlet-class>\n" +
+		   "\t<servlet-name>" + ProjectName + "</servlet-name>\n" +
+		   "\t<servlet-class>" + ServletClassName + "</servlet-class>\n" +
 		 "</servlet>\n" +
 		  "<servlet-mapping>\n" +
-		    "<servlet-name>" + ProjectName + "</servlet-name>\n" +
-		    "<url-pattern>" + ServletPath + "</url-pattern>\n" +
+		    "\t<servlet-name>" + ProjectName + "</servlet-name>\n" +
+		    "\t<url-pattern>" + ServletPath + "</url-pattern>\n" +
 		  "</servlet-mapping>\n";
 		 }
 		
