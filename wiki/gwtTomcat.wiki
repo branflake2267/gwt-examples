@@ -222,3 +222,7 @@ netmask 255.255.255.0
 
 </Server>
 }}}
+
+= Tomcat Virtual Hosting =
+ Now this seemed hard at first, but its the easiest. Use the Tomcat Web Server Administration tool to add virtual hosts. You won't have to edit a bit a xml code to configure this. 
+ * [http://tribling.com/tomcat.php Tomcat vhosts setup Images] - These are snapshots of my tomcat setup. I installed a virtual host and installed the manager in each virtual host to quickly deploy and maintain the wars.
