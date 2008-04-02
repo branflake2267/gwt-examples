@@ -3,6 +3,9 @@
 = Tomcat Details =
  Tomcat has got to be the easiest platform to deploy GWT application in the most efficient system. If you switch to Tomcat, you love it.
 
+ == My Screenshots ==
+  [http://tribling.com/tomcat.php Screenshots] - Tomcat install screenshots
+
 = Reference =
  Some details to note.
  * [http://tomcat.apache.org/tomcat-6.0-doc/ Tomcat Documentation] 
