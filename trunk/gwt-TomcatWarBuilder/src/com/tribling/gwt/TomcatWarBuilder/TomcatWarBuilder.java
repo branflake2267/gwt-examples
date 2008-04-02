@@ -50,42 +50,51 @@ public class TomcatWarBuilder {
 	private static boolean isGWT15 = false;
 	
 	// Project vars
-	private static String ProjectCompileFile; // project compile file location
-	private static String ProjectCompileFileContents;
-	private static String ProjectModuleName;
-	private static String ProjectName;
-	private static String[] ProjectDirs;
-	private static String ProjectDir;
-	private static String ProjectGWTxmlFile;
-	private static String ProjectGWTxmlFileLocation;
-	private static String ProjectGWTxmlFileContents;
-	private static String ServletClassName; // xml servlet class
-	private static String ServletPath; // xml servlet path
-	private static String ServletClassNameIMPL;
+	private static String projectCompileFile; // project compile file location
+	private static String projectCompileFileContents;
+	private static String projectModuleName;
+	private static String projectName;
+	private static String[] projectDirs;
+	private static String projectDir;
+	private static String projectGWTxmlFile;
+	private static String projectGWTxmlFileLocation;
+	private static String projectGWTxmlFileContents;
+	private static String servletClassName; // xml servlet class
+	private static String servletPath; // xml servlet path
+	private static String servletClassNameIMPL;
 	// private static String[] ServerProjectDirs; //skipping for now
-	private static String ClassFileContents;
-	private static String[] ClassLibs;
-	private static String WebXML;
-
+	private static String classFileContents;
+	private static String[] classLibs;
+	private static String webXML;
+	
+	
 	
 	//temp build folder in project directory
 	//BEWARE - if you change this - u must change this directory in this method -> getZipPath()
 	//don't change, still fouls things up
-	private static String TempBuildFolder = "/production";
+	private static String tempBuildFolder = "/production";
 	
 	//default location is project root. Set this for another location
 	//set with no trailing slash like "/home/branflake2267/warFiles"
 	//private static String TempWarFileLocation = "/home/branflake2267"; 
-	private static String TempWarFileLocation = null; 
+	private static String tempWarFileLocation = null; 
 	
 	//add this if your project-compile class path is relative
 	//Add trailing slash "/dir/dir/gwt-linux/"
 	//private static String GWT_HOME_Manual = "/opt/gwt-linux/";
-	private static String GWT_HOME_Manual = null;
+	private static String path_GWT_HOME_Manual = null;
 	
 	//acts like .htaccess security - popup login
 	//add security xml - uses tomcat-users.xml user security
 	private static boolean askForLogin = false;
+
+	// go directly to the application as the home page
+	private static boolean goDirectlyToApplication = true;
+
+	// change the name of the war file at the end - like to ROOT.war for root app for host
+	private static boolean renameWarFile = false;
+	private static String renameWarFileNameTo = "ROOT.war";
+	
 	
 	/**
 	 * main method
@@ -99,19 +108,14 @@ public class TomcatWarBuilder {
 	 */
 	public static void main(String[] args) throws IOException {
 		
-		//is GWT version 1.5?
-		isGWT15 = true; //they put the compiled files in a different directory
 		
-		/********************/
-		/* User Configuration Vars */
-		/********************/
+		//****FIRST**** -> Compile your project in the eclipse gwt debugger before you run this
 		
-		//FIRST -> Compile your project in the eclipse gwt debugger before you run this
 		
-		//Ask for authorization to use this servlet application. 
-		askForLogin = false;
+		/* Choices Below */
 		
-		// project directory
+		
+		// project directory (examples below)
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-DisplayDate";
 		ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Clicklistener";
@@ -119,12 +123,43 @@ public class TomcatWarBuilder {
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Login-Manager";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-Calendar";
 		
+		
+		
+		//is GWT version 1.5?
+		isGWT15 = true; //they put the compiled files in a different directory
+		
+		//Ask for authenication to use this servlet application. 
+		askForLogin = false;
+		
+		// go to application instead of going to index.jsp
+		goDirectlyToApplication = true;
+		
+		// For virtual hosting - rename your war file to what you want the application context to be
+		// OR rename to ROOT.war for hosts root app
+		renameWarFile = true;
+		renameWarFileNameTo = "ROOT.war";
 
 		
-		/********************/
-		/* Setup Project Vars */
-		/********************/
 		
+		
+		/* End Choices */
+		
+		
+		
+		// go get em
+		startProcess();
+	}
+
+	/**
+	 * process everything - and build war archive
+	 * @throws IOException
+	 */
+	private static void startProcess() throws IOException {
+		
+		/********************/
+		/* get/setup Project Vars */
+		/********************/
+	
 		
 		//Compile Project
 		//TODO - compile the projectdirectory project
@@ -170,10 +205,15 @@ public class TomcatWarBuilder {
 		//zip into war file
 		zipProject();
 
+		// rename the war file to desired name
+		renameWar();
+		
+		
 		
 		//TODO - upload to production/design tomcat server
 		//http://localhost:8080/manager/deploy?path=/footoo&war=file:/path/to/foo
 
+		
 		
 		//delete production folder when done
 		
@@ -182,13 +222,11 @@ public class TomcatWarBuilder {
 		System.out.println("");
 		System.out.println("All Done");
 	}
-
-	
 	
 	/**
 	 * get project Vars
 	 */
-	public static void getProjectVars() {
+	private static void getProjectVars() {
 		
 		// GWT_HOME location
 		getGWT_HOME();
@@ -224,36 +262,76 @@ public class TomcatWarBuilder {
 		getClassLibs();
 	}
 	
-
-	
-	
 	/**
 	 * create the servlet /WEB-INF/web.xml file
 	 * 
 	 * Reference
 	 * http://tomcat.apache.org/tomcat-6.0-doc/config/context.html
+	 * http://www.caucho.com/resin/doc/filters.xtp
+	 *
+	 *
+	 * Name your application ROOT.war to make it the root application for your domain
 	 * 
-	 * change
-	 * <web-app xmlns="http://java.sun.com/xml/ns/j2ee"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
-		version="2.4">
+     *
+		<error-page>
+		    <error-code>404</error-code>
+		    <location>/404.html</location>
+		</error-page>
+
 	 */
-	public static String createWebXMLFileContents() {
-		String WebXML = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
-		"<web-app>\n" +
-		  "<display-name>gwt-" + ProjectName + " Compiled: " + getDate() + "</display-name>\n" +
-		  "<description>Google Web Toolkit Project</description>\n";
+	private static String createWebXMLFileContents() {
 		
-		if (ServletClassName != null) {
-		 WebXML += "<servlet>\n" + 
-		   "\t<servlet-name>" + ProjectName + "</servlet-name>\n" +
-		   "\t<servlet-class>" + ServletClassName + "</servlet-class>\n" +
-		 "</servlet>\n" +
-		  "<servlet-mapping>\n" +
-		    "\t<servlet-name>" + ProjectName + "</servlet-name>\n" +
-		    "\t<url-pattern>" + ServletPath + "</url-pattern>\n" +
-		  "</servlet-mapping>\n";
+		// xml definition
+		String WebXML = "" +
+			"<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
+		
+			"<web-app id=\"/\" xmlns=\"http://java.sun.com/xml/ns/j2ee\" " +
+				"xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " +
+				"xsi:schemaLocation=\"http://java.sun.com/xml/ns/j2ee " +
+				"http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd\" " +
+				"version=\"2.4\">\n" +
+				
+		  // servlet name and description
+		  "\t<display-name>gwt-" + projectName + " Compiled: " + getDate() + "</display-name>\n" +
+		  "\t<description>Google Web Toolkit Project</description>\n";
+		
+		
+		// test
+		/* couldn't make this work yet
+		WebXML += "" +
+			"<context-param>\n" +
+				"\t<param-name>path</param-name>\n" +
+				"\t<param-value>/what</param-value>\n" +
+			"</context-param>\n" +
+			"<context-param>\n" +
+				"\t<param-name>docBase</param-name>\n" +
+				"\t<param-value>" + ProjectName + "</param-value>\n" +
+			"</context-param>\n";
+		*/
+		
+		// use welcome file list to go directly to the application
+		if (goDirectlyToApplication == true) {
+		WebXML += "" +
+			 "<welcome-file-list>\n" +
+			 	"\t<welcome-file>" + projectName + ".html</welcome-file>\n" + // go directly to the applications the homepage
+			 	"\t<welcome-file>index.jsp</welcome-file>\n" + // you could use these
+			 	"\t<welcome-file>index.html</welcome-file>\n" +
+			 	"\t<welcome-file>index.htm</welcome-file>\n" +
+			 "</welcome-file-list>\n";
+		}
+		
+		// enable web page authentication to tomcat-users.xml 
+		if (servletClassName != null) {
+		 WebXML += "" +
+		 	 "\n<!-- server side gwt stuff-->\n" +
+			 "<servlet>\n" + 
+			   "\t<servlet-name>" + projectName + "</servlet-name>\n" +
+			   "\t<servlet-class>" + servletClassName + "</servlet-class>\n" +
+			 "</servlet>\n" +
+			 "<servlet-mapping>\n" +
+			    "\t<servlet-name>" + projectName + "</servlet-name>\n" +
+			    "\t<url-pattern>" + servletPath + "</url-pattern>\n" +
+			  "</servlet-mapping>\n";
 		 }
 		
 		//add user security if turned on
@@ -271,51 +349,53 @@ public class TomcatWarBuilder {
 	 * You can change role below to a different role in the list, 
 	 * as long as the users are part of that role that want to login
 	 */
-	public static String createWebXMLFileContents_Security() {
+	private static String createWebXMLFileContents_Security() {
 		String WebXML = "" +
 			"\n<!-- Define a Security Constraint on this Application -->\n" +
 			"<security-constraint>\n" +
-				"<web-resource-collection>" +
-				"<web-resource-name>Entire Application</web-resource-name>\n" +
-				"<url-pattern>/*</url-pattern>\n" +
-				"</web-resource-collection>\n" +
-				"<auth-constraint>\n" +
-				"<role-name>admin</role-name>\n" +
-				"</auth-constraint>\n" +
+				"\t<web-resource-collection>" +
+				"\t<web-resource-name>Entire Application</web-resource-name>\n" +
+				"\t<url-pattern>/*</url-pattern>\n" +
+				"\t</web-resource-collection>\n" +
+				"\t<auth-constraint>\n" +
+				"\t<role-name>admin</role-name>\n" +
+				"\t</auth-constraint>\n" +
 			"</security-constraint>\n\n" +
 
 			"<login-config>\n" +
-				"<auth-method>BASIC</auth-method>\n" +
-				"<realm-name>Your Realm Name</realm-name>\n" +
+				"\t<auth-method>BASIC</auth-method>\n" +
+				"\t<realm-name>Your Realm Name</realm-name>\n" +
 			"</login-config>\n\n" +
 
 			"<security-role>\n" +
-				"<description>The role that is required to log in to the Manager Application</description>\n" +
-				"<role-name>admin</role-name>\n" +
+				"\t<description>The role that is required to log in to the Manager Application</description>\n" +
+				"\t<role-name>admin</role-name>\n" +
 			"</security-role>\n\n";
 		
 		if (askForLogin == true) {
 			return WebXML;
 		} else {
-			return null;
+			return "";
 		}
-
 	}
 	
-	public static String getDate() {
+	/**
+	 * get todays date
+	 * @return
+	 */
+	private static String getDate() {
 		Date date = new Date();
 		String now = date.toString();
 		return now;
 	}
 	
-	
 	/**
 	 * create an index page for easy module access
 	 * @return
 	 */
-	public static String createIndexPageContents() {
+	private static String createIndexPageContents() {
 	
-		String LintToModule = ProjectName +".html";
+		String LintToModule = projectName +".html";
 		String LinkToModuleDesc = LintToModule;
 		
 		String IndexPage = "<!doctype html public \"-//w3c//dtd html 4.0 transitional//en\">\n" +
@@ -332,28 +412,32 @@ public class TomcatWarBuilder {
 	/**
 	 * create file ./production/index.jsp
 	 */
-	public static void createIndexPage() {
-		String File = TempBuildFolder + "/index.jsp";
+	private static void createIndexPage() {
+		String File = tempBuildFolder + "/index.jsp";
 		createFile(File, createIndexPageContents());
 	}
 	
-	
-	public static void getCurrentProjectDirectory() {
+	/**
+	 * Get the project directory this script resides in
+	 * 
+	 * figure out how to get the path of this script
+	 */
+	private static void getCurrentProjectDirectory() {
 		//don't know how to get the eclipse project directory yet that this file is in
 	}
 	
 	/**
 	 * setup temp build folder, staging area for files
 	 */
-	public static void setTempBuildFolder() {
-		TempBuildFolder = ProjectDirectory + TempBuildFolder;
+	private static void setTempBuildFolder() {
+		tempBuildFolder = ProjectDirectory + tempBuildFolder;
 	}
 
 	/**
 	 * delete the previous production folder
 	 */
-	public static void deleteProductionFolder() {
-		String sDir = TempBuildFolder;
+	private static void deleteProductionFolder() {
+		String sDir = tempBuildFolder;
 		File dir = new File(sDir);
 		System.out.println("Deleting production directory contents: " + sDir);
 		//delete the production folder contents
@@ -383,33 +467,33 @@ public class TomcatWarBuilder {
 	/**
 	 * create file ./production/WEB-INF/web.xml
 	 */
-	public static void createWebXMLFile() {
-		String File = TempBuildFolder + "/WEB-INF/web.xml";
+	private static void createWebXMLFile() {
+		String File = tempBuildFolder + "/WEB-INF/web.xml";
 		createFile(File, createWebXMLFileContents());
 	}
 	
 	/**
 	 * create Folders for build
 	 */
-	public static void createDirectoriesForBuild() {
+	private static void createDirectoriesForBuild() {
 
 		System.out.println("");
 		System.out.println("Starting Build");
 
 		// create ./production folder for staging
-		String ProductionFolder = TempBuildFolder;
+		String ProductionFolder = tempBuildFolder;
 		createFolder(ProductionFolder);
 
 		// create folder ./production/WEB-INF
-		String ProductionWebInf = TempBuildFolder + "/WEB-INF";
+		String ProductionWebInf = tempBuildFolder + "/WEB-INF";
 		createFolder(ProductionWebInf);
 
 		// create folder ./production/WEB-INF/classes
-		String ProductionWebInfClasses = TempBuildFolder + "/WEB-INF/classes";
+		String ProductionWebInfClasses = tempBuildFolder + "/WEB-INF/classes";
 		createFolder(ProductionWebInfClasses);
 
 		// create folder ./production/WEB-INF/lib
-		String ProductionWebInfLib = TempBuildFolder + "/WEB-INF/lib";
+		String ProductionWebInfLib = tempBuildFolder + "/WEB-INF/lib";
 		createFolder(ProductionWebInfLib);
 	}
 
@@ -419,7 +503,7 @@ public class TomcatWarBuilder {
 	 * 
 	 * @throws IOException
 	 */
-	public static void copyFilesToProductionBuildFolder() throws IOException {
+	private static void copyFilesToProductionBuildFolder() throws IOException {
 
 		// copy the www file
 		copyWWWFiles();
@@ -434,10 +518,10 @@ public class TomcatWarBuilder {
 	/**
 	 * copy the compiled classes to /production/WEB-INF/classes
 	 */
-	public static void copyCompiledClasses() {
+	private static void copyCompiledClasses() {
 		
 		String src = ProjectDirectory + "/bin";
-		String dest = TempBuildFolder + "/WEB-INF/classes";
+		String dest = tempBuildFolder + "/WEB-INF/classes";
 		
 		try {
 			copyFiles(src, dest);
@@ -451,7 +535,7 @@ public class TomcatWarBuilder {
 	/**
 	 * copy files - //copy ./www to ./production/
 	 */
-	public static void copyWWWFiles() throws IOException {
+	private static void copyWWWFiles() throws IOException {
 		
 		String addDir = "";
 		if (isGWT15 == true) {
@@ -460,13 +544,13 @@ public class TomcatWarBuilder {
 		
 		System.out.println("Copying WWW Files");
 		
-		String src = ProjectDirectory + "/www/" + ProjectModuleName + addDir;
+		String src = ProjectDirectory + "/www/" + projectModuleName + addDir;
 		
 		//Archive/www/*files - have to change the servelt context path if you change this
 		//String dest = TempBuildFolder + "/www";
 		
 		//root production folder - much easier to use right off the bat - If you stick it in folders deeper, you have to change the url-path web.xml
-		String dest = TempBuildFolder;
+		String dest = tempBuildFolder;
 		
 		try {
 			copyFiles(src, dest);
@@ -481,17 +565,17 @@ public class TomcatWarBuilder {
 	 * 
 	 * @throws IOException
 	 */
-	public static void copyJarFiles() throws IOException {
+	private static void copyJarFiles() throws IOException {
 
-		System.out.println("Copying Jars" + ClassLibs.length);
+		System.out.println("Copying Jars" + classLibs.length);
 		
 		String src = null;
 		String dest = null;
 
-		for (int i = 0; i < (ClassLibs.length); i++) {
-			src = ClassLibs[i];
+		for (int i = 0; i < (classLibs.length); i++) {
+			src = classLibs[i];
 			String DestFile = getDestDirectory(src);
-			dest = TempBuildFolder + "/WEB-INF/lib/" + DestFile;
+			dest = tempBuildFolder + "/WEB-INF/lib/" + DestFile;
 			
 			try {
 				copyFiles(src, dest);
@@ -507,10 +591,10 @@ public class TomcatWarBuilder {
 	 * get class path file contents
 	 * search .classpath for libs to add
 	 */
-	public static void getClassPathContents() {
+	private static void getClassPathContents() {
 		String classpathfile = ProjectDirectory + "/.classpath";
-		ClassFileContents = readFile(new File(classpathfile));
-		System.out.println("ClassFileContents: " + ClassFileContents);
+		classFileContents = readFile(new File(classpathfile));
+		System.out.println("ClassFileContents: " + classFileContents);
 	}
 
 	/**
@@ -519,11 +603,11 @@ public class TomcatWarBuilder {
 	 * TODO - don't know how to process dir constant JUNIT_HOME, need to get eclipse enviro var, do this later "/"
 	 * 
 	 */
-	public static void getClassLibs() {
+	private static void getClassLibs() {
 
 		//kind=['|\"]lib['|\"].*?
 		Pattern p = Pattern.compile("path=['\"](/.*?jar)['\"]");
-		Matcher matcher = p.matcher(ClassFileContents);
+		Matcher matcher = p.matcher(classFileContents);
 
 		// Count the matches
 		int i = 0;
@@ -552,7 +636,7 @@ public class TomcatWarBuilder {
 		//get rid of gwt-user.jar
 		jars = deleteGwtUserJar(jars, AddGwtServlet);
 		
-		ClassLibs = jars;
+		classLibs = jars;
 	}
 	
 	/**
@@ -561,7 +645,7 @@ public class TomcatWarBuilder {
 	 * @param AddGwtServlet - tell it to replace gwt-servlet.jar and not erase it
 	 * @return
 	 */
-	public static String[] deleteGwtUserJar(String[] jars, boolean AddGwtServlet) {
+	private static String[] deleteGwtUserJar(String[] jars, boolean AddGwtServlet) {
 		String jar;
 		for(int i=0; i<jars.length; i++) {
 			jar = jars[i].toString();
@@ -579,44 +663,44 @@ public class TomcatWarBuilder {
 		return jars;
 	}
 	
-
-
 	/**
 	 * get projects client xml settings
 	 */
-	public static void getProjectsXMLFile() {
-		int depth = ProjectDirs.length - 1;
-		String ProjectName = ProjectDirs[depth];
+	private static void getProjectsXMLFile() {
+		int depth = projectDirs.length - 1;
+		String ProjectName = projectDirs[depth];
 
-		ProjectGWTxmlFile = ProjectName + ".gwt.xml";
-		System.out.println("ProjectGWTxmlFile: " + ProjectGWTxmlFile);
+		projectGWTxmlFile = ProjectName + ".gwt.xml";
+		System.out.println("ProjectGWTxmlFile: " + projectGWTxmlFile);
 
-		ProjectGWTxmlFileLocation = ProjectDirectory + "/src" + ProjectDir + "/" + ProjectGWTxmlFile;
-		System.out.println("ProjectGWTxmlFileLocation: "+ ProjectGWTxmlFileLocation);
+		projectGWTxmlFileLocation = ProjectDirectory + "/src" + projectDir + "/" + projectGWTxmlFile;
+		System.out.println("ProjectGWTxmlFileLocation: "+ projectGWTxmlFileLocation);
 	}
 
-	public static void readProjectXMLFileContents() {
-
-		ProjectGWTxmlFileContents = readFile(new File(ProjectGWTxmlFileLocation));
-		System.out.println("ProjectGWTxmlFileContents: " + ProjectGWTxmlFileContents);
+	/**
+	 * read xml files contents
+	 */
+	private static void readProjectXMLFileContents() {
+		projectGWTxmlFileContents = readFile(new File(projectGWTxmlFileLocation));
+		System.out.println("ProjectGWTxmlFileContents: " + projectGWTxmlFileContents);
 	}
 
 	
 	/**
 	 * get servlet class
 	 */
-	public static void getServletClassFromXMLFile() {
+	private static void getServletClassFromXMLFile() {
 
 		Pattern p = Pattern.compile("<servlet.*?class=[\"'](.*?)[\"'].*?>");
-		Matcher m = p.matcher(ProjectGWTxmlFileContents);
+		Matcher m = p.matcher(projectGWTxmlFileContents);
 		boolean found = m.find();
 
 		if (found == true) {
-			ServletClassName = m.group(1);
+			servletClassName = m.group(1);
 		}
 
 		//debug
-		System.out.println("ServletClassName: " + ServletClassName);
+		System.out.println("ServletClassName: " + servletClassName);
 		System.out.println("");
 	}
 
@@ -624,51 +708,54 @@ public class TomcatWarBuilder {
 	/**
 	 * get servlet path
 	 */
-	public static void getServeletUrlPath() {
+	private static void getServeletUrlPath() {
 
 		Pattern p = Pattern.compile("path=['\"](.*?)['\"]");
-		Matcher m = p.matcher(ProjectGWTxmlFileContents);
+		Matcher m = p.matcher(projectGWTxmlFileContents);
 		boolean found = m.find();
 
 		if (found == true) {
-			ServletPath = m.group(1);
+			servletPath = m.group(1);
 		}
 
 		//debug
-		System.out.println("ServletPath: " + ServletPath);
+		System.out.println("ServletPath: " + servletPath);
 	}
 
-	
 	/**
 	 * get the directory structure - this wont work with a project named with 1 name and no . in it
 	 * 
 	 * TODO - add logic to use single name for class like "class" and not just "com.domain.gwt.class.client.class"
 	 */
-	public static void getProjectDirectoryFromClassName() {
+	private static void getProjectDirectoryFromClassName() {
 
-		String[] dirs = ProjectModuleName.split("\\.");
+		String[] dirs = projectModuleName.split("\\.");
 
-		ProjectDirs = dirs; //can use this else where
+		projectDirs = dirs; //can use this else where
 
 		String dir = "";
 		for (int i = 0; i < (dirs.length - 1); i++) {
 			dir = dir + "/" + dirs[i].toString();
 		}
 
-		ProjectDir = dir;
+		projectDir = dir;
 		System.out.println("ProjectDir: " + dir);
 	}
 
 	/**
 	 * get project name from class name
 	 */
-	public static void getProjectName() {
-		ProjectName = ProjectDirs[ProjectDirs.length-1].toString();
-		System.out.println("ProjectName: " + ProjectName);
+	private static void getProjectName() {
+		projectName = projectDirs[projectDirs.length-1].toString();
+		System.out.println("ProjectName: " + projectName);
 	}
 	
-	
-	public static String getDestDirectory(String File) {
+	/**
+	 * get path/directory in array
+	 * @param File
+	 * @return
+	 */
+	private static String getDestDirectory(String File) {
 		String[] dirs = File.split("/");
 		String dir = dirs[dirs.length - 1];
 		return dir;
@@ -680,13 +767,13 @@ public class TomcatWarBuilder {
 	 * 
 	 * TODO - add logic to use single name for class like "class" and not just "com.domain.gwt.class.client.class"
 	 */
-	public static void getServerClassNameIMPL() {
+	private static void getServerClassNameIMPL() {
 
-		if (ServletClassName == null) {
+		if (servletClassName == null) {
 			return;
 		}
 		
-		String[] dirs = ServletClassName.split("\\.");
+		String[] dirs = servletClassName.split("\\.");
 
 		//ServerProjectDirs = dirs; //can use this else where
 
@@ -697,23 +784,23 @@ public class TomcatWarBuilder {
 		}
 		 */
 
-		ServletClassNameIMPL = dirs[dirs.length - 1].toString();
+		servletClassNameIMPL = dirs[dirs.length - 1].toString();
 
-		System.out.println("ServletClassNameIMPL: " + ServletClassNameIMPL);
+		System.out.println("ServletClassNameIMPL: " + servletClassNameIMPL);
 	}
 
-	public static void getProjectClassName() {
+	private static void getProjectClassName() {
 
 		Pattern p = Pattern.compile("\"\\$@\"\040(.*?);");
-		Matcher m = p.matcher(ProjectCompileFileContents);
+		Matcher m = p.matcher(projectCompileFileContents);
 		boolean found = m.find();
 
 		if (found == true) {
-			ProjectModuleName = m.group(1);
+			projectModuleName = m.group(1);
 		}
 
 		//debug
-		System.out.println("ProjectClassName: " + ProjectModuleName);
+		System.out.println("ProjectClassName: " + projectModuleName);
 	}
 
 	/**
@@ -724,15 +811,15 @@ public class TomcatWarBuilder {
 	 * TODO - look up the relative path
 	 * 
 	 */
-	public static void getGWT_HOME() {
+	private static void getGWT_HOME() {
 
-		if (GWT_HOME_Manual != null) {
-			GWT_HOME = GWT_HOME_Manual;
+		if (path_GWT_HOME_Manual != null) {
+			GWT_HOME = path_GWT_HOME_Manual;
 			return;
 		}
 		
 		Pattern p = Pattern.compile(":(/.*)gwt-user.jar:");
-		Matcher m = p.matcher(ProjectCompileFileContents);
+		Matcher m = p.matcher(projectCompileFileContents);
 		boolean found = m.find();
 
 		if (found == true) {
@@ -749,25 +836,25 @@ public class TomcatWarBuilder {
 	/**
 	 * read the gwt-compile folder to get contents
 	 */
-	public static void readProjectCompileFile() {
+	private static void readProjectCompileFile() {
 
-		String Dir = ProjectDirectory + "/" + ProjectCompileFile;
+		String Dir = ProjectDirectory + "/" + projectCompileFile;
 		File ProjectCompileFile = new File(Dir);
 
-		ProjectCompileFileContents = readFile(ProjectCompileFile);
-		System.out.println("FileContents: " + ProjectCompileFileContents);
+		projectCompileFileContents = readFile(ProjectCompileFile);
+		System.out.println("FileContents: " + projectCompileFileContents);
 	}
 
 	/**
 	 * read the project xml file to get contents
 	 */
-	public static void readProjectGWTxmlFile() {
+	private static void readProjectGWTxmlFile() {
 
-		String Dir = ProjectDirectory + "/" + ProjectGWTxmlFile;
+		String Dir = ProjectDirectory + "/" + projectGWTxmlFile;
 		File ProjectCompileFile = new File(Dir);
 
-		ProjectGWTxmlFileContents = readFile(ProjectCompileFile);
-		System.out.println("FileContents: " + ProjectGWTxmlFileContents);
+		projectGWTxmlFileContents = readFile(ProjectCompileFile);
+		System.out.println("FileContents: " + projectGWTxmlFileContents);
 	}
 
 	
@@ -809,7 +896,7 @@ public class TomcatWarBuilder {
 			//System.out.println("Checking for compile: inFile: "+ file);
 
 			if (found == true) {
-				ProjectCompileFile = file;
+				projectCompileFile = file;
 				return;
 			}
 		}
@@ -820,7 +907,7 @@ public class TomcatWarBuilder {
 	 * @param file
 	 * @return
 	 */
-	public static boolean checkForCompile(String file) {
+	private static boolean checkForCompile(String file) {
 
 		if (file == null) {
 			return false;
@@ -857,7 +944,12 @@ public class TomcatWarBuilder {
 		return status;
 	}
 
-	public static String readFile(File file) {
+	/**
+	 * read file contents
+	 * @param file
+	 * @return
+	 */
+	private static String readFile(File file) {
 
 		String sFile = null;
 
@@ -905,7 +997,7 @@ public class TomcatWarBuilder {
 	 * @param dstPath
 	 * @throws IOException
 	 */
-	public static void copyFiles(String strPath, String dstPath) throws IOException {
+	private static void copyFiles(String strPath, String dstPath) throws IOException {
 
 		File src = new File(strPath);
 		File dest = new File(dstPath);
@@ -945,8 +1037,12 @@ public class TomcatWarBuilder {
 		}
 	}
 
-	
-	public static void createFile(String File, String Contents) {
+	/**
+	 * create file with these contents
+	 * @param File
+	 * @param Contents
+	 */
+	private static void createFile(String File, String Contents) {
 		
 	    try {
 	        File file = new File(File);
@@ -969,18 +1065,17 @@ public class TomcatWarBuilder {
 	    
 	}
 	
-	
 	/**
 	 * zip up the production folder
 	 * 
 	 * @throws IOException
 	 */
-	public static void zipProject() throws IOException {
+	private static void zipProject() throws IOException {
 		
 		System.out.println("Starting Zipping of War");
 		
-		String ZipFile = getWarFileName();
-	    String ZipUp = TempBuildFolder;
+		String ZipFile = getWarFilePathAndName();
+	    String ZipUp = tempBuildFolder;
 	    
 	    System.out.println("WarZipFile: " + ZipFile + " ZipUpDir:" +ZipUp);
 	    
@@ -991,22 +1086,33 @@ public class TomcatWarBuilder {
 	    zos.close(); //close the stream 
 	}
 	
-
 	/**
-	 * get zip archive name for tomcat deploy
+	 * get war file with entire path
 	 * @return
 	 */
-	public static String getWarFileName() {
-		String WarName = null;
-		if (TempWarFileLocation == null) {
-			WarName = ProjectDirectory + "/" + ProjectName + ".war";
+	private static String getWarFilePathAndName() {
+		String warFile = null; 
+		if (tempWarFileLocation == null) {
+			warFile = ProjectDirectory + "/" + projectName + ".war";
 		} else {
-			WarName = TempWarFileLocation + "/" + ProjectName + ".war";
+			warFile = tempWarFileLocation + "/" + projectName + ".war";
 		}
-		return WarName;
+		return warFile;
 	}
 	
-	
+	/**
+	 * get war directory path
+	 * @return
+	 */
+	private static String getWarDir() {
+		String warDir = null; 
+		if (tempWarFileLocation == null) {
+			warDir = ProjectDirectory;
+		} else {
+			warDir = tempWarFileLocation;
+		}
+		return warDir;
+	}
 	
 	/**
 	 * archive temp build folder
@@ -1015,7 +1121,7 @@ public class TomcatWarBuilder {
 	 * 
 	 * TODO - skip .svn files
 	 */
-	public static void zipDir(String dir2zip, ZipOutputStream zos) {
+	private static void zipDir(String dir2zip, ZipOutputStream zos) {
 		try {
 			//create a new File object based on the directory we have to zip File    
 			File zipDir = new File(dir2zip);
@@ -1070,7 +1176,7 @@ public class TomcatWarBuilder {
 	 * @param Path
 	 * @return
 	 */
-	public static String getZipPath(String Path) {
+	private static String getZipPath(String Path) {
 		
 		String path = null;
 		
@@ -1088,5 +1194,34 @@ public class TomcatWarBuilder {
 		return path;
 	}
 	
+	/**
+	 * rename war file to desired name
+	 */
+	private static void renameWar() {
+		
+		if (renameWarFile == false && renameWarFileNameTo != null) {
+			return;
+		}
+		
+		if (renameWarFileNameTo.equals("")) {
+			System.out.println("renameWarFielNameTo is null, add that field");
+		}
+		
+		String warFile = getWarFilePathAndName();
+		String warDir = getWarDir();
+		
+		String newName = warDir + "/" + renameWarFileNameTo;
+		
+		
+	    File file = new File(warFile);
+	    File file2 = new File(newName);
+
+	    boolean success = file.renameTo(file2);
+	    if (!success) {
+	        System.out.println("failed to rename war.");
+	    } else {
+	    	System.out.println("Rename War: " + file2);
+	    }
+	}
 	
 }//end
