@@ -34,7 +34,7 @@ sudo apt-get install tomcat5.5 tomcat5.5-admin tomcat5.5-webapps
 }}}
 
  == Add Your User Name To Tomcat Config ==
- You will have to find your tomcat users and add yourself, and delete anybody else.
+ You will have to find your tomcat users and add yourself, and delete anybody else. Make sure your role has admin, manager, so you can use those activities.
 {{{
 //In /etc/tomcat5.5/tomcat-users.xml
 <user username="branflake2267" password="password" fullName="" roles="admin,manager,role1,tomcat"/>
