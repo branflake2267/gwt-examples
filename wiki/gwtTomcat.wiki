@@ -22,7 +22,7 @@
 sudo apt-get install sun-java6-bin sun-java6-jdk sun-java6-jre sun-java6-fonts
 }}}
   === Optional - Choose JVM ===
-   On ubuntu, use galternatives to choose your JVM
+   On ubuntu, use galternatives to choose your JVM - use this to change it if need be.
 {{{
 #run this
 galternatives
