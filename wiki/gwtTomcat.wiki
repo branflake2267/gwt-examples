@@ -1,5 +1,12 @@
 #summary gwt tomcat setup
 
+= Tomcat Details =
+ Tomcat has got to be the easiest platform to deploy GWT application in the most efficient system. There are so many positives with tomcat, after you use the system to breg about.
+
+= Reference =
+ Some details to note.
+ * [http://tomcat.apache.org/tomcat-6.0-doc/ Tomcat Documentation]  
+
 = Tomcat Setup =
  This is my install on Ubuntu Linux which is quite simple. When running a servlet with jdbc connector I got socket access denied. This stumped me for a bit and I found that Tomcat controls socket access.
 
