@@ -238,6 +238,20 @@ netmask 255.255.255.0
  == Security Errors ==
  You will have to enable security permissions with tomcat policies. If you have any private fields in your serialized RPC Class it will throw a security error. This is what I do to fix it.
 
+ I made my own policy file to make it easy to track.
+{{{
+// /etc/tomcat5.5/policy.d/myapps.policy
+// for my virtual host gawkat.com I enable permssions
+
+// gawkat.com vhost
+grant codeBase "file:/srv/vhosts/gawkat.com/tomcat/-" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "file:/srv/vhosts/gawkat.com/tomcat/-" {
+      permission java.net.SocketPermission "192.168.12.81:3306", "connect";
+};
+}}}
 
  == ROOT application ==
  Name your root application ROOT.war and it will be the root app for the virtual host.
