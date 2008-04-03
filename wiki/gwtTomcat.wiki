@@ -235,5 +235,9 @@ netmask 255.255.255.0
  * [http://tribling.com/tomcat.php Tomcat vhosts setup Images] - These are snapshots of my tomcat setup. I installed a virtual host and installed the manager in each virtual host to quickly deploy and maintain the wars.
  * Note - vhosts directory path "/path/to/vhost/webapps" has correct permissions, and doesn't have trailing slash.
 
+ == Security Errors ==
+ You will have to enable security permissions with tomcat policies. If you have any private fields in your serialized RPC Class it will throw a security error. This is what I do to fix it.
+
+
  == ROOT application ==
  Name your root application ROOT.war and it will be the root app for the virtual host.
