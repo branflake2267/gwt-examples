@@ -61,6 +61,8 @@ sudo /etc/init.d/tomcat5.5 force-reload
 = JDBC Socket Permission - Security Error =
  Fix this problem: java.security.AccessControlException access denied (java.net.SocketPermission localhost resolve)
  You will need to change Tomcat configuration.
+ * Look below in virtual hosting category for more.
+
 {{{
 //On my debian/ubuntu tomcat config
 //add to /etc/tomcat5.5/policy.d/04webapps.policy
