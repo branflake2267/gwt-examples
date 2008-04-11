@@ -141,7 +141,7 @@ eclipse -XX:PermSize=128m -XX:MaxPermSize=512m
 
 == Installing Subversive - SVN Team Provider =
  Installing subversion for eclipse. Select team provider. 
- * [http://www.polarion.org/index.php?page=overview&project=subversive Subversive]
+ * [http://www.eclipse.org/subversive/downloads.php Eclipse Update Site]
  * [http://www.polarion.org/index.php?page=download&project=subversive Download Using Eclispe Update]
  === setup ===
   Setup the svn connector to connect to the svn repository. You will need to configure team settings in preferences.
