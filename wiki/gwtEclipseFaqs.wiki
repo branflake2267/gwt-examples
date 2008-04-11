@@ -175,3 +175,7 @@ ulimit -n
 #user specific
 #username hard nofile 10000
 }}}
+
+== Eclipse 3.3 Update ==
+ Update eclipse to europa 3.3.
+ [http://update.eclipse.org/updates/3.3/] Put this in eclipse update manager.
