@@ -42,6 +42,11 @@ pLoading.add(image);
 //example string
 String myString = null;
 
+//skip errors in a method for null string before comparing
+if (myString == null) {
+   return;
+}
+
 //comapre like (this == that)
 if (myString.equals(myOtherString)) {
     //do this
