@@ -389,7 +389,6 @@ public class WatchEventPanel extends VerticalPanel implements SourcesMouseEvents
 = Parsing Query String =
  get/pass parameters from the http query string. I use the history token to pass paramters, which makes more sense, since you don't have to refresh the page. Here is my method I do it with.
 
- * add a hist
 {{{
 
 /**
