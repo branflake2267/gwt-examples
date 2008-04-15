@@ -385,3 +385,69 @@ public class WatchEventPanel extends VerticalPanel implements SourcesMouseEvents
 
 }
 }}}
+
+= Parsing Query String =
+ get/pass parameters from the http query string. I use the history token to pass paramters, which makes more sense, since you don't have to refresh the page. Here is my method I do it with.
+
+ * add a hist
+{{{
+
+/**
+ * init history support, start watching for changes in history
+ * 
+ * observe history changes (tokens)
+ */
+public void initHistorySupport() {
+
+	History.addHistoryListener(this);
+
+	// check to see if there are any tokens passed at startup via the
+	// browser’s URI
+	String token = History.getToken();
+	if (token.length() == 0) {
+		onHistoryChanged("trainer");
+	} else {
+		onHistoryChanged(token);
+	}
+}
+
+
+/**
+ * parse history token ?[var=1&var2=2&var3=3]
+ * 
+ * Parse the history token like querystring - domain.tld#historyToken?params
+ * 
+ * @param historyToken
+ * @return
+ */
+public static HashMap parseHistoryToken(String historyToken) {
+
+	//skip if there is no question mark
+	if (!historyToken.contains("?")) {
+		return null;
+	}
+	
+	// ? position
+	int questionMarkIndex = historyToken.indexOf("?") + 1;
+	
+	//get the sub string of parameters var=1&var2=2&var3=3...
+	String[] arStr = historyToken.substring(questionMarkIndex, historyToken.length()).split("&");
+
+	HashMap params = new HashMap();
+	for (int i = 0; i < arStr.length; i++) {
+		
+		String[] substr = arStr[i].split("=");
+		
+		params.put(substr[0], substr[1]);
+		
+		//debug
+		System.out.println("param[" + i + "]=" + arStr[i]);
+	}
+
+	//debug
+	System.out.println("map: " + params);
+
+	return params;
+
+}
+}}}
