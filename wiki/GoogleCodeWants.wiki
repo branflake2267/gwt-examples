@@ -33,7 +33,7 @@
 
 == Documentation ==
  Please add more reference documentation to the classes reference. Add more snippets. 
- * 04/16/2008 - Add wiki links into your class comments, method comments, so users can link right out into the current documentation. This would be good long term strategy for maintaining upto date documentation. Need a documentation haven for this platform. Specfic wiki just for class/method documentation.
+ * 04/16/2008 - Add wiki links into your class comments, method comments, so users can link right out into the current documentation. This would be good long term strategy for maintaining upto date documentation. Need a documentation haven for this platform. Specfic wiki just for class/method documentation. (documentation segments on subjects is all over, centralize it).
 
 == Global Google Suggestions ==
  * On Google help page - link to form for reporting a error of any google app!
