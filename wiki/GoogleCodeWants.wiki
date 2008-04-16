@@ -31,6 +31,10 @@
  * 04/16/2008 - Google Webmaster tools integration
  * 04/16/2008 - Selenium integration would really be cool
 
+== Documentation ==
+ Please add more reference documentation to the classes reference. Add more snippets. 
+ * 04/16/2008 - Add wiki links into your classes docs, so users can link right out to current docs. This would be good long term modifications system for documentation.
+
 == Global Google Suggestions ==
  * On Google help page - link to form for reporting a error of any google app!
  * On Google help page - link to form for making suggestions for any google app!
