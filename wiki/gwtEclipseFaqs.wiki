@@ -201,3 +201,4 @@ ulimit -n
  [http://update.eclipse.org/updates/3.3/] Put this in eclipse update manager.
  
 == Errors ==
+ libjvm.so problematic frame crash. Working on it?
