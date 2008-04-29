@@ -24,6 +24,35 @@ protected void onAfterResponseSerialized(String serializedResponse) {
 }
 }}}
 
+== Serialization - Passing Data Around ==
+ I love this way of moving data around from client to server, server to client and between classes. This has got to be one of the coolest tricks.
+
+{{{
+/**
+ * Hold relevant data for Bible. And pass it around.
+ * This class is meant to be serialized in RPC calls.
+ */
+public class BibleData implements IsSerializable {
+
+	//bible passage choices
+	public String[] StartBook; 
+	public int StartChapter;
+	public int StartVerse;
+	public String[] EndBook;
+	public int EndChapter;
+	public int EndVerse;
+	
+	//bible passage selections
+	public int rsID;
+	public int selStartBook;
+	public int selStartChapter;
+	public int selStartVerse;
+	public int selEndBook;
+	public int selEndChapter;
+	public int selEndVerse;
+}
+}}}
+
 == Image ==
  Show an external image on your page.
 {{{
