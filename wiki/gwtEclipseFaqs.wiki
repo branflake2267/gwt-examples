@@ -217,5 +217,9 @@ ulimit -n
  
  == libxcb.so problematic frame crash ===
   I got rid of this problematic frame by uninstalling eclipse and reinstalling it.
- 
- 
+
+
+= Bugzilla Integration= 
+ Integrate buzilla tasklist with eclipse ide.
+ * [http://www.eclipse.org/mylyn/] Mylyn Tasklist
+ * Eclipse IDE > Help (menu) > Software Updates > Find and Install > Search for new features to install > Mylyn (archived site) > Finished (click) > Mylyn (in window) > Mylyn Integration > Mylyn Bridget: Bugzilla Integration
