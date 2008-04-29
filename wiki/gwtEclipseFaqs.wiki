@@ -203,7 +203,7 @@ ulimit -n
 
 = Problematic frame crashes in Hardy =
 
-== libjvm.so problematic frame crash ==
+ == libjvm.so problematic frame crash ==
  libjvm.so problematic frame crash. Ubuntu Hardy Crashes. 
  * https://bugs.launchpad.net/ubuntu/+source/openjdk-6/+bug/206620
  * Use sun-java-1.5, this seems to fix it.
@@ -213,7 +213,7 @@ ulimit -n
  JAVA_HOME=/usr/lib/jvm/java-1.5.0-sun
 }}}
  
-== libxcb.so problematic frame crash ===
+ == libxcb.so problematic frame crash ===
   I got rid of this problematic frame by uninstalling eclipse and reinstalling it.
  
  
