@@ -200,5 +200,12 @@ ulimit -n
  Update eclipse to europa 3.3.
  [http://update.eclipse.org/updates/3.3/] Put this in eclipse update manager.
  
-== Errors ==
+== Problematic frame crashes in Hardy ==
  libjvm.so problematic frame crash. Working on it?
+ * https://bugs.launchpad.net/ubuntu/+source/openjdk-6/+bug/206620
+ * Use sun-java-1.5, not sure if this is the fix yet. 
+ 
+ == libxcb.so ===
+  I got rid of this problematic frame by uninstalling eclipse and reinstalling it.
+ 
+ 
