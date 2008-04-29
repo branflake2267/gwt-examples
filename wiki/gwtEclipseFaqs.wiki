@@ -222,4 +222,4 @@ ulimit -n
 = Bugzilla Integration= 
  Integrate buzilla tasklist with eclipse ide.
  * [http://www.eclipse.org/mylyn/] Mylyn Tasklist
- * Eclipse IDE > Help (menu) > Software Updates > Find and Install > Search for new features to install > Mylyn (archived site) > Finished (click) > Mylyn (in window) > Mylyn Integration > Mylyn Bridget: Bugzilla Integration
+ * Eclipse IDE > Help (menu) > Software Updates > Find and Install > Search for new features to install > Mylyn (archived site) > Finished (click) > Mylyn (in window) > Mylyn Integration > Bugzilla Integration (select)
