@@ -99,7 +99,26 @@ sudo update-alternatives --config java
  * Are you getting a eclipse out of memory error?  
  * [http://help.eclipse.org/help33/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/running_eclipse.htm Eclipse Reference Help Link]
 
-Change your file "/usr/lib/eclipse/eclipse.ini". This will change the startup parameters.
+ Change paramenters in ~/.eclipse/eclipserc
+ This is great for picking the java jvm without editing any files that have strictor permissions
+{{{
+# ~/.eclipse/eclipserc
+
+#Running Eclipse Options
+#http://help.eclipse.org/help31/index.jsp?topic=/org.eclipse.platform.doc.isv/reference/misc/runtime-options.html
+#http://help.eclipse.org/help21/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/running_eclipse.htm
+
+# Which JRE to run Eclipse
+JAVA_HOME=/usr/lib/jvm/java-6-openjdk
+
+# Arguments to Java Machine running Eclipse 
+# Xmx - add heap space
+VMARGS="-Xmx1024m"
+}}}
+
+ OR
+
+ Change your file "/usr/lib/eclipse/eclipse.ini". This will change the startup parameters.
 {{{
 # you may have to change permissions to the file - "sudo chmod 777 /usr/lib/eclipse/eclipse.ini"
 #eclipse.ini file - changes start up parameters
@@ -110,9 +129,9 @@ Change your file "/usr/lib/eclipse/eclipse.ini". This will change the startup pa
 -XX:MaxPermSize=512m
 }}}
 
-Or 
+ Or 
 
-Change the way it start up with "/usr/bin/eclipse"
+ Change the way it start up with "/usr/bin/eclipse"
 {{{
 # you may have to change permissions to the file - "sudo chmod 777 /usr/bin/eclipse"
 #/usr/bin/eclipse - bottom of file
@@ -131,9 +150,9 @@ exec /usr/lib/eclipse/eclipse \
 #(memory sizes represent start with minimum MB to and go to maximum MB)
 }}}
 
-Or
+ Or
 
-Change the eclipse parameters from command line. This a good way to trace a class not loading correctly.
+ Change the eclipse parameters from command line. This a good way to trace a class not loading correctly.
 {{{
 #command line
 eclipse -XX:PermSize=128m -XX:MaxPermSize=512m
