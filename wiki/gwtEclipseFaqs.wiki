@@ -111,7 +111,9 @@ sudo update-alternatives --config java
 # Which JRE to run Eclipse
 #JAVA_HOME=/usr/lib/jvm/java-6-openjdk - libjvm problematic frame
 #JAVA_HOME=/usr/lib/jvm/java-6-sun - libjvm problematic frame
-JAVA_HOME=/usr/lib/jvm/java-1.5.0-sun - no crashes yet.
+
+# no crashes yet
+JAVA_HOME=/usr/lib/jvm/java-1.5.0-sun
 
 # Arguments to Java Machine running Eclipse
 VMARGS="-Xmx1024m"
