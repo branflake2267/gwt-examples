@@ -109,11 +109,11 @@ sudo update-alternatives --config java
 #http://help.eclipse.org/help21/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/running_eclipse.htm
 
 # Which JRE to run Eclipse
-#JAVA_HOME=/usr/lib/jvm/java-6-openjdk
-JAVA_HOME=/usr/lib/jvm/java-6-sun
+#JAVA_HOME=/usr/lib/jvm/java-6-openjdk - libjvm problematic frame
+#JAVA_HOME=/usr/lib/jvm/java-6-sun - libjvm problematic frame
+JAVA_HOME=/usr/lib/jvm/java-1.5.0-sun - no crashes yet.
 
-# Arguments to Java Machine running Eclipse 
-# Xmx - add heap space
+# Arguments to Java Machine running Eclipse
 VMARGS="-Xmx1024m"
 }}}
 
@@ -199,13 +199,21 @@ ulimit -n
 == Eclipse 3.3 Update ==
  Update eclipse to europa 3.3.
  [http://update.eclipse.org/updates/3.3/] Put this in eclipse update manager.
- 
-== Problematic frame crashes in Hardy ==
+
+
+= Problematic frame crashes in Hardy =
+
+== libjvm.so problematic frame crash ==
  libjvm.so problematic frame crash. Ubuntu Hardy Crashes. 
  * https://bugs.launchpad.net/ubuntu/+source/openjdk-6/+bug/206620
  * Use sun-java-1.5, this seems to fix it.
+
+ change this in your ~/.eclipse/eclipserc file - example above
+{{{
+ JAVA_HOME=/usr/lib/jvm/java-1.5.0-sun
+}}}
  
- == libxcb.so ===
+== libxcb.so problematic frame crash ===
   I got rid of this problematic frame by uninstalling eclipse and reinstalling it.
  
  
