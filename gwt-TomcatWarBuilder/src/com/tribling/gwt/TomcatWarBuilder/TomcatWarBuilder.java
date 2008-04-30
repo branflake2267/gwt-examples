@@ -67,7 +67,7 @@ public class TomcatWarBuilder {
 	private static String[] classLibs;
 	private static String webXML;
 	
-	
+	/* change the vars in the constructor */
 	
 	//temp build folder in project directory
 	//BEWARE - if you change this - u must change this directory in this method -> getZipPath()
@@ -125,8 +125,8 @@ public class TomcatWarBuilder {
 		
 		
 		
-		//is GWT version 1.5?
-		isGWT15 = true; //they put the compiled files in a different directory
+		//is GWT version 1.5? if files are in /std
+		isGWT15 = false; //they put the compiled files in a different directory
 		
 		//Ask for authenication to use this servlet application. 
 		askForLogin = false;
