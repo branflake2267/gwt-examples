@@ -116,16 +116,16 @@ public class TomcatWarBuilder {
 		
 		
 		// project directory (examples below)
-		//ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
+		ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-DisplayDate";
-		ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Clicklistener";
+		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Clicklistener";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RPC-adv";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Login-Manager";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-Calendar";
 		
 		
 		
-		//is GWT version 1.5? if files are in /std
+		//Output goes to ~/std directory
 		isGWT15 = false; //they put the compiled files in a different directory
 		
 		//Ask for authenication to use this servlet application. 
