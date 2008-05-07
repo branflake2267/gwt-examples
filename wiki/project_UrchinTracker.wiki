@@ -39,7 +39,7 @@ private static native void track(String s) /*-{
 	//
 	$wnd._uacct = "UA-2862268-12";
 	$wnd._uanchor = 1;
-	$wnd.urchinTracker("/"); // I had to stick with something like this "/" in the tracker, so I could get the tracker to request to google analytics
+	$wnd.urchinTracker("/UrchinTracker/"); // I had to have pages after the first request
 }-*/;
 }}}
 
