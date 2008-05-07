@@ -62,3 +62,46 @@ private static native void track(String s) /*-{
 	pageTracker._trackPageview();
 </script>
 }}}
+
+ === Anchor Tag Parameters ===
+ I love this little method b/c it makes life much simpler in that you can have parameters with out a page reload in the querystring using the anchor tag.
+ * You can Parse the querystring anchor tag like - domain.tld#historyToken?params=1&param2=b&param3=abc and get the parameters
+{{{
+/**
+ * parse history token ?[var=1&var2=2&var3=3]
+ * 
+ * Parse the history token like querystring - domain.tld#historyToken?params=1&param2=b&param3=abc
+ * 
+ * @param historyToken
+ * @return
+ */
+public static HashMap parseHistoryToken(String historyToken) {
+
+	//skip if there is no question mark
+	if (!historyToken.contains("?")) {
+		return null;
+	}
+	
+	// ? position
+	int questionMarkIndex = historyToken.indexOf("?") + 1;
+	
+	//get the sub string of parameters var=1&var2=2&var3=3...
+	String[] arStr = historyToken.substring(questionMarkIndex, historyToken.length()).split("&");
+
+	HashMap params = new HashMap();
+	for (int i = 0; i < arStr.length; i++) {
+		
+		String[] substr = arStr[i].split("=");
+		
+		params.put(substr[0], substr[1]);
+		
+		//debug
+		//System.out.println("param[" + i + "]=" + arStr[i]);
+	}
+
+	//debug
+	//System.out.println("map: " + params);
+
+	return params;
+}
+}}}
