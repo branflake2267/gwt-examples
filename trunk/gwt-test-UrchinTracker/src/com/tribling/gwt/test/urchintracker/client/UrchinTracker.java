@@ -38,7 +38,7 @@ public class UrchinTracker implements EntryPoint, HistoryListener, ClickListener
 		
 		RootPanel.get().add(hp);
 		
-		//listen for clicks
+		//listen for clickscheck the source code out if your interested.
 		h1.addClickListener(this);
 		h2.addClickListener(this);
 		h3.addClickListener(this);
@@ -65,13 +65,12 @@ public class UrchinTracker implements EntryPoint, HistoryListener, ClickListener
 		// $wnd.trackGA();
 		 
 		
-		//urchin.js included in UrchinTracker.gwt.xml
-		//tried the old tracker
-		//so far this works - cool - uncomment below, as well as include the urchin.js in the xml file
+		//urchin.js is included in UrchinTracker.gwt.xml for use here
+		// this works - cool - include the urchin.js in the xml file
 		//
 		$wnd._uacct = "UA-2862268-12";
 		$wnd._uanchor = 1;
-		$wnd.urchinTracker("/"); // I had to stick a "/" in the tracker, so I could get the tracker to request to google analytics
+		$wnd.urchinTracker("/UrchinTracker/"); // I had to have pages after first request
 		
 		
 		 
