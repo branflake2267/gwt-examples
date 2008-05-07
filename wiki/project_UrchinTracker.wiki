@@ -63,7 +63,7 @@ private static native void track(String s) /*-{
 </script>
 }}}
 
- === Anchor Tag Parameters ===
+ = Anchor Tag Parameters =
  I love this little method b/c it makes life much simpler in that you can have parameters with out a page reload in the querystring using the anchor tag.
  You can Parse the querystring anchor tag like - domain.tld#historyToken?params=1&param2=b&param3=abc and get the parameters
 {{{
