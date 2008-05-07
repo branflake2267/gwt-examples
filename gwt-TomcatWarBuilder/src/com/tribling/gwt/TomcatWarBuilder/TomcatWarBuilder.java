@@ -47,7 +47,7 @@ public class TomcatWarBuilder {
 	private static String GWT_HOME;
 
 	// GWT-linux Version
-	private static boolean isGWT15 = false;
+	private static boolean isGWT15_M1 = false;
 	
 	// Project vars
 	private static String projectCompileFile; // project compile file location
@@ -116,17 +116,18 @@ public class TomcatWarBuilder {
 		
 		
 		// project directory (examples below)
-		ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
+		//ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
+		//ProjectDirectory = "/home/branflake2267/workspace/gwt-Feedback";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-DisplayDate";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Clicklistener";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RPC-adv";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Login-Manager";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-Calendar";
-		
+		ProjectDirectory = "/home/branflake2267/workspace/gwt-test-UrchinTracker";
 		
 		
 		//Output goes to ~/std directory
-		isGWT15 = false; //they put the compiled files in a different directory
+		isGWT15_M1 = false; //they put the compiled files in a different directory
 		
 		//Ask for authenication to use this servlet application. 
 		askForLogin = false;
@@ -351,6 +352,7 @@ public class TomcatWarBuilder {
 	 */
 	private static String createWebXMLFileContents_Security() {
 		String WebXML = "" +
+		    "<!-- Built by TomcatWarBuilder - http://gwt-examples.googlecode.com -->\n\n" +
 			"\n<!-- Define a Security Constraint on this Application -->\n" +
 			"<security-constraint>\n" +
 				"\t<web-resource-collection>" +
@@ -538,7 +540,7 @@ public class TomcatWarBuilder {
 	private static void copyWWWFiles() throws IOException {
 		
 		String addDir = "";
-		if (isGWT15 == true) {
+		if (isGWT15_M1 == true) {
 			addDir = "/std";
 		}
 		
