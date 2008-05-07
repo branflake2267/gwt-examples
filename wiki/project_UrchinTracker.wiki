@@ -1,0 +1,63 @@
+#summary application tracking with Google Analytics
+
+= Google Analytics Urchin Tracker Examples =
+
+
+
+ Integrated JSNI methodology for tracking ajax inside your gwt ajax application.
+
+ In module.xml file you want to include urchin
+{{{
+#UrchinTracker.gwt.xml file
+<module>
+  	<!-- google analytics js include -->
+  	<!--  I can get this script to work - it was easier to read the code -->
+  	<!-- download the script from here, or google analytics. -->
+  	<script src="urchin.js"/>
+  	
+	<!-- Inherit the core Web Toolkit stuff. -->
+	<inherits name='com.google.gwt.user.User'/>
+	<!-- Specify the app entry point class. -->
+	<entry-point class='com.tribling.gwt.test.urchintracker.client.UrchinTracker'/>
+</module>
+
+/**
+ * Send tracking to google analytics
+ * 
+ * http://www.google.com/analytics/InstallingGATrackingCode.pdf
+ * 
+ * This works great using the urchin.js for the JSNI
+ * You can see how things can work here, and run with it somewhere else
+ * 
+ * Verify your get requests in firefox to Google Analytics with tamper data
+ */
+private static native void track(String s) /*-{
+
+	//urchin.js included in UrchinTracker.gwt.xml
+	//tried the old tracker
+	//so far this works - cool - uncomment below, as well as include the urchin.js in the xml file
+	//
+	$wnd._uacct = "UA-2862268-12";
+	$wnd._uanchor = 1;
+	$wnd.urchinTracker("/"); // I had to stick a "/" in the tracker, so I could get the tracker to request to google analytics
+}-*/;
+}}}
+
+ === Problem - Only Loads OnLoad===
+ All though I wanted to track this way, it will only track the page loading. Below I show a better way of doing it.
+{{{
+<!-- web statistics -->
+<script type="text/javascript">
+	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+	var pageTracker = _gat._getTracker("UA-xxxxxxxx-13");
+
+	// *** track anchor tags ***
+	pageTracker._setAllowAnchor(true);
+
+	pageTracker._initData();
+	pageTracker._trackPageview();
+</script>
+}}}
