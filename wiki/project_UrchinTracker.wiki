@@ -34,9 +34,8 @@
  */
 private static native void track(String s) /*-{
 
-	//urchin.js included in UrchinTracker.gwt.xml
-	//tried the old tracker
-	//so far this works - cool - uncomment below, as well as include the urchin.js in the xml file
+	// urchin.js included in UrchinTracker.gwt.xml
+	// so far this works - cool - include the urchin.js in the xml file
 	//
 	$wnd._uacct = "UA-2862268-12";
 	$wnd._uanchor = 1;
