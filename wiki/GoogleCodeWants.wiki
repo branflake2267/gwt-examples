@@ -20,7 +20,6 @@
  * add apis to ubuntu repository so updater could notify of the latest updates, and could be auto download via repository. (same for rpm repository). Make it easy for developers to stay uptodate with the latest api downloads. Stick the downloads in /opt/Google/api, add link to desktop
  * I would really like to see stats. how many api (gwt,android) downloads have happened.  
  * Show project popularity, like sourceforge. Show project activity, show project downloads? 
- * Google analytics didn't allow me to rename the domain code.google.com when I set that up. - customize the name for each domain. 
  * Featured wiki links -change link name to liking, in that, add "#Name 'My Cool Code wiki page'" (like #Summary) to wiki, anchor linking
  * 03/22/2008 - wiki syntax, add syntax for links to headings in page - this would help when you use the wiki for documentation and the page is huge.
  * 03/24/2008 - GWT project - date time format, consolidate links for it, to all date time format links - all links to date object and locatization of it
