@@ -65,7 +65,7 @@ private static native void track(String s) /*-{
 
  === Anchor Tag Parameters ===
  I love this little method b/c it makes life much simpler in that you can have parameters with out a page reload in the querystring using the anchor tag.
- * You can Parse the querystring anchor tag like - domain.tld#historyToken?params=1&param2=b&param3=abc and get the parameters
+ You can Parse the querystring anchor tag like - domain.tld#historyToken?params=1&param2=b&param3=abc and get the parameters
 {{{
 /**
  * parse history token ?[var=1&var2=2&var3=3]
