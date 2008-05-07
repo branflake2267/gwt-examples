@@ -14,6 +14,8 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * Using gwt-linux milestone 2
+ * 
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class UrchinTracker implements EntryPoint, HistoryListener, ClickListener {
