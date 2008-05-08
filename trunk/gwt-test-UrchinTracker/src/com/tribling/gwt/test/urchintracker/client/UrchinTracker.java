@@ -166,7 +166,7 @@ public class UrchinTracker implements EntryPoint, HistoryListener, ClickListener
 	 */
 	public void onHistoryChanged(String historyToken) {
 		
-		checkHistoryToken(historyToken);
+		getAnchorTagParameter(historyToken);
 		
 		// "view" anchor used  - do this
 		if (historyToken.equals("urchinView")) {
@@ -197,7 +197,7 @@ public class UrchinTracker implements EntryPoint, HistoryListener, ClickListener
 	 * 
 	 * @param historyToken
 	 */
-	private void checkHistoryToken(String historyToken) {
+	private void getAnchorTagParameter(String historyToken) {
 		
 		if (historyToken == null) {
 			return;
