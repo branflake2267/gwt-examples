@@ -37,6 +37,7 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 	
 	// query string parameter we may use
 	private String id = null;
+	private String add = null;
 	
 
 	
@@ -115,8 +116,14 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 		if (type.equals("friends")) {
 			Friends friends = new Friends();
 			
+			//set the param to where we need it
 			if (id != null) {
 				friends.setID(Integer.parseInt(id));
+			}
+			
+			//set the param to where we need it
+			if (add != null) {
+				friends.setAnotherParam(add);
 			}
 			
 			pContent.add(friends);
@@ -269,7 +276,6 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 		return true;
 	}
 	
-	
 	/**
 	 * This is where we Navigate from !!!! This observes History Change Observes Anchor
 	 * 
@@ -331,6 +337,10 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 			
 			if (params.get("id") != null) {
 				this.id = (String) params.get("id");
+			}
+			
+			if (params.get("add") != null) {
+				this.add  = (String) params.get("add");
 			}
 			
 			historyToken = getHistoryTokenWithParameters(historyToken);
