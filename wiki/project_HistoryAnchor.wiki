@@ -5,3 +5,96 @@
  * HistoryToken = Anchor Tag - so we can stay on the same page. like domain.tld#anchorTag?var1=a&var2=b...
  * Find the entire project in source code.
  * Demo [http://gawkat.com/HistoryAnchor/#home]
+ * This also deploys integrated Google Analytics
+ 
+
+ == History Token Method Snippets ==
+{{{
+/**
+ * init history support, start watching for changes in history
+ * 
+ * observe history changes (tokens)
+ */
+private void initHistorySupport() {
+
+	History.addHistoryListener(this);
+
+	// check to see if there are any tokens passed at startup via the anchor tag
+	String token = History.getToken();
+	if (token.length() == 0) {
+		
+		// navigate with anchors
+		History.newItem("home");
+		
+	} else {
+		
+		onHistoryChanged(token);
+		
+	}
+}
+
+/**
+ * parse history token ?[var=1&var2=2&var3=3]
+ * 
+ * Parse the history token like querystring - domain.tld#historyToken?params
+ * 
+ * @param historyToken
+ * @return
+ */
+private static HashMap parseHistoryTokenParameters(String historyToken) {
+
+	//skip if there is no question mark
+	if (!historyToken.contains("?")) {
+		return null;
+	}
+	
+	//debug
+	//System.out.println("parse historyToken: " + historyToken);
+	
+	// ? position
+	int questionMarkIndex = historyToken.indexOf("?") + 1;
+	
+	//get the sub string of parameters var=1&var2=2&var3=3...
+	String[] arStr = historyToken.substring(questionMarkIndex, historyToken.length()).split("&");
+
+	HashMap params = new HashMap();
+	for (int i = 0; i < arStr.length; i++) {
+		
+		String[] substr = arStr[i].split("=");
+		
+		params.put(substr[0], substr[1]);
+		
+		//debug
+		//System.out.println("param[" + i + "]=" + arStr[i]);
+	}
+
+	//debug
+	System.out.println("map: " + params);
+
+	return params;
+}
+
+/**
+ * get anchor tag by it self when there are parameters
+ * 
+ * @param historyToken
+ * @return
+ */
+private String getHistoryTokenWithParameters(String historyToken) {
+	
+	//skip if there is no question mark
+	if (!historyToken.contains("?")) {
+		return null;
+	}
+
+	String[] arStr = historyToken.split("\\?");
+
+	historyToken = arStr[0];
+
+	//debug
+	//System.out.println("historyToken: " + historyToken);
+
+	return historyToken;
+}
+
+}}}
