@@ -35,7 +35,9 @@ public class Friends extends Composite {
 		case 2:
 			pWidget.add(new Label("id 2 selected : Joel"));
 			break;
-
+		case 3:
+			pWidget.add(new Label("id 3 selected : Jeremy"));
+			break;
 		}
 	}
 	
