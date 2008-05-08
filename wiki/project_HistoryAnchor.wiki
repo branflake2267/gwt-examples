@@ -4,4 +4,4 @@
  Navigating with anchor tags is very cool. You can also add parameters to your anchor tag. 
  * HistoryToken = Anchor Tag - so we can stay on the same page. like domain.tld#anchorTag?var1=a&var2=b...
  * Find the entire project in source code.
- * Demo 
+ * Demo [http://gawkat.com/HistoryAnchor/#home]
