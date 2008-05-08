@@ -9,6 +9,8 @@
  
 
  == History Token Method Snippets ==
+ Init the history support
+ * use History.newItem("home"); //to fire a history change
 {{{
 /**
  * init history support, start watching for changes in history
@@ -32,7 +34,10 @@ private void initHistorySupport() {
 		
 	}
 }
-
+}}}
+ 
+ Parse the anchor tag / history token parameters
+{{{
 /**
  * parse history token ?[var=1&var2=2&var3=3]
  * 
@@ -73,7 +78,10 @@ private static HashMap parseHistoryTokenParameters(String historyToken) {
 
 	return params;
 }
+}}}
 
+ Get an anchor tag / history token when you have parameters
+{{{
 /**
  * get anchor tag by it self when there are parameters
  * 
