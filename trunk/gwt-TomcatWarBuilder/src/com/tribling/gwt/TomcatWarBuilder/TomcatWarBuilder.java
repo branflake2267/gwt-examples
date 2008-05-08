@@ -123,24 +123,27 @@ public class TomcatWarBuilder {
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RPC-adv";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Login-Manager";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-Calendar";
-		ProjectDirectory = "/home/branflake2267/workspace/gwt-test-UrchinTracker";
+		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-UrchinTracker";
+		ProjectDirectory = "/home/branflake2267/workspace/gwt-test-History";
 		
 		
-		//Output goes to ~/std directory
-		isGWT15_M1 = false; //they put the compiled files in a different directory
-		
-		//Ask for authenication to use this servlet application. 
+		// Ask for credentials to use application 
 		askForLogin = false;
 		
-		// go to application instead of going to index.jsp
-		goDirectlyToApplication = true;
 		
 		// For virtual hosting - rename your war file to what you want the application context to be
 		// OR rename to ROOT.war for hosts root app
-		renameWarFile = false; //true = turn on rename
+		renameWarFile = false; //true = turn on rename for servlet context(filename)
 		renameWarFileNameTo = "ROOT.war";
 
 		
+		/********** OPTIONAL ***********/
+		
+		// go to application instead of going to index.jsp true is recommended
+		goDirectlyToApplication = true;
+		
+		//Output goes to ~/std directory
+		isGWT15_M1 = false; //they put the compiled files in a different directory
 		
 		
 		/* End Choices */
