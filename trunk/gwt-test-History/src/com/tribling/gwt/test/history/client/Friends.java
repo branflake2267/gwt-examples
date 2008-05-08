@@ -39,4 +39,12 @@ public class Friends extends Composite {
 		}
 	}
 	
+	/**
+	 * set another param
+	 * 
+	 * @param s
+	 */
+	public void setAnotherParam(String s) {
+		pWidget.add(new Label("Another Param: " + s));
+	}
 }
