@@ -296,21 +296,25 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 		// main home page without login
 		if (historyToken.equals("home")) {
 			drawContent("home");
+			mainMenu.selectTab(0);
 			track();
 		}
 		
 		if (historyToken.equals("blog")) {
 			drawContent("blog");
+			mainMenu.selectTab(1);
 			track();
 		}
 		
 		if (historyToken.equals("wiki")) {
 			drawContent("wiki");
+			mainMenu.selectTab(2);
 			track();
 		}
 		
 		if (historyToken.equals("friends")) {
 			drawContent("friends");
+			mainMenu.selectTab(3);
 			track();
 		}
 		
