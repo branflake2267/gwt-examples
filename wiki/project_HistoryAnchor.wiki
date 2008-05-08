@@ -1,7 +1,7 @@
-#summary Testing history and anchor tag navigation
+#summary Testing history token and anchor tag navigation
 
-= HistoryToken / Anchor Tag Navigation =
- Navigating with anchor tags is very cool. You can also add parameters to your anchor tag. 
+= History Token / Anchor Tag Navigation =
+ Navigating with anchor tags is very cool and a must in any application. You can also add parameters to your anchor tag which makes it super flexible to navigate with out a page refresh/reload.
  * HistoryToken = Anchor Tag - so we can stay on the same page. like domain.tld#anchorTag?var1=a&var2=b...
  * Find the entire project in source code.
  * Demo [http://gawkat.com/HistoryAnchor/#home]
