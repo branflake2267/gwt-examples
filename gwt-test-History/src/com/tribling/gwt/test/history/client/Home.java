@@ -3,7 +3,6 @@ package com.tribling.gwt.test.history.client;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Hyperlink;
-import com.google.gwt.user.client.ui.TabBar;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class Home extends Composite {
