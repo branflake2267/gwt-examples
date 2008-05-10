@@ -150,6 +150,8 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 	/**
 	 * init history support, start watching for changes in history
 	 * 
+	 * use historyTokens (anchor tags) to navigate
+	 * 
 	 * observe history changes (tokens)
 	 */
 	private void initHistorySupport() {
@@ -171,9 +173,11 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 	}
 	
 	/**
-	 * check history token for parameters to process after #history/anchor?var=1&var3=2&var3=3
+	 * parse the historyToken
+	 *  
+	 * like domaint.tld#anchor?[var=1&var3=2&var3=3]
 	 * 
-	 * @param historyToken
+	 * @param historyToken anchor tag
 	 */
 	private String parseHistoryToken(String historyToken) {
 		
@@ -196,12 +200,12 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 	}
 	
 	/**
-	 * parse history token ?[var=1&var2=2&var3=3]
+	 * get historyToken parameters
 	 * 
-	 * Parse the history token like querystring - domain.tld#historyToken?params
+	 * like domaint.tld#anchor?[var=1&var3=2&var3=3]
 	 * 
-	 * @param historyToken
-	 * @return
+	 * @param historyToken anchor tag
+	 * @return hashmap of the parameters
 	 */
 	private static HashMap getHistoryTokenParameters(String historyToken) {
 	
@@ -231,7 +235,7 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 	}
 	
 	/**
-	 * get history token when there are parameters
+	 * get historyToken by itself
 	 * 
 	 * like domain.tld#[historyToken]?params=1
 	 *  
@@ -251,9 +255,22 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 	
 		return historyToken;
 	}
-	
 
-	
+	/**
+	 * are there params in historyToken
+	 * 
+	 * @return
+	 */
+	private boolean isParamsInHistoryToken() {
+		String s = History.getToken();
+		
+		if (s.contains("?")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	/**
 	 * use the parameters
 	 * @param params
@@ -270,22 +287,6 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 		
 		if (params.get("add") != null) {
 			this.add  = (String) params.get("add");
-		}
-		
-	}
-	
-	/**
-	 * are there params in historyToken
-	 * 
-	 * @return
-	 */
-	private boolean isParamsInHistoryToken() {
-		String s = History.getToken();
-		
-		if (s.contains("?")) {
-			return true;
-		} else {
-			return false;
 		}
 	}
 	
@@ -312,7 +313,7 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 				break;
 			case 3: 
 				
-				// the menu select creates an event too
+				// the Tabbar creates an event when the tab is selected
 				// skip a duplicate event when there are parameters using the tabbar
 				if (isParamsInHistoryToken()) {
 					//skip
