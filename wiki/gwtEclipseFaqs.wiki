@@ -9,7 +9,7 @@
 
  == Reference ==
  * http://www.eclipse.org/ - Eclipse home
- * [http://www.eclipse.org/subversive/downloads.php] Eclipse subversion installation
+ * [http://www.eclipse.org/subversive/downloads.php] - Eclipse subversion installation
 
 
 == Importing My Projects Settings ==
