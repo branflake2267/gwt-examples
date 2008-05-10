@@ -5,15 +5,11 @@ import java.util.HashMap;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SourcesTabEvents;
 import com.google.gwt.user.client.ui.TabBar;
 import com.google.gwt.user.client.ui.TabListener;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 /**
  * testing anchor tag navigation
@@ -59,7 +55,7 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 		initHistorySupport();
 		
 		
-		//after loaded, hide the loading
+		// after loaded, hide the loading
 	    RootPanel.get("loading").setVisible(false);
 	}
 	
@@ -71,9 +67,7 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 		mainMenu.addTab("Blog");
 		mainMenu.addTab("Wiki");
 		mainMenu.addTab("Friends");
-		
 		mainMenu.selectTab(0);
-		
 		mainMenu.setWidth("400px");
 		
 		pHeader.add(mainMenu);
@@ -134,8 +128,9 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 	/**
 	 * track with google analytics
 	 */
-	private void track() {
-		trackGA();
+	private void track(String s) {
+		
+		trackGA(s);
 		
 		//debug
 		System.out.println("track - google analytics - finished");
@@ -146,10 +141,10 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 	 * 
 	 * Uses JSNI - accesses native javascript in urchin.js and sends a gif request to google analytics
 	 */
-	private static native void trackGA() /*-{
+	private static native void trackGA(String s) /*-{
 	 	$wnd._uacct = "UA-2862268-12";
 		$wnd._uanchor = 1;
-		$wnd.urchinTracker("/HistoryAnchor/"); 
+		$wnd.urchinTracker("/HistoryAnchor/" + s); 
 	}-*/;
 
 	/**
@@ -176,6 +171,31 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 	}
 	
 	/**
+	 * check history token for parameters to process after #history/anchor?var=1&var3=2&var3=3
+	 * 
+	 * @param historyToken
+	 */
+	private String parseHistoryToken(String historyToken) {
+		
+		if (historyToken == null) {
+			return "";
+		}
+		
+		//get parameters from history token
+		if (historyToken.contains("?")) {
+			HashMap params = getHistoryTokenParameters(historyToken);
+
+			//use the parameters
+			setParams(params);
+
+			//get just the history token / anchor tag , not with paramenters
+			historyToken = getHistoryToken(historyToken);
+		} 
+	
+		return historyToken;
+	}
+	
+	/**
 	 * parse history token ?[var=1&var2=2&var3=3]
 	 * 
 	 * Parse the history token like querystring - domain.tld#historyToken?params
@@ -183,7 +203,7 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 	 * @param historyToken
 	 * @return
 	 */
-	private static HashMap parseHistoryTokenParameters(String historyToken) {
+	private static HashMap getHistoryTokenParameters(String historyToken) {
 	
 		//skip if there is no question mark
 		if (!historyToken.contains("?")) {
@@ -198,49 +218,81 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 		
 		//get the sub string of parameters var=1&var2=2&var3=3...
 		String[] arStr = historyToken.substring(questionMarkIndex, historyToken.length()).split("&");
-	
 		HashMap params = new HashMap();
 		for (int i = 0; i < arStr.length; i++) {
-			
 			String[] substr = arStr[i].split("=");
-			
 			params.put(substr[0], substr[1]);
-			
-			//debug
-			//System.out.println("param[" + i + "]=" + arStr[i]);
 		}
 	
 		//debug
-		System.out.println("map: " + params);
+		//System.out.println("map: " + params);
 	
 		return params;
 	}
 	
 	/**
-	 * get anchor tag by it self when there are parameters
+	 * get history token when there are parameters
 	 * 
+	 * like domain.tld#[historyToken]?params=1
+	 *  
 	 * @param historyToken
 	 * @return
 	 */
-	private String getHistoryTokenWithParameters(String historyToken) {
+	private String getHistoryToken(String historyToken) {
 		
 		//skip if there is no question mark
 		if (!historyToken.contains("?")) {
-			return null;
+			return "";
 		}
 
+		//get just the historyToken/anchor tag
 		String[] arStr = historyToken.split("\\?");
-	
 		historyToken = arStr[0];
-	
-		//debug
-		//System.out.println("historyToken: " + historyToken);
 	
 		return historyToken;
 	}
 	
+
+	
+	/**
+	 * use the parameters
+	 * @param params
+	 */
+	private void setParams(HashMap params) {
+		
+		if (params == null) {
+			return;
+		}
+			
+		if (params.get("id") != null) {
+			this.id = (String) params.get("id");
+		}
+		
+		if (params.get("add") != null) {
+			this.add  = (String) params.get("add");
+		}
+		
+	}
+	
+	/**
+	 * are there params in historyToken
+	 * 
+	 * @return
+	 */
+	private boolean isParamsInHistoryToken() {
+		String s = History.getToken();
+		
+		if (s.contains("?")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	/**
 	 * observe tabs
+	 * 
+	 * navigate with the anchor tag / history token in the URL(QueryString/URI)
 	 */
 	public void onTabSelected(SourcesTabEvents sender, int tabIndex) {
 		
@@ -249,6 +301,7 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 			switch (tabIndex) {
 			
 			case 0: 
+				//Navigate with anchors
 				History.newItem("home");
 				break;
 			case 1: 
@@ -258,7 +311,15 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 				History.newItem("wiki");
 				break;
 			case 3: 
-				History.newItem("friends");
+				
+				// the menu select creates an event too
+				// skip a duplicate event when there are parameters using the tabbar
+				if (isParamsInHistoryToken()) {
+					//skip
+				} else {
+					History.newItem("friends");
+				}
+				
 				break;
 			default: 
 				History.newItem("home");
@@ -277,82 +338,49 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 	}
 	
 	/**
-	 * This is where we Navigate from !!!! This observes History Change Observes Anchor
+	 * This is where we Navigate from !!!! 
+	 * This observes History Change - Observes Anchors
 	 * 
 	 * forward, back, load(b/c of set token)
 	 * 
 	 */
 	public void onHistoryChanged(String historyToken) {
 		
-		//just in case?
+		//just in case? I hate the null errors poppin up on the comparison objects
 		if (historyToken == null) {
 			return;
 		}
 		
 		// are there any parameters in the history token/Anchor we need to use?
-		historyToken = getAnchorTagParameters(historyToken);
+		historyToken = parseHistoryToken(historyToken);
 		
 		
 		// main home page without login
 		if (historyToken.equals("home")) {
 			drawContent("home");
 			mainMenu.selectTab(0);
-			track();
 		}
 		
 		if (historyToken.equals("blog")) {
 			drawContent("blog");
 			mainMenu.selectTab(1);
-			track();
 		}
 		
 		if (historyToken.equals("wiki")) {
 			drawContent("wiki");
 			mainMenu.selectTab(2);
-			track();
 		}
 		
 		if (historyToken.equals("friends")) {
 			drawContent("friends");
 			mainMenu.selectTab(3);
-			track();
 		}
+		
+		track(historyToken);
 		
 		System.out.println("history event ::: " + historyToken);
 	}
 	
-	/**
-	 * check history token for parameters to process after #history/anchor?var=1&var3=2&var3=3
-	 * 
-	 * @param historyToken
-	 */
-	private String getAnchorTagParameters(String historyToken) {
-		
-		if (historyToken == null) {
-			return "";
-		}
-		
-		if (historyToken.contains("?")) {
-			
-			//System.out.println("checking");
-			
-			//get parameters from history token
-			HashMap params = parseHistoryTokenParameters(historyToken);
-			
-			if (params.get("id") != null) {
-				this.id = (String) params.get("id");
-			}
-			
-			if (params.get("add") != null) {
-				this.add  = (String) params.get("add");
-			}
-			
-			historyToken = getHistoryTokenWithParameters(historyToken);
-			
-		} 
-	
-		//debug
-		return historyToken;
-	}
+
 	
 }
