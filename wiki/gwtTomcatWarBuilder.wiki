@@ -41,3 +41,6 @@
  * 04/02/2008 - added War rename, so that I could rename application context (like ROOT.war)
  * 04/02/2008 - fixed code up a bit
  * 04/02/2008 - added welcome file list, and or directly redirects to application whatever the name is - doesn't have to be index.jsp, it can be whatever.html as the welcome page
+ * works with Milestone 1 and Milestone 2
+ * 05/01/2008 - added servlet comments
+ * 05/02/2008 - moved around option vars
