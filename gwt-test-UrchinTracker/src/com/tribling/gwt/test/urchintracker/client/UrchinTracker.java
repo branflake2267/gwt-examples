@@ -5,7 +5,6 @@ import java.util.HashMap;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
@@ -23,6 +22,10 @@ public class UrchinTracker implements EntryPoint, HistoryListener, ClickListener
 	private Hyperlink h1 = new Hyperlink("View It", "urchinView");
 	private Hyperlink h2 = new Hyperlink("Edit It", "urchinEdit");
 	private Hyperlink h3 = new Hyperlink("Test", "urchinAnchor");
+	
+	//Querystring / URI parameters to do something with
+	private String id; 
+	private String add;
 	
 	/**
 	 * This is the entry point method.
@@ -50,7 +53,8 @@ public class UrchinTracker implements EntryPoint, HistoryListener, ClickListener
 	/**
 	 * Send tracking to google analytics
 	 * 
-	 * http://www.google.com/analytics/InstallingGATrackingCode.pdf
+	 * http://www.google.com/analytics/InstallingGATrackingCode.pdf - how to with reference
+	 * http://www.google.com/support/analytics/bin/answer.py?hl=en&answer=76305 - reference for urchin.js, ga.js
 	 * 
 	 * This works great using the urchin.js for the JSNI
 	 * You can see how things can work here, and run with it somewhere else
@@ -59,18 +63,11 @@ public class UrchinTracker implements EntryPoint, HistoryListener, ClickListener
 	 */
 	private static native void track(String s) /*-{
 
-		// tried my script using the trackers
-		// I wasn't able to get the includes in the right order
-		// my track.js included in UrchinTracker.gwt.xml
-		// $wnd.trackGA();
-		 
-		
-		//urchin.js is included in UrchinTracker.gwt.xml for use here
-		// this works - cool - include the urchin.js in the xml file
-		//
+		// urchin.js is included in UrchinTracker.gwt.xml for use here
+		// cool, this works - Make sure you include the urchin.js in the xml file
 		$wnd._uacct = "UA-2862268-12";
-		$wnd._uanchor = 1;
-		$wnd.urchinTracker("/UrchinTracker/"); // I had to have pages after first request
+		$wnd._uanchor = 1; //use anchors with campaigns
+		$wnd.urchinTracker("/UrchinTracker/" + s); // I had to have pages after first request
 		
 		
 		 
@@ -89,8 +86,15 @@ public class UrchinTracker implements EntryPoint, HistoryListener, ClickListener
 		// $wnd.pageTracker._trackPageview();
 
 
-		//let us know something happened here
-		$wnd.alert("tracked Finished");
+		// tried my script using the trackers
+		// I wasn't able to get the includes in the right order
+		// my track.js included in UrchinTracker.gwt.xml
+		// $wnd.trackGA();
+
+
+		// debug (Alert)
+		// let us know something happened here
+		$wnd.alert("Sent tracking info to Goolge Anayltics");
 		
 	}-*/;
 	
@@ -104,14 +108,12 @@ public class UrchinTracker implements EntryPoint, HistoryListener, ClickListener
 	
 		History.addHistoryListener(this);
 	
-		// check to see if there are any tokens passed at startup via the
-		// browser’s URI
+		// check for history token / anchor tag in  domain.tld#anchor/historytoken
 		String token = History.getToken();
 		if (token.length() == 0) {
-			onHistoryChanged("urchinHome"); //initial state, or u could say first anchor
 			
-			//first time to track
-			track("urchinHome");
+			// navigate with anchors
+			History.newItem("home"); //default anchor
 			
 		} else {
 			onHistoryChanged(token);
@@ -121,17 +123,20 @@ public class UrchinTracker implements EntryPoint, HistoryListener, ClickListener
 	/**
 	 * parse history token ?[var=1&var2=2&var3=3]
 	 * 
-	 * Parse the history token like querystring - domain.tld#historyToken?params=1&param2=b&param3=abc
+	 * Parse the history token like querystring - domain.tld#historyToken?params
 	 * 
 	 * @param historyToken
 	 * @return
 	 */
-	public static HashMap parseHistoryToken(String historyToken) {
+	private static HashMap parseHistoryTokenParameters(String historyToken) {
 	
 		//skip if there is no question mark
 		if (!historyToken.contains("?")) {
 			return null;
 		}
+		
+		//debug
+		//System.out.println("parse historyToken: " + historyToken);
 		
 		// ? position
 		int questionMarkIndex = historyToken.indexOf("?") + 1;
@@ -143,7 +148,6 @@ public class UrchinTracker implements EntryPoint, HistoryListener, ClickListener
 		for (int i = 0; i < arStr.length; i++) {
 			
 			String[] substr = arStr[i].split("=");
-			
 			params.put(substr[0], substr[1]);
 			
 			//debug
@@ -154,7 +158,60 @@ public class UrchinTracker implements EntryPoint, HistoryListener, ClickListener
 		//System.out.println("map: " + params);
 	
 		return params;
+	}
 	
+	/**
+	 * get anchor tag by it self when there are parameters
+	 * 
+	 * @param historyToken
+	 * @return
+	 */
+	private String getHistoryTokenWithParameters(String historyToken) {
+		
+		//skip if there is no question mark
+		if (!historyToken.contains("?")) {
+			return null;
+		}
+
+		String[] arStr = historyToken.split("\\?");
+	
+		historyToken = arStr[0];
+	
+		//debug
+		//System.out.println("historyToken: " + historyToken);
+	
+		return historyToken;
+	}
+	
+	/**
+	 * check history token for parameters to process after #history/anchor?var=1&var3=2&var3=3
+	 * 
+	 * @param historyToken
+	 */
+	private String getAnchorTagParameters(String historyToken) {
+		
+		if (historyToken == null) {
+			return "";
+		}
+		
+		if (historyToken.contains("?")) {
+		
+			//get parameters from history token
+			HashMap params = parseHistoryTokenParameters(historyToken);
+			
+			if (params.get("id") != null) {
+				this.id = (String) params.get("id");
+			}
+			
+			if (params.get("add") != null) {
+				this.add  = (String) params.get("add");
+			}
+			
+			historyToken = getHistoryTokenWithParameters(historyToken);
+		} 
+	
+		//debug
+		return historyToken;
 	}
 	
 	/**
@@ -166,69 +223,35 @@ public class UrchinTracker implements EntryPoint, HistoryListener, ClickListener
 	 */
 	public void onHistoryChanged(String historyToken) {
 		
-		getAnchorTagParameter(historyToken);
+		historyToken = getAnchorTagParameters(historyToken);
 		
 		// "view" anchor used  - do this
 		if (historyToken.equals("urchinView")) {
 			System.out.println("historyToken: " + historyToken);
-			track("/");
 		}
 		
 		// "edit" anchor used - do this
 		if (historyToken.equals("urchinEdit")) {
 			System.out.println("historyToken: " + historyToken);
-			track("/");
 		}
 		
 		//"archive" anchor used - do this
 		if (historyToken.equals("urchinAnchor")) {
 			System.out.println("historyToken: " + historyToken);
-			track("/");
+			
 		}
 		
+		track(historyToken);
 		
-		//Window.alert("history event ::: " + historyToken);
+		//debug
+		System.out.println("history event ::: " + historyToken);
 	}
 	
+	
+
 	/**
-	 * Check the history token for particular paramaters
-	 * 
-	 * Persay, listens for paramaters in anchor, then you can trigger off anchor parameters
-	 * 
-	 * @param historyToken
+	 * Observe
 	 */
-	private void getAnchorTagParameter(String historyToken) {
-		
-		if (historyToken == null) {
-			return;
-		}
-		
-		HashMap params = parseHistoryToken(historyToken);
-
-		if (params == null) {
-			return;
-		}
-		
-		String incomingID = null;
-		if (params.get("id") != null) {
-			incomingID = (String) params.get("id");
-		}
-		
-		String yesno = null;
-		if (params.get("yesno") != null) {
-			yesno = (String) params.get("yesno");
-		}
-		
-		if (incomingID != null && yesno != null) {
-			//goto a particular part of the application you want with id and yes/no var
-		}
-		
-
-
-		
-	}
-
-	
 	public void onClick(Widget sender) {
 		
 		if (sender == h1) {
