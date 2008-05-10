@@ -1,6 +1,6 @@
 #summary gwt tomcat setup
 
- [http://tribling.com/brainstorm1583.png] [http://brainstorm.ubuntu.com/idea/1583/ Vote For Ubuntu Tomcat 6]
+ [http://tribling.com/brainstorm1583.png] [http://brainstorm.ubuntu.com/idea/1583/ Vote For Ubuntu Tomcat 6] 
 
 = Tomcat Deployment =
  Tomcat, has got to be the easiest platform to deploy GWT applications on and the most efficient system. If you switch to Tomcat, you'll love it.
