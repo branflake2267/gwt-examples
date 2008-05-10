@@ -11,9 +11,13 @@
  == History Token Method Snippets ==
  Init the history support
  * use History.newItem("home"); //to fire a history change
+
+ Init history support
 {{{
 /**
  * init history support, start watching for changes in history
+ * 
+ * use historyTokens (anchor tags) to navigate
  * 
  * observe history changes (tokens)
  */
@@ -25,7 +29,7 @@ private void initHistorySupport() {
 	String token = History.getToken();
 	if (token.length() == 0) {
 		
-		// navigate with anchors
+		// navigate with anchors to home
 		History.newItem("home");
 		
 	} else {
@@ -35,18 +39,48 @@ private void initHistorySupport() {
 	}
 }
 }}}
- 
- Parse the anchor tag / history token parameters
+
+ Parse history token / anchor tag for parameters
 {{{
 /**
- * parse history token ?[var=1&var2=2&var3=3]
+ * parse the historyToken
+ *  
+ * like domaint.tld#anchor?[var=1&var3=2&var3=3]
  * 
- * Parse the history token like querystring - domain.tld#historyToken?params
- * 
- * @param historyToken
- * @return
+ * @param historyToken anchor tag
  */
-private static HashMap parseHistoryTokenParameters(String historyToken) {
+private String parseHistoryToken(String historyToken) {
+	
+	if (historyToken == null) {
+		return "";
+	}
+	
+	//get parameters from history token
+	if (historyToken.contains("?")) {
+		HashMap params = getHistoryTokenParameters(historyToken);
+
+		//use the parameters
+		setParams(params);
+
+		//get just the history token / anchor tag , not with paramenters
+		historyToken = getHistoryToken(historyToken);
+	} 
+
+	return historyToken;
+}
+}}}
+
+  Get history parameters in an anchor tag
+{{{
+/**
+ * get historyToken parameters
+ * 
+ * like domaint.tld#anchor?[var=1&var3=2&var3=3]
+ * 
+ * @param historyToken anchor tag
+ * @return hashmap of the parameters
+ */
+private static HashMap getHistoryTokenParameters(String historyToken) {
 
 	//skip if there is no question mark
 	if (!historyToken.contains("?")) {
@@ -61,48 +95,80 @@ private static HashMap parseHistoryTokenParameters(String historyToken) {
 	
 	//get the sub string of parameters var=1&var2=2&var3=3...
 	String[] arStr = historyToken.substring(questionMarkIndex, historyToken.length()).split("&");
-
 	HashMap params = new HashMap();
 	for (int i = 0; i < arStr.length; i++) {
-		
 		String[] substr = arStr[i].split("=");
-		
 		params.put(substr[0], substr[1]);
-		
-		//debug
-		//System.out.println("param[" + i + "]=" + arStr[i]);
 	}
 
 	//debug
-	System.out.println("map: " + params);
+	//System.out.println("map: " + params);
 
 	return params;
 }
 }}}
 
- Get an anchor tag / history token when you have parameters
+ Get historyToken when looking at it with parameters.
 {{{
 /**
- * get anchor tag by it self when there are parameters
+ * get historyToken by itself
  * 
+ * like domain.tld#[historyToken]?params=1
+ *  
  * @param historyToken
  * @return
  */
-private String getHistoryTokenWithParameters(String historyToken) {
+private String getHistoryToken(String historyToken) {
 	
 	//skip if there is no question mark
 	if (!historyToken.contains("?")) {
-		return null;
+		return "";
 	}
 
+	//get just the historyToken/anchor tag
 	String[] arStr = historyToken.split("\\?");
-
 	historyToken = arStr[0];
-
-	//debug
-	//System.out.println("historyToken: " + historyToken);
 
 	return historyToken;
 }
+}}}
 
+ Are there params in the historyToken?
+{{{
+/**
+ * are there params in historyToken
+ * 
+ * @return
+ */
+private boolean isParamsInHistoryToken() {
+	String s = History.getToken();
+	
+	if (s.contains("?")) {
+		return true;
+	} else {
+		return false;
+	}
+}
+}}}
+
+ Use the paramters collected from the historyToken / anchor tag
+{{{
+/**
+ * use the parameters
+ * @param params
+ */
+private void setParams(HashMap params) {
+	
+	if (params == null) {
+		return;
+	}
+		
+	if (params.get("id") != null) {
+		this.id = (String) params.get("id");
+	}
+	
+	if (params.get("add") != null) {
+		this.add  = (String) params.get("add");
+	}
+}
 }}}
