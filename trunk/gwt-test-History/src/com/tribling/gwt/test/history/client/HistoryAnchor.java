@@ -23,7 +23,6 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 	// main menu
 	private TabBar mainMenu = new TabBar();
 	
-	
 	// panels
 	private VerticalPanel pWidget = new VerticalPanel();
 	private VerticalPanel pHeader = new VerticalPanel();
@@ -162,7 +161,7 @@ public class HistoryAnchor implements EntryPoint, HistoryListener, TabListener {
 		String token = History.getToken();
 		if (token.length() == 0) {
 			
-			// navigate with anchors
+			// navigate with anchors to home
 			History.newItem("home");
 			
 		} else {
