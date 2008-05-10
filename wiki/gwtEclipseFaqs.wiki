@@ -7,8 +7,9 @@
  * [http://help.eclipse.org/help33/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/running_eclipse.htm Eclipse Official Site Help]
  * [http://code.google.com/support/bin/answer.py?answer=93348&topic=11369 Coding in the Shade: Using Eclipse with Google Data APIs]
 
-== Reference ==
+ == Reference ==
  * [http://www.eclipse.org/subversive/downloads.php] Eclipse subversion installation
+
 
 == Importing My Projects Settings ==
   # You can import these projects into your Eclipse.org IDE. SVN URL: http://gwt-examples.googlecode.com/svn/trunk/
