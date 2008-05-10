@@ -2,15 +2,14 @@
 
  [http://tribling.com/brainstorm1583.png] [http://brainstorm.ubuntu.com/idea/1583/ Vote For Ubuntu Tomcat 6]
 
-= Tomcat Setup And Tips =
+= Tomcat Deployment =
  Tomcat, has got to be the easiest platform to deploy GWT applications on and the most efficient system. If you switch to Tomcat, you'll love it.
 
  == My Screenshots ==
  [http://tribling.com/tomcat.php Screenshots] - Tomcat install screenshots for reference
 
-= Tomcat Reference =
- Some details to note.
- * [http://tomcat.apache.org/tomcat-6.0-doc/ Tomcat Documentation] 
+ == Tomcat Reference ==
+ * [http://tomcat.apache.org/tomcat-6.0-doc/] - Tomcat Documentation
  * /var/lib/tomcat5.5 - (Ubuntu) some of the files reside here
  * /usr/share/tomcat5.5 - (Ubuntu)
  * /etc/tomcat5.5 - (Ubuntu) configuration files, tomcat-users.xml, server.xml
