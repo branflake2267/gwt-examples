@@ -8,6 +8,7 @@
  * [http://code.google.com/support/bin/answer.py?answer=93348&topic=11369 Coding in the Shade: Using Eclipse with Google Data APIs]
 
  == Reference ==
+ * http://www.eclipse.org/ - Eclipse home
  * [http://www.eclipse.org/subversive/downloads.php] Eclipse subversion installation
 
 
