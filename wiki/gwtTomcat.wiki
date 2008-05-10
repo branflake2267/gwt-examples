@@ -14,6 +14,7 @@
  * /usr/share/tomcat5.5 - (Ubuntu)
  * /etc/tomcat5.5 - (Ubuntu) configuration files, tomcat-users.xml, server.xml
  * /usr/share/tomcat5.5-webapps (Ubuntu) - example web aps directory
+ * [http://www.gwtapps.com/?p=41] - How much can one server take?
 
 = Tomcat Setup =
  This is my install on Ubuntu Linux which is quite simple. When running a servlet with jdbc connector I got socket access denied. This stumped me for a bit and I found that Tomcat controls socket access.
