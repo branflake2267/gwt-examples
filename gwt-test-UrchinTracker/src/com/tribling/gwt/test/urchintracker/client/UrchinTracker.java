@@ -119,16 +119,42 @@ public class UrchinTracker implements EntryPoint, HistoryListener, ClickListener
 			onHistoryChanged(token);
 		}
 	}
+	/**
+	 * parse the historyToken
+	 *  
+	 * like domaint.tld#anchor?[var=1&var3=2&var3=3]
+	 * 
+	 * @param historyToken anchor tag
+	 */
+	private String parseHistoryToken(String historyToken) {
+		
+		if (historyToken == null) {
+			return "";
+		}
+		
+		//get parameters from history token
+		if (historyToken.contains("?")) {
+			HashMap params = getHistoryTokenParameters(historyToken);
+
+			//use the parameters
+			setParams(params);
+
+			//get just the history token / anchor tag , not with paramenters
+			historyToken = getHistoryToken(historyToken);
+		} 
+	
+		return historyToken;
+	}
 	
 	/**
-	 * parse history token ?[var=1&var2=2&var3=3]
+	 * get historyToken parameters
 	 * 
-	 * Parse the history token like querystring - domain.tld#historyToken?params
+	 * like domaint.tld#anchor?[var=1&var3=2&var3=3]
 	 * 
-	 * @param historyToken
-	 * @return
+	 * @param historyToken anchor tag
+	 * @return hashmap of the parameters
 	 */
-	private static HashMap parseHistoryTokenParameters(String historyToken) {
+	private static HashMap getHistoryTokenParameters(String historyToken) {
 	
 		//skip if there is no question mark
 		if (!historyToken.contains("?")) {
@@ -143,15 +169,10 @@ public class UrchinTracker implements EntryPoint, HistoryListener, ClickListener
 		
 		//get the sub string of parameters var=1&var2=2&var3=3...
 		String[] arStr = historyToken.substring(questionMarkIndex, historyToken.length()).split("&");
-	
 		HashMap params = new HashMap();
 		for (int i = 0; i < arStr.length; i++) {
-			
 			String[] substr = arStr[i].split("=");
 			params.put(substr[0], substr[1]);
-			
-			//debug
-			//System.out.println("param[" + i + "]=" + arStr[i]);
 		}
 	
 		//debug
@@ -161,57 +182,59 @@ public class UrchinTracker implements EntryPoint, HistoryListener, ClickListener
 	}
 	
 	/**
-	 * get anchor tag by it self when there are parameters
+	 * get historyToken by itself
 	 * 
+	 * like domain.tld#[historyToken]?params=1
+	 *  
 	 * @param historyToken
 	 * @return
 	 */
-	private String getHistoryTokenWithParameters(String historyToken) {
+	private String getHistoryToken(String historyToken) {
 		
 		//skip if there is no question mark
 		if (!historyToken.contains("?")) {
-			return null;
+			return "";
 		}
 
+		//get just the historyToken/anchor tag
 		String[] arStr = historyToken.split("\\?");
-	
 		historyToken = arStr[0];
-	
-		//debug
-		//System.out.println("historyToken: " + historyToken);
 	
 		return historyToken;
 	}
-	
+
 	/**
-	 * check history token for parameters to process after #history/anchor?var=1&var3=2&var3=3
+	 * are there params in historyToken
 	 * 
-	 * @param historyToken
+	 * @return
 	 */
-	private String getAnchorTagParameters(String historyToken) {
+	private boolean isParamsInHistoryToken() {
+		String s = History.getToken();
 		
-		if (historyToken == null) {
-			return "";
+		if (s.contains("?")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * use the parameters
+	 * @param params
+	 */
+	private void setParams(HashMap params) {
+		
+		if (params == null) {
+			return;
+		}
+			
+		if (params.get("id") != null) {
+			this.id = (String) params.get("id");
 		}
 		
-		if (historyToken.contains("?")) {
-		
-			//get parameters from history token
-			HashMap params = parseHistoryTokenParameters(historyToken);
-			
-			if (params.get("id") != null) {
-				this.id = (String) params.get("id");
-			}
-			
-			if (params.get("add") != null) {
-				this.add  = (String) params.get("add");
-			}
-			
-			historyToken = getHistoryTokenWithParameters(historyToken);
-		} 
-	
-		//debug
-		return historyToken;
+		if (params.get("add") != null) {
+			this.add  = (String) params.get("add");
+		}
 	}
 	
 	/**
@@ -223,7 +246,7 @@ public class UrchinTracker implements EntryPoint, HistoryListener, ClickListener
 	 */
 	public void onHistoryChanged(String historyToken) {
 		
-		historyToken = getAnchorTagParameters(historyToken);
+		historyToken = parseHistoryToken(historyToken);
 		
 		// "view" anchor used  - do this
 		if (historyToken.equals("urchinView")) {
