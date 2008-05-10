@@ -9,7 +9,7 @@
  
 
  == History Token Method Snippets ==
- Init the history support
+ Navigation using history tokens / anchor tags. Be able to use the back button, forward button with out problems. Send in parameters with the anchor tag.
  * use History.newItem("home"); //to fire a history change
 
  Init history support
@@ -35,7 +35,6 @@ private void initHistorySupport() {
 	} else {
 		
 		onHistoryChanged(token);
-		
 	}
 }
 }}}
