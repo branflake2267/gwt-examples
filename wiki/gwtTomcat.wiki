@@ -1,6 +1,5 @@
 #summary gwt tomcat setup
 
- = Vote For Tomcat 6 =
  [http://tribling.com/brainstorm1583.png] [http://brainstorm.ubuntu.com/idea/1583/ Vote For Ubuntu Tomcat 6]
 
 = Tomcat Setup And Tips =
