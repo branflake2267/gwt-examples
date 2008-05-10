@@ -13,7 +13,6 @@
  * Choose the context of your application - ROOT.war or anyName.war to setup the context of your virtual host
  * sets up the welcome page, so it loads whatever.html as the homepage for your applications context.
 
-
  == Directions ==
  # Import this Project into eclipse or other java IDE
  # Compile your GWT project in the eclipse GWT debugger before running this script.
@@ -26,7 +25,7 @@
  [gwtTomcat] - how to setup tomcat up.
 
  == SVN Location ==
- Download the latest version from SVN.
+ Download the latest version from SVN. [http://code.google.com/p/gwt-examples/source/browse/trunk/gwt-TomcatWarBuilder/src/com/tribling/gwt/TomcatWarBuilder/TomcatWarBuilder.java Source Code]
 
  == Windows OS ==
  This should work fine on windows if you change the path forward slashes to back slashes.
