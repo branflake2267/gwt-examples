@@ -29,6 +29,7 @@
  * 04/16/2008 - Google Analytics integration - this could really make it cool!!!!
  * 04/16/2008 - Google Webmaster tools integration
  * 04/16/2008 - Selenium integration would really be cool
+ * 05/11/2008 - Voting Issue
 
 == Documentation ==
  Please add more reference documentation to the classes reference. Add more snippets. 
