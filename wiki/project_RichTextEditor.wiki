@@ -5,6 +5,7 @@
 
  * project located in source code. Source > trunk > gwt-test-RichTextEditor [http://code.google.com/p/gwt-examples/source/browse source]
  * Demo of error (compiled war project) - [http://gawkat.com/RichTextEditorPopUp/]
+ * [http://code.google.com/p/gwt-examples/downloads/list?can=1&q=RichTextEditor&colspec=Filename+Summary+Uploaded+Size+DownloadCount Download WAR]
 
  Error in eclipse Developments shell debugger
 {{{
