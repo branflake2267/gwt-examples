@@ -1,0 +1,23 @@
+#summary Testing rich text editing
+
+= Rich Text Editor =
+ When adding the rich text editor to a dialog box after it has been drawn I get an error. Timing the adding of the rta, will allow first dialog box draw to work but not the second.
+
+ * project located in source code. Source > trunk > gwt-test-RichTextEditor [http://code.google.com/p/gwt-examples/source/browse source]
+
+
+ Error in eclipse Developments shell debugger
+{{{
+[ERROR] Uncaught exception escaped
+java.lang.RuntimeException: Failed to invoke native method: @com.google.gwt.user.client.ui.impl.RichTextAreaImplStandard::unhookEvents() with 0 arguments.
+	at com.google.gwt.dev.shell.moz.LowLevelMoz.invoke(LowLevelMoz.java:132)
+	at com.google.gwt.dev.shell.moz.ModuleSpaceMoz.doInvoke(ModuleSpaceMoz.java:98)
+	at com.google.gwt.dev.shell.ModuleSpace.invokeNative(ModuleSpace.java:474)
+	at com.google.gwt.dev.shell.ModuleSpace.invokeNativeVoid(ModuleSpace.java:275)
+	at com.google.gwt.dev.shell.JavaScriptHost.invokeNativeVoid(JavaScriptHost.java:121)
+	at com.google.gwt.user.client.ui.impl.RichTextAreaImplStandard.unhookEvents(RichTextAreaImplStandard.java:308)
+	at com.google.gwt.user.client.ui.impl.RichTextAreaImplStandard.uninitElement(RichTextAreaImplStandard.java:228)
+	at com.google.gwt.user.client.ui.RichTextArea.onDetach(RichTextArea.java:435)
+	at com.google.gwt.user.client.ui.Panel.doDetachChildren(Panel.java:174)
+	at com.google.gwt.user.client.ui.Widget.onDetach(Widget.java:146)
+}}}
