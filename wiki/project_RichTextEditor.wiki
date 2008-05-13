@@ -3,7 +3,7 @@
 = Rich Text Editor =
  I am getting an error when adding a RichTextEditor to a DialogBox. I have tried a few workarounds and haven't found a good solution. I tried Timing the adding of the rta, this works for the first time the DialogBox is centered(). After hiding and trying for a second time to center() it, the Dialogbox will fail because of the rich text editor.
 
- * compiled with gwt-linux milestone 2
+ * Built with GWT Version 0.0.2415_M2
  * project located in source code. Source > trunk > gwt-test-RichTextEditor [http://code.google.com/p/gwt-examples/source/browse source]
  * Demo of error (compiled war project) - [http://gawkat.com/RichTextEditorPopUp/]
  * [http://code.google.com/p/gwt-examples/downloads/list?can=1&q=RichTextEditor&colspec=Filename+Summary+Uploaded+Size+DownloadCount Download WAR]
