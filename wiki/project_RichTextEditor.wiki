@@ -4,7 +4,7 @@
  When adding the rich text editor to a dialog box after it has been drawn I get an error. Timing the adding of the rta, will allow first dialog box draw to work but not the second.
 
  * project located in source code. Source > trunk > gwt-test-RichTextEditor [http://code.google.com/p/gwt-examples/source/browse source]
-
+ * Demo of error (compiled war project) - [http://gawkat.com/RichTextEditorPopUp/]
 
  Error in eclipse Developments shell debugger
 {{{
