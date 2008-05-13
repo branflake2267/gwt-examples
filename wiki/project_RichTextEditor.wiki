@@ -8,6 +8,9 @@
  * Demo of error (compiled war project) - [http://gawkat.com/RichTextEditorPopUp/]
  * [http://code.google.com/p/gwt-examples/downloads/list?can=1&q=RichTextEditor&colspec=Filename+Summary+Uploaded+Size+DownloadCount Download WAR]
 
+ == Bug ==
+ [http://code.google.com/p/google-web-toolkit/issues/detail?id=2396 Issue 2396]
+
  Error in eclipse Developments shell debugger
 {{{
 [ERROR] Uncaught exception escaped
