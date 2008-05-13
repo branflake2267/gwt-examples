@@ -11,6 +11,7 @@
  == Bug ==
  [http://code.google.com/p/google-web-toolkit/issues/detail?id=2396 Issue 2396]
 
+ = Details =
  Error in eclipse Developments shell debugger
 {{{
 [ERROR] Uncaught exception escaped
