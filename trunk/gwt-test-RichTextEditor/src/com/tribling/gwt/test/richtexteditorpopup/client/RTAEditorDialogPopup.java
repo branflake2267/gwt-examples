@@ -26,6 +26,7 @@ public class RTAEditorDialogPopup extends DialogBox implements ClickListener {
 		// main panel
 		private VerticalPanel pWidget = new VerticalPanel();
 		
+		//use this for testing
 		private VerticalPanel pInputTest = new VerticalPanel();
 		
 		//rta input (in popout editor)
@@ -171,4 +172,4 @@ public class RTAEditorDialogPopup extends DialogBox implements ClickListener {
 			if (changeListeners != null)
 				changeListeners.remove(listener);
 		}
-	}
+}
