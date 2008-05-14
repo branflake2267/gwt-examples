@@ -124,7 +124,8 @@ public class TomcatWarBuilder {
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Login-Manager";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-Calendar";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-UrchinTracker";
-		ProjectDirectory = "/home/branflake2267/workspace/gwt-test-History";
+		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-History";
+		ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RichTextEditor";
 		
 		
 		// Ask for credentials to use application 
@@ -134,7 +135,7 @@ public class TomcatWarBuilder {
 		// For virtual hosting - rename your war file to what you want the application context to be
 		// OR rename to ROOT.war for hosts root app
 		renameWarFile = false; //true = turn on rename for servlet context(filename)
-		renameWarFileNameTo = "ROOT.war";
+		renameWarFileNameTo = "ROOT.war"; //rename to
 
 		
 		/********** OPTIONAL ***********/
@@ -341,6 +342,9 @@ public class TomcatWarBuilder {
 		//add user security if turned on
 		WebXML += createWebXMLFileContents_Security();
 		WebXML += "</web-app>\n";
+		
+		//optional
+		WebXML += "\n<!-- Compiled by the TomcatWarBuilder on gwt-examples.googlecode.com -->\n";
 		
 		return WebXML;
 	}
