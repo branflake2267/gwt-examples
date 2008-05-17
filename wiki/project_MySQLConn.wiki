@@ -184,3 +184,32 @@ protected static String escapeForSql(String s) {
 	return rtn;
 }
 }}}
+
+ Improved Escape method for fixing data before its stuck into db
+{{{
+/**
+ * escape string to db
+ * 
+ * remove harmfull db content
+ * remove harmfull tags
+ *
+ * @param s
+ * @return
+ */
+protected static String escapeForSql(String s) {
+	
+	//remove harmful HTML tags
+	if (s != null) {
+		s = s.replaceAll("(?i)</?(HTML|SCRIPT|HEAD|CSS)\\b[^>]*>", "");	
+	}
+
+	String rtn = StringEscapeUtils.escapeSql(s);
+	
+	//escape utils returns null if null
+	if (rtn == null) {
+		rtn = "";
+	}
+
+	return rtn;
+}
+}}}
