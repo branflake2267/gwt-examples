@@ -7,6 +7,8 @@
  * Demo [http://gawkat.com/HistoryAnchor]
  * This also deploys integrated Google Analytics
  
+ == My Suggestion to GWT Project ==
+ I suggested an enhancement. Vote if you want something like this natively. Comment on it. [http://code.google.com/p/google-web-toolkit/issues/detail?id=2422 GWT Issue 2422]
 
  == History Token Method Snippets ==
  Navigation using history tokens / anchor tags. Be able to use the back button, forward button with out problems. Send in parameters with the anchor tag.
