@@ -15,6 +15,77 @@
   * [http://www.gwtapps.com/doc/html/com.google.gwt.i18n.client.DateTimeFormat.html Class DateTimeFormat] - Documentation
   * [http://code.google.com/p/bunsenandbeaker/wiki/DevGuideDateAndNumberFormat GWT Date Time Format Incubation] - Documentation
 
+ Get the beginning/start of the day in seconds - using Calendar
+{{{
+/**
+ * get Start of Day Time Stamp in seconds
+ * 
+ * @param int TimeStamp - unix time stamp
+ * @return unix time stamp (seconds)
+ */
+protected static String getDateStart_TimeStamp(int TimeStamp) {
+
+	long ltime = (long) (TimeStamp / .001); //my unix time stamp in seconds
+
+	Date date = new Date(ltime);
+	TimeZone tzGMT = TimeZone.getTimeZone("GMT");
+	Calendar cal = Calendar.getInstance();
+	cal.setTimeZone(tzGMT);
+	cal.setTime(date);
+	cal.set(Calendar.HOUR_OF_DAY, 0);
+	cal.set(Calendar.MINUTE, 0);
+	cal.set(Calendar.SECOND, 0);
+	
+	
+	//proof
+	//int h = cal.get(Calendar.HOUR_OF_DAY);
+	//int m = cal.get(Calendar.MINUTE);
+	//int d = cal.get(Calendar.DATE);
+	//System.out.println("time: day:" + d +" " + h + ":" + m);
+	
+	//change to seconds
+	long ltimeM = cal.getTimeInMillis();
+	int iTimeStamp = (int) (ltimeM * .001);
+
+	return Integer.toString(iTimeStamp);
+}
+}}}
+
+ Get the end of the day in seconds
+{{{
+/**
+ * Get End of Day Time Stamp in seconds
+ * 
+ * @param int TimeStamp - unix time stamp
+ * @return unix time stamp (seconds)
+ */
+protected static String getDateEnd_TimeStamp(int TimeStamp) {
+
+	long ltime = (long) (TimeStamp / .001); //my unix time stamp in seconds
+
+	Date date = new Date(ltime);
+	TimeZone tzGMT = TimeZone.getTimeZone("GMT");
+	Calendar cal = Calendar.getInstance();
+	cal.setTimeZone(tzGMT);
+	cal.setTime(date);
+	cal.set(Calendar.HOUR_OF_DAY, 23);
+	cal.set(Calendar.MINUTE, 59);
+	cal.set(Calendar.SECOND, 59);
+	
+	//proof
+	//int h = cal.get(Calendar.HOUR_OF_DAY);
+	//int m = cal.get(Calendar.MINUTE);
+	//int d = cal.get(Calendar.DATE);
+	//System.out.println("time: day:" + d +" " + h + ":" + m);
+	
+	//change to seconds
+	long ltimeM = cal.getTimeInMillis();
+	int iTimeStamp = (int) (ltimeM * .001);
+
+	return Integer.toString(iTimeStamp);
+}
+
+}}}
 
 = TimeStamp - Start and End Of Day =
  Get the start of the day 0:00:00 am in seconds
