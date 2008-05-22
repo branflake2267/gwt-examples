@@ -15,6 +15,8 @@
   * [http://www.gwtapps.com/doc/html/com.google.gwt.i18n.client.DateTimeFormat.html Class DateTimeFormat] - Documentation
   * [http://code.google.com/p/bunsenandbeaker/wiki/DevGuideDateAndNumberFormat GWT Date Time Format Incubation] - Documentation
 
+
+ = TimeStamp - Start and End Of Day =
  Get the beginning/start of the day in seconds - using Calendar
 {{{
 /**
@@ -87,7 +89,6 @@ protected static String getDateEnd_TimeStamp(int TimeStamp) {
 
 }}}
 
-= TimeStamp - Start and End Of Day =
  Get the start of the day 0:00:00 am in seconds
 {{{
 /**
