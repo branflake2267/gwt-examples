@@ -209,7 +209,7 @@ ulimit -n
 == Eclipse 3.3 Update ==
  Update eclipse to europa 3.3.
  [http://update.eclipse.org/updates/3.3/] Put this in eclipse update manager.
-
+ * sudo chmod 777 -R /usr/lib/eclipse /usr/local/lib/eclipse - so eclipse can update itself
 
 = Problematic frame crashes in Hardy =
 
