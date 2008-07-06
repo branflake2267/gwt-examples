@@ -63,6 +63,30 @@ sudo /etc/init.d/tomcat5.5 force-reload
  * Goto http://localhost:8180/YourProject/Url-Pattern
  * If you get Page 405 error, you got url-pattern error (url=context). (page 405 error, cant use Get)
  
+ == Install Servlet Permissions ==
+ Be sure you have the correct 'java -version' running on your system. Either a sun-jdk/jre or open-jdk/jre
+{{{ 
+// fileName: /etc/tomcat5.5/policy.d/60gwt.policy
+// this will get read on next tomcat restart
+
+// my gwt policy
+// be sure! your 'java -version' is a 1.5+ sun-jdk/jre or open-jdk/jre
+
+//codeBase is the location of my gwt projects
+
+grant codeBase "file:${catalina.home}/webapps/-" {
+      permission java.net.SocketPermission "192.168.12.81:3306", "connect";
+};
+
+
+grant codeBase "file:${catalina.home}/webapps/-" {
+  permission java.security.AllPermission;
+};
+
+
+// restart tomcat
+// sudo /etc/init.d/tomcat5.5 restart
+}}}
 
 = JDBC Socket Permission - Security Error =
  Fix this problem: java.security.AccessControlException access denied (java.net.SocketPermission localhost resolve)
