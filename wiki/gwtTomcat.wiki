@@ -72,13 +72,16 @@ sudo /etc/init.d/tomcat5.5 force-reload
 // my gwt policy
 // be sure! your 'java -version' is a 1.5+ sun-jdk/jre or open-jdk/jre
 
+
 //codeBase is the location of my gwt projects
 
+//servlet permission for mysql access/connection
 grant codeBase "file:${catalina.home}/webapps/-" {
       permission java.net.SocketPermission "192.168.12.81:3306", "connect";
 };
 
 
+//servlet permission for all security, so you can do all with servlet.
 grant codeBase "file:${catalina.home}/webapps/-" {
   permission java.security.AllPermission;
 };
