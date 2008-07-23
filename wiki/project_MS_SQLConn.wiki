@@ -108,3 +108,140 @@ public class DB_Conn {
 	}
 }
 }}}
+
+ MS SQL query and update/insert examples using DB_Conn
+{{{
+public class DB_Demo_Queries extends DB_Conn {
+
+	private Connection connection = null;
+
+	// use this to add top 100 to sql field for debugging
+	// remove this during update
+	private String topQuery = "";
+
+	/**
+	 * work on some tables
+	 * 
+	 * @throws SQLException
+	 */
+	public DB_Demo_Queries() throws SQLException {
+
+		// open a connection to ms sql db
+		connection = this.getConn();
+
+		// during debugging do this
+		this.topQuery = " "; // can be 'top 100'
+
+		// condition short data fields
+		query1();
+
+		// close the connection when done
+		connection.close();
+	}
+
+	/**
+	 * query example
+	 */
+	private void query1() {
+
+		String query = "SELECT " + topQuery
+				+ " recordID, center FROM dbo.table";
+
+		try {
+
+			Statement select = connection.createStatement();
+			ResultSet result = select.executeQuery(query);
+
+			int i = 0; // getResultSetSize(result);
+			while (result.next()) {
+				String recordID = result.getString(1);
+				String center = result.getString(2);
+
+				// make the query and do it
+				updateQuery(i, recordID, center);
+				i++;
+			}
+			result.close();
+
+		} catch (Exception e) {
+
+			// debug out output this way
+			System.err.println("Query Statement Error: " + query);
+			e.printStackTrace();
+
+		}
+
+	}
+
+	/**
+	 * update query example
+	 * 
+	 * @param i
+	 * @param recordID
+	 * @param center
+	 */
+	private void updateQuery(int i, String recordID, String center) {
+
+		String sRecordID = recordID;
+		String sCenterID = Integer.toString(getCenterID(center));
+
+		String query = "UPDATE table SET CenterID='" + sCenterID
+				+ "' WHERE (recordID='" + sRecordID + "');";
+
+		// debug
+		System.out.println(i + ". " + query);
+
+		try {
+
+			Statement update = connection.createStatement();
+			update.executeUpdate(query);
+
+		} catch (Exception e) {
+			// debug out output this way
+			System.err.println("Mysql Statement Error: " + query);
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * query example
+	 * 
+	 * @param center
+	 * @return
+	 */
+	private int getCenterID(String center) {
+
+		String query = "SELECT CenterID FROM dbo.table2 WHERE (Match='"
+				+ center + "');";
+
+		// debug
+		System.out.println("Query: " + query);
+
+		int centerID = 0;
+		try {
+
+			Statement select = connection.createStatement();
+			ResultSet result = select.executeQuery(query);
+
+			while (result.next()) {
+				centerID = result.getInt(1);
+			}
+			result.close();
+
+		} catch (Exception e) {
+
+			// debug out output this way
+			System.err.println("Query Statement Error: " + query);
+			e.printStackTrace();
+
+		}
+
+		if (centerID == 0) {
+			System.out.println("ERROR - NO CENTER for " + center);
+		}
+
+		return centerID;
+	}
+
+}
+}}}
