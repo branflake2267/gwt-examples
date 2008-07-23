@@ -265,3 +265,20 @@ select * from (
  ) as newtbl order by lname desc
 ) as newtbl2 order by lname asc
 }}}
+
+ If you want to go to a particular index in the recordset results, you can't do it with MS SQL jdbc. What gives MS. Who wants the entire record set every time. You will have to spool through the entire record set and use a count instead. I do that when I am inserting the record set data into an object array.
+{{{
+protected static int getResultSetSize(ResultSet resultSet) {
+    int size = -1;
+
+    try {
+        resultSet.last();
+        size = resultSet.getRow();
+        resultSet.beforeFirst();
+    } catch(SQLException e) {
+        return size;
+    }
+
+    return size;
+}
+}}}
