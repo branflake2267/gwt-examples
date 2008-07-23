@@ -1,0 +1,1 @@
+#summary Microsoft SQL Server 2000/2005 JDBC connection
