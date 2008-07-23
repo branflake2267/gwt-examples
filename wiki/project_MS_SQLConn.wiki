@@ -12,7 +12,8 @@
 = Code Examples =
  MS SQL example methods and classes
 
- Connection Example
+ === Connection Example ===
+  Connecting to MS SQL server with JDBC
 {{{
 public class DB_Conn {
 	
@@ -108,8 +109,9 @@ public class DB_Conn {
 	}
 }
 }}}
-
- MS SQL query and update/insert examples using DB_Conn
+ 
+ === Query, Update, Insert ===
+  MS SQL query and update/insert examples using DB_Conn
 {{{
 public class DB_Demo_Queries extends DB_Conn {
 
