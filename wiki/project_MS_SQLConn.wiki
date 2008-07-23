@@ -247,3 +247,21 @@ public class DB_Demo_Queries extends DB_Conn {
 
 }
 }}}
+
+= Problems With Using MS JDBC =
+ Things I don't dig about using MS JDBC
+
+ Pagination, Paging - Getting specific set of records with in a record set should be easy. Its very easy, I mean VERY easy to get them from MySQL. On the other hand its hard to get them from MS SQL. I saw improved code for 2005, but it wasn't much better. I used logic to do a record set off set instead of that weird query below. It makes my code quite pervasive and much more difficult for a anybody else to ready my queries.
+{{{
+// MySQL limit clause
+SELECT emp_id,lname,fname FROM employee LIMIT 20,10
+
+// MSSQL equivelent
+select * from (
+ select top 10 emp_id,lname,fname from (
+    select top 30 emp_id,lname,fname
+    from employee
+   order by lname asc
+ ) as newtbl order by lname desc
+) as newtbl2 order by lname asc
+}}}
