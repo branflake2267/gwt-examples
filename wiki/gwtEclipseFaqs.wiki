@@ -228,7 +228,11 @@ ulimit -n
   I got rid of this problematic frame by uninstalling eclipse and reinstalling it.
 
 
-= Bugzilla Integration= 
+= Bugzilla Integration = 
  Integrate buzilla tasklist with eclipse ide.
  * [http://www.eclipse.org/mylyn/] - Mylyn Tasklist with bugzilla integration
  * Eclipse IDE > Help (menu) > Software Updates > Find and Install > Search for new features to install > Mylyn (archived site) > Finished (click) > Mylyn (in window) > Mylyn Integration > Bugzilla Integration (select)
+
+= Eclipse Metrics =
+ This is an excellent metrics system to figure out how many lines of code you have and find out several other things with your code base.
+ * [[http://metrics.sourceforge.net/]] - Install the update site into eclipse.
