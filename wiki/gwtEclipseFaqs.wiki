@@ -3,6 +3,9 @@
 
 = Eclipse FAQs =
 
+ == Promoting ==
+  [http://tribling.com/brainstorm1265.png] [http://brainstorm.ubuntu.com/idea/1265/ Vote For Eclipse in Ubuntu] 
+
  == Eclipse Docs ==
  * [http://help.eclipse.org/help33/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/running_eclipse.htm Eclipse Official Site Help]
  * [http://code.google.com/support/bin/answer.py?answer=93348&topic=11369 Coding in the Shade: Using Eclipse with Google Data APIs]
