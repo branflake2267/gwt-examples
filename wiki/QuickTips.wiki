@@ -491,8 +491,31 @@ public static HashMap parseHistoryToken(String historyToken) {
 = Round Percentage =
 Round a double. Round a percentage. Round a decimal to places.
 {{{
-    public static final double roundDouble(double d, int places) {
+    private double roundDouble(double d, int places) {
         return Math.round(d * Math.pow(10, (double) places)) / Math.pow(10,
             (double) places);
     }
+
+    private double exampleUse() {
+
+       int count = 6;
+       int days = 21;
+
+        // calculate ratio
+        double ratio = 0;
+        if (count > 0) {
+        	ratio = (double)count / (double)days ;
+        } else {
+        	ratio = 0;
+        }
+        
+        // round
+        ratio = roundDouble(ratio, 4);
+        
+        // make it a percentage
+        ratio = ratio * 100;
+
+        return ratio;
+    }
+
 }}}
