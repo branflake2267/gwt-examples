@@ -517,5 +517,24 @@ Round a double. Round a percentage. Round a decimal to places.
 
         return ratio;
     }
+}}}
 
+= Slit String (CSV)=
+ Split a comma separated string with double quotes encasing them.
+{{{
+String testSplit = "\"1:a,b,c,d\",\"2,e,f,g,h\",\"3,i,j,k,l,m\",\"4,n,o,p,q\"";
+System.out.println("testSplit: " + testSplit);
+
+String[] arSplit = testSplit.split("\",\"");
+
+for (int i=0; i < arSplit.length; i++) {
+
+	String s = arSplit[i]; 
+
+	s = s.replaceFirst("^\"", ""); // get rid of the start quote if theres one
+	s = s.replaceFirst("\"$", ""); // get rid of the end quote if theres one
+
+	System.out.println(i + ". split: " + arSplit[i] + " Fixed:" + s);
+
+}
 }}}
