@@ -1,27 +1,67 @@
 
+/*----------------------------------------------------*/
 /* CalendarWidget */
-
-.cal-menu {
+.cal-pCalendarWidget {
+	border:1px solid #E4CA95;
+}
+	.calendar-Title {
+		border-bottom: 1px solid #E4CA95;
+		background-color: #CCCC99;
+		padding: 3px;
+	}
+.cal-pCalendarMenu {
 	width: 100%;
-	border:1px solid #aaa;
-	font-weight: bold;
-}
-.cal-grid {
-	border:1px solid #aaa;
+	padding: 3px;
 }
 
-.cal-WeekDays {
-	font-weight: bold;
+.cal-pCalendarContent {
 }
-.cal-Today {
-	background-color: #C3D9FF;
-	font-weight: bold;
-	color: green;
-}
-.cal-Day {
-	background-color: #f5f5f5;
-	border:1px solid #aaa;
-}
+	.cal-Grid {
+	}
+		.cal-WeekDays {
+			font-weight: bold;
+			text-align: center;
+			background-color: #f5f5f5;
+		}
+		/* day cells */
+		.cal-Today {
+			vertical-align: top;
+			border: 1px solid #aaa;
+			background-color: #C3D9FF;
+			cursor: pointer;
+		}
+		.cal-Day {
+			vertical-align: top;
+			border: 1px solid #aaa;
+			background-color: #f5f5f5;
+			cursor: pointer;
+		}
+		.cal-DaySelected {
+			vertical-align: top;
+			border: 1px solid #aaa;
+			background-color: #FFF1BA;
+			cursor: pointer;
+		}
+		.cal-Day-Cantedit {
+			vertical-align: top;
+			border: 1px solid #aaa;
+			background-color: #e0e0e0;
+		}
+	/* Day Widget */
+	.cal-fDayWidget {
+		/*overflow: hidden;*/
+	}
+		.cal-pDayWidget {
+			font-size: .75em;
+		}
+			.cal-pDayNumber {
+				padding-left: 3px;
+				padding-bottom: 1px;
+			}
+			.cal-pDayContent {
+			}
+
+/*----------------------------------------------------*/
 
 
 

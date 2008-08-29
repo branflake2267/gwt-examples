@@ -1,7 +1,11 @@
 package com.tribling.gwt.test.calendar.client;
 
+import java.util.Arrays;
 import java.util.Date;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ChangeListenerCollection;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -13,398 +17,413 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.SourcesTableEvents;
+import com.google.gwt.user.client.ui.TableListener;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CalendarWidget extends Composite implements ClickListener {
 
-	/**
-	 * Make a day widget with clicklistener to put in the calendar days
-	 */
-	public class DayWidget extends Composite implements ClickListener {
+public class CalendarWidget extends Composite implements ClickListener, TableListener {
 
-		// change listeners for this widget
-		private ChangeListenerCollection changeListeners;
-
-		FocusPanel pContent = new FocusPanel();
-		FocusPanel pDayNumber = new FocusPanel();
-		VerticalPanel pDayPanel = new VerticalPanel();
-
-		int SelectedDay = 0;
-
-		/**
-		 * constructor
-		 */
-		public DayWidget() {
-
-			//TODO - set cursor over text
-
-			//create focus panels that observe
-			pDayNumber.add(new Label(Integer.toString(SelectedDay)));
-			//pContent.add(new Label("test"));
-
-			//add the focus panels to the main panel
-			pDayPanel.add(pDayNumber);
-			//pDayPanel.add(pContent);
-
-			//init the focus panel widget
-			initWidget(pDayPanel);
-
-			pDayNumber.addClickListener(this);
-			//pContent.addClickListener(this);
-
-			pDayNumber.setWidth("100%");
-			//pContent.setWidth("100%");
-			pDayPanel.setWidth("100%");
-		}
-
-		/**
-		 * use this to listen/observe to the widget
-		 * 
-		 * @param listener
-		 */
-		protected void addChangeListener(ChangeListener listener) {
-			if (changeListeners == null)
-				changeListeners = new ChangeListenerCollection();
-			changeListeners.add(listener);
-		}
-
-		public int getDaySelected() {
-			return this.SelectedDay;
-		}
-
-		public void onClick(Widget sender) {
-
-			//Window.alert("click in day widget: Day: " + this.SelectedDay);
-
-			//notify the orginator widget, to look for getDayNumber
-			if (changeListeners != null) {
-				changeListeners.fireChange(this);
-			}
-		}
-
-		protected void removeChangeListener(ChangeListener listener) {
-			if (changeListeners != null)
-				changeListeners.remove(listener);
-		}
-
-		public void setDayNumber(int DayNumber) {
-			this.SelectedDay = DayNumber;
-			pDayNumber.clear();
-			pDayNumber.add(new Label(Integer.toString(this.SelectedDay)));
-		}
-
-		public void setDayPanelStyle(String Style) {
-			pDayPanel.addStyleName(Style);
-			//pDayNumber.addStyleName(Style);
-		}
-
-		public void setDaySelected(int DaySelected) {
-			this.SelectedDay = DaySelected;
-		}
-	}
-	
-	
-	
-	PushButton bNextMonth = new PushButton(">");
-	PushButton bNextYear = new PushButton(">");
-	PushButton bPrevMonth = new PushButton("<");
-
-	PushButton bPrevYear = new PushButton("<");
-
-	//Observer to notify the originator object
+	// Observer to notify the originator object
 	private ChangeListenerCollection changeListeners;
 
-	//First day falls on what weekday s,m,t,w,t,f,s
+	// First day falls on what weekday s,m,t,w,t,f,s
 	private int dayOfMonthOffset = 0;
 
-	//Days of Week
+	// Days of Week
 	private String[] daysOfWeek = new String[] { "Sunday", "Monday", "Tuesday",
 			"Wednesday", "Thursday", "Friday", "Saturday" };
 
-	//Days of Week Abrev
+	// Days of Week Abrev
 	private String[] daysOfWeekAbrev = new String[] { "Sun", "Mon", "Tue",
 			"Wed", "Thu", "Fri", "Sat" };
 
-	private DayWidget dayWidget;
-
-	//Num the first day of month falls on
+	// Num the first day of month falls on
 	private int firstDayNumOfMonth = 0;
 
-	//Days in month
+	// Days in month
 	private int lastDayInMonth = 0;
 
-	//Months
+	// Months
 	private String[] monthNames = new String[] { "January", "February",
 			"March", "April", "May", "June", "July", "August", "September",
 			"October", "November", "December" };
-	//calendar content
-	HorizontalPanel pCalendarContent = new HorizontalPanel();
-	//calendar menu
-	HorizontalPanel pCalendarMenu = new HorizontalPanel();
-	//calendar widget
-	VerticalPanel pCalendarWidget = new VerticalPanel();
-	HorizontalPanel pMenuMonth = new HorizontalPanel();
-	HorizontalPanel pMenuYear = new HorizontalPanel();
 
-	HorizontalPanel pMonthName = new HorizontalPanel();
-	HorizontalPanel pYear = new HorizontalPanel();
+	
+	// Calendar panels
+	private VerticalPanel pCalendarWidget = new VerticalPanel();
+	private HorizontalPanel pCalendarMenu = new HorizontalPanel();
+	private HorizontalPanel pCalendarContent = new HorizontalPanel();
+	
+	// menu
+	private HorizontalPanel pMenuMonth = new HorizontalPanel();
+	private HorizontalPanel pMenuYear = new HorizontalPanel();
+	private HorizontalPanel pMenuToday = new HorizontalPanel();
+	private HorizontalPanel pMonthName = new HorizontalPanel();
+	private HorizontalPanel pYear = new HorizontalPanel();
+	
+	// buttons
+	private PushButton bNextMonth = new PushButton(">");
+	private PushButton bNextYear = new PushButton(">");
+	private PushButton bPrevMonth = new PushButton("<");
+	private PushButton bPrevYear = new PushButton("<");
+	private PushButton bToday = new PushButton("Today");
 
-	//Selected DaY
-	private int selectedDay = 0;
-	//Menu Selected
+	// Selected Day
+	private int selectedDay = 0; //TODO - replace this with selDay
+	
+	// Menu Selected
 	private int selMonth = 0;
 	private int selYear = 0;
+	private int selDay = 0;
 
-	//Today
-	private int todayDate = 0;
-
+	// Today - keeps today in mem
+	private int todayDay = 0;
 	private int todayMonth = 0;
-
 	private int todayYear = 0;
-
+		
+	// calendar grid - used for referencing with dayGrid storage
+	private Grid calGrid = null;
+	
+	// store the DayNum grid location
+	private String[] dayGrid = null;
+	
+	// last grid that was selected by click
+	private String dayGridLastSelected = null;
+	
+	private boolean clearDay;
+	
 	/**
 	 * constructor - make widget
 	 */
 	public CalendarWidget() {
 
-		// menu
-		pCalendarMenu.addStyleName("cal-menu");
+		//Title
+		HorizontalPanel hpTitle = new HorizontalPanel();
+		hpTitle.add(new HTML("&nbsp;<b>Habit Progress</b>&nbsp;"));
+		
+		VerticalPanel pTitle = new VerticalPanel();
+		pTitle.add(hpTitle);
+		
 		pCalendarMenu.setHorizontalAlignment(HorizontalPanel.ALIGN_CENTER);
+		
+		// menu
 		pCalendarMenu.add(pMenuMonth);
-		pCalendarMenu.add(new HTML(
-				"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"));
+		pCalendarMenu.add(bToday);
 		pCalendarMenu.add(pMenuYear);
+		
 
-		//combine the menu and calendar
-		VerticalPanel combine = new VerticalPanel();
-		combine.add(pCalendarMenu);
-		combine.add(pCalendarContent);
-		pCalendarWidget.add(combine);
-
+		VerticalPanel pSpacer1 = new VerticalPanel();
+		VerticalPanel pSpacer2 = new VerticalPanel();
+		
+		// Combine Calendar Panels
+		pCalendarWidget.add(pTitle);
+		pCalendarWidget.add(pSpacer1);
+		pCalendarWidget.add(pCalendarMenu);
+		pCalendarWidget.add(pCalendarContent);
+		pCalendarWidget.add(pSpacer2);
+		
 		//init the widget
 		initWidget(pCalendarWidget);
-
+		
+		//Style
+		pSpacer1.setStyleName("spacer");
+		pSpacer2.setStyleName("spacer");
+		pCalendarMenu.setStyleName("padLR");
+		pCalendarContent.addStyleName("padLR");
+		pTitle.addStyleName("title");
+		pCalendarMenu.addStyleName("cal-pCalendarMenu");
+		pCalendarContent.addStyleName("cal-pCalendarContent");
+		pCalendarWidget.setStyleName("cal-pCalendarWidget");
+		
+		//Hard Style
+		pTitle.setWidth("100%");
+		pTitle.setCellHorizontalAlignment(hpTitle, HorizontalPanel.ALIGN_CENTER);
+		
+		//Observers
 		bPrevMonth.addClickListener(this);
 		bNextMonth.addClickListener(this);
 		bPrevYear.addClickListener(this);
 		bNextYear.addClickListener(this);
-
+		bToday.addClickListener(this);
+		
+		
+	}
+	
+	/**
+	 * process sign in
+	 * 
+	 * set today
+	 * draws menu
+	 */
+	public void drawCalendarItems() {
 		//get todays date
 		getToday();
 
 		//set the first month to this month
-		setSelectedFirst();
+		setTodayDateSelected();
 
 		//draw menu
-		drawCalendarMenu();
-
-		//draw the first calendar
-		drawCalendarGrid();
-
-		//debug();
+		drawMenu();
+		
+		drawCalendar();
 	}
-
-	/**
-	 * use this to listen/observe to the widget
-	 * 
-	 * @param listener
-	 */
-	protected void addChangeListener(ChangeListener listener) {
-		if (changeListeners == null)
-			changeListeners = new ChangeListenerCollection();
-		changeListeners.add(listener);
-	}
-
+	
 	/**
 	 * calculate common calendar stuff
 	 */
-	private void calcCalendar() {
+	private void calculateCalendar() {
+		// How many days in month
 		getLastDayInMonth();
+		
+		// first day offset
 		getFirstDayNumOfMonth();
 	}
 
-	private void changeNextMonth() {
-
-		// if dec to jan
-		if (selMonth == 11) {
-			selYear = selYear + 1;
-			selMonth = 0;
-			drawCalendarYear();
-		} else {
-			selMonth = selMonth + 1;
-		}
-
-		//change month name
-		drawCalendarMonth();
-
-		//redraw calendar
-		drawCalendarGrid();
-	}
-
-	private void changeNextYear() {
-		selYear = selYear + 1;
-		drawCalendarYear();
-
-		//redraw calendar
-		drawCalendarGrid();
-	}
-
+	/**
+	 * goto prev month
+	 */
 	private void changePrevMonth() {
-
+		this.resetGridSelection();
 		// if jan to dec
 		if (selMonth == 0) {
 			selYear = selYear - 1;
 			selMonth = 11;
-			drawCalendarYear();
+			drawYear();
 		} else {
 			selMonth = selMonth - 1;
 		}
 
-		//change month name
-		drawCalendarMonth();
-
-		//redraw calendar
-		drawCalendarGrid();
+		drawMonth();//change month name
+		drawCalendar();//redraw calendar
+	}
+	
+	/**
+	 * goto next month
+	 */
+	private void changeNextMonth() {
+		this.resetGridSelection();
+		// if dec to jan
+		if (selMonth == 11) {
+			selYear = selYear + 1;
+			selMonth = 0;
+			drawYear();
+		} else {
+			selMonth = selMonth + 1;
+		}
+		drawMonth();//change month name
+		drawCalendar(); //redraw calendar
 	}
 
+	/**
+	 * goto prev year
+	 */
 	private void changePrevYear() {
+		this.resetGridSelection();
 		selYear = selYear - 1;
-		drawCalendarYear();
+		drawYear(); //change year displayed
+		drawCalendar();//redraw calendar
+	}
 
-		//redraw calendar
+	/**
+	 * goto next year
+	 */
+	private void changeNextYear() {
+		this.resetGridSelection();
+		selYear = selYear + 1;
+		drawYear(); //change year displayed
+		drawCalendar(); //redraw calendar
+	}
+
+	/**
+	 * Change Day Selected 
+	 * 
+	 * only reload calendar if the  month has changed 
+	 */
+	private void changeToToday() {
+				
+		if (this.selMonth != this.todayMonth || this.selYear != this.todayYear) {
+			setTodayDateSelected();
+			drawCalendar();
+		} else {
+			setSelectedDay(todayDay);
+			setDaySelectedInCalGrid(todayDay);
+		}
+	
+		drawMonth();
+		drawYear();
+	}
+
+	/**
+	 * draw calendar with data
+	 */
+	public void drawCalendar() {
+		
+		// draw calendar
 		drawCalendarGrid();
+		
+		// load calendar data
+		//getCalendarDataForMonth(selYear, selMonth);
 	}
-
-	private void debug() {
-		VerticalPanel vp = new VerticalPanel();
-		vp.add(new Label("selYear: " + selYear));
-		vp.add(new Label("todayYear: " + todayYear));
-		vp.add(new Label("selMonth: " + selMonth));
-		vp.add(new Label("selMonth: " + todayMonth));
-		vp.add(new Label("FirstDayOfMonth: " + firstDayNumOfMonth));
-		vp.add(new Label("lastDayInMonth: " + lastDayInMonth));
-		RootPanel.get().add(vp);
+	
+	/**
+	 * draw calendar data for specific day, saved or deleted
+	 */
+	public void drawCalendarDataForDay() {
+		
+		// get calendar labels for 
+		//getCalendarDataForDay(this.selYear, this.selMonth, this.selDay);
 	}
-
+	
 	/**
 	 * draw calendar grid
 	 */
 	private void drawCalendarGrid() {
 		pCalendarContent.clear(); //start over
-
+		
 		//calculate calendar days
-		calcCalendar();
+		calculateCalendar();
 
-		int CountCells = 0 - 6; //consider first 7 cells names and 0 in day count
+		// consider first 7 cells names and 0 in day count
+		int CountCells = 0 - 6; 
 		int CountWeekDays = 0;
-		int CountDays = 0;
+		int countDay = 0;
 		int LastDay = lastDayInMonth + firstDayNumOfMonth + 1;
-
-		int Height = 6;
+		dayGrid = new String[LastDay]; //store day grid location
+		
+		// grid size
+		int rowsTotal = 6;
+		int columnsTotal = 7; 
 		if (firstDayNumOfMonth > 4 && lastDayInMonth > 30) {
-			Height = 7; //depth of grid cells
+			rowsTotal = 7; 
 		}
+		calGrid = new Grid(rowsTotal, columnsTotal);
 
-		int Width = 7; //width of grid cells
-		Grid grid = new Grid(Height, Width);
+		//rows
+		for (int row = 0; row < rowsTotal; ++row) {
 
-		//set style for grid - can use css, but for this will do this for now
-		//grid.setBorderWidth(1);
-		grid.addStyleName("cal-grid");
+			//columns
+			for (int column = 0; column < columnsTotal; ++column) {
 
-		//height
-		for (int row = 0; row < Height; ++row) {
-
-			//width
-			for (int column = 0; column < Width; ++column) {
-
-				//width of cells
-				grid.getCellFormatter().setWidth(row, column, "50px");
-
-				//grid.setText(row, col, "" + row + ", " + col); //like 0,0 0,1 0,2
-
-				//FIRST ROW
-				//draw weekday names
-				if (row == 0) {
+				// Weekdays
+				if (row == 0) { //FIRST ROW
 					String WeekDayAbrev = getWeekDayName(CountWeekDays);
-					grid.setText(row, column, WeekDayAbrev);
-					grid.getCellFormatter().addStyleName(row, column,
-							"cal-WeekDays");
+					calGrid.setText(row, column, WeekDayAbrev);
+					calGrid.getCellFormatter().addStyleName(row, column,"cal-WeekDays");
 					CountWeekDays++;
 				}
 
-				//AFTER ROW FIRST
-				//draw Days with Number
-				if (row > 0 && CountCells > firstDayNumOfMonth
-						&& CountCells < LastDay) {
-					//add dayNum
-					String DayNum = Integer.toString(CountDays + 1);
-
-					//TODAY
-					String Style = "";
-					if ((CountDays + 1 == todayDate && selMonth == todayMonth && selYear == todayYear)) {
-						Style = "cal-Today";
-					} else { //Other Days
-						Style = "cal-Day";
-					}
-
+				// Days
+				if (row > 0 && CountCells > firstDayNumOfMonth && CountCells < LastDay) { // AFTER FIRST ROW
+					
+					//store grid location 0,1 - for access later
+					dayGrid[countDay] = Integer.toString(row) + "," + Integer.toString(column);
+					
+					//make widget for panel
+					Day dayWidget = new Day();
+					
 					//add a widget that observers for clicks
-					dayWidget = new DayWidget();
-					dayWidget.setDayPanelStyle(Style);
-					dayWidget.setDayNumber(CountDays + 1);
+					dayWidget.setDayNumber(countDay + 1);
+					
+					//add day widget to Day in Grid
+					calGrid.setWidget(row, column, dayWidget);
+					
+					// Can't edit future
+					boolean canEdit = getCanEditDay(countDay+1);
 
-					//observer the click on the day
-					dayWidget.addChangeListener(new ChangeListener() {
-						public void onChange(Widget sender) {
-							DayWidget dw = (DayWidget) sender;//cast to type
-
-							//Window.alert("Day Selected" + dw.getDaySelected());
-							//set the day number clicked and then fire change
-							setSelectedDay(dw.getDaySelected());
-						}
-					});
-
-					//add day widget to grid
-					grid.setWidget(row, column, dayWidget);
-
-					CountDays++;
+					//Day Style
+					String style = "";
+					if ((countDay + 1 == todayDay && selMonth == todayMonth && selYear == todayYear)) { // Today
+						style = "cal-Today";
+					} else if (canEdit == false) { // can edit style
+						style = "cal-Day-Cantedit";
+					} else { // Can't edit style
+						style = "cal-Day";
+					}
+					 
+					//cell style
+					calGrid.getCellFormatter().setWidth(row, column, "45px");
+					calGrid.getCellFormatter().setHeight(row, column, "45px");
+					calGrid.getCellFormatter().setStyleName(row, column, style);
+					
+					
+					countDay++;
 				}
 				//count what cell we are on
 				CountCells++;
 			}
 		}
 
-		//add the grid to the widget
-		pCalendarContent.add(grid);
+		// Display
+		pCalendarContent.add(calGrid);
+		
+		// Observe Grid for clicks
+		calGrid.addTableListener(this);
+		
+		// Style
+		calGrid.addStyleName("cal-Grid");
 	}
 
-	private void drawCalendarMenu() {
+	/**
+	 * can we edit this day?
+	 * 
+	 * @param day
+	 * @return
+	 */
+	private boolean getCanEditDay(int day) {
+		
+		boolean canEdit = false;
+		
+		if ( (day <= todayDay) &&  (selMonth <= todayMonth) && (selYear <= todayYear) || 
+				(selMonth < todayMonth) && (selYear <= todayYear) ) {  
+			canEdit = true;
+		}
+		
+		return canEdit;
+	}
+	
+	/**
+	 * draw calendar menu
+	 */
+	private void drawMenu() {
+		
+		//Month Panel
 		pMenuMonth.clear();
 		pMenuMonth.add(bPrevMonth);
-		pMenuMonth.add(new HTML("&nbsp;&nbsp;"));
+		pMenuMonth.add(new HTML("&nbsp;"));
 		pMenuMonth.add(pMonthName);
-		pMenuMonth.add(new HTML("&nbsp;&nbsp;"));
+		pMenuMonth.add(new HTML("&nbsp;"));
 		pMenuMonth.add(bNextMonth);
 
+		//Year Panel
 		pMenuYear.clear();
 		pMenuYear.add(bPrevYear);
-		pMenuYear.add(new HTML("&nbsp;&nbsp;"));
+		pMenuYear.add(new HTML("&nbsp;"));
 		pMenuYear.add(pYear);
-		pMenuYear.add(new HTML("&nbsp;&nbsp;"));
+		pMenuYear.add(new HTML("&nbsp;")); 	
 		pMenuYear.add(bNextYear);
 
-		drawCalendarMonth();
-		drawCalendarYear();
+		drawMonth();
+		drawYear();
+		
+		pMenuMonth.setCellVerticalAlignment(pMonthName, VerticalPanel.ALIGN_MIDDLE);
+		pMenuYear.setCellVerticalAlignment(pYear, VerticalPanel.ALIGN_MIDDLE);
 	}
 
-	private void drawCalendarMonth() {
+	/**
+	 * draw month in menu
+	 */
+	private void drawMonth() {
 		String MonthName = getMonthName();
 		pMonthName.clear();
 		pMonthName.add(new Label(MonthName));
 	}
 
-	private void drawCalendarYear() {
+	/**
+	 * draw year in menu
+	 */
+	private void drawYear() {
 		String Year = Integer.toString(selYear);
 		pYear.clear();
 		pYear.add(new Label(Year));
@@ -419,7 +438,7 @@ public class CalendarWidget extends Composite implements ClickListener {
 	}
 
 	/**
-	 * get days in month
+	 * get how many days in month
 	 */
 	private void getLastDayInMonth() {
 
@@ -458,26 +477,213 @@ public class CalendarWidget extends Composite implements ClickListener {
 	}
 
 	/**
-	 * get today info
+	 * get today 
+	 * 
+	 * sets todayYear
+	 * sets todayMonth
+	 * sets tdoayDate
 	 */
 	private void getToday() {
 		Date date = new Date();
 		todayYear = date.getYear() + 1900;
 		todayMonth = date.getMonth();
-		todayDate = date.getDate();
+		todayDay = date.getDate();
 	}
 
+	/**
+	 * get day of week name for grid/calendar
+	 * 
+	 * @param WeekDay
+	 * @return
+	 */
 	private String getWeekDayName(int WeekDay) {
 		return daysOfWeekAbrev[WeekDay];
 	}
 
+	/**
+	 * set the default month to load
+	 */
+	private void setTodayDateSelected() {
+		selMonth = todayMonth;
+		selYear = todayYear;
+		selDay = todayDay;
+	}
+	
+	/**
+	 * set day selected in calendar grid
+	 * 
+	 * @param Day
+	 */
+	private void setDaySelectedInCalGrid(int Day) {
+		
+		this.selDay = Day;
+		
+		String location = dayGrid[Day-1];
+		String[] grid = getGrid(location);
+		
+		if (dayGridLastSelected != null) {
+			String[] lastgrid = getGrid(dayGridLastSelected);
+			
+			//Is the lastgrid location today
+			String lStyle;
+			String slastgrid = Integer.parseInt(lastgrid[0]) + "," + Integer.parseInt(lastgrid[1]); //5,4
+			
+			if (selMonth == todayMonth && selYear == todayYear) {
+				if (dayGrid[todayDay-1].equals(slastgrid)) {
+					lStyle = "cal-Today";
+				} else {
+					lStyle = "cal-Day";
+				}
+			} else {
+				lStyle = "cal-Day";
+			}
+  
+			setGridStyle(lastgrid[0], lastgrid[1], lStyle);
+		}
+		
+		setGridStyle(grid[0], grid[1], "cal-DaySelected");
+		
+		//save the last selected
+		dayGridLastSelected = dayGrid[Day-1];
+	}
+	
+	/**
+	 * set grid style to cell in grid
+	 * 
+	 * @param row
+	 * @param col
+	 * @param Style
+	 */
+	private void setGridStyle(String row, String col, String Style) {
+		int irow = Integer.parseInt(row);
+		int icol = Integer.parseInt(col);
+		calGrid.getCellFormatter().setStyleName(irow, icol, Style);
+		//RootPanel.get().add(new Label("grid: " + row + " " + col + " s: " + Style));
+	}
+	
+	/**
+	 * find grid location from string 0,1
+	 * 
+	 * @param location
+	 * @return grid[]
+	 */
+	private String[] getGrid(String location) {
+		String[] grid = location.split(",");
+		return grid;
+	}
+	
+	/**
+	 * reset the grid calendar selection system
+	 */
+	private void resetGridSelection() {
+		dayGrid = null;
+		dayGridLastSelected = null;
+	}
+
+	/**
+	 * draw the labels into entire month
+	 * 
+	 * @param cal
+	 */
+	private void drawCalendarDataForMonth(CalendarData[] calData) {
+
+		//loop through data and insert into the grid
+		for (int i=0; i < calData.length; i++) {
+			drawLabelToGrid(calData[i]);
+		}
+	}
+	
+	/**
+	 *  draw the lables into a Day
+	 *  
+	 * @param calData
+	 */
+	private void drawCalendarDataForDay(CalendarData[] calData) {
+		
+		if (calData == null) {
+			return;
+		}
+		
+		clearDay = true;
+		
+		//loop through data and insert into the grid
+		for (int i=0; i < calData.length; i++) {
+			
+			if (i==1) {
+				clearDay = false;
+			}
+			
+			drawLabelToGrid(calData[i]);
+		}
+	
+		//clear the day if return is 0
+		if (calData.length == 0) {
+			CalendarData calData2 = new CalendarData();
+			calData2.day = selDay;
+			calData2.month = selMonth;
+			calData2.year = selYear;
+			drawLabelToGrid(calData2);
+		}
+	}
+	
+	/**
+	 * draw labels on calendar grid
+	 * 
+	 * @param day
+	 * @param labels
+	 */
+	private void drawLabelToGrid(CalendarData calData) {
+		
+		int day = calData.day;
+		String sLabel = calData.label;
+
+		String location = dayGrid[day-1];
+		String[] grid = getGrid(location);
+		int row = Integer.parseInt(grid[0]);
+		int column = Integer.parseInt(grid[1]);
+		Day dw = (Day) calGrid.getWidget(row, column);
+		
+		if (clearDay == true) {
+			dw.clearLabels();
+		}
+		dw.drawLabel(sLabel);
+	}
+	
+	/**
+	 * get Unix Time stamp for day (at 12:00:00 24hr)
+	 * 
+	 * @return int unixTimeStamp 
+	 */
+	public int getSelectedTimeStampForDay() {
+		Date date = new Date();
+		date.setYear(this.selYear-1900);
+		date.setMonth(this.selMonth);
+		date.setDate(this.selectedDay);
+		date.setHours(12);
+		date.setMinutes(0);
+		date.setSeconds(0);
+		long lTimeStamp = date.getTime();
+		int iTimeStamp = (int) (lTimeStamp * .001);
+		return iTimeStamp;
+	}
+	
+	/**
+	 * set selected day and let the parent know of change
+	 * 
+	 * @param selectedDay
+	 */
+	private void setSelectedDay(int selectedDay) {
+		this.selectedDay = selectedDay;
+
+		if (changeListeners != null) {
+			changeListeners.fireChange(this);
+		}
+	}
+
+	/**
+	 * Observing
+	 */
 	public void onClick(Widget sender) {
-
-		//debug
-		//Window.alert("click");
-
-		//clear selected
-		setSelectedDay(0);
 
 		if (sender == bPrevMonth) {
 			changePrevMonth();
@@ -495,30 +701,53 @@ public class CalendarWidget extends Composite implements ClickListener {
 			changeNextYear();
 		}
 
-		//any clicks here will notify the originator object
-		if (changeListeners != null) {
-			changeListeners.fireChange(this);
+		if (sender == bToday) {
+			changeToToday();
 		}
 	}
 
+	/**
+	 * Observe Calendar Widget
+	 * 
+	 * @param listener
+	 */
+	public void addChangeListener(ChangeListener listener) {
+		if (changeListeners == null)
+			changeListeners = new ChangeListenerCollection();
+		changeListeners.add(listener);
+	}
+	
 	protected void removeChangeListener(ChangeListener listener) {
 		if (changeListeners != null)
 			changeListeners.remove(listener);
 	}
 
-	private void setSelectedDay(int selectedDay) {
-		this.selectedDay = selectedDay;
-
-		if (changeListeners != null) {
-			changeListeners.fireChange(this);
-		}
-	}
-
 	/**
-	 * set the default month to load
+	 * observe day
 	 */
-	private void setSelectedFirst() {
-		selMonth = todayMonth;
-		selYear = todayYear;
+	public void onCellClicked(SourcesTableEvents sender, int row, int cell) {
+		
+		String location = Integer.toString(row) + "," + Integer.toString(cell);
+		int index = Arrays.binarySearch(dayGrid, location);
+		
+		// no matching day found for this cell
+		if (index == -1) { 
+			return;
+		}
+		
+		int dayClicked = index + 1;
+		
+		boolean canEdit = getCanEditDay(dayClicked);
+		
+		if (canEdit == true) {
+			setSelectedDay(dayClicked);
+			setDaySelectedInCalGrid(dayClicked);
+		}
+	
+		// debug
+		//System.out.println("click: Row:" + row + " Col:" + cell + " index:" + dayClicked);
 	}
+	
+
+	
 }
