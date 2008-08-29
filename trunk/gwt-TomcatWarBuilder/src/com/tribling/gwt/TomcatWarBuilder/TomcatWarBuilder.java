@@ -20,6 +20,7 @@ import java.util.zip.ZipOutputStream;
 
 /**
  * build the war file for tomcat gwt server deploy
+ * addes the libraries you need too.
  * @author branflake2267 - Brandon Donnelson
  *
  * Watch Console for output. Vars will be outputted there.  
@@ -122,10 +123,10 @@ public class TomcatWarBuilder {
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Clicklistener";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RPC-adv";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Login-Manager";
-		//ProjectDirectory = "/home/branflake2267/workspace/gwt-Calendar";
+		ProjectDirectory = "/home/branflake2267/workspace/gwt-Calendar";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-UrchinTracker";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-History";
-		ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RichTextEditor";
+		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RichTextEditor";
 		
 		
 		// Ask for credentials to use application 
