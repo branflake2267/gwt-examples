@@ -7,13 +7,15 @@ import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class Calendar implements EntryPoint {
+public class Calendar implements EntryPoint, ChangeListener {
 
+	// init the calendar
 	private CalendarWidget calendar = new CalendarWidget();
 
 	/**
@@ -21,20 +23,28 @@ public class Calendar implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 
-		// observe the clicks
-		calendar.addChangeListener(new ChangeListener() {
-			public void onChange(Widget sender) {
-
-				int SelectedDay = 0;
-				if (calendar.getSelectedDay() > 0) {
-					SelectedDay = calendar.getSelectedDay();
-
-					Window.alert("Day Selected: " + SelectedDay);
-				}
-
-			}
-		});
-
+		// draw the calendar
+		calendar.drawCalendarItems();
+		
+		// display the calendar to page
 		RootPanel.get().add(calendar);
+		
+		// observe the clicks
+		calendar.addChangeListener(this);
 	}
+
+	/**
+	 * observe widgets
+	 */
+	public void onChange(Widget sender) {
+		
+		// if calendar fired a change, get a var from it
+		if (calendar.getSelectedDay() > 0) {
+			int SelectedDay = calendar.getSelectedDay();
+			Window.alert("Day Selected: " + SelectedDay);
+		}
+		
+	}
+	
+	
 }
