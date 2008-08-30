@@ -10,16 +10,16 @@
  * I make sure I have a complete sentence in meta tags description.
  
 = Content Spider See =
- As soon as my page load, my GWT ap loads. I have to use hidden content for Google's spider to see. Check out my home page source on [http://GoneVertical.com].
+ As soon as my page load, my GWT application loads. I have to use hidden content for Google's spider to see. Check out my home page source on [http://GoneVertical.com].
 
 = Content Redirection =
  When linking to other content for spiders and it exists in my GWT application, I use redirection to the GWT application position. 
  * [http://gonevertical.com/info/howitworks.html] - this is an example I use to get a search engine spider, but redirects to the GWT Application location of the same content.
 
  == GWT Application Content Inclusion ==
- This is how I include my external pages, html pages, or other content into my gwt application system. This is like a php include or Apache include. And one of my favorite tricks.
+ This is how I include my external pages, html pages, or other content into my GWT application system. This is like a php include or an Apache include. And one of my favorite tricks.
 
- * This allows me to show my content to spiders and use it in my application environment. This has been the most efficent way for me to edit and present my contextual content quickly. 
+ This allows me to show my content to spiders and use it in my application environment. This has been the most efficent way for me to edit and present my contextual content quickly. 
 {{{
 // This is my class to including other page content into my application
 public class HowItWorks extends Composite {
@@ -39,3 +39,16 @@ public class HowItWorks extends Composite {
 }
 }}}
  
+ This is what I put on the How it works content page.
+ * I keep my content in > gwt_project/public/info/content.html
+{{{
+<!-- This would be the html page that has content -->
+
+page content goes here.
+
+<script>
+	// send non web spiders back to gwt version of this content
+	window.location = "../#HowItWorks"
+</script>
+
+}}}
