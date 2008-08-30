@@ -49,6 +49,7 @@ page html content goes here.
 
 <script>
 	// send non web spiders back to gwt version of this same content
+        // Link according to your application folder mine was in domain.tld/info/page.html
 	window.location = "../#HowItWorks"
 </script>
 
