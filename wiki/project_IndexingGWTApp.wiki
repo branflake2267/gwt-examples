@@ -10,7 +10,7 @@
  * I make sure I have a complete sentence in meta tags description.
  
 = Content for the Spiders =
- As soon as my page load, my GWT application loads. I have to use hidden content for Google's spider to see. Check out my home page source on [http://GoneVertical.com].
+ As soon as my page loads, my GWT application loads, that is with a javascript enabled client. Therefore I have to use hidden content for Google's spider to see. Check out my home page source on [http://GoneVertical.com] to see what I did.
 
 = Content Redirection =
  I direct spiders to my content from my homepage. If a user comes, the javascript will load how I want the user so see the content. Since a spider follows links, it will follow my links hidden in white font. The spider will index the content, so when a user clicks on that, the page redirects to the gwt location that has that content. I think this system could get abused and therefore, may not last forever. But used in the proper context, it should work good for getting the spiders to the proper places in your application for good indexing, helping people find what they want when they want.
