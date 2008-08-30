@@ -13,13 +13,14 @@
  As soon as my page load, my GWT application loads. I have to use hidden content for Google's spider to see. Check out my home page source on [http://GoneVertical.com].
 
 = Content Redirection =
- When linking to other content for spiders and it exists in my GWT application, I use redirection to the GWT application position. 
+ I direct spiders to my content from my homepage. If a user comes, the javascript will load how I want the user so see the content. Since a spider follows links, it will follow my links hidden in white font. The spider will index the content, so when a user clicks on that, the page redirects to the gwt location that has that content. I think this system could get abused and therefore, may not last forever. But used in the proper context, it should work good for getting the spiders to the proper places in your application for good indexing, helping people find what they want when they want.
+ 
  * [http://gonevertical.com/info/howitworks.html] - this is an example I use to get a search engine spider, but redirects to the GWT Application location of the same content.
 
  == GWT Application Content Inclusion ==
  This is how I include my external pages, html pages, or other content into my GWT application system. This is like a php include or an Apache include. And one of my favorite tricks.
 
- This allows me to show my content to spiders and use it in my application environment. This has been the most efficent way for me to edit and present my contextual content quickly. 
+ This allows me to show my content to spiders and use it in my application environment. This has been the most efficient way for me to edit and present my contextual content quickly. 
 {{{
 // This is my class to including other page content into my application
 public class HowItWorks extends Composite {
@@ -39,15 +40,15 @@ public class HowItWorks extends Composite {
 }
 }}}
  
- This is what I put on the How it works content page.
+ This is what I put on the the page the spider sees. If a javascript client loads the page, the user will get redirected back to the application, where this content is stored.
  * I keep my content in > gwt_project/public/info/content.html
 {{{
 <!-- This would be the html page that has content -->
 
-page content goes here.
+page html content goes here.
 
 <script>
-	// send non web spiders back to gwt version of this content
+	// send non web spiders back to gwt version of this same content
 	window.location = "../#HowItWorks"
 </script>
 
