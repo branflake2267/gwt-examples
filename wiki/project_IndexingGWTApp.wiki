@@ -9,7 +9,7 @@
  I use Google web master tools to verify all the things are working. [https://www.google.com/webmasters/tools/]
  * I make sure I have a complete sentence in meta tags description.
  
-= Content Spider See =
+= Content for the Spiders =
  As soon as my page load, my GWT application loads. I have to use hidden content for Google's spider to see. Check out my home page source on [http://GoneVertical.com].
 
 = Content Redirection =
