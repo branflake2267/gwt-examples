@@ -53,3 +53,6 @@ page html content goes here.
 </script>
 
 }}}
+
+= Hard to Explain =
+ I hoped that help gives an example to get spiders to your site content, while keeping your GWT application model intact. This has been very effective to me and I hope this can give others little tidbits to grow there application indexing with the power of keeping there application fully web 2.0.
