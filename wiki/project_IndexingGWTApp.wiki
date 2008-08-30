@@ -1,0 +1,41 @@
+#summary getting your application indexed in a search engine.
+
+= Indexing and your Application =
+ My application entirely exists in javascript therefore a search engine spider hasn't been able to figure out where the content is. So here what I have been doing to get my content indexed so it's useful to other people.
+
+* Here is my entirely all GWT application that I have been applying my techniques to: [http://GoneVertical.com]
+
+= Keywords and Description =
+ I use Google web master tools to verify all the things are working. [https://www.google.com/webmasters/tools/]
+ * I make sure I have a complete sentence in meta tags description.
+ 
+= Content Spider See =
+ As soon as my page load, my GWT ap loads. I have to use hidden content for Google's spider to see. Check out my home page source on [http://GoneVertical.com].
+
+= Content Redirection =
+ When linking to other content for spiders and it exists in my GWT application, I use redirection to the GWT application position. 
+ * [http://gonevertical.com/info/howitworks.html] - this is an example I use to get a search engine spider, but redirects to the GWT Application location of the same content.
+
+== GWT Application Content Inclusion ==
+ This is how I include my external pages, html pages, or other content into my gwt application system. This is like a php include or Apache include. And one of my favorite tricks.
+
+ * This allows me to show my content to spiders and use it in my application environment. This has been the most efficent way for me to edit and present my contextual content quickly. 
+{{{
+// This is my class to including other page content into my application
+public class HowItWorks extends Composite {
+
+	private VerticalPanel pWidget = new VerticalPanel();
+	
+	/**
+	 * contructor - init page
+	 */
+	public HowItWorks() {
+	
+		Widget w = new HTMLInclude("info/howitworks.html"); 
+		pWidget.add(w);
+		
+		initWidget(pWidget);
+	}
+}
+}}}
+ 
