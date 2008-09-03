@@ -6,7 +6,7 @@
  * Check your Eclipse referenced libraries for jar
  * Example Eclipse Project Source code of Mysql Conn - http://gwt-examples.googlecode.com/svn/trunk/gwt-test-MySQLConn/src/com/tribling/gwt/test/mysqlconn/server/
  == Links ==
- * JDBC Connector - http://www.mysql.com/products/connector/j/
+ * JDBC Connector - http://www.mysql.com/products/connector/j/ - download MySQL Connector/J 5.1
  * Example MySQL Database, The King James Bible [http://sourceforge.net/project/showfiles.php?group_id=186532&package_id=249676&release_id=548680 Download Bible Database Here] (It comes as a MySQL Dump)
 
 = Tomcat Setup =
