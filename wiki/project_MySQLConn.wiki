@@ -14,7 +14,9 @@
  You will need to change Tomcat configuration.
 {{{
 #for debian/ubuntu
-#add to /etc/tomcat5.5/policy.d/04webapps.policy
+# I added to /etc/tomcat5.5/policy.d/04webapps.policy
+# Or make your own /etc/tomcat5.5/olicy.d/myGWTPolicys.policy
+# you can change file to: file:/apps/directory/yourApps/- 
 grant codeBase "file:${catalina.home}/webapps/-" {
       permission java.net.SocketPermission "192.168.12.81:3306", "connect";
 };
