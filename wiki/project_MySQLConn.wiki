@@ -11,6 +11,7 @@
 
 = Tomcat Setup =
  Fix this problem: java.security.AccessControlException access denied (java.net.SocketPermission localhost resolve)
+ * More information on this here: [gwtTomcat]
  You will need to change Tomcat configuration.
 {{{
 #for debian/ubuntu
