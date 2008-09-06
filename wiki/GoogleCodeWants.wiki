@@ -1,5 +1,4 @@
 #summary Google Code Wants
-#labels Featured
 
 
 = Reference =
