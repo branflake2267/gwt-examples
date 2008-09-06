@@ -1,6 +1,6 @@
 #summary advertising in your GWT Application
 
-= Advertising With AdBrite =
+= Advertising In GWT =
  I wanted other people to know that they have other options if you can't advertise with Google's AdSense. 
 
  == Why I Use AdBrite ==
