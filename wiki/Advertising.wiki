@@ -1,7 +1,7 @@
 #summary advertising in your GWT Application
 
  * [http://www.adbrite.com/mb/landing_both.php?spid=96893&afb=468x60-2 http://files.adbrite.com/mb/images/468x60-2.gif] 
- * [http://www.adbrite.com/mb/landing_both.php?spid=96893&afb=468x60-2 Monetize Your Site] - this is a fantastic company to try out. Very easy to use.
+ * [http://www.adbrite.com/mb/landing_both.php?spid=96893&afb=468x60-2 Monetize Your Site] - Monetize your site like this with there referral program.
 
 = Advertising In GWT =
  I wanted other people to know that they have other options if you can't advertise with Google's AdSense. 
