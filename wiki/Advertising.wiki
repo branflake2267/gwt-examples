@@ -4,10 +4,10 @@
  I wanted other people to know that they have other options if you can't advertise with Google's AdSense. 
 
  == Why I Use AdBrite ==
- Google's AdSense denied me there advertising product which is entirely designed with GWT and Google technology. I seriously am a Google promoter but they won't allow me to use there Advertising product in my GoneVertical.com Application.
+ Google's AdSense denied me there advertising product which is entirely designed with GWT and Google technology because most of my pages where membership oriented. I seriously am a Google promoter but they won't allow me to use there Advertising product in my GoneVertical.com Application so I had to find alternatives. 
  
- == Need Advertising in Google Code ==
- It would be nice to have advertising in Google Code, for those who spend alot of there time developing and supporting Google Projects! Please :).
+ == Note: Need Advertising in Google Code ==
+ It would be nice to have advertising in Google Code, for those who spend many hours of there time developing and supporting Google Projects for free! Please :).
 
  === Try These Companies For a Spin ===
  * Try this fantasic way to monetize your site! I recommend trying them out, Brandon.
