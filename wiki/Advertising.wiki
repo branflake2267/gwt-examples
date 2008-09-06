@@ -11,7 +11,7 @@
  Try these companies for a spin.
 
   === AdBrite ===
-  [http://www.adbrite.com/mb/landing_both.php?spid=96893&afb=468x60-2 AdBrite] -This is a fantastic way to advertise. It was easier to setup than Google's AdSense. After being denied use of AdSense, I starting using AdBrite.
+  [http://www.adbrite.com/mb/landing_both.php?spid=96893&afb=468x60-2 AdBrite] -This is a fantastic way to advertise. It was easier to setup than Google's AdSense. After being denied use of AdSense, I starting using AdBrite. You can also use the referral program in your Google Project for monetization, which is a fantastic option since Google has none.
 
   === AdSense ===
  [https://www.google.com/adsense/login/en_US/ AdSense] - This probably won't work if lots of your site requires login, as what happened to me.
