@@ -7,16 +7,16 @@
 == Try These Companies For a Spin ==
 Try these companies for a spin. Make money with your application, blog, and/or website.
 
-  == AdSense ==
+ == AdSense ==
  [https://www.google.com/adsense/login/en_US/ AdSense] - This probably won't work if lots of your site requires login, as what happened to me.
 
-  == AdBrite ==
+ == AdBrite ==
   [http://www.adbrite.com/mb/landing_both.php?spid=96893&afb=468x60-2 AdBrite] -This is a fantastic way to advertise. It was easier to setup than Google's AdSense. After being denied use of AdSense, I starting using AdBrite. You can also use the referral program in your Google Project for monetization, which is a fantastic option since Google has none.
  * [http://www.adbrite.com/mb/landing_both.php?spid=96893&afb=468x60-2 Monetize Your Site] - Monetize your site like this with there referral program.
  * [http://www.adbrite.com/mb/landing_both.php?spid=96893&afb=468x60-2 http://files.adbrite.com/mb/images/468x60-2.gif]
  
 
-  == Linkshare ==
+ == Linkshare ==
  [http://click.linksynergy.com/fs-bin/stat?id=QCdCuKxPYyY&offerid=7097.10000054&subid=0&type=4 Linkshare] - Another possibility in advertising content.
  * For example signup and earn $9.00 referring to netflix. 
  * [http://click.linksynergy.com/fs-bin/stat?id=QCdCuKxPYyY&offerid=7097.10000054&subid=0&type=4 http://tribling.com/images/linkshare.jpg]
