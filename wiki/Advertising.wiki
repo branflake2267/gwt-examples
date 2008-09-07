@@ -5,10 +5,10 @@
  I wanted other people to know that they have other options if you can't advertise with Google's AdSense. 
 
 == Try These Companies For a Spin ==
-Try these companies for a spin. Make money with your application, blog, and/or website.
+ Try these companies for a spin. Make money with your application, blog, and/or website.
 
  == AdSense ==
- [https://www.google.com/adsense/login/en_US/ AdSense] - This probably won't work if lots of your site requires login, as what happened to me.
+  [https://www.google.com/adsense/login/en_US/ AdSense] - This probably won't work if lots of your site requires login, as what happened to me.
 
  == AdBrite ==
   [http://www.adbrite.com/mb/landing_both.php?spid=96893&afb=468x60-2 AdBrite] -This is a fantastic way to advertise. It was easier to setup than Google's AdSense. After being denied use of AdSense, I starting using AdBrite. You can also use the referral program in your Google Project for monetization, which is a fantastic option since Google has none.
@@ -17,9 +17,9 @@ Try these companies for a spin. Make money with your application, blog, and/or w
  
 
  == Linkshare ==
- [http://click.linksynergy.com/fs-bin/stat?id=QCdCuKxPYyY&offerid=7097.10000054&subid=0&type=4 Linkshare] - Another possibility in advertising content.
+  [http://click.linksynergy.com/fs-bin/stat?id=QCdCuKxPYyY&offerid=7097.10000054&subid=0&type=4 Linkshare] - Another possibility in advertising content.
  * For example signup and earn $9.00 referring to netflix. 
  * [http://click.linksynergy.com/fs-bin/stat?id=QCdCuKxPYyY&offerid=7097.10000054&subid=0&type=4 http://tribling.com/images/linkshare.jpg]
 
  === Note: Need Advertising in Google Code ===
- It would be nice to have advertising in Google Code, for those who spend many hours of there time developing and supporting Google Projects for free! Please :).
+  It would be nice to have advertising in Google Code, for those who spend many hours of there time developing and supporting Google Projects for free! Please :).
