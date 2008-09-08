@@ -1,5 +1,11 @@
 #summary More notes on how to connect to mysql database
 
+= Update =
+ SVN source has complete project, which was updated on 9/7/2008. I added rpc example.
+
+= Demo =
+[http://gawkat.com/MySQLConn/ Demo MySQL Connection] - Transport MySQL data from server to client with and RPC/Remote Procedure Call. I use an object array to transport the recordset from server to client.
+
 = JDBC Connector =
  * Add a JDBC connector jar to your Build Path
  * I put it here. My Projects are configured like: /opt/gwt-linux/mysql-connector-java-5.0.8-bin.jar
