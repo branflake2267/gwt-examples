@@ -253,7 +253,7 @@ public class BibleData implements IsSerializable {
 }
 }}}
 
- This is an example of how I spool the data into the Object Array.
+ This is an example of how I spool the data into the Object Array from MySQL.
 {{{
 public BibleData[] getBibleInfo() {
 	
