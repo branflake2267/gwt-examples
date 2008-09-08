@@ -1,0 +1,22 @@
+
+.gwt-Label {
+	font-weight: bold;
+}
+
+.bibleTable {
+	border:1px solid #aaa;
+}
+
+/* record set rows */
+.rs-selected {
+	background-color: #F8D869;
+}
+.rs-hover {
+	background-color: #fdf2cb;
+}
+.rs-even {
+	background-color: #E7EEFC;
+}
+.rs-odd {
+	background-color: #F0FEFF;
+}

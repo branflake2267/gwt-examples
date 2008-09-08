@@ -6,4 +6,11 @@
 	<!-- Specify the app entry point class.                   -->
 	<entry-point class='com.tribling.gwt.test.mysqlconn.client.MySQLConn'/>
   
+  	<!-- style -->
+  	<stylesheet src="style.css" />
+  
+    <!-- servlet context - path is arbritray, but must match up with the rpc init inside java class -->
+    <!-- Tomcat will listen for this from the server and waits for rpc request in this context -->
+  	<servlet class="com.tribling.gwt.test.mysqlconn.server.MySQLConnImpl" path="/MySQLConnService" />
+  	
 </module>

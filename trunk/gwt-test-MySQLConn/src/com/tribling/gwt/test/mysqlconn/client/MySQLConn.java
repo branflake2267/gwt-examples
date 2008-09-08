@@ -12,26 +12,30 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class MySQLConn implements EntryPoint {
 
-  /**
-   * This is the entry point method.
-   */
-  public void onModuleLoad() {
-	  
-	  
-	  //Nothing to do here.
-	  
-	  
-	  //You will need to change the Build Path vars. You will need to make sure a JDBC connector is added to your class path. 
-	  //I added it to /opt/gwt-linux/mysql-connector-java-5.0.8-bin.jar - (Elipse Project Referenced Libraries) get it from mysql.com
-	  
-	  
-	  
-	  //This project is just a quick way to show you how you could query your MySQL database. 
-	  // ** Check the server package for the files.
-	  
-	  
-	  
-	  //run RunMeToTestQuery as java application for testing your query (in server package)
-	  
-  }
+	/**
+	 * This is the entry point method.
+	 */
+	public void onModuleLoad() {
+
+		// NOTE:
+		// You will need to change the Build Path vars to match your
+		// gwt-user.jar and MySQL.jar
+		// You will need to make sure a JDBC connector is added to your class
+		// path.
+		// I added my jdbc jar to
+		// /opt/classpath/mysql-connector-java-5.1.5/mysql
+		// -connector-java-5.1.5-bin.jar
+
+		// you can run RunMeToTestQuery as java application for testing your
+		// query (in server package)
+
+		
+		
+		// load bible info widget for example sql query and using RPC to get the data/info
+		BibleInfoWidget bibleInfo = new BibleInfoWidget();
+		RootPanel.get("BibleInfo").add(bibleInfo);
+		
+		
+		
+	}
 }
