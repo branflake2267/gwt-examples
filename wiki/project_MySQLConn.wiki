@@ -222,3 +222,81 @@ protected static String escapeForSql(String s) {
 	return rtn;
 }
 }}}
+
+= Trasporting Data / Recordsets Around =
+ This is an example of how I transport data from server to client and back. This is my favorite way and by far the most efficient and easiest way to do it.
+
+ I use a class like this to MySQL record set data. This make is very easy to do. Now if you use private methods, you will have have to change Tomcat security. See more in [gwtTomcat].
+{{{
+/**
+ * I use this class to store my mysql recordset in an object that is an array.
+ * This will give an example of how I pass data from the server to client in an object, 
+ * one of my favourites for its simplicity.
+ * 
+ * @author branflake2267
+ *
+ */
+public class BibleData implements IsSerializable {
+
+	// fields to store data
+	public String book;
+	public int howManyChapters;
+	public int howManyVerses;
+	
+	/**
+	 * constructor
+	 */
+	public BibleData() {
+		// nothing to do when transporting
+	}
+	
+}
+}}}
+
+ This is an example of how I spool the data into the Object Array.
+{{{
+public BibleData[] getBibleInfo() {
+	
+	String query = "SELECT bid, en FROM book;";
+	
+	// prepare for rpc transport
+	BibleData[] bibleData = null;
+	
+    try {
+    	Connection connection = getConn();
+        Statement select = connection.createStatement();
+        ResultSet result = select.executeQuery(query);
+       
+        // init object into the size we need, like a recordset
+        int rsSize = getResultSetSize(result); //size the array
+        bibleData = new BibleData[rsSize];
+        
+        int i = 0;
+        while (result.next()) {
+        	
+        	// init each object in the array !!!!
+        	bibleData[i] = new BibleData(); // <-THIS IS CRITICAL TO REMEMBER!!!! init each array with the object type (I forget to do this so often)
+        	
+        	int bid = result.getInt(1);
+        	bibleData[i].book = result.getString(2);
+        	bibleData[i].howManyChapters = getHowManyChapters(bid);
+        	bibleData[i].howManyVerses = getHowManyVerses(bid);
+        	
+            i++;
+        }
+        
+        // clean up
+        result.close();
+        connection.close();
+        
+    } catch(Exception e) {
+    	
+    	System.err.println("Mysql Statement Error: " + query);
+    	e.printStackTrace();
+    	
+    }
+	
+    // return the array
+	return bibleData;
+}
+}}}
