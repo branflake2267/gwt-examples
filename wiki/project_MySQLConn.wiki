@@ -1,7 +1,7 @@
 #summary More notes on how to connect to mysql database
 
 = Update =
- SVN source has a complete eclipse project, which was updated on 9/7/2008. I added an rpc example to. I added a demo. See the demo.
+ SVN source has a complete eclipse project, which was updated on 9/7/2008. I added an rpc example to. I added a demo.
 
 = Demo =
  [http://gawkat.com/MySQLConn/ Demo MySQL Connection] - Transport MySQL data from server to client with and RPC/Remote Procedure Call. I use an object array to transport the recordset from server to client.
