@@ -226,7 +226,7 @@ protected static String escapeForSql(String s) {
 = Trasporting Data / Recordsets Around =
  This is an example of how I transport data from server to client and back. This is my favorite way and by far the most efficient and easiest way to do it.
 
- I use a class like this to MySQL record set data. This make is very easy to do. Now if you use private methods, you will have have to change Tomcat security. See more in [gwtTomcat].
+ I use a class like this to store MySQL record set data into an object array. This makes it very easy to pass around data. Now if you use private methods in the Class that goes from server to client, you will have have to change Tomcat security. See more in [gwtTomcat].
 {{{
 /**
  * I use this class to store my mysql recordset in an object that is an array.
@@ -297,6 +297,6 @@ public BibleData[] getBibleInfo() {
     }
 	
     // return the array
-	return bibleData;
+    return bibleData;
 }
 }}}
