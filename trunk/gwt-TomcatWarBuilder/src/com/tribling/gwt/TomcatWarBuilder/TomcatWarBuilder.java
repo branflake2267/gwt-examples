@@ -123,11 +123,11 @@ public class TomcatWarBuilder {
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Clicklistener";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RPC-adv";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-Login-Manager";
-		ProjectDirectory = "/home/branflake2267/workspace/gwt-Calendar";
+		//ProjectDirectory = "/home/branflake2267/workspace/gwt-Calendar";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-UrchinTracker";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-History";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RichTextEditor";
-		
+		ProjectDirectory = "/home/branflake2267/workspace/gwt-test-MySQLConn";
 		
 		// Ask for credentials to use application 
 		askForLogin = false;
@@ -136,7 +136,9 @@ public class TomcatWarBuilder {
 		// For virtual hosting - rename your war file to what you want the application context to be
 		// OR rename to ROOT.war for hosts root app
 		renameWarFile = false; //true = turn on rename for servlet context(filename)
-		renameWarFileNameTo = "ROOT.war"; //rename to
+		
+		//rename to
+		renameWarFileNameTo = "ROOT.war"; 
 
 		
 		/********** OPTIONAL ***********/
@@ -194,7 +196,7 @@ public class TomcatWarBuilder {
 		/********************/
 
 		// delete previous production build
-		deleteProductionFolder();
+		deleteProductionFolder(0);
 		
 		// create directories for production build
 		createDirectoriesForBuild();
@@ -446,12 +448,24 @@ public class TomcatWarBuilder {
 	/**
 	 * delete the previous production folder
 	 */
-	private static void deleteProductionFolder() {
+	private static void deleteProductionFolder(int when) {
+
+		String s = "";
+		if (when == 0) {
+			s = "Previous";
+		}
+		
 		String sDir = tempBuildFolder;
 		File dir = new File(sDir);
-		System.out.println("Deleting production directory contents: " + sDir);
+		
+		System.out.println("Deleting " +s + " production directory contents: " + sDir);
+	
 		//delete the production folder contents
-		boolean success = deleteDir(dir);
+		try {
+			deleteDir(dir);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
