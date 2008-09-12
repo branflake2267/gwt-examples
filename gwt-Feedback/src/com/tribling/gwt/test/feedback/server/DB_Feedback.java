@@ -201,7 +201,7 @@ public class DB_Feedback extends DB_Conn {
 		ed.setFrom("server@gawkat.com", "gawkat server");
 		ed.setSubject(subject);
 		ed.setBody(body);
-		ed.setSMTPHost("192.168.12.71", "user", "pass");
+		ed.setSMTPHost("192.168.12.80", "user", "pass");
 		ed.sendMsg();
 
 	}

@@ -98,8 +98,8 @@ public abstract class DB_Conn {
 		}
 		String db = "gwt";
 		String driver = "com.mysql.jdbc.Driver";
-		String user = "";
-		String pass = "";
+	    String user = "gwt-examples";
+	    String pass = "password";
 
 		//System.out.println("getConnSlave: url:" + url);
 		
