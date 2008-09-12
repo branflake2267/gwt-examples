@@ -58,7 +58,9 @@ public class FeedbackWidget extends DialogBox implements ClickListener {
 	 * constructor - init widget
 	 */
 	public FeedbackWidget() {
-		setText("Feedback");
+		
+		// window title/caption
+		setText("Send Feedback"); // set style for this title/caption here in sytle.css-> .gwt-DialogBox .Caption {};
 		
 		String s = "Sends us feedback.";
 		HTML htmlT = new HTML(s);
@@ -137,7 +139,7 @@ public class FeedbackWidget extends DialogBox implements ClickListener {
 			tbFromName.setWidth("300px");
 			tbSubject.setWidth("300px");
 			taMessage.setSize("300px", "300px");
-	
+			
 	
 		
 		// init rpc
