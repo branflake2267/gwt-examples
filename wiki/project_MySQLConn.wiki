@@ -325,5 +325,5 @@ CREATE TABLE `gv_feedback` (
   `LastUpdated` int(11) default NULL,
   PRIMARY KEY  (`ID`),
   KEY `UserID` (`UserID`)
-) ENGINE=MyISAM AUTO_INCREMENT=241 DEFAULT CHARSET=latin1
+) ENGINE=MyISAM DEFAULT CHARSET=latin1
 }}}
