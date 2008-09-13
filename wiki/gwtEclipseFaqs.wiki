@@ -192,6 +192,8 @@ exec /usr/lib/eclipse/eclipse \
 eclipse -XX:PermSize=128m -XX:MaxPermSize=512m
 }}}
 
+
+
 == Watching Traces of Eclipse Crashes ==
  Does eclipse glitch when you load it. Does eclipse fail to load? Does eclipse crash on loading up or in the middle of operating?
 
@@ -221,12 +223,14 @@ ulimit -n
 #username hard nofile 10000
 }}}
 
-== Eclipse 3.3 Update ==
+
+= Eclipse 3.3 Update =
  Update eclipse to europa 3.3.
  [http://update.eclipse.org/updates/3.3/] Put this in eclipse update manager.
  * sudo chmod 777 -R /usr/lib/eclipse /usr/local/lib/eclipse - so eclipse can update itself
 
 = Problematic frame crashes in Hardy =
+ When eclipse starts crashing after upgrade. I recommend a clean install using the stand alone version. If you get eclipse problems, its easier just to backup your project and reinstall eclipse. I have wasted many hours trying to figure out why these things happen, coming to find out, its easier with a clean stand alone install.
 
  == libjvm.so problematic frame crash ==
  libjvm.so problematic frame crash. Ubuntu Hardy Crashes. 
@@ -241,29 +245,33 @@ ulimit -n
  == libxcb.so problematic frame crash ===
   I got rid of this problematic frame by uninstalling eclipse and reinstalling it.
 
+ == Clean Install ==
+  Instead of dealing with messing with your System, try a Eclipse Standalone Clean Install. Don't forget to backup your projects. After you installed your system, move back your workspace directory.
+
+
 = Extending Eclipse =
  Adding tools to eclipse to help your GWT development.
 
 == Subversive - SVN Team Provider =
- Installing subversion for eclipse. Select team provider. 
- * [http://www.eclipse.org/subversive/downloads.php Eclipse Update Site]
+  Installing subversion for eclipse. Select team provider. 
+  * [http://www.eclipse.org/subversive/downloads.php Eclipse Update Site]
 
- === Reasons to Use Subversion ===
-  * Backup remotely easily and quickly.
-  * Develop on multiple PCs
-  * Make a mistake and and check your commit history. Revert back.
-  * Develop using a team
-  * and so much more.
+  === Reasons to Use Subversion ===
+   * Backup remotely easily and quickly.
+   * Develop on multiple PCs
+   * Make a mistake and and check your commit history. Revert back.
+   * Develop using a team
+   * and so much more.
 
-  === Subversion Setup ===
-   Setup the svn connector to connect to the svn repository. You will need to configure team settings in preferences.
-   * eclipse menu > Window > Preferences > Team > SVN > (tab) SVN Client > select "SVN Kit"
+   ==== Subversion Setup ====
+    Setup the svn connector to connect to the svn repository. You will need to configure team settings in preferences.
+    * eclipse menu > Window > Preferences > Team > SVN > (tab) SVN Client > select "SVN Kit"
 
-== Bugzilla Integration == 
- Integrate buzilla tasklist with eclipse ide.
- * [http://www.eclipse.org/mylyn/] - Mylyn Tasklist with bugzilla integration
- * Eclipse IDE > Help (menu) > Software Updates > Find and Install > Search for new features to install > Mylyn (archived site) > Finished (click) > Mylyn (in window) > Mylyn Integration > Bugzilla Integration (select)
+ == Bugzilla Integration == 
+  Integrate buzilla tasklist with eclipse ide.
+  * [http://www.eclipse.org/mylyn/] - Mylyn Tasklist with bugzilla integration
+  * Eclipse IDE > Help (menu) > Software Updates > Find and Install > Search for new features to install > Mylyn (archived site) > Finished (click) > Mylyn (in window) > Mylyn Integration > Bugzilla Integration (select)
 
-== Eclipse Metrics ==
- This is an excellent metrics system to figure out how many lines of code you have and find out several other things with your code base.
+ == Eclipse Metrics ==
+  This is an excellent metrics system to figure out how many lines of code you have and find out several other things with your code base.
  * [[http://metrics.sourceforge.net/]] - Install the update site into eclipse.
