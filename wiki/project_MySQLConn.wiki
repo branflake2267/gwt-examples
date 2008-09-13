@@ -4,7 +4,8 @@
  SVN source has a complete eclipse project, which was updated on 9/7/2008. I added an rpc example to. I added a demo.
 
 = Demo =
- [http://gawkat.com/MySQLConn/ Demo MySQ Connection/Query & RPC in Action] - Transport MySQL data from server to client with and RPC/Remote Procedure Call. I use an object array to transport the recordset from server to client.
+ * [http://gawkat.com/MySQLConn/ Demo MySQ Connection/Query & RPC in Action] - Transport MySQL data from server to client with and RPC/Remote Procedure Call. I use an object array to transport the recordset from server to client.
+ * [http://gawkat.com/Feedback/ Feedback widget Demo] - Try the feedback widget out. More at bottom.
 
 = JDBC Connector =
  * Add a JDBC connector jar to your Build Path
@@ -304,7 +305,7 @@ public BibleData[] getBibleInfo() {
 = Feed Back Widget =
 The feedback widget in the repository gathers up the inputs and sends them to the server and inserts them into MySql. 
 
- * [http://gawkat.com/Feedback/ Demo]
+ * [http://gawkat.com/Feedback/ Feedback widget Demo]
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/gwt-Feedback SVN FeedBack Widget Project] - Eclipse project for my Feedback widget
 
  My Feedback Table
