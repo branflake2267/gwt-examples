@@ -34,8 +34,10 @@ public class DB_Feedback extends DB_Conn {
 	 */
 	public boolean saveFeedBack(String SessionID, FeedbackData feedbackData) {
 		
-		int UserID = getUserID(SessionID);
-		String sUserID = Integer.toString(UserID);
+		// I use this in my login system
+		//int UserID = getUserID(SessionID);
+		//String sUserID = Integer.toString(UserID);
+		String sUserID = "0";
 		
 		String fromEmail = feedbackData.fromEmail;
 		String fromName = feedbackData.fromName;
@@ -201,7 +203,7 @@ public class DB_Feedback extends DB_Conn {
 		ed.setFrom("server@gawkat.com", "gawkat server");
 		ed.setSubject(subject);
 		ed.setBody(body);
-		ed.setSMTPHost("galatic.tribling.com", "user", "password");
+		ed.setSMTPHost("192.168.12.80", "userName", "password");
 		ed.sendMsg();
 
 	}
