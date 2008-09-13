@@ -4,7 +4,7 @@
  SVN source has a complete eclipse project, which was updated on 9/7/2008. I added an rpc example to. I added a demo.
 
 = Demo =
- * [http://gawkat.com/MySQLConn/ MySQL Connection/Query & RPC in Action Demo] - Transport MySQL data from server to client with and RPC/Remote Procedure Call.
+ * [http://gawkat.com/MySQLConn/ MySQL Connection/Query & RPC in Action Demo] - Transport MySQL data from server to client with RPC/Remote Procedure Call.
  * [http://gawkat.com/Feedback/ Feedback widget Demo] - Try the feedback widget out. More at bottom.
 
 = JDBC Connector =
