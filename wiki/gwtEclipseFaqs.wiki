@@ -14,11 +14,14 @@
  * http://www.eclipse.org/ - Eclipse home
  * [http://www.eclipse.org/subversive/downloads.php] - Eclipse subversion installation
 
+  === Extending Eclipse ===
+   * [http://dev.mysql.com/downloads/connector/j/5.1.html Link To MySQL] - JDBC Connector
+   * [http://metrics.sourceforge.net] - Code Metrics - How many lines of code do you have?
 
-== Importing My Projects Settings ==
-  # You can import these projects into your Eclipse.org IDE. SVN URL: http://gwt-examples.googlecode.com/svn/trunk/
-  # Once imported, change your project's build path to the correct libraries. Change the build path library for gwt-linux home directory. I set mine to /opt/gwt-linux which is linked to the current Google Web toolkit download that I have.
-   # Location: Eclipse > Right Click Project > Build Path > Libraries Tab >
+== Importing My Projects From SVN ==
+  # You can import these projects into your Eclipse.org IDE. SVN URL: [http://gwt-examples.googlecode.com/svn/trunk/]
+  # Once imported, change your project's build path to the correct libraries. Change the build path library for gwt-linux home directory. I set mine to */opt/gwt-linux* which is linked to the current Google Web toolkit download that I have.
+  # Location: Eclipse > Right Click Project > Build Path > Libraries Tab >
   # Open the debug dialog in eclipse and look for java application. Select the gwt application and hit debug.
 
 
@@ -28,8 +31,11 @@
  # Get JConnector MySQL JDBC [http://dev.mysql.com/downloads/connector/j/5.1.html Link To MySQL]
  # Eclipse > Right Click Project > Build Path > Libraries Tab > Add External Jar > Add /opt/gwt-linux/mysql-connector-java-5.0.8-bin.jar
 
-== GWT Home Directory ==
- If you want to use my build path from this project install GWT to */opt/gwt-linux*. Or  right click on the eclipse project and select "Build Path", and change the library to the correct location for your GWT Home directory.
+
+
+== GWT_Home Directory ==
+ I put GWT Home Directory system link as */opt/gwt-linux* which links to the current version in */opt/google/gwt/gwt-linux.version*. Or right click on the eclipse project and select _"Build Path"_, and change the library to the correct location for your GWT Home directory.
+
  === Setting Enviromental Variable GWT_HOME ===
   If you want to use a enviromental variable
   # Edit /etc/environment (sudo gedit /etc/environment)
@@ -50,7 +56,6 @@ echo $GWT_HOME
  * Eclipse > Right Click Project > Build Path > Libraries Tab > Add External Jar > Add /opt/gwt-linux/gwt-user.jar
 
 == GWT_EXTERNAL_BROWSER ==
-
  How to add GWT External Browser linux environment variable for Eclipse.
 
  # Edit /etc/environment (sudo gedit /etc/environment) 
@@ -68,24 +73,30 @@ export GWT_EXTERNAL_BROWSER="/usr/local/firefox32/firefox"
 echo $GWT_EXTERNAL_BROWSER
 }}}
 
+ 
+
 == Running 32bit JVM for GWT ==
+Use a 64bit JVM with Eclipse IDE and run your application in a separate 32bit JVM. You will need change your projects debug configuration to a 32bit JVM.
 
- You will need use a 32bit JVM in your build path / Referenced Libaries to work with GWT.
+ * You can use Eclipse with a 64-bit System JVM
+ * You can use separate JVM for each eclipse Project.
 
- * This is the easiest way.
- * Change or add a 32bit JVM in Eclipse project preferences
- * install a 32bit jvm from your linux repository. like ia32-sun-java6-bin
- * Goto: Eclipse > Window (Top Menu) > Preferences > Java > Installed JREs > Add JVM 
+ === Change Projects Running JVM ===
+  * This is the easiest way for 32 bit JVM setup for GWT.
+  * Change or add a 32bit JVM in Eclipse project preferences.
+  * install a 32bit jvm from your linux repository. like _ia32-sun-java6-bin_
+  * Goto: Eclipse > Window (Top Menu) > Preferences > Java > Installed JREs > Add JVM
+  Or
+  * GoTo: Debug Configurations > Java Application > GWT Project > (Project Tab) JRE > Alternate JRE > Select JRE Or Install JRE
 
-OR
+   OR
 
- === Changing the default System JVM ===
- # for ubuntu - use galternatives
- # Install ia32-sun-java6-bin (install 32bit JVM)
- # Install galternatives (this is how we will change the default JVM)
- # Run galternatives
- # Find Java in the List and choose the ia32 JVM
-
+ === Changing the default System JVM (Not Recommended) ===
+  # for ubuntu - use galternatives
+  # Install ia32-sun-java6-bin (install 32bit JVM)
+  # Install galternatives (this is how we will change the default JVM)
+  # Run galternatives
+  # Find Java in the List and choose the ia32 JVM
 {{{
 #Ubuntu method of getting galterantives
 sudo apt-get galternatives
@@ -99,15 +110,23 @@ galternatives
 sudo update-alternatives --config java
 }}}
 
- === Problems that Occur with GWT and AMD64 ===
+=== Problems With GWT and 64bit JVM ===
+ You will get problems trying to run your GWT application in a 64bit JVM. 
+
  Get this error trying to run a GWT project? like: wrong ELF class: ELFCLASS32
 {{{
 /gwt-linux/libswt-pi-gtk-3235.so: wrong ELF class: ELFCLASS32 (Possible cause: architecture word width mismatch)
 }}}
 
-  This Error comes from running 64bit JVM and then GWT tries to use 32bit compiled libraries.
+ * This Error comes from running 64bit JVM and then GWT tries to use 32bit compiled libraries.
+ * Use a 64bit IDE with and run your application in a 32bit JVM 
+
+
+
 
 == Configuring Eclipse Memory ==
+ Configuring more memory for your java JVM to use for your running java application, in this case eclipse.
+
  * Are you getting a eclipse out of memory error?  
  * [http://help.eclipse.org/help33/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/running_eclipse.htm Eclipse Reference Help Link]
 
