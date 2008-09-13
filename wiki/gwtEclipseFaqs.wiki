@@ -110,16 +110,20 @@ galternatives
 sudo update-alternatives --config java
 }}}
 
-=== Problems With GWT and 64bit JVM ===
- You will get problems trying to run your GWT application in a 64bit JVM. 
+ === Problems With GWT and 64bit JVM ===
+ You will get problems trying to run your GWT application in a 64bit JVM during development. 
 
  Get this error trying to run a GWT project? like: wrong ELF class: ELFCLASS32
 {{{
 /gwt-linux/libswt-pi-gtk-3235.so: wrong ELF class: ELFCLASS32 (Possible cause: architecture word width mismatch)
 }}}
 
- * This Error comes from running 64bit JVM and then GWT tries to use 32bit compiled libraries.
- * Use a 64bit IDE with and run your application in a 32bit JVM 
+  * This Error comes from running 64bit JVM and then GWT tries to use 32bit compiled libraries.
+  * Use a 64bit IDE with and run your application in a 32bit JVM 
+
+ ==== GWT 64-bit Linux Issue ====
+   [http://code.google.com/p/google-web-toolkit/issues/detail?id=135#c30] - Running GWT with 64bit JVM problem.
+
 
 
 
