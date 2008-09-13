@@ -302,12 +302,12 @@ public BibleData[] getBibleInfo() {
 }}}
 
 = Feed Back Widget =
- The feedback widget in the repository gathers up the inputs and sends them to the server and inserts them into MySql. 
+The feedback widget in the repository gathers up the inputs and sends them to the server and inserts them into MySql. 
 
-* [http://gawkat.com/Feedback/ Demo]
-* [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/gwt-Feedback SVN FeedBack Widget Project] - Eclipse project for my Feedback widget
+ * [http://gawkat.com/Feedback/ Demo]
+ * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/gwt-Feedback SVN FeedBack Widget Project] - Eclipse project for my Feedback widget
 
-My Feedback Table
+ My Feedback Table
 {{{
 CREATE TABLE `gv_feedback` (
   `ID` int(11) NOT NULL auto_increment,
