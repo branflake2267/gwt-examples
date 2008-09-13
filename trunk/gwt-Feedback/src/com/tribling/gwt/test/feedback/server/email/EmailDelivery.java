@@ -113,7 +113,7 @@ public class EmailDelivery {
         smtp_password = p_password;
 
         props.put("mail.smtp.host", smtp_host);
-        props.setProperty("mail.smtp.localhost", "mail.tribling.com");
+        props.setProperty("mail.smtp.localhost", smtp_host);
         //
         //Determine if we are using authentication or not
         //
