@@ -192,14 +192,6 @@ exec /usr/lib/eclipse/eclipse \
 eclipse -XX:PermSize=128m -XX:MaxPermSize=512m
 }}}
 
-== Installing Subversive - SVN Team Provider =
- Installing subversion for eclipse. Select team provider. 
- * [http://www.eclipse.org/subversive/downloads.php Eclipse Update Site]
- 
- === setup ===
-  Setup the svn connector to connect to the svn repository. You will need to configure team settings in preferences.
-  * eclipse menu > Window > Preferences > Team > SVN > (tab) SVN Client) > select "SVN Kit"
-
 == Watching Traces of Eclipse Crashes ==
  Does eclipse glitch when you load it. Does eclipse fail to load? Does eclipse crash on loading up or in the middle of operating?
 
@@ -249,12 +241,29 @@ ulimit -n
  == libxcb.so problematic frame crash ===
   I got rid of this problematic frame by uninstalling eclipse and reinstalling it.
 
+= Extending Eclipse =
+ Adding tools to eclipse to help your GWT development.
 
-= Bugzilla Integration = 
- Integrate buzilla tasklist with eclipse ide.
- * [http://www.eclipse.org/mylyn/] - Mylyn Tasklist with bugzilla integration
- * Eclipse IDE > Help (menu) > Software Updates > Find and Install > Search for new features to install > Mylyn (archived site) > Finished (click) > Mylyn (in window) > Mylyn Integration > Bugzilla Integration (select)
+ == Installing Subversive - SVN Team Provider =
+  Installing subversion for eclipse. Select team provider. 
+  * [http://www.eclipse.org/subversive/downloads.php Eclipse Update Site]
 
-= Eclipse Metrics =
+  === Reasons to Use Subversion ===
+   * Backup remotely easily and quickly.
+   * Develop on multiple PCs
+   * Make a mistake and and check your commit history. Revert back.
+   * Develop using a team
+   * and so much more.
+
+  === Subversion Setup ===
+   Setup the svn connector to connect to the svn repository. You will need to configure team settings in preferences.
+  * eclipse menu > Window > Preferences > Team > SVN > (tab) SVN Client > select "SVN Kit"
+
+ == Bugzilla Integration == 
+  Integrate buzilla tasklist with eclipse ide.
+  * [http://www.eclipse.org/mylyn/] - Mylyn Tasklist with bugzilla integration
+  * Eclipse IDE > Help (menu) > Software Updates > Find and Install > Search for new features to install > Mylyn (archived site) > Finished (click) > Mylyn (in window) > Mylyn Integration > Bugzilla Integration (select)
+
+== Eclipse Metrics ==
  This is an excellent metrics system to figure out how many lines of code you have and find out several other things with your code base.
  * [[http://metrics.sourceforge.net/]] - Install the update site into eclipse.
