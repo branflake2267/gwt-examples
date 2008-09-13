@@ -300,3 +300,30 @@ public BibleData[] getBibleInfo() {
     return bibleData;
 }
 }}}
+
+= Feed Back Widget =
+ The feedback widget in the repository gathers up the inputs and sends them to the server and inserts them into MySql. 
+
+* [http://gawkat.com/Feedback/ Demo]
+* [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/gwt-Feedback SVN FeedBack Widget Project] - Eclipse project for my Feedback widget
+
+My Feedback Table
+{{{
+CREATE TABLE `gv_feedback` (
+  `ID` int(11) NOT NULL auto_increment,
+  `UserID` int(11) default NULL,
+  `FromEmail` varchar(150) default NULL,
+  `FromName` varchar(150) default NULL,
+  `Subject` varchar(250) default NULL,
+  `Message` text,
+  `Suggestion` tinyint(1) default '0',
+  `Comment` tinyint(1) default '0',
+  `Problem` tinyint(1) default '0',
+  `Other` tinyint(1) default '0',
+  `Post` tinyint(1) default NULL,
+  `DateCreated` int(11) NOT NULL default '0',
+  `LastUpdated` int(11) default NULL,
+  PRIMARY KEY  (`ID`),
+  KEY `UserID` (`UserID`)
+) ENGINE=MyISAM AUTO_INCREMENT=241 DEFAULT CHARSET=latin1
+}}}
