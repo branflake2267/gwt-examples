@@ -246,8 +246,7 @@ ulimit -n
   I got rid of this problematic frame by uninstalling eclipse and reinstalling it.
 
  == Clean Install ==
-  Instead of dealing with messing with your System, try a Eclipse Standalone Clean Install. Don't forget to backup your projects. After you installed your system, move back your workspace directory.
-
+  Instead of dealing with messing with your System, try a Eclipse Standalone Clean Install. Don't forget to backup your projects. After you installed your system, move back your workspace directory. 
 
 = Extending Eclipse =
  Adding tools to eclipse to help your GWT development.
