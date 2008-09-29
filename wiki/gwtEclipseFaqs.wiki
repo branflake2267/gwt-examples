@@ -264,6 +264,7 @@ ulimit -n
 == Subversive - SVN Team Provider =
   Installing subversion for eclipse. Select team provider. 
   * [http://www.eclipse.org/subversive/downloads.php Eclipse Update Site]
+  * [http://www.polarion.org/projects/subversive/download/eclipse/2.0/ganymede-site/ Ganymede SVN connectors]
 
   === Reasons to Use Subversion ===
    * Backup remotely easily and quickly.
