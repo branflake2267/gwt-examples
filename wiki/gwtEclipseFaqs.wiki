@@ -266,6 +266,11 @@ ulimit -n
   * [http://www.eclipse.org/subversive/downloads.php Eclipse Update Site]
   * [http://www.polarion.org/projects/subversive/download/eclipse/2.0/ganymede-site/ Ganymede SVN connectors]
 
+  === Ganymede Install ===
+    Subversion is a part of Ganymede Update Site. 
+    * Help > Software Updates > Available Software > Ganymede > Collaboration Tools > subversion
+    * Also: add SVN connectors separately - use link above
+
   === Reasons to Use Subversion ===
    * Backup remotely easily and quickly.
    * Develop on multiple PCs
