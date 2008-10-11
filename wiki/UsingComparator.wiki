@@ -2,7 +2,7 @@
 
 = Object Array Search =
 
-= Using Comparable or Comparator =
+= Comparator =
  I like using Comparator for specific field search in an object. Here's how I did it below.
 
 = Code =
