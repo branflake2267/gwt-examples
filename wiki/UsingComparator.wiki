@@ -1,5 +1,7 @@
 #summary Using a comparator to sort and search
 
+= Arrayed Object Search =
+
 = Comparable and Comparator =
  I like using Comparator for specific field search in an object. Here's how I did it below.
 
