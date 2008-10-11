@@ -4,6 +4,8 @@
  I like using Comparator for specific field search in an object. Here's how I did it below.
 
 = Code =
+
+Use main class to run it
 {{{
 public class RunSort {
 
@@ -54,6 +56,7 @@ public class RunSort {
 }
 }}}
 
+I use this object to store data. You can also sort using Comparable. In this test, I don't use this option, but can be used Arrays.sort(fieldsData); instead of Arrays.sort(fieldsData, comparator);
 {{{
 /**
  * object to store data in
@@ -77,6 +80,7 @@ public class DataFields implements Comparable<DataFields> {
 }
 }}}
 
+This is my Comparator interface usage. I use this to sort and search my FieldsData object instances.
 {{{
 /**
  * use this interface to sort and search
