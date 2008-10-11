@@ -49,7 +49,7 @@ public class RunSort {
 		// this is how to find it
 		int index = Arrays.binarySearch(fieldsData, searchFieldObject, searchComparator);
 		
-		System.out.println("Index: " + index);
+		System.out.println(searchFieldObject.source + " Found @ Index: " + index);
 		
 	}
 	
@@ -98,4 +98,13 @@ public class SortBySource implements Comparator<DataFields> {
 		return i;
 	}
 }
+}}}
+
+Console output when run
+{{{
+0. Apple
+1. Employee ID
+2. Survey
+3. Ticket Number
+Survey Found @ Index: 2
 }}}
