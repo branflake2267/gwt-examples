@@ -1,4 +1,4 @@
-#summary Using a comparator to sort and search
+#summary Using a comparator to sort and search Object Array
 
 = Object Array Search =
 
