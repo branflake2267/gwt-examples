@@ -265,6 +265,7 @@ ulimit -n
   Installing subversion for eclipse. Select team provider. 
   * [http://www.eclipse.org/subversive/downloads.php Eclipse Update Site]
   * [http://www.polarion.org/projects/subversive/download/eclipse/2.0/ganymede-site/ Ganymede SVN connectors]
+  * [http://www.eclipse.org/subversive/documentation/gettingStarted/aboutSubversive/install.php Directions] - directions with screen shots
 
   === Ganymede Install ===
     Subversion is a part of Ganymede Update Site. 
