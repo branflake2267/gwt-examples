@@ -91,7 +91,7 @@ Use a 64bit JVM with Eclipse IDE and run your application in a separate 32bit JV
   * Goto: Eclipse > Window (Top Menu) > Preferences > Java > Installed JREs > Add JVM
   Or
   * GoTo: Debug Configurations > Java Application > GWT Project > (Project Tab) JRE > Alternate JRE > Select JRE Or Install JRE
-
+  
    OR
 
  === Changing the default System JVM (Not Recommended) ===
@@ -112,6 +112,8 @@ galternatives
 #Another way to do it in shell
 sudo update-alternatives --config java
 }}}
+
+ * Ubuntu jvms located in: /usr/lib/jvm
 
  === Problems With GWT and 64bit JVM ===
  You will get problems trying to run your GWT application in a 64bit JVM during development. 
