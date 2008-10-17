@@ -17,9 +17,9 @@
 = Available Secure Hash Functions =
  [http://pajhome.org.uk/crypt/md5/sha1src.html] - sha1.js hash functions
 
- In Your Project.gwt.xml 
+ In Your Project.gwt.xml
 {{{
-<!-- Include the JS file -->
+<!-- Include the JS file. Put the file in Project Folder > src > public > sha1.js -->
 <!-- http://pajhome.org.uk/crypt/md5/ - SHA-1 algorithms are secure hash functions. -->
 <script src="sha1.js"/>
 }}}
