@@ -12,3 +12,14 @@
 
  == My SVN Source ==
   [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/gwt-test-OAuth] - My Eclipse project 
+
+
+= Hash Functions =
+ [http://pajhome.org.uk/crypt/md5/sha1src.html] - sha1.js hash functions
+
+ In Your Project.gwt.xml 
+{{{
+<!-- Include the JS file -->
+<!-- http://pajhome.org.uk/crypt/md5/ - SHA-1 algorithms are secure hash functions. -->
+<script src="sha1.js"/>
+}}}
