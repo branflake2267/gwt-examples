@@ -26,16 +26,37 @@ public class OAuth implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 
-		// test rpc
-		TestRpcCall testRpc = new TestRpcCall();
+		// test out rpc
+		testRpc();
+		
+		// test out included js functions
+		testSha1JsSetup();
 		
 		
-
-		RootPanel.get().add(testRpc);
 
 	}
 
-
+	/**
+	 * call the native javascript
+	 */
+	private void testSha1JsSetup() {
+		boolean works = sha1Test();
+		RootPanel.get().add(new HTML("sha1.js file works?: " + works));
+	}
 	
+	/**
+	 * test out the included javascript
+	 */
+	private native boolean sha1Test() /*-{
+		return $wnd.sha1_vm_test();
+	}-*/;
+	
+	/**
+	 * test out rpc
+	 */
+	private void testRpc() {
+		TestRpcCall testRpc = new TestRpcCall();
+		RootPanel.get().add(testRpc);
+	}
 	
 }
