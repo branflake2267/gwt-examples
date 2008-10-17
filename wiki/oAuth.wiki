@@ -23,3 +23,6 @@
 <!-- http://pajhome.org.uk/crypt/md5/ - SHA-1 algorithms are secure hash functions. -->
 <script src="sha1.js"/>
 }}}
+
+= The Flow =
+[http://oauth.net/core/diagram.png]
