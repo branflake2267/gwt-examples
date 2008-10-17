@@ -24,6 +24,8 @@
   # Location: Eclipse > Right Click Project > Build Path > Libraries Tab >
   # Open the debug dialog in eclipse and look for java application. Select the gwt application and hit debug.
 
+== Make Eclipse Faster ==
+ Goto your task manager Linux or Windows and change the processing priority.
 
 == JDBC Connector ==
  If you want to use this project's mysql jdbc connector make sure you have it in */opt/gwt-linux*. /opt/gwt-linux/mysql-connector-java-5.0.8-bin.jar
