@@ -4,7 +4,9 @@
 
 = oAuth and GWT =
  This is my example of using oAuth in my gwt application for user authentication to protected resources. My goal, not to pass user credentials across the web. I also want to open up the possibilities of using other oAuth applications.
- 
+
+== My SVN Srouce ==
+ [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/gwt-test-OAuth] - My Eclipse project 
 
 = Reference Documentation =
  * [http://oauth.net] - home page and documentation spec
