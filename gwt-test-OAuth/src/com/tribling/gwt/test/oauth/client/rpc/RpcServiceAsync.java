@@ -6,6 +6,7 @@ public interface RpcServiceAsync {
 
 	/**
 	 * example rpc request with the callback
+	 * 
 	 * @param s
 	 * @param callback
 	 */

@@ -5,6 +5,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 public class TokenData implements IsSerializable {
 
 	/*
+	 * 
 	Service Provider:
         A web application that allows access via OAuth. 
     User:
@@ -27,9 +28,11 @@ public class TokenData implements IsSerializable {
         A secret used by the Consumer to establish ownership of a given Token. 
     OAuth Protocol Parameters:
         Parameters with names beginning with oauth_. 
+     *
 	 */
 	
-	/* example authorization request
+	/* 
+	 * example authorization request
     Authorization: OAuth realm="http://sp.example.com/",
     oauth_consumer_key="0685bd9184jfhq22",
     oauth_token="ad180jjd733klru7",
@@ -38,7 +41,9 @@ public class TokenData implements IsSerializable {
     oauth_timestamp="137131200",
     oauth_nonce="4572616e48616d6d65724c61686176",
     oauth_version="1.0"
+	 *
 	 */
+	
 	
 	public String oauth_consumer_key;
 	
@@ -57,7 +62,7 @@ public class TokenData implements IsSerializable {
 	public String oauth_callback;
 
 	public String oauth_version;
-	
+		
 	/**
 	 * constructor - nothing to do here
 	 */
@@ -194,7 +199,5 @@ public class TokenData implements IsSerializable {
 		this.oauth_nounce = oauth_nonce;
 		this.oauth_version = oauth_version; 
 	}
-	
-	
 	
 }
