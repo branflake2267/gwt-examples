@@ -5,7 +5,7 @@
 = oAuth and GWT =
  This is my example of using oAuth in my gwt application for user authentication to protected resources. My goal, not to pass user credentials across the web. I also want to open up the possibilities of using other oAuth applications.
 
-= References =
+= Reference =
  * [http://oauth.net] - home page and documentation spec
  * [http://code.google.com/p/oauth/] - example svn repository, java, javascript, and others...
  * [http://pajhome.org.uk/crypt/md5/] - The MD4, MD5 and SHA-1 algorithms are secure hash functions
