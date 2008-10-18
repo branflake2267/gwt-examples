@@ -19,21 +19,26 @@ import com.tribling.gwt.test.oauth.client.rpc.RpcServiceAsync;
  */
 public class OAuth implements EntryPoint {
 
-	
-
 	/**
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
 
-		// test out rpc
-		testRpc();
+		// test the stuff needed
+		testStuff();
 		
-		// test out included js functions
-		testSha1JsSetup();
+
 		
 		
 
+	}
+	
+	/**
+	 * test the stuff needed for this setup
+	 */
+	public void testStuff() {
+		testRpcSetup();
+		testSha1JsSetup();
 	}
 
 	/**
@@ -46,6 +51,7 @@ public class OAuth implements EntryPoint {
 	
 	/**
 	 * test out the included javascript
+	 * run the native js method
 	 */
 	private native boolean sha1Test() /*-{
 		return $wnd.sha1_vm_test();
@@ -54,7 +60,7 @@ public class OAuth implements EntryPoint {
 	/**
 	 * test out rpc
 	 */
-	private void testRpc() {
+	private void testRpcSetup() {
 		TestRpcCall testRpc = new TestRpcCall();
 		RootPanel.get().add(testRpc);
 	}

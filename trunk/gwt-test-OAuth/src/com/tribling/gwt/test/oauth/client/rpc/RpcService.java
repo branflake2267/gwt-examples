@@ -6,6 +6,7 @@ public interface RpcService extends RemoteService {
 
 	/**
 	 * example rpc request
+	 * 
 	 * @param s
 	 * @return
 	 */
