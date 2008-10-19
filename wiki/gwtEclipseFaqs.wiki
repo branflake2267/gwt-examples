@@ -17,6 +17,9 @@
   === Extending Eclipse ===
    * [http://dev.mysql.com/downloads/connector/j/5.1.html Link To MySQL] - JDBC Connector
    * [http://metrics.sourceforge.net] - Code Metrics - How many lines of code do you have?
+ 
+  === Configuration Details ===
+   goto: Help > About Eclipse Platform > Configuration Details (button)
 
 == Importing My Projects From SVN ==
   # You can import these projects into your Eclipse.org IDE. SVN URL: [http://gwt-examples.googlecode.com/svn/trunk/]
