@@ -59,7 +59,7 @@ public class TomcatWarBuilder {
 	private  String projectGWTxmlFile;
 	private  String projectGWTxmlFileLocation;
 	private  String projectGWTxmlFileContents;
-	private  String servletClassName; // xml servlet class
+	private  String servletClassName; // xml servlet class - server side class for rpc
 	private  String servletPath; // xml servlet path
 	private  String servletClassNameIMPL;
 	// private  String[] ServerProjectDirs; //skipping for now
@@ -773,7 +773,8 @@ public class TomcatWarBuilder {
 	/**
 	 * get servlet path
 	 * 
-	 * TODO - add os file path seperator to regexp
+	 * TODO - fix this Brandon - need to correct regexp!!!!!!!
+	 * 
 	 */
 	private void getServeletUrlPath() {
 
