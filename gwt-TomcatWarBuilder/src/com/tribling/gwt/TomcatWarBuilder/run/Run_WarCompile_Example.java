@@ -37,8 +37,6 @@ public class Run_WarCompile_Example {
 		
 
 		/********** OPTIONAL ***********/
-		// temp build folder
-		data.tempBuildFolderName = "production";
 		
 		// go to application instead of going to index.jsp true is recommended
 		data.goDirectlyToApplication = true;
