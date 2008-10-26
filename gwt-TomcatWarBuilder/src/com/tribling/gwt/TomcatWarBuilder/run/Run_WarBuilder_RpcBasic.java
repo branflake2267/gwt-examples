@@ -16,8 +16,7 @@ public class Run_WarBuilder_RpcBasic {
 		WarCompileData data = new WarCompileData();
 		
 		// choose your operating system
-		// [0=linux, 1=windows]		
-		
+		// [0=linux, 1=windows]
 		data.os = 0;
 		
 		// project directory (examples below)
