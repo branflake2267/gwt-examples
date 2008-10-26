@@ -16,7 +16,8 @@ public class Run_WarCompile_RpcBasic {
 		WarCompileData data = new WarCompileData();
 		
 		// choose your operating system
-		// [0=linux, 1=windows]
+		// [0=linux, 1=windows]		
+		
 		data.os = 0;
 		
 		// project directory (examples below)
@@ -37,6 +38,7 @@ public class Run_WarCompile_RpcBasic {
 		
 		// Ask for credentials to use application 
 		data.askForLogin = false;
+		
 		/********** OPTIONAL ***********/
 		
 		
