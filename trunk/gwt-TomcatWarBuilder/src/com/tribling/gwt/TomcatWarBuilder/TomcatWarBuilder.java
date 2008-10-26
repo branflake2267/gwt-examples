@@ -20,21 +20,17 @@ import java.util.zip.ZipOutputStream;
 
 
 /**
- * build the war file for tomcat gwt server deploy
- * addes the libraries you need too.
+ * build the WAR for Apache Tomcat servlet deployment
+ *
  * @author branflake2267 - Brandon Donnelson
  *
  * Watch Console for output. Vars will be outputed there.  
  *
  *
- * Wants
- * TODO - figure out what project directory this file is in when ran as java application
- * TODO - Compile project first
- * TODO - upload to server via tomcat deploy automatically
  * 
- * Maybes
- * TODO - dont zip .svn*
- * TODO - Ask for username and password for tomcat deploy, instead of var
+ * Wants In Future
+ * TODO - deploy to tomcat automatically
+ * TODO - fix gwt-files classpath in project-compile after import? 
  * 
  * Documentation
  * http://tomcat.apache.org/tomcat-6.0-doc/index.html
@@ -103,15 +99,10 @@ public class TomcatWarBuilder {
 		cData = data;
 	}
 	
+	/**
+	 * TODO save this for later - then get rid of
+	 */
 	private void old() {
-		//****FIRST**** -> Compile your project in the eclipse gwt debugger before you run this
-		
-		// choose your operating system
-		// [0=linux, 1=windows]
-		cData.os = 0;
-		
-		// temp build folder
-		cData.tempBuildFolderName = "production";
 		
 		// project directory (examples below)
 		cData.projectDirectory = "/home/branflake2267/workspace/gwt-SandBox";
@@ -126,23 +117,7 @@ public class TomcatWarBuilder {
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-History";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RichTextEditor";
 		//ProjectDirectory = "/home/branflake2267/workspace/gwt-test-MySQLConn";
-		
-		// Ask for credentials to use application 
-		cData.askForLogin = false;
-		
-		// For virtual hosting - rename your war file to what you want the application context to be
-		// OR rename to ROOT.war for hosts root app
-		cData.renameWarFile = true; //true = turn on will rename the servlet context (filename)
-		
-		//rename to
-		cData.renameWarFileNameTo = "ROOT.war"; 
 
-		
-		
-		/********** OPTIONAL ***********/
-		
-		// go to application instead of going to index.jsp true is recommended
-		cData.goDirectlyToApplication = true;
 	}
 	
 	/**
@@ -150,11 +125,6 @@ public class TomcatWarBuilder {
 	 * @throws Exception 
 	 */
 	private void startProcess() {
-		
-		/********************/
-		/* get/setup Project Vars */
-		/********************/
-	
 		
 		//testing - todo
 		getCurrentProjectDirectory();
@@ -175,9 +145,7 @@ public class TomcatWarBuilder {
 		compileProject();
 		
 		
-		/********************/
 		/* START WAR BUILD */
-		/********************/
 
 		// delete previous production build
 		deleteProductionFolder(0);
@@ -207,11 +175,13 @@ public class TomcatWarBuilder {
 
 		
 		// delete production folder when done
-		
+		if (cData.deleteTempFolder == true) {
+			deleteProductionFolder(1);
+		}
 		
 		//Done with everything
 		System.out.println("");
-		System.out.println("All Done");
+		System.out.println("All Done!");
 	}
 	
 	/**
@@ -458,7 +428,7 @@ public class TomcatWarBuilder {
 		String sDir = cData.tempBuildFolderName;
 		File dir = new File(sDir);
 		
-		System.out.println("Deleting " +s + " production directory contents: " + sDir);
+		System.out.println("Deleting " + s + " production directory contents: " + sDir);
 	
 		//delete the production folder contents
 		try {

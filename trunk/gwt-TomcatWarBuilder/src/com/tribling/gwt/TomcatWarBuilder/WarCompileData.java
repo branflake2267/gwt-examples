@@ -40,7 +40,10 @@ public class WarCompileData {
 	//default location is project root. Set this for another location
 	//set with no trailing slash like "/home/branflake2267/warFiles"
 	//private  String TempWarFileLocation = "/home/branflake2267"; 
-	public String tempWarFileLocation = null; 
+	public String tempWarFileLocation = null;
+
+	// after all done - delete the temp folder
+	public boolean deleteTempFolder = true; 
 	
 	/********** OPTIONAL ***********/
 }
