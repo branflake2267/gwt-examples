@@ -55,7 +55,7 @@ public class TomcatWarBuilder {
 	private String projectGWTxmlFileContents;
 	private String servletClassName; // xml servlet class - server side class
 	// for rpc
-	private String servletPath; // xml servlet path
+	private String rpcServicePath; // xml servlet path
 	private String servletClassNameIMPL;
 	// private String[] ServerProjectDirs; //skipping for now
 	private String classFileContents;
@@ -291,7 +291,7 @@ public class TomcatWarBuilder {
 					+ "\t<servlet-class>" + servletClassName
 					+ "</servlet-class>\n" + "</servlet>\n"
 					+ "<servlet-mapping>\n" + "\t<servlet-name>" + projectName
-					+ "</servlet-name>\n" + "\t<url-pattern>" + servletPath
+					+ "</servlet-name>\n" + "\t<url-pattern>" + rpcServicePath
 					+ "</url-pattern>\n" + "</servlet-mapping>\n";
 		}
 
@@ -767,6 +767,11 @@ public class TomcatWarBuilder {
 	 * 
 	 * TODO - fix this Brandon - need to correct regexp!!!!!!!
 	 * 
+	 * This is the url-pattern, or rpcServicePath. 
+	 * Or servlet context that redirects to the rpc class
+	 * 
+	 * THis is broken, will fix tonight
+	 * 
 	 */
 	private void getServeletUrlPath() {
 
@@ -777,11 +782,11 @@ public class TomcatWarBuilder {
 		boolean found = m.find();
 
 		if (found == true) {
-			servletPath = m.group(1);
+			rpcServicePath = m.group(1);
 		}
 
 		// debug
-		System.out.println("ServletPath: " + servletPath);
+		System.out.println("ServletPath: " + rpcServicePath);
 	}
 
 	/**
