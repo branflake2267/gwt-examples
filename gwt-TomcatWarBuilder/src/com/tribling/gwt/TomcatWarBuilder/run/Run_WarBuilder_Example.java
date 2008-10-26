@@ -1,7 +1,7 @@
 package com.tribling.gwt.TomcatWarBuilder.run;
 
 import com.tribling.gwt.TomcatWarBuilder.TomcatWarBuilder;
-import com.tribling.gwt.TomcatWarBuilder.WarCompileData;
+import com.tribling.gwt.TomcatWarBuilder.WarBuilderData;
 
 /**
  * this is an example compile war setup setup
@@ -19,7 +19,7 @@ public class Run_WarBuilder_Example {
 	public static void main(String[] args) {
 		
 		// refer to this object for variable options
-		WarCompileData data = new WarCompileData();
+		WarBuilderData data = new WarBuilderData();
 		
 		// choose your operating system
 		// [0=linux, 1=windows]

@@ -60,7 +60,6 @@ public class TomcatWarBuilder {
 	private String projectGWTxmlFileLocation;
 	private String projectGWTxmlFileContents;
 	private String servletClassName; // xml servlet class - server side class
-	// for rpc
 	private String rpcServicePath; // xml servlet path
 	private String servletClassNameIMPL;
 	// private String[] ServerProjectDirs; //skipping for now
@@ -69,13 +68,15 @@ public class TomcatWarBuilder {
 	private String webXML;
 
 	// show wait while compiling
+	// TODO - haven't added this yet, 
+	// will add a worker to compile and loop for watching until its done
 	private boolean wait = false;
 
 	// flag notating the war compile data was set
 	private boolean setData = false;
 
 	// variables that control the compile
-	private WarCompileData data = null;
+	private WarBuilderData data = null;
 
 	// temp folder name
 	private String tempBuildFolderFullPath;
@@ -87,8 +88,12 @@ public class TomcatWarBuilder {
 		// nothing to do yet
 	}
 
+	/**
+	 * start the build process
+	 * 
+	 * NOTE: don't forget to set the war builder data first
+	 */
 	public void start() {
-
 		if (setData == false) {
 			System.out.println("set the WarCompileData first");
 			System.exit(1);
@@ -101,7 +106,7 @@ public class TomcatWarBuilder {
 	 * 
 	 * @param data
 	 */
-	public void setTomcatCompileData(WarCompileData data) {
+	public void setTomcatCompileData(WarBuilderData data) {
 		setData = true;
 		this.data = data;
 	}
