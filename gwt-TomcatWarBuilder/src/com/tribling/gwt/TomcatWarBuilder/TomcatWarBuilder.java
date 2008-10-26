@@ -1069,11 +1069,10 @@ public class TomcatWarBuilder {
 	 */
 	private void copyFiles(String strPath, String dstPath) throws IOException {
 
-		File src = new File(strPath);
-		File dest = new File(dstPath);
+		File src = new File(strPath); // source
+		File dest = new File(dstPath); // destination
 
-		// skip .svn files
-		if (src.isDirectory() == true && src.getName() != ".svn") {
+		if (src.isDirectory() == true && src.getName() != ".svn") { // skip .svn files
 
 			dest.mkdirs();
 			String list[] = src.list();
@@ -1087,6 +1086,7 @@ public class TomcatWarBuilder {
 					copyFiles(src1, dest1);
 				}
 			}
+			
 		} else {
 
 			FileInputStream fin = new FileInputStream(src);
@@ -1095,8 +1095,9 @@ public class TomcatWarBuilder {
 			System.out.println("Copying file src:" + src + " dest:" + dest);
 
 			int c;
-			while ((c = fin.read()) >= 0)
+			while ((c = fin.read()) >= 0) {
 				fout.write(c);
+			}
 
 			fin.close();
 			fout.close();
@@ -1107,28 +1108,27 @@ public class TomcatWarBuilder {
 	/**
 	 * create file with these contents
 	 * 
-	 * @param File
+	 * @param createFilePath
 	 * @param Contents
 	 */
-	private void createFile(String File, String Contents) {
+	private void createFile(String createFilePath, String Contents) {
 
 		try {
-			File file = new File(File);
-
-			// Create file if it does not exist
+			File file = new File(createFilePath);
 			boolean success = file.createNewFile();
 			if (success) {
-				// Write to file
-				BufferedWriter out = new BufferedWriter(new FileWriter(File,true));
+				BufferedWriter out = new BufferedWriter(new FileWriter(createFilePath,true));
 				out.write(Contents);
 				out.close();
 
 			} else {
-				// File already exists
-				(new File(File)).delete();
-				createFile(File, Contents);
+				(new File(createFilePath)).delete();
+				createFile(createFilePath, Contents);
 			}
 		} catch (IOException e) {
+			System.out.println("Could not create file: (debug createFilePath: " + createFilePath + ")");
+			System.out.println("Do you have write permission for this location?");
+			System.exit(1);
 		}
 
 	}
@@ -1160,11 +1160,12 @@ public class TomcatWarBuilder {
 
 		// create a ZipOutputStream to zip the data to
 		ZipOutputStream zos = new ZipOutputStream(file);
-		zipDir(zipUp, zos);
+		zipTempDir(zipUp, zos);
 
 		try {
 			zos.close();
 		} catch (IOException e) {
+			System.out.println("could not close ZipOutputStream");
 			e.printStackTrace();
 		} // close the stream
 	}
@@ -1206,7 +1207,7 @@ public class TomcatWarBuilder {
 	 * @param dir2zip
 	 * @param zos
 	 */
-	private void zipDir(String dir2zip, ZipOutputStream zos) {
+	private void zipTempDir(String dir2zip, ZipOutputStream zos) {
 		try {
 			File zipDir = new File(dir2zip);
 			String[] dirList = zipDir.list();
@@ -1219,7 +1220,7 @@ public class TomcatWarBuilder {
 				File f = new File(zipDir, dirList[i]);
 				if (f.isDirectory()) {
 					String filePath = f.getPath();
-					zipDir(filePath, zos);
+					zipTempDir(filePath, zos);
 					continue;
 				}
 
@@ -1247,8 +1248,9 @@ public class TomcatWarBuilder {
 				fis.close();
 			}
 		} catch (Exception e) {
-			//System.out.println("Could not do the zipDir process. debug zipDir()");
-			//System.exit(1);
+			System.out.println("Could not do the zipDir process. debug zipDir()");
+			System.out.println("This would be an internal variable configuration error. I guess you'll have to debug it");
+			System.exit(1);
 		}
 	}
 
