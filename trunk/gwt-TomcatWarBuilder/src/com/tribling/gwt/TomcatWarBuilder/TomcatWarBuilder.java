@@ -24,19 +24,19 @@ import java.util.zip.ZipOutputStream;
  * 
  * @author branflake2267 - Brandon Donnelson
  * 
- *         Watch Console for output. Vars will be outputed there.
+ * Watch Console for output. Vars will be outputed there.
  * 
  * 
  * 
- *         Wants In Future TODO - deploy to tomcat automatically TODO - fix
- *         gwt-files classpath in project-compile after import?
+ * Wants In Future TODO - deploy to tomcat automatically TODO - fix
+ * gwt-files classpath in project-compile after import?
  * 
- *         Documentation http://tomcat.apache.org/tomcat-6.0-doc/index.html
+ * Documentation http://tomcat.apache.org/tomcat-6.0-doc/index.html
  */
 public class TomcatWarBuilder {
 
 	// gwt-linux location
-	private String GWT_HOME;
+	private String gwtHome;
 
 	// add this if your project-compile class path is relative
 	// Add trailing slash "/dir/dir/gwt-linux/"
@@ -46,7 +46,7 @@ public class TomcatWarBuilder {
 	// proejct vars
 	private String projectCompileFile; // project compile file location
 	private String projectCompileFileContents;
-	private String projectModuleName;
+	private String classPackage;
 	private String projectName;
 	private String[] projectDirs;
 	private String projectDir;
@@ -69,11 +69,13 @@ public class TomcatWarBuilder {
 	private boolean setData = false;
 
 	// variables that control the compile
-	private WarCompileData cData = null;
+	private WarCompileData data = null;
+
+	// temp folder name
+	private String tempBuildFolderFullPath;
 
 	/**
 	 * constructor - make the instance
-	 * 
 	 */
 	public void TomCatWarBuilder() {
 		// nothing to do yet
@@ -95,7 +97,7 @@ public class TomcatWarBuilder {
 	 */
 	public void setTomcatCompileData(WarCompileData data) {
 		setData = true;
-		cData = data;
+		this.data = data;
 	}
 
 	/**
@@ -104,7 +106,7 @@ public class TomcatWarBuilder {
 	private void old() {
 
 		// project directory (examples below)
-		cData.projectDirectory = "/home/branflake2267/workspace/gwt-SandBox";
+		data.projectDirectory = "/home/branflake2267/workspace/gwt-SandBox";
 		// ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
 		// ProjectDirectory = "/home/branflake2267/workspace/gwt-Feedback";
 		// ProjectDirectory =
@@ -177,7 +179,7 @@ public class TomcatWarBuilder {
 		//http://localhost:8080/manager/deploy?path=/footoo&war=file:/path/to/foo
 
 		// delete production folder when done
-		if (cData.deleteTempFolder == true) {
+		if (data.deleteTempFolder == true) {
 			deleteProductionFolder(1);
 		}
 
@@ -194,7 +196,7 @@ public class TomcatWarBuilder {
 	private void getProjectVars() {
 
 		// GWT_HOME location
-		getGWT_HOME();
+		getGwtHome();
 
 		// ProjectClassName
 		getProjectClassName();
@@ -271,12 +273,12 @@ public class TomcatWarBuilder {
 		 */
 
 		// use welcome file list to go directly to the application
-		if (cData.goDirectlyToApplication == true) {
+		if (data.goDirectlyToApplication == true) {
 			WebXML += "" + "<welcome-file-list>\n"
 					+ "\t<welcome-file>"
 					+ projectName
 					+ ".html</welcome-file>\n"
-					+ // go directly to the applications the homepage
+					+ // go directly to the applications homepage
 					"\t<welcome-file>index.jsp</welcome-file>\n"
 					+ // you could use these
 					"\t<welcome-file>index.html</welcome-file>\n"
@@ -286,7 +288,7 @@ public class TomcatWarBuilder {
 
 		// enable web page authentication to tomcat-users.xml
 		if (servletClassName != null) {
-			WebXML += "" + "\n<!-- server side gwt stuff-->\n" + "<servlet>\n"
+			WebXML += "" + "\n<!-- reference project.gwt.xml for servlet class path  -->\n" + "<servlet>\n"
 					+ "\t<servlet-name>" + projectName + "</servlet-name>\n"
 					+ "\t<servlet-class>" + servletClassName
 					+ "</servlet-class>\n" + "</servlet>\n"
@@ -338,7 +340,7 @@ public class TomcatWarBuilder {
 				+ "\t<description>The role that is required to log in to the Manager Application</description>\n"
 				+ "\t<role-name>admin</role-name>\n" + "</security-role>\n\n";
 
-		if (cData.askForLogin == true) {
+		if (data.askForLogin == true) {
 			return WebXML;
 		} else {
 			return "";
@@ -372,22 +374,22 @@ public class TomcatWarBuilder {
 	 */
 	private String createIndexPageContents() {
 
-		String LintToModule = projectName + ".html";
-		String LinkToModuleDesc = LintToModule;
+		String linkToModle = projectName + ".html";
+		String linkToModuleDesc = linkToModle;
 
-		String IndexPage = "<!doctype html public \"-//w3c//dtd html 4.0 transitional//en\">\n"
+		String indexPage = "<!doctype html public \"-//w3c//dtd html 4.0 transitional//en\">\n"
 				+ "<html>\n"
 				+ "<body>"
 				+ ""
 				+ "\t<a href=\""
-				+ LintToModule
+				+ linkToModle
 				+ "\">"
-				+ LinkToModuleDesc
+				+ linkToModuleDesc
 				+ "</a> Quick link to your gwt module."
 				+ "</body>"
 				+ "</html>\n";
 
-		return IndexPage;
+		return indexPage;
 	}
 
 	/**
@@ -397,7 +399,7 @@ public class TomcatWarBuilder {
 
 		String sep = getPathsFileSeparator();
 
-		String File = cData.tempBuildFolderName + sep + "index.jsp";
+		String File = data.tempBuildFolderName + sep + "index.jsp";
 		createFile(File, createIndexPageContents());
 	}
 
@@ -416,11 +418,8 @@ public class TomcatWarBuilder {
 	 */
 	private void setTempBuildFolder() {
 
-		// TODO check for / or \\ on the tempBuildFolder and get rid of it
-
 		String sep = getPathsFileSeparator();
-		cData.tempBuildFolderName = cData.projectDirectory + sep
-				+ cData.tempBuildFolderName;
+		this.tempBuildFolderFullPath = data.projectDirectory + sep + data.tempBuildFolderName;
 	}
 
 	/**
@@ -433,11 +432,10 @@ public class TomcatWarBuilder {
 			s = "Previous";
 		}
 
-		String sDir = cData.tempBuildFolderName;
-		File dir = new File(sDir);
+		
+		File dir = new File(tempBuildFolderFullPath);
 
-		System.out.println("Deleting " + s + " production directory contents: "
-				+ sDir);
+		System.out.println("Deleting " + s + " production directory contents: "	+ tempBuildFolderFullPath);
 
 		// delete the production folder contents
 		try {
@@ -475,8 +473,7 @@ public class TomcatWarBuilder {
 
 		String sep = getPathsFileSeparator();
 
-		String File = cData.tempBuildFolderName + sep + "WEB-INF" + sep
-				+ "web.xml";
+		String File = data.tempBuildFolderName + sep + "WEB-INF" + sep + "web.xml";
 		createFile(File, createWebXMLFileContents());
 	}
 
@@ -491,21 +488,19 @@ public class TomcatWarBuilder {
 		String sep = getPathsFileSeparator();
 
 		// create ./production folder for staging
-		String ProductionFolder = cData.tempBuildFolderName;
+		String ProductionFolder = tempBuildFolderFullPath;
 		createFolder(ProductionFolder);
 
 		// create folder ./production/WEB-INF
-		String ProductionWebInf = cData.tempBuildFolderName + sep + "WEB-INF";
+		String ProductionWebInf = tempBuildFolderFullPath + sep + "WEB-INF";
 		createFolder(ProductionWebInf);
 
 		// create folder ./production/WEB-INF/classes
-		String ProductionWebInfClasses = cData.tempBuildFolderName + sep
-				+ "WEB-INF" + sep + "classes";
+		String ProductionWebInfClasses = tempBuildFolderFullPath + sep + "WEB-INF" + sep + "classes";
 		createFolder(ProductionWebInfClasses);
 
 		// create folder ./production/WEB-INF/lib
-		String ProductionWebInfLib = cData.tempBuildFolderName + sep
-				+ "WEB-INF" + sep + "lib";
+		String ProductionWebInfLib = tempBuildFolderFullPath + sep + "WEB-INF" + sep + "lib";
 		createFolder(ProductionWebInfLib);
 	}
 
@@ -532,9 +527,8 @@ public class TomcatWarBuilder {
 	private void copyCompiledClasses() {
 
 		String sep = getPathsFileSeparator();
-		String src = cData.projectDirectory + sep + "bin";
-		String dest = cData.tempBuildFolderName + sep + "WEB-INF" + sep
-				+ "classes";
+		String src = data.projectDirectory + sep + "bin";
+		String dest = tempBuildFolderFullPath + sep + "WEB-INF" + sep	+ "classes";
 
 		try {
 			copyFiles(src, dest);
@@ -561,11 +555,10 @@ public class TomcatWarBuilder {
 		String sep = getPathsFileSeparator();
 
 		// source directory
-		String src = cData.projectDirectory + sep + "www" + sep
-				+ projectModuleName;
+		String src = data.projectDirectory + sep + "www" + sep	+ classPackage;
 
 		// destination directory
-		String dest = cData.tempBuildFolderName;
+		String dest = tempBuildFolderFullPath;
 
 		// copy files
 		try {
@@ -585,8 +578,7 @@ public class TomcatWarBuilder {
 
 		String sep = getPathsFileSeparator();
 
-		System.out.println("Copying Jars" + classLibs.length
-				+ " (Using .classpath for locating jars)");
+		System.out.println("Copying Jars" + classLibs.length + " (Using .classpath for locating jars)");
 
 		String src = null;
 		String dest = null;
@@ -594,8 +586,7 @@ public class TomcatWarBuilder {
 		for (int i = 0; i < (classLibs.length); i++) {
 			src = classLibs[i];
 			String DestFile = getDestinationDirectory(src);
-			dest = cData.tempBuildFolderName + sep + "WEB-INF" + sep + "lib"
-					+ sep + DestFile;
+			dest = tempBuildFolderFullPath + sep + "WEB-INF" + sep + "lib" + sep + DestFile;
 
 			try {
 				copyFiles(src, dest);
@@ -614,14 +605,12 @@ public class TomcatWarBuilder {
 
 		String sep = getPathsFileSeparator();
 
-		String classpathfilelocation = cData.projectDirectory + sep
-				+ ".classpath";
+		String classpathfilelocation = data.projectDirectory + sep + ".classpath";
 
 		File file = new File(classpathfilelocation);
 
 		if (file.isFile() == false) {
-			System.out
-					.println("Can't read the .classpath file or it does not exist");
+			System.out.println("Can't read the .classpath file or it does not exist");
 			System.exit(1);
 		}
 
@@ -633,15 +622,14 @@ public class TomcatWarBuilder {
 	/**
 	 * get jar files location
 	 * 
-	 * TODO - don't know how to process dir constant JUNIT_HOME, need to get
-	 * eclipse enviro var, do this later "/"
-	 * 
-	 * TODO - path seperator in regexp
 	 */
 	private void getClassLibs() {
+		
+		String sep = getPathsFileSeparator();
 
 		// kind=['|\"]lib['|\"].*?
-		Pattern p = Pattern.compile("path=['\"](/.*?jar)['\"]");
+		String re = "path=['\"](" + sep + ".*?jar)['\"]";
+		Pattern p = Pattern.compile(re);
 		Matcher matcher = p.matcher(classFileContents);
 
 		// Count the matches first
@@ -690,9 +678,8 @@ public class TomcatWarBuilder {
 			boolean has = jars[i].contains("gwt-user.jar");
 			if (has == true) {
 				if (AddGwtServlet == true) {
-					System.out
-							.println("ClassLibs Changing gwt-user.jar to gwt-servlet.jar");
-					jars[i] = GWT_HOME + "gwt-servlet.jar";
+					System.out.println("ClassLibs Changing gwt-user.jar to gwt-servlet.jar");
+					jars[i] = gwtHome + "gwt-servlet.jar";
 				} else {
 					jars[i] = null;
 				}
@@ -712,12 +699,10 @@ public class TomcatWarBuilder {
 		String projectName = projectDirs[depth];
 
 		projectGWTxmlFile = projectName + ".gwt.xml";
-		projectGWTxmlFileLocation = cData.projectDirectory + sep + "src"
-				+ projectDir + sep + projectGWTxmlFile;
+		projectGWTxmlFileLocation = data.projectDirectory + sep + "src" + projectDir + sep + projectGWTxmlFile;
 
 		System.out.println("ProjectGWTxmlFile: " + projectGWTxmlFile);
-		System.out.println("ProjectGWTxmlFileLocation: "
-				+ projectGWTxmlFileLocation);
+		System.out.println("ProjectGWTxmlFileLocation: " + projectGWTxmlFileLocation);
 	}
 
 	/**
@@ -730,12 +715,13 @@ public class TomcatWarBuilder {
 		File file = new File(projectGWTxmlFileLocation);
 		projectGWTxmlFileContents = readFile(file);
 
-		System.out.println("ProjectGWTxmlFileContents: "
-				+ projectGWTxmlFileContents);
-
+		if (projectGWTxmlFileContents == null) {
+			System.out.println("Could not read project.gwt.xml file. (" + projectGWTxmlFileLocation + ")");
+		}
+		System.out.println("ProjectGWTxmlFileContents: " + projectGWTxmlFileContents);
+		
 		if (projectGWTxmlFileContents.length() == 0) {
-			System.out
-					.println("Could not read your GWT XML file. debug: readProjectXMLFileContents");
+			System.out.println("Could not read your GWT XML file. debug: readProjectXMLFileContents");
 			System.exit(1);
 		}
 
@@ -743,8 +729,6 @@ public class TomcatWarBuilder {
 
 	/**
 	 * get servlet class
-	 * 
-	 * TODO - add os file path seperator to regexp
 	 * 
 	 */
 	private void getServletClassFromXMLFile() {
@@ -765,17 +749,13 @@ public class TomcatWarBuilder {
 	/**
 	 * get servlet path
 	 * 
-	 * 
 	 * This is the url-pattern, or rpcServicePath. 
 	 * Or servlet context that redirects to the rpc class
-	 * 
-	 * TODO - test fix on windows
 	 */
 	private void getServeletUrlPath() {
 
 		// entry-point class
-		Pattern p = Pattern
-				.compile("<entry-point.*?path.*?=.*?['\"](.*?)['\"].*?>");
+		Pattern p = Pattern.compile("<entry-point.*?path.*?=.*?['\"](.*?)['\"].*?>");
 		Matcher m = p.matcher(projectGWTxmlFileContents);
 		boolean found = m.find();
 
@@ -788,24 +768,31 @@ public class TomcatWarBuilder {
 	}
 
 	/**
-	 * get the directory structure - this wont work with a project named with 1
+	 * get the directory structure
 	 * name and no . in it
 	 * 
-	 * TODO - add logic to use single name for class like "class" and not just
 	 * "com.domain.gwt.class.client.class"
 	 */
 	private void getProjectDirectoryFromClassName() {
 
-		String[] dirs = projectModuleName.split("\\.");
+		String sep = getPathsFileSeparator();
+		
+		String[] dirs = null;
+		if (classPackage.contains(".")) {
+			dirs = classPackage.split("\\.");
+		} else {
+			dirs[0] = new String(classPackage);
+		}
 
 		projectDirs = dirs; // can use this else where
 
 		String dir = "";
 		for (int i = 0; i < (dirs.length - 1); i++) {
-			dir = dir + "/" + dirs[i].toString();
+			dir = dir + sep + dirs[i].toString();
 		}
 
 		projectDir = dir;
+		
 		System.out.println("ProjectDir: " + dir);
 	}
 
@@ -833,9 +820,8 @@ public class TomcatWarBuilder {
 	}
 
 	/**
-	 * get the server class name server/"ServiceImpl"
+	 * get the server class name "ServiceImpl"
 	 * 
-	 * TODO - add logic to use single name for class like "class" and not just
 	 * "com.domain.gwt.class.client.class"
 	 */
 	private void getServerClassNameIMPL() {
@@ -844,14 +830,13 @@ public class TomcatWarBuilder {
 			return;
 		}
 
-		String[] dirs = servletClassName.split("\\.");
-
-		// ServerProjectDirs = dirs; //can use this else where
-
-		/*
-		 * not useing for now String dir = ""; for (int i=0; i <
-		 * (dirs.length-1); i++) { dir = dir + "/" + dirs[i].toString(); }
-		 */
+		// split the class into dir
+		String[] dirs = null;
+		if (servletClassName.contains(".")) {
+			dirs = servletClassName.split("\\.");
+		} else {
+			dirs[0] = new String(servletClassName);
+		}
 
 		servletClassNameIMPL = dirs[dirs.length - 1].toString();
 
@@ -860,52 +845,53 @@ public class TomcatWarBuilder {
 
 	/**
 	 * get the package name (and class) that the src files are in
-	 * com.tribling.gwt.test.client.MyProject
+	 * com.tribling.gwt.test.client.MyProject or com.tribling.gwt.test.client.MyProject;
+	 * 
 	 */
 	private void getProjectClassName() {
 
-		Pattern p = Pattern.compile("\"\\$@\"\040(.*?);");
+		//Pattern p = Pattern.compile("\"\\$@\"\040(.*?);"); 
+		Pattern p = Pattern.compile(".*\040(.*?);|.*\040(.*?)");
 		Matcher m = p.matcher(projectCompileFileContents);
 		boolean found = m.find();
 
 		if (found == true) {
-			projectModuleName = m.group(1);
+			classPackage = m.group(1);
 		}
 
 		// debug
-		System.out.println("ProjectClassName: " + projectModuleName);
+		System.out.println("classPackage: " + classPackage);
+		System.out.println("");
 	}
 
 	/**
 	 * get the location for the gwt files from eclipse class path contents
 	 * 
-	 * errors when the class path is relative.
-	 * 
-	 * TODO - look up the relative path TODO - add get os file path seperator
-	 * for regexp
-	 * 
+	 * TODO - errors when the class path is relative
 	 */
-	private void getGWT_HOME() {
+	private void getGwtHome() {
 
+		String sep = getPathsFileSeparator();
+		
 		if (path_GWT_HOME_Manual != null) {
-			GWT_HOME = path_GWT_HOME_Manual;
+			gwtHome = path_GWT_HOME_Manual;
 			return;
 		}
-
-		Pattern p = Pattern.compile(":(/.*)gwt-user.jar:");
+		
+		String re = ":(" + sep + ".*)gwt-user.jar:";
+		Pattern p = Pattern.compile(re);
 		Matcher m = p.matcher(projectCompileFileContents);
 		boolean found = m.find();
 
 		if (found == true) {
-			GWT_HOME = m.group(1);
+			gwtHome = m.group(1);
 		} else {
-			System.out
-					.println("Can't find GWT_Home Directory, in the ProjectCompileFileContents Classpath. debug getClassPathContents()");
+			System.out.println("Can't find gwtHome Directory, in the ProjectCompileFileContents Classpath. debug getClassPathContents()");
 			System.exit(1);
 		}
 
 		// debug
-		System.out.println("GWT_HOME dir: " + GWT_HOME);
+		System.out.println("gwtHome dir: " + gwtHome);
 	}
 
 	/**
@@ -915,7 +901,7 @@ public class TomcatWarBuilder {
 
 		String sep = getPathsFileSeparator();
 
-		String directory = cData.projectDirectory + sep + projectCompileFile;
+		String directory = data.projectDirectory + sep + projectCompileFile;
 		File ProjectCompileFile = new File(directory);
 
 		projectCompileFileContents = readFile(ProjectCompileFile);
@@ -933,7 +919,7 @@ public class TomcatWarBuilder {
 
 		String sep = getPathsFileSeparator();
 
-		String Dir = cData.projectDirectory + sep + projectGWTxmlFile;
+		String Dir = data.projectDirectory + sep + projectGWTxmlFile;
 		File ProjectCompileFile = new File(Dir);
 
 		projectGWTxmlFileContents = readFile(ProjectCompileFile);
@@ -948,12 +934,11 @@ public class TomcatWarBuilder {
 		String FileList[];
 
 		// ls the directory for files
-		file = new File(cData.projectDirectory);
+		file = new File(data.projectDirectory);
 		FileList = file.list();
 
 		if (FileList == null) {
-			System.out
-					.println("Error reading current directory. debug: checkProjectListForCompile()");
+			System.out.println("Error reading current directory. debug: checkProjectListForCompile()");
 			System.exit(1);
 		}
 
@@ -974,9 +959,6 @@ public class TomcatWarBuilder {
 		for (int i = 0; i <= FileList.length; i++) {
 			file = FileList[i];
 			found = checkForCompile(file);
-
-			// debug output
-			// System.out.println("Checking for compile: inFile: "+ file);
 
 			if (found == true) {
 				projectCompileFile = file;
@@ -1003,8 +985,6 @@ public class TomcatWarBuilder {
 		Matcher m = p.matcher(file);
 		found = m.find();
 
-		// System.out.println("FOUND?" + found);
-
 		return found;
 	}
 
@@ -1016,15 +996,15 @@ public class TomcatWarBuilder {
 	 */
 	private boolean createFolder(String Dir) {
 		boolean status = false;
-		String NewDir = null;
+		String newDir = null;
 
 		if (Dir != null) {
-			NewDir = Dir;
-			status = new File(NewDir).mkdir();
+			newDir = Dir;
+			status = new File(newDir).mkdir();
 		}
 
 		// debug
-		System.out.println("Created Production Dir: " + NewDir);
+		System.out.println("Created Production Dir: " + newDir);
 
 		return status;
 	}
@@ -1042,7 +1022,6 @@ public class TomcatWarBuilder {
 		}
 
 		String sFile = null;
-
 		try {
 			FileReader input = new FileReader(file);
 			BufferedReader bufRead = new BufferedReader(input);
@@ -1057,24 +1036,17 @@ public class TomcatWarBuilder {
 
 			// Read through file one line at time. Print line # and line
 			while (line != null) {
-
 				line = bufRead.readLine();
-
 				if (line != null) {
 					sFile = sFile + line;
 				}
-
 				count++;
 			}
-
 			bufRead.close();
 
 		} catch (ArrayIndexOutOfBoundsException e) {
-
 			System.out.println("Usage: java ReadFile filename\n");
-
 		} catch (IOException e) {
-			// trace the error
 			e.printStackTrace();
 		}
 
@@ -1105,10 +1077,6 @@ public class TomcatWarBuilder {
 				String dest1 = dest.getAbsolutePath() + "/" + list[i];
 
 				if (list[i].toString().matches(".svn") != true) { // skip .svn
-					// dirs
-					// debug
-					// System.out.println("copying: " + src1 + " to " + dest1);
-
 					copyFiles(src1, dest1);
 				}
 			}
@@ -1144,8 +1112,7 @@ public class TomcatWarBuilder {
 			boolean success = file.createNewFile();
 			if (success) {
 				// Write to file
-				BufferedWriter out = new BufferedWriter(new FileWriter(File,
-						true));
+				BufferedWriter out = new BufferedWriter(new FileWriter(File,true));
 				out.write(Contents);
 				out.close();
 
@@ -1171,7 +1138,7 @@ public class TomcatWarBuilder {
 		System.out.println("Zipping up archive. WAR file generation");
 
 		String zipFile = getWarFilePathAndName();
-		String zipUp = cData.tempBuildFolderName;
+		String zipUp = tempBuildFolderFullPath;
 
 		System.out.println("WarZipFile: " + zipFile + " ZipUpDir:" + zipUp);
 
@@ -1179,8 +1146,7 @@ public class TomcatWarBuilder {
 		try {
 			file = new FileOutputStream(zipFile);
 		} catch (FileNotFoundException e) {
-			System.out
-					.println("Could not make the zip file. debug: zipProject");
+			System.out.println("Could not make the zip file. debug: zipProject");
 			e.printStackTrace();
 			System.exit(1);
 		}
@@ -1202,11 +1168,12 @@ public class TomcatWarBuilder {
 	 * @return
 	 */
 	private String getWarFilePathAndName() {
+		String sep = getPathsFileSeparator();
 		String warFile = null;
-		if (cData.tempWarFileLocation == null) {
-			warFile = cData.projectDirectory + "/" + projectName + ".war";
+		if (data.tempWarFileLocation == null) {
+			warFile = data.projectDirectory + sep + projectName + ".war";
 		} else {
-			warFile = cData.tempWarFileLocation + "/" + projectName + ".war";
+			warFile = data.tempWarFileLocation + sep + projectName + ".war";
 		}
 		return warFile;
 	}
@@ -1218,10 +1185,10 @@ public class TomcatWarBuilder {
 	 */
 	private String getWarDir() {
 		String warDir = null;
-		if (cData.tempWarFileLocation == null) {
-			warDir = cData.projectDirectory;
+		if (data.tempWarFileLocation == null) {
+			warDir = data.projectDirectory;
 		} else {
-			warDir = cData.tempWarFileLocation;
+			warDir = data.tempWarFileLocation;
 		}
 		return warDir;
 	}
@@ -1231,16 +1198,10 @@ public class TomcatWarBuilder {
 	 * 
 	 * @param dir2zip
 	 * @param zos
-	 * 
-	 *            TODO - skip .svn files
 	 */
 	private void zipDir(String dir2zip, ZipOutputStream zos) {
 		try {
-			// create a new File object based on the directory we have to zip
-			// File
 			File zipDir = new File(dir2zip);
-
-			// get a listing of the directory content
 			String[] dirList = zipDir.list();
 
 			byte[] readBuffer = new byte[2156];
@@ -1248,15 +1209,10 @@ public class TomcatWarBuilder {
 
 			// loop through dirList, and zip the files
 			for (int i = 0; i < dirList.length; i++) {
-
 				File f = new File(zipDir, dirList[i]);
-
 				if (f.isDirectory()) {
-					// if the File object is a directory, call this
-					// function again to add its content recursively
 					String filePath = f.getPath();
 					zipDir(filePath, zos);
-					// loop again
 					continue;
 				}
 
@@ -1265,9 +1221,11 @@ public class TomcatWarBuilder {
 				FileInputStream fis = new FileInputStream(f);
 
 				// create a new zip entry
-
 				String filePath = f.getPath();
-				filePath = getZipPath(filePath); // change the path to relative
+				
+				// change the path to relative
+				filePath = getZipPath(filePath); 
+				
 				// to the production dir
 				ZipEntry anEntry = new ZipEntry(filePath);
 
@@ -1282,36 +1240,40 @@ public class TomcatWarBuilder {
 				fis.close();
 			}
 		} catch (Exception e) {
-			System.out
-					.println("Could not do the zipDir process. debug zipDir()");
-			System.exit(1);
+			//System.out.println("Could not do the zipDir process. debug zipDir()");
+			//System.exit(1);
 		}
 	}
 
 	/**
 	 * Figure out the build path, so we can set the zip archive to relative path
 	 * 
-	 * TODO add os file path seperator
+	 * TODO - veryify name change works
 	 * 
-	 * @param Path
+	 * @param path
 	 * @return
 	 */
-	private String getZipPath(String Path) {
+	private String getZipPath(String path) {
 
-		String path = null;
-
+		String sep = getPathsFileSeparator();
+		
+		String tmp = data.tempBuildFolderName + sep; 
+		
 		// /.*production/
-		Pattern p = Pattern.compile("/.*production/(.*)");
-		Matcher m = p.matcher(Path);
+		String re = ".*" + tmp + "(.*)";
+		Pattern p = Pattern.compile(re);
+		Matcher m = p.matcher(path);
 		boolean found = m.find();
 
+		String newPath = "";
 		if (found == true) {
-			path = m.group(1);
+			newPath = m.group(1);
 		}
-
+		
 		// debug
-		System.out.println("Zip path: " + path);
-		return path;
+		System.out.println("Copying to zip archive (war): " + newPath);
+		
+		return newPath;
 	}
 
 	/**
@@ -1321,18 +1283,18 @@ public class TomcatWarBuilder {
 
 		String sep = getPathsFileSeparator();
 
-		if (cData.renameWarFile == false && cData.renameWarFileNameTo != null) {
+		if (data.renameWarFile == false && data.renameWarFileNameTo != null) {
 			return;
 		}
 
-		if (cData.renameWarFileNameTo.equals("")) {
+		if (data.renameWarFileNameTo.equals("")) {
 			System.out.println("renameWarFielNameTo is null, add that field");
 		}
 
 		String warFile = getWarFilePathAndName();
 		String warDir = getWarDir();
 
-		String newName = warDir + sep + cData.renameWarFileNameTo;
+		String newName = warDir + sep + data.renameWarFileNameTo;
 
 		File file = new File(warFile);
 		File file2 = new File(newName);
@@ -1351,10 +1313,10 @@ public class TomcatWarBuilder {
 	 * @return
 	 */
 	private String getPathsFileSeparator() {
-		String s = "";
-		if (cData.os == 0) {
+		String s = "/";
+		if (data.os == 0) {
 			s = "/";
-		} else if (cData.os == 1) {
+		} else if (data.os == 1) {
 			s = "\\";
 		}
 
@@ -1372,10 +1334,9 @@ public class TomcatWarBuilder {
 	private void compileProject() {
 
 		String sep = getPathsFileSeparator();
-		String runPath = cData.projectDirectory + sep + projectCompileFile;
+		String runPath = data.projectDirectory + sep + projectCompileFile;
 
-		System.out
-				.println("Compiling gwt application - This may take a minute to complete! Be patient.");
+		System.out.println("Compiling gwt application - This may take a minute to complete! Be patient.");
 
 		try {
 			Runtime rt = Runtime.getRuntime();
@@ -1383,8 +1344,7 @@ public class TomcatWarBuilder {
 			proc.waitFor();
 			// TODO - show wait - need a worker
 		} catch (Throwable t) {
-			System.out
-					.println("If you get a permission error on linux, 'chmod 777 project-compile'");
+			System.out.println("If you get a permission error on linux, 'chmod 777 project-compile'");
 			t.printStackTrace();
 			System.exit(1);
 		}
