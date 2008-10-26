@@ -39,6 +39,8 @@ public class Run_WarCompile_RpcBasic {
 		// Ask for credentials to use application 
 		data.askForLogin = false;
 		
+		data.deleteTempFolder = false;
+		
 		/********** OPTIONAL ***********/
 		
 		

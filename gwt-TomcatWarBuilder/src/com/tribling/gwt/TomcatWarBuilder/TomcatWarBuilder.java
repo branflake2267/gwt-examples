@@ -765,19 +765,17 @@ public class TomcatWarBuilder {
 	/**
 	 * get servlet path
 	 * 
-	 * TODO - fix this Brandon - need to correct regexp!!!!!!!
 	 * 
 	 * This is the url-pattern, or rpcServicePath. 
 	 * Or servlet context that redirects to the rpc class
 	 * 
-	 * THis is broken, will fix tonight
-	 * 
+	 * TODO - test fix on windows
 	 */
 	private void getServeletUrlPath() {
 
 		// entry-point class
 		Pattern p = Pattern
-				.compile("<entry-point.*?class.*?=.*?['\"](.*?)['\"].*?>");
+				.compile("<entry-point.*?path.*?=.*?['\"](.*?)['\"].*?>");
 		Matcher m = p.matcher(projectGWTxmlFileContents);
 		boolean found = m.find();
 
