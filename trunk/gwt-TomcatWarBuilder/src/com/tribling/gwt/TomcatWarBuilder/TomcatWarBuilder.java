@@ -928,6 +928,8 @@ public class TomcatWarBuilder {
 
 	/**
 	 * get file list in the directory (find project-compile)
+	 * 
+	 * looking for project-compile, which builds the project from console
 	 */
 	private void checkProjectListForCompile() {
 		File file;
@@ -935,8 +937,13 @@ public class TomcatWarBuilder {
 
 		// ls the directory for files
 		file = new File(data.projectDirectory);
+		if (file.isDirectory() == false) {
+			System.out.println("Your data.ProjectDirectory is not a directory or does not exist. (debug: " + data.projectDirectory + ")");
+			System.out.println("Make sure you have the correct path");
+			System.exit(1);
+		}
+		
 		FileList = file.list();
-
 		if (FileList == null) {
 			System.out.println("Error reading current directory. debug: checkProjectListForCompile()");
 			System.exit(1);
@@ -1085,7 +1092,7 @@ public class TomcatWarBuilder {
 			FileInputStream fin = new FileInputStream(src);
 			FileOutputStream fout = new FileOutputStream(dest);
 
-			System.out.println("Copying File src:" + src + " dest:" + dest);
+			System.out.println("Copying file src:" + src + " dest:" + dest);
 
 			int c;
 			while ((c = fin.read()) >= 0)
