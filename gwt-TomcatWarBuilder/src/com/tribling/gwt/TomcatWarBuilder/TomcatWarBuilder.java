@@ -18,6 +18,10 @@ import java.util.zip.ZipOutputStream;
 /**
  * build the WAR for Apache Tomcat servlet deployment
  * 
+ * 
+ * BROKEN at moment
+ * 
+ * 
  * @author branflake2267 - Brandon Donnelson
  * 
  *         Watch Console for output. Vars will be outputed there.
