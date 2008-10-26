@@ -18,9 +18,15 @@ import java.util.zip.ZipOutputStream;
 /**
  * build the WAR for Apache Tomcat servlet deployment
  * 
+ * This code works great for building your gwt projects and deploying them with Tomcat manager
+ * check http://gwt-examples.googlecode.com for updates.
  * 
- * BROKEN at moment
+ * http://localhost:8081/manager/html - upload your file and wala, your done
+ * In my opinion using the Tomcat manager is so fast and efficient to deploy 
+ * and application, I'll never change to another platform.
  * 
+ * Built for linux and windows compiling, haven't had a chance to test this on a mac, 
+ * but should work the same as the linux version
  * 
  * @author branflake2267 - Brandon Donnelson
  * 
@@ -28,8 +34,8 @@ import java.util.zip.ZipOutputStream;
  * 
  * 
  * 
- * Wants In Future TODO - deploy to tomcat automatically TODO - fix
- * gwt-files classpath in project-compile after import?
+ * Wants In Future TODO - deploy to tomcat automatically 
+ * TODO - fix gwt-files classpath in project-compile after import of svn project?
  * 
  * Documentation http://tomcat.apache.org/tomcat-6.0-doc/index.html
  */
@@ -310,10 +316,15 @@ public class TomcatWarBuilder {
 	/**
 	 * add security to web.xml file - Need to login to view servlet application
 	 * 
-	 * @return Roles are in /etc/tomcat5.5/tomcat-users.xml - roles are like
-	 *         groups - user needs to be apart of role You can change role below
-	 *         to a different role in the list, as long as the users are part of
-	 *         that role that want to login
+	 * Roles are in /etc/tomcat5.5/tomcat-users.xml - roles are like
+	 * groups - user needs to be apart of role. You can change the role below
+	 * to a different role in the list, as long as the users are part of
+	 * that role that want to login
+	 * 
+	 * Recommendation, after setting youself up as a user in tomcat-users.xml
+	 * use the http://localhost:8081/admin (tomcat admin) to administor the tomcat configuration
+	 * 
+	 * @return 
 	 */
 	private String createWebXMLFileContents_Security() {
 		String WebXML = ""
@@ -328,17 +339,17 @@ public class TomcatWarBuilder {
 				+ "\t<role-name>admin</role-name>\n"
 				+ "\t</auth-constraint>\n"
 				+ "</security-constraint>\n\n"
-				+
+				
 
-				"<login-config>\n"
+				+ "<login-config>\n"
 				+ "\t<auth-method>BASIC</auth-method>\n"
-				+ "\t<realm-name>Your Realm Name</realm-name>\n"
+				+ "\t<realm-name>Your Realm Name</realm-name>\n" // something a person will recognise when the credentials question pops up
 				+ "</login-config>\n\n"
-				+
+				
 
-				"<security-role>\n"
+				+ "<security-role>\n"
 				+ "\t<description>The role that is required to log in to the Manager Application</description>\n"
-				+ "\t<role-name>admin</role-name>\n" + "</security-role>\n\n";
+				+ "\t<role-name>admin</role-name>\n" + "</security-role>\n\n"; // this role has to exist in tomcat-users.xml! use localhost:8080/admin to mange it.
 
 		if (data.askForLogin == true) {
 			return WebXML;
@@ -348,7 +359,8 @@ public class TomcatWarBuilder {
 	}
 
 	/**
-	 * get todays date
+	 * get todays date for adding to the project name in the xml file
+	 * gives a bearing of when we built this project 
 	 * 
 	 * @return
 	 */
@@ -360,7 +372,6 @@ public class TomcatWarBuilder {
 			now = date.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
-			// timezone issue come up?
 			now = " getDate(); error ";
 		}
 
@@ -368,7 +379,9 @@ public class TomcatWarBuilder {
 	}
 
 	/**
-	 * create an index page for easy module access
+	 * create an index page for easy application access, if not directly going to app. 
+	 * This can be used for quickly testing, especially if your using your application as an include
+	 * on another site.
 	 * 
 	 * @return
 	 */
@@ -1322,6 +1335,7 @@ public class TomcatWarBuilder {
 	 * @return
 	 */
 	private String getPathsFileSeparator() {
+		
 		String s = "/";
 		if (data.os == 0) {
 			s = "/";
@@ -1332,6 +1346,8 @@ public class TomcatWarBuilder {
 		// debug
 		if (s.length() == 0) {
 			System.out.println("no os was selected");
+			System.out.println("select an os number 0 or 1, this determines what type of file system exists.");
+			System.exit(1);
 		}
 
 		return s;
