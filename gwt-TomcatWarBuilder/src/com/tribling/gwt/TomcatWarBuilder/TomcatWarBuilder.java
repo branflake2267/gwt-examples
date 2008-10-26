@@ -1259,7 +1259,7 @@ public class TomcatWarBuilder {
 		
 		String tmp = data.tempBuildFolderName + sep; 
 		
-		// /.*production/
+		// production/(file)
 		String re = ".*" + tmp + "(.*)";
 		Pattern p = Pattern.compile(re);
 		Matcher m = p.matcher(path);
