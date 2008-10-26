@@ -602,7 +602,7 @@ public class TomcatWarBuilder {
 
 		String sep = getPathsFileSeparator();
 		
-		System.out.println("Copying Jars" + classLibs.length);
+		System.out.println("Copying Jars" + classLibs.length + " (Using .classpath for locating jars)");
 		
 		String src = null;
 		String dest = null;
@@ -679,10 +679,10 @@ public class TomcatWarBuilder {
 		}
 
 		// need gwt-servlet?? is there an rpc method? -lets do it by default
-		boolean AddGwtServlet = true;
+		boolean addGwtServlet = true;
 		
 		// get rid of gwt-user.jar - won't need it for the server side
-		jars = deleteGwtUserJar(jars, AddGwtServlet);
+		jars = deleteGwtUserJar(jars, addGwtServlet);
 		
 		classLibs = jars;
 	}
@@ -1373,8 +1373,9 @@ public class TomcatWarBuilder {
 			Runtime rt = Runtime.getRuntime();
 			Process proc = rt.exec(runPath);
 			proc.waitFor();
-			// TODO - show wait
+			// TODO - show wait - need a worker
 		} catch (Throwable t) {
+			System.out.println("If you get a permission error on linux, 'chmod 777 project-compile'");
 			t.printStackTrace();
 			System.exit(1);
 		}
