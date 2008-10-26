@@ -1339,6 +1339,8 @@ public class TomcatWarBuilder {
 
 	/**
 	 * compile the eclipse project first
+	 * 
+	 * TODO - change permissions on folder if on os 0, so to not have to worry about manual exec permission
 	 */
 	private void compileProject() {
 
@@ -1350,10 +1352,10 @@ public class TomcatWarBuilder {
 		try {
 			Runtime rt = Runtime.getRuntime();
 			Process proc = rt.exec(runPath);
-			proc.waitFor();
-			// TODO - show wait - need a worker
+			proc.waitFor(); // TODO - show wait - need a worker
 		} catch (Throwable t) {
 			System.out.println("If you get a permission error on linux, 'chmod 777 project-compile'");
+			System.out.println("Was not able to exec the project-compile file to compile project");
 			t.printStackTrace();
 			System.exit(1);
 		}
