@@ -29,9 +29,6 @@ public class WarCompileData {
 	// temp build folder
 	public String tempBuildFolderName = "production";
 	
-	// go to application instead of going to index.jsp true is recommended
-	public boolean  goDirectlyToApplication = true;
-	
 	// Ask for credentials to use gwt application 
 	public boolean askForLogin = false;
 	
@@ -44,6 +41,11 @@ public class WarCompileData {
 
 	// after all done - delete the temp folder
 	public boolean deleteTempFolder = true; 
+	
+	// go to application instead of going to index.jsp - true is recommended
+	// you can set this to false if you want, when you intend to include your compilation of code to another site,
+	// although, you can directly copy the code from the www directory and include it in your sites setup
+	public boolean  goDirectlyToApplication = true;
 	
 	/********** OPTIONAL ***********/
 }
