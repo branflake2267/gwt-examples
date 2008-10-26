@@ -3,13 +3,7 @@ package com.tribling.gwt.TomcatWarBuilder.run;
 import com.tribling.gwt.TomcatWarBuilder.TomcatWarBuilder;
 import com.tribling.gwt.TomcatWarBuilder.WarCompileData;
 
-/**
- * this is an example compile war setup setup
- * 
- * @author branflake2267
- *
- */
-public class Run_WarCompile_Example {
+public class Run_WarBuilder_RpcBasic {
 
 	/**
 	 * run this from console or debug configuration in eclipse
@@ -22,11 +16,12 @@ public class Run_WarCompile_Example {
 		WarCompileData data = new WarCompileData();
 		
 		// choose your operating system
-		// [0=linux, 1=windows]
+		// [0=linux, 1=windows]		
+		
 		data.os = 0;
 		
 		// project directory (examples below)
-		data.projectDirectory = "/home/branflake2267/workspace/gwt-SandBox";
+		data.projectDirectory = "/home/branflake2267/workspace/gwt-test-RPC-basic";
 
 		// rename war file to [ROOT.war | project.war]
 		// ROOT.war is the virtual host root servlet context "/" 
@@ -43,6 +38,9 @@ public class Run_WarCompile_Example {
 		
 		// Ask for credentials to use application 
 		data.askForLogin = false;
+		
+		data.deleteTempFolder = false;
+		
 		/********** OPTIONAL ***********/
 		
 		
@@ -51,5 +49,5 @@ public class Run_WarCompile_Example {
 		build.setTomcatCompileData(data);
 		build.start();
 	}
-	
+
 }
