@@ -67,25 +67,35 @@ public class TomcatWarBuilder {
 	private String[] classLibs;
 	private String webXML;
 
-	// show wait while compiling
-	// TODO - haven't added this yet, 
-	// will add a worker to compile and loop for watching until its done
-	private boolean wait = false;
-
 	// flag notating the war compile data was set
 	private boolean setData = false;
 
 	// variables that control the compile
 	private WarBuilderData data = null;
 
-	// temp folder name
+	// temp folder name with full path to it
 	private String tempBuildFolderFullPath;
+	
+	// show wait while compiling
+	// TODO - haven't added this yet, 
+	// will add a worker to compile and loop for watching until its done
+	private boolean wait = false;
 
 	/**
 	 * constructor - make the instance
 	 */
 	public void TomCatWarBuilder() {
 		// nothing to do yet
+	}
+	
+	/**
+	 * set the war builder data first, to control the build
+	 * 
+	 * @param data
+	 */
+	public void setTomcatCompileData(WarBuilderData data) {
+		setData = true;
+		this.data = data;
 	}
 
 	/**
@@ -98,107 +108,36 @@ public class TomcatWarBuilder {
 			System.out.println("set the WarCompileData first");
 			System.exit(1);
 		}
-		startProcess();
+		
+		// get the variables need to process compile and build war
+		setupProjectVars();
+		
+		// Compile Project
+		compileProject();
+
+		// build the war
+		buildWar();
+		
+		System.out.println("");
+		System.out.println("All Done!");
 	}
 
 	/**
-	 * set the vars the control the war build - set this first
-	 * 
-	 * @param data
+	 * find the compile file and get the vars starting with it
 	 */
-	public void setTomcatCompileData(WarBuilderData data) {
-		setData = true;
-		this.data = data;
-	}
-
-	/**
-	 * TODO save this for later - then get rid of
-	 */
-	private void old() {
-
-		// project directory (examples below)
-		data.projectDirectory = "/home/branflake2267/workspace/gwt-SandBox";
-		// ProjectDirectory = "/home/branflake2267/workspace/gwt-GV";
-		// ProjectDirectory = "/home/branflake2267/workspace/gwt-Feedback";
-		// ProjectDirectory =
-		// "/home/branflake2267/workspace/gwt-test-DisplayDate";
-		// ProjectDirectory =
-		// "/home/branflake2267/workspace/gwt-test-Clicklistener";
-		// ProjectDirectory = "/home/branflake2267/workspace/gwt-test-RPC-adv";
-		// ProjectDirectory =
-		// "/home/branflake2267/workspace/gwt-test-Login-Manager";
-		// ProjectDirectory = "/home/branflake2267/workspace/gwt-Calendar";
-		// ProjectDirectory =
-		// "/home/branflake2267/workspace/gwt-test-UrchinTracker";
-		// ProjectDirectory = "/home/branflake2267/workspace/gwt-test-History";
-		// ProjectDirectory =
-		// "/home/branflake2267/workspace/gwt-test-RichTextEditor";
-		// ProjectDirectory =
-		// "/home/branflake2267/workspace/gwt-test-MySQLConn";
-
-	}
-
-	/**
-	 * process everything - and build war archive
-	 * 
-	 * @throws Exception
-	 */
-	private void startProcess() {
-
-		// testing - todo
-		getCurrentProjectDirectory();
-
-		// set Temp Build Folder
-		setTempBuildFolder(); // use gwt-project/production for now.
+	private void setupProjectVars() {
 
 		// find file project-compile to read its contents
-		checkProjectListForCompile();
+		checkProjectListForCompileFile();
 
 		// read the compile file ./project.compile
 		readProjectCompileFile();
 
 		// figure Compile Vars
 		getProjectVars();
-
-		// Compile Project
-		compileProject();
-
-		/* START WAR BUILD */
-
-		// delete previous production build
-		deleteProductionFolder(0);
-
-		// create directories for production build
-		createDirectoriesForBuild();
-
-		// create web xml file
-		createWebXMLFile();
-
-		// create index.jsp page
-		createIndexPage();
-
-		// copy www, jars, classes to production folder
-		copyFilesToProductionBuildFolder();
-
-		// zip into war file
-		zipProject();
-
-		// rename the war file to desired name
-		renameWar();
-
-		// TODO - upload to production/design tomcat server
-		//http://localhost:8080/manager/deploy?path=/footoo&war=file:/path/to/foo
-
-		// delete production folder when done
-		if (data.deleteTempFolder == true) {
-			deleteProductionFolder(1);
-		}
-
-		// Done with everything
-		System.out.println("");
-		System.out.println("All Done!");
+		
 	}
-
+	
 	/**
 	 * get project Vars
 	 * 
@@ -206,6 +145,9 @@ public class TomcatWarBuilder {
 	 */
 	private void getProjectVars() {
 
+		// set full path to tmp folder to work in
+		setTempBuildFolder(); 
+		
 		// GWT_HOME location
 		getGwtHome();
 
@@ -238,6 +180,51 @@ public class TomcatWarBuilder {
 
 		// get class libs
 		getClassLibs();
+		
+		System.out.println("Done getting vars.");
+	}
+	
+	/**
+	 * build WAR
+	 * 
+	 * summary
+	 * - copy tmp files from production to zip
+	 * - create web.xml file for guiding the servlet
+	 * - make an index page for application
+	 * 
+	 */
+	private void buildWar() {
+		
+		// delete previous production build
+		deleteProductionFolder(0);
+
+		// create directories for production build
+		createDirectoriesForBuild();
+
+		// create web xml file
+		createWebXMLFile();
+
+		// create index.jsp page
+		createIndexPage();
+
+		// copy www, jars, classes to production folder
+		copyFilesToProductionBuildFolder();
+
+		// zip into war file
+		zipProject();
+
+		// rename the war file to desired name
+		renameWar();
+
+		// TODO - upload to production/design tomcat server
+		//http://localhost:8080/manager/deploy?path=/footoo&war=file:/path/to/foo
+
+		// delete production folder when done
+		if (data.deleteTempFolder == true) {
+			deleteProductionFolder(1);
+		}
+
+		System.out.println("Done Building WAR.");
 	}
 
 	/**
@@ -299,7 +286,7 @@ public class TomcatWarBuilder {
 			xml += "</servlet>\n\n";
 			
 			// servlet url to get to class path
-			xml += "<!-- url/path to servlet class -->\n";
+			xml += "<!-- url/path to servlet class and mapping -->\n";
 			xml +=  "<servlet-mapping>\n";
 				xml += "\t<servlet-name>" + projectName + "</servlet-name>\n";
 				xml += "\t<url-pattern>" + rpcServicePath + "</url-pattern>\n";
@@ -401,23 +388,23 @@ public class TomcatWarBuilder {
 		String linkToApplication = projectName + ".html";
 		String linkToApplicationDescription = linkToApplication + " - goes to your gwt application";
 
-		String homePage = "";
-		homePage += "<!doctype html public \"-//w3c//dtd html 4.0 transitional//en\">\n";
-		homePage += "<html>\n";
-		homePage += "<head>";
-		homePage += "<title>GWT Application HomePage - " + projectName + "</title>";
-		homePage += "</head>";
-		homePage += "<body>\n";
-		homePage += "";
-		homePage +="\t<a href=\"";
-		homePage +=linkToApplication;
-		homePage +="\">";
-		homePage +=linkToApplicationDescription;
-		homePage +="</a> Quick link to your gwt module.\n";
-		homePage +="</body>\n";
-		homePage +="</html>\n";
+		String html = "";
+		html += "<!doctype html public \"-//w3c//dtd html 4.0 transitional//en\">\n";
+		html += "<html>\n";
+		html += "<head>";
+		html += "<title>GWT Application HomePage - " + projectName + "</title>";
+		html += "</head>";
+		html += "<body>\n";
+		html += "";
+		html += "\t<a href=\"";
+		html += linkToApplication;
+		html += "\">";
+		html += linkToApplicationDescription;
+		html += "</a> Quick link to your gwt module.\n";
+		html += "</body>\n";
+		html += "</html>\n";
 
-		return homePage;
+		return html;
 	}
 
 	/**
@@ -429,16 +416,6 @@ public class TomcatWarBuilder {
 
 		String File = tempBuildFolderFullPath + sep + "index.jsp";
 		createFile(File, createIndexPageContents());
-	}
-
-	/**
-	 * Get the project directory this script resides in
-	 * 
-	 * figure out how to get the path of this script
-	 */
-	private void getCurrentProjectDirectory() {
-		// don't know how to get the eclipse project directory yet that this
-		// file is in
 	}
 
 	/**
@@ -460,7 +437,6 @@ public class TomcatWarBuilder {
 			s = "Previous";
 		}
 
-		
 		File dir = new File(tempBuildFolderFullPath);
 
 		System.out.println("Deleting " + s + " production directory contents: "	+ tempBuildFolderFullPath);
@@ -835,14 +811,14 @@ public class TomcatWarBuilder {
 	/**
 	 * get path/directory in array
 	 * 
-	 * @param File
+	 * @param file
 	 * @return
 	 */
-	private String getDestinationDirectory(String File) {
+	private String getDestinationDirectory(String file) {
 
 		String sep = getPathsFileSeparator();
 
-		String[] dirs = File.split(sep);
+		String[] dirs = file.split(sep);
 		String dir = dirs[dirs.length - 1];
 		return dir;
 	}
@@ -959,9 +935,9 @@ public class TomcatWarBuilder {
 	 * 
 	 * looking for project-compile, which builds the project from console
 	 */
-	private void checkProjectListForCompile() {
+	private void checkProjectListForCompileFile() {
 		File file;
-		String FileList[];
+		String list[];
 
 		// ls the directory for files
 		file = new File(data.projectDirectory);
@@ -971,28 +947,28 @@ public class TomcatWarBuilder {
 			System.exit(1);
 		}
 		
-		FileList = file.list();
-		if (FileList == null) {
+		list = file.list();
+		if (list == null) {
 			System.out.println("Error reading current directory. debug: checkProjectListForCompile()");
 			System.exit(1);
 		}
 
 		// look for ./project-compile
-		findProjectCompile(FileList);
+		findProjectCompile(list);
 	}
 
 	/**
 	 * find the project gwt-compile file
 	 * 
-	 * @param FileList
+	 * @param list
 	 */
-	private void findProjectCompile(String[] FileList) {
+	private void findProjectCompile(String[] list) {
 
 		String file = null;
 		boolean found = false;
 
-		for (int i = 0; i <= FileList.length; i++) {
-			file = FileList[i];
+		for (int i = 0; i <= list.length; i++) {
+			file = list[i];
 			found = checkForCompile(file);
 
 			if (found == true) {
@@ -1026,15 +1002,15 @@ public class TomcatWarBuilder {
 	/**
 	 * create new directory
 	 * 
-	 * @param Dir
+	 * @param dir
 	 * @return
 	 */
-	private boolean createFolder(String Dir) {
+	private boolean createFolder(String dir) {
 		boolean status = false;
 		String newDir = null;
 
-		if (Dir != null) {
-			newDir = Dir;
+		if (dir != null) {
+			newDir = dir;
 			status = new File(newDir).mkdir();
 		}
 
@@ -1091,13 +1067,13 @@ public class TomcatWarBuilder {
 	/**
 	 * copy files
 	 * 
-	 * @param strPath
+	 * @param srcPath
 	 * @param dstPath
 	 * @throws IOException
 	 */
-	private void copyFiles(String strPath, String dstPath) throws IOException {
+	private void copyFiles(String srcPath, String dstPath) throws IOException {
 
-		File src = new File(strPath); // source
+		File src = new File(srcPath); // source
 		File dest = new File(dstPath); // destination
 
 		if (src.isDirectory() == true && src.getName() != ".svn") { // skip .svn files
@@ -1137,20 +1113,20 @@ public class TomcatWarBuilder {
 	 * create file with these contents
 	 * 
 	 * @param createFilePath
-	 * @param Contents
+	 * @param contents
 	 */
-	private void createFile(String createFilePath, String Contents) {
+	private void createFile(String createFilePath, String contents) {
 
 		try {
 			File file = new File(createFilePath);
 			boolean success = file.createNewFile();
 			if (success) {
 				BufferedWriter out = new BufferedWriter(new FileWriter(createFilePath,true));
-				out.write(Contents);
+				out.write(contents);
 				out.close();
 			} else {
 				(new File(createFilePath)).delete();
-				createFile(createFilePath, Contents);
+				createFile(createFilePath, contents);
 			}
 		} catch (IOException e) {
 			System.out.println("Could not create file: (debug: createFilePath() " + createFilePath + ")");
@@ -1409,5 +1385,5 @@ public class TomcatWarBuilder {
 		} while (wait == true);
 
 	}
-
+	
 }// end
