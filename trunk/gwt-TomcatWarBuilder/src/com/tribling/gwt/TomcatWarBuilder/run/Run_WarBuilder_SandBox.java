@@ -3,12 +3,10 @@ package com.tribling.gwt.TomcatWarBuilder.run;
 import com.tribling.gwt.TomcatWarBuilder.TomcatWarBuilder;
 import com.tribling.gwt.TomcatWarBuilder.WarBuilderData;
 
-public class Run_WarBuilder_Gv {
+public class Run_WarBuilder_SandBox {
 
 	/**
 	 * run this from console or debug configuration in eclipse
-	 * 
-	 * GoneVertical.com application
 	 * 
 	 * @param args
 	 */
@@ -22,11 +20,11 @@ public class Run_WarBuilder_Gv {
 		data.os = 0;
 		
 		// project directory (examples below)
-		data.projectDirectory = "/home/branflake2267/workspace/gwt-GV";
+		data.projectDirectory = "/home/branflake2267/workspace/gwt-SandBox";
 
 		// rename war file to [ROOT.war | project.war]
 		// ROOT.war is the virtual host root servlet context "/" 
-		data.renameWarFile = true; //true = turn on will rename the servlet context (filename)
+		data.renameWarFile = false; //true = turn on will rename the servlet context (filename)
 		
 		// if renameWarFile = true then rename to:
 		data.renameWarFileNameTo = "ROOT.war"; 
