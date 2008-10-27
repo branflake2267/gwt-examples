@@ -257,65 +257,66 @@ public class TomcatWarBuilder {
 	private String createWebXMLFileContents() {
 
 		// xml definition
-		String WebXML = ""
-				+ "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n"
-				+
+		String xml = "";
+		
+		// xml file start
+		xml += "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n";
+		xml += "<web-app id=\"/\" xmlns=\"http://java.sun.com/xml/ns/j2ee\" ";
+		xml += "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" ";
+		xml += "xsi:schemaLocation=\"http://java.sun.com/xml/ns/j2ee ";
+		xml += "http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd\" ";
+		xml += "version=\"2.4\">\n\n";
+				
+		// servlet name and description
+		xml +="<display-name>gwt-" + projectName + " Compiled: " + getDate() + "</display-name>\n";
+		xml += "<description>Google Web Toolkit Project</description>\n\n";
 
-				"<web-app id=\"/\" xmlns=\"http://java.sun.com/xml/ns/j2ee\" "
-				+ "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
-				+ "xsi:schemaLocation=\"http://java.sun.com/xml/ns/j2ee "
-				+ "http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd\" "
-				+ "version=\"2.4\">\n"
-				+
-
-				// servlet name and description
-				"\t<display-name>gwt-" + projectName + " Compiled: "
-				+ getDate() + "</display-name>\n"
-				+ "\t<description>Google Web Toolkit Project</description>\n";
-
-		// test
-		/*
-		 * couldn't make this work yet WebXML += "" + "<context-param>\n" +
-		 * "\t<param-name>path</param-name>\n" +
-		 * "\t<param-value>/what</param-value>\n" + "</context-param>\n" +
-		 * "<context-param>\n" + "\t<param-name>docBase</param-name>\n" +
-		 * "\t<param-value>" + ProjectName + "</param-value>\n" +
-		 * "</context-param>\n";
-		 */
-
-		// use welcome file list to go directly to the application
+		// welcome file list - go directly to application using this technique
 		if (data.goDirectlyToApplication == true) {
-			WebXML += "" + "<welcome-file-list>\n"
-					+ "\t<welcome-file>"
-					+ projectName
-					+ ".html</welcome-file>\n"
-					+ // go directly to the applications homepage
-					"\t<welcome-file>index.jsp</welcome-file>\n"
-					+ // you could use these
-					"\t<welcome-file>index.html</welcome-file>\n"
-					+ "\t<welcome-file>index.htm</welcome-file>\n"
-					+ "</welcome-file-list>\n";
+			xml += "" + "<welcome-file-list>\n";
+				xml += "\t<welcome-file>" + projectName + ".html</welcome-file>\n";
+				xml += "\t<welcome-file>index.jsp</welcome-file>\n";
+				xml += "\t<welcome-file>index.html</welcome-file>\n";
+				xml += "\t<welcome-file>index.htm</welcome-file>\n";
+				xml += "\t<welcome-file>default.jsp</welcome-file>\n";
+				xml += "\t<welcome-file>default.htm</welcome-file>\n";
+				xml += "\t<welcome-file>default.html</welcome-file>\n";
+			xml += "</welcome-file-list>\n";
 		}
 
-		// enable web page authentication to tomcat-users.xml
+		// RPC system here - project.gwt.xml
+		// This configures the page that listens for the rpc calls
+		// Only need this if we have an rpc servlet class
 		if (servletClassName != null) {
-			WebXML += "" + "\n<!-- reference project.gwt.xml for servlet class path  -->\n" + "<servlet>\n"
-					+ "\t<servlet-name>" + projectName + "</servlet-name>\n"
-					+ "\t<servlet-class>" + servletClassName
-					+ "</servlet-class>\n" + "</servlet>\n"
-					+ "<servlet-mapping>\n" + "\t<servlet-name>" + projectName
-					+ "</servlet-name>\n" + "\t<url-pattern>" + rpcServicePath
-					+ "</url-pattern>\n" + "</servlet-mapping>\n";
+			
+			xml += "\n<!-- reference project.gwt.xml for servlet class path -->\n";
+			
+			// servlet class
+			xml += "<!-- servlet class -->\n";
+			xml += "<servlet>\n";
+				xml +=  "\t<servlet-name>" + projectName + "</servlet-name>\n";
+				xml +=  "\t<servlet-class>" + servletClassName + "</servlet-class>\n";
+			xml += "</servlet>\n\n";
+			
+			// servlet url to get to class path
+			xml += "<!-- url/path to servlet class -->\n";
+			xml +=  "<servlet-mapping>\n";
+				xml += "\t<servlet-name>" + projectName + "</servlet-name>\n";
+				xml += "\t<url-pattern>" + rpcServicePath + "</url-pattern>\n";
+			xml += "</servlet-mapping>\n\n";
 		}
 
-		// add user security if turned on
-		WebXML += createWebXMLFileContents_Security();
-		WebXML += "</web-app>\n";
+		// ask for gwt application http authorizaton?
+		xml += createWebXMLFileContents_Security();
+		
+		// end of the web xml file
+		xml += "\n\n</web-app>\n\n";
 
-		// optional
-		WebXML += "\n<!-- Compiled by the TomcatWarBuilder on http://gwt-examples.googlecode.com -->\n";
+		// the end
+		xml += "<!-- Compiled by the TomcatWarBuilder on http://gwt-examples.googlecode.com -->\n";
+		xml += "<!-- " + getDate() + " -->\n";
 
-		return WebXML;
+		return xml;
 	}
 
 	/**
@@ -332,32 +333,37 @@ public class TomcatWarBuilder {
 	 * @return 
 	 */
 	private String createWebXMLFileContents_Security() {
-		String WebXML = ""
-				+ "<!-- Built by TomcatWarBuilder - http://gwt-examples.googlecode.com -->\n\n"
-				+ "\n<!-- Define a Security Constraint on this Application -->\n"
-				+ "<security-constraint>\n"
-				+ "\t<web-resource-collection>"
-				+ "\t<web-resource-name>Entire Application</web-resource-name>\n"
-				+ "\t<url-pattern>/*</url-pattern>\n"
-				+ "\t</web-resource-collection>\n"
-				+ "\t<auth-constraint>\n"
-				+ "\t<role-name>admin</role-name>\n"
-				+ "\t</auth-constraint>\n"
-				+ "</security-constraint>\n\n"
+		String xml = "";
+		
+		xml += "<!-- Built by TomcatWarBuilder - http://gwt-examples.googlecode.com -->\n\n";
+		xml += "\n<!-- Define a Security Constraint on this Application -->\n";
+		
+		// ask for authorization to use this application
+		xml += "<security-constraint>\n";
+			xml += "\t<web-resource-collection>";
+			xml += "\t<web-resource-name>Entire Application</web-resource-name>\n";
+			xml += "\t<url-pattern>/*</url-pattern>\n";
+			xml += "\t</web-resource-collection>\n";
+			xml += "\t<auth-constraint>\n";
+			xml += "\t<role-name>admin</role-name>\n";
+			xml += "\t</auth-constraint>\n";
+		xml += "</security-constraint>\n\n";
 				
-
-				+ "<login-config>\n"
-				+ "\t<auth-method>BASIC</auth-method>\n"
-				+ "\t<realm-name>Your Realm Name</realm-name>\n" // something a person will recognise when the credentials question pops up
-				+ "</login-config>\n\n"
+		// http crendentials popup method
+		xml += "<login-config>\n";
+		xml += "\t<auth-method>BASIC</auth-method>\n";
+		xml += "\t<realm-name>Your Realm Name</realm-name>\n"; // window popup name
+		xml += "</login-config>\n\n";
 				
-
-				+ "<security-role>\n"
-				+ "\t<description>The role that is required to log in to the Manager Application</description>\n"
-				+ "\t<role-name>admin</role-name>\n" + "</security-role>\n\n"; // this role has to exist in tomcat-users.xml! use localhost:8080/admin to mange it.
+		// users and roles exist in Tomcat-users.xml
+		// role name and description
+		xml += "<security-role>\n";
+			xml += "\t<description>The role that is required to log in to the Manager Application</description>\n";
+			xml += "\t<role-name>admin</role-name>\n"; 
+		xml += "</security-role>\n\n"; 
 
 		if (data.askForLogin == true) {
-			return WebXML;
+			return xml;
 		} else {
 			return "";
 		}
@@ -392,22 +398,26 @@ public class TomcatWarBuilder {
 	 */
 	private String createIndexPageContents() {
 
-		String linkToModle = projectName + ".html";
-		String linkToModuleDesc = linkToModle;
+		String linkToApplication = projectName + ".html";
+		String linkToApplicationDescription = linkToApplication + " - goes to your gwt application";
 
-		String indexPage = "<!doctype html public \"-//w3c//dtd html 4.0 transitional//en\">\n"
-				+ "<html>\n"
-				+ "<body>"
-				+ ""
-				+ "\t<a href=\""
-				+ linkToModle
-				+ "\">"
-				+ linkToModuleDesc
-				+ "</a> Quick link to your gwt module."
-				+ "</body>"
-				+ "</html>\n";
+		String homePage = "";
+		homePage += "<!doctype html public \"-//w3c//dtd html 4.0 transitional//en\">\n";
+		homePage += "<html>\n";
+		homePage += "<head>";
+		homePage += "<title>GWT Application HomePage - " + projectName + "</title>";
+		homePage += "</head>";
+		homePage += "<body>\n";
+		homePage += "";
+		homePage +="\t<a href=\"";
+		homePage +=linkToApplication;
+		homePage +="\">";
+		homePage +=linkToApplicationDescription;
+		homePage +="</a> Quick link to your gwt module.\n";
+		homePage +="</body>\n";
+		homePage +="</html>\n";
 
-		return indexPage;
+		return homePage;
 	}
 
 	/**
@@ -417,7 +427,7 @@ public class TomcatWarBuilder {
 
 		String sep = getPathsFileSeparator();
 
-		String File = data.tempBuildFolderName + sep + "index.jsp";
+		String File = tempBuildFolderFullPath + sep + "index.jsp";
 		createFile(File, createIndexPageContents());
 	}
 
@@ -491,7 +501,7 @@ public class TomcatWarBuilder {
 
 		String sep = getPathsFileSeparator();
 
-		String File = data.tempBuildFolderName + sep + "WEB-INF" + sep + "web.xml";
+		String File = tempBuildFolderFullPath + sep + "WEB-INF" + sep + "web.xml";
 		createFile(File, createWebXMLFileContents());
 	}
 
@@ -1138,13 +1148,12 @@ public class TomcatWarBuilder {
 				BufferedWriter out = new BufferedWriter(new FileWriter(createFilePath,true));
 				out.write(Contents);
 				out.close();
-
 			} else {
 				(new File(createFilePath)).delete();
 				createFile(createFilePath, Contents);
 			}
 		} catch (IOException e) {
-			System.out.println("Could not create file: (debug createFilePath: " + createFilePath + ")");
+			System.out.println("Could not create file: (debug: createFilePath() " + createFilePath + ")");
 			System.out.println("Do you have write permission for this location?");
 			System.exit(1);
 		}

@@ -38,7 +38,7 @@ public class Run_WarBuilder_RpcBasic {
 		// Ask for credentials to use application 
 		data.askForLogin = false;
 		
-		data.deleteTempFolder = true;
+		data.deleteTempFolder = false;
 		
 		/********** OPTIONAL ***********/
 		
