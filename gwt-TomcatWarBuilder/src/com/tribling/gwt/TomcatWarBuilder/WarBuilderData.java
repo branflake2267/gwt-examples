@@ -1,7 +1,7 @@
 package com.tribling.gwt.TomcatWarBuilder;
 
 /**
- * This sets up the variables that control the build
+ * This sets up the variables that control the WAR build
  * 
  * @author branflake2267
  *
