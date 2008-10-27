@@ -1,6 +1,9 @@
 #summary gwt Tomcat War Builder
 #labels Featured
 
+= New Verision =
+ I rewrote the builder and updated it Oct 27. I will rewrite my documentation this week for it. 
+
 = Tomcat War Builder =
  Auto Build or Compile a GWT project for tomcat server. Compile your project in a ready to go War archive. Deploy it by uploading the war file to your tomcat server. Quickly deploy your application for testing.
 
