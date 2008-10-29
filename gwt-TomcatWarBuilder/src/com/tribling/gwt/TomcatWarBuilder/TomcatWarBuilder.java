@@ -1285,10 +1285,12 @@ public class TomcatWarBuilder {
 
 		String sep = getPathsFileSeparator();
 		
-		String tmp = data.tempBuildFolderName + sep; 
-		
-		if (data.os == 2) {
-			tmp += "\\";
+		String tmp = "";
+		if (data.os == 1) { // windows
+			// path delimiter has to be escaped in regexp
+			tmp = data.tempBuildFolderName +  sep + sep;
+		} else { // linux
+			tmp = data.tempBuildFolderName + sep; 
 		}
 		
 		// production/(file)
@@ -1303,7 +1305,7 @@ public class TomcatWarBuilder {
 		}
 		
 		// debug
-		System.out.println("Copying to zip archive (war): " + newPath);
+		System.out.println("Copying to zip archive (warPath): " + newPath);
 		
 		return newPath;
 	}
