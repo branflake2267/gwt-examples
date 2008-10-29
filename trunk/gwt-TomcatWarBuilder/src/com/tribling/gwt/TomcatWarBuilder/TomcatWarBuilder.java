@@ -296,6 +296,11 @@ public class TomcatWarBuilder {
 		// ask for gwt application http authorizaton?
 		xml += createWebXMLFileContents_Security();
 		
+		// include custom content into the web.xml 
+		xml += "\n\n\n<!-- custom content included -->\n";
+		xml += data.customXmlContent;
+		xml += "\n<!-- custom content included -->\n\n";
+		
 		// end of the web xml file
 		xml += "\n\n</web-app>\n\n";
 
