@@ -59,7 +59,7 @@ public class TomcatWarBuilder {
 	private String projectGWTxmlFile;
 	private String projectGWTxmlFileLocation;
 	private String projectGWTxmlFileContents;
-	private String servletClassName; // xml servlet class - server side class
+	private String servletPackageClass; // xml servlet class - server side class
 	private String servletPackageClassPath; // xml servlet path
 	private String servletClassNameIMPL;
 	// private String[] ServerProjectDirs; //skipping for now
@@ -167,7 +167,7 @@ public class TomcatWarBuilder {
 		readProjectXMLFileContents();
 
 		// servlet class name - from client side
-		getServletClassFromXMLFile();
+		getServletPackageClass();
 
 		// get servlet path
 		getServletPackageClassPath();
@@ -274,7 +274,7 @@ public class TomcatWarBuilder {
 		// RPC system here - project.gwt.xml
 		// This configures the page that listens for the rpc calls
 		// Only need this if we have an rpc servlet class
-		if (servletClassName != null) {
+		if (servletPackageClass != null) {
 			
 			xml += "\n<!-- reference project.gwt.xml for servlet class path -->\n";
 			
@@ -282,7 +282,7 @@ public class TomcatWarBuilder {
 			xml += "<!-- servlet class -->\n";
 			xml += "<servlet>\n";
 				xml +=  "\t<servlet-name>" + projectName + "</servlet-name>\n";
-				xml +=  "\t<servlet-class>" + servletClassName + "</servlet-class>\n";
+				xml +=  "\t<servlet-class>" + servletPackageClass + "</servlet-class>\n";
 			xml += "</servlet>\n\n";
 			
 			// servlet url to get to class path
@@ -735,20 +735,20 @@ public class TomcatWarBuilder {
 	 * get servlet class
 	 * 
 	 */
-	private void getServletClassFromXMLFile() {
+	private void getServletPackageClass() {
 
 		Pattern p = Pattern.compile("<servlet.*?class=[\"'](.*?)[\"'].*?>");
 		Matcher m = p.matcher(projectGWTxmlFileContents);
 		boolean found = m.find();
 
 		if (found == true) {
-			servletClassName = m.group(1);
+			servletPackageClass = m.group(1);
 		}
 
 		// debug
-		System.out.println("ServletClassName: " + servletClassName);
-		if (servletClassName == null) {
-			System.out.println("No servlet class, means you don't have any server side rpc.");
+		System.out.println("ServletPackageClass: " + servletPackageClass);
+		if (servletPackageClass == null) {
+			System.out.println("No servlet class, means you don't have any server side rpc. debug: getServletPackageClass()");
 		}
 		System.out.println("");
 	}
@@ -772,6 +772,7 @@ public class TomcatWarBuilder {
 
 		// debug
 		System.out.println("getServletPackageClassPath: " + servletPackageClassPath);
+		System.out.println("");
 	}
 
 	/**
@@ -834,16 +835,16 @@ public class TomcatWarBuilder {
 	 */
 	private void getServerClassNameIMPL() {
 
-		if (servletClassName == null) {
+		if (servletPackageClass == null) {
 			return;
 		}
 
 		// split the class into dir
 		String[] dirs = null;
-		if (servletClassName.contains(".")) {
-			dirs = servletClassName.split("\\.");
+		if (servletPackageClass.contains(".")) {
+			dirs = servletPackageClass.split("\\.");
 		} else {
-			dirs[0] = new String(servletClassName);
+			dirs[0] = new String(servletPackageClass);
 		}
 
 		servletClassNameIMPL = dirs[dirs.length - 1].toString();
