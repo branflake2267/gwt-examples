@@ -755,7 +755,6 @@ public class TomcatWarBuilder {
 		if (servletPackageClass == null) {
 			System.out.println("No servlet class, means you don't have any server side rpc. debug: getServletPackageClass()");
 		}
-		System.out.println("");
 	}
 
 	/**
