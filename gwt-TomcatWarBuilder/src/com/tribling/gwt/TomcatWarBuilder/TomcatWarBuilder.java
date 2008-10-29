@@ -882,7 +882,14 @@ public class TomcatWarBuilder {
 			return;
 		}
 		
-		String re = ":(" + sep + ".*)gwt-user.jar:";
+		String re = "";
+		if (sep.equals("\\")) {
+			re = "([a-zA-Z]:.*?)gwt-user.jar";
+		} else {
+			re = ":(" + sep + ".*)gwt-user.jar:";
+		}
+		
+		
 		Pattern p = Pattern.compile(re);
 		Matcher m = p.matcher(projectCompileFileContents);
 		boolean found = m.find();
