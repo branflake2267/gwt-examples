@@ -60,7 +60,7 @@ public class TomcatWarBuilder {
 	private String projectGWTxmlFileLocation;
 	private String projectGWTxmlFileContents;
 	private String servletClassName; // xml servlet class - server side class
-	private String entryPointPackage; // xml servlet path
+	private String servletPackageClassPath; // xml servlet path
 	private String servletClassNameIMPL;
 	// private String[] ServerProjectDirs; //skipping for now
 	private String classFileContents;
@@ -170,7 +170,7 @@ public class TomcatWarBuilder {
 		getServletClassFromXMLFile();
 
 		// get servlet path
-		getEntryPointPackage();
+		getServletPackageClassPath();
 
 		// get servlet Name (server class name)
 		getServerClassNameIMPL();
@@ -289,7 +289,7 @@ public class TomcatWarBuilder {
 			xml += "<!-- url/path to servlet class and mapping -->\n";
 			xml +=  "<servlet-mapping>\n";
 				xml += "\t<servlet-name>" + projectName + "</servlet-name>\n";
-				xml += "\t<url-pattern>" + entryPointPackage + "</url-pattern>\n";
+				xml += "\t<url-pattern>" + servletPackageClassPath + "</url-pattern>\n";
 			xml += "</servlet-mapping>\n\n";
 		}
 
@@ -754,28 +754,24 @@ public class TomcatWarBuilder {
 	}
 
 	/**
-	 * get entry point class in project.gwt.xml
+	 * get servlet package/class
 	 * 
 	 * This is the url-pattern, or rpcServicePath. 
 	 * Or servlet context that redirects to the rpc class
 	 */
-	private void getEntryPointPackage() {
+	private void getServletPackageClassPath() {
 
 		// entry-point class
-		Pattern p = Pattern.compile("<entry-point.*?path.*?=.*?['\"](.*?)['\"].*?>");
+		Pattern p = Pattern.compile("<servlet.*?path=[\"'](.*?)[\"'].*?>");
 		Matcher m = p.matcher(projectGWTxmlFileContents);
 		boolean found = m.find();
 
 		if (found == true) {
-			entryPointPackage = m.group(1);
+			servletPackageClassPath = m.group(1);
 		}
 
 		// debug
-		System.out.println("EntryPointPackage(class): " + entryPointPackage);
-		if (entryPointPackage == null) {
-			System.out.println("EntryPointPackage(class) was not found");
-			System.exit(1);
-		}
+		System.out.println("getServletPackageClassPath: " + servletPackageClassPath);
 	}
 
 	/**
