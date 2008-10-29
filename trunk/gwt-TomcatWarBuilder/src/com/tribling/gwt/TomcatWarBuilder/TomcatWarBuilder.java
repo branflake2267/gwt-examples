@@ -890,7 +890,7 @@ public class TomcatWarBuilder {
 		if (found == true) {
 			gwtHome = m.group(1);
 		} else {
-			System.out.println("Can't find gwtHome Directory, in the ProjectCompileFileContents Classpath. debug getClassPathContents()");
+			System.out.println("Can't find gwtHome Directory, in the ProjectCompileFileContents Classpath. debug getGwtHome()");
 			System.exit(1);
 		}
 
