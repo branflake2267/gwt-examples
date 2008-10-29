@@ -883,12 +883,11 @@ public class TomcatWarBuilder {
 		}
 		
 		String re = "";
-		if (sep.equals("\\")) {
+		if (sep.equals("\\")) { // windows 
 			re = "([a-zA-Z]:.*?)gwt-user.jar";
-		} else {
+		} else { // linux
 			re = ":(" + sep + ".*)gwt-user.jar:";
 		}
-		
 		
 		Pattern p = Pattern.compile(re);
 		Matcher m = p.matcher(projectCompileFileContents);
