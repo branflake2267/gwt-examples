@@ -747,6 +747,9 @@ public class TomcatWarBuilder {
 
 		// debug
 		System.out.println("ServletClassName: " + servletClassName);
+		if (servletClassName == null) {
+			System.out.println("No servlet class, means you don't have any server side rpc.");
+		}
 		System.out.println("");
 	}
 
@@ -768,7 +771,11 @@ public class TomcatWarBuilder {
 		}
 
 		// debug
-		System.out.println("EntryPointPacakge(class): " + entryPointPackage);
+		System.out.println("EntryPointPackage(class): " + entryPointPackage);
+		if (entryPointPackage == null) {
+			System.out.println("EntryPointPackage(class) was not found");
+			System.exit(1);
+		}
 	}
 
 	/**
@@ -1264,6 +1271,7 @@ public class TomcatWarBuilder {
 		} catch (Exception e) {
 			System.out.println("Could not do the zipDir process. debug zipDir()");
 			System.out.println("This would be an internal variable configuration error. I guess you'll have to debug it");
+			e.printStackTrace();
 			System.exit(1);
 		}
 	}
@@ -1281,6 +1289,10 @@ public class TomcatWarBuilder {
 		String sep = getPathsFileSeparator();
 		
 		String tmp = data.tempBuildFolderName + sep; 
+		
+		if (data.os == 2) {
+			tmp += "\\";
+		}
 		
 		// production/(file)
 		String re = ".*" + tmp + "(.*)";
