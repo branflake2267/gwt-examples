@@ -47,5 +47,8 @@ public class WarBuilderData {
 	// although, you can directly copy the code from the www directory and include it in your sites setup
 	public boolean  goDirectlyToApplication = true;
 	
+	// custom web.xml content
+	public String customXmlContent = "";
+	
 	/********** OPTIONAL ***********/
 }
