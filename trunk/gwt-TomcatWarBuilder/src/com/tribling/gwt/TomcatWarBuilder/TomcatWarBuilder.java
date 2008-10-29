@@ -60,7 +60,7 @@ public class TomcatWarBuilder {
 	private String projectGWTxmlFileLocation;
 	private String projectGWTxmlFileContents;
 	private String servletClassName; // xml servlet class - server side class
-	private String rpcServicePath; // xml servlet path
+	private String entryPointPackage; // xml servlet path
 	private String servletClassNameIMPL;
 	// private String[] ServerProjectDirs; //skipping for now
 	private String classFileContents;
@@ -152,7 +152,7 @@ public class TomcatWarBuilder {
 		getGwtHome();
 
 		// ProjectClassName
-		getProjectClassName();
+		getProjectPackageClassName();
 
 		// figure the project directory
 		getProjectDirectoryFromClassName();
@@ -170,7 +170,7 @@ public class TomcatWarBuilder {
 		getServletClassFromXMLFile();
 
 		// get servlet path
-		getServeletUrlPath();
+		getEntryPointPackage();
 
 		// get servlet Name (server class name)
 		getServerClassNameIMPL();
@@ -289,7 +289,7 @@ public class TomcatWarBuilder {
 			xml += "<!-- url/path to servlet class and mapping -->\n";
 			xml +=  "<servlet-mapping>\n";
 				xml += "\t<servlet-name>" + projectName + "</servlet-name>\n";
-				xml += "\t<url-pattern>" + rpcServicePath + "</url-pattern>\n";
+				xml += "\t<url-pattern>" + entryPointPackage + "</url-pattern>\n";
 			xml += "</servlet-mapping>\n\n";
 		}
 
@@ -751,12 +751,12 @@ public class TomcatWarBuilder {
 	}
 
 	/**
-	 * get servlet path
+	 * get entry point class in project.gwt.xml
 	 * 
 	 * This is the url-pattern, or rpcServicePath. 
 	 * Or servlet context that redirects to the rpc class
 	 */
-	private void getServeletUrlPath() {
+	private void getEntryPointPackage() {
 
 		// entry-point class
 		Pattern p = Pattern.compile("<entry-point.*?path.*?=.*?['\"](.*?)['\"].*?>");
@@ -764,15 +764,16 @@ public class TomcatWarBuilder {
 		boolean found = m.find();
 
 		if (found == true) {
-			rpcServicePath = m.group(1);
+			entryPointPackage = m.group(1);
 		}
 
 		// debug
-		System.out.println("ServletPath: " + rpcServicePath);
+		System.out.println("EntryPointPacakge(class): " + entryPointPackage);
 	}
 
 	/**
-	 * get the directory structure
+	 * get the directory structure from the 'com.example.test.client.application'
+	 * 
 	 * name and no . in it
 	 * 
 	 * "com.domain.gwt.class.client.class"
@@ -852,10 +853,9 @@ public class TomcatWarBuilder {
 	 * com.tribling.gwt.test.client.MyProject or com.tribling.gwt.test.client.MyProject;
 	 * 
 	 */
-	private void getProjectClassName() {
+	private void getProjectPackageClassName() {
 
-		//Pattern p = Pattern.compile("\"\\$@\"\040(.*?);"); 
-		Pattern p = Pattern.compile(".*\040(.*?);|.*\040(.*?)");
+		Pattern p = Pattern.compile(".*\040(.*?)$|.*\040(.*?);$");
 		Matcher m = p.matcher(projectCompileFileContents);
 		boolean found = m.find();
 
@@ -866,6 +866,11 @@ public class TomcatWarBuilder {
 		// debug
 		System.out.println("classPackage: " + classPackage);
 		System.out.println("");
+		
+		if (classPackage.length() == 0) {
+			System.out.println("Cant figure out the class project in the compile file. debug getProjectPackageClassName()");
+			System.exit(1);
+		}
 	}
 
 	/**
@@ -883,7 +888,7 @@ public class TomcatWarBuilder {
 		}
 		
 		String re = "";
-		if (sep.equals("\\")) { // windows 
+		if (projectCompileFileContents.contains("\\")) { // windows 
 			re = "([a-zA-Z]:.*?)gwt-user.jar";
 		} else { // linux
 			re = ":(" + sep + ".*)gwt-user.jar:";
