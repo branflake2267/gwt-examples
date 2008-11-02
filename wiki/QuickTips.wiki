@@ -543,7 +543,7 @@ for (int i=0; i < arSplit.length; i++) {
 }}}
 
 =Strip HTML Tags=
- Strip out html tags that could be dangerous.
+ Strip out html tags that could be dangerous. Remove html tags before drawing to screen. May need to do something like this if the request comes from rpc for safety.
 {{{
 private String stripHtml(String html) {
 	String regex = "(<([^>]+)>)";
