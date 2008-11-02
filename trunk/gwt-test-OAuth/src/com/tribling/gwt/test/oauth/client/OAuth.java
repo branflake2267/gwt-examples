@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.tribling.gwt.test.oauth.client.rpc.RpcService;
 import com.tribling.gwt.test.oauth.client.rpc.RpcServiceAsync;
+import com.tribling.gwt.test.oauth.client.tests.TestRpcCall;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
