@@ -551,3 +551,18 @@ private String removeHtmlTags(String html) {
 	return html;
 }
 }}}
+
+=Timer=
+ Timer example. Show something delayed or how then hide it.
+{{{
+public void hideTimed() {
+	pWidget.setVisible(true);
+	
+	Timer t = new Timer() {
+		public void run() {
+			pWidget.setVisible(false);
+		}
+	};
+	t.schedule(3000);
+}
+}}}
