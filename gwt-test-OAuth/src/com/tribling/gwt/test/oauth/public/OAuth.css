@@ -1,12 +1,36 @@
-/** Add css rules here for your application. */
-
-
-/** Example rules used by the template application (remove for your app) */
-.pc-template-btn {
-  display: block;
-  font-size: 16pt
+body {
+  background-color: white;
+  color: black;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 10pt;
+  
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 800px;
+}
+ 
+.gwt-TextBox {
+	border: 1px solid #66B3FF;
+}
+ 
+.gwt-PasswordTextBox {
+	border: 1px solid #66B3FF;
 }
 
-#pc-template-img {
-  margin-top: 20px;
+.gwt-TextBox-readonly {
+  color: #888;
 }
+ 
+
+.login-Ui {
+}
+.login-Ui-InputLabel {
+	color: #aaa;
+}
+.login-Ui-InputConsumerKey {
+}
+.login-Ui-InputConsumerSecret {
+}
+
+
