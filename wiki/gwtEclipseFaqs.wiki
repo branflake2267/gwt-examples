@@ -1,6 +1,9 @@
 #summary How to configure eclipse for these projects.
 #labels Featured
 
+====Advertising====
+[http://click.linksynergy.com/fs-bin/click?id=QCdCuKxPYyY&offerid=135505.10000400&type=4&subid=0 http://cdn.netflix.com/us/affiliates/banners/0804/468060B_599.gif]
+
 = Eclipse FAQs =
 
  == Promoting ==
