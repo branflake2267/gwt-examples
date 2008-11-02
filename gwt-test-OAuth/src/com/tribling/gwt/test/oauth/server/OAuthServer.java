@@ -1,6 +1,6 @@
 package com.tribling.gwt.test.oauth.server;
 
-import com.tribling.gwt.test.oauth.client.oauth.TokenData;
+import com.tribling.gwt.test.oauth.client.oauth.OAuthTokenData;
 
 public class OAuthServer {
 	
@@ -11,7 +11,7 @@ public class OAuthServer {
 		
 	}
 	
-	public boolean verifySignature(String url, TokenData token) {
+	public boolean verifySignature(String url, OAuthTokenData token) {
 		
 		return false;
 	}
