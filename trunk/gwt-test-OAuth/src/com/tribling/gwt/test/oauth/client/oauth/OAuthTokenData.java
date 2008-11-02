@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class TokenData implements IsSerializable {
+public class OAuthTokenData implements IsSerializable {
 
 	/*
 	 * 
@@ -64,18 +64,11 @@ public class TokenData implements IsSerializable {
 	
 	public String oauth_version;
 
-	
-		
 	/**
 	 * constructor - nothing to do here
 	 */
-	public TokenData() {
+	public OAuthTokenData() {
 		// nothing
-	}
-	
-	private String encodeParameter(String s) {
-		
-		return s;
 	}
 	
 	/**
@@ -83,10 +76,11 @@ public class TokenData implements IsSerializable {
 	 * 
 	 * a signing request is built by sorted keys concatenated string separated by &, my chosen method
 	 * 
+	 * Reference SPEC A.5.1 
+	 * 
 	 * @param requestUrl
 	 */
-	public String getTokensSignatureBaseString(String requestUrl) {
-		String s = "";
+	public String getSignatureBaseString(String requestUrl) {
 		
 		if (requestUrl == null) {
 			System.out.println("need request url");
@@ -96,25 +90,23 @@ public class TokenData implements IsSerializable {
 			System.out.println("need request url");
 		}
 		
-		// SPEC A.5.1 - I changed GET to RPC, since its my method I am defining. Probably is a post.
+		String s = "";
 		s += "RPC&";
 		s += requestUrl + "&";
+		s += "oauth_callback=" + oauth_callback+ "&";
+		s += "oauth_consumer_key=" + oauth_consumer_key+ "&";
+		s += "oauth_nounce=" + oauth_nounce+ "&";
+		// skip signature, thats what this does
+		s += "oauth_signautre_method="+ oauth_signature_method+ "&";
+		s += "oauth_timestamp=" + oauth_timestamp+ "&";
+		s += "oauth_token=" + oauth_token+ "&";
+		s += "oauth_token_secret=" + oauth_token_secret+ "&";
+		s += "oauth_version=" + oauth_version;
 		
-		ArrayList<String> aS = new ArrayList<String>();
-		
-		if (oauth_callback != null) {
-			aS.add(new String("oauth_callback=" + oauth_callback));
-		}
-		
-		if (oauth_consumer_key != null) {
-			aS.add(new String("oauth_consumer_key=" + oauth_consumer_key));
-		}
-		
-		if (oauth_nounce != null) {
-			aS.add(new String("oauth_nounce=" + oauth_nounce));
-		}
-		
-		//TODO - more to do here
+		return s;
+	}
+	
+	private String encodeParameter(String s) {
 		
 		return s;
 	}
