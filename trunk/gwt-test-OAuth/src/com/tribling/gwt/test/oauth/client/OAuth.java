@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.tribling.gwt.test.oauth.client.rpc.RpcService;
 import com.tribling.gwt.test.oauth.client.rpc.RpcServiceAsync;
 import com.tribling.gwt.test.oauth.client.tests.TestRpcCall;
+import com.tribling.gwt.test.oauth.client.ui.LoginHorizontal;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -26,11 +27,12 @@ public class OAuth implements EntryPoint {
 	public void onModuleLoad() {
 
 		// test the stuff needed
-		testStuff();
+		//testStuff();
 		
-
-		
-		
+		// Manage the application's session
+		SessionManager sessionManager = new SessionManager();
+		sessionManager.setLoginUiDiv("LoginUI");
+				
 
 	}
 	
