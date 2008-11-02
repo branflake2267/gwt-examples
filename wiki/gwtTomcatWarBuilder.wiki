@@ -4,6 +4,9 @@
 ====Advertising====
 [http://click.linksynergy.com/fs-bin/click?id=QCdCuKxPYyY&offerid=135505.10000397&type=4&subid=0 http://cdn.netflix.com/us/affiliates/banners/0804/120090A_599.gif][http://ad.linksynergy.com/fs-bin/show?id=QCdCuKxPYyY&bids=135505.10000397&type=4&subid=0&fromGoogleCode.png]   [http://click.linksynergy.com/fs-bin/click?id=QCdCuKxPYyY&offerid=146261.10003722&type=4&subid=0 http://images.apple.com/itunesaffiliates/US/2008/10/04/AsteroidsGalaxy_120x90.jpg][http://ad.linksynergy.com/fs-bin/show?id=QCdCuKxPYyY&bids=146261.10003722&type=4&subid=0&fromGoogleCode.png]     [http://click.linksynergy.com/fs-bin/click?id=QCdCuKxPYyY&offerid=164496.10000003&type=4&subid=0 http://www.popcornopolis.com/landingpages/2008/banners/fall_08/120x90_tin.gif][http://ad.linksynergy.com/fs-bin/show?id=QCdCuKxPYyY&bids=164496.10000003&type=4&subid=0&fromGoogleCode.png]    [http://click.linksynergy.com/fs-bin/click?id=QCdCuKxPYyY&offerid=137601.10000059&type=4&subid=0 http://marketing.vistaprint.com/us/imgs/bannerads/FALL_120x90.gif][http://ad.linksynergy.com/fs-bin/show?id=QCdCuKxPYyY&bids=137601.10000059&type=4&subid=0&fromGoogleCode.png]    [http://click.linksynergy.com/fs-bin/click?id=QCdCuKxPYyY&offerid=129871.10000065&type=4&subid=0 http://www.acronym.com/sirius/SIRIUS%20Banners/NFL/120x90_nfl.gif][http://ad.linksynergy.com/fs-bin/show?id=QCdCuKxPYyY&bids=129871.10000065&type=4&subid=0&fromGoogleCode.png]
 
+== References ==
+[gwtTomcat] - gwt tomcat setup
+
 = Tomcat War Builder =
  Auto Build or Compile a GWT project for tomcat server. Compile your project in a ready to go War archive. Deploy it by uploading the war file to your tomcat server. Quickly deploy your application for testing.
 
@@ -31,7 +34,7 @@
  Download the latest version from SVN. [http://code.google.com/p/gwt-examples/source/browse/trunk/gwt-TomcatWarBuilder/src/com/tribling/gwt/TomcatWarBuilder/TomcatWarBuilder.java Source Code]
 
  == Windows OS ==
- This should work fine on windows if you change the path forward slashes to back slashes.
+ This now builds great on windows. I have tested it and works great compiling on my windows pc.
 
  == Example War Created ==
  [http://code.google.com/p/gwt-examples/downloads/list Downloads] - War file created from the RPC Advanced Eclipse project
