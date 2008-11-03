@@ -71,10 +71,6 @@ public class SessionManager {
 		loginUi.draw();
 	}
 	
-	private void drawForgotPasswordUi() {
-		// TODO center popup, with background grey
-	}
-	
 	/**
 	 * A. request request token
 	 */
