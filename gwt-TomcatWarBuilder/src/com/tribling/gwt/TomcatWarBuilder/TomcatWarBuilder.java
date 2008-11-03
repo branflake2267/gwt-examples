@@ -716,8 +716,6 @@ public class TomcatWarBuilder {
 
 	/**
 	 * read xml files contents
-	 * 
-	 * @throws Exception
 	 */
 	private void readProjectXMLFileContents() {
 
@@ -871,6 +869,9 @@ public class TomcatWarBuilder {
 			classPackage = m.group(1);
 		}
 
+		// linux has it, windows doesn't
+		classPackage = classPackage.replace(";", "");
+		
 		// debug
 		System.out.println("classPackage: " + classPackage);
 		System.out.println("");
