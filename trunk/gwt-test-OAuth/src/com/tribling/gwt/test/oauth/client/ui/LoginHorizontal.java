@@ -18,6 +18,7 @@ import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentConstant;
 import com.tribling.gwt.test.oauth.client.Global;
 import com.tribling.gwt.test.oauth.client.LoadingWidget;
 
@@ -145,7 +146,7 @@ public class LoginHorizontal extends Composite implements ClickListener, Keyboar
 		
 		// main login inputs
 		HorizontalPanel ploginItems = new HorizontalPanel();
-		ploginItems.setSpacing(4);
+		ploginItems.setWidth("100%");
 		ploginItems.add(tbConsumerKey);
 		ploginItems.add(tbConsumerSecret);
 		ploginItems.add(tbConsumerSecretPass);
@@ -154,12 +155,13 @@ public class LoginHorizontal extends Composite implements ClickListener, Keyboar
 		
 		// login options
 		HorizontalPanel pOptions = new HorizontalPanel();
-		pOptions.setSpacing(4);
+		//pOptions.setSpacing(4);
 		pOptions.add(cbRemberMe);
 		pOptions.add(hForgotPassword);
 		pOptions.add(hAccountCreate);
 		
 		VerticalPanel vp = new VerticalPanel();
+		vp.setWidth("100%");
 		vp.add(ploginItems);
 		vp.add(pOptions);
 		
@@ -172,8 +174,18 @@ public class LoginHorizontal extends Composite implements ClickListener, Keyboar
 		drawInputLabel_secret();
 		
 		tbConsumerKey.addStyleName("login-Ui-InputConsumerKey");
+		tbConsumerSecret.addStyleName("login-Ui-InputConsumerSecret");
 		tbConsumerSecretPass.addStyleName("login-Ui-InputConsumerSecret");
-		tbConsumerSecretPass.addStyleName("login-Ui-InputConsumerSecret");
+		pOptions.setCellHorizontalAlignment(hForgotPassword, HorizontalPanel.ALIGN_RIGHT);
+		pOptions.setCellHorizontalAlignment(hAccountCreate, HorizontalPanel.ALIGN_RIGHT);
+		pOptions.setCellVerticalAlignment(hForgotPassword, VerticalPanel.ALIGN_BOTTOM);
+		pOptions.setCellVerticalAlignment(hAccountCreate, VerticalPanel.ALIGN_BOTTOM);
+		pOptions.addStyleName("login-Ui-InputOptions");
+		pOptions.setWidth("100%");
+
+		
+		//vp.addStyleName("test1");
+		//pOptions.addStyleName("test2");
 	}
 	
 	private void drawForgotPassword() {
@@ -192,6 +204,9 @@ public class LoginHorizontal extends Composite implements ClickListener, Keyboar
 		
 		pWidget.add(hp);
 		
+		// style
+		hForgotPassword.addStyleName("login-Ui-InputOptions");
+		hp.setCellVerticalAlignment(hAccountLogin, VerticalPanel.ALIGN_BOTTOM);
 	}
 	
 	private void drawLoggedIn() {
@@ -273,11 +288,9 @@ public class LoginHorizontal extends Composite implements ClickListener, Keyboar
 	}
 	
 	private void checkInputLabel_secret() {
-
 		if (getConsumerSecret().length() == 0 ) {
 			tbConsumerSecret.setVisible(true);
 			tbConsumerSecretPass.setVisible(false);
-			
 		} 
 	}
 
