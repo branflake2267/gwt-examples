@@ -593,7 +593,13 @@ public class TomcatWarBuilder {
 		String dest = null;
 
 		for (int i = 0; i < (classLibs.length); i++) {
+			
 			src = classLibs[i];
+			
+			if (src.contains("/") && data.os == 1) {
+				src = src.replaceAll("/", "\\\\");
+			}
+			
 			String DestFile = getDestinationDirectory(src);
 			dest = tempBuildFolderFullPath + sep + "WEB-INF" + sep + "lib" + sep + DestFile;
 
@@ -820,7 +826,12 @@ public class TomcatWarBuilder {
 	 */
 	private String getDestinationDirectory(String file) {
 
-		String sep = getPathsFileSeparator();
+		String sep = "";
+		if (data.os == 0) {
+			sep = "/";
+		} else {
+			sep = "\\\\";
+		}
 
 		String[] dirs = file.split(sep);
 		String dir = dirs[dirs.length - 1];

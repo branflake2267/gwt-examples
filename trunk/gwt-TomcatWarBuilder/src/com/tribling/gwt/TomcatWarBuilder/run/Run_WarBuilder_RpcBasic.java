@@ -17,10 +17,10 @@ public class Run_WarBuilder_RpcBasic {
 		
 		// choose your operating system
 		// [0=linux, 1=windows]
-		data.os = 0;
+		data.os = 1;
 		
 		// project directory (examples below)
-		data.projectDirectory = "/home/branflake2267/workspace/gwt-test-RPC-basic";
+		data.projectDirectory = "C:\\My Documents\\workspace\\gwt-test-RPC-basic";
 
 		// rename war file to [ROOT.war | project.war]
 		// ROOT.war is the virtual host root servlet context "/" 
