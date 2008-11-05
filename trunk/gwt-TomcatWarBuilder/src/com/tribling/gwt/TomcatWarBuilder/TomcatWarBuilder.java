@@ -96,6 +96,7 @@ public class TomcatWarBuilder {
 	public void setTomcatCompileData(WarBuilderData data) {
 		setData = true;
 		this.data = data;
+		this.path_GWT_HOME_Manual = data.path_GWT_HOME_Manual;
 	}
 
 	/**
