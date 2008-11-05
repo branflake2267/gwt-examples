@@ -634,8 +634,8 @@ public class TomcatWarBuilder {
 	 */
 	private void getClassLibs() {
 		
-		String sep = getPathsFileSeparator();
-
+		String sep = "[/\\\\]";
+		
 		// kind=['|\"]lib['|\"].*?
 		String re = "path=['\"](" + sep + ".*?jar)['\"]";
 		Pattern p = Pattern.compile(re);
