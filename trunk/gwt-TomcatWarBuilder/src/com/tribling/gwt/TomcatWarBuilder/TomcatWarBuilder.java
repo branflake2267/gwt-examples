@@ -604,6 +604,7 @@ public class TomcatWarBuilder {
 			String DestFile = getDestinationDirectory(src);
 			dest = tempBuildFolderFullPath + sep + "WEB-INF" + sep + "lib" + sep + DestFile;
 
+			
 			try {
 				copyFiles(src, dest);
 			} catch (IOException e) {
@@ -1105,6 +1106,12 @@ public class TomcatWarBuilder {
 		File src = new File(srcPath); // source
 		File dest = new File(dstPath); // destination
 
+		if (src.isFile() == false) {
+			System.out.println("For Some reason this file does not exist.");
+			System.out.println("It could b/c we could not find gwt-home");
+			System.out.println("The File: " + srcPath);
+		}
+		
 		if (src.isDirectory() == true && src.getName() != ".svn") { // skip .svn files
 
 			dest.mkdirs();

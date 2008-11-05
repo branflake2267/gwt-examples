@@ -52,6 +52,10 @@ public class WarBuilderData {
 
 	// set this directory to the location of the gwt project, which is automatically deteremined in the compile file.
 	//  like "/opt/gwt-linux/" <- with trailing slash
+	
+	// NOTE !!!!!!! - compiling on windows for linux tomcat
+	// NOTE !!!!!!! - If your compiling for a linux server on a windows pc, this has to be set to the gwt-linux, in order to get the linux servlet.!!!!
+	// NOTE !!!!!!! - like -> data.path_GWT_HOME_Manual = "C:\\Archive\\gwt\\gwt-linux-1.5.3\\";
 	public String path_GWT_HOME_Manual = "";
 	
 	/********** OPTIONAL ***********/
