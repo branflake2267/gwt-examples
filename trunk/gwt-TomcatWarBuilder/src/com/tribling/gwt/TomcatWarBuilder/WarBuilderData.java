@@ -51,7 +51,7 @@ public class WarBuilderData {
 	public String customXmlContent = "";
 
 	// set this directory to the location of the gwt project, which is automatically deteremined in the compile file.
-	//  like "/home/branflake2267/workspace/gwt-project/" <- with trailing slash
+	//  like "/opt/gwt-linux/" <- with trailing slash
 	public String path_GWT_HOME_Manual = "";
 	
 	/********** OPTIONAL ***********/
