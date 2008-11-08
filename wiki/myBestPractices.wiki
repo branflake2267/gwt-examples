@@ -19,8 +19,8 @@ public class EmployeeData implements IsSerializable {
 
 }
 }}}
- 
- Arrayed Object Example
+
+ Object Array Example
 {{{
 public EmployeeData[] getEmployees() {
 
