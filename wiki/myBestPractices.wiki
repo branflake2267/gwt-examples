@@ -19,6 +19,49 @@ public class EmployeeData implements IsSerializable {
 }
 }}}
 
+ ArrayList Object Example - This is a simpler way to transport object(s) in an arraylist.
+{{{
+public ArrayList<EmployeeData> getEmployees() {
+
+		String query = "SELECT id,firstname,lastname FROM employee;";
+
+		// prepare for rpc transport
+		ArrayList<EmployeeData> employees = new ArrayList<EmployeeData>();
+
+		try {
+			Connection connection = getConn();
+			Statement select = connection.createStatement();
+			ResultSet result = select.executeQuery(query);
+
+			while (result.next()) {
+
+				// init each arrayed object, so we can store data in them
+				EmployeeData employee = new EmployeeData();
+				employee.id = result.getInt(1);
+				employee.firstname = result.getString(2);
+				employee.lastname = result.getString(3);
+
+				employees.add(employee);
+			}
+
+			// clean up
+			result.close();
+			connection.close();
+
+		} catch (SQLException e) {
+
+			System.err.println("Mysql Statement Error: " + query);
+			e.printStackTrace();
+
+		}
+
+		// return the array
+		return employees;
+	}
+
+}
+}}}
+
  Object Array Example
 {{{
 public EmployeeData[] getEmployees() {
