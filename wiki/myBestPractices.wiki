@@ -9,7 +9,7 @@
 
  * For example: I fetch data by getting a record from mysql (and its fields/columns), and stick that record (and its field/columns) in a object (or class), to tranpsort to the client through rpc. Having said that, I transport multiple records with making the same object an array. So "MyEmployee employee" or MyEmployee[] emploees.
 
- The Object/Class
+ The Object/Class - be sure to put this on the client side of gwt packages.
 {{{
 // this class has to be on the client side of the code, and it will be imported to the server side
 public class EmployeeData implements IsSerializable {
