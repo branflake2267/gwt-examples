@@ -16,7 +16,6 @@ public class EmployeeData implements IsSerializable {
      public int id;
      public String firstname;
      public String lastname;
-
 }
 }}}
 
