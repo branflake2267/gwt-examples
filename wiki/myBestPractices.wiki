@@ -7,4 +7,4 @@
 = Data Transport =
  Tranporting data client to server and server to client. 
 
-*For example: I fetch data by getting a record from mysql (and its fields/columns), and stick that record (and its field/columns) in a object (or class), to tranpsort to the client through rpc. Having said that, I transport multiple records with making the same object an array. So "MyEmployee employee" or MyEmployee[] emploees.
+* For example: I fetch data by getting a record from mysql (and its fields/columns), and stick that record (and its field/columns) in a object (or class), to tranpsort to the client through rpc. Having said that, I transport multiple records with making the same object an array. So "MyEmployee employee" or MyEmployee[] emploees.
