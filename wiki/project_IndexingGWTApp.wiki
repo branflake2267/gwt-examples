@@ -1,5 +1,8 @@
 #summary getting your application indexed in a search engine.
 
+=Table of Contents= 
+<wiki:toc max_depth="2" />
+
 = Indexing and your Application =
  My application entirely exists in javascript therefore a search engine spider hasn't been able to figure out where the content is. So here what I have been doing to get my content indexed so it's useful to other people.
 
