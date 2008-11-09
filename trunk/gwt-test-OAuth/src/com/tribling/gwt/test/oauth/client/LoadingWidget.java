@@ -66,6 +66,9 @@ public class LoadingWidget extends Composite {
 	 * @param s
 	 */
 	public void setHTML(String s) {
+		
+		s = Global.removeBadHtmlTags(s);
+		
 		html.setVisible(true);
 		html.setHTML(s);
 	}
