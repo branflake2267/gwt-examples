@@ -20,7 +20,7 @@
 
 
  = Unix Time Stamp =
-  get unix time stamp from Date()
+ get unix time stamp from Date()
 {{{
 private int getUnixTimeStamp() {
 	Date date = new Date();
