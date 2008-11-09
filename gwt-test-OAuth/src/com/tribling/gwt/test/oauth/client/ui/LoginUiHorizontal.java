@@ -54,10 +54,10 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	private	FlowPanel pUi = new FlowPanel();
 	
 	// login button
-	private PushButton bLogin;
+	private PushButton bLogin = new PushButton("Login");
 	
 	// forgot password, ask for it
-	private PushButton bForgot;
+	private PushButton bForgot = new PushButton("Get Password");
 	
 	private Hyperlink hAccountSettings;
 	private Hyperlink hAccountCreate;
@@ -135,7 +135,9 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	 */
 	public void autoLogin(String email, String password) {
 		tbConsumerKey.setText(email);
-		tbConsumerSecret.setText(password);
+		tbConsumerSecret.setVisible(false);
+		tbConsumerSecretPass.setVisible(true);
+		tbConsumerSecretPass.setText(password);
 		
 		fireChange(LOGIN);
 	}
@@ -150,7 +152,7 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		pWidget.clear();
 		
 		cbRemberMe.setText("Remember Me");
-		bLogin = new PushButton("Login");
+		
 		
 		hAccountCreate = new Hyperlink("Create Account", "account_Create");
 		
@@ -210,7 +212,6 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		// reset ui
 		pWidget.clear();
 		
-		bForgot = new PushButton("Get Password");
 		bForgot.setTitle("This will reset your password, and send you a email of the new password to login.");
 
 		HorizontalPanel hp = new HorizontalPanel();
@@ -227,6 +228,8 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	}
 	
 	private void drawLoggedIn() {
+		hideLoading();
+		
 		hAccountSettings = new Hyperlink("My Account","account");
 		hAccountLogout = new Hyperlink("Logout", "account_Logout");
 		
@@ -237,6 +240,8 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	}
 	
 	private void drawError(String error) {
+		hideLoading();
+		
 		pError.clear();
 		pError.setVisible(true);
 		
@@ -277,12 +282,18 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		return consumerSecret;
 	}
 	
-	public void drawLoading() {
+	private void drawLoading() {
 		wLoading.show();
+		
+		tbConsumerKey.setEnabled(false);
+		tbConsumerSecretPass.setEnabled(false);
 	}
 	
-	public void hideLoading() {
+	private void hideLoading() {
 		wLoading.hide();
+		
+		tbConsumerKey.setEnabled(true);
+		tbConsumerSecretPass.setEnabled(false);
 	}
 	
 	private void checkInputLabel_key(boolean click) {
@@ -336,8 +347,10 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 
 	public void onClick(Widget sender) {
 		if (sender == bLogin) {
+			drawLoading();
 			fireChange(LOGIN);
 		} else if (sender == bForgot) {
+			drawLoading();
 			fireChange(FORGOT_PASSWORD);
 		} else if (sender == tbConsumerKey) {
 			checkInputLabel_key(true);

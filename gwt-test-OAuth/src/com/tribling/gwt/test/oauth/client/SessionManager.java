@@ -20,6 +20,9 @@ public class SessionManager {
 	// div tag that holds the login ui widget
 	private String loginUiDiv;
 	
+	// TODO - move this to LoginUi, as the master of the User Input systems one could use, horizontal, vertical, separate forgot...
+	// TODO - will do this later, as to the complication to code
+	private LoginUiHorizontal loginUi = new LoginUiHorizontal();
 		
 	/**
 	 * constructor
@@ -59,6 +62,7 @@ public class SessionManager {
 		// TODO - check for saved session cookie
 		// TODO - if session cookie, auto login
 		// TODO - move drawLoginUi to its own public method
+		// TODO - add logic to decide which UI to use, how to do this, has to be done later
 		drawLoginUi();
 	}
 	
@@ -71,7 +75,7 @@ public class SessionManager {
 	 * @param password
 	 */
 	public void autoLogin(String email, String password) {
-		
+		loginUi.autoLogin(email, password);
 	}
 	
 	public SessionData getSession() {
@@ -84,7 +88,6 @@ public class SessionManager {
 	}
 	
 	private void drawLoginUi() {
-		LoginUiHorizontal loginUi = new LoginUiHorizontal();
 		RootPanel.get(loginUiDiv).add(loginUi);
 		loginUi.draw();
 	}
