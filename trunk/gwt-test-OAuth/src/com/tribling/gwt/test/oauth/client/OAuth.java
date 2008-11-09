@@ -4,6 +4,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.ChangeListenerCollection;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
@@ -14,26 +15,30 @@ import com.google.gwt.user.client.ui.Widget;
 import com.tribling.gwt.test.oauth.client.rpc.RpcService;
 import com.tribling.gwt.test.oauth.client.rpc.RpcServiceAsync;
 import com.tribling.gwt.test.oauth.client.tests.TestRpcCall;
-import com.tribling.gwt.test.oauth.client.ui.LoginHorizontal;
+import com.tribling.gwt.test.oauth.client.ui.LoginUiHorizontal;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class OAuth implements EntryPoint {
 
+	// this manages the users priviledges to protected resources
+	private SessionManager sessionManager;
+
+	
 	/**
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
 
-		// test the stuff needed
-		//testStuff();
-		
 		// Manage the application's session
-		SessionManager sessionManager = new SessionManager();
+		sessionManager = new SessionManager();
 		sessionManager.setLoginUiDiv("LoginUI");
-				
+		// TODO - separate method to start the process 
 
+		// test and debug stuff
+		// testStuff();
+				
 	}
 	
 	/**

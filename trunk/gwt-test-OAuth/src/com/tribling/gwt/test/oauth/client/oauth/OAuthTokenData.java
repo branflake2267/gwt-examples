@@ -76,7 +76,7 @@ public class OAuthTokenData implements IsSerializable {
 	 */
 	public OAuthTokenData() {
 		oauth_nounce = getNounce();
-		oauth_timestamp = getUnixTimeStamp();
+		oauth_timestamp = getTimeStamp();
 		oauth_version = "1.0";
 	}
 	
@@ -87,22 +87,22 @@ public class OAuthTokenData implements IsSerializable {
 	 * 
 	 * Reference SPEC A.5.1 
 	 * 
-	 * @param requestUrl
+	 * @param url
 	 */
-	public String getSignatureBaseString(String requestUrl) {
+	public String getSignatureBaseString(String url) {
 		
-		if (requestUrl == null) {
+		if (url == null) {
 			System.out.println("need request url");
 		}
 
-		if (requestUrl.length() == 0) {
+		if (url.length() == 0) {
 			System.out.println("need request url");
 		}
 		
 		// skip signature, thats what this does
 		String s = "";
 		s += "RPC&";
-		s += requestUrl + "&";
+		s += url + "&";
 		s += "oauth_callback=" + oauth_callback+ "&";
 		s += "oauth_consumer_key=" + oauth_consumer_key+ "&";
 		s += "oauth_nounce=" + oauth_nounce+ "&";
@@ -117,6 +117,11 @@ public class OAuthTokenData implements IsSerializable {
 		return s;
 	}
 	
+	/**
+	 * make a random string - prevents replay attack
+	 * 
+	 * @return
+	 */
 	private String getNounce() {
 		int nounceLength = 6;
 		String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
@@ -129,14 +134,19 @@ public class OAuthTokenData implements IsSerializable {
 	    return s;
 	}
 	
-	private int getUnixTimeStamp() {
+	/**
+	 * create a timestamp, seconds since the epoch. 
+	 * 
+	 * @return
+	 */
+	private int getTimeStamp() {
 		Date date = new Date();
 		int iTimeStamp = (int) (date.getTime() * .001);
 		return iTimeStamp;
 	}
 		
 	/**
-	 * encode 
+	 * encode signature base (url)
 	 * 
      * encode ignores: - _ . ! ~ * ' ( )
      * OAuth dictates the only ones you can ignore are: - _ . ~
