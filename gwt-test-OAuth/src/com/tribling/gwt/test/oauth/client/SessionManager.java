@@ -4,10 +4,10 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.tribling.gwt.test.oauth.client.oauth.SessionData;
-import com.tribling.gwt.test.oauth.client.ui.LoginHorizontal;
+import com.tribling.gwt.test.oauth.client.ui.LoginUiHorizontal;
 
 /**
- * manages the login system 
+ * manages the users session, authentication/authorization to protected resources on a remote server
  * 
  * @author branflake2267
  *
@@ -20,6 +20,7 @@ public class SessionManager {
 	// div tag that holds the login ui widget
 	private String loginUiDiv;
 	
+		
 	/**
 	 * constructor
 	 */
@@ -53,7 +54,24 @@ public class SessionManager {
 		}
 		
 		this.loginUiDiv = loginUiDiv;
+		
+		
+		// TODO - check for saved session cookie
+		// TODO - if session cookie, auto login
+		// TODO - move drawLoginUi to its own public method
 		drawLoginUi();
+	}
+	
+	/**
+	 * use this for testing/debugging
+	 * 
+	 * !!! remove after testing - remove later
+	 * 
+	 * @param email
+	 * @param password
+	 */
+	public void autoLogin(String email, String password) {
+		
 	}
 	
 	public SessionData getSession() {
@@ -66,7 +84,7 @@ public class SessionManager {
 	}
 	
 	private void drawLoginUi() {
-		LoginHorizontal loginUi = new LoginHorizontal();
+		LoginUiHorizontal loginUi = new LoginUiHorizontal();
 		RootPanel.get(loginUiDiv).add(loginUi);
 		loginUi.draw();
 	}
