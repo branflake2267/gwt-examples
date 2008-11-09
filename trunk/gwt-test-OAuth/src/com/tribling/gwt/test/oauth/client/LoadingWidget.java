@@ -3,9 +3,11 @@ package com.tribling.gwt.test.oauth.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
  * make a loading img appear
@@ -15,8 +17,10 @@ import com.google.gwt.user.client.ui.Image;
  */
 public class LoadingWidget extends Composite {
 
-	private HorizontalPanel pWidget = new HorizontalPanel();
-	private HTML html = new HTML();
+	private FlowPanel pWidget = new FlowPanel();
+
+	// in milliseconds, amount of time before hiding
+	private int amountOfTime = 3000;
 	
 	/**
 	 * init widget
@@ -26,14 +30,11 @@ public class LoadingWidget extends Composite {
 		String sImage = GWT.getModuleBaseURL() + "/images/loading.gif";
 	    Image image = new Image(sImage);
 		
-	    pWidget.add(new HTML("&nbsp;"));
 	    pWidget.add(image);
-	    pWidget.add(new HTML("&nbsp;"));
-	    pWidget.add(html);
-
+	    
 	    initWidget(pWidget);
 	    
-	    pWidget.setStyleName("loadingImage");
+	    pWidget.setStyleName("LoadingImage");
 	    
 	    hide();
 	}
@@ -53,27 +54,6 @@ public class LoadingWidget extends Composite {
 	}
 	
 	/**
-	 * show with text
-	 * @param s
-	 */
-	public void show(String s) {
-		show();
-		setHTML(s);
-	}
-	
-	/**
-	 * set text for loading
-	 * @param s
-	 */
-	public void setHTML(String s) {
-		
-		s = Global.removeBadHtmlTags(s);
-		
-		html.setVisible(true);
-		html.setHTML(s);
-	}
-
-	/**
 	 *  hide timed
 	 */
 	public void hideTimed() {
@@ -84,7 +64,13 @@ public class LoadingWidget extends Composite {
 				pWidget.setVisible(false);
 			}
 		};
-		t.schedule(3000);
+		t.schedule(amountOfTime);
 	}
 
+	public void hideTimed(int amountOfTime) {
+		this.amountOfTime = amountOfTime;
+		hideTimed();
+	}
+	
+	
 }

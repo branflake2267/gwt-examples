@@ -41,7 +41,7 @@ public class OAuth implements EntryPoint, ClickListener {
 		// TODO - separate method to start the process 
 
 		// test and debug stuff
-		// testStuff();
+		testStuff();
 		
 		
 		HorizontalPanel hp = new HorizontalPanel();
