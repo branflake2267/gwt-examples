@@ -109,3 +109,15 @@ public EmployeeData[] getEmployees() {
 
 }
 }}}
+
+=Remove Bad HTML Tags=
+ removing bad html tags when sticking html on a page through a method.
+{{{
+public static String removeBadHtmlTags(String html) {
+			
+	html = html.replaceAll("(<(?i:/script|script)[^>]*>)", "");
+	html = html.replaceAll("(<(?i:/embed|embed)[^>]*>)", "");
+	
+	return html;
+}
+}}}
