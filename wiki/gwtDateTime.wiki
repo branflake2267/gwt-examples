@@ -30,7 +30,7 @@ private int getUnixTimeStamp() {
 }}}
 
 = TimeStamp - Start and End Of Day =
-Get the beginning/start of the day in seconds - using Calendar
+ Get the beginning/start of the day in seconds - using Calendar
 {{{
 /**
  * get Start of Day Time Stamp in seconds
