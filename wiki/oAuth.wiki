@@ -19,7 +19,7 @@
   [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/gwt-test-OAuth] - My Eclipse project 
 
 = Demo =
-[http://gawkat.com/OAuth/] - Current build - under development
+ [http://gawkat.com/OAuth/] - Current build - under development
 
 = Available Secure Hash Functions =
  [http://pajhome.org.uk/crypt/md5/sha1src.html] - sha1.js hash functions
