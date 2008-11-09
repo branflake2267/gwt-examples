@@ -10,13 +10,13 @@
 = Quick Tips =
  Quick tips that might help you. These are things that I have learned along the way that make my job easier.
 
-== Console/Syslog Debugging ==
+= Console/Syslog Debugging =
  Using System.out.println to print to debugger console or when running it on the server it will print to the /var/log/Syslog which is very helpful for debugging.
 {{{
 System.out.println("MyMethod has this var: " + this.MyVar);
 }}}
 
-== Print RPCs Serialized Response ==
+= Print RPCs Serialized Response =
  I found this in GWT sample Dynamic Table. I love this function b/c it prints out the object that will be sent in the RPC. Put this snippet in your server side of the rpc call, MyServerImpl.java class. 
 {{{
 //stick this in your server side, MyServiceImpl.java class
@@ -30,7 +30,7 @@ protected void onAfterResponseSerialized(String serializedResponse) {
 }
 }}}
 
-== Serialization - Passing Data Around ==
+= Serialization - Passing Data Around =
  I love this way of moving data around from client to server, server to client and between classes. This has got to be one of the coolest tricks.
 
 {{{
@@ -59,7 +59,7 @@ public class BibleData implements IsSerializable {
 }
 }}}
 
-== Image ==
+= Image =
  Show an external image on your page.
 {{{
 //stick the image in the ~/www folder
@@ -69,7 +69,7 @@ Image image = new Image(sImage);
 pLoading.add(image);
 }}}
 
-== String Comparison ==
+= String Comparison =
  You can compare strings like this.
 {{{
 //myString.equals(OtherString) is boolean
@@ -108,7 +108,7 @@ if (myString == null || myString == "") {
 
 }}}
 
-== Clicklistener ==
+= Clicklistener =
  Avoid calling a listener more than once! Add the clicklistener in the constructor of the widget not a method called over and over. Every time you call a method with a clicklister, you add another observer to that object. Then if you want to do something with that object, you may cause multiples of something to happen, which is annoying!
 {{{
 private HorizontalPanel pWidgetContent = new HorizontalPanel();
@@ -137,7 +137,7 @@ public void onClick(Widget sender) {
 }
 }}}
 
-== Keyboardlistener ==
+= Keyboardlistener =
  * Example of a keyboard listener. Listen to ten key or number pad with numlock on.
  * [http://google-web-toolkit.googlecode.com/svn/javadoc/1.4/com/google/gwt/user/client/ui/KeyboardListener.html GWT Interface KeyboardListener Reference]
  * Google Example on the [http://google-web-toolkit.googlecode.com/svn/javadoc/1.4/com/google/gwt/user/client/ui/TextBox.html  Textbox]
@@ -222,7 +222,7 @@ public class CalculatorWidget extends Composite implements ClickListener, Keyboa
 }
 }}}
 
-== Get ListBox Value's Index ==
+= Get ListBox Value's Index =
  Here is a method used to find the value's index, so then you can setSelected for listbox by value. 
 {{{
 /**
@@ -247,7 +247,7 @@ public int getListBoxIndexByValue(ListBox lb, String SelectedValue) {
 }
 }}}
 
-== Get Widget(s) Data In a Panel ==
+= Get Widget(s) Data In a Panel =
  Getting Widgets in a panel is a nice way to interact with widgets you make. You can add several widgets into a panel, and get all of them by looping through the widgets in the panel. I make a specific panel to put all my reminder widgets in. Then I gather data and use it elsewhere.
 {{{
 /**
@@ -277,7 +277,7 @@ private ReminderData[] getReminderData() {
 }
 }}}
 
-== Observe Events On Vertical Panel ==
+= Observe Events On Vertical Panel =
  Add this class and use it just like you would a vertical panel. This extends vertical panel and allows you to watch for events on the panel. This class below is only watching for clicks, but you can watch for all the events by adding them to sink events.
 
 {{{
