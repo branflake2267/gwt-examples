@@ -3,7 +3,7 @@
 ====Advertising====
 [http://click.linksynergy.com/fs-bin/click?id=QCdCuKxPYyY&offerid=135505.10000397&type=4&subid=0 http://cdn.netflix.com/us/affiliates/banners/0804/120090A_599.gif][http://ad.linksynergy.com/fs-bin/show?id=QCdCuKxPYyY&bids=135505.10000397&type=4&subid=0&fromGoogleCode.png]   [http://click.linksynergy.com/fs-bin/click?id=QCdCuKxPYyY&offerid=146261.10003722&type=4&subid=0 http://images.apple.com/itunesaffiliates/US/2008/10/04/AsteroidsGalaxy_120x90.jpg][http://ad.linksynergy.com/fs-bin/show?id=QCdCuKxPYyY&bids=146261.10003722&type=4&subid=0&fromGoogleCode.png]     [http://click.linksynergy.com/fs-bin/click?id=QCdCuKxPYyY&offerid=164496.10000003&type=4&subid=0 http://www.popcornopolis.com/landingpages/2008/banners/fall_08/120x90_tin.gif][http://ad.linksynergy.com/fs-bin/show?id=QCdCuKxPYyY&bids=164496.10000003&type=4&subid=0&fromGoogleCode.png]    [http://click.linksynergy.com/fs-bin/click?id=QCdCuKxPYyY&offerid=137601.10000059&type=4&subid=0 http://marketing.vistaprint.com/us/imgs/bannerads/FALL_120x90.gif][http://ad.linksynergy.com/fs-bin/show?id=QCdCuKxPYyY&bids=137601.10000059&type=4&subid=0&fromGoogleCode.png]    [http://click.linksynergy.com/fs-bin/click?id=QCdCuKxPYyY&offerid=129871.10000065&type=4&subid=0 http://www.acronym.com/sirius/SIRIUS%20Banners/NFL/120x90_nfl.gif][http://ad.linksynergy.com/fs-bin/show?id=QCdCuKxPYyY&bids=129871.10000065&type=4&subid=0&fromGoogleCode.png]
 
-* I am building an oauth gwt application. I will provide a complete example shortly. 
+== I am building an oauth gwt application. Under Development Nov 2008. ==
 
 = oAuth and GWT =
  This is my example of using oAuth in my gwt application for user authentication to protected resources. My goal, not to pass user credentials across the web. I also want to open up the possibilities of using other oAuth applications.
@@ -18,6 +18,8 @@
  == My SVN Source ==
   [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/gwt-test-OAuth] - My Eclipse project 
 
+= Demo =
+[http://gawkat.com/OAuth/] - Current build - under development
 
 = Available Secure Hash Functions =
  [http://pajhome.org.uk/crypt/md5/sha1src.html] - sha1.js hash functions
