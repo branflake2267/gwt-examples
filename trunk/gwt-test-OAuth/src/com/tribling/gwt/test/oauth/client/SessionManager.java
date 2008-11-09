@@ -58,7 +58,7 @@ public class SessionManager {
 	
 	public SessionData getSession() {
 		if (session == null) {
-			// TODO - move to login?
+			// TODO - ask to login?
 			return null;
 		}
 		
