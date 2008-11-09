@@ -19,7 +19,7 @@
   * [http://code.google.com/p/bunsenandbeaker/wiki/DevGuideDateAndNumberFormat GWT Date Time Format Incubation] - Documentation
 
 
- = Unix Time Stamp =
+= Unix Time Stamp =
  get unix time stamp from Date()
 {{{
 private int getUnixTimeStamp() {
@@ -29,8 +29,8 @@ private int getUnixTimeStamp() {
 }
 }}}
 
- = TimeStamp - Start and End Of Day =
- Get the beginning/start of the day in seconds - using Calendar
+= TimeStamp - Start and End Of Day =
+Get the beginning/start of the day in seconds - using Calendar
 {{{
 /**
  * get Start of Day Time Stamp in seconds
