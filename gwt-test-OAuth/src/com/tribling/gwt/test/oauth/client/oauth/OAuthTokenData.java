@@ -1,11 +1,13 @@
 package com.tribling.gwt.test.oauth.client.oauth;
 
 import java.util.ArrayList;
+import java.util.Date;
 
+import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class OAuthTokenData implements IsSerializable {
-
+	
 	/*
 	 * 
 	Service Provider:
@@ -62,13 +64,15 @@ public class OAuthTokenData implements IsSerializable {
 	
 	public String oauth_token_secret;
 	
-	public String oauth_version;
+	public String oauth_version = "1.0";
 
 	/**
 	 * constructor - nothing to do here
 	 */
 	public OAuthTokenData() {
-		// nothing
+		oauth_nounce = getNounce();
+		oauth_timestamp = getUnixTimeStamp();
+		oauth_version = "1.0";
 	}
 	
 	/**
@@ -90,155 +94,66 @@ public class OAuthTokenData implements IsSerializable {
 			System.out.println("need request url");
 		}
 		
+		// skip signature, thats what this does
 		String s = "";
 		s += "RPC&";
 		s += requestUrl + "&";
 		s += "oauth_callback=" + oauth_callback+ "&";
 		s += "oauth_consumer_key=" + oauth_consumer_key+ "&";
 		s += "oauth_nounce=" + oauth_nounce+ "&";
-		// skip signature, thats what this does
 		s += "oauth_signautre_method="+ oauth_signature_method+ "&";
 		s += "oauth_timestamp=" + oauth_timestamp+ "&";
 		s += "oauth_token=" + oauth_token+ "&";
 		s += "oauth_token_secret=" + oauth_token_secret+ "&";
 		s += "oauth_version=" + oauth_version;
 		
-		return s;
-	}
-	
-	private String encodeParameter(String s) {
+		s = encode(s);
 		
 		return s;
 	}
 	
-	/**
-	 * G. Consumer accesses protected resources  
-	 * 
-	 * @param oauth_consumer_key
-	 * @param oauth_token
-	 * @param oauth_signature_method
-	 * @param oauth_signature
-	 * @param oauth_timestamp
-	 * @param oauth_nonce
-	 * @param oauth_version
-	 */
-	public void setConsumerAccessesProtectedResources(
-			String oauth_consumer_key, 
-			String oauth_token,
-			String oauth_signature_method,
-			String oauth_signature,
-			int oauth_timestamp,
-			String oauth_nonce,
-			String oauth_version) {
-		this.oauth_consumer_key = oauth_consumer_key;
-		this.oauth_token = oauth_token;
-		this.oauth_signature_method = oauth_signature_method;
-		this.oauth_signature = oauth_signature;
-		this.oauth_timestamp = oauth_timestamp;
-		this.oauth_nounce = oauth_nonce;
-		this.oauth_version = oauth_version; 
+	private String getNounce() {
+		int nounceLength = 6;
+		String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+		
+		String s = "";
+	    for (int i=0; i < nounceLength; i++) {
+	    	int rnum = (int) Math.floor(Math.random() * chars.length());
+            s += chars.substring(rnum, rnum+1);
+	    }
+	    return s;
 	}
 	
-	/**
-	 * C. Consumer directs user to service provider
-	 * 
-	 * @param oauth_token - [optional]
-	 * @param oauth_callback - [optional]
-	 */
-	public void setConsumerDirectUserToServiceProvider(
-			String oauth_token, 
-			String oauth_callback) {
-		this.oauth_token = oauth_token;
-		this.oauth_callback = oauth_callback;
+	private int getUnixTimeStamp() {
+		Date date = new Date();
+		int iTimeStamp = (int) (date.getTime() * .001);
+		return iTimeStamp;
 	}
-	
+		
 	/**
-	 * E. Consumer requests access token
+	 * encode 
 	 * 
-	 * @param oauth_consumer_key
-	 * @param oauth_token
-	 * @param oauth_signature_method
-	 * @param oauth_signature
-	 * @param oauth_timestamp
-	 * @param oauth_nonce
-	 * @param oauth_version - [optional]
+     * encode ignores: - _ . ! ~ * ' ( )
+     * OAuth dictates the only ones you can ignore are: - _ . ~
+     * Source: http://developer.mozilla.org/en/docs/Core_JavaScript_1.5_Reference:Global_Functions:encodeURIComponent
+     *
+	 * @param s
+	 * @return
 	 */
-	public void setConsumerRequestsAccessToken(
-			String oauth_consumer_key, 
-			String oauth_token,
-			String oauth_signature_method,
-			String oauth_signature,
-			int oauth_timestamp,
-			String oauth_nonce,
-			String oauth_version) {
-		this.oauth_consumer_key = oauth_consumer_key;
-		this.oauth_token = oauth_token;
-		this.oauth_signature_method = oauth_signature_method;
-		this.oauth_signature = oauth_signature;
-		this.oauth_timestamp = oauth_timestamp;
-		this.oauth_nounce = oauth_nonce;
-		this.oauth_version = oauth_version; 
-	}
-
-	/**
-	 * A. Consumer Requests Request Token
-	 * 
-	 * @param oauth_consumer_key
-	 * @param oauth_signature_method
-	 * @param oauth_signature
-	 * @param oauth_timestamp
-	 * @param oauth_nonce
-	 * @param oauth_version - [optional]
-	 */
-	public void setConsumerRequestsRequestToken(
-			String oauth_consumer_key, 
-			String oauth_signature_method, 
-			String oauth_signature, 
-			int oauth_timestamp, 
-			String oauth_nonce,
-			String oauth_version) {
-		this.oauth_consumer_key = oauth_consumer_key;
-		this.oauth_signature_method = oauth_signature_method;
-		this.oauth_signature = oauth_signature;
-		this.oauth_timestamp = oauth_timestamp;
-		this.oauth_nounce = oauth_nonce;
-		this.oauth_version = oauth_version; 
-	}
-	
-	/**
-	 * D. Service provider directs user to consumer
-	 * 
-	 * @param oauth_token - [optional]
-	 */
-	public void setServiceProviderDirectsUserToConsuer(
-			String oauth_token) {
-		this.oauth_token = oauth_token;
-	}
-	
-	/**
-	 * F. Service Provider Grants Access Token
-	 *
-	 * @param oauth_token
-	 * @param oauth_token_secret
-	 */
-	public void setServiceProviderGrantsAccessToken(
-			String oauth_token, 
-			String oauth_token_secret) {
-		this.oauth_token = oauth_token;
-		this.oauth_token_secret = oauth_token_secret;
-	}
-	
-	/**
-	 * B. Service Provider Grants Request Token
-	 * 
-	 * @param oauth_token
-	 * @param oauth_token_secret
-	 */
-	public void setServiceProviderGrantsRequestToken(
-			String oauth_token, 
-			String oauth_token_secret) {
-		this.oauth_token = oauth_token;
-		this.oauth_token_secret = oauth_token_secret;
+	private String encode(String s) {
+		if (s == null) {
+			return "";
+		}
+		
+		s = URL.encode(s);
+		
+        s = s.replace("!", "%21");
+        s = s.replace("*", "%2A");
+        s = s.replace("'", "%27");
+        s = s.replace("(", "%28");
+        s = s.replace(")", "%29");
+		
+		return s;
 	}
 	
 }
