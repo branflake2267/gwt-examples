@@ -1,5 +1,6 @@
 package com.tribling.gwt.test.oauth.client.ui;
 
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ChangeListenerCollection;
@@ -84,6 +85,8 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		hp.add(wLoading);
 		hp.add(pUi);
 		
+		pWidget.add(hp);
+		
 		initWidget(pWidget);
 		
 		// observers
@@ -117,6 +120,12 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		// defaults
 		pError.setVisible(false);
 		
+		hp.setCellVerticalAlignment(wLoading, VerticalPanel.ALIGN_MIDDLE);
+		
+		// debug
+		//pWidget.addStyleName("test2");
+
+		
 	}
 	
 	public void draw() {
@@ -134,6 +143,7 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	 * 
 	 */
 	public void autoLogin(String email, String password) {
+		drawLoading();
 		tbConsumerKey.setText(email);
 		tbConsumerSecret.setVisible(false);
 		tbConsumerSecretPass.setVisible(true);
@@ -149,7 +159,7 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		tbConsumerSecretPass.setVisible(false);
 		
 		// reset ui
-		pWidget.clear();
+		pUi.clear();
 		
 		cbRemberMe.setText("Remember Me");
 		
@@ -187,7 +197,7 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		// TODO - move this to a floating overlay
 		vp.add(pError);
 
-		pWidget.add(vp);
+		pUi.add(vp);
 		
 		drawInputLabel_key();
 		drawInputLabel_secret();
@@ -210,7 +220,7 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	private void drawForgotPassword() {
 		
 		// reset ui
-		pWidget.clear();
+		pUi.clear();
 		
 		bForgot.setTitle("This will reset your password, and send you a email of the new password to login.");
 
@@ -220,7 +230,7 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		hp.add(bForgot);
 		hp.add(hAccountLogin);
 		
-		pWidget.add(hp);
+		pUi.add(hp);
 		
 		// style
 		hForgotPassword.addStyleName("login-Ui-InputOptions");
@@ -290,7 +300,7 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	}
 	
 	private void hideLoading() {
-		wLoading.hide();
+		//wLoading.hide();
 		
 		tbConsumerKey.setEnabled(true);
 		tbConsumerSecretPass.setEnabled(false);

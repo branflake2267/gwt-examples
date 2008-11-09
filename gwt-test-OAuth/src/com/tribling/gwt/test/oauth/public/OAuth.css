@@ -30,7 +30,9 @@ body {
   color: #888;
 }
 
- 
+.LoadingImage {
+
+}
 
 .login-Ui {
 	font-size: 90%;
@@ -49,9 +51,11 @@ body {
 
 .login-Ui-InputConsumerKey {
 	width: 120px;
+	margin-right: 3px;
 }
 .login-Ui-InputConsumerSecret {
 	width: 120px;
+	margin-right: 3px;
 }
 
 
