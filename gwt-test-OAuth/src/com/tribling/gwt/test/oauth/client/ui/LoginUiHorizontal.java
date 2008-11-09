@@ -22,9 +22,14 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentC
 import com.tribling.gwt.test.oauth.client.Global;
 import com.tribling.gwt.test.oauth.client.LoadingWidget;
 
-public class LoginHorizontal extends Composite implements ClickListener, KeyboardListener, ChangeListener, FocusListener {
+public class LoginUiHorizontal extends Composite implements ClickListener, KeyboardListener, ChangeListener, FocusListener {
 
 	private ChangeListenerCollection changeListeners;
+	private int changeEvent; 
+	
+	// observe/listen for these events
+	public int LOGIN = 1;
+	public int FORGOT_PASSWORD = 2;
 	
 	// main widget div
 	private FlowPanel pWidget = new FlowPanel();
@@ -54,8 +59,6 @@ public class LoginHorizontal extends Composite implements ClickListener, Keyboar
 	// forgot password, ask for it
 	private PushButton bForgot;
 	
-	// forgot password
-	
 	private Hyperlink hAccountSettings;
 	private Hyperlink hAccountCreate;
 	private Hyperlink hAccountLogout;
@@ -75,7 +78,7 @@ public class LoginHorizontal extends Composite implements ClickListener, Keyboar
 	/**
 	 * constructor
 	 */
-	public LoginHorizontal() {
+	public LoginUiHorizontal() {
 	
 		HorizontalPanel hp = new HorizontalPanel();
 		hp.add(wLoading);
@@ -84,6 +87,9 @@ public class LoginHorizontal extends Composite implements ClickListener, Keyboar
 		initWidget(pWidget);
 		
 		// observers
+		bLogin.addClickListener(this);
+		bForgot.addClickListener(this);
+		
 		tbConsumerKey.addClickListener(this);
 		tbConsumerKey.addChangeListener(this);
 		tbConsumerKey.addKeyboardListener(this);
@@ -115,12 +121,23 @@ public class LoginHorizontal extends Composite implements ClickListener, Keyboar
 	
 	public void draw() {
 		
-		//TODO - check for saved session cookie
-		
 		if (loginStatus == false) {
 			drawLoginInputs();
 		} 
 		
+	}
+	
+	/**
+	 * auto put a name and password in, and submit for testing/debugging
+	 * 
+	 * !!!! Remove me later - for testing
+	 * 
+	 */
+	public void autoLogin(String email, String password) {
+		tbConsumerKey.setText(email);
+		tbConsumerSecret.setText(password);
+		
+		fireChange(LOGIN);
 	}
 	
 	private void drawLoginInputs() {
@@ -293,7 +310,19 @@ public class LoginHorizontal extends Composite implements ClickListener, Keyboar
 			tbConsumerSecretPass.setVisible(false);
 		} 
 	}
-
+	
+	public int getChangeEvent() {
+		return changeEvent;
+	}
+	
+	private void fireChange(int changeEvent) {
+		this.changeEvent = changeEvent;
+		
+		if (changeListeners != null) {
+			changeListeners.fireChange(this);
+		}
+	}
+	
 	public void addChangeListener(ChangeListener listener) {
 		if (changeListeners == null)
 			changeListeners = new ChangeListenerCollection();
@@ -304,9 +333,13 @@ public class LoginHorizontal extends Composite implements ClickListener, Keyboar
 		if (changeListeners != null)
 			changeListeners.remove(listener);
 	}
-	
+
 	public void onClick(Widget sender) {
-		if (sender == tbConsumerKey) {
+		if (sender == bLogin) {
+			fireChange(LOGIN);
+		} else if (sender == bForgot) {
+			fireChange(FORGOT_PASSWORD);
+		} else if (sender == tbConsumerKey) {
 			checkInputLabel_key(true);
 		} else if (sender == tbConsumerSecret) {
 			changePasswordInput();
