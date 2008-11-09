@@ -1,11 +1,16 @@
 package com.tribling.gwt.test.oauth.client.oauth;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
+/**
+ * oAuth data to pass around from client to server and server to client
+ * 
+ * @author branflake2267
+ *
+ */
 public class OAuthTokenData implements IsSerializable {
 	
 	/*
@@ -67,7 +72,7 @@ public class OAuthTokenData implements IsSerializable {
 	public String oauth_version = "1.0";
 
 	/**
-	 * constructor - nothing to do here
+	 * constructor - init
 	 */
 	public OAuthTokenData() {
 		oauth_nounce = getNounce();
