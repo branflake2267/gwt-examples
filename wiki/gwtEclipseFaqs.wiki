@@ -23,15 +23,18 @@
  == Extending Eclipse ==
    * [http://dev.mysql.com/downloads/connector/j/5.1.html Link To MySQL] - JDBC Connector
    * [http://metrics.sourceforge.net] - Code Metrics - How many lines of code do you have?
- 
-  === Configuration Details ===
-   goto: Help > About Eclipse Platform > Configuration Details (button)
 
-== Importing My Projects From SVN ==
+
+= Importing My Projects From SVN =
   # You can import these projects into your Eclipse.org IDE. SVN URL: [http://gwt-examples.googlecode.com/svn/trunk/]
   # Once imported, change your project's build path to the correct libraries. Change the build path library for gwt-linux home directory. I set mine to */opt/gwt-linux* which is linked to the current Google Web toolkit download that I have.
   # Location: Eclipse > Right Click Project > Build Path > Libraries Tab >
   # Open the debug dialog in eclipse and look for java application. Select the gwt application and hit debug.
+
+= Tips =
+
+== Get Your Configuration Details ==
+ goto: Help > About Eclipse Platform > Configuration Details (button)
 
 == Make Eclipse Faster ==
  Goto your task manager Linux or Windows and change the processing priority. Beware it could lock up other resources.
@@ -39,78 +42,97 @@
 == JDBC Connector ==
  If you want to use this project's mysql jdbc connector make sure you have it in */opt/gwt-linux*. /opt/gwt-linux/mysql-connector-java-5.0.8-bin.jar
  Or change the build path by right clicking on the eclipse project, select "Build Path", then change or add the mysql jdb connectory library.
- # Get JConnector MySQL JDBC [http://dev.mysql.com/downloads/connector/j/5.1.html Link To MySQL]
- # Eclipse > Right Click Project > Build Path > Libraries Tab > Add External Jar > Add /opt/gwt-linux/mysql-connector-java-5.0.8-bin.jar
-
-
+  # Get JConnector MySQL JDBC [http://dev.mysql.com/downloads/connector/j/5.1.html Link To MySQL]
+  # Eclipse > Right Click Project > Build Path > Libraries Tab > Add External Jar > Add /opt/gwt-linux/mysql-connector-java-5.0.8-bin.jar
 
 == GWT_Home Directory ==
  I put GWT Home Directory system link as */opt/gwt-linux* which links to the current version in */opt/google/gwt/gwt-linux.version*. Or right click on the eclipse project and select _"Build Path"_, and change the library to the correct location for your GWT Home directory.
 
- === Setting Enviromental Variable GWT_HOME ===
-  If you want to use a enviromental variable
-  # Edit /etc/environment (sudo gedit /etc/environment)
-  # Add this
+== Error: To Many Files Open ==
+ You have to run eclipse from shell to get this error output. 
+
+ Test how many files can be open during your session
+{{{
+ulimit -n
+}}}
+
+ Enviroment Vars
+{{{
+#In /etc/security/limits.conf (on my ubuntu linux box)
+#sudo pico /etc/security/limits.conf - edit it from shell
+
+#I adjusted this so eclipse will work with more java files
+*       soft    nofile          10000
+*       hard    nofile          10000
+
+#user specific
+#username hard nofile 10000
+}}}
+
+== Setting Enviromental Variable GWT_HOME ==
+ If you want to use a enviromental variable
+   # Edit /etc/environment (sudo gedit /etc/environment)
+   # Add this
 {{{
 GWT_HOME="/opt/gwt-linux" 
 }}}
-  # Or Add it to ~/.profile
+   # Or Add it to ~/.profile
 {{{
  export GWT_HOME="/opt/gwt-linux" 
 }}}
-  # Test it in bash/shell
+   # Test it in bash/shell
 {{{
 echo $GWT_HOME
 }}}
- === Eclispe Build Path To gwt-user.jar ===
+
+== Eclispe Build Path To gwt-user.jar ==
  This is my gwt-linux home directory location, and I use this build path for my projects.
- * Eclipse > Right Click Project > Build Path > Libraries Tab > Add External Jar > Add /opt/gwt-linux/gwt-user.jar
+  * Eclipse > Right Click Project > Build Path > Libraries Tab > Add External Jar > Add /opt/gwt-linux/gwt-user.jar
 
 == GWT_EXTERNAL_BROWSER ==
- How to add GWT External Browser linux environment variable for Eclipse.
+  How to add GWT External Browser linux environment variable for Eclipse.
 
- # Edit /etc/environment (sudo gedit /etc/environment) 
- # Add this
+   # Edit /etc/environment (sudo gedit /etc/environment) 
+   # Add this
 {{{
 # restart user session for this to take effect
 GWT_EXTERNAL_BROWSER="/usr/local/firefox32/firefox"
 }}}
- # or add it to ~/.profile (user home directory)
+   # or add it to ~/.profile (user home directory)
 {{{
 export GWT_EXTERNAL_BROWSER="/usr/local/firefox32/firefox"
 }}}
- # Test it in bash/shell
+   # Test it in bash/shell
 {{{
 echo $GWT_EXTERNAL_BROWSER
 }}}
 
  
 
-= Running 32bit JVM for GWT =
-Use a 64bit JVM with Eclipse IDE and run your application in a separate 32bit JVM. You will need change your projects debug configuration to a 32bit JVM.
+== Running 32bit JVM for GWT ==
+ Use a 64bit JVM with Eclipse IDE and run your application in a separate 32bit JVM. You will need change your projects debug configuration to a 32bit JVM.
 
- * You can use Eclipse with a 64-bit System JVM
- * You can use separate JVM for each eclipse Project.
+  * You can use Eclipse with a 64-bit System JVM
+  * You can use separate JVM for each eclipse Project.
 
- == Other References ==
-  [http://code.google.com/p/google-web-toolkit/issues/detail?id=135#c30] - Another explanation
+  === Other References ===
+    [http://code.google.com/p/google-web-toolkit/issues/detail?id=135#c30] - Another explanation
 
- === Change Projects Running JVM ===
-  * This is the easiest way for 32 bit JVM setup for GWT.
-  * Change or add a 32bit JVM in Eclipse project preferences.
-  * install a 32bit jvm from your linux repository. like _ia32-sun-java6-bin_
-  * Goto: Eclipse > Window (Top Menu) > Preferences > Java > Installed JREs > Add JVM
-  Or
-  * GoTo: Debug Configurations > Java Application > GWT Project > (Project Tab) JRE > Alternate JRE > Select JRE Or Install JRE
+  === Change Projects Running JVM ===
+   * This is the easiest way for 32 bit JVM setup for GWT.
+   * Change or add a 32bit JVM in Eclipse project preferences.
+   * install a 32bit jvm from your linux repository. like _ia32-sun-java6-bin_
+   * Goto: Eclipse > Window (Top Menu) > Preferences > Java > Installed JREs > Add JVM
+   Or
+   * GoTo: Debug Configurations > Java Application > GWT Project > (Project Tab) JRE > Alternate JRE > Select JRE Or Install JRE
   
-   OR
-
- === Changing the default System JVM (Not Recommended) ===
-  # for ubuntu - use galternatives
-  # Install ia32-sun-java6-bin (install 32bit JVM)
-  # Install galternatives (this is how we will change the default JVM)
-  # Run galternatives
-  # Find Java in the List and choose the ia32 JVM
+  OR
+  === Changing the default System JVM (Not Recommended) ===
+   # for ubuntu - use galternatives
+   # Install ia32-sun-java6-bin (install 32bit JVM)
+   # Install galternatives (this is how we will change the default JVM)
+   # Run galternatives
+   # Find Java in the List and choose the ia32 JVM
 {{{
 #Ubuntu method of getting galterantives
 sudo apt-get galternatives
@@ -126,35 +148,31 @@ sudo update-alternatives --config java
 
  * Ubuntu jvms located in: /usr/lib/jvm
 
- === Problems With GWT and 64bit JVM ===
- You will get problems trying to run your GWT application in a 64bit JVM during development. 
+   === Problems With GWT and 64bit JVM ===
+    You will get problems trying to run your GWT application in a 64bit JVM during development. 
 
- Get this error trying to run a GWT project? like: wrong ELF class: ELFCLASS32
+    Get this error trying to run a GWT project? like: wrong ELF class: ELFCLASS32
 {{{
 /gwt-linux/libswt-pi-gtk-3235.so: wrong ELF class: ELFCLASS32 (Possible cause: architecture word width mismatch)
 }}}
 
-  * This Error comes from running 64bit JVM and then GWT tries to use 32bit compiled libraries.
-  * Use a 64bit IDE with and run your application in a 32bit JVM 
+    * This Error comes from running 64bit JVM and then GWT tries to use 32bit compiled libraries.
+    * Use a 64bit IDE with and run your application in a 32bit JVM 
 
- ==== GWT 64-bit Linux Issue ====
-  * [http://code.google.com/p/google-web-toolkit/issues/detail?id=134] - GWT hosted web browser does not work in 64-bit Linux
-  * [http://code.google.com/p/google-web-toolkit/issues/detail?id=135] - Duplicate  
+   ==== GWT 64-bit Linux Issue ====
+    * [http://code.google.com/p/google-web-toolkit/issues/detail?id=134] - GWT hosted web browser does not work in 64-bit Linux
+    * [http://code.google.com/p/google-web-toolkit/issues/detail?id=135] - Duplicate  
 
- ==== Prevent Crashes ====
-{{{
-# fredsa - http://code.google.com/p/google-web-toolkit/issues/detail?id=135#c30
-LIBXCB_ALLOW_SLOPPY_LOCK=true
-}}}
+
 
 == Configuring Eclipse Memory ==
  Configuring more memory for your java JVM to use for your running java application, in this case eclipse.
 
- * Are you getting a eclipse out of memory error?  
- * [http://help.eclipse.org/help33/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/running_eclipse.htm Eclipse Reference Help Link]
+   * Are you getting a eclipse out of memory error?  
+   * [http://help.eclipse.org/help33/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/running_eclipse.htm Eclipse Reference Help Link]
 
- Change paramenters in ~/.eclipse/eclipserc
- This is great for picking the java jvm without editing any files that have strictor permissions
+   * Change paramenters in ~/.eclipse/eclipserc
+   * This is great for picking the java jvm without editing any files that have strictor permissions
 {{{
 # ~/.eclipse/eclipserc
 
@@ -215,36 +233,24 @@ exec /usr/lib/eclipse/eclipse \
 eclipse -XX:PermSize=128m -XX:MaxPermSize=512m
 }}}
 
+= Debugging =
 
-
-== Watching Traces of Eclipse Crashes ==
- Does eclipse glitch when you load it. Does eclipse fail to load? Does eclipse crash on loading up or in the middle of operating?
-
- * Run eclipse from a shell, it will output trace on crash.
- * You can also check log in: /usr/lib/eclipse/configuration
- * User settings are in and user log: ~/workspace/.metadata
- * I suggest only installing one feature at a time then testing it. If you get carried away  you could find yourself reinstalling eclipse.
- * Just a tip I have learned. Install the features from the Europa or Eclipse update sites first, then, install the other features.
-
-== Error: To Many Files Open ==
- You have to run eclipse from shell to get this error output. 
-
- Test how many files can be open during your session
+ == Prevent Crashes ==
 {{{
-ulimit -n
+# fredsa - http://code.google.com/p/google-web-toolkit/issues/detail?id=135#c30
+LIBXCB_ALLOW_SLOPPY_LOCK=true
 }}}
 
-{{{
-#In /etc/security/limits.conf (on my ubuntu linux box)
-#sudo pico /etc/security/limits.conf - edit it from shell
+ == Watching Traces of Eclipse Crashes ==
+  Does eclipse glitch when you load it. Does eclipse fail to load? Does eclipse crash on loading up or in the middle of operating?
 
-#I adjusted this so eclipse will work with more java files
-*       soft    nofile          10000
-*       hard    nofile          10000
+   * Run eclipse from a shell, it will output trace on crash.
+   * You can also check log in: /usr/lib/eclipse/configuration
+   * User settings are in and user log: ~/workspace/.metadata
+   * I suggest only installing one feature at a time then testing it. If you get carried away  you could find yourself reinstalling eclipse.
+   * Just a tip I have learned. Install the features from the Europa or Eclipse update sites first, then, install the other features.
 
-#user specific
-#username hard nofile 10000
-}}}
+
 
 
 == Eclipse 3.3 Update ==
