@@ -1,10 +1,10 @@
 #summary List of my best practices
 
-= My Best Practices =
- I wanted to list my best practices here, so I can remember what I do for certain situations that are occurring over and over. This is what I found works best for me. 
-
 =Table of Contents= 
 <wiki:toc max_depth="2" />
+
+= About My Best Practices =
+ I wanted to list my best practices here, so I can remember what I do for certain situations that are occurring over and over. This is what I found works best for me. 
 
 = Data Transport =
  Transporting RPC data client to server and server to client. 
