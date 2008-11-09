@@ -20,12 +20,20 @@
 
 
 = Unix Time Stamp =
- get unix time stamp from Date()
+ Seconds since the epoch. Get unix time stamp from java.util.Date
 {{{
 private int getUnixTimeStamp() {
 	Date date = new Date();
 	int iTimeStamp = (int) (date.getTime() * .001);
 	return iTimeStamp;
+}
+}}}
+
+ Get milliseconds from epoch.
+{{{
+private long getTimeStampMilli() {
+	Date date = new Date();
+	return date.getTime();
 }
 }}}
 
