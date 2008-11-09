@@ -7,7 +7,7 @@
 =Table of Contents= 
 <wiki:toc max_depth="2" />
 
-= About Quick Tips =
+= Quick Tips =
  Quick tips that might help you. These are things that I have learned along the way that make my job easier.
 
 == Console/Syslog Debugging ==
