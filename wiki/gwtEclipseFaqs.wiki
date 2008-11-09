@@ -90,19 +90,19 @@ echo $GWT_HOME
   * Eclipse > Right Click Project > Build Path > Libraries Tab > Add External Jar > Add /opt/gwt-linux/gwt-user.jar
 
 == GWT_EXTERNAL_BROWSER ==
-  How to add GWT External Browser linux environment variable for Eclipse.
+ How to add GWT External Browser linux environment variable for Eclipse.
 
-   # Edit /etc/environment (sudo gedit /etc/environment) 
-   # Add this
+  # Edit /etc/environment (sudo gedit /etc/environment) 
+  # Add this
 {{{
 # restart user session for this to take effect
 GWT_EXTERNAL_BROWSER="/usr/local/firefox32/firefox"
 }}}
-   # or add it to ~/.profile (user home directory)
+  # or add it to ~/.profile (user home directory)
 {{{
 export GWT_EXTERNAL_BROWSER="/usr/local/firefox32/firefox"
 }}}
-   # Test it in bash/shell
+  # Test it in bash/shell
 {{{
 echo $GWT_EXTERNAL_BROWSER
 }}}
