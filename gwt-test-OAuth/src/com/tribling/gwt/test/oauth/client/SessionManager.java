@@ -88,7 +88,7 @@ public class SessionManager extends Composite {
 		
 		// is an app consumer key set?
 		if (appConsumerKey == null) {
-			System.out.print(errApKey);
+			System.out.println(errApKey);
 			Window.alert(errApKey);
 		}
 		
