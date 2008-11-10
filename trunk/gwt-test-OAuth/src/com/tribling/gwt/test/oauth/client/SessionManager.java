@@ -39,6 +39,10 @@ public class SessionManager extends Composite {
 	private LoginUi loginUi = new LoginUi();
 	
 	private String errDiv = "No div tag exists for this widget. debug: setLoginUiDiv() <div id='"+loginUiDiv+"'></div>";
+	private String errApKey = "No consumer key was set (for application/web site). debug: setAppConsumerKey()";
+	
+	// this application's consumer key
+	private String appConsumerKey = null;
 	
 	/**
 	 * constructor
@@ -47,6 +51,8 @@ public class SessionManager extends Composite {
 		
 		// init rpc
 		callRpcService = Rpc.initRpc();
+		
+		
 	}
 	
 	/**
@@ -80,6 +86,12 @@ public class SessionManager extends Composite {
 		// set the type of user interface with inputs
 		loginUi.setUi(uiType);
 		
+		// is an app consumer key set?
+		if (appConsumerKey == null) {
+			System.out.print(errApKey);
+			Window.alert(errApKey);
+		}
+		
 		// TODO - check for saved session cookie
 		
 		// TODO - if session cookie, auto login
@@ -96,6 +108,9 @@ public class SessionManager extends Composite {
 		loginUi.draw();
 	}
 	
+	public void setAppConsumerKey(String consumerKey) {
+		this.appConsumerKey = consumerKey;
+	}
 	
 	/**
 	 * use this for testing/debugging
@@ -126,7 +141,7 @@ public class SessionManager extends Composite {
 		String consumerKey = loginUi.getConsumerKey();
 		
 		OAuthTokenData tokenData = new OAuthTokenData();
-		tokenData.oauth_consumer_key = consumerKey;
+		tokenData.oauth_consumer_key = appConsumerKey; // application consumer key
 		// TODO - create signature
 		
 		

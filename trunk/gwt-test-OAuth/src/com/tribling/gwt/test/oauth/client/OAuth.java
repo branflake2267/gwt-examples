@@ -30,6 +30,8 @@ public class OAuth implements EntryPoint, ClickListener, ChangeListener {
 		// Manage the application's session
 		sessionManager = new SessionManager();
 		sessionManager.setLoginUiDiv("LoginUI", LoginUi.LOGIN_HORIZONTAL);
+		// set my application consumer key - for consumer (web site)
+		sessionManager.setAppConsumerKey("Gawkat.com_oAuthApp_01"); 
 		sessionManager.drawUi();
 		
 		// test and debug stuff
