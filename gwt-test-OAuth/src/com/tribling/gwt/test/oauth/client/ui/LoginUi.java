@@ -36,7 +36,7 @@ public class LoginUi extends Composite implements ChangeListener {
 	private LoginUiHorizontal loginUiH = null;
 	private LoginUiVertical loginUiV = null;
 	
-
+	
 	
 	// which ui type was choosen to display
 	private int uiType;
@@ -160,5 +160,7 @@ public class LoginUi extends Composite implements ChangeListener {
 		if (changeListeners != null)
 			changeListeners.remove(listener);
 	}
+
+
 	
 }
