@@ -27,8 +27,8 @@ public class LoginUi extends Composite implements ChangeListener {
 	public static int FORGOT_PASSWORD = 2;
 	
 	// ui types
-	public int LOGIN_HORIZONTAL = 1;
-	public int LOGIN_VERTICAL = 2;
+	public static int LOGIN_HORIZONTAL = 1;
+	public static int LOGIN_VERTICAL = 2;
 	
 	
 	private FlowPanel pWidget = new FlowPanel();
@@ -98,7 +98,32 @@ public class LoginUi extends Composite implements ChangeListener {
 		} else if (uiType == LOGIN_VERTICAL) {
 		}
 	}
+	
+	public String getConsumerKey() {
+		
+		String s = null;
+		if (uiType == LOGIN_HORIZONTAL) {
+			s = loginUiH.getConsumerKey();
+		} else if (uiType == LOGIN_VERTICAL) {
+		}
+		
+		return s;
+	}
+	
+	public String getConsumerSecret() {
+		
+		String s = null;
+		if (uiType == LOGIN_HORIZONTAL) {
+			s = loginUiH.getConsumerSecret();
+		} else if (uiType == LOGIN_VERTICAL) {
+		}
+		
+		return s;
+	}
 
+	public void eraseCredentials() {
+		// TODO - after login, erase the credentials in the login widget
+	}
 	
 	public void onChange(Widget sender) {
 		

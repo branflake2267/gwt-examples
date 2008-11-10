@@ -279,13 +279,13 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		tbConsumerSecret.addStyleName("login-Ui-InputLabel");
 	}
 	
-	private String getConsumerKey() {
+	protected String getConsumerKey() {
 		String consumerKey = tbConsumerKey.getText();
 		consumerKey = Global.removeHtmlTags(consumerKey).trim();
 		return consumerKey; 
 	}
 	
-	private String getConsumerSecret() {
+	protected String getConsumerSecret() {
 		String consumerSecret = tbConsumerSecretPass.getText();
 		consumerSecret = Global.removeHtmlTags(consumerSecret).trim();
 		return consumerSecret;
