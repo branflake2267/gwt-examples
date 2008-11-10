@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.tribling.gwt.test.oauth.client.tests.TestRpcCall;
+import com.tribling.gwt.test.oauth.client.ui.LoginUi;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -28,9 +29,9 @@ public class OAuth implements EntryPoint, ClickListener, ChangeListener {
 
 		// Manage the application's session
 		sessionManager = new SessionManager();
-		sessionManager.setLoginUiDiv("LoginUI");
-		// TODO - separate method to start the process 
-
+		sessionManager.setLoginUiDiv("LoginUI", LoginUi.LOGIN_HORIZONTAL);
+		sessionManager.drawUi();
+		
 		// test and debug stuff
 		testStuff();
 		

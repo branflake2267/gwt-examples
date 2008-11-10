@@ -1,6 +1,7 @@
 package com.tribling.gwt.test.oauth.client.rpc;
 
 import com.google.gwt.user.client.rpc.RemoteService;
+import com.tribling.gwt.test.oauth.client.oauth.OAuthTokenData;
 
 public interface RpcService extends RemoteService {
 
@@ -12,4 +13,11 @@ public interface RpcService extends RemoteService {
 	 */
 	public String testMethod(String s);
 
+	/**
+	 * A. grant request token?
+	 * 
+	 * @param tokenData
+	 * @return
+	 */
+	public OAuthTokenData requestToken(OAuthTokenData tokenData);
 }

@@ -1,11 +1,16 @@
 package com.tribling.gwt.test.oauth.client;
 
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ChangeListenerCollection;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.tribling.gwt.test.oauth.client.oauth.OAuthTokenData;
 import com.tribling.gwt.test.oauth.client.oauth.SessionData;
+import com.tribling.gwt.test.oauth.client.rpc.Rpc;
+import com.tribling.gwt.test.oauth.client.rpc.RpcServiceAsync;
 import com.tribling.gwt.test.oauth.client.ui.LoginUi;
 
 
@@ -18,6 +23,8 @@ import com.tribling.gwt.test.oauth.client.ui.LoginUi;
  */
 public class SessionManager extends Composite {
 
+	public RpcServiceAsync callRpcService;
+	
 	private ChangeListenerCollection changeListeners;
 	private int changeEvent; 
 	
@@ -30,11 +37,16 @@ public class SessionManager extends Composite {
 	// TODO - move this to LoginUi, as the master of the User Input systems one could use, horizontal, vertical, separate forgot...
 	// TODO - will do this later, as to the complication to code
 	private LoginUi loginUi = new LoginUi();
-		
+	
+	private String errDiv = "No div tag exists for this widget. debug: setLoginUiDiv() <div id='"+loginUiDiv+"'></div>";
+	
 	/**
 	 * constructor
 	 */
 	public SessionManager() {
+		
+		// init rpc
+		callRpcService = Rpc.initRpc();
 	}
 	
 	/**
@@ -42,7 +54,7 @@ public class SessionManager extends Composite {
 	 * 
 	 * @param loginUiDiv
 	 */
-	public void setLoginUiDiv(String loginUiDiv) {
+	public void setLoginUiDiv(String loginUiDiv, int uiType) {
 		
 		if (loginUiDiv == null) {
 			System.out.println("loginUiDiv tag is null. debug: setLoginUiDiv()");
@@ -58,18 +70,32 @@ public class SessionManager extends Composite {
 		try {
 			RootPanel.get(loginUiDiv).isAttached();
 		} catch (Exception e) {
-			String err = "No div tag exists for this widget. debug: setLoginUiDiv() <div id='"+loginUiDiv+"'></div>";
-			System.out.println(err);
-			Window.alert(err);
+			System.out.println(errDiv);
+			Window.alert(errDiv);
 		}
 		
+		// what div is the user interface going to be stuck in
 		this.loginUiDiv = loginUiDiv;
 		
+		// set the type of user interface with inputs
+		loginUi.setUi(uiType);
 		
 		// TODO - check for saved session cookie
 		
 		// TODO - if session cookie, auto login
 	}
+	
+	public void drawUi() {
+		try {
+			RootPanel.get(loginUiDiv).isAttached();
+		} catch (Exception e) {
+			System.out.println(errDiv);
+			Window.alert(errDiv);
+		}
+		RootPanel.get(loginUiDiv).add(loginUi);
+		loginUi.draw();
+	}
+	
 	
 	/**
 	 * use this for testing/debugging
@@ -92,16 +118,20 @@ public class SessionManager extends Composite {
 		return session;
 	}
 	
-	private void drawLoginUi() {
-		RootPanel.get(loginUiDiv).add(loginUi);
-		loginUi.draw();
-	}
-	
 	/**
 	 * A. request request token
 	 */
 	private void request_Request_Token() {
 		
+		String consumerKey = loginUi.getConsumerKey();
+		
+		OAuthTokenData tokenData = new OAuthTokenData();
+		tokenData.oauth_consumer_key = consumerKey;
+		// TODO - create signature
+		
+		
+		// ask for request token, grant access, or report findings (error,other)
+		requestToken(tokenData);
 	}
 	
 	/**
@@ -116,7 +146,7 @@ public class SessionManager extends Composite {
 	 */
 	private void getUsersAuthorization() {
 		
-		drawLoginUi();
+		
 	}
 	
 	/**
@@ -157,4 +187,26 @@ public class SessionManager extends Composite {
 		if (changeListeners != null)
 			changeListeners.remove(listener);
 	}
+	
+	/**
+	 * A. Request request token
+	 */
+	private void requestToken(OAuthTokenData tokenData) {
+
+		AsyncCallback<OAuthTokenData> callback = new AsyncCallback<OAuthTokenData>() {
+			// on failure
+			public void onFailure(Throwable ex) {
+				RootPanel.get().add(new HTML(ex.toString()));
+			}
+			// on success
+			public void onSuccess(OAuthTokenData tokenData) {
+			}
+		};
+
+		// execute rpc and wait for its response
+		callRpcService.requestToken(tokenData, callback);
+	}
+	
+	
+	
 }
