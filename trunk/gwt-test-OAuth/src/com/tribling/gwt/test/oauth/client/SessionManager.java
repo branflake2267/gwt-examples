@@ -108,6 +108,12 @@ public class SessionManager extends Composite {
 		loginUi.draw();
 	}
 	
+	/**
+	 * set web site/application consumer key - determined by service provider
+	 *  A. used to request request token -> grant access token?
+	 * 
+	 * @param consumerKey
+	 */
 	public void setAppConsumerKey(String consumerKey) {
 		this.appConsumerKey = consumerKey;
 	}
