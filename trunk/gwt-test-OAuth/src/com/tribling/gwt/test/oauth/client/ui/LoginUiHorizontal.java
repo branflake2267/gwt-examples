@@ -1,6 +1,5 @@
 package com.tribling.gwt.test.oauth.client.ui;
 
-import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ChangeListenerCollection;
@@ -12,14 +11,12 @@ import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentConstant;
 import com.tribling.gwt.test.oauth.client.Global;
 import com.tribling.gwt.test.oauth.client.LoadingWidget;
 
@@ -27,10 +24,6 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 
 	private ChangeListenerCollection changeListeners;
 	private int changeEvent; 
-	
-	// observe/listen for these events
-	public int LOGIN = 1;
-	public int FORGOT_PASSWORD = 2;
 	
 	// main widget div
 	private FlowPanel pWidget = new FlowPanel();
@@ -136,6 +129,12 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		
 	}
 	
+	public void setLoginStatus(boolean bol) {
+		this.loginStatus = bol;
+		
+		// TODO - redraw?
+	}
+	
 	/**
 	 * auto put a name and password in, and submit for testing/debugging
 	 * 
@@ -149,7 +148,7 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		tbConsumerSecretPass.setVisible(true);
 		tbConsumerSecretPass.setText(password);
 		
-		fireChange(LOGIN);
+		fireChange(LoginUi.LOGIN);
 	}
 	
 	private void drawLoginInputs() {
@@ -358,10 +357,10 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	public void onClick(Widget sender) {
 		if (sender == bLogin) {
 			drawLoading();
-			fireChange(LOGIN);
+			fireChange(LoginUi.LOGIN);
 		} else if (sender == bForgot) {
 			drawLoading();
-			fireChange(FORGOT_PASSWORD);
+			fireChange(LoginUi.FORGOT_PASSWORD);
 		} else if (sender == tbConsumerKey) {
 			checkInputLabel_key(true);
 		} else if (sender == tbConsumerSecret) {

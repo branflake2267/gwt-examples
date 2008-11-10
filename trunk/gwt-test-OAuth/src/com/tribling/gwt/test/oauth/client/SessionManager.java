@@ -1,10 +1,14 @@
 package com.tribling.gwt.test.oauth.client;
 
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.ChangeListener;
+import com.google.gwt.user.client.ui.ChangeListenerCollection;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.tribling.gwt.test.oauth.client.oauth.SessionData;
-import com.tribling.gwt.test.oauth.client.ui.LoginUiHorizontal;
+import com.tribling.gwt.test.oauth.client.ui.LoginUi;
+
+
 
 /**
  * manages the users session, authentication/authorization to protected resources on a remote server
@@ -12,8 +16,11 @@ import com.tribling.gwt.test.oauth.client.ui.LoginUiHorizontal;
  * @author branflake2267
  *
  */
-public class SessionManager {
+public class SessionManager extends Composite {
 
+	private ChangeListenerCollection changeListeners;
+	private int changeEvent; 
+	
 	// store the granted access token and related info in here
 	private SessionData session = null;
 	
@@ -22,7 +29,7 @@ public class SessionManager {
 	
 	// TODO - move this to LoginUi, as the master of the User Input systems one could use, horizontal, vertical, separate forgot...
 	// TODO - will do this later, as to the complication to code
-	private LoginUiHorizontal loginUi = new LoginUiHorizontal();
+	private LoginUi loginUi = new LoginUi();
 		
 	/**
 	 * constructor
@@ -60,10 +67,8 @@ public class SessionManager {
 		
 		
 		// TODO - check for saved session cookie
+		
 		// TODO - if session cookie, auto login
-		// TODO - move drawLoginUi to its own public method
-		// TODO - add logic to decide which UI to use, how to do this, has to be done later
-		drawLoginUi();
 	}
 	
 	/**
@@ -127,4 +132,29 @@ public class SessionManager {
 		// TODO - set the session as a cookie to remember to login agian
 	}
 	
+	private void setObserver() {
+		
+	}
+	
+	public int getChangeEvent() {
+		return changeEvent;
+	}
+	
+	private void fireChange(int changeEvent) {
+		this.changeEvent = changeEvent;
+		if (changeListeners != null) {
+			changeListeners.fireChange(this);
+		}
+	}
+	
+	public void addChangeListener(ChangeListener listener) {
+		if (changeListeners == null)
+			changeListeners = new ChangeListenerCollection();
+		changeListeners.add(listener);
+	}
+	
+	public void removeChangeListener(ChangeListener listener) {
+		if (changeListeners != null)
+			changeListeners.remove(listener);
+	}
 }
