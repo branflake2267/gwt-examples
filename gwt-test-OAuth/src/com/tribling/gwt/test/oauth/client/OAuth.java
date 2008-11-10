@@ -1,29 +1,20 @@
 package com.tribling.gwt.test.oauth.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.rpc.ServiceDefTarget;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ChangeListenerCollection;
+import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentConstant;
-import com.tribling.gwt.test.oauth.client.rpc.RpcService;
-import com.tribling.gwt.test.oauth.client.rpc.RpcServiceAsync;
 import com.tribling.gwt.test.oauth.client.tests.TestRpcCall;
-import com.tribling.gwt.test.oauth.client.ui.LoginUiHorizontal;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class OAuth implements EntryPoint, ClickListener {
+public class OAuth implements EntryPoint, ClickListener, ChangeListener {
 
 	// this manages the users priviledges to protected resources
 	private SessionManager sessionManager;
@@ -66,6 +57,8 @@ public class OAuth implements EntryPoint, ClickListener {
 		String email = "test@gonevertical.com";
 		String password = "test*7";
 		sessionManager.autoLogin(email, password);
+		
+		sessionManager.addChangeListener(this);
 	}
 	
 	/**
@@ -106,6 +99,15 @@ public class OAuth implements EntryPoint, ClickListener {
 	public void onClick(Widget sender) {
 		if (sender == bTestLogin) {
 			autoLogin();
+		}
+		
+	}
+
+
+	public void onChange(Widget sender) {
+		
+		if (sender == sessionManager) {
+			
 		}
 		
 	}

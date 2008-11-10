@@ -1,15 +1,11 @@
 package com.tribling.gwt.test.oauth.client.tests;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.tribling.gwt.test.oauth.client.rpc.Rpc;
-import com.tribling.gwt.test.oauth.client.rpc.RpcService;
 import com.tribling.gwt.test.oauth.client.rpc.RpcServiceAsync;
 
 public class TestRpcCall extends Composite {
