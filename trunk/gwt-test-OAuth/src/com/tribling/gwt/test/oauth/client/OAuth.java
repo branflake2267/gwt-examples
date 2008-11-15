@@ -59,8 +59,8 @@ public class OAuth implements EntryPoint, ClickListener, ChangeListener {
 		bTestLogin.addClickListener(this);
 		
 		
-		
-		MD5KeyGenerator m = new MD5KeyGenerator();
+		// this doesn't work
+		//MD5KeyGenerator m = new MD5KeyGenerator();
 	}
 	
 	/**
