@@ -22,7 +22,13 @@
  [http://gawkat.com/OAuth/] - Current build - under development
 
 = Available Secure Hash Functions =
- [http://pajhome.org.uk/crypt/md5/sha1src.html] - sha1.js hash functions
+
+ == MD5 ==
+ GWT has a built in MD5 key generator, I am going to try this out first.
+
+ == Sha1 ==
+ You can import the sha1.js native javascript and use it for signing.
+ * [http://pajhome.org.uk/crypt/md5/sha1src.html] - sha1.js hash functions
 
  In Your Project.gwt.xml
 {{{
