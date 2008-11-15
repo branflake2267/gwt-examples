@@ -22,6 +22,7 @@
  [http://gawkat.com/OAuth/] - Current build - under development
 
 = Available Secure Hash Functions =
+Hashing (digest) a consomerKey, Urlbasestring or (rpc:dataobject) can be done by different methods.
 
  == MD5 ==
  GWT has a built in MD5 key generator, I am going to try this out first.
