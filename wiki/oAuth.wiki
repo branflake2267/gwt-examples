@@ -31,7 +31,7 @@ Hashing (digest) a consomerKey, Urlbasestring or (rpc:dataobject) can be done by
  You can import the sha1.js native javascript and use it for signing.
  * [http://pajhome.org.uk/crypt/md5/sha1src.html] - sha1.js hash functions
 
- In Your Project.gwt.xml
+ To include Sha1 in your project, you will need to import it in (...public>yourProject.gwt.xml)
 {{{
 <!-- Include the JS file. Put the file in Project Folder > src > public > sha1.js -->
 <!-- http://pajhome.org.uk/crypt/md5/ - SHA-1 algorithms are secure hash functions. -->
