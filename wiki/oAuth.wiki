@@ -25,14 +25,7 @@
 Hashing (digest) a consomerKey, Urlbasestring or (rpc:dataobject) can be done by different methods.
 
  == MD5 ==
- GWT has a built in MD5 key (hash) generator, I am going to try this out first.
- * com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator
-
- To include MD5 in your project, you will need to import it in (...public>yourProject.gwt.xml)
-{{{
-  <!-- import: Internationalization support for GWT applications.  -->
-  <inherits name="com.google.gwt.i18n.I18N" />
-}}}
+ com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator is built in, but will not inherit correctly. My beef with this class is there not literature to the purpose to why they use this or need it for that mater. 
 
  == Sha1 ==
  You can also use Sha1 to get a hash/digest.
