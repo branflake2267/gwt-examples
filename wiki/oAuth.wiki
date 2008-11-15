@@ -26,7 +26,7 @@ Hashing (digest) a consomerKey, Urlbasestring or (rpc:dataobject) can be done by
 
  == MD5 ==
  GWT has a built in MD5 key (hash) generator, I am going to try this out first.
-
+ * com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator
  == Sha1 ==
  You can import the sha1.js native javascript and use it for signing.
  * [http://pajhome.org.uk/crypt/md5/sha1src.html] - sha1.js hash functions
