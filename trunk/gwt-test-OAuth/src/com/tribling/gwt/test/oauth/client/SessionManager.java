@@ -49,6 +49,8 @@ public class SessionManager extends Composite {
 	 */
 	public SessionManager() {
 		
+		
+		
 		// init rpc
 		callRpcService = Rpc.initRpc();
 		

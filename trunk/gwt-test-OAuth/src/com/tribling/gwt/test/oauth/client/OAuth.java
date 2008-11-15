@@ -17,21 +17,23 @@ import com.tribling.gwt.test.oauth.client.ui.LoginUi;
  */
 public class OAuth implements EntryPoint, ClickListener, ChangeListener {
 
+	// web site consumer key
+	private String consumerKeyForSite = "Gawkat.com_oAuthApp_01";
+	
 	// this manages the users priviledges to protected resources
 	private SessionManager sessionManager;
 
+	// test button to auto login
 	private PushButton bTestLogin = new PushButton("Test Login");
+	
+
 	
 	/**
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
 
-		// Manage the application's session
-		sessionManager = new SessionManager();
-		sessionManager.setAppConsumerKey("Gawkat.com_oAuthApp_01"); 
-		sessionManager.setLoginUiDiv("LoginUI", LoginUi.LOGIN_HORIZONTAL);
-		sessionManager.drawUi();
+		initSessionManager();
 		
 		// test and debug stuff
 		testStuff();
@@ -52,6 +54,17 @@ public class OAuth implements EntryPoint, ClickListener, ChangeListener {
 		
 		
 		bTestLogin.addClickListener(this);
+	}
+	
+	/**
+	 * manage the session and acess to protected resources 
+	 * for the web site and user using the web site
+	 */
+	private void initSessionManager() {
+		sessionManager = new SessionManager();
+		sessionManager.setAppConsumerKey(consumerKeyForSite); 
+		sessionManager.setLoginUiDiv("LoginUI", LoginUi.LOGIN_HORIZONTAL);
+		sessionManager.drawUi();
 	}
 	
 
