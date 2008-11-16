@@ -24,6 +24,10 @@ public class Sha1 {
 	 * the server-side, but the defaults work in most cases.
 	 */
 	
+	/**
+	 * wrote into java by Brandon Donnelson
+	 */
+	
 	/*
 	 * hex output format. 0 - lowercase; 1 -
 	 * uppercase
