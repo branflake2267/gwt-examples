@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * translated into java from javascript by Brandon Donnelson
+ * Goal is to be able to use this both on the server and client side easily
  * 
  * TODO Need to test more 
  * TODO clean up comments and code
