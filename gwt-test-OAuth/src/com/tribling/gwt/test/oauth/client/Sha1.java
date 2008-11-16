@@ -3,10 +3,11 @@ package com.tribling.gwt.test.oauth.client;
 import java.util.ArrayList;
 
 /**
- * rewrote the nativie js to java, need to test
- *
+ * translated into java from javascript by Brandon Donnelson
  * 
- * @author branflake2267
+ * Need to test
+ *
+ * @author Brandon Donnelson
  * 
  */
 public class Sha1 {
