@@ -5,7 +5,8 @@ import java.util.ArrayList;
 /**
  * translated into java from javascript by Brandon Donnelson
  * 
- * Need to test
+ * TODO Need to test more 
+ * TODO clean up comments and code
  *
  * @author Brandon Donnelson
  * 

@@ -177,6 +177,7 @@ function binb2hex(binarray)
     str += hex_tab.charAt((binarray[i>>2] >> ((3 - i%4)*8+4)) & 0xF) +
            hex_tab.charAt((binarray[i>>2] >> ((3 - i%4)*8  )) & 0xF);
   }
+  
   return str;
 }
 
