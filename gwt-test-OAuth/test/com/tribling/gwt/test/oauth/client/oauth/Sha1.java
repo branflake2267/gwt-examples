@@ -1,5 +1,7 @@
 package com.tribling.gwt.test.oauth.client.oauth;
 
+import java.util.ArrayList;
+
 /**
  * testing this out only!!!!
  * 
@@ -39,52 +41,54 @@ public class Sha1 {
 	/* bits per input character. 8 - ASCII; 16 - Unicode */
 	private int chrsz = 8; 
 
+	/**
+	 * constructor
+	 */
+	public Sha1() {
+	}
+	
 	/*
 	 * These are the privates you'll usually want to call They take string
 	 * arguments and return either hex or base-64 encoded strings
 	 */
 
-	private String hex_sha1(String[] s) {
-		return binb2hex(core_sha1(str2binb(s), s.length * chrsz));
+	public String hex_sha1(String s) {
+		return binb2hex(core_sha1(str2binb(s), s.length() * chrsz));
 	}
 
-	private String b64_sha1(String[] s) {
-		return binb2b64(core_sha1(str2binb(s), s.length * chrsz));
+	public String b64_sha1(String s) {
+		return binb2b64(core_sha1(str2binb(s), s.length() * chrsz));
 	}
 
-	private String str_sha1(String[] s) {
-		return binb2str(core_sha1(str2binb(s), s.length * chrsz));
+	public String str_sha1(String s) {
+		return binb2str(core_sha1(str2binb(s), s.length() * chrsz));
 	}
 
-	private String hex_hmac_sha1(String[] key, String[] data) {
+	public String hex_hmac_sha1(String key, String data) {
 		return binb2hex(core_hmac_sha1(key, data));
 	}
 
-	private String b64_hmac_sha1(String[] key, String[] data) {
+	public String b64_hmac_sha1(String key, String data) {
 		return binb2b64(core_hmac_sha1(key, data));
 	}
 
-	private String str_hmac_sha1(String[] key, String[] data) {
+	public String str_hmac_sha1(String key, String data) {
 		return binb2str(core_hmac_sha1(key, data));
 	}
 
 	/*
 	 * Perform a simple self-test to see if the VM is working
 	 */
-	private boolean sha1_vm_test() {
+	public boolean sha1_vm_test() {
 
-		String[] s = new String[3];
-		s[0] = "a";
-		s[1] = "b";
-		s[2] = "c";
-		
-		return hex_sha1(s) == "a9993e364706816aba3e25717850c26c9cd0d89d";
+		return hex_sha1("abc") == "a9993e364706816aba3e25717850c26c9cd0d89d";
 	}
 
 	/*
 	 * Calculate the SHA-1 of an array of big-endian words, and a bit length
 	 */
 	private int[] core_sha1(int[] x, int len) {
+		
 		/* append padding */
 		x[len >> 5] |= 0x80 << (24 - len % 32);
 		x[((len + 64 >> 9) << 4) + 15] = len;
@@ -152,10 +156,10 @@ public class Sha1 {
 	/*
 	 * Calculate the HMAC-SHA1 of a key and some data
 	 */
-	private int[] core_hmac_sha1(String[] key, String[] data) {
+	private int[] core_hmac_sha1(String key, String data) {
 		int[] bkey = str2binb(key);
 		if (bkey.length > 16) {
-			bkey = core_sha1(bkey, key.length * chrsz);
+			bkey = core_sha1(bkey, key.length() * chrsz);
 		}
 			
 		int[] ipad = new int[16];
@@ -165,8 +169,9 @@ public class Sha1 {
 			opad[i] = bkey[i] ^ 0x5C5C5C5C;
 		}
 
-		// concat join 2 or more arrays
-		String hash = core_sha1(ipad.concat(str2binb(data)), 512 + data.length * chrsz);
+		// TODO concat join 2 or more arrays
+		
+		String hash = core_sha1(ipad.concat(str2binb(data)), 512 + data.length() * chrsz);
 
 		return core_sha1(opad.concat(hash), 512 + 160);
 	}
@@ -191,15 +196,38 @@ public class Sha1 {
 	/*
 	 * Convert an 8-bit or 16-bit string to an array of big-endian words In
 	 * 8-bit private, characters >255 have their hi-byte silently ignored.
+	 * 
+	 * I had to modify the unicode and adding to an array
 	 */
-	private int[] str2binb(String[] str) {
-		int[] bin = new int[str.length * chrsz];
+	private int[] str2binb(String str) {
 		int mask = (1 << chrsz) - 1;
-		for (int i = 0; i < str.length * chrsz; i += chrsz) {
-			bin[i >> 5] |= (str.charCodeAt(i / chrsz) & mask) << (32 - chrsz - i % 32);
-		}
+		int index = 0;
+		int bin = 0;
+		ArrayList<Integer> ar = new ArrayList<Integer>();
+		for (int i = 0; i < str.length() * chrsz; i += chrsz) {
+			
+			int pos = (i / chrsz) & mask;
+			byte unicode = (byte) str.substring(pos, pos+1).charAt(0);
+			int cal = unicode << (32 - chrsz - i % 32);
 
-		return bin;
+			if (i>>5 > index) {
+				index++;
+				ar.add(bin);
+				bin = 0;
+			}
+			bin |=  cal;
+			
+			// debug
+			//System.out.println("i:" + i + " mask: " + mask + " pos:" + pos + " charUnicode:" + unicode + " cal:" + cal + " bin:" + bin);
+		}
+		ar.add(bin);
+		
+		int[] rtn = new int[ar.size()];
+		for (int i=0; i < ar.size(); i++) {
+			rtn[i] = ar.get(i);
+		}
+		
+		return rtn;
 	}
 
 	/*
@@ -209,8 +237,7 @@ public class Sha1 {
 		String str = "";
 		int mask = (1 << chrsz) - 1;
 		for (int i = 0; i < bin.length * 32; i += chrsz)
-			str += String.fromCharCode((bin[i >> 5] >>> (32 - chrsz - i % 32))
-					& mask);
+			str += String.fromCharCode((bin[i >> 5] >>> (32 - chrsz - i % 32)) & mask);
 		return str;
 	}
 
