@@ -3,10 +3,8 @@ package com.tribling.gwt.test.oauth.client;
 import java.util.ArrayList;
 
 /**
- * testing this out only!!!!
- * 
- * I got no clue yet to what I am doing, so I am moving on to use gwt md5 generator for now
- * and will come back to this later
+ * rewrote the nativie js to java, need to test
+ *
  * 
  * @author branflake2267
  * 
