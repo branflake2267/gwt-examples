@@ -51,7 +51,10 @@ public class Sha1 {
 	}
 	
 	public String hex_sha1(String s) {
+		
+		
 		return binb2hex(core_sha1(str2binb(s), s.length() * chrsz));
+		
 	}
 
 	public String b64_sha1(String s) {
@@ -74,22 +77,51 @@ public class Sha1 {
 		return binb2str(core_hmac_sha1(key, data));
 	}
 
-	/*
-	 * Perform a simple self-test to see if the VM is working
+	/**
+	 *  Perform a simple self-test to see if the VM is working
+	 *  
+	 *  working!!! yippie 11/15/08
+	 *  TODO - run through more tests
+	 *  
+	 * @return
 	 */
-	public boolean sha1_vm_test() {
+	public boolean test_Sha1() {
 
-		return hex_sha1("abc") == "a9993e364706816aba3e25717850c26c9cd0d89d";
+		String aa = hex_sha1("abc");
+		String bb = "a9993e364706816aba3e25717850c26c9cd0d89d";
+		
+		if (aa.equals(bb)) {
+			return true;
+		}
+		
+		return false;
 	}
 
-	/*
+	/**
 	 * Calculate the SHA-1 of an array of big-endian words, and a bit length
+	 * 
+	 * tested 11/15/08 - works, moving to next, then coming back to do more padding tests
+	 * 
+	 * @param x
+	 * @param len
+	 * @return
 	 */
 	private int[] core_sha1(int[] x, int len) {
 		
-		/* append padding */
+		//????
 		x[len >> 5] |= 0x80 << (24 - len % 32);
-		x[((len + 64 >> 9) << 4) + 15] = len;
+		
+		// size array bigger
+		int size2 = ((len + 64 >> 9) << 4) + 15;
+		x = pad(x, size2, len);
+		
+		
+		// TODO - fix padding - adding to array
+		/* append padding */
+		//x[len >> 5] |= 0x80 << (24 - len % 32);
+		//x[((len + 64 >> 9) << 4) + 15] = len;
+		
+		System.out.println("x.length " + x.length);
 
 		int[] w = new int[80];
 		int a = 1732584193;
@@ -106,10 +138,13 @@ public class Sha1 {
 			int olde = e;
 
 			for (int j = 0; j < 80; j++) {
-				if (j < 16)
+				
+				if (j < 16) {
 					w[j] = x[i + j];
-				else
+				} else {
 					w[j] = rol(w[j - 3] ^ w[j - 8] ^ w[j - 14] ^ w[j - 16], 1);
+				}
+				
 				int t = safe_add(safe_add(rol(a, 5), sha1_ft(j, b, c, d)),
 						safe_add(safe_add(e, w[j]), sha1_kt(j)));
 				e = d;
@@ -125,10 +160,26 @@ public class Sha1 {
 			d = safe_add(d, oldd);
 			e = safe_add(e, olde);
 		}
+		
+		System.out.println("a: " + a + "");
+		System.out.println("b: " + b + "");
+		System.out.println("c: " + c + "");
+		System.out.println("d: " + d + "");
+		System.out.println("e: " + e + "");
 
 		return new int[] { a, b, c, d, e };
 	}
 
+	private int[] pad(int[] a, int size, int len) {
+		
+		int[] b = new int[size];
+		b[size-1] = len;
+		
+		int[] c = join(a, b);
+		
+		return c;
+	}
+	
 	/*
 	 * Perform the appropriate triplet combination private for the current
 	 * iteration
@@ -147,8 +198,7 @@ public class Sha1 {
 	 * Determine the appropriate additive constant for the current iteration
 	 */
 	private int sha1_kt(int t) {
-		return (t < 20) ? 1518500249 : (t < 40) ? 1859775393
-				: (t < 60) ? -1894007588 : -899497514;
+		return (t < 20) ? 1518500249 : (t < 40) ? 1859775393 : (t < 60) ? -1894007588 : -899497514;
 	}
 
 	/**
@@ -273,16 +323,36 @@ public class Sha1 {
 		return str;
 	}
 
-	/*
+	/**
 	 * Convert an array of big-endian words to a hex string.
+	 * 
+	 * seems to be working 11/15/2008
+	 * 
+	 * @param binarray
+	 * @return
 	 */
 	private String binb2hex(int[] binarray) {
 		String hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
+		
+		System.out.println("hex_tab: " + hex_tab);
+		
 		String str = "";
 		for (int i = 0; i < binarray.length * 4; i++) {
-			str += hex_tab.charAt((binarray[i >> 2] >> ((3 - i % 4) * 8 + 4)) & 0xF)
-					+ hex_tab.charAt((binarray[i >> 2] >> ((3 - i % 4) * 8)) & 0xF);
+			
+			int a = (binarray[i >> 2] >> ((3 - i % 4) * 8 + 4)) & 0xF;
+			int b = (binarray[i >> 2] >> ((3 - i % 4) * 8)) & 0xF;
+			
+			char aa = hex_tab.charAt((binarray[i >> 2] >> ((3 - i % 4) * 8 + 4)) & 0xF);
+		    char bb = hex_tab.charAt((binarray[i >> 2] >> ((3 - i % 4) * 8)) & 0xF);
+			
+		    //System.out.println(""+ aa + bb);
+		    
+			//str += hex_tab.charAt((binarray[i >> 2] >> ((3 - i % 4) * 8 + 4)) & 0xF) + hex_tab.charAt((binarray[i >> 2] >> ((3 - i % 4) * 8)) & 0xF);
+		    str += aa +""+ bb;
 		}
+		
+		//System.out.println("binb2hex(): " + str);
+		
 		return str;
 	}
 
@@ -306,4 +376,47 @@ public class Sha1 {
 		return str;
 	}
 
+	
+	public void tests() {
+	
+		System.out.println("Running Tests");
+		
+		
+		boolean bol = test_Sha1();
+		System.out.println("main test: " + bol);
+		
+		test1();
+		
+		test2();
+		
+	}
+	
+	private void test1() {
+		String hexSha1 = hex_sha1("abc");
+		System.out.println("hex_sha1(\"abc\"): " + hexSha1);
+	}
+	
+	private void test2() {
+		
+		String sh = "abc";
+		
+		System.out.println("str2binb(\""+sh+"\")");
+		
+		int[] a = str2binb(sh);
+		for (int i=0; i < a.length; i++) {
+			System.out.println("a: (" + a[i] + ")");
+		}
+		
+		// a weird character comes at both the end of this and the javascript
+		String s = binb2str(a);
+		System.out.println("(" + s + ")");
+		
+		if (sh.equals(s)) {
+			System.out.println("str2binb and binb2str works");
+		} else {
+			System.out.println("not working");
+		}
+	}
+	
+	
 }
