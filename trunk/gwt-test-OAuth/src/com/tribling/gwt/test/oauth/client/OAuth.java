@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.tribling.gwt.test.oauth.client.oauth.Sha1;
 import com.tribling.gwt.test.oauth.client.tests.TestRpcCall;
 import com.tribling.gwt.test.oauth.client.ui.LoginUi;
 

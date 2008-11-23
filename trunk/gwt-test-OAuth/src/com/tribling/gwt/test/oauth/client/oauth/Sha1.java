@@ -1,4 +1,4 @@
-package com.tribling.gwt.test.oauth.client;
+package com.tribling.gwt.test.oauth.client.oauth;
 
 import java.util.ArrayList;
 
