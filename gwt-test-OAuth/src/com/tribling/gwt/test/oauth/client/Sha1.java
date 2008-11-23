@@ -3,7 +3,15 @@ package com.tribling.gwt.test.oauth.client;
 import java.util.ArrayList;
 
 /**
- * translated into java from javascript by Brandon Donnelson
+ * A JavaScript implementation of the Secure Hash Algorithm, SHA-1, as
+ * defined in FIPS PUB 180-1 Version 2.1a Copyright Paul Johnston 2000 -
+ * 2002. Other contributors: Greg Holt, Andrew Kepert, Ydnar, Lostinet
+ * Distributed under the BSD License See http://pajhome.org.uk/crypt/md5 for
+ * details.
+ */
+
+/**
+ * translated into java from javascript by Brandon Donnelson Nov 2008
  * Goal is to be able to use this both on the server and client side easily
  * 
  * TODO Need to test more 
@@ -13,37 +21,22 @@ import java.util.ArrayList;
  * 
  */
 public class Sha1 {
- 
-	/*
-	 * A JavaScript implementation of the Secure Hash Algorithm, SHA-1, as
-	 * defined in FIPS PUB 180-1 Version 2.1a Copyright Paul Johnston 2000 -
-	 * 2002. Other contributors: Greg Holt, Andrew Kepert, Ydnar, Lostinet
-	 * Distributed under the BSD License See http://pajhome.org.uk/crypt/md5 for
-	 * details.
-	 */
 
-	/*
-	 * Configurable variables. You may need to tweak these to be compatible with
-	 * the server-side, but the defaults work in most cases.
-	 */
-	
 	/**
-	 * wrote into java by Brandon Donnelson
-	 */
-	
-	/*
 	 * hex output format. 0 - lowercase; 1 -
 	 * uppercase
 	 */
 	private boolean hexcase = false; 
 	
-	/*
+	/**
 	 * base-64 pad character. "=" for strict RFC
 	 * compliance
 	 */
 	private String b64pad = "";
 	
-	/* bits per input character. 8 - ASCII; 16 - Unicode */
+	/** 
+	 * bits per input character. 8 - ASCII; 16 - Unicode 
+	 */
 	private int chrsz = 8; 
 
 	/**
@@ -53,8 +46,6 @@ public class Sha1 {
 	}
 	
 	public String hex_sha1(String s) {
-		
-		
 		return binb2hex(core_sha1(str2binb(s), s.length() * chrsz));
 		
 	}
@@ -83,7 +74,7 @@ public class Sha1 {
 	 *  Perform a simple self-test to see if the VM is working
 	 *  
 	 *  working!!! yippie 11/15/08
-	 *  TODO - run through more tests
+	 *  working!!! yahoo 11/23/08
 	 *  
 	 * @return
 	 */
@@ -103,6 +94,7 @@ public class Sha1 {
 	 * Calculate the SHA-1 of an array of big-endian words, and a bit length
 	 * 
 	 * tested 11/15/08 - works, moving to next, then coming back to do more padding tests
+	 * tested 11/23/08 - works, padding works, sha signing works. 
 	 * 
 	 * @param x
 	 * @param len
@@ -110,15 +102,14 @@ public class Sha1 {
 	 */
 	private int[] core_sha1(int[] x, int len) {
 		
-		//????
+		// TODO - not sure if i need to adjust this later, if a larger array comes in
 		x[len >> 5] |= 0x80 << (24 - len % 32);
 		
-		// size array bigger
+		// size array bigger - I added padding in like it was
 		int size2 = ((len + 64 >> 9) << 4) + 15;
 		x = pad(x, size2, len);
 		
-		
-		// TODO - fix padding - adding to array
+		// was - fix padding - adding to array
 		/* append padding */
 		//x[len >> 5] |= 0x80 << (24 - len % 32);
 		//x[((len + 64 >> 9) << 4) + 15] = len;
@@ -172,6 +163,14 @@ public class Sha1 {
 		return new int[] { a, b, c, d, e };
 	}
 
+	/**
+	 * create larger int array - especially for the sha-core method
+	 * 
+	 * @param a - int[] array
+	 * @param size - create new array to this size
+	 * @param len - stick this value at the end of the array, which copies the javascript function
+	 * @return
+	 */
 	private int[] pad(int[] a, int size, int len) {
 		
 		int[] b = new int[size];
@@ -182,7 +181,7 @@ public class Sha1 {
 		return c;
 	}
 	
-	/*
+	/**
 	 * Perform the appropriate triplet combination private for the current
 	 * iteration
 	 */
@@ -196,7 +195,7 @@ public class Sha1 {
 		return b ^ c ^ d;
 	}
 
-	/*
+	/**
 	 * Determine the appropriate additive constant for the current iteration
 	 */
 	private int sha1_kt(int t) {
@@ -233,11 +232,11 @@ public class Sha1 {
 	}
 
 	/**
-	 * joint to int[] arrays into one int[] array
+	 * join two int[] arrays into one int[] array
 	 * 
-	 * @param a
-	 * @param b
-	 * @return
+	 * @param a int[] array 1
+	 * @param b int[] array 2
+	 * @return joined int[] array
 	 */
 	private int[] join(int[] a, int[] b) {
 		int[] c = new int[a.length + b.length];
@@ -253,7 +252,7 @@ public class Sha1 {
 		return c;
 	}
 	
-	/*
+	/**
 	 * Add integers, wrapping at 2^32. This uses 16-bit operations internally to
 	 * work around bugs in some JS interpreters.
 	 */
@@ -263,7 +262,7 @@ public class Sha1 {
 		return (msw << 16) | (lsw & 0xFFFF);
 	}
 
-	/*
+	/**
 	 * Bitwise rotate a 32-bit number to the left.
 	 */
 	private int rol(int num, int cnt) {
@@ -336,7 +335,8 @@ public class Sha1 {
 	private String binb2hex(int[] binarray) {
 		String hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
 		
-		System.out.println("hex_tab: " + hex_tab);
+		//debug
+		//System.out.println("hex_tab: " + hex_tab);
 		
 		String str = "";
 		for (int i = 0; i < binarray.length * 4; i++) {
@@ -347,12 +347,15 @@ public class Sha1 {
 			char aa = hex_tab.charAt((binarray[i >> 2] >> ((3 - i % 4) * 8 + 4)) & 0xF);
 		    char bb = hex_tab.charAt((binarray[i >> 2] >> ((3 - i % 4) * 8)) & 0xF);
 			
+		    str += aa +""+ bb;
 		    //System.out.println(""+ aa + bb);
 		    
+		    // was
 			//str += hex_tab.charAt((binarray[i >> 2] >> ((3 - i % 4) * 8 + 4)) & 0xF) + hex_tab.charAt((binarray[i >> 2] >> ((3 - i % 4) * 8)) & 0xF);
-		    str += aa +""+ bb;
+		    
 		}
 		
+		// debug
 		//System.out.println("binb2hex(): " + str);
 		
 		return str;
@@ -384,10 +387,10 @@ public class Sha1 {
 		System.out.println("Running Tests");
 		
 		
-		boolean bol = test_Sha1();
-		System.out.println("main test: " + bol);
+		//boolean bol = test_Sha1();
+		//System.out.println("main test: " + bol);
 		
-		test1();
+		//test1();
 		
 		test2();
 		
@@ -398,25 +401,29 @@ public class Sha1 {
 		System.out.println("hex_sha1(\"abc\"): " + hexSha1);
 	}
 	
+	/**
+	 * test the big endian word creation and to and from
+	 */
 	private void test2() {
 		
-		String sh = "abc";
+		String sh = "abcdefghijklmnopqrstuvwxyz1234567891011121314abABcdEF /?1*3478568@#$%)*";
 		
 		System.out.println("str2binb(\""+sh+"\")");
 		
 		int[] a = str2binb(sh);
 		for (int i=0; i < a.length; i++) {
-			System.out.println("a: (" + a[i] + ")");
+			System.out.println("big endian words created: (" + a[i] + ")");
 		}
 		
-		// a weird character comes at both the end of this and the javascript
+		// a weird character comes at both the end of this and the javascript too
 		String s = binb2str(a);
-		System.out.println("(" + s + ")");
+		System.out.println("change back from endian words: " + s);
 		
-		if (sh.equals(s)) {
-			System.out.println("str2binb and binb2str works");
+		// note: more chars exist on the return from binb2str - same with javascript version
+		if (s.contains(sh)) {
+			System.out.println("str2binb and binb2str: works");
 		} else {
-			System.out.println("not working");
+			System.out.println("str2binb and binb2str: not working");
 		}
 	}
 	
