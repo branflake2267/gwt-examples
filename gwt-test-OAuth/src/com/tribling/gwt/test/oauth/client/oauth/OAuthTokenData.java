@@ -14,7 +14,6 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 public class OAuthTokenData implements IsSerializable {
 	
 	/*
-	 * 
 	Service Provider:
         A web application that allows access via OAuth. 
     User:
@@ -37,11 +36,10 @@ public class OAuthTokenData implements IsSerializable {
         A secret used by the Consumer to establish ownership of a given Token. 
     OAuth Protocol Parameters:
         Parameters with names beginning with oauth_. 
-     *
-	 */
+	*/
 	
 	/* 
-	 * example authorization request
+	example authorization request
     Authorization: OAuth realm="http://sp.example.com/",
     oauth_consumer_key="0685bd9184jfhq22",
     oauth_token="ad180jjd733klru7",
@@ -50,26 +48,37 @@ public class OAuthTokenData implements IsSerializable {
     oauth_timestamp="137131200",
     oauth_nonce="4572616e48616d6d65724c61686176",
     oauth_version="1.0"
-	 *
-	 */
+	*/
 	
+	
+	// call back url - in the case of using rpc for this application
+	// this will be excluded for now
 	public String oauth_callback;
 	
+	// application id, or user id
 	public String oauth_consumer_key;
 	
-	public String oauth_nounce;
-	
-	public String oauth_signature;
-	
-	public String oauth_signature_method;
-
-	public int oauth_timestamp;
-	
-	public String oauth_token;
-	
+	// application id secret, or user id secret (like password) (hashed)
 	public String oauth_token_secret;
 	
+	// random string - protects against replay attacks
+	public String oauth_nounce;
+	
+	// this objects signature - sha1 hash
+	public String oauth_signature;
+	
+	// what this object used to sign itself
+	public String oauth_signature_method = "HMAC_SHA1";
+
+	// timestamp this object was created
+	public int oauth_timestamp;
+	
+	// token(id) given from server on return
+	public String oauth_token;
+	
+	// version used, another var added for signature uniqueness
 	public String oauth_version = "1.0";
+	
 
 	/**
 	 * constructor - init
@@ -81,40 +90,31 @@ public class OAuthTokenData implements IsSerializable {
 	}
 	
 	/**
-	 * generate a string to sign
-	 * 
-	 * a signing request is built by sorted keys concatenated string separated by &, my chosen method
-	 * 
-	 * Reference SPEC A.5.1 
+	 * sign the token - sign after setting needed vars
 	 * 
 	 * @param url
 	 */
-	public String getSignatureBaseString(String url) {
-		
-		if (url == null) {
-			System.out.println("need request url");
+	public void sign(String url) {
+		String s = getSignatureBaseString(url);
+		Sha1 sha = new Sha1();
+		this.oauth_signature = sha.hex_sha1(s);
+	}
+	
+	/**
+	 * verify against previous signature
+	 * 
+	 * @param url
+	 * @param verify
+	 * @return
+	 */
+	public boolean verify(String url) {
+		String verify = this.oauth_signature;
+		sign(url);
+		boolean bol = false;
+		if (this.oauth_signature.equals(verify)) {
+			bol = true;
 		}
-
-		if (url.length() == 0) {
-			System.out.println("need request url");
-		}
-		
-		// skip signature, thats what this does
-		String s = "";
-		s += "RPC&";
-		s += url + "&";
-		s += "oauth_callback=" + oauth_callback+ "&";
-		s += "oauth_consumer_key=" + oauth_consumer_key+ "&";
-		s += "oauth_nounce=" + oauth_nounce+ "&";
-		s += "oauth_signautre_method="+ oauth_signature_method+ "&";
-		s += "oauth_timestamp=" + oauth_timestamp+ "&";
-		s += "oauth_token=" + oauth_token+ "&";
-		s += "oauth_token_secret=" + oauth_token_secret+ "&";
-		s += "oauth_version=" + oauth_version;
-		
-		s = encode(s);
-		
-		return s;
+		return bol;
 	}
 	
 	/**
@@ -125,7 +125,6 @@ public class OAuthTokenData implements IsSerializable {
 	private String getNounce() {
 		int nounceLength = 6;
 		String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
-		
 		String s = "";
 	    for (int i=0; i < nounceLength; i++) {
 	    	int rnum = (int) Math.floor(Math.random() * chars.length());
@@ -146,6 +145,43 @@ public class OAuthTokenData implements IsSerializable {
 	}
 		
 	/**
+	 * generate a string to sign
+	 * 
+	 * a signing request is built by sorted keys concatenated string separated by &, my chosen method
+	 * 
+	 * Reference SPEC A.5.1 
+	 * 
+	 * @param url
+	 */
+	private String getSignatureBaseString(String url) {
+		
+		if (url == null) {
+			System.out.println("need request url");
+		}
+
+		if (url.length() == 0) {
+			System.out.println("need request url");
+		}
+		
+		String s = "";
+		s += "RPC&";
+		s += url + "&";
+		s += "oauth_callback=" + oauth_callback+ "&";
+		s += "oauth_consumer_key=" + oauth_consumer_key+ "&";
+		s += "oauth_nounce=" + oauth_nounce+ "&";
+		s += "oauth_signautre_method="+ oauth_signature_method+ "&";
+		s += "oauth_timestamp=" + oauth_timestamp+ "&";
+		s += "oauth_token=" + oauth_token+ "&";
+		s += "oauth_token_secret=" + oauth_token_secret+ "&";
+		s += "oauth_version=" + oauth_version;
+		
+		// encode it to spec
+		s = encode(s);
+		
+		return s;
+	}
+	
+	/**
 	 * encode signature base (url)
 	 * 
      * encode ignores: - _ . ! ~ * ' ( )
@@ -159,17 +195,13 @@ public class OAuthTokenData implements IsSerializable {
 		if (s == null) {
 			return "";
 		}
-		
 		s = URL.encode(s);
-		
         s = s.replace("!", "%21");
         s = s.replace("*", "%2A");
         s = s.replace("'", "%27");
         s = s.replace("(", "%28");
         s = s.replace(")", "%29");
-		
 		return s;
 	}
-	
-	
+
 }
