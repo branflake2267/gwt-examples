@@ -1,6 +1,6 @@
 package com.tribling.gwt.test.oauth.client;
 
-public class Global {
+public class Global_String {
 
 	public static String removeHtmlTags(String html) {
 		String regex = "(<([^>]+)>)";
