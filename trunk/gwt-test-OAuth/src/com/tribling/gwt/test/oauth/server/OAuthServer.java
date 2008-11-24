@@ -22,7 +22,7 @@ public class OAuthServer {
 		
 		System.out.println("request url: " + url);
 		
-		tokenData.verify(url);
+		boolean bol = tokenData.verify(url);
 		
 		// TODO - the request signature has been successfully verified
 		// TODO - request token has never been exchanged for an access token
