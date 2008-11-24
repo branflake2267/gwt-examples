@@ -1,5 +1,6 @@
 package com.tribling.gwt.test.oauth.client;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.ChangeListener;
@@ -41,8 +42,9 @@ public class SessionManager extends Composite {
 	private String errDiv = "No div tag exists for this widget. debug: setLoginUiDiv() <div id='"+loginUiDiv+"'></div>";
 	private String errApKey = "No consumer key was set (for application/web site). debug: setAppConsumerKey()";
 	
-	// this application's consumer key
+	// this application's key and secret
 	private String appConsumerKey = null;
+	private String appConsumerSecret = null;
 	
 	/**
 	 * constructor
@@ -116,8 +118,9 @@ public class SessionManager extends Composite {
 	 * 
 	 * @param consumerKey
 	 */
-	public void setAppConsumerKey(String consumerKey) {
+	public void setAppConsumerKey(String consumerKey, String consumerSecret) {
 		this.appConsumerKey = consumerKey;
+		this.appConsumerSecret = consumerSecret;
 	}
 	
 	/**
@@ -146,15 +149,16 @@ public class SessionManager extends Composite {
 	 */
 	private void request_Request_Token() {
 		
-		String consumerKey = loginUi.getConsumerKey();
+		OAuthTokenData token = new OAuthTokenData();
+		token.oauth_consumer_key = appConsumerKey; // application consumer key
+		token.oauth_token_secret = appConsumerSecret; // application consumer secret (password hashed)
 		
-		OAuthTokenData tokenData = new OAuthTokenData();
-		tokenData.oauth_consumer_key = appConsumerKey; // application consumer key
+		
 		// TODO - create signature
-		
+		token.sign(GWT.getModuleBaseURL());
 		
 		// ask for request token, grant access, or report findings (error,other)
-		requestToken(tokenData);
+		requestToken(token);
 	}
 	
 	/**

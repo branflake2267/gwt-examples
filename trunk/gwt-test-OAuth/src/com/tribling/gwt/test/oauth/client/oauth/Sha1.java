@@ -91,6 +91,38 @@ public class Sha1 {
 	}
 
 	/**
+	 * create larger int array - especially for the sha-core method
+	 * 
+	 * @param a - int[] array
+	 * @param size - create new array to this size
+	 * @param len - stick this value at the end of the array, which copies the javascript function
+	 * @return
+	 */
+	private int[] pad(int[] a, int size, int len) {
+		
+		// change to based on zero ordinal
+		size++;
+		
+		if (a.length > size) {
+			return a;
+		}
+		
+		int[] c = new int[size];
+		for(int i=0; i < size; i++) {
+			
+			if (i < a.length) {
+				c[i] = a[i];
+			} 
+		}
+		
+		if (len > 0) {
+			c[c.length-1] = len;
+		}
+		
+		return c;
+	}
+		
+	/**
 	 * Calculate the SHA-1 of an array of big-endian words, and a bit length
 	 * 
 	 * tested 11/15/08 - works, moving to next, then coming back to do more padding tests
@@ -101,20 +133,19 @@ public class Sha1 {
 	 * @return
 	 */
 	private int[] core_sha1(int[] x, int len) {
-		
-		// TODO - not sure if i need to adjust this later, if a larger array comes in
+
+		int key = len >> 5;
+		x = pad(x, key, 0); // size the array if need be
 		x[len >> 5] |= 0x80 << (24 - len % 32);
 		
-		// size array bigger - I added padding in like it was
-		int size2 = ((len + 64 >> 9) << 4) + 15;
-		x = pad(x, size2, len);
+		int key2 = ((len + 64 >> 9) << 4) + 15;
+		x = pad(x, key2, len); // size the array if need be
 		
-		// was - fix padding - adding to array
+		// was 
 		/* append padding */
 		//x[len >> 5] |= 0x80 << (24 - len % 32);
 		//x[((len + 64 >> 9) << 4) + 15] = len;
 		
-		System.out.println("x.length " + x.length);
 
 		int[] w = new int[80];
 		int a = 1732584193;
@@ -154,33 +185,16 @@ public class Sha1 {
 			e = safe_add(e, olde);
 		}
 		
-		System.out.println("a: " + a + "");
-		System.out.println("b: " + b + "");
-		System.out.println("c: " + c + "");
-		System.out.println("d: " + d + "");
-		System.out.println("e: " + e + "");
+		// debug - for comparing the javascript results
+		//System.out.println("a: " + a + "");
+		//System.out.println("b: " + b + "");
+		//System.out.println("c: " + c + "");
+		//System.out.println("d: " + d + "");
+		//System.out.println("e: " + e + "");
 
 		return new int[] { a, b, c, d, e };
 	}
 
-	/**
-	 * create larger int array - especially for the sha-core method
-	 * 
-	 * @param a - int[] array
-	 * @param size - create new array to this size
-	 * @param len - stick this value at the end of the array, which copies the javascript function
-	 * @return
-	 */
-	private int[] pad(int[] a, int size, int len) {
-		
-		int[] b = new int[size];
-		b[size-1] = len;
-		
-		int[] c = join(a, b);
-		
-		return c;
-	}
-	
 	/**
 	 * Perform the appropriate triplet combination private for the current
 	 * iteration
@@ -212,16 +226,22 @@ public class Sha1 {
 	 * @return
 	 */
 	private int[] core_hmac_sha1(String key, String data) {
+		
 		int[] bkey = str2binb(key);
+		
 		if (bkey.length > 16) {
 			bkey = core_sha1(bkey, key.length() * chrsz);
 		}
 			
 		int[] ipad = new int[16];
 		int[] opad = new int[16];
+		
+		// TODO - this has not been fixed yet bkey, array problem
 		for (int i = 0; i < 16; i++) {
+		
 			ipad[i] = bkey[i] ^ 0x36363636;
 			opad[i] = bkey[i] ^ 0x5C5C5C5C;
+			
 		}
 
 		// modified with join method
@@ -239,16 +259,20 @@ public class Sha1 {
 	 * @return joined int[] array
 	 */
 	private int[] join(int[] a, int[] b) {
+		
 		int[] c = new int[a.length + b.length];
+		
 		int index = 0;
 		for(int i=0; i < a.length; i++) {
 			c[index] = a[i];
 			index++;
 		}
+		
 		for (int i=0; i< b.length; i++) {
 			c[index] = b[i];
 			index++;
 		}
+		
 		return c;
 	}
 	

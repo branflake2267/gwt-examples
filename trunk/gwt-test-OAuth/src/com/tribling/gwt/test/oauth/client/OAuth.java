@@ -22,26 +22,25 @@ import com.tribling.gwt.test.oauth.client.ui.LoginUi;
 public class OAuth implements EntryPoint, ClickListener, ChangeListener {
 
 	// web site consumer key
-	private String consumerKeyForSite = "Gawkat.com_oAuthApp_01";
+	private String appConsumerKey = "Gawkat.com_oAuthApp_01";
+	private String appConsumerSecret = "";
 	
 	// this manages the users priviledges to protected resources
 	private SessionManager sessionManager;
 
 	// test button to auto login
 	private PushButton bTestLogin = new PushButton("Test Login");
-	
-
-	
+		
 	/**
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
 
+		// protective resource management
+		// watch the applications session
+		// watch the users session
 		initSessionManager();
-		
-		// test and debug stuff
-		testStuff();
-		
+	
 		
 		HorizontalPanel hp = new HorizontalPanel();
 		hp.add(bTestLogin);
@@ -53,13 +52,17 @@ public class OAuth implements EntryPoint, ClickListener, ChangeListener {
 		vp.add(new HTML("Under development - showing tests below."));
 		RootPanel.get("Login_TestButton").add(vp);
 		
+		// Style
 		vp.setCellHorizontalAlignment(hp, HorizontalPanel.ALIGN_CENTER);
 		
-		
-		
+		// Observe
 		bTestLogin.addClickListener(this);
+
 		
+		// test and debug stuff
+		testStuff();
 		
+		// test
 		try {
 			Sha1 test = new Sha1();
 			boolean b = test.test_Sha1();
@@ -76,7 +79,7 @@ public class OAuth implements EntryPoint, ClickListener, ChangeListener {
 	 */
 	private void initSessionManager() {
 		sessionManager = new SessionManager();
-		sessionManager.setAppConsumerKey(consumerKeyForSite); 
+		sessionManager.setAppConsumerKey(appConsumerKey, appConsumerSecret); 
 		sessionManager.setLoginUiDiv("LoginUI", LoginUi.LOGIN_HORIZONTAL);
 		sessionManager.drawUi();
 	}

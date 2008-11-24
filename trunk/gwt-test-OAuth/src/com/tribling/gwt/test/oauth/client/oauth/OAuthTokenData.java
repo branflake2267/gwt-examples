@@ -2,8 +2,10 @@ package com.tribling.gwt.test.oauth.client.oauth;
 
 import java.util.Date;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.rpc.IsSerializable;
+import com.tribling.gwt.test.oauth.client.Global_Domain;
 
 /**
  * oAuth data to pass around from client to server and server to client
@@ -50,6 +52,8 @@ public class OAuthTokenData implements IsSerializable {
     oauth_version="1.0"
 	*/
 	
+	// domain
+	public String realm;
 	
 	// call back url - in the case of using rpc for this application
 	// this will be excluded for now
@@ -95,13 +99,14 @@ public class OAuthTokenData implements IsSerializable {
 	 * @param url
 	 */
 	public void sign(String url) {
+		String key = "salt";
 		String s = getSignatureBaseString(url);
 		Sha1 sha = new Sha1();
-		this.oauth_signature = sha.hex_sha1(s);
+		this.oauth_signature = sha.hex_hmac_sha1(key, s);
 	}
 	
 	/**
-	 * verify against previous signature
+	 * verify against another signature
 	 * 
 	 * @param url
 	 * @param verify
@@ -141,7 +146,7 @@ public class OAuthTokenData implements IsSerializable {
 	private int getTimeStamp() {
 		Date date = new Date();
 		int iTimeStamp = (int) (date.getTime() * .001);
-		return iTimeStamp;
+		return iTimeStamp;	
 	}
 		
 	/**
@@ -162,6 +167,9 @@ public class OAuthTokenData implements IsSerializable {
 		if (url.length() == 0) {
 			System.out.println("need request url");
 		}
+		
+		// set realm like http://host.domain.tld:8180
+		this.realm = Global_Domain.getRealm(url) + "/";
 		
 		String s = "";
 		s += "RPC&";
