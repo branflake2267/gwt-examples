@@ -23,7 +23,7 @@ public class OAuth implements EntryPoint, ClickListener, ChangeListener {
 
 	// web site consumer key
 	private String appConsumerKey = "Gawkat.com_oAuthApp_01";
-	private String appConsumerSecret = "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8"; // "password" in hex_sha1
+	private String appConsumerSecret = "c1d0e06998305903ac76f589bbd6d4b61a670ba6"; // hmac_sha1 - key="salt", data="password"
 	
 	// this manages the users priviledges to protected resources
 	private SessionManager sessionManager;
