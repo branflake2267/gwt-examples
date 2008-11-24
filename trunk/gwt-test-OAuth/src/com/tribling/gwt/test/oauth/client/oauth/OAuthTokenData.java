@@ -53,44 +53,61 @@ public class OAuthTokenData implements IsSerializable {
 	*/
 	
 	// domain
-	public String realm;
+	private String realm;
 	
 	// call back url - in the case of using rpc for this application
 	// this will be excluded for now
-	public String oauth_callback;
+	private String oauth_callback;
 	
 	// application id, or user id
-	public String oauth_consumer_key;
+	private String oauth_consumer_key;
 	
 	// application id secret, or user id secret (like password) (hashed)
-	public String oauth_token_secret;
+	private String oauth_token_secret;
 	
 	// random string - protects against replay attacks
-	public String oauth_nounce;
+	private String oauth_nounce;
 	
 	// this objects signature - sha1 hash
-	public String oauth_signature;
+	private String oauth_signature;
 	
 	// what this object used to sign itself
-	public String oauth_signature_method = "HMAC_SHA1";
+	private String oauth_signature_method = "HMAC_SHA1";
 
 	// timestamp this object was created
-	public int oauth_timestamp;
+	private int oauth_timestamp;
 	
 	// token(id) given from server on return
-	public String oauth_token;
+	private String oauth_token;
 	
 	// version used, another var added for signature uniqueness
-	public String oauth_version = "1.0";
+	private String oauth_version = "1.0";
 	
-
+	// what are we requesting
+	public int REQUEST_REQUEST_TOKEN = 1;
+	public int OBTAIN_USER_AUTHORIZATION = 2;
+	private int requesting = REQUEST_REQUEST_TOKEN;
+	
+	
+	
 	/**
 	 * constructor - init
 	 */
 	public OAuthTokenData() {
-		oauth_nounce = getNounce();
-		oauth_timestamp = getTimeStamp();
-		oauth_version = "1.0";
+		this.oauth_nounce = getNounce();
+		this.oauth_timestamp = getTimeStamp();
+		this.oauth_version = "1.0";
+	}
+	
+	/**
+	 * set the credentials 
+	 * 
+	 * @param consumerKey
+	 * @param consumerSecret
+	 */
+	public void setCredentials(String consumerKey, String consumerSecret) {
+		this.oauth_consumer_key = consumerKey;
+		this.oauth_token_secret = consumerSecret;
 	}
 	
 	/**
@@ -102,6 +119,10 @@ public class OAuthTokenData implements IsSerializable {
 		String s = getSignatureBaseString(url);
 		Sha1 sha = new Sha1();
 		this.oauth_signature = sha.hex_sha1(s);
+	}
+	
+	public void setRequest(int requesting) {
+		this.requesting = requesting;
 	}
 	
 	/**

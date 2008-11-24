@@ -39,24 +39,20 @@ public class SessionManager extends Composite {
 	// TODO - will do this later, as to the complication to code
 	private LoginUi loginUi = new LoginUi();
 	
+	// errors
 	private String errDiv = "No div tag exists for this widget. debug: setLoginUiDiv() <div id='"+loginUiDiv+"'></div>";
 	private String errApKey = "No consumer key was set (for application/web site). debug: setAppConsumerKey()";
 	
-	// this application's key and secret
-	private String appConsumerKey = null;
-	private String appConsumerSecret = null;
 	
 	/**
 	 * constructor
 	 */
 	public SessionManager() {
 		
-		
-		
 		// init rpc
 		callRpcService = Rpc.initRpc();
 		
-		
+
 	}
 	
 	/**
@@ -90,11 +86,7 @@ public class SessionManager extends Composite {
 		// set the type of user interface with inputs
 		loginUi.setUi(uiType);
 		
-		// is an app consumer key set?
-		if (appConsumerKey == null) {
-			System.out.println(errApKey);
-			Window.alert(errApKey);
-		}
+
 		
 		// TODO - check for saved session cookie
 		
@@ -110,17 +102,6 @@ public class SessionManager extends Composite {
 		}
 		RootPanel.get(loginUiDiv).add(loginUi);
 		loginUi.draw();
-	}
-	
-	/**
-	 * set web site/application consumer key - determined by service provider
-	 *  A. used to request request token -> grant access token?
-	 * 
-	 * @param consumerKey
-	 */
-	public void setAppConsumerKey(String consumerKey, String consumerSecret) {
-		this.appConsumerKey = consumerKey;
-		this.appConsumerSecret = consumerSecret;
 	}
 	
 	/**
@@ -145,18 +126,26 @@ public class SessionManager extends Composite {
 	}
 	
 	/**
-	 * A. request request token
+	 * set web site/application consumer key - determined by service provider
+	 *  A. used to request request token -> grant access token?
+	 * 
+	 * @param consumerKey
 	 */
-	private void request_Request_Token() {
+	public void setAppConsumerKey(String consumerKey, String consumerSecret) {
 		
 		OAuthTokenData token = new OAuthTokenData();
-		token.oauth_consumer_key = appConsumerKey; // application consumer key
-		token.oauth_token_secret = appConsumerSecret; // application consumer secret (password hashed)
-		
-		
-		// TODO - create signature
+		token.setCredentials(consumerKey, consumerSecret);
 		token.sign(GWT.getModuleBaseURL());
+		token.setRequest(token.REQUEST_REQUEST_TOKEN);
 		
+		request_Request_Token(token);
+	}
+	
+	/**
+	 * A. request request token
+	 */
+	private void request_Request_Token(OAuthTokenData token) {
+
 		// ask for request token, grant access, or report findings (error,other)
 		requestToken(token);
 	}
@@ -227,6 +216,7 @@ public class SessionManager extends Composite {
 			}
 			// on success
 			public void onSuccess(OAuthTokenData tokenData) {
+				// TODO - do b?
 			}
 		};
 
