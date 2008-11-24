@@ -22,6 +22,8 @@ public class OAuthServer {
 		
 		System.out.println("request url: " + url);
 		
+		tokenData.verify(url);
+		
 		// TODO - the request signature has been successfully verified
 		// TODO - request token has never been exchanged for an access token
 		// TODO - the request token matches the consumerKey (is this a web site key, or username/email?)
