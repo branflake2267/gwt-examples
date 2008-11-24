@@ -1,6 +1,5 @@
 package com.tribling.gwt.test.oauth.client.oauth;
 
-import com.tribling.gwt.test.oauth.client.Sha1;
 
 
 
