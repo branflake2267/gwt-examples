@@ -99,10 +99,9 @@ public class OAuthTokenData implements IsSerializable {
 	 * @param url
 	 */
 	public void sign(String url) {
-		String key = "salt";
 		String s = getSignatureBaseString(url);
 		Sha1 sha = new Sha1();
-		this.oauth_signature = sha.hex_hmac_sha1(key, s);
+		this.oauth_signature = sha.hex_sha1(s);
 	}
 	
 	/**
