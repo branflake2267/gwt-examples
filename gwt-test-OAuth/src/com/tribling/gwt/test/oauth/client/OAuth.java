@@ -23,7 +23,9 @@ public class OAuth implements EntryPoint, ClickListener, ChangeListener {
 
 	// web site consumer key
 	private String appConsumerKey = "Gawkat.com_oAuthApp_01";
-	private String appConsumerSecret = "c1d0e06998305903ac76f589bbd6d4b61a670ba6"; // hmac_sha1 - key="salt", data="password"
+	
+	 // hash - hmac_sha1 - key="salt", data="password"
+	private String appConsumerSecret = "c1d0e06998305903ac76f589bbd6d4b61a670ba6";
 	
 	// this manages the users priviledges to protected resources
 	private SessionManager sessionManager;
@@ -68,7 +70,6 @@ public class OAuth implements EntryPoint, ClickListener, ChangeListener {
 			boolean b = test.test_Sha1();
 			System.out.println("Sha1 test results: " + b);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -81,7 +82,9 @@ public class OAuth implements EntryPoint, ClickListener, ChangeListener {
 		sessionManager = new SessionManager();
 		sessionManager.setAppConsumerKey(appConsumerKey, appConsumerSecret); 
 		sessionManager.setLoginUiDiv("LoginUI", LoginUi.LOGIN_HORIZONTAL);
-		sessionManager.drawUi();
+		
+		// TODO - do this if we get an access token
+		//sessionManager.drawUi();
 	}
 	
 
