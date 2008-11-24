@@ -18,7 +18,9 @@ public class OAuthServer {
 	 * @param tokenData
 	 * @return
 	 */
-	public OAuthTokenData requestToken(OAuthTokenData tokenData) {
+	public OAuthTokenData requestToken(OAuthTokenData tokenData, String url) {
+		
+		System.out.println("request url: " + url);
 		
 		// TODO - the request signature has been successfully verified
 		// TODO - request token has never been exchanged for an access token

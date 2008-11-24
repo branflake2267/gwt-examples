@@ -83,12 +83,16 @@ public class OAuthTokenData implements IsSerializable {
 	// version used, another var added for signature uniqueness
 	private String oauth_version = "1.0";
 	
-	// what are we requesting
+	// what is this objects purpose, what are we requesting?
 	public int REQUEST_REQUEST_TOKEN = 1;
 	public int OBTAIN_USER_AUTHORIZATION = 2;
 	private int requesting = REQUEST_REQUEST_TOKEN;
 	
-	
+	// result of request
+	private int ERROR = 1;
+	private int SUCCESS = 2;
+	private int NOTIFY = 3;
+	private int resultOfRequest = 0;
 	
 	/**
 	 * constructor - init
@@ -140,6 +144,15 @@ public class OAuthTokenData implements IsSerializable {
 			bol = true;
 		}
 		return bol;
+	}
+	
+	/**
+	 * what is the result of the request from client, tell the client what happend on the server
+	 * 
+	 * @param result
+	 */
+	public void setResult(int result) {
+		this.resultOfRequest = result;
 	}
 	
 	/**
