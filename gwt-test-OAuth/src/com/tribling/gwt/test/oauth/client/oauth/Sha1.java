@@ -45,9 +45,16 @@ public class Sha1 {
 	public Sha1() {
 	}
 	
+	/**
+	 * get sha1 hash
+	 * 
+	 * works
+	 * 
+	 * @param s
+	 * @return
+	 */
 	public String hex_sha1(String s) {
 		return binb2hex(core_sha1(str2binb(s), s.length() * chrsz));
-		
 	}
 
 	public String b64_sha1(String s) {
@@ -58,6 +65,13 @@ public class Sha1 {
 		return binb2str(core_sha1(str2binb(s), s.length() * chrsz));
 	}
 
+	/**
+	 * get sha1 hash - use some sale
+	 * 
+	 * @param key - salt
+	 * @param data - what to hash
+	 * @return
+	 */
 	public String hex_hmac_sha1(String key, String data) {
 		return binb2hex(core_hmac_sha1(key, data));
 	}
@@ -140,12 +154,6 @@ public class Sha1 {
 		
 		int key2 = ((len + 64 >> 9) << 4) + 15;
 		x = pad(x, key2, len); // size the array if need be
-		
-		// was 
-		/* append padding */
-		//x[len >> 5] |= 0x80 << (24 - len % 32);
-		//x[((len + 64 >> 9) << 4) + 15] = len;
-		
 
 		int[] w = new int[80];
 		int a = 1732584193;
@@ -219,6 +227,8 @@ public class Sha1 {
 	/**
 	 * Calculate the HMAC-SHA1 of a key and some data
 	 * 
+	 * works 
+	 * 
 	 * Modified: had to add a array joining method
 	 * 
 	 * @param key
@@ -232,16 +242,18 @@ public class Sha1 {
 		if (bkey.length > 16) {
 			bkey = core_sha1(bkey, key.length() * chrsz);
 		}
-			
+		
+		// pad array if needed, so that loop below doesn't error
+		if (bkey.length < 16) {
+			bkey = pad(bkey, 15, 0);
+		}
+		
 		int[] ipad = new int[16];
 		int[] opad = new int[16];
 		
-		// TODO - this has not been fixed yet bkey, array problem
 		for (int i = 0; i < 16; i++) {
-		
 			ipad[i] = bkey[i] ^ 0x36363636;
 			opad[i] = bkey[i] ^ 0x5C5C5C5C;
-			
 		}
 
 		// modified with join method
@@ -385,7 +397,7 @@ public class Sha1 {
 		return str;
 	}
 
-	/*
+	/**
 	 * Convert an array of big-endian words to a base-64 string
 	 */
 	private String binb2b64(int[] binarray) {
@@ -416,7 +428,9 @@ public class Sha1 {
 		
 		//test1();
 		
-		test2();
+		//test2();
+		
+		test3();
 		
 	}
 	
@@ -449,6 +463,15 @@ public class Sha1 {
 		} else {
 			System.out.println("str2binb and binb2str: not working");
 		}
+	}
+	
+	private void test3() {
+		String key = "salt";
+		String data = "password";
+		String hash = hex_hmac_sha1(key, data);
+		
+		System.out.println("hash: " + hash);
+		
 	}
 	
 	
