@@ -17,7 +17,7 @@ import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.tribling.gwt.test.oauth.client.Global;
+import com.tribling.gwt.test.oauth.client.Global_String;
 import com.tribling.gwt.test.oauth.client.LoadingWidget;
 
 public class LoginUiHorizontal extends Composite implements ClickListener, KeyboardListener, ChangeListener, FocusListener {
@@ -254,7 +254,7 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		pError.clear();
 		pError.setVisible(true);
 		
-		error = Global.removeHtmlTags(error);
+		error = Global_String.removeHtmlTags(error);
 		HTML htmlError = new HTML(error);
 		
 		pError.add(htmlError);
@@ -281,13 +281,13 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	
 	protected String getConsumerKey() {
 		String consumerKey = tbConsumerKey.getText();
-		consumerKey = Global.removeHtmlTags(consumerKey).trim();
+		consumerKey = Global_String.removeHtmlTags(consumerKey).trim();
 		return consumerKey; 
 	}
 	
 	protected String getConsumerSecret() {
 		String consumerSecret = tbConsumerSecretPass.getText();
-		consumerSecret = Global.removeHtmlTags(consumerSecret).trim();
+		consumerSecret = Global_String.removeHtmlTags(consumerSecret).trim();
 		return consumerSecret;
 	}
 	
