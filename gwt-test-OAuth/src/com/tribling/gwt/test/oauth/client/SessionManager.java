@@ -133,9 +133,11 @@ public class SessionManager extends Composite {
 	 */
 	public void setAppConsumerKey(String consumerKey, String consumerSecret) {
 		
+		String url = GWT.getHostPageBaseURL();
+		
 		OAuthTokenData token = new OAuthTokenData();
 		token.setCredentials(consumerKey, consumerSecret);
-		token.sign(GWT.getModuleBaseURL());
+		token.sign(url);
 		token.setRequest(token.REQUEST_REQUEST_TOKEN);
 		
 		request_Request_Token(token);
