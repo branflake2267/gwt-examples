@@ -15,6 +15,7 @@ public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
 
 	/**
 	 * get request url
+	 * 
 	 * @return
 	 */
 	private String getRequestUrl() {
@@ -38,6 +39,7 @@ public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
 	
 	/**
 	 * get request url path for oauth - minus port
+	 * 
 	 * ajax requests come in on different ports, as far as I can tell
 	 * maybe its only in hosted mode
 	 * 
@@ -67,15 +69,13 @@ public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
 	 */
 	public OAuthTokenData requestToken(OAuthTokenData tokenData) {
 		
-		String url = getRequestUrlOAuth();
-		
+		//String url = getRequestUrlOAuth();
 		
 		// get the url the client came in on
 		HttpServletRequest request = getThreadLocalRequest();
 		String url = request.getRequestURL().toString();
 		
 		OAuthServer oauth = new OAuthServer();
-		return oauth.requestToken(url, tokenData);
 		return oauth.requestToken(tokenData, url);
 	}
 

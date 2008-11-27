@@ -119,6 +119,10 @@ public class OAuthTokenData implements IsSerializable {
 	 * @param url
 	 */
 	public void sign(String url) {
+		
+		// removing port for now, rpc method different
+		url = url.replaceAll(":[0-9]+", ""); 
+		
 		String s = getSignatureBaseString(url);
 		Sha1 sha = new Sha1();
 		this.oauth_signature = sha.hex_sha1(s);

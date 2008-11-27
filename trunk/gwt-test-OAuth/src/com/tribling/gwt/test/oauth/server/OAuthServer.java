@@ -15,16 +15,17 @@ public class OAuthServer {
 	 * A. -> (B. grant request token): Can we go to the next step?
 	 * grant request token?
 	 * 
+	 * NOTE: using rpc, I am only using the app base url, to sign, and no port
+	 * 
 	 * @param tokenData
 	 * @return
 	 */
 	public OAuthTokenData requestToken(OAuthTokenData tokenData, String url) {
 		
+		// debug
 		System.out.println("request url: " + url);
 		
-		boolean bol = tokenData.verify(url);
-		
-		// TODO - the request signature has been successfully verified
+		// Test if the request signature has been successfully verified
 		boolean verify = tokenData.verify(url);
 		
 		// TODO - request token has never been exchanged for an access token
