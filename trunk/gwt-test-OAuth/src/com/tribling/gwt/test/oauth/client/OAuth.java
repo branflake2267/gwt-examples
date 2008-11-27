@@ -79,9 +79,6 @@ public class OAuth implements EntryPoint, ClickListener, ChangeListener {
 		sessionManager = new SessionManager();
 		sessionManager.setAppConsumerKey(appConsumerKey, appConsumerSecret); 
 		sessionManager.setLoginUiDiv("LoginUI", LoginUi.LOGIN_HORIZONTAL);
-		
-		// TODO - do this if we get an access token
-		//sessionManager.drawUi();
 	}
 	
 

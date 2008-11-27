@@ -48,11 +48,8 @@ public class SessionManager extends Composite {
 	 * constructor
 	 */
 	public SessionManager() {
-		
 		// init rpc
 		callRpcService = Rpc.initRpc();
-		
-
 	}
 	
 	/**
@@ -86,11 +83,6 @@ public class SessionManager extends Composite {
 		// set the type of user interface with inputs
 		loginUi.setUi(uiType);
 		
-
-		
-		// TODO - check for saved session cookie
-		
-		// TODO - if session cookie, auto login
 	}
 	
 	public void drawUi() {
@@ -107,7 +99,7 @@ public class SessionManager extends Composite {
 	/**
 	 * use this for testing/debugging
 	 * 
-	 * !!! remove after testing - remove later
+	 * TODO !!! remove after testing - remove later
 	 * 
 	 * @param email
 	 * @param password
@@ -133,30 +125,50 @@ public class SessionManager extends Composite {
 	 */
 	public void setAppConsumerKey(String consumerKey, String consumerSecret) {
 		
-		String url = GWT.getHostPageBaseURL();
+		// TODO - check for saved session cookie
 		
+		// TODO - if session cookie, auto login
+		
+		// get the application base url only, b/c of rpc method, 
+		// requests will happen on different ports, and with different servlet context
+		String url = GWT.getHostPageBaseURL();
 		OAuthTokenData token = new OAuthTokenData();
 		token.setCredentials(consumerKey, consumerSecret);
 		token.sign(url);
-		token.setRequest(token.REQUEST_REQUEST_TOKEN);
+		token.setRequest(OAuthTokenData.REQUEST_REQUEST_TOKEN);
 		
+		// ask the server now
 		request_Request_Token(token);
 	}
 	
 	/**
 	 * A. request request token
+	 * ask for request token, grant access, or report findings (error,other)
+	 * 
+	 * @param token
 	 */
 	private void request_Request_Token(OAuthTokenData token) {
-
-		// ask for request token, grant access, or report findings (error,other)
 		requestToken(token);
 	}
 	
 	/**
 	 * B. server replies back with
 	 */
-	private void request_Request_Token_Response() {
+	private void request_Request_Token_Response(OAuthTokenData token) {
 		
+		int result = token.getResult();
+		switch (result) {
+		case OAuthTokenData.SUCCESS:
+			drawUi();
+			break;
+		case OAuthTokenData.ERROR:
+			// TODO - make better
+			Window.alert("ERROR: This application's access token did not match up.\n This application has not been granted access.");
+			break;
+
+			
+
+		}
 	}
 	
 	/**
@@ -211,14 +223,19 @@ public class SessionManager extends Composite {
 	 */
 	private void requestToken(OAuthTokenData tokenData) {
 
+		// TODO Show loading
+		
 		AsyncCallback<OAuthTokenData> callback = new AsyncCallback<OAuthTokenData>() {
 			// on failure
 			public void onFailure(Throwable ex) {
+				// TODO - use an specialized re-try connection interface for this
 				RootPanel.get().add(new HTML(ex.toString()));
 			}
 			// on success
-			public void onSuccess(OAuthTokenData tokenData) {
-				// TODO - do b?
+			public void onSuccess(OAuthTokenData token) {
+				request_Request_Token_Response(token);
+				
+				// TODO hide loading
 			}
 		};
 

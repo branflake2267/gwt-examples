@@ -83,16 +83,16 @@ public class OAuthTokenData implements IsSerializable {
 	private String oauth_version = "1.0";
 	
 	// what is this objects purpose, what are we requesting?
-	public int REQUEST_REQUEST_TOKEN = 1;
-	public int OBTAIN_USER_AUTHORIZATION = 2;
+	public static final int REQUEST_REQUEST_TOKEN = 1;
+	public static final int OBTAIN_USER_AUTHORIZATION = 2;
 	private int requesting = REQUEST_REQUEST_TOKEN;
 	
 	// result of request
-	private int ERROR = 1;
-	private int SUCCESS = 2;
-	private int NOTIFY = 3;
+	public static final int SUCCESS = 1;
+	public static final int ERROR = 2;
 	private int resultOfRequest = 0;
 	
+
 	/**
 	 * constructor - init
 	 */
@@ -128,8 +128,26 @@ public class OAuthTokenData implements IsSerializable {
 		this.oauth_signature = sha.hex_sha1(s);
 	}
 	
+	/**
+	 * set the request purpose
+	 * 
+	 * @param requesting
+	 */
 	public void setRequest(int requesting) {
 		this.requesting = requesting;
+	}
+	
+	/**
+	 * what is the result of the request from client, tell the client what happend on the server
+	 * 
+	 * @param result
+	 */
+	public void setResult(int result) {
+		this.resultOfRequest = result;
+	}
+	
+	public int getResult() {
+		return this.resultOfRequest;
 	}
 	
 	/**
@@ -148,16 +166,7 @@ public class OAuthTokenData implements IsSerializable {
 		}
 		return bol;
 	}
-	
-	/**
-	 * what is the result of the request from client, tell the client what happend on the server
-	 * 
-	 * @param result
-	 */
-	public void setResult(int result) {
-		this.resultOfRequest = result;
-	}
-	
+
 	/**
 	 * make a random string - prevents replay attack
 	 * 
@@ -255,7 +264,7 @@ public class OAuthTokenData implements IsSerializable {
 	 * @param c
 	 * @return
 	 */
-	private static String encodeChar(char c) {
+	private String encodeChar(char c) {
 		String cS = Character.toString(c);
 		
 		// Note: I don't encode & or =, b/c those are valid url querystring chars
@@ -268,4 +277,6 @@ public class OAuthTokenData implements IsSerializable {
 		
 		return s;
 	}
+	
+
 }
