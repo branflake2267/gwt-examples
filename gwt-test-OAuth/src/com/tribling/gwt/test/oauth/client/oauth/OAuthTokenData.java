@@ -120,12 +120,41 @@ public class OAuthTokenData implements IsSerializable {
 	 */
 	public void sign(String url) {
 		
+		//debug
+		//System.out.println("Signing With URL: " + url);
+		
 		// removing port for now, rpc method different
 		url = url.replaceAll(":[0-9]+", ""); 
 		
 		String s = getSignatureBaseString(url);
 		Sha1 sha = new Sha1();
 		this.oauth_signature = sha.hex_sha1(s);
+		
+		//System.out.println("Sign:" + oauth_signature);
+	}
+	
+	/**
+	 * verify against another signature
+	 * 
+	 * @param url
+	 * @param verify
+	 * @return
+	 */
+	public boolean verify(String url) {
+		
+		//debug
+		//System.out.println("Signing With URL: " + url);
+		
+		// removing port for now, rpc method different
+		url = url.replaceAll(":[0-9]+", ""); 
+		
+		String verify = this.oauth_signature;
+		sign(url);
+		boolean bol = false;
+		if (this.oauth_signature.equals(verify)) {
+			bol = true;
+		}
+		return bol;
 	}
 	
 	/**
@@ -150,23 +179,6 @@ public class OAuthTokenData implements IsSerializable {
 		return this.resultOfRequest;
 	}
 	
-	/**
-	 * verify against another signature
-	 * 
-	 * @param url
-	 * @param verify
-	 * @return
-	 */
-	public boolean verify(String url) {
-		String verify = this.oauth_signature;
-		sign(url);
-		boolean bol = false;
-		if (this.oauth_signature.equals(verify)) {
-			bol = true;
-		}
-		return bol;
-	}
-
 	/**
 	 * make a random string - prevents replay attack
 	 * 
@@ -219,14 +231,16 @@ public class OAuthTokenData implements IsSerializable {
 		String s = "";
 		s += "RPC&";
 		s += url + "&";
-		s += "oauth_callback=" + oauth_callback+ "&";
-		s += "oauth_consumer_key=" + oauth_consumer_key+ "&";
-		s += "oauth_nounce=" + oauth_nounce+ "&";
-		s += "oauth_signautre_method="+ oauth_signature_method+ "&";
-		s += "oauth_timestamp=" + oauth_timestamp+ "&";
-		s += "oauth_token=" + oauth_token+ "&";
-		s += "oauth_token_secret=" + oauth_token_secret+ "&";
+		s += "oauth_callback=" + oauth_callback + "&";
+		s += "oauth_consumer_key=" + oauth_consumer_key + "&";
+		s += "oauth_nounce=" + oauth_nounce + "&";
+		s += "oauth_signautre_method=" + oauth_signature_method + "&";
+		s += "oauth_timestamp=" + oauth_timestamp + "&";
+		s += "oauth_token=" + oauth_token + "&";
+		s += "oauth_token_secret=" + oauth_token_secret + "&";
 		s += "oauth_version=" + oauth_version;
+		
+		//System.out.println("base:" + s);
 		
 		// encode it to spec
 		s = urlencode(s);

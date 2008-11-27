@@ -29,6 +29,8 @@ public class OAuthServer {
 		boolean verify = token.verify(url);
 		if (verify == false) {
 			token.setResult(OAuthTokenData.ERROR);
+		} else {
+			token.setResult(OAuthTokenData.SUCCESS);
 		}
 		
 		// TODO - request token has never been exchanged for an access token

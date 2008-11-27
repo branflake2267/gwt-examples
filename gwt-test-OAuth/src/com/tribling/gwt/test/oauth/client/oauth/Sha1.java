@@ -418,6 +418,9 @@ public class Sha1 {
 	}
 
 	
+	/**
+	 * run tests to verify results
+	 */
 	public void tests() {
 	
 		System.out.println("Running Tests");

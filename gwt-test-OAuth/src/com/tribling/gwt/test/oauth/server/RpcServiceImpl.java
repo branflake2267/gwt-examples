@@ -1,5 +1,8 @@
 package com.tribling.gwt.test.oauth.server;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -51,7 +54,22 @@ public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
 		String host = request.getRemoteHost();
 		String path = request.getPathInfo();
 		
-		String url = "http://" + host + path;
+		// take off the servlet context path
+		String re = "(.*/)";
+		Pattern p = Pattern.compile(re);
+		Matcher m = p.matcher(path);
+		boolean found = m.find();
+		String newPath = "";
+		if (found == true) {
+			newPath = m.group(1);
+		}
+		
+		// work around for hosted mode
+		if (host.equals("127.0.0.1")) {
+			host = "localhost";
+		}
+		
+		String url = "http://" + host + newPath;
 		
 		return url;		
 	}
@@ -69,11 +87,7 @@ public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
 	 */
 	public OAuthTokenData requestToken(OAuthTokenData tokenData) {
 		
-		//String url = getRequestUrlOAuth();
-		
-		// get the url the client came in on
-		HttpServletRequest request = getThreadLocalRequest();
-		String url = request.getRequestURL().toString();
+		String url = getRequestUrlOAuth();
 		
 		OAuthServer oauth = new OAuthServer();
 		return oauth.requestToken(tokenData, url);
