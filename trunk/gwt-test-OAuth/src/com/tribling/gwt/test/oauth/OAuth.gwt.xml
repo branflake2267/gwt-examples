@@ -16,11 +16,6 @@
 
       <!-- Other module inherits -->
 
-	  <!-- Include the JS file. Put the file in Project Folder > src > public > sha1.js -->
-	  <!-- http://pajhome.org.uk/crypt/md5/ - SHA-1 algorithms are secure hash functions. -->
-	  <script src="sha1.js"/>
-
-
       <!-- Specify the app entry point class.                         -->
       <entry-point class='com.tribling.gwt.test.oauth.client.OAuth'/>
     

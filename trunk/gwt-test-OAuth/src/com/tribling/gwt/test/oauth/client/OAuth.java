@@ -58,14 +58,14 @@ public class OAuth implements EntryPoint, ClickListener, ChangeListener {
 		bTestLogin.addClickListener(this);
 
 		
-		// test and debug stuff
-		testStuff();
+		// TODO remove later - debug - test and debug stuff
+		//testStuff();
 		
 		// test
 		try {
 			Sha1 test = new Sha1();
 			boolean b = test.test_Sha1();
-			System.out.println("Sha1 test results: " + b);
+			//System.out.println("Sha1 test results: " + b);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -81,13 +81,17 @@ public class OAuth implements EntryPoint, ClickListener, ChangeListener {
 		sessionManager.setLoginUiDiv("LoginUI", LoginUi.LOGIN_HORIZONTAL);
 	}
 	
-
+	/**
+	 * auto login
+	 * TODO - remove later
+	 */
 	private void autoLogin() {
 
 		String email = "test@gonevertical.com";
 		String password = "test*7";
 		sessionManager.autoLogin(email, password);
 		
+		// observe session manager
 		sessionManager.addChangeListener(this);
 	}
 	
@@ -96,25 +100,9 @@ public class OAuth implements EntryPoint, ClickListener, ChangeListener {
 	 */
 	public void testStuff() {
 		testRpcSetup();
-		testSha1JsSetup();
+		
 	}
 
-	/**
-	 * call the native javascript
-	 */
-	private void testSha1JsSetup() {
-		boolean works = sha1Test();
-		RootPanel.get().add(new HTML("sha1.js file works?: " + works));
-	}
-	
-	/**
-	 * test out the included javascript
-	 * run the native js method
-	 */
-	private native boolean sha1Test() /*-{
-		return $wnd.sha1_vm_test();
-	}-*/;
-	
 	/**
 	 * test out rpc
 	 */
