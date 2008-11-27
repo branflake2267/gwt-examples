@@ -127,6 +127,8 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 			drawLoginInputs();
 		} 
 		
+		// TODO - what will happen if this was called, and one was already logged in
+		
 	}
 	
 	public void setLoginStatus(boolean bol) {

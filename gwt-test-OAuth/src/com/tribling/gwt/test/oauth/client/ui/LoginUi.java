@@ -79,7 +79,7 @@ public class LoginUi extends Composite implements ChangeListener {
 	}
 	
 	/**
-	 * remove after testing - used for testing
+	 * TODO remove after testing - used for testing
 	 * 
 	 * @param email
 	 * @param password
