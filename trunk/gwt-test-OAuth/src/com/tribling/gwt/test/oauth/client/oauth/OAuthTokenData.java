@@ -216,7 +216,7 @@ public class OAuthTokenData implements IsSerializable {
 		s += "oauth_version=" + oauth_version;
 		
 		// encode it to spec
-		s = encode(s);
+		s = urlencode(s);
 		
 		return s;
 	}
@@ -224,24 +224,44 @@ public class OAuthTokenData implements IsSerializable {
 	/**
 	 * encode signature base (url)
 	 * 
-     * encode ignores: - _ . ! ~ * ' ( )
+	 * 5.1
+	 * 
      * OAuth dictates the only ones you can ignore are: - _ . ~
-     * Source: http://developer.mozilla.org/en/docs/Core_JavaScript_1.5_Reference:Global_Functions:encodeURIComponent
+     * NOTE: http://developer.mozilla.org/en/docs/Core_JavaScript_1.5_Reference:Global_Functions:encodeURIComponent
      *
 	 * @param s
 	 * @return
 	 */
-	private String encode(String s) {
+	private String urlencode(String s) {
 		if (s == null) {
 			return "";
 		}
-		s = URL.encode(s);
-        s = s.replace("!", "%21");
-        s = s.replace("*", "%2A");
-        s = s.replace("'", "%27");
-        s = s.replace("(", "%28");
-        s = s.replace(")", "%29");
-		return s;
+		
+		String r = "";
+		for (int i=0; i < s.length(); i++) {
+			r += encodeChar(s.charAt(i));
+		}
+		
+		return r;
 	}
 
+	/**
+	 * encode char to there asii table using % as the delimiter
+	 * 
+	 * @param c
+	 * @return
+	 */
+	private static String encodeChar(char c) {
+		String cS = Character.toString(c);
+		
+		// Note: I don't encode & or =, b/c those are valid url querystring chars
+		String s = "";
+		if (cS.matches("[a-zA-Z0-9_.\\-~&=]") == false) {
+			s = "%" + Byte.toString((byte) c);
+		} else {
+			s = cS;
+		}
+		
+		return s;
+	}
 }
