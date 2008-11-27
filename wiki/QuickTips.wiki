@@ -602,3 +602,24 @@ private static String encodeChar(char c) {
 	return s;
 }
 }}}
+
+=Servlet Information=
+ Get servlet request GET/POST information. Get Requesting url, ip address, and other information that came in on the header request to the servlet.
+{{{
+//
+# only use in [YourAppService]Impl 
+HttpServletRequest request = getThreadLocalRequest();
+String url = request.getRequestURL().toString();
+
+# only use in [YourAppService]Impl 
+private String getRequestUrlOAuth() {
+
+	HttpServletRequest request = getThreadLocalRequest();
+	String host = request.getRemoteHost();
+	String path = request.getPathInfo();
+	
+	String url = "http://" + host + path;
+	
+	return url;		
+}
+}}}
