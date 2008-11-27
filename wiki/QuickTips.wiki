@@ -569,3 +569,30 @@ public void hideTimed() {
 	t.schedule(3000);
 }
 }}}
+
+=Url Encode=
+ Encode url. Use this both on the client and server side.
+{{{
+private static String urlencode(String s) {
+	
+	String r = "";
+	for (int i=0; i < s.length(); i++) {
+		r += encodeChar(s.charAt(i));
+	}
+	
+	return r;
+}
+
+private static String encodeChar(char c) {
+	String cS = Character.toString(c);
+	
+	String s = "";
+	if (cS.matches("[a-zA-Z0-9_.\\-~&=]") == false) {
+		s = "%" + Byte.toString((byte) c);
+	} else {
+		s = cS;
+	}
+	
+	return s;
+}
+}}}
