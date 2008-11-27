@@ -25,6 +25,8 @@ public class OAuthServer {
 		boolean bol = tokenData.verify(url);
 		
 		// TODO - the request signature has been successfully verified
+		boolean verify = tokenData.verify(url);
+		
 		// TODO - request token has never been exchanged for an access token
 		// TODO - the request token matches the consumerKey (is this a web site key, or username/email?)
 		
@@ -32,9 +34,6 @@ public class OAuthServer {
 	}
 	
 	
-	private boolean verifySignature(String url, OAuthTokenData token) {
-		
-		return false;
-	}
+
 	
 }
