@@ -70,14 +70,20 @@ pLoading.add(image);
 }}}
 
 = String Comparison =
- You can compare strings like this.
+ You can compare strings like this. When using string, its best to always init with null, and then always check the string var before doing something with it. 
 {{{
 //myString.equals(OtherString) is boolean
 
 //example string
 String myString = null;
 
-//skip errors in a method for null string before comparing
+// check string before doing something with it
+if (myString == null) {
+  // return ""; or return null; or break;
+  // or myString = ""; then if (myString.length())
+}
+
+// skip errors in a method for null string before comparing!!!!
 if (myString == null) {
    return;
 }
