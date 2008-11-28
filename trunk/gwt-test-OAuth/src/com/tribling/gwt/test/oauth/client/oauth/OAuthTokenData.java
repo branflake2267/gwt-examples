@@ -167,6 +167,14 @@ public class OAuthTokenData implements IsSerializable {
 	}
 	
 	/**
+	 * get the purpose of requesting
+	 * @return
+	 */
+	public int getRequesting() {
+		return this.requesting;
+	}
+	
+	/**
 	 * what is the result of the request from client, tell the client what happend on the server
 	 * 
 	 * @param result

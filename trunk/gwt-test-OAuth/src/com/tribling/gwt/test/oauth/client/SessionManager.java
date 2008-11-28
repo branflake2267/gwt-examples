@@ -54,6 +54,7 @@ public class SessionManager extends Composite {
 	
 	/**
 	 * !!!!THIS HAS TO BE DONE FIRST!!!!
+	 * set the login div tag in html page
 	 * 
 	 * @param loginUiDiv
 	 */
@@ -162,7 +163,7 @@ public class SessionManager extends Composite {
 			drawUi();
 			break;
 		case OAuthTokenData.ERROR:
-			// TODO - make better
+			// TODO - make better notification
 			Window.alert("ERROR: This application's access token did not match up.\n This application has not been granted access.");
 			break;
 
@@ -175,8 +176,6 @@ public class SessionManager extends Composite {
 	 * C. if B. passes, get users authorization
 	 */
 	private void getUsersAuthorization() {
-		
-		
 	}
 	
 	/**
