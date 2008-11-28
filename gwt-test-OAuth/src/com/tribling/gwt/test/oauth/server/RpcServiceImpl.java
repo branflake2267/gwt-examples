@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.tribling.gwt.test.oauth.client.oauth.OAuthTokenData;
 import com.tribling.gwt.test.oauth.client.rpc.RpcService;
+import com.tribling.gwt.test.oauth.server.oauth.OAuthServer;
 
 public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
 
