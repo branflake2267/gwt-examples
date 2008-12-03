@@ -156,8 +156,7 @@ String query = "INSERT INTO `session` (UserID, SessionID, LastAccessed, DateCrea
 			   "VALUES ('" + this.dbUserID + "', '" + this.SessionID + "' , UNIX_TIMESTAMP(), UNIX_TIMESTAMP());";
 
 try {
-	setLocation(50);
-	Connection conn = getConn_MySql();
+    Connection conn = this.getConn();
     Statement update = conn.createStatement();
     update.executeUpdate(query);
     
