@@ -152,32 +152,27 @@ UUID uID = UUID.randomUUID();
 this.SessionID = uID.toString();
 
 //save session data to table 
-String Query = "INSERT INTO `session` (UserID, SessionID, LastAccessed, DateCreated) " +
+String query = "INSERT INTO `session` (UserID, SessionID, LastAccessed, DateCreated) " +
 			   "VALUES ('" + this.dbUserID + "', '" + this.SessionID + "' , UNIX_TIMESTAMP(), UNIX_TIMESTAMP());";
 
 try {
-	Connection connection = this.getConn();
-    Statement update = connection.createStatement();
-    update.executeUpdate(Query);
+	setLocation(50);
+	Connection conn = getConn_MySql();
+    Statement update = conn.createStatement();
+    update.executeUpdate(query);
     
-    //get last id
-    ResultSet rs = update.getGeneratedKeys(); 
-
-    if (rs != null && rs.next()) { 
-    	int rsID = rs.getInt(1);  //unique record to which the session is stored
+    //get last id 
+    ResultSet result = update.getGeneratedKeys(); 
+    if (result != null && result.next()) { 
+        int rsId = result.getInt(1);  
     }
 
-    //debug
-    System.out.println("SessionID Created: " + this.SessionID);
-    
-    rs.close();
-    connection.close();
-    
-} catch(Exception e) {
-	//debug out output this way
-	System.err.println("Mysql Statement Error: " + Query);
-	e.printStackTrace();
-	
+    result.close();
+    update.close();
+    conn.close();
+} catch(SQLException e) {
+    System.err.println("Mysql Statement Error: " + query);
+    e.printStackTrace();
 }
 }}}
 
