@@ -103,14 +103,11 @@ protected static int getResultSetSize(ResultSet resultSet) {
 }}}
 
  == Query ==
- Query statement, with connection, statement, resultset, and get record.
+ Query statement, using connection, statement, resultset, and get record. Setup a connection first.
 {{{
-/**
- * method to test query
- */
 String query = "SELECT * FROM table";
  
-  try {
+try {
     Connection conn = this.getConn();
     Statement select = conn.createStatement();
     ResultSet result = select.executeQuery(query);
@@ -120,20 +117,20 @@ String query = "SELECT * FROM table";
     select.close();
     result.close();
     conn.close();
-  } catch(SQLException e) {
+} catch(SQLException e) {
 	System.err.println("Mysql Statement Error: " + query);
 	e.printStackTrace();
-  }
+}
 }}}
 
  == Update / Insert ==
- Update and Insert into database, MySql or MsSql or whatever database you have
+ Update and Insert into database, MySql or MsSql or whatever database you have. Setup a connection first
 {{{
 //save session data to table 
 String query = "INSERT INTO `session` (UserID, SessionID, LastAccessed, DateCreated) " +
 			   "VALUES ('" + this.dbUserID + "', '" + this.SessionID + "' , UNIX_TIMESTAMP(), UNIX_TIMESTAMP());";
 
-  try {
+try {
     Connection conn = this.getConn();
     Statement update = conn.createStatement();
     update.executeUpdate(query);
@@ -147,10 +144,10 @@ String query = "INSERT INTO `session` (UserID, SessionID, LastAccessed, DateCrea
     result.close();
     update.close();
     conn.close();
-  } catch(SQLException e) {
+} catch(SQLException e) {
     System.err.println("Mysql Statement Error: " + query);
     e.printStackTrace();
-  }
+}
 }}}
 
 
