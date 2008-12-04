@@ -1,0 +1,23 @@
+#summary hosting jsp pages in your gwt application
+
+= JSP Page Hosting =
+
+ Host JSP pages in your gwt application. You can test them, by incuding the tomcat 5.5 jars below. 
+ * [Right click Project] > Build Path > Configure Build Path > Libraries > Add External Jar > [Select Jar]
+ * Windows users, download and install tomcat 5.5, and find the jasper jars and add them to your class path.
+{{{
+<!-- project.gwt.xml -->
+<servlet path='/test.jsp' class='org.apache.jasper.servlet.JspServlet' />
+<servlet path='/xml/chart.jsp' class='org.apache.jasper.servlet.JspServlet' />
+
+}}}
+
+ Add the mime type to the. This will allow jsp files to be used.
+ * project > tomcat/conf/gwt/web.xml > add mime type
+{{{
+<mime-mapping>
+  <extension>jsp</extension>
+  <mime-type>text/html</mime-type>
+</mime-mapping> 
+}}}
+
