@@ -108,8 +108,6 @@ protected static int getResultSetSize(ResultSet resultSet) {
 /**
  * method to test query
  */
-public void queryMyDB() {
-
 String query = "SELECT * FROM table";
  
   try {
@@ -129,12 +127,8 @@ String query = "SELECT * FROM table";
 }}}
 
  == Update / Insert ==
- UUID gets you a unique session id to work with. 
+ Update and Insert into database, MySql or MsSql or whatever database you have
 {{{
-//create a unique session id to store
-UUID uID = UUID.randomUUID();
-this.SessionID = uID.toString();
-
 //save session data to table 
 String query = "INSERT INTO `session` (UserID, SessionID, LastAccessed, DateCreated) " +
 			   "VALUES ('" + this.dbUserID + "', '" + this.SessionID + "' , UNIX_TIMESTAMP(), UNIX_TIMESTAMP());";
