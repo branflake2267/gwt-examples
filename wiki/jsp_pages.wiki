@@ -2,7 +2,10 @@
 
 = JSP Page Hosting =
 
- Host JSP pages in your gwt application. You can test them, by incuding the tomcat 5.5 jars below. 
+ == References ==
+ * [http://tomcat.apache.org/download-55.cgi] - tomcat 5.5  (don't use tomcat 6 jasper jars yet)
+
+ Host JSP pages in your gwt application. You can test them in hosted mode this way, by including the tomcat 5.5 jars below. 
  * [Right click Project] > Build Path > Configure Build Path > Libraries > Add External Jar > [Select Jar]
  * Windows users, download and install tomcat 5.5, and find the jasper jars and add them to your class path.
 {{{
@@ -20,4 +23,3 @@
   <mime-type>text/html</mime-type>
 </mime-mapping> 
 }}}
-
