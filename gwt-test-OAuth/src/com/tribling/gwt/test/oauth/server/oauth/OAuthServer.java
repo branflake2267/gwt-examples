@@ -1,9 +1,9 @@
 package com.tribling.gwt.test.oauth.server.oauth;
 
 import com.tribling.gwt.test.oauth.client.oauth.OAuthTokenData;
-import com.tribling.gwt.test.oauth.server.db.DB_Conn;
+import com.tribling.gwt.test.oauth.server.db.Db_Conn;
 
-public class OAuthServer extends DB_Conn {
+public class OAuthServer extends Db_Conn {
 	
 	/**
 	 * constructor
@@ -56,6 +56,9 @@ public class OAuthServer extends DB_Conn {
 	 */
 	private int getApplicationId(OAuthTokenData token) {
 	
+		String query = "";
+		
+		
 		return 0;
 	}
 	
