@@ -87,9 +87,7 @@ public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
 	 * A. ->(B.?) grant request token?
 	 */
 	public OAuthTokenData requestToken(OAuthTokenData tokenData) {
-		
 		String url = getRequestUrlOAuth();
-		
 		OAuthServer oauth = new OAuthServer();
 		return oauth.requestToken(tokenData, url);
 	}
