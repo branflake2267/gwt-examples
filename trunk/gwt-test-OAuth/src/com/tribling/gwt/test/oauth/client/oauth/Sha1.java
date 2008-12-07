@@ -84,7 +84,14 @@ public class Sha1 {
 	 * @return
 	 */
 	public String b64_hmac_sha1(String key, String data) {
-		return binb2b64(core_hmac_sha1(key, data));
+		
+		String s = null;
+		try {
+			s = binb2b64(core_hmac_sha1(key, data));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return s;
 	}
 
 	/**
@@ -417,16 +424,44 @@ public class Sha1 {
 	private String binb2b64(int[] binarray) {
 		String tab = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 		String str = "";
+		
+		// correct binnary array size, do we need a bigger array?
+		int arlen = binarray.length;
 		for (int i = 0; i < binarray.length * 4; i += 3) {
-			int triplet = (((binarray[i >> 2] >> 8 * (3 - i % 4)) & 0xFF) << 16)
-					| (((binarray[i + 1 >> 2] >> 8 * (3 - (i + 1) % 4)) & 0xFF) << 8)
-					| ((binarray[i + 2 >> 2] >> 8 * (3 - (i + 2) % 4)) & 0xFF);
-			for (int j = 0; j < 4; j++) {
-				if (i * 8 + j * 6 > binarray.length * 32)
-					str += b64pad;
-				else
-					str += tab.charAt((triplet >> 6 * (3 - j)) & 0x3F);
+			int index1 = i >> 2;
+			int index2 = i + 1 >> 2;
+			int index3 = i + 2 >> 2;
+			if (index1 > arlen) {
+				arlen = index1;
 			}
+			if (index2 > arlen) {
+				arlen = index1;
+			}
+			if (index3 > arlen) {
+				arlen = index1;
+			}
+		}
+		
+		if (arlen >= binarray.length) {
+			binarray = pad(binarray, arlen, 0);
+		}
+		
+		for (int i = 0; i < binarray.length * 4; i += 3) {
+						
+			int triplet = (((binarray[i >> 2] >> 8 * (3 - i % 4)) & 0xFF) << 16) | 
+						  (((binarray[i + 1 >> 2] >> 8 * (3 - (i + 1) % 4)) & 0xFF) << 8) | 
+						  ((binarray[i + 2 >> 2] >> 8 * (3 - (i + 2) % 4)) & 0xFF);
+			
+			for (int j = 0; j < 4; j++) {
+				
+				if (i * 8 + j * 6 > binarray.length * 32) {
+					str += b64pad;
+				} else {
+					str += tab.charAt((triplet >> 6 * (3 - j)) & 0x3F);
+				}
+				
+			}
+			
 		}
 		return str;
 	}
@@ -447,8 +482,9 @@ public class Sha1 {
 		
 		//test2();
 		
-		test3();
+		//test3();
 		
+		test4();
 	}
 	
 	private void test1() {
@@ -491,5 +527,10 @@ public class Sha1 {
 		
 	}
 	
+	private void test4() {
+		String key = "Salt";
+		String data = "http&y=b&c=1&this=work";
+		String s = b64_hmac_sha1(key, data);
+	}
 	
 }

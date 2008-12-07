@@ -32,15 +32,14 @@ public class OAuthServer extends Db_Conn {
 		//System.out.println("request url: " + url);
 		
 	
-		// see if the request token matches the stored consumerKey & consumerSecret
-		// get the applicationId for the Applications ConsumerKey & ConsumerSecret
+		// get the application data according to the consumerKey Given, then lets see if it matches up
 		ApplicationData appData = getApplicationId(token);
 		
-		// Test the signature has been signed on client and server side the same
+		// verify the signed signature from the client matches the local
 		boolean verifySignature = token.verify(url, appData.consumerSecret);
 		
 		// Examine if we can go to the next step
-		if (verifySignature == false && appData.applicationId < 0) {
+		if (verifySignature == false) {
 			token.setResult(OAuthTokenData.ERROR);
 		} else {
 			token.setResult(OAuthTokenData.SUCCESS);

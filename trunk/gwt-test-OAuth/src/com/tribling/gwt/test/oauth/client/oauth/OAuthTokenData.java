@@ -261,11 +261,11 @@ public class OAuthTokenData implements IsSerializable {
 		// make base string
 		String s = "";
 		s += "RPC&";
-		s += url + "&";
+		s += encode(url) + "&";
 		s += "oauth_callback=" + encode(oauth_callback) + "&";
 		s += "oauth_consumer_key=" + encode(oauth_consumer_key) + "&";
 		s += "oauth_nounce=" + oauth_nounce + "&";
-		s += "oauth_signautre_method=" + oauth_signature_method + "&";
+		s += "oauth_signature_method=" + oauth_signature_method + "&";
 		s += "oauth_timestamp=" + oauth_timestamp + "&";
 		s += "oauth_token=" + oauth_token + "&";
 		s += "oauth_token_secret=" + oauth_token_secret + "&";
