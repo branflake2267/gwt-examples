@@ -1,7 +1,7 @@
 #summary Serialize a java obect for database storage
 
 = Java Object Serialization =
- I found I could store my java object into mysql binary field and deserialize for later. For example, caching an object that causes huge query load each time its requested.
+ I found I could store my java object into mysql binary field and deserialize for later use. For example, caching an object that causes huge query load each time its requested. Or you can have the server rebuild the objects every night. I do this for my charts.
 
  == Byte Serialization ==
  For server side use only. Use this to store a java object into a database and use it agian. The table's field must be binary (case sensitive)
