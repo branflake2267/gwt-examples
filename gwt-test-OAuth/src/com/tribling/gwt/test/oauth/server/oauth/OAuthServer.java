@@ -1,5 +1,10 @@
 package com.tribling.gwt.test.oauth.server.oauth;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import com.tribling.gwt.test.oauth.client.oauth.OAuthTokenData;
 import com.tribling.gwt.test.oauth.server.db.Db_Conn;
 
@@ -14,7 +19,7 @@ public class OAuthServer extends Db_Conn {
 	
 	/**
 	 * A. -> (B. grant request token): Can we go to the next step?
-	 * grant request token?
+	 * Service Provider (this), can grant request token?
 	 * 
 	 * NOTE: using rpc, I am only using the app base url, to sign, and no port
 	 * 
@@ -26,24 +31,23 @@ public class OAuthServer extends Db_Conn {
 		// debug
 		//System.out.println("request url: " + url);
 		
-		// Test if the request signature has been successfully verified
-		boolean verifySignature = token.verify(url);
-
-		// TODO - get application id 
-		int applicationId = getApplicationId(token);
+	
+		// see if the request token matches the stored consumerKey & consumerSecret
+		// get the applicationId for the Applications ConsumerKey & ConsumerSecret
+		ApplicationData appData = getApplicationId(token);
 		
-		// TODO - request token has never been exchanged for an access token - check nonce
+		// Test the signature has been signed on client and server side the same
+		boolean verifySignature = token.verify(url, appData.consumerSecret);
 		
-		
-		// TODO - the request token matches the consumerKey (is this a web site key, or username/email?)
-		
-		
-		// TODO - for example 
-		if (verifySignature == false) {
+		// Examine if we can go to the next step
+		if (verifySignature == false && appData.applicationId < 0) {
 			token.setResult(OAuthTokenData.ERROR);
 		} else {
 			token.setResult(OAuthTokenData.SUCCESS);
 		}
+		
+		// TODO - check nounce???
+		// TODO - get access token ???
 		
 		return token;
 	}
@@ -54,12 +58,40 @@ public class OAuthServer extends Db_Conn {
 	 * @param token
 	 * @return
 	 */
-	private int getApplicationId(OAuthTokenData token) {
+	private ApplicationData getApplicationId(OAuthTokenData token) {
 	
-		String query = "";
+		if (token == null) {
+			System.out.println("No tokenData exists. ERROR: getApplicationId()");
+		}
 		
+		String ck = token.getConsumerKey();
 		
-		return 0;
+		String sql = "SELECT ApplicationId, ConsumerKey, ConsumerSecret " +
+				"FROM Application " +
+				"WHERE (ConsumerKey='" + ck + "')";
+		
+		// debug
+		System.out.println("sql query: " + sql);
+		
+		ApplicationData appData = new ApplicationData();
+		try {
+			Connection conn = this.getDbConnRead();
+			Statement select = conn.createStatement();
+			ResultSet result = select.executeQuery(sql);
+			while (result.next()) {
+				appData.applicationId = result.getInt(1);
+				appData.consumerKey = result.getString(2);
+				appData.consumerSecret = result.getString(3);
+			}
+			select.close();
+			result.close();
+			conn.close();
+		} catch (SQLException e) {
+			System.err.println("Mysql Statement Error: " + sql);
+			e.printStackTrace();
+		}
+		
+		return appData;
 	}
 	
 	/**

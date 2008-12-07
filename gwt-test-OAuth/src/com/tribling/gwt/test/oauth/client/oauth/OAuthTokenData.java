@@ -10,6 +10,8 @@ import com.tribling.gwt.test.oauth.client.Global_Domain;
  * oAuth data to pass around from client to server and server to client
  * 
  * @author branflake2267
+ * 
+ * TODO - get rid of Consumer key - 
  *
  */
 public class OAuthTokenData implements IsSerializable {
@@ -61,7 +63,7 @@ public class OAuthTokenData implements IsSerializable {
 	// application id, or user id
 	private String oauth_consumer_key;
 	
-	// application id secret, or user id secret (like password) (hashed)
+	// token secret
 	private String oauth_token_secret;
 	
 	// random string - protects against replay attacks
@@ -81,6 +83,7 @@ public class OAuthTokenData implements IsSerializable {
 	
 	// version used, another var added for signature uniqueness
 	private String oauth_version = "1.0";
+	
 	
 	// what is this objects purpose, what are we requesting?
 	public static final int REQUEST_REQUEST_TOKEN = 1;
@@ -102,33 +105,35 @@ public class OAuthTokenData implements IsSerializable {
 		this.oauth_version = "1.0";
 	}
 	
-	/**
-	 * set the credentials 
-	 * 
-	 * @param consumerKey
-	 * @param consumerSecret
-	 */
-	public void setCredentials(String consumerKey, String consumerSecret) {
+	public void setConsumerKey(String consumerKey) {
 		this.oauth_consumer_key = consumerKey;
-		this.oauth_token_secret = consumerSecret;
+	}
+	
+	public String getConsumerKey() {
+		return this.oauth_consumer_key;
 	}
 	
 	/**
 	 * sign the token - sign after setting needed vars
 	 * 
+	 * TODO - signature = concat(consumerSecret+tokenSecret)
+	 * 
 	 * @param url
+	 * @param consumerSecret
 	 */
-	public void sign(String url) {
+	public void sign(String url, String consumerSecret) {
 		
 		//debug
 		//System.out.println("Signing With URL: " + url);
 		
 		// removing port for now, rpc method different
-		url = url.replaceAll(":[0-9]+", ""); 
+		url = url.replaceAll(":[0-9]+", "");
 		
-		String s = getSignatureBaseString(url);
+		String key = getConcatConsumerSecretAndTokenSecret(consumerSecret);
+		String data = getSignatureBaseString(url);
+		
 		Sha1 sha = new Sha1();
-		this.oauth_signature = sha.hex_sha1(s);
+		this.oauth_signature = sha.b64_hmac_sha1(key, data);
 		
 		//System.out.println("Sign:" + oauth_signature);
 	}
@@ -137,19 +142,19 @@ public class OAuthTokenData implements IsSerializable {
 	 * verify against another signature
 	 * 
 	 * @param url
-	 * @param verify
+	 * @param consumerSecret
 	 * @return
 	 */
-	public boolean verify(String url) {
+	public boolean verify(String url, String consumerSecret) {
 		
 		//debug
 		//System.out.println("Signing With URL: " + url);
 		
-		// removing port for now, rpc method different
+		// removing port for now, rpc method is different
 		url = url.replaceAll(":[0-9]+", ""); 
 		
 		String verify = this.oauth_signature;
-		sign(url);
+		sign(url, consumerSecret);
 		boolean bol = false;
 		if (this.oauth_signature.equals(verify)) {
 			bol = true;
@@ -186,6 +191,23 @@ public class OAuthTokenData implements IsSerializable {
 	public int getResult() {
 		return this.resultOfRequest;
 	}
+		
+	private String getConcatConsumerSecretAndTokenSecret(String consumerSecret) {
+		
+		if (consumerSecret == null) {
+			consumerSecret = "";
+		}
+		
+		if (oauth_token_secret == null) {
+			oauth_token_secret = "";
+		}
+		
+		String concat = "";
+		concat += encode(consumerSecret) + "&";
+		concat += encode(consumerSecret);
+		
+		return concat;
+	}
 	
 	/**
 	 * make a random string - prevents replay attack
@@ -193,7 +215,7 @@ public class OAuthTokenData implements IsSerializable {
 	 * @return
 	 */
 	private String getNounce() {
-		int nounceLength = 6;
+		int nounceLength = 30;
 		String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
 		String s = "";
 	    for (int i=0; i < nounceLength; i++) {
@@ -236,11 +258,12 @@ public class OAuthTokenData implements IsSerializable {
 		// set realm like http://host.domain.tld:8180
 		this.realm = Global_Domain.getRealm(url) + "/";
 		
+		// make base string
 		String s = "";
 		s += "RPC&";
 		s += url + "&";
-		s += "oauth_callback=" + oauth_callback + "&";
-		s += "oauth_consumer_key=" + oauth_consumer_key + "&";
+		s += "oauth_callback=" + encode(oauth_callback) + "&";
+		s += "oauth_consumer_key=" + encode(oauth_consumer_key) + "&";
 		s += "oauth_nounce=" + oauth_nounce + "&";
 		s += "oauth_signautre_method=" + oauth_signature_method + "&";
 		s += "oauth_timestamp=" + oauth_timestamp + "&";
@@ -250,14 +273,11 @@ public class OAuthTokenData implements IsSerializable {
 		
 		//System.out.println("base:" + s);
 		
-		// encode it to spec
-		s = urlencode(s);
-		
 		return s;
 	}
 	
 	/**
-	 * encode signature base (url)
+	 * encode String
 	 * 
 	 * 5.1
 	 * 
@@ -267,7 +287,7 @@ public class OAuthTokenData implements IsSerializable {
 	 * @param s
 	 * @return
 	 */
-	private String urlencode(String s) {
+	private String encode(String s) {
 		if (s == null) {
 			return "";
 		}
@@ -299,6 +319,6 @@ public class OAuthTokenData implements IsSerializable {
 		
 		return s;
 	}
-	
+
 
 }

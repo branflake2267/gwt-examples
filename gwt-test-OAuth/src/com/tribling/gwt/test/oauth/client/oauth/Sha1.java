@@ -66,20 +66,34 @@ public class Sha1 {
 	}
 
 	/**
-	 * get sha1 hash - use some sale
+	 * get hexidemical sha1 hash - using salt
 	 * 
 	 * @param key - salt
-	 * @param data - what to hash
+	 * @param data - what to hash with the salt
 	 * @return
 	 */
 	public String hex_hmac_sha1(String key, String data) {
 		return binb2hex(core_hmac_sha1(key, data));
 	}
 
+	/**
+	 * get a base 64 sha1 hash - using salt
+	 * 
+	 * @param key - salt
+	 * @param data - what to hash with the salt
+	 * @return
+	 */
 	public String b64_hmac_sha1(String key, String data) {
 		return binb2b64(core_hmac_sha1(key, data));
 	}
 
+	/**
+	 * get sha1  using some salt
+	 * 
+	 * @param key - salt
+	 * @param data - what to hash with the salt
+	 * @return
+	 */
 	public String str_hmac_sha1(String key, String data) {
 		return binb2str(core_hmac_sha1(key, data));
 	}
