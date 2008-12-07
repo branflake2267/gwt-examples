@@ -84,7 +84,6 @@ public class Sha1 {
 	 * @return
 	 */
 	public String b64_hmac_sha1(String key, String data) {
-		
 		String s = null;
 		try {
 			s = binb2b64(core_hmac_sha1(key, data));
