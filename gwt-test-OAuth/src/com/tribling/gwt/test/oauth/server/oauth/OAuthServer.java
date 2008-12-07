@@ -40,10 +40,6 @@ public class OAuthServer extends Db_Conn {
 		// check nonce 
 		boolean verifyNonce = verifyNonceHasntBeenUsed(token, appData.applicationId, 0);
 
-		// TODO - get access token ???
-		   // produce access token and token secret and send it back
-		
-		
 		// prepare for transport back
 		OAuthTokenData returnToken = new OAuthTokenData();
 		
@@ -52,6 +48,11 @@ public class OAuthServer extends Db_Conn {
 			returnToken.setResult(OAuthTokenData.ERROR);
 		} else {
 			returnToken.setResult(OAuthTokenData.SUCCESS);
+		}
+		
+		// TODO - on success
+		if (returnToken.getResult() == OAuthTokenData.SUCCESS) {
+			// TODO - create/produce access token and token secret and send it back
 		}
 		
 		// set nonce, so it can't be used again
@@ -125,10 +126,11 @@ public class OAuthServer extends Db_Conn {
 			return false;
 		}
 
+		//NOTE: Nonce is case sensitive in sql table
 		String sql = "SELECT NonceId " +
 				"FROM session_nonce " +
 				"WHERE " + whereQuery + " AND " +
-				"(Nonce='" + token.getNonce() + "');";
+				"(Nonce='" + token.getNonce() + "');"; 
 		
 		// debug
 		System.out.println("Query Nonce:" + sql);
@@ -155,7 +157,7 @@ public class OAuthServer extends Db_Conn {
 				"ApplicationId='" + escapeForSql(appId) + "', " +
 				"UserId='" + escapeForSql(userId) + "', " +
 				"Nonce='" + escapeForSql(token.getNonce()) + "', " +
-				"DateCreated=NOW();";
+				"DateCreated=UNIX_TIMESTAMP(NOW());";
 		
 		System.out.println("setNonce query: " + sql);
 		setQuery(sql);
