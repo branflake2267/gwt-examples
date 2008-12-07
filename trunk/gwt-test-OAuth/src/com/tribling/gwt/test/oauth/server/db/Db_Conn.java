@@ -325,7 +325,6 @@ public class Db_Conn {
 			System.err.println("Mysql Statement Error: " + sql);
 			e.printStackTrace();
 		}
-
 		return b;
 	}
 	

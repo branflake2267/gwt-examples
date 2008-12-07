@@ -134,8 +134,8 @@ public class SessionManager extends Composite {
 		// requests will happen on different ports, and with different servlet context
 		String url = GWT.getHostPageBaseURL();
 		OAuthTokenData token = new OAuthTokenData();
-		token.setCredentials(consumerKey, consumerSecret);
-		token.sign(url);
+		token.setConsumerKey(consumerKey);
+		token.sign(url, consumerSecret);
 		token.setRequest(OAuthTokenData.REQUEST_REQUEST_TOKEN);
 		
 		// ask the server now
