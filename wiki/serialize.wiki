@@ -1,0 +1,146 @@
+#summary Serialize a java obect for database storage
+
+= Java Object Serialization =
+
+ == Byte Serialization ==
+ For server side use only. Use this to store a java object into a database and use it agian. The table's field must be binary (case sensitive)
+{{{
+public class MySerializationPolicy extends SerializationPolicy {
+
+	public MySerializationPolicy() {
+		
+	}
+	
+	@Override
+	public boolean shouldDeserializeFields(Class<?> clazz) {
+		return false;
+	}
+
+	@Override
+	public boolean shouldSerializeFields(Class<?> clazz) {
+		return false;
+	}
+
+	@Override
+	public void validateDeserialize(Class<?> clazz)
+			throws SerializationException {
+	}
+
+	@Override
+	public void validateSerialize(Class<?> clazz) throws SerializationException {
+	}
+
+}
+
+public class Serialize {
+
+	public Serialize() {
+	}
+	
+	/**
+	 * serialize an object - BASE64Encoder
+	 * 
+	 * @param o
+	 * @return
+	 */
+	public String serialize(Object o) {
+		
+		if (o == null) {
+			return null;
+		}
+		
+		String s = null;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+			ObjectOutputStream oout = new ObjectOutputStream(baos);
+			oout.writeObject(o);
+			oout.close();
+			byte[] buf = baos.toByteArray();
+			s = new sun.misc.BASE64Encoder().encode(buf);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	    return s;
+	}
+	
+	/**
+	 * deserialize an object - BASE64Decoder
+	 * 
+	 * @param s
+	 * @return
+	 */
+	public Object deserialize(String s) {
+		
+		if (s == null) {
+			return null;
+		}
+		
+		byte[] buf = null;
+		try {
+			buf = new sun.misc.BASE64Decoder().decodeBuffer(s);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		Object o = null;
+		if (buf != null) {
+			ObjectInputStream objectIn = null;
+			try {
+				objectIn = new ObjectInputStream(new ByteArrayInputStream(buf));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				o = objectIn.readObject();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} 
+		}
+		
+		return o;
+	}
+}
+}}}
+
+ == GWT serialzation ==
+  I tried serializing using gwt, but found there wasn't a deserialize method to use on the server side.
+
+  === Encoding ===
+{{{
+public class SerializeGwt {
+
+	public static void main(String[] args) {
+		
+		DrillDownData drill = new DrillDownData();
+		
+		Class<?> responseClass = drill.getClass();
+
+		
+		MySerializationPolicy serializationPolicy = new MySerializationPolicy();
+		
+		
+		ServerSerializationStreamWriter stream = new ServerSerializationStreamWriter(serializationPolicy);
+
+	    stream.prepareToWrite();
+	    
+	    if (responseClass != void.class) {
+	      try {
+			stream.serializeValue(drill, responseClass);
+			} catch (SerializationException e) {
+	
+				e.printStackTrace();
+			}
+	    }
+
+	    String bufferStr = stream.toString();
+	      
+		
+		
+		System.out.println("hash: " + bufferStr);
+	}
+}
+}}}
+
+  === Decoding ===
