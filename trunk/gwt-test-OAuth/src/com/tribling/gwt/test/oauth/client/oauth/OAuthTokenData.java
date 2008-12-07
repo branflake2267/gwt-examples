@@ -100,7 +100,7 @@ public class OAuthTokenData implements IsSerializable {
 	 * constructor - init
 	 */
 	public OAuthTokenData() {
-		this.oauth_nounce = getNounce();
+		this.oauth_nounce = getNonce();
 		this.oauth_timestamp = getTimeStamp();
 		this.oauth_version = "1.0";
 	}
@@ -214,7 +214,7 @@ public class OAuthTokenData implements IsSerializable {
 	 * 
 	 * @return
 	 */
-	private String getNounce() {
+	public String getNonce() {
 		int nounceLength = 30;
 		String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
 		String s = "";
@@ -223,6 +223,10 @@ public class OAuthTokenData implements IsSerializable {
             s += chars.substring(rnum, rnum+1);
 	    }
 	    return s;
+	}
+	
+	public int getTimeStamped() {
+		return this.oauth_timestamp;
 	}
 	
 	/**

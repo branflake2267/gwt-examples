@@ -7,11 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 
 import org.apache.commons.lang.StringEscapeUtils;
+
+import com.mysql.jdbc.EscapeTokenizer;
 
 /**
  * DB connection methods
@@ -365,5 +364,51 @@ public class Db_Conn {
 		return id;
 	}
 	
+	/**
+	 * escape all that goes into sql for safely.
+	 * 
+	 * @param s
+	 * @return
+	 */
+	protected String escapeForSql(String s) {
+		return escape(s);
+	}
+	
+	/**
+	 * this is a bit overkill, but keeps things consistent in the code
+	 * 
+	 * @param i
+	 * @return
+	 */
+	protected String escapeForSql(int i) {
+		String s = Integer.toString(i);
+		return escape(s);
+	}
+	
+	/**
+	 * this is a bit overkill, but keeps things consistent in the code
+	 * 
+	 * @param i
+	 * @return
+	 */
+	protected String escapeForSql(double i) {
+		String s = Double.toString(i);
+		return escape(s);
+	}
+	
+	/**
+	 * make sure the string going into sql, won't have weird stuff in it, it escapes ' and "
+	 * when inserting this way, when bringing stuff out has to be delt with o
+	 */
+	private String escape(String s) {
+		String rtn = StringEscapeUtils.escapeSql(s);
+		if (rtn != null) {
+			rtn = rtn.trim();
+		}
+		if (rtn == null) {
+			rtn = "";
+		}
+		return rtn;
+	}
 	
 }
