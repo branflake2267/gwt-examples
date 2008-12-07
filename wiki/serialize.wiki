@@ -5,33 +5,6 @@
  == Byte Serialization ==
  For server side use only. Use this to store a java object into a database and use it agian. The table's field must be binary (case sensitive)
 {{{
-public class MySerializationPolicy extends SerializationPolicy {
-
-	public MySerializationPolicy() {
-		
-	}
-	
-	@Override
-	public boolean shouldDeserializeFields(Class<?> clazz) {
-		return false;
-	}
-
-	@Override
-	public boolean shouldSerializeFields(Class<?> clazz) {
-		return false;
-	}
-
-	@Override
-	public void validateDeserialize(Class<?> clazz)
-			throws SerializationException {
-	}
-
-	@Override
-	public void validateSerialize(Class<?> clazz) throws SerializationException {
-	}
-
-}
-
 public class Serialize {
 
 	public Serialize() {
@@ -109,6 +82,35 @@ public class Serialize {
 
   === Encoding ===
 {{{
+public class MySerializationPolicy extends SerializationPolicy {
+
+	public MySerializationPolicy() {
+		
+	}
+	
+	@Override
+	public boolean shouldDeserializeFields(Class<?> clazz) {
+		return false;
+	}
+
+	@Override
+	public boolean shouldSerializeFields(Class<?> clazz) {
+		return false;
+	}
+
+	@Override
+	public void validateDeserialize(Class<?> clazz)
+			throws SerializationException {
+	}
+
+	@Override
+	public void validateSerialize(Class<?> clazz) throws SerializationException {
+	}
+
+}
+
+
+
 public class SerializeGwt {
 
 	public static void main(String[] args) {
