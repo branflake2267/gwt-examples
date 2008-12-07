@@ -167,8 +167,6 @@ public class SessionManager extends Composite {
 			Window.alert("ERROR: This application's access token did not match up.\n This application has not been granted access.");
 			break;
 
-			
-
 		}
 	}
 	
