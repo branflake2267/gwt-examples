@@ -115,11 +115,12 @@ public class SerializeGwt {
 
 	public static void main(String[] args) {
 		
+                // my object i wanted to serialize, which has data in it.
 		DrillDownData drill = new DrillDownData();
 		
 		Class<?> responseClass = drill.getClass();
 
-		
+		// make a serialization policy of my own to use, normally deteremined by rpc request
 		MySerializationPolicy serializationPolicy = new MySerializationPolicy();
 		
 		
