@@ -140,3 +140,17 @@ public static String removeBadHtmlTags(String html) {
 	return html;
 }
 }}}
+
+= Methods =
+ When using variables, use error checking so when you go to call the variable and you dont input the variables later, it reminds you what you did wrong.
+{{{
+public int getMyInt(String a, String b) {
+    if (a == null) {
+       System.out.println("Dude, you need and 'a' to get this. getMyInt();");
+    }
+
+    if (b == null) {
+       System.out.println("Dude, you need and 'b' to get this. getMyInt();");
+    }
+}
+}}}
