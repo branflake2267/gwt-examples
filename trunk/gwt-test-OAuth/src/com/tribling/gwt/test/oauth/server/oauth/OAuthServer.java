@@ -53,6 +53,7 @@ public class OAuthServer extends Db_Conn {
 		// TODO - on success
 		if (returnToken.getResult() == OAuthTokenData.SUCCESS) {
 			// TODO - create/produce access token and token secret and send it back
+			AccessTokenData at = setAccessToken(appData.applicationId);
 		}
 		
 		// set nonce, so it can't be used again
@@ -163,5 +164,44 @@ public class OAuthServer extends Db_Conn {
 		setQuery(sql);
 	}
 
+	/**
+	 * get unique accessToken
+	 * 
+	 * @param applicationId
+	 * @return
+	 */
+	private AccessTokenData setAccessToken(int applicationId) {
+		
+		String accessKey = getAccessKey();
+		String accessSecret = getAccessSecret();
+		
+		String sql = "INSERT INTO session_accesstoken SET " +
+				"AccessToken='" + accessKey + "'," +
+				"AccessTokenSecret='" + accessSecret + "', " +
+				"DateCreated=UNIX_TIMESTAMP(NOW());";
+	
+		int id = setQuery(sql);
+		
+		// transport back
+		AccessTokenData at = new AccessTokenData();
+		at.accessToken = accessKey;
+		at.accessTokenSecret = accessSecret;
+		return at;
+	}
+	
+	// TODO
+	private String getAccessKey() {
+		return null;
+	}
+	
+	// TODO
+	private String getAccessSecret() {
+		return null;
+	}
+	
+	// TODO
+	private boolean verifyAccessToken(int applicationId, String accessToken, String accessTokenSecret) {
+		return false;
+	}
 	
 }
