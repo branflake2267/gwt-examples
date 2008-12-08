@@ -36,6 +36,7 @@ import java.util.zip.ZipOutputStream;
  * 
  * Wants In Future TODO - deploy to tomcat automatically 
  * TODO - fix gwt-files classpath in project-compile after import of svn project?
+ * TODO - setup linux, windows compile files fix
  * 
  * Documentation http://tomcat.apache.org/tomcat-6.0-doc/index.html
  */
