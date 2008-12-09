@@ -41,7 +41,7 @@ private long getTimeStampMilli() {
 }}}
 
 = TimeStamp - Start and End Of Day =
- Get the beginning/start of the day in seconds - using Calendar
+ Get the beginning/start of the day in seconds - using Calendar (calendar works on server side only)
 {{{
 /**
  * get Start of Day Time Stamp in seconds
