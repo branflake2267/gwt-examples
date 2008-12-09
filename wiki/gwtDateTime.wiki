@@ -42,6 +42,7 @@ private long getTimeStampMilli() {
 
 = TimeStamp - Start and End Of Day =
  Get the beginning/start of the day in seconds - using Calendar (calendar works on server side only)
+ * MySql: SELECT UNIX_TIMESTAMP(MAKEDATE( EXTRACT(YEAR FROM CURDATE()), DAYOFYEAR(CURDATE()))); 
 {{{
 /**
  * get Start of Day Time Stamp in seconds
