@@ -25,6 +25,11 @@
  <user username="tomcat" password="s3cret" roles="manager"/>
 }}}
 
+ tomcat restart
+{{{
+ sudo /etc/init.d/tomcat6 restart
+}}}
+
    * *localhost links*
    * [http://localhost:8080/manager/html localhost manager]
 
