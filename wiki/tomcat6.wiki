@@ -30,11 +30,12 @@
  sudo /etc/init.d/tomcat6 restart
 }}}
 
-   * *localhost links*
-   * [http://localhost:8080/manager/html localhost manager]
-
 == Microsoft Windows ==
  * 1. goto windows installer - [http://tomcat.apache.org/download-60.cgi download]
  * 2. follow instructions - record username and port
  * 3. goto http://locahost:8080
  * 4. goto Tomcat Manager Link and login as the user 
+
+= Quick Localhost Links =
+ * [http://localhost:8080/manager/html localhost manager]
+ * [http://localhost:8080/host-manager/html admin]
