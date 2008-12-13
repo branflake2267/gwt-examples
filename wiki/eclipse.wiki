@@ -33,4 +33,4 @@
 
 === Proxy ===
  For intranet proxies in corporations.
- * 1. Window > Prefrences > [type filter Proxy] > General > Network Connections > Setup your intranet proxy
+ * 1. Window > Prefrences > (type filter Proxy) > General > Network Connections > Setup your intranet proxy
