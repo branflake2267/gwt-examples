@@ -29,7 +29,8 @@
 == Software Updates ==
 
 === SVN - Subversion ===
-  * 1. Help > Software Updates > Available Software > Ganymede > Collaboration Tools > Subversion SVN Team Provider
+ * 1. Help > Software Updates > Available Software > Ganymede > Collaboration Tools > Subversion SVN Team Provider
+ * 2. Help > Software Updates > Available Software > Add Site > [http://www.polarion.org/projects/subversive/download/eclipse/2.0/ganymede-site/ SVN Connectors]
 
 === Proxy ===
  For intranet proxies in corporations.
