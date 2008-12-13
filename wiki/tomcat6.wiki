@@ -14,9 +14,6 @@
  * 3. sudo /etc/init.d/tomcat6 restart
  * 4. goto http://localhost:8080
 
-  === localhost links ===
-   * [http://localhost:8080/manager/html localhost manager]
-
  apt-get
 {{{
  sudo apt-get install tomcat6 tomcat6-common tomcat6-admin tomcat6-user tomcat6-docs tomcat6-examples
@@ -27,6 +24,9 @@
  <role rolename="manager"/>
  <user username="tomcat" password="s3cret" roles="manager"/>
 }}}
+
+  === localhost links ===
+   * [http://localhost:8080/manager/html localhost manager]
 
 == Microsoft Windows ==
  * 1. goto windows installer - [http://tomcat.apache.org/download-60.cgi download]
