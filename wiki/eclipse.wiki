@@ -37,7 +37,10 @@
  * 2. Help > Software Updates > Available Software > Add Site > [http://www.polarion.org/projects/subversive/download/eclipse/2.0/ganymede-site/ SVN Connectors]
  * 3. Update Site Polarion.org > (Check) Subversion SVN Connectors, (Check) SVNkit 1.2.0
  * 4. Window > Prefrences > (type filter SVN) > Team > SVN > SVN Connector > *Select SVN Kit 1.2.0* - A connector method has to be selected to connect to a SVN repository.
- * 4. File > New Other > (type filter SVN) > SVN Projects From SVN
+
+=== Import Project From Respository === 
+ * 1. File > New Other > (type filter SVN) > SVN Projects From SVN > (Enter URL) https://gwt-examples.googlecode.com/svn/
+ * 2. 
 
 = Proxy =
  For intranet proxies in corporations.
