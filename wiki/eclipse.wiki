@@ -28,7 +28,7 @@
  * 3. Create shortcut for desktop of eclipse.exe
 
 == Recommendations ==
- * I recommend starting with *Eclipse for Java Developers* download. You can install more features later that you may desire with software updates.
+ * I recommend starting with *Eclipse for Java Developers EE* download. You can install more features later that you may desire with software updates.
 
 = Software Updates =
 
@@ -38,9 +38,14 @@
  * 3. Update Site Polarion.org > (Check) Subversion SVN Connectors, (Check) SVNkit 1.2.0
  * 4. Window > Prefrences > (type filter SVN) > Team > SVN > SVN Connector > *Select SVN Kit 1.2.0* - A connector method has to be selected to connect to a SVN repository.
 
+== Code Metrics ==
+ How many lines of code have you written for your application? How is your code?
+ * [http://metrics.sourceforge.net/ metrics site]
+ * [http://metrics.sourceforge.net/update Metrics Update Site]
+
 === Share Project ===
  Share your eclipse GWT project with multiple computers and developers.
- * 1. (Right Click on Project Name) > 
+ * 1. (Right Click on Project Name) > Team Provider
 
 === Import Project From Respository === 
  * 1. File > New Other > (type filter SVN) > SVN Projects From SVN > (Enter URL), (Enter Username), (Enter Password)
