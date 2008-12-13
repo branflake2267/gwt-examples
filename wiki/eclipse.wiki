@@ -40,7 +40,8 @@
 
 === Import Project From Respository === 
  * 1. File > New Other > (type filter SVN) > SVN Projects From SVN > (Enter URL), (Enter Username), (Enter Password)
- * 2. 
+ * URLs: https://gwt-examples.googlecode.com/svn/trunk/ username:googleAccount password:sourcePassword
+ * URLs: svn+ssh://192.168.12.81/srv/svn username:computerAccount password:computerAccount
 
 = Proxy =
  For intranet proxies in corporations.
