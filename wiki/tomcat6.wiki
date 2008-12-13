@@ -41,7 +41,7 @@
  * [http://localhost:8080/host-manager/html localhost admin]
  * [http://localhost:8080/docs/ localhost docs]
 
-= Domain.tld/Folder_Name =
- Naming your archive.war will determine your servlet context.
+= Domain.tld/Archive.war =
+ Naming your archive.war will determine your servlet context or could say the .
  * for domian.tld/context = domain.tld/archive, or archive.war deployed
  * for domain.tld/(root) = domain.tld/ROOT, or ROOT.war deployed
