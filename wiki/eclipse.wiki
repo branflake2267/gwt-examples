@@ -61,6 +61,9 @@ sudo chmod -R g+rws myproject
 sudo svnadmin create /home/svn/myproject
 }}}
 
+=== Microsoft Window ===
+ TODO
+
 = Code Metrics =
  How many lines of code have you written for your application? How is your code?
  * [http://metrics.sourceforge.net/ metrics site]
