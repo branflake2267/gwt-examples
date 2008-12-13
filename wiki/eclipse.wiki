@@ -43,6 +43,20 @@
  * URLs: https://gwt-examples.googlecode.com/svn/trunk/ username:googleAccount,  password:sourcePassword
  * URLs: svn+ssh://192.168.12.81/srv/svn username:computerAccount, password:computerAccount
 
+=== Create SVN Repository ===
+ 
+==== Linux ====
+ * reference Ubuntu: [https://help.ubuntu.com/community/Subversion Ubuntu SVN Info]
+{{{
+sudo mkdir /home/svn
+cd /home/svn
+sudo mkdir myproject
+sudo chown -R www-data myproject
+sudo chgrp -R subversion myproject
+sudo chmod -R g+rws myproject
+sudo svnadmin create /home/svn/myproject
+}}}
+
 = Proxy =
  For intranet proxies in corporations.
  * 1. Window > Prefrences > (type filter Proxy) > General > Network Connections > Setup your intranet proxy
