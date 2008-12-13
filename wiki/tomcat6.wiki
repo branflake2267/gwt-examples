@@ -42,6 +42,6 @@
  * [http://localhost:8080/docs/ localhost docs]
 
 = Domain.tld/Archive.war =
- Naming your archive.war will determine your servlet context or could say the .
+ Naming your archive.war will determine your servlet context. Or could say archive.war represents the folder_name compared to html /folder/page.html
  * for domian.tld/context = domain.tld/archive, or archive.war deployed
  * for domain.tld/(root) = domain.tld/ROOT, or ROOT.war deployed
