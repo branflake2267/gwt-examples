@@ -26,12 +26,12 @@
 == Recommendations ==
  * I recommend starting with *Eclipse for Java Developers* download. You can install more features later that you may desire with software updates.
 
-== Software Updates ==
+= Software Updates =
 
-=== SVN - Subversion ===
+== SVN - Subversion ==
  * 1. Help > Software Updates > Available Software > Ganymede > Collaboration Tools > Subversion SVN Team Provider
  * 2. Help > Software Updates > Available Software > Add Site > [http://www.polarion.org/projects/subversive/download/eclipse/2.0/ganymede-site/ SVN Connectors]
 
-=== Proxy ===
+= Proxy =
  For intranet proxies in corporations.
  * 1. Window > Prefrences > (type filter Proxy) > General > Network Connections > Setup your intranet proxy
