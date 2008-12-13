@@ -11,8 +11,12 @@
  * 1. Install Java Jdk
  * 2. [http://www.eclipse.org/downloads/ Download]
 
- install java
+ installing java
 {{{
+ sudo apt-get install openjdk-6-jre
+
+ # for 64bit systems, you will also need to run GWT in 32 jre vm 
+ sudo apt-get install ia32-sun-java6-bin
 }}}
 
  == Microsoft Windows ==
