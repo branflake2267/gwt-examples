@@ -7,28 +7,30 @@
 
 = Install =
  
- == Ubuntu Linux ==
-  * 0. Install Java Jdk
-  * 1. [http://www.eclipse.org/downloads/ Download]
+== Ubuntu Linux ==
+ * 0. Install Java Jdk
+ * 1. [http://www.eclipse.org/downloads/ Download]
 
-  installing java
+ installing java
 {{{
  sudo apt-get install openjdk-6-jre
 
-  # for 64bit systems, you will also need to run GWT in 32 jre vm 
+ # for 64bit systems, you will also need to run GWT in 32 jre vm 
  sudo apt-get install ia32-sun-java6-bin
 }}}
 
- == Microsoft Windows ==
-  * 0. [http://java.sun.com/javaee/downloads/index.jsp?intcmp=1282 Download] Install Java SDK 
-  * 1. [http://www.eclipse.org/downloads/ Download]
+== Microsoft Windows ==
+ * 0. [http://java.sun.com/javaee/downloads/index.jsp?intcmp=1282 Download] Install Java SDK 
+ * 1. [http://www.eclipse.org/downloads/ Download]
 
- == Recommendations ==
-  * I recommend starting with Eclipse for Java Developers download. You can install more features later that you may desire with software updates.
+== Recommendations ==
+ * I recommend starting with Eclipse for Java Developers download. You can install more features later that you may desire with software updates.
 
- == Software Updates ==
+== Software Updates ==
 
- === SVN - Subversion ===
+=== SVN - Subversion ===
   * 1. Help > Software Updates > Available Software > Ganymede > Collaboration Tools > Subversion SVN Team Provider
 
- === Proxy ===
+=== Proxy ===
+ For intranet proxies in corporations.
+ * 1. Window > Prefrences > [type filter Proxy] > General > Network Connections > Setup your intranet proxy
