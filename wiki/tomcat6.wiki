@@ -2,7 +2,7 @@
 
 
 =Table of Contents= 
-<wiki:toc max_depth="2" 
+<wiki:toc max_depth="2"/>
 
 = Apache Tomcat 6 Servlet Container =
 
