@@ -36,6 +36,8 @@
  * 1. Help > Software Updates > Available Software > Ganymede > Collaboration Tools > Subversion SVN Team Provider
  * 2. Help > Software Updates > Available Software > Add Site > [http://www.polarion.org/projects/subversive/download/eclipse/2.0/ganymede-site/ SVN Connectors]
  * 3. Update Site Polarion.org > (Check) Subversion SVN Connectors, (Check) SVNkit 1.2.0
+ * 4. Window > Prefrences > (type filter SVN) > Team > SVN > SVN Connector > *Select SVN Kit 1.2.0* - this is important to do.
+ * 4. File > New Other > (type filter SVN) > SVN Projects From SVN
 
 = Proxy =
  For intranet proxies in corporations.
