@@ -61,7 +61,7 @@ sudo chmod -R g+rws myproject
 sudo svnadmin create /home/svn/myproject
 }}}
 
-=== Microsoft Window ===
+=== Microsoft Windows ===
  TODO
 
 = Code Metrics =
@@ -86,3 +86,9 @@ sudo svnadmin create /home/svn/myproject
 = External Jar Libraries =
  Adding external libraries onto your gwt project can increase the funcationality for both the client and the server side. Keep in mind that adding jars and using there classes don't always work for the client side.
  * 1. (Right Click on Project) > Build Path > Libraries > Add External Jars
+
+
+
+
+= Trouble Shooting =
+ TODO
