@@ -45,7 +45,7 @@
 
 === Share Project ===
  Share your eclipse GWT project with multiple computers and developers.
- * 1. (Right Click on Project Name) > Team Provider
+ * 1. (Right Click on Project Name) > Team > Share Project > (follow steps)
 
 === Import Project From Respository === 
  * 1. File > New Other > (type filter SVN) > SVN Projects From SVN > (Enter URL), (Enter Username), (Enter Password)
