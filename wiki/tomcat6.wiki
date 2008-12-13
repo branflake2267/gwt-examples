@@ -24,4 +24,4 @@
 }}}
 
 == Microsoft Windows ==
- * 1. download [http://tomcat.apache.org/download-60.cgi download]
+ * 1. Goto windows installer - [http://tomcat.apache.org/download-60.cgi download]
