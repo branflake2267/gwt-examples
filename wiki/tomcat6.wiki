@@ -25,7 +25,7 @@
  <user username="tomcat" password="s3cret" roles="manager"/>
 }}}
 
-  === localhost links ===
+   * *localhost links*
    * [http://localhost:8080/manager/html localhost manager]
 
 == Microsoft Windows ==
