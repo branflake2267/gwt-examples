@@ -23,5 +23,5 @@
  <user username="tomcat" password="s3cret" roles="manager"/>
 }}}
 
-== Window ==
+== Microsoft Windows ==
  * 1. download [http://tomcat.apache.org/download-60.cgi download]
