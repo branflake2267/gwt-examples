@@ -10,6 +10,8 @@
 == Ubuntu Linux ==
  * 0. Install Java Jdk. I like using OpenJDK for Eclipse. I run GWT in ia32-sun-jre.
  * 1. [http://www.eclipse.org/downloads/ Download Eclipse]
+ * 2. Extract eclipse into a directory like /opt/eclipse
+ * 3. Create eclipse launcher shortcut for desktop.
 
  installing java
 {{{
@@ -22,6 +24,8 @@
 == Microsoft Windows ==
  * 0. [http://java.sun.com/javaee/downloads/index.jsp?intcmp=1282 Download Java] Install Java SDK 
  * 1. [http://www.eclipse.org/downloads/ Download Eclipse]
+ * 2. Extract into directory like C:\archive\eclipse
+ * 3. Create shortcut for desktop of eclipse.exe
 
 == Recommendations ==
  * I recommend starting with *Eclipse for Java Developers* download. You can install more features later that you may desire with software updates.
