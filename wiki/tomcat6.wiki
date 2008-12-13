@@ -9,9 +9,8 @@
  * 1. get tomcat6, tomcat6-common, tomcat6-admin, tomcat-user
  * 2. add tomcat manager user. For more information [http://tomcat.apache.org/tomcat-6.0-doc/manager-howto.html Manager App HOW-TO]
 
-add manager role, and user in /etc/tomcat6/tomcat-users.xml
+ add manager role, and user in /etc/tomcat6/tomcat-users.xml
 {{{
  <role rolename="manager"/>
  <user username="tomcat" password="s3cret" roles="manager"/>
 }}}
-
