@@ -39,7 +39,7 @@
  * 4. Window > Prefrences > (type filter SVN) > Team > SVN > SVN Connector > *Select SVN Kit 1.2.0* - A connector method has to be selected to connect to a SVN repository.
 
 === Import Project From Respository === 
- * 1. File > New Other > (type filter SVN) > SVN Projects From SVN > (Enter URL) https://gwt-examples.googlecode.com/svn/
+ * 1. File > New Other > (type filter SVN) > SVN Projects From SVN > (Enter URL), (Enter Username), (Enter Password)
  * 2. 
 
 = Proxy =
