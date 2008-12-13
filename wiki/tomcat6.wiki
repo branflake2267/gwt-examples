@@ -38,4 +38,4 @@
 
 = Quick Localhost Links =
  * [http://localhost:8080/manager/html localhost manager]
- * [http://localhost:8080/host-manager/html admin]
+ * [http://localhost:8080/host-manager/html localhost admin]
