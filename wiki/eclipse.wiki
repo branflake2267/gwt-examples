@@ -76,3 +76,7 @@ sudo svnadmin create /home/svn/myproject
 == Larger Memory Space For Debugging ==
  GWT project creation now sets this.
  * 1. (Right Click on Project) > Debug As > Debug Configurations > Java Application > ProjectName > Arguments > Arguments > VM arguments > -Xmx256
+
+= External Jar Libraries =
+ Adding external libraries onto your gwt project can increase the funcationality for both the client and the server side. Keep in mind that adding jars and using there classes don't always work for the client side.
+ * 1. (Right Click on Project) > Build Path > Libraries > Add External Jars
