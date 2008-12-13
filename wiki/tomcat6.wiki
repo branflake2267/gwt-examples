@@ -1,7 +1,10 @@
 #summary tomcat6 servlet container
 
-= Apache Tomcat 6 Servlet Container =
 
+=Table of Contents= 
+<wiki:toc max_depth="2" 
+
+= Apache Tomcat 6 Servlet Container =
 
 = Install =
 
