@@ -40,3 +40,8 @@
  * [http://localhost:8080/manager/html localhost manager]
  * [http://localhost:8080/host-manager/html localhost admin]
  * [http://localhost:8080/docs/ localhost docs]
+
+= Servlet Naming =
+ Naming your archive.war will determine your servlet context.
+ * for domian.tld/context = domain.tld/archive, or archive.war deployed
+ * for / root context name your archive.war -> ROOT.war
