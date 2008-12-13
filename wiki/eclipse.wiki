@@ -38,10 +38,16 @@
  * 3. Update Site Polarion.org > (Check) Subversion SVN Connectors, (Check) SVNkit 1.2.0
  * 4. Window > Prefrences > (type filter SVN) > Team > SVN > SVN Connector > *Select SVN Kit 1.2.0* - A connector method has to be selected to connect to a SVN repository.
 
+=== Share Project ===
+ Share your eclipse GWT project with multiple computers and developers.
+ * 1. (Right Click on Project Name) > 
+
 === Import Project From Respository === 
  * 1. File > New Other > (type filter SVN) > SVN Projects From SVN > (Enter URL), (Enter Username), (Enter Password)
  * URLs: https://gwt-examples.googlecode.com/svn/trunk/ username:googleAccount,  password:sourcePassword
  * URLs: svn+ssh://192.168.12.81/srv/svn username:computerAccount, password:computerAccount
+ * 2. Select Resource > trunk > (selct project to import)
+ * 3. If the code base is not setup yet as an eclipse project, you will have to select Java Project as the new project. 
 
 === Create SVN Repository ===
  
