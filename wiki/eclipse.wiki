@@ -24,7 +24,7 @@
  * 1. [http://www.eclipse.org/downloads/ Download Eclipse]
 
 == Recommendations ==
- * I recommend starting with Eclipse for Java Developers download. You can install more features later that you may desire with software updates.
+ * I recommend starting with *Eclipse for Java Developers* download. You can install more features later that you may desire with software updates.
 
 == Software Updates ==
 
