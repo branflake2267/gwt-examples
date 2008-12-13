@@ -12,3 +12,6 @@
 
  == Microsoft Windows ==
   * 2. [http://www.eclipse.org/downloads/ Download]
+
+ == Recommendations ==
+  * I recommend starting with Eclipse for Java Developers download. You can install more features later that you may desire with software updates.
