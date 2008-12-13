@@ -1,7 +1,7 @@
 #summary tomcat6 servlet container
 
 
-=Table of Contents= 
+= Table of Contents = 
 <wiki:toc max_depth="2"/>
 
 = Apache Tomcat 6 Servlet Container =
