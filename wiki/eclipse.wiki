@@ -8,8 +8,8 @@
 = Install =
  
 == Ubuntu Linux ==
- * 0. Install Java Jdk
- * 1. [http://www.eclipse.org/downloads/ Download]
+ * 0. Install Java Jdk. I like using OpenJDK for Eclipse. I run GWT in ia32-sun-jre.
+ * 1. [http://www.eclipse.org/downloads/ Download Eclipse]
 
  installing java
 {{{
@@ -20,8 +20,8 @@
 }}}
 
 == Microsoft Windows ==
- * 0. [http://java.sun.com/javaee/downloads/index.jsp?intcmp=1282 Download] Install Java SDK 
- * 1. [http://www.eclipse.org/downloads/ Download]
+ * 0. [http://java.sun.com/javaee/downloads/index.jsp?intcmp=1282 Download Java] Install Java SDK 
+ * 1. [http://www.eclipse.org/downloads/ Download Eclipse]
 
 == Recommendations ==
  * I recommend starting with Eclipse for Java Developers download. You can install more features later that you may desire with software updates.
