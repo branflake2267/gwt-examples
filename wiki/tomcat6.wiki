@@ -6,8 +6,13 @@
 = Install =
 
 == Ubuntu ==
- * 1. get tomcat6, tomcat6-common, tomcat6-admin, tomcat-user
+ * 1. sudo apt-get install tomcat6 tomcat6-common tomcat6-admin tomcat6-user tomcat6-docs tomcat6-examples
  * 2. add tomcat manager user. For more information [http://tomcat.apache.org/tomcat-6.0-doc/manager-howto.html Manager App HOW-TO] 
+
+ apt-get
+{{{
+ sudo apt-get install tomcat6 tomcat6-common tomcat6-admin tomcat6-user tomcat6-docs tomcat6-examples
+}}}
 
  add manager role, and user in /etc/tomcat6/tomcat-users.xml
 {{{
