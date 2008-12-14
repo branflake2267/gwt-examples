@@ -47,3 +47,6 @@
  Naming your archive.war will determine your servlet context. Or you could say archive.war represents the folder/directory compared to html /directory/page.jsp
  * for domian.tld/directory = domain.tld/archive, or archive.war deployed
  * for domain.tld/(root) = domain.tld/ROOT, or ROOT.war deployed
+
+= Troubleshooting =
+ TODO
