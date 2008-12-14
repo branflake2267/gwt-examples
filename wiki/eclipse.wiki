@@ -6,7 +6,7 @@
 = Eclipse =
 
 = Reference =
- 
+ * [http://eclipse.org Eclipse IDE Home] 
 
 = Install =
  
@@ -102,6 +102,4 @@ sudo svnadmin create /home/svn/myproject
  * TODO Out of memory error
  * TODO files open limit
  * TODO 64bit/32bit erros 
-
-
 
