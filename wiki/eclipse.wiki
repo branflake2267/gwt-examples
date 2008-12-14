@@ -5,6 +5,9 @@
 
 = Eclipse =
 
+= Reference =
+ 
+
 = Install =
  
 == Ubuntu Linux ==
@@ -88,7 +91,17 @@ sudo svnadmin create /home/svn/myproject
  * 1. (Right Click on Project) > Build Path > Libraries > Add External Jars
 
 
-
+= Keyboard Shortcuts =
+ TODO 
 
 = Trouble Shooting =
  TODO
+
+== TODOs ==
+ - check v1 docs in this wiki for these things
+ * TODO Out of memory error
+ * TODO files open limit
+ * TODO 64bit/32bit erros 
+
+
+
