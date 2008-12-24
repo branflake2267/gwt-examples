@@ -17,8 +17,8 @@ import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.tribling.gwt.test.oauth.client.Global_String;
 import com.tribling.gwt.test.oauth.client.LoadingWidget;
+import com.tribling.gwt.test.oauth.client.global.Global_String;
 
 public class LoginUiHorizontal extends Composite implements ClickListener, KeyboardListener, ChangeListener, FocusListener {
 

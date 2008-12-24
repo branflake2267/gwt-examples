@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.rpc.IsSerializable;
-import com.tribling.gwt.test.oauth.client.Global_Domain;
+import com.tribling.gwt.test.oauth.client.global.Global_Domain;
 
 /**
  * oAuth data to pass around from client to server and server to client
