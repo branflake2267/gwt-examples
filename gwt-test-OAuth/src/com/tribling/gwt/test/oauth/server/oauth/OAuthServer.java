@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.UUID;
 
 import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 import com.tribling.gwt.test.oauth.client.oauth.OAuthTokenData;
@@ -43,22 +44,27 @@ public class OAuthServer extends Db_Conn {
 		// prepare for transport back
 		OAuthTokenData returnToken = new OAuthTokenData();
 		
-		// Examine if we can go to the next step
+		// examine if we can go to the next step
 		if (verifySignature == false | verifyNonce == false) {
 			returnToken.setResult(OAuthTokenData.ERROR);
 		} else {
 			returnToken.setResult(OAuthTokenData.SUCCESS);
 		}
 		
-		// TODO - on success
+		// on success - grant request token access
+		AccessTokenData aT = null;
 		if (returnToken.getResult() == OAuthTokenData.SUCCESS) {
-			// TODO - create/produce access token and token secret and send it back
-			AccessTokenData at = setAccessToken(appData.applicationId);
+			aT = setAccessToken(appData.applicationId);
+			returnToken.setAccessToken(aT.accessToken, aT.accessTokenSecret);
 		}
 		
 		// set nonce, so it can't be used again
 		setNonce(token, url, appData.applicationId, 0);
 		
+		// sign the token
+		returnToken.sign(url, aT.accessTokenSecret);
+		
+		// transport back to client
 		return returnToken;
 	}
 	
@@ -77,7 +83,7 @@ public class OAuthServer extends Db_Conn {
 		String ck = token.getConsumerKey();
 		
 		String sql = "SELECT ApplicationId, ConsumerKey, ConsumerSecret " +
-				"FROM Application " +
+				"FROM application " +
 				"WHERE (ConsumerKey='" + ck + "')";
 		
 		// debug
@@ -189,15 +195,33 @@ public class OAuthServer extends Db_Conn {
 		return at;
 	}
 	
-	// TODO
+	/**
+	 * get accessToken (key)
+	 * 
+	 * @return
+	 */
 	private String getAccessKey() {
-		return null;
+    UUID uId = UUID.randomUUID();
+    return uId.toString();
 	}
 	
-	// TODO
-	private String getAccessSecret() {
-		return null;
-	}
+	/**
+	 * get accesstoken (secret)
+	 * 
+	 * @return
+	 */
+  private String getAccessSecret() {
+
+    int nounceLength = 15;
+    String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+    String s = "";
+    for (int i = 0; i < nounceLength; i++) {
+      int rnum = (int) Math.floor(Math.random() * chars.length());
+      s += chars.substring(rnum, rnum + 1);
+    }
+    return s;
+
+  }
 	
 	// TODO
 	private boolean verifyAccessToken(int applicationId, String accessToken, String accessTokenSecret) {
