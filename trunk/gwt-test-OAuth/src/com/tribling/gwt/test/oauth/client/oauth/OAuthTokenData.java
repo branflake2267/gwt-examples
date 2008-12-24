@@ -114,14 +114,14 @@ public class OAuthTokenData implements IsSerializable {
 	}
 	
 	/**
-	 * sign the token - sign after setting needed vars
+	 * sign the token
 	 * 
-	 * TODO - signature = concat(consumerSecret+tokenSecret)
+	 * signature = concat(consumerSecret+tokenSecret)
 	 * 
 	 * @param url
-	 * @param consumerSecret
+	 * @param secret
 	 */
-	public void sign(String url, String consumerSecret) {
+	public void sign(String url, String secret) {
 		
 		//debug
 		//System.out.println("Signing With URL: " + url);
@@ -129,7 +129,7 @@ public class OAuthTokenData implements IsSerializable {
 		// removing port for now, rpc method different
 		url = url.replaceAll(":[0-9]+", "");
 		
-		String key = getConcatConsumerSecretAndTokenSecret(consumerSecret);
+		String key = getConcatConsumerSecretAndTokenSecret(secret);
 		String data = getSignatureBaseString(url);
 		
 		Sha1 sha = new Sha1();
@@ -139,7 +139,7 @@ public class OAuthTokenData implements IsSerializable {
 	}
 	
 	/**
-	 * verify against another signature
+	 * verify the token signature
 	 * 
 	 * @param url
 	 * @param consumerSecret
@@ -188,10 +188,32 @@ public class OAuthTokenData implements IsSerializable {
 		this.resultOfRequest = result;
 	}
 	
+	/**
+	 * what was the result from server side
+	 * 
+	 * @return
+	 */
 	public int getResult() {
 		return this.resultOfRequest;
 	}
-		
+	
+	/**
+	 * set access token. 6.1.2
+	 * 
+	 * @param token
+	 * @param secret
+	 */
+	public void  setAccessToken(String token, String secret) {
+	  this.oauth_token = token;
+	  this.oauth_token_secret = secret;
+	}
+	
+	/**
+	 * combine the oauth_token_secret and consumer secret
+	 * 
+	 * @param consumerSecret
+	 * @return
+	 */
 	private String getConcatConsumerSecretAndTokenSecret(String consumerSecret) {
 		
 		if (consumerSecret == null) {
@@ -203,7 +225,7 @@ public class OAuthTokenData implements IsSerializable {
 		}
 		
 		String concat = "";
-		concat += encode(consumerSecret) + "&";
+		concat += encode(oauth_token_secret) + "&";
 		concat += encode(consumerSecret);
 		
 		return concat;
