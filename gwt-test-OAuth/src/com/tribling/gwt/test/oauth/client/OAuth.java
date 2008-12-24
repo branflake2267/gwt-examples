@@ -58,6 +58,7 @@ public class OAuth implements EntryPoint, ClickListener, ChangeListener {
 		bTestLogin.addClickListener(this);
 
 		
+		// *****************************************************
 		// TODO remove later - debug - test and debug stuff
 		//testStuff();
 		
@@ -69,6 +70,9 @@ public class OAuth implements EntryPoint, ClickListener, ChangeListener {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
+		
 	}
 	
 	/**
@@ -83,6 +87,7 @@ public class OAuth implements EntryPoint, ClickListener, ChangeListener {
 	
 	/**
 	 * auto login
+	 * 
 	 * TODO - remove later
 	 */
 	private void autoLogin() {

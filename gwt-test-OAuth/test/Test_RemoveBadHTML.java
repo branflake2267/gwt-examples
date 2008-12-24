@@ -1,4 +1,4 @@
-import com.tribling.gwt.test.oauth.client.Global_String;
+import com.tribling.gwt.test.oauth.client.global.Global_String;
 
 
 public class Test_RemoveBadHTML {

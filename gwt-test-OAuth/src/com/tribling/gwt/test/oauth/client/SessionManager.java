@@ -216,7 +216,7 @@ public class SessionManager extends Composite {
 	}
 	
 	/**
-	 * A. Request request token
+	 * A. Request request token (get consumer(web app) access)
 	 */
 	private void requestToken(OAuthTokenData tokenData) {
 
