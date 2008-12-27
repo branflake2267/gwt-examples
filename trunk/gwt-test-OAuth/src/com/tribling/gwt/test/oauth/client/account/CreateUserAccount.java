@@ -31,6 +31,9 @@ public class CreateUserAccount extends DialogBox implements ClickListener {
   // terms of use container
   public TextArea terms = new TextArea();
   
+  /**
+   * constructor - init widget
+   */
   public CreateUserAccount() {
     
     setTitle("Create New Account");
@@ -81,6 +84,10 @@ public class CreateUserAccount extends DialogBox implements ClickListener {
     if (sender == bCreateAccount) {
       
     }
+    
+  }
+  
+  private void createAccount() {
     
   }
   
