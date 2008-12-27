@@ -41,6 +41,7 @@ public class OAuth implements EntryPoint, ClickListener, ChangeListener {
 		initSessionManager();
 	
 		
+		/* observe a test button */
 		HorizontalPanel hp = new HorizontalPanel();
 		hp.add(bTestLogin);
 		
@@ -56,7 +57,7 @@ public class OAuth implements EntryPoint, ClickListener, ChangeListener {
 		
 		// Observe
 		bTestLogin.addClickListener(this);
-
+    /* observe a test button */
 		
 		// *****************************************************
 		// TODO remove later - debug - test and debug stuff
