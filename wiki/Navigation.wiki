@@ -4,4 +4,4 @@
  After designing several applications I am trying to find a consistent stragegy for application navigation and interaction.
 
 = Here is how I see it =
-
+[http://gwt-examples.googlecode.com/files/GWT_Application_Navigation.png]
