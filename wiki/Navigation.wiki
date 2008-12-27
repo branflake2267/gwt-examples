@@ -5,3 +5,6 @@
 
 = Here is how I see it =
 [http://gwt-examples.googlecode.com/files/GWT_Application_Navigation.png]
+
+= Personal Notes =
+ I don't think its possible or always prudent to send the entire application interaction variables through the querystring. In most cases I only need a few variables to setup the applications widget in the history anchor. I see three event types, URL, User, and Push to create application interaction. All three blend together at some stage of the applications state. Although some of the time, you do not need all the event parameters to render the application.
