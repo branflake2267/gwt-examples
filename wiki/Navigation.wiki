@@ -1,0 +1,9 @@
+#summary GWT Application Navigation
+
+= Application Navigation =
+ After designing several applications I am trying to find a consistent stragegy for application navigation and interaction.
+
+== Here is how I see it. ==
+
+
+
