@@ -8,3 +8,8 @@
 
 = Personal Notes =
  I don't think its possible or always prudent to send the entire application interaction variables through the querystring. In most cases I only need a few variables to setup the applications widget in the history anchor. I see three event types, URL, User, and Push to create application interaction. All three blend together at some stage of the applications state. Although some of the time, you do not need all the event parameters to render the application.
+
+== Fundamental Difference Web 1.0 and Web 2.0 ==
+ I consider application interaction the fundamental difference between Web 1.0 and Web 2.0. Also for me this was one of most challenging things to adapt to after learning static web page design. Understanding calling the server for information and having the server call back when it is done, resembles parallel processing to me. Creating the logic to understand the interaction is paramount to a fantastic web application, but even more, is trying to understand how the user thinks and making that application intuitive, simple, and as automatic as possible. For instance when I worked in a labor trade I tried think whats next while I was working on the current task. If I am cutting a board to size to fit, the next cut is queued in the brain, which allows to accomplish the task faster. Comparing that to the user interface, anticipating the next move or contemplating how to achieve the same result with less steps is a utmost desire. 
+
+ 
