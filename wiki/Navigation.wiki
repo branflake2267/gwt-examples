@@ -1,6 +1,6 @@
-#summary GWT Application Navigation
+#summary GWT Application Navigation c
 
-= Application Navigation =
+= Application Navigation Visualization =
  This is me trying to find a consistent strategy for application navigation and interaction.
 
 = Here is how I see it =
