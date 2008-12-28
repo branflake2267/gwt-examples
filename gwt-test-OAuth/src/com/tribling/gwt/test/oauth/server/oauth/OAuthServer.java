@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.UUID;
 
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 import com.tribling.gwt.test.oauth.client.oauth.OAuthTokenData;
 import com.tribling.gwt.test.oauth.server.db.Db_Conn;
 

@@ -10,8 +10,6 @@ import java.util.Arrays;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
-import com.mysql.jdbc.EscapeTokenizer;
-
 /**
  * DB connection methods
  * 

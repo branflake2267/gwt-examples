@@ -1,10 +1,14 @@
 package com.tribling.gwt.test.oauth.client.ui;
 
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.HistoryListener;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ChangeListenerCollection;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.tribling.gwt.test.oauth.client.account.CreateUserAccount;
 
 /**
  * This will be the hook into the types of UIs that one could possibly use
@@ -17,7 +21,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author branflake2267
  *
  */
-public class LoginUi extends Composite implements ChangeListener {
+public class LoginUi extends Composite implements ChangeListener, HistoryListener {
 
 	private ChangeListenerCollection changeListeners;
 	private int changeEvent; 
@@ -44,6 +48,13 @@ public class LoginUi extends Composite implements ChangeListener {
 	public LoginUi() {
 		
 		initWidget(pWidget);
+		
+		History.addHistoryListener(this);
+		
+		// if refreshed, and url event
+		if (History.getToken().equals("account_Create")) {
+		  drawCreateAccount();
+		}
 	}
 	
 	public void setUi(int uiType) {
@@ -64,6 +75,7 @@ public class LoginUi extends Composite implements ChangeListener {
 		if (uiType == LOGIN_HORIZONTAL) {
 			loginUiH.addChangeListener(this);
 		} else if (uiType == LOGIN_VERTICAL) {
+		  // TODO
 		}
 		
 	}
@@ -75,6 +87,7 @@ public class LoginUi extends Composite implements ChangeListener {
 		if (uiType == LOGIN_HORIZONTAL) {
 			loginUiH.draw();
 		} else if (uiType == LOGIN_VERTICAL) {
+		  // TODO
 		}
 	}
 	
@@ -88,6 +101,7 @@ public class LoginUi extends Composite implements ChangeListener {
 		if (uiType == LOGIN_HORIZONTAL) {
 			loginUiH.autoLogin(email, password);
 		} else if (uiType == LOGIN_VERTICAL) {
+		  // TODO
 		}
 	}
 	
@@ -96,6 +110,7 @@ public class LoginUi extends Composite implements ChangeListener {
 		if (uiType == LOGIN_HORIZONTAL) {
 			loginUiH.setLoginStatus(bol);
 		} else if (uiType == LOGIN_VERTICAL) {
+		  // TODO
 		}
 	}
 	
@@ -125,6 +140,12 @@ public class LoginUi extends Composite implements ChangeListener {
 		// TODO - after login, erase the credentials in the login widget
 	}
 	
+	private void drawCreateAccount() {
+	  CreateUserAccount createUserAccount = new CreateUserAccount();
+	  createUserAccount.setAnimationEnabled(true);
+	  createUserAccount.center();
+	}
+	
 	public void onChange(Widget sender) {
 		
 		if (uiType == LOGIN_HORIZONTAL) {
@@ -133,7 +154,7 @@ public class LoginUi extends Composite implements ChangeListener {
 			}
 		} else if (uiType == LOGIN_VERTICAL) {
 			if (sender == loginUiV) {
-				
+				// TODO 
 			}
 		}
 		
@@ -160,6 +181,19 @@ public class LoginUi extends Composite implements ChangeListener {
 		if (changeListeners != null)
 			changeListeners.remove(listener);
 	}
+
+ 
+  public void onHistoryChanged(String historyToken) {
+   
+    if (historyToken.equals("account_Create")) {
+      drawCreateAccount();
+      
+    } else if (historyToken.equals("account_ForgotPassword")) {
+      Window.alert("fogot");
+      
+    }
+    
+  }
 
 
 	

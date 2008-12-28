@@ -2,7 +2,6 @@ package com.tribling.gwt.test.oauth.client.oauth;
 
 import java.util.Date;
 
-import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.tribling.gwt.test.oauth.client.global.Global_Domain;
 

@@ -238,6 +238,7 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		hp.setCellVerticalAlignment(hAccountLogin, VerticalPanel.ALIGN_BOTTOM);
 	}
 	
+	// TODO
 	private void drawLoggedIn() {
 		hideLoading();
 		
@@ -250,6 +251,7 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		
 	}
 	
+	// TODO
 	private void drawError(String error) {
 		hideLoading();
 		
@@ -357,29 +359,42 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	}
 
 	public void onClick(Widget sender) {
+	  
 		if (sender == bLogin) {
 			drawLoading();
 			fireChange(LoginUi.LOGIN);
+		
 		} else if (sender == bForgot) {
 			drawLoading();
 			fireChange(LoginUi.FORGOT_PASSWORD);
+		
 		} else if (sender == tbConsumerKey) {
 			checkInputLabel_key(true);
+		
 		} else if (sender == tbConsumerSecret) {
 			changePasswordInput();
+		
 		} else if (sender == cbRemberMe) {
+		  // TODO
+		
 		} else if (sender == hForgotPassword) {
 			drawForgotPassword();
+		
 		} else if (sender == hAccountLogin) {
 			drawLoginInputs();
 		}
+		
 	}
 
 	public void onKeyDown(Widget sender, char keyCode, int modifiers) {
 		if (sender == tbConsumerKey) {
+		  // TODO
 		} else if (sender == tbConsumerSecret) {
+		  // TODO
 		} else if (sender == cbRemberMe) {
+		  // TODO
 		} else {
+		  // TODO
 		}
 	}
 
@@ -403,9 +418,11 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		if (sender == tbConsumerKey) {
 			checkInputLabel_key(false);
 		} else if (sender == tbConsumerSecret) {
+		  // TODO
 		} else if (sender == tbConsumerSecretPass) {
 			checkInputLabel_secret();
 		} else if (sender == cbRemberMe) {
+		  // TODO
 		}
 	}
 
