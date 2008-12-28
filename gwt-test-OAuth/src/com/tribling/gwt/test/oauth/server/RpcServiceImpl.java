@@ -52,27 +52,55 @@ public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
 	private String getRequestUrlOAuth() {
 
 		HttpServletRequest request = getThreadLocalRequest();
-		String host = request.getRemoteHost();
-		String path = request.getPathInfo();
+		String host = getHost(request);
+		String path = request.getRequestURI();
 		
 		// take off the servlet context path
-		String re = "(.*/)";
-		Pattern p = Pattern.compile(re);
-		Matcher m = p.matcher(path);
-		boolean found = m.find();
 		String newPath = "";
-		if (found == true) {
-			newPath = m.group(1);
+		if (path != null) {
+	    String re = "(.*/)";
+	    Pattern p = Pattern.compile(re);
+	    Matcher m = p.matcher(path);
+	    boolean found = m.find();
+	    if (found == true) {
+	      newPath = m.group(1);
+	    }
 		}
-		
-		// work around for hosted mode
-		if (host.equals("127.0.0.1")) {
-			host = "localhost";
-		}
-		
-		String url = "http://" + host + newPath;
+
+		String url = host + newPath;
 		
 		return url;		
+	}
+	
+	private String getHost(HttpServletRequest request) {
+	  String s = "";
+	  
+	  StringBuffer url = request.getRequestURL();
+	  
+	  int sep = 0;
+	  int col = 0;
+	  for (int i=0; i < url.length(); i++) {
+	    
+	    String c = Character.toString(url.charAt(i));
+	    
+	    if (c.equals(":")) {
+	      col++;
+	      if (col == 2) {
+	        break;
+	      }
+	    }
+	    
+	    if (c.equals("/")) {
+	      sep++;
+	      if (sep == 3) {
+	        break;
+	      }
+	    }
+	    
+	    s += c;
+	  }
+	  
+	  return s;
 	}
 	
 	/**
@@ -87,9 +115,22 @@ public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
 	 * A. ->(B.?) grant request token?
 	 */
 	public OAuthTokenData requestToken(OAuthTokenData tokenData) {
-		String url = getRequestUrlOAuth();
+	  
+	  System.out.println("1. Impl: requestToken: ");
+		
+	  String url = getRequestUrlOAuth();
+		
+	  System.out.println("2. Impl: requestToken: ");
+	  
 		OAuthServer oauth = new OAuthServer();
-		return oauth.requestToken(tokenData, url);
+		
+		System.out.println("3. Impl: requestToken: ");
+		
+		OAuthTokenData rtnToken = oauth.requestToken(tokenData, url);
+		
+		System.out.println("4. Impl: requestToken: ");
+		
+		return rtnToken;
 	}
 
 	

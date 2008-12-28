@@ -61,13 +61,13 @@ public class OAuth implements EntryPoint, ClickListener, ChangeListener {
 		
 		// *****************************************************
 		// TODO remove later - debug - test and debug stuff
-		//testStuff();
+		testStuff();
 		
 		// test
 		try {
 			Sha1 test = new Sha1();
 			boolean b = test.test_Sha1();
-			//System.out.println("Sha1 test results: " + b);
+			RootPanel.get().add(new HTML("sha1 test result: " + b));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -94,6 +94,9 @@ public class OAuthTokenData implements IsSerializable {
 	public static final int ERROR = 2;
 	private int resultOfRequest = 0;
 	
+	// when need of console output, turn this on
+	boolean debug = true;
+	int debugIndex = 0;
 
 	/**
 	 * constructor - init
@@ -123,7 +126,7 @@ public class OAuthTokenData implements IsSerializable {
 	public void sign(String url, String secret) {
 		
 		//debug
-		//System.out.println("Signing With URL: " + url);
+		debug("sign: url: " + url + " secret: " + secret);
 		
 		// removing port for now, rpc method different
 		url = url.replaceAll(":[0-9]+", "");
@@ -134,7 +137,7 @@ public class OAuthTokenData implements IsSerializable {
 		Sha1 sha = new Sha1();
 		this.oauth_signature = sha.b64_hmac_sha1(key, data);
 		
-		//System.out.println("Sign:" + oauth_signature);
+		debug("sign: auth_signature: " + oauth_signature);
 	}
 	
 	/**
@@ -146,8 +149,7 @@ public class OAuthTokenData implements IsSerializable {
 	 */
 	public boolean verify(String url, String consumerSecret) {
 		
-		//debug
-		//System.out.println("Signing With URL: " + url);
+	  debug("verify: url: " + url + " consumerSecret: " + consumerSecret);
 		
 		// removing port for now, rpc method is different
 		url = url.replaceAll(":[0-9]+", ""); 
@@ -158,6 +160,9 @@ public class OAuthTokenData implements IsSerializable {
 		if (this.oauth_signature.equals(verify)) {
 			bol = true;
 		}
+		
+		debug("verify: signature: [true|false]: " + bol);
+		
 		return bol;
 	}
 	
@@ -241,7 +246,7 @@ public class OAuthTokenData implements IsSerializable {
 		String s = "";
 	    for (int i=0; i < nounceLength; i++) {
 	    	int rnum = (int) Math.floor(Math.random() * chars.length());
-            s += chars.substring(rnum, rnum+1);
+            s += chars.substring(rnum, rnum + 1);
 	    }
 	    return s;
 	}
@@ -345,5 +350,15 @@ public class OAuthTokenData implements IsSerializable {
 		return s;
 	}
 
+  public void setDebug(boolean debug) {
+    this.debug = debug;
+  }
+  
+  private void debug(String s) {
+    if (debug == true) {
+      System.out.println(debugIndex + ": " + s);
+      debugIndex++;
+    }
+  }
 
 }

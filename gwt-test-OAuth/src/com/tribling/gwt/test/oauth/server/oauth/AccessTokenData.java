@@ -1,8 +1,11 @@
 package com.tribling.gwt.test.oauth.server.oauth;
 
-public class AccessTokenData {
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-	public String accessToken;
-	public String accessTokenSecret;
+public class AccessTokenData implements IsSerializable {
+
+	public String accessToken = null;
+	
+	public String accessTokenSecret = null;
 	
 }
