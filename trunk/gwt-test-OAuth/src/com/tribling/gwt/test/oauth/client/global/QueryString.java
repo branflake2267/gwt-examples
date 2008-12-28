@@ -1,7 +1,6 @@
 package com.tribling.gwt.test.oauth.client.global;
 
 import java.util.HashMap;
-import java.util.Iterator;
 
 import com.google.gwt.user.client.History;
 
