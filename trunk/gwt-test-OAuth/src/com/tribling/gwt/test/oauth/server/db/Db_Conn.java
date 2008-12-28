@@ -18,6 +18,10 @@ import org.apache.commons.lang.StringEscapeUtils;
  */
 public class Db_Conn {
 	
+  // for debugging
+  public boolean debug = true;
+  public int debugIndex = 0;
+  
 	// connection vars for read connection
 	private Db_ConnData dbConnRead = null;
 	
@@ -408,5 +412,17 @@ public class Db_Conn {
 		}
 		return rtn;
 	}
+	
+  public void setDebug(boolean debug) {
+    this.debug = debug;
+  }
+  
+  public void debug(String s) {
+    if (debug == true) {
+      System.out.println(debugIndex + ": " + s);
+      debugIndex++;
+    }
+  }
+
 	
 }

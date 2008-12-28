@@ -1,9 +1,12 @@
 package com.tribling.gwt.test.oauth.client.global;
 
-public class Global_Domain {
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class Global_Domain implements IsSerializable {
 
 	/**
 	 * get realm = http://host.domain.tld:8180
+	 * 
 	 * @param url
 	 * @return
 	 */
@@ -24,6 +27,7 @@ public class Global_Domain {
 	
 	/**
 	 * find the index of the slash that separates the domain with the page/folder
+	 * 
 	 * @param s
 	 * @return
 	 */

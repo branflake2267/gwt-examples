@@ -132,7 +132,7 @@ public class SessionManager extends Composite {
 		
 		// get the application base url only, b/c of rpc method, 
 		// requests will happen on different ports, and with different servlet context
-		String url = GWT.getHostPageBaseURL();
+		String url = getUrl();
 		OAuthTokenData token = new OAuthTokenData();
 		token.setConsumerKey(consumerKey);
 		token.sign(url, consumerSecret);
@@ -189,8 +189,27 @@ public class SessionManager extends Composite {
 		// TODO - set the session as a cookie to remember to login agian
 	}
 	
+	/**
+	 * get client's url 
+	 *
+	 * TODO - add ./folder?
+	 * 
+	 * @return
+	 */
+	private String getUrl() {
+	  
+	  String url = GWT.getModuleBaseURL();
+	  
+	  // TODO - work around get rid of port
+	  url = url.replaceFirst(":[0-9]+", "");
+	  
+	  Window.alert("signing: url: " + url);
+	  
+	  return url;
+	}
+	
 	private void setObserver() {
-		
+	  // TODO
 	}
 	
 	public int getChangeEvent() {

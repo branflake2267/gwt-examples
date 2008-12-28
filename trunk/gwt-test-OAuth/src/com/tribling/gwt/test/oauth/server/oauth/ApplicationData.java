@@ -1,6 +1,8 @@
 package com.tribling.gwt.test.oauth.server.oauth;
 
-public class ApplicationData {
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class ApplicationData implements IsSerializable {
 
 	public int applicationId;
 	public String consumerKey;

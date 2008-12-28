@@ -11,7 +11,9 @@ import com.tribling.gwt.test.oauth.server.db.Db_Conn;
 
 public class OAuthServer extends Db_Conn {
 	
-	/**
+
+
+  /**
 	 * constructor
 	 */
 	public OAuthServer() {
@@ -29,7 +31,8 @@ public class OAuthServer extends Db_Conn {
 	public OAuthTokenData requestToken(OAuthTokenData token, String url) {
 		
 		// debug
-		//System.out.println("request url: " + url);
+		System.out.println("Request Token: url: " + url);
+		debug("requestToken: token: " + token.toString() + " url: " + url);
 		
 		// get the application data according to the consumerKey Given, then lets see if it matches up
 		ApplicationData appData = getApplicationId(token);
@@ -51,17 +54,24 @@ public class OAuthServer extends Db_Conn {
 		}
 		
 		// on success - grant request token access
-		AccessTokenData aT = null;
+		AccessTokenData at = new AccessTokenData();;
 		if (returnToken.getResult() == OAuthTokenData.SUCCESS) {
-			aT = setAccessToken(appData.applicationId);
-			returnToken.setAccessToken(aT.accessToken, aT.accessTokenSecret);
+			at = setAccessToken(appData.applicationId);
+			returnToken.setAccessToken(at.accessToken, at.accessTokenSecret);
 		}
 		
 		// set nonce, so it can't be used again
 		setNonce(token, url, appData.applicationId, 0);
 		
-		// sign the token
-		returnToken.sign(url, aT.accessTokenSecret);
+		debug("requestToken: url: " + url + " secret: " + at.accessTokenSecret);
+
+    try {
+      returnToken.sign(url, at.accessTokenSecret);
+    } catch (Exception e) {
+      debug("requestToken: ****** ERROR SIGNING");
+      e.printStackTrace();
+    }
+
 		
 		// transport back to client
 		return returnToken;
@@ -226,5 +236,7 @@ public class OAuthServer extends Db_Conn {
 	private boolean verifyAccessToken(int applicationId, String accessToken, String accessTokenSecret) {
 		return false;
 	}
+	
+
 	
 }
