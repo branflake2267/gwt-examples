@@ -35,6 +35,7 @@
   # Open the debug dialog in eclipse and look for java application. Select the gwt application and hit debug.
 
 = Tips =
+ * [Eclipse_Advantages]- Why Eclipse kicks butt as an IDE.
 
 == Get Your Configuration Details ==
  goto: Help > About Eclipse Platform > Configuration Details (button)
