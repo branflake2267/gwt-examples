@@ -384,3 +384,26 @@ int min = cal.get(Calendar.MINUTE);
 
 System.out.println("now: h:" + hour + " m:" + min);
 }}}
+
+= Subtract Months =
+ Subtract 12 months from current date and get that 12 months prior timestamp. 
+{{{
+private long getMinus12Months(int month, int year) {
+	
+	for (int i=0; i < 12; i++) {
+		
+		if (month == 1) { // jan
+			year--;
+			month = 12;
+		} else {
+			month--;
+		}
+	}
+	
+	Date date = new Date();
+	date.setMonth(month-1);
+	date.setYear(year-1900);
+	return date.getTime();
+}
+
+}}}
