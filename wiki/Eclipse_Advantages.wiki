@@ -3,7 +3,7 @@
 = Compared to Microsoft Visual Developer Eclipse IDE Kicks Butt =
 
 = Here's Why =
-#. foward to method,field,class with control-click
+ # foward to method,field,class with control-click
 #. method list (outline) sync up with current view
 #. current text highlights on error
 #. control space on method('cnt-space' will fill in the methods vars. Huge advantage!
