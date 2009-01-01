@@ -1,6 +1,7 @@
 #summary Advantages to using Eclipse IDE
 
-= Compared to Microsoft Visual Developer Eclipse IDE Kicks Butt =
+= Eclipse IDE Kicks Butt =
+ Compared to Microsoft Visual Developer it really kicks Butt!
 
 = Here's Why =
  # foward to method,field,class with control-click
