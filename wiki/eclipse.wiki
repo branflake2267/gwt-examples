@@ -82,7 +82,7 @@ sudo svnadmin create /home/svn/myproject
  On a 64bit operating system, you will need to configure an alternate JRE to test your gwt application with. 
  * 1. (Right Click on Project) > Debug As > Debug Configurations > Java Application > ProjectName > JRE > Installed JREs > Add > (ubuntu linux: /usr/lib/jvm/ia32...)
 
-== Larger Memory Space For Debugging ==
+== Larger Memory Space ==
  GWT project creation now sets this.
  * 1. (Right Click on Project) > Debug As > Debug Configurations > Java Application > ProjectName > Arguments > VM arguments > -Xmx256M
 
