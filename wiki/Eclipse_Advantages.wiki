@@ -24,3 +24,39 @@
  # auto suggestion to fixing, like a object type rename objecta ob = getObjectB();
  # Marking //TODO tasktodo is great. marks a link on the right side too.
  # when entering in "string (hit enter)" it will concat the string onto the next line. it will auto add " + at the end of the line and start qoutes on next.
+
+= Other Things Related =
+
+== Mysql JDBC advantages ==
+ # JDBC row index set, move anywhere in the recordset, can't do this with ms sql jdbc
+ # start,limit query
+ # can't move to last record in recordset, to count how big the recordset is, have to loop the entire set in ms sql logic
+ # Insert,Update syntax can be the same. insert into t set a=1, b=2, update t set a=1, b=2
+
+== Mysql advantages ==
+ # (field = '') = null or nothing and MS you have to go (field is null)
+ # (field != '') and not <> cli context
+
+== C# disadvantages ==
+ # get record that is null throws an error insteading of returning null for the variable, have to try catch all gets annoying
+ # object rename,  doesn't understand naming conflicts
+ # object hightlight, won't highlight all objects of the same type on selection.
+ # object reference, often crashes.
+
+
+== MS Visual Developer diss ==
+ # pauses between pages, takes long time to parse color highlighting
+ # hitting space after var constantly fills in random vars if the abrevation matches, not good in most cases!
+ # no console output for C# code
+ # dataexplorer, can't double click on a table
+ # your stuck with ms sql, couldn't do mysql
+ # You can only inherit one class. You can not extend more than one. You can't implement another class.
+ # notation comments are ugly for methods. I don't like /// it look bad.
+ # no bugzilla integration for multi-developer/community involvment.
+ # Can't control + mouse wheel to page quicly(scroll) through code
+ # cntrl+shift+end goes to end of page, not end of line
+ # highlighting text when selecting across 70+ characters, when it extends the screen is not gradual. The scroll jumps way to far at a time. .5 screen width. auto screen scrolling during selection sucks.
+ # javascript find function won't follow hierarchy.
+ # code formating, doesn't work, with if exp {} spacing sucks.
+ # no auto concat when enter withing quoted string. refer to eclipse #20
+ # No line breaks unchecking global edit, like a list of all the line breaks in one spot. Eclipse has this
