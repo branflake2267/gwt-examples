@@ -4,22 +4,22 @@
 
 = Here's Why =
  # foward to method,field,class with control-click
-#. method list (outline) sync up with current view
-#. current text highlights on error
-#. control space on method('cnt-space' will fill in the methods vars. Huge advantage!
-#. library auto import or select auto import.
-#. svn access
-#. metrics on code
-#. console output
-#. marks problems on the fly!!!! matching var types, matching object types, correct class def. ...
-#. better code formating for cli with brakets {}
-#. jvm jit faster
-#. hiarchy method syncronization 
-#. debugging - variables view sync with source code window, breaks easier to manage
-#. windowing windows,views,widgets better
-#. you can use any Database
-#. bugzilla task integration, this is really cool!
-#. Control Up + mouse wheel pages quickly - scroll quickly through code
-#. auto suggestion to fixing, like a object type rename objecta ob = getObjectB();
-#. Marking //TODO tasktodo is great. marks a link on the right side too.
-#. when entering in "string (hit enter)" it will concat the string onto the next line. it will auto add " + at the end of the line and start qoutes on next.
+ # method list (outline) sync up with current view
+ # current text highlights on error
+ #. control space on method('cnt-space' will fill in the methods vars. Huge advantage!
+ #. library auto import or select auto import.
+ #. svn access
+ #. metrics on code
+ #. console output
+ #. marks problems on the fly!!!! matching var types, matching object types, correct class def. ...
+ #. better code formating for cli with brakets {}
+ #. jvm jit faster
+ #. hiarchy method syncronization 
+ #. debugging - variables view sync with source code window, breaks easier to manage
+ #. windowing windows,views,widgets better
+ #. you can use any Database
+ #. bugzilla task integration, this is really cool!
+ #. Control Up + mouse wheel pages quickly - scroll quickly through code
+ #. auto suggestion to fixing, like a object type rename objecta ob = getObjectB();
+ #. Marking //TODO tasktodo is great. marks a link on the right side too.
+ #. when entering in "string (hit enter)" it will concat the string onto the next line. it will auto add " + at the end of the line and start qoutes on next.
