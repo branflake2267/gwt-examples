@@ -60,3 +60,6 @@
  # code formating, doesn't work, with if exp {} spacing sucks.
  # no auto concat when enter withing quoted string. refer to eclipse #20
  # No line breaks unchecking global edit, like a list of all the line breaks in one spot. Eclipse has this
+
+== Most annoying thing about programming with Windows ==
+ * Focus on window with mouse wheel scroll. - You have to click on window to focus to scroll, not in linux. Linux wheel scroll Much better!!!!!!!!
