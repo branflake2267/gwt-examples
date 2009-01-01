@@ -14,7 +14,7 @@
  # marks problems on the fly!!!! matching var types, matching object types, correct class def. ...
  # better code formating for cli with brakets {}
  # jvm jit faster
- # hiarchy method syncronization 
+ # hierarchy method syncronization 
  # debugging - variables view sync with source code window, breaks easier to manage
  # windowing windows,views,widgets better
  # you can use any Database
