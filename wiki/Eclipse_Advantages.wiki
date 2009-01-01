@@ -37,7 +37,7 @@
  # (field = '') = null or nothing and MS you have to go (field is null)
  # (field != '') and not <> cli context
 
-== C# disadvantages ==
+== Microsoft Visual Developer C# disadvantages ==
  # get record that is null throws an error insteading of returning null for the variable, have to try catch all gets annoying
  # object rename,  doesn't understand naming conflicts
  # object hightlight, won't highlight all objects of the same type on selection.
