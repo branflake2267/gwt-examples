@@ -1,6 +1,7 @@
 package com.tribling.gwt.test.oauth.client.account;
 
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -28,6 +29,8 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   
   // main widget div
   private VerticalPanel pWidget = new VerticalPanel();
+  
+  private VerticalPanel pNotification = new VerticalPanel();
   
   // inputs
   // username (email)
@@ -69,6 +72,10 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     
     // init rpc
     callRpcService = Rpc.initRpc();
+    
+    // Style
+    pNotification.setWidth("100%");
+    pNotification.setStyleName("CreateUserAccount-Notification");
   }
   
   /**
@@ -137,6 +144,51 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     this.accessToken = accessToken;
   }
   
+  private void notify(UserData userData) {
+    
+    String err = "";
+    switch (userData.error) {
+    case UserData.SYSTEM_ERROR:
+      err = "System error occurred. Contact the administrator.";
+      break;
+    case UserData.USER_EXISTS:
+      err = "This user name exists already. Please choose another.";
+      break;
+    case UserData.USERNAME_DONTMATCH:
+      err = "Usernames don't match.";
+      break;
+    case UserData.PASSWORD_DONTMATCH:
+      err = "Passwords don't match.";
+      break;
+    }
+    
+    if (err.length() > 0) {
+      drawNotification(err);
+    }
+  }
+  
+  /**
+   * draw a notification
+   * 
+   * @param s
+   */
+  public void drawNotification(String s) {
+    pNotification.clear();
+    pNotification.setVisible(true);
+    
+    HTML html = new HTML(s);
+    html.addStyleName("Notification");
+    html.setHorizontalAlignment(HorizontalPanel.ALIGN_CENTER);
+    pNotification.add(html);
+    
+    Timer t = new Timer() {
+      public void run() {
+        pNotification.setVisible(false);
+      }
+    };
+    t.schedule(5000);
+  }
+  
   private boolean doesKeysMatch() {
   
     String u1 = tbU1.getText().trim();
@@ -169,7 +221,7 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   }
   
   /**
-   * does the user exist in the system already?
+   * check if the user exist in the system already?
    */
   private void doesConsumerExistAlready() {
     
@@ -185,7 +237,7 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   private void processKeyExist(UserData userData) {
     
     if (userData.error > 0) {
-      // TODO notify what type of error happened
+      notify(userData);
       return;
     }
     
@@ -200,6 +252,11 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     return hash;
   }
   
+  private String getKey() {
+    String key = tbP1.getText().trim();
+    return key;
+  }
+  
   private String getPasswordHash() {
     String password = tbP1.getText().trim();
     Sha1 sha = new Sha1();
@@ -207,6 +264,9 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     return hash;
   }
   
+  /**
+   * process the account creation after all the things are met
+   */
   private void processCreate() {
     
     // do keys match
@@ -222,14 +282,14 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     // prepare for transport
     UserData userData = new UserData();
     userData.accessToken = accessToken;
-    userData.consumerKey = getKeyHash();;
+    userData.consumerKey = getKey(); // could be - getKeyHash();;
     userData.consumerSecret = getPasswordHash();
     userData.sign();
     
     createAccountRpc(userData);
   }
   
-  private void processCreation(UserData userData) {
+  private void processAccountCreation(UserData userData) {
     
     // close this
     
@@ -292,7 +352,7 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
         RootPanel.get().add(new HTML(ex.toString()));
       }
       public void onSuccess(UserData userData) {
-        processCreation(userData);
+        processAccountCreation(userData);
         // TODO hide loading
       }
     };
