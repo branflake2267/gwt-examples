@@ -1,7 +1,6 @@
 package com.tribling.gwt.test.oauth.client.account;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
-import com.tribling.gwt.test.oauth.client.global.Global_Domain;
 import com.tribling.gwt.test.oauth.client.oauth.OAuthTokenData;
 import com.tribling.gwt.test.oauth.client.oauth.Sha1;
 
@@ -26,8 +25,11 @@ public class UserData implements IsSerializable {
   // error notifications
   public int error = 0;
   
-  public static int SYSTEM_ERROR = 1;
-  public static int USER_EXISTS = 2;
+  // possible errors for error notifications
+  final public static int SYSTEM_ERROR = 1;
+  final public static int USER_EXISTS = 2;
+  final public static int USERNAME_DONTMATCH = 3;
+  final public static int PASSWORD_DONTMATCH = 4;
   
   
   // hash of this objects vars
