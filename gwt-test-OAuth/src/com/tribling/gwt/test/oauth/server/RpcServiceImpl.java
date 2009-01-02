@@ -6,8 +6,10 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.tribling.gwt.test.oauth.client.account.UserData;
 import com.tribling.gwt.test.oauth.client.oauth.OAuthTokenData;
 import com.tribling.gwt.test.oauth.client.rpc.RpcService;
+import com.tribling.gwt.test.oauth.server.db.Db_User;
 import com.tribling.gwt.test.oauth.server.oauth.OAuthServer;
 
 public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
@@ -133,6 +135,19 @@ public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
 		return rtnToken;
 	}
 
-	
+  public UserData createUser(UserData userData) {
+    Db_User db = new Db_User();
+    return db.createUser(userData);
+  }
+  
+  public UserData isUserNameExist(UserData userData) {
+    Db_User db = new Db_User();
+    return db.isUserNameExist(userData);
+  }
+  
+  public UserData forgotPassword(UserData userData) {
+    Db_User db = new Db_User();
+    return db.forgotPassword(userData);
+  }
 	
 }

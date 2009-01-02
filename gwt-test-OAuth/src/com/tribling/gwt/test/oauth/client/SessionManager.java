@@ -43,6 +43,10 @@ public class SessionManager extends Composite {
 	private String errDiv = "No div tag exists for this widget. debug: setLoginUiDiv() <div id='"+loginUiDiv+"'></div>";
 	private String errApKey = "No consumer key was set (for application/web site). debug: setAppConsumerKey()";
 	
+	// Once the consumer gets Access, save the token for use
+	// This will apply on user login
+	// this will apply with user creation
+	private OAuthTokenData accessToken = null;
 	
 	/**
 	 * constructor
@@ -157,6 +161,8 @@ public class SessionManager extends Composite {
 	 */
 	private void request_Request_Token_Response(OAuthTokenData token) {
 		
+	  this.accessToken = token;
+	  
 		int result = token.getResult();
 		switch (result) {
 		case OAuthTokenData.SUCCESS:

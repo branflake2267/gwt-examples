@@ -1,21 +1,31 @@
 package com.tribling.gwt.test.oauth.client.account;
 
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PushButton;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.tribling.gwt.test.oauth.client.oauth.OAuthTokenData;
+import com.tribling.gwt.test.oauth.client.rpc.Rpc;
+import com.tribling.gwt.test.oauth.client.rpc.RpcServiceAsync;
 
-public class CreateUserAccount extends DialogBox implements ClickListener {
+public class CreateUserAccount extends DialogBox implements ClickListener, KeyboardListener {
 
+  // rpc system
+  public RpcServiceAsync callRpcService;
+  
+  // main widget div
   public VerticalPanel pWidget = new VerticalPanel();
   
   // inputs
@@ -50,6 +60,9 @@ public class CreateUserAccount extends DialogBox implements ClickListener {
     
     bCreateAccount.addClickListener(this);
     bClose.addClickListener(this);
+    
+    // init rpc
+    callRpcService = Rpc.initRpc();
   }
   
   public void draw() {
@@ -108,11 +121,48 @@ public class CreateUserAccount extends DialogBox implements ClickListener {
     pWidget.add(cbAccept);
     pWidget.add(new HTML("&nbsp;"));
     pWidget.add(hpBottom);
+  }
+  
+  private boolean doesEmailMatch() {
+  
+    String u1 = tbU1.getText().trim();
+    String u2 = tbU2.getText().trim();
     
+    // TODO - no spaces in middle?
     
+    boolean pass = false;
+    if (u1.equals(u2)) {
+      pass = true;
+    }
+    
+    return pass;
     
   }
-
+  
+  private boolean doesPasswordMatch() {
+    
+    String p1 = tbP1.getText().trim();
+    String p2 = tbP2.getText().trim();
+    
+    // TODO - no spaces in middle?
+    
+    boolean pass = false;
+    if (p1.equals(p2)) {
+      pass = true;
+    }
+    
+    return pass;
+  }
+  
+  private String hashPassword() {
+    
+    String password = tbP1.getText().trim();
+    
+    // TODO - need to interact with consumerToken to sign
+    
+    return null;
+  }
+  
   public void onClick(Widget sender) {
     
     if (sender == bCreateAccount) {
@@ -125,9 +175,46 @@ public class CreateUserAccount extends DialogBox implements ClickListener {
     
   }
   
-  private void createAccount() {
-    
+  public void onKeyDown(Widget sender, char keyCode, int modifiers) {
   }
+
+  public void onKeyPress(Widget sender, char keyCode, int modifiers) {
+  }
+
+  public void onKeyUp(Widget sender, char keyCode, int modifiers) {
+  }
+  
+  private void createAccountRpc(UserData userData) {
+    
+    AsyncCallback<UserData> callback = new AsyncCallback<UserData>() {
+      public void onFailure(Throwable ex) {
+        // TODO 
+        RootPanel.get().add(new HTML(ex.toString()));
+      }
+      public void onSuccess(UserData userData) {
+       
+        // TODO hide loading
+      }
+    };
+    callRpcService.createUser(userData, callback);
+  }
+  
+  private void isUserExistRpc(UserData userData) {
+    
+    AsyncCallback<UserData> callback = new AsyncCallback<UserData>() {
+      public void onFailure(Throwable ex) {
+        // TODO 
+        RootPanel.get().add(new HTML(ex.toString()));
+      }
+      public void onSuccess(UserData userData) {
+       
+        // TODO hide loading
+      }
+    };
+    callRpcService.isUserNameExist(userData, callback);
+  }
+
+
   
   
 }
