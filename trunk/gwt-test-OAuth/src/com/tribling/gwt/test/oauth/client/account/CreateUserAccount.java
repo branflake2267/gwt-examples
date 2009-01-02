@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.tribling.gwt.test.oauth.client.oauth.OAuthTokenData;
+import com.tribling.gwt.test.oauth.client.oauth.Sha1;
 import com.tribling.gwt.test.oauth.client.rpc.Rpc;
 import com.tribling.gwt.test.oauth.client.rpc.RpcServiceAsync;
 
@@ -45,6 +46,11 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   
   public CheckBox cbAccept = new CheckBox("Accept terms of use and privacy agreement?");
   
+  // consumer access Token
+  // tells me that the web application has access to the system
+  // will be used to send with UserData
+  public OAuthTokenData accessToken = null;
+  
   /**
    * constructor - init widget
    */
@@ -65,7 +71,11 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     callRpcService = Rpc.initRpc();
   }
   
+  /**
+   * draw the inputs and items that make up the create user widget
+   */
   public void draw() {
+    
     tbU1.setWidth("300px");
     tbU2.setWidth("300px");
     tbP1.setWidth("300px");
@@ -123,6 +133,10 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     pWidget.add(hpBottom);
   }
   
+  public void setAccessToken(OAuthTokenData accessToken) {
+    this.accessToken = accessToken;
+  }
+  
   private boolean doesEmailMatch() {
   
     String u1 = tbU1.getText().trim();
@@ -157,10 +171,10 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   private String hashPassword() {
     
     String password = tbP1.getText().trim();
-    
-    // TODO - need to interact with consumerToken to sign
-    
-    return null;
+    Sha1 sha = new Sha1();
+    String hash = sha.b64_sha1(password);
+      
+    return hash;
   }
   
   public void onClick(Widget sender) {
