@@ -1,14 +1,24 @@
 package com.tribling.gwt.test.oauth.client.account;
 
-public class UserData {
+import com.google.gwt.user.client.rpc.IsSerializable;
+import com.tribling.gwt.test.oauth.client.oauth.OAuthTokenData;
 
+public class UserData implements IsSerializable {
+
+  // consumer accessToken
+  // web application has access
+  // will be used to verify this application can create users
+  // will be used to verify this application can login users
+  // its like a sessionVars that are for a non-user session
+  public OAuthTokenData accessToken = null; 
+  
   
   // userName for login
-  public String email = null;
+  public String consumerKey = null;
   
   
-  // password will be hashed (always) in transit
-  public String password = null;
+  // hash of password
+  public String consumerSecret = null;
 
   
   // accept terms of use
@@ -23,6 +33,15 @@ public class UserData {
    * constructor - nothing to do
    */
   public UserData() {
+  }
+  
+  public void sign() {
+    // TODO
+  }
+  
+  public boolean verify() {
+    // TODO
+    return false;
   }
   
 }

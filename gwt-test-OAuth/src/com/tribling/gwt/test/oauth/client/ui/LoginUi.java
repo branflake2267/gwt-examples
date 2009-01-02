@@ -36,6 +36,7 @@ public class LoginUi extends Composite implements ChangeListener, HistoryListene
 	
 	// which ui type was choosen to display
 	private int uiType = 0;
+  
 	// ui types
   public static int LOGIN_HORIZONTAL = 1;
   public static int LOGIN_VERTICAL = 2;
@@ -43,6 +44,11 @@ public class LoginUi extends Composite implements ChangeListener, HistoryListene
   // observe/listen for these events
   public static int LOGIN = 1;
   public static int FORGOT_PASSWORD = 2;
+  
+  // consumer accessToken
+  // used for account login
+  // used for account creation
+  private OAuthTokenData accessToken = null;
   
   /**
    * constructor - init composite widget
@@ -92,7 +98,11 @@ public class LoginUi extends Composite implements ChangeListener, HistoryListene
 	/**
 	 * draw widget
 	 */
-	public void draw() {
+	public void draw(OAuthTokenData accessToken) {
+	  
+	  // consumer accessToken
+	  this.accessToken = accessToken;
+	  
 		if (uiType == LOGIN_HORIZONTAL) {
 			loginUiH.draw();
 		} else if (uiType == LOGIN_VERTICAL) {
@@ -152,6 +162,7 @@ public class LoginUi extends Composite implements ChangeListener, HistoryListene
 	private void drawCreateAccount() {
 	  CreateUserAccount createUserAccount = new CreateUserAccount();
 	  createUserAccount.setAnimationEnabled(true);
+	  createUserAccount.setAccessToken(accessToken);
 	  createUserAccount.center();
 	}
 	

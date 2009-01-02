@@ -98,7 +98,7 @@ public class SessionManager extends Composite {
 			Window.alert(errDiv);
 		}
 		RootPanel.get(loginUiDiv).add(loginUi);
-		loginUi.draw();
+		loginUi.draw(accessToken);
 	}
 	
 	/**
