@@ -30,6 +30,7 @@ public class UserData implements IsSerializable {
   final public static int USER_EXISTS = 2;
   final public static int USERNAME_DONTMATCH = 3;
   final public static int PASSWORD_DONTMATCH = 4;
+  final public static int BOTH_DONTMATCH = 5;
   
   
   // hash of this objects vars
@@ -63,7 +64,7 @@ public class UserData implements IsSerializable {
     Sha1 sha = new Sha1();
     
     boolean pass = false;
-    if (this.signature.equals(getSignatureBaseString())) {
+    if (this.signature.equals(sha.b64_sha1(getSignatureBaseString()))) {
       pass = true;
     }
     

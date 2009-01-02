@@ -6,6 +6,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -22,7 +23,7 @@ import com.tribling.gwt.test.oauth.client.oauth.Sha1;
 import com.tribling.gwt.test.oauth.client.rpc.Rpc;
 import com.tribling.gwt.test.oauth.client.rpc.RpcServiceAsync;
 
-public class CreateUserAccount extends DialogBox implements ClickListener, KeyboardListener {
+public class CreateUserAccount extends DialogBox implements ClickListener, KeyboardListener, FocusListener {
 
   // rpc system
   private RpcServiceAsync callRpcService;
@@ -68,6 +69,7 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     draw();
     
     bCreateAccount.addClickListener(this);
+    bCreateAccount.addFocusListener(this);
     bClose.addClickListener(this);
     
     // init rpc
@@ -215,7 +217,7 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     boolean pass = false;
     if (p1.equals(p2)) {
       pass = true;
-    }
+    } 
     
     return pass;
   }
@@ -227,7 +229,7 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     
     UserData userData = new UserData();
     userData.accessToken = accessToken;
-    userData.consumerKey = getKeyHash();
+    userData.consumerKey = getKey(); // could be -> getKeyHash();
     userData.consumerSecret = getPasswordHash();
     userData.sign();
     
@@ -245,6 +247,17 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     processCreate();
   }
   
+  /**
+   * could hash the key possibly for being even more anonymous.
+   *   this would possibly allow users to have multiple accounts by accident, if they forget there login
+   *   Case sensitivity becomes and issue possibly.
+   *   whats the possibility of a collision with just querying a key?
+   *      Would have to compare both key and secret every time, which would be better I think
+   *   could not search for username, b/c it would be a hash, so could not tell if it existed or not unless an exact match was made
+   *   If compared both, the combinations are unlimited in respect to trying to find a lost account
+   *  TODO  Could make this a user option, this seems like it could be the best!!!!
+   * @return
+   */
   private String getKeyHash() {
     String key = tbP1.getText().trim();
     Sha1 sha = new Sha1();
@@ -262,6 +275,33 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     Sha1 sha = new Sha1();
     String hash = sha.b64_sha1(password);
     return hash;
+  }
+  
+  private void checkForErrors() {
+    
+    // do keys match
+    boolean keysMatch = doesKeysMatch();
+    
+    // do passwords match
+    boolean passwordsMatch = doesPasswordMatch();
+    
+    UserData userData = new UserData();
+    if (keysMatch == false && passwordsMatch == false); {
+      userData.error = UserData.BOTH_DONTMATCH;
+    }
+    
+    if (keysMatch == false) {
+      userData.error = UserData.USERNAME_DONTMATCH;
+    }
+    
+    if (passwordsMatch == false) {
+      userData.error = UserData.PASSWORD_DONTMATCH;
+    }
+    
+    if (userData.error > 0) {
+      notify(userData);
+    }
+    
   }
   
   /**
@@ -319,6 +359,15 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   public void onKeyUp(Widget sender, char keyCode, int modifiers) {
   }
   
+  public void onFocus(Widget sender) {
+    if (sender == bCreateAccount) {
+      checkForErrors();
+    }
+  }
+
+  public void onLostFocus(Widget sender) {
+  }
+  
   /**
    * check to see if the user already exists in the database
    * 
@@ -358,6 +407,8 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     };
     callRpcService.createUser(userData, callback);
   }
+
+
   
 
   
