@@ -26,7 +26,7 @@ import com.tribling.gwt.test.oauth.client.rpc.RpcServiceAsync;
 public class CreateUserAccount extends DialogBox implements ClickListener, KeyboardListener, FocusListener {
 
   // rpc system
-  private RpcServiceAsync callRpcService;
+  private RpcServiceAsync callRpcService = null;
   
   // main widget div
   private VerticalPanel pWidget = new VerticalPanel();
