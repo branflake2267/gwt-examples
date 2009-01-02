@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.tribling.gwt.test.oauth.client.account.CreateUserAccount;
+import com.tribling.gwt.test.oauth.client.oauth.OAuthTokenData;
 
 /**
  * This will be the hook into the types of UIs that one could possibly use
@@ -26,25 +27,26 @@ public class LoginUi extends Composite implements ChangeListener, HistoryListene
 	private ChangeListenerCollection changeListeners;
 	private int changeEvent; 
 	
-	// observe/listen for these events
-	public static int LOGIN = 1;
-	public static int FORGOT_PASSWORD = 2;
-	
-	// ui types
-	public static int LOGIN_HORIZONTAL = 1;
-	public static int LOGIN_VERTICAL = 2;
-	
-	
+	// main panel
 	private FlowPanel pWidget = new FlowPanel();
 	
+	// possible ui types (widget)
 	private LoginUiHorizontal loginUiH = null;
 	private LoginUiVertical loginUiV = null;
 	
-	
-	
 	// which ui type was choosen to display
-	private int uiType;
+	private int uiType = 0;
+	// ui types
+  public static int LOGIN_HORIZONTAL = 1;
+  public static int LOGIN_VERTICAL = 2;
 	
+  // observe/listen for these events
+  public static int LOGIN = 1;
+  public static int FORGOT_PASSWORD = 2;
+  
+  /**
+   * constructor - init composite widget
+   */
 	public LoginUi() {
 		
 		initWidget(pWidget);
@@ -57,6 +59,12 @@ public class LoginUi extends Composite implements ChangeListener, HistoryListene
 		}
 	}
 	
+	/**
+	 * what type of ui are we going to use?
+	 * [LOGIN_HORIZONTAL, LOGIN_VERTICAL]
+	 * 
+	 * @param uiType
+	 */
 	public void setUi(int uiType) {
 		this.uiType = uiType;
 		
@@ -67,7 +75,8 @@ public class LoginUi extends Composite implements ChangeListener, HistoryListene
 			loginUiV = new LoginUiVertical();
 			pWidget.add(loginUiV);
 		}
-			
+		
+		// observe the accounts/session ui for changes
 		setObserver();
 	}
 	

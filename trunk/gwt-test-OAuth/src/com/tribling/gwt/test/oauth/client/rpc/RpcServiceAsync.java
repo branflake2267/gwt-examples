@@ -1,7 +1,9 @@
 package com.tribling.gwt.test.oauth.client.rpc;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.tribling.gwt.test.oauth.client.account.UserData;
 import com.tribling.gwt.test.oauth.client.oauth.OAuthTokenData;
+import com.tribling.gwt.test.oauth.server.db.Db_User;
 
 public interface RpcServiceAsync {
 
@@ -20,4 +22,11 @@ public interface RpcServiceAsync {
 	 * @param callback
 	 */
 	public void requestToken(OAuthTokenData tokenData, AsyncCallback<OAuthTokenData> callback);
+	
+	
+  public void createUser(UserData userData, AsyncCallback<UserData> callback);
+  
+  public void isUserNameExist(UserData userData, AsyncCallback<UserData> callback);
+  
+  public void forgotPassword(UserData userData, AsyncCallback<UserData> callback);
 }
