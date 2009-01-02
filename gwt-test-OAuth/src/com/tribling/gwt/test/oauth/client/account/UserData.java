@@ -1,7 +1,9 @@
 package com.tribling.gwt.test.oauth.client.account;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
+import com.tribling.gwt.test.oauth.client.global.Global_Domain;
 import com.tribling.gwt.test.oauth.client.oauth.OAuthTokenData;
+import com.tribling.gwt.test.oauth.client.oauth.Sha1;
 
 public class UserData implements IsSerializable {
 
@@ -12,21 +14,25 @@ public class UserData implements IsSerializable {
   // its like a sessionVars that are for a non-user session
   public OAuthTokenData accessToken = null; 
   
-  
   // userName for login
   public String consumerKey = null;
-  
   
   // hash of password
   public String consumerSecret = null;
 
-  
   // accept terms of use
   boolean acceptTerms = false;
   
-  
   // error notifications
   public int error = 0;
+  
+  public static int SYSTEM_ERROR = 1;
+  public static int USER_EXISTS = 2;
+  
+  
+  // hash of this objects vars
+  // verify it was disturbed during transit
+  private String signature = null;
   
   
   /**
@@ -35,13 +41,38 @@ public class UserData implements IsSerializable {
   public UserData() {
   }
   
+  /**
+   * sign this object variables that I don't want messed with
+   * TODO - add some salt? - keeping it simple for now, return to later
+   * 
+   */
   public void sign() {
-    // TODO
+    Sha1 sha = new Sha1();
+    this.signature = sha.b64_sha1(getSignatureBaseString());
   }
   
+  /**
+   * verify this objects varibles
+   * TODO - add some salt?
+   * 
+   * @return
+   */
   public boolean verify() {
-    // TODO
-    return false;
+    Sha1 sha = new Sha1();
+    
+    boolean pass = false;
+    if (this.signature.equals(getSignatureBaseString())) {
+      pass = true;
+    }
+    
+    return pass;
+  }
+  
+  private String getSignatureBaseString() {
+    String s = "";
+    s += "consumerKey=" + consumerKey + "&";
+    s += "consumerSecret=" + consumerSecret;
+    return s;
   }
   
 }

@@ -113,12 +113,12 @@ public class LoginUi extends Composite implements ChangeListener, HistoryListene
 	/**
 	 * TODO remove after testing - used for testing
 	 * 
-	 * @param email
+	 * @param key
 	 * @param password
 	 */
-	public void autoLogin(String email, String password) {
+	public void autoLogin(String key, String password) {
 		if (uiType == LOGIN_HORIZONTAL) {
-			loginUiH.autoLogin(email, password);
+			loginUiH.autoLogin(key, password);
 		} else if (uiType == LOGIN_VERTICAL) {
 		  // TODO
 		}
