@@ -24,33 +24,33 @@ import com.tribling.gwt.test.oauth.client.rpc.RpcServiceAsync;
 public class CreateUserAccount extends DialogBox implements ClickListener, KeyboardListener {
 
   // rpc system
-  public RpcServiceAsync callRpcService;
+  private RpcServiceAsync callRpcService;
   
   // main widget div
-  public VerticalPanel pWidget = new VerticalPanel();
+  private VerticalPanel pWidget = new VerticalPanel();
   
   // inputs
   // username (email)
-  public TextBox tbU1 = new TextBox();
-  public TextBox tbU2 = new TextBox();
+  private TextBox tbU1 = new TextBox();
+  private TextBox tbU2 = new TextBox();
   
   // password
-  public TextBox tbP1 = new TextBox();
-  public TextBox tbP2 = new TextBox();
+  private TextBox tbP1 = new TextBox();
+  private TextBox tbP2 = new TextBox();
   
-  public PushButton bCreateAccount = new PushButton("Create Account");
-  public PushButton bClose = new PushButton("Close");
+  private PushButton bCreateAccount = new PushButton("Create Account");
+  private PushButton bClose = new PushButton("Close");
   
   // terms of use container
-  public TextArea taTerms = new TextArea();
+  private TextArea taTerms = new TextArea();
   
-  public CheckBox cbAccept = new CheckBox("Accept terms of use and privacy agreement?");
+  private CheckBox cbAccept = new CheckBox("Accept terms of use and privacy agreement?");
   
   // consumer access Token
   // tells me that the web application has access to the system
   // will be used to send with UserData
-  public OAuthTokenData accessToken = null;
-  
+  private OAuthTokenData accessToken = null;
+   
   /**
    * constructor - init widget
    */
@@ -89,8 +89,8 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     setText(t);
     HTML title = new HTML(t);
 
-    Label lu1 = new Label("Email");
-    Label lu2 = new Label("Verify Email");
+    Label lu1 = new Label("Username");
+    Label lu2 = new Label("Verify Username");
     
     Label lp1 = new Label("Password");
     Label lp2 = new Label("Verify Password");
@@ -137,7 +137,7 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     this.accessToken = accessToken;
   }
   
-  private boolean doesEmailMatch() {
+  private boolean doesKeysMatch() {
   
     String u1 = tbU1.getText().trim();
     String u2 = tbU2.getText().trim();
@@ -168,18 +168,79 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     return pass;
   }
   
-  private String hashPassword() {
+  /**
+   * does the user exist in the system already?
+   */
+  private void doesConsumerExistAlready() {
     
+    UserData userData = new UserData();
+    userData.accessToken = accessToken;
+    userData.consumerKey = getKeyHash();
+    userData.consumerSecret = getPasswordHash();
+    userData.sign();
+    
+    isUserExistRpc(userData);
+  }
+  
+  private void processKeyExist(UserData userData) {
+    
+    if (userData.error > 0) {
+      // TODO notify what type of error happened
+      return;
+    }
+    
+    // create account if there is no duplication
+    processCreate();
+  }
+  
+  private String getKeyHash() {
+    String key = tbP1.getText().trim();
+    Sha1 sha = new Sha1();
+    String hash = sha.b64_sha1(key);
+    return hash;
+  }
+  
+  private String getPasswordHash() {
     String password = tbP1.getText().trim();
     Sha1 sha = new Sha1();
     String hash = sha.b64_sha1(password);
-      
     return hash;
+  }
+  
+  private void processCreate() {
+    
+    // do keys match
+    boolean keysMatch = doesKeysMatch();
+    
+    // do passwords match
+    boolean passwordsMatch = doesPasswordMatch();
+    
+    if (keysMatch == false && passwordsMatch == false) {
+      return;
+    }
+
+    // prepare for transport
+    UserData userData = new UserData();
+    userData.accessToken = accessToken;
+    userData.consumerKey = getKeyHash();;
+    userData.consumerSecret = getPasswordHash();
+    userData.sign();
+    
+    createAccountRpc(userData);
+  }
+  
+  private void processCreation(UserData userData) {
+    
+    // close this
+    
+    // change to logged in, set the consumerToken
+    
   }
   
   public void onClick(Widget sender) {
     
     if (sender == bCreateAccount) {
+      doesConsumerExistAlready();
       
     } else if (sender == bClose) {
       this.hide();
@@ -198,21 +259,11 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   public void onKeyUp(Widget sender, char keyCode, int modifiers) {
   }
   
-  private void createAccountRpc(UserData userData) {
-    
-    AsyncCallback<UserData> callback = new AsyncCallback<UserData>() {
-      public void onFailure(Throwable ex) {
-        // TODO 
-        RootPanel.get().add(new HTML(ex.toString()));
-      }
-      public void onSuccess(UserData userData) {
-       
-        // TODO hide loading
-      }
-    };
-    callRpcService.createUser(userData, callback);
-  }
-  
+  /**
+   * check to see if the user already exists in the database
+   * 
+   * @param userData
+   */
   private void isUserExistRpc(UserData userData) {
     
     AsyncCallback<UserData> callback = new AsyncCallback<UserData>() {
@@ -221,13 +272,33 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
         RootPanel.get().add(new HTML(ex.toString()));
       }
       public void onSuccess(UserData userData) {
-       
+        processKeyExist(userData);
         // TODO hide loading
       }
     };
     callRpcService.isUserNameExist(userData, callback);
   }
 
+  /**
+   * create user account
+   * 
+   * @param userData
+   */
+  private void createAccountRpc(UserData userData) {
+    
+    AsyncCallback<UserData> callback = new AsyncCallback<UserData>() {
+      public void onFailure(Throwable ex) {
+        // TODO 
+        RootPanel.get().add(new HTML(ex.toString()));
+      }
+      public void onSuccess(UserData userData) {
+        processCreation(userData);
+        // TODO hide loading
+      }
+    };
+    callRpcService.createUser(userData, callback);
+  }
+  
 
   
   

@@ -66,7 +66,7 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	private boolean loginStatus = false;
 	
 	// input box labels
-	private String inputLabel_ConsumerKey = "Email";
+	private String inputLabel_ConsumerKey = "Username";
 	private String inputLabel_consumerSecret = "Password";
 	
 	/**
@@ -143,9 +143,9 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	 * !!!! Remove me later - for testing
 	 * 
 	 */
-	public void autoLogin(String email, String password) {
+	public void autoLogin(String key, String password) {
 		drawLoading();
-		tbConsumerKey.setText(email);
+		tbConsumerKey.setText(key);
 		tbConsumerSecret.setVisible(false);
 		tbConsumerSecretPass.setVisible(true);
 		tbConsumerSecretPass.setText(password);
