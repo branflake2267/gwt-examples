@@ -27,11 +27,17 @@ public class UserData implements IsSerializable {
   
   // possible errors for error notifications
   final public static int SYSTEM_ERROR = 1;
-  final public static int USER_EXISTS = 2;
-  final public static int USERNAME_DONTMATCH = 3;
-  final public static int PASSWORD_DONTMATCH = 4;
+  final public static int KEY_EXISTS = 2;
+  final public static int KEYS_DONTMATCH = 3;
+  final public static int SECRETS_DONTMATCH = 4;
   final public static int BOTH_DONTMATCH = 5;
-  
+  final public static int KEYS_SHORT = 6;
+  final public static int KEY1_SHORT = 7;
+  final public static int KEY2_SHORT = 8;
+  final public static int SECRETS_SHORT = 9;
+  final public static int SECRET1_SHORT = 10;
+  final public static int SECRET2_SHORT = 11;
+  final public static int BOTH_SHORT = 12;
   
   // hash of this objects vars
   // verify it was disturbed during transit
@@ -78,4 +84,80 @@ public class UserData implements IsSerializable {
     return s;
   }
   
+  public String getNotification() {
+    String err = "";
+    switch (error) {
+    case UserData.SYSTEM_ERROR:
+      err = "System error occurred. Contact the administrator.";
+      break;
+    case UserData.KEY_EXISTS:
+      err = "This user name exists already. Please choose another.";
+      break;
+    case UserData.KEYS_DONTMATCH:
+      err = "Usernames don't match.";
+      break;
+    case UserData.SECRETS_DONTMATCH:
+      err = "Passwords don't match.";
+      break;
+    }
+    return err;
+  }
+  
+  /**
+   * possible errors
+   * 
+   * TODO - switch to internation version later
+   * 
+   * @param error
+   * @return
+   */
+  public static String getError(int error) {
+    
+    String s = "";
+    switch (error) {
+    case SYSTEM_ERROR:
+      s = "System/Server error.";
+      break;
+    case KEY_EXISTS:
+      s = "Username exists. Try another.";
+      break;
+    case KEYS_DONTMATCH:
+      s = "Usernames do not match.";
+      break;
+    case SECRETS_DONTMATCH:
+      s = "Passwords do not match.";
+      break;
+    case BOTH_DONTMATCH:
+      s = "Your usernames and passwords do not match.";
+      break;
+    case KEYS_SHORT:
+      s = "Add more characters to your usernames.";
+      break;
+    case KEY1_SHORT:
+      s = "Add more characters to your username.";
+      break;
+    case KEY2_SHORT:
+      s = "Add more characters to your username.";
+      break;
+    case SECRETS_SHORT:
+      s = "Add more characters to your passwords.";
+      break;
+    case SECRET1_SHORT:
+      s = "Add more characters to your password.";
+      break;
+    case SECRET2_SHORT:
+      s = "Add more characters to your password.";
+      break;
+    case BOTH_SHORT:
+      s = "Add more characters to both the username and password.";
+      break;
+    }
+    
+    return s;
+  }
+  
+  
+  public String getError() {
+    return getError(this.error);
+  }
 }

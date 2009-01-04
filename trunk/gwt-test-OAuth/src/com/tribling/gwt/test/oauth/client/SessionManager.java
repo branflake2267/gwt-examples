@@ -209,7 +209,7 @@ public class SessionManager extends Composite {
 	  // TODO - work around get rid of port
 	  url = url.replaceFirst(":[0-9]+", "");
 	  
-	  Window.alert("signing: url: " + url);
+	  //Window.alert("signing: url: " + url);
 	  
 	  return url;
 	}
