@@ -114,6 +114,14 @@ select.setFetchSize(Integer.MIN_VALUE);
 ResultSet result = select.executeQuery(query);
 }}}
 
+== JavaHL Dependency Error ==
+ If you get a JavaHL dependency error. I sovled it by uninstalling JavaHL stuff. 
+ * Help > Software Udpates > Updater > (control-F "JavaHL") > (select JavaHL(s)) > Uninstall
+{{{
+Unsatisfied dependency: [org.polarion.eclipse.team.svn.connector.javahl.win32.feature.group 2.0.7.I20081222-1900] requiredCapability: org.eclipse.equinox.p2.iu/org.polarion.eclipse.team.svn.connector.javahl.win32/[2.0.7.I20081222-1900,2.0.7.I20081222-1900]
+Unsatisfied dependency: [org.polarion.eclipse.team.svn.connector.javahl15.win32.feature.group 2.0.7.I20081222-1900] requiredCapability: org.eclipse.equinox.p2.iu/org.polarion.eclipse.team.svn.connector.javahl15.win32/[2.0.7.I20081222-1900,2.0.7.I20081222-1900]
+}}}
+
 == TODOs ==
  - check v1 docs in this wiki for these things
  * TODO Out of memory error
