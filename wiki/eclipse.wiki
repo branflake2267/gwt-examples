@@ -71,6 +71,7 @@ sudo svnadmin create /home/svn/myproject
 = Javascript Editor =
  Get a better javascript editor for eclipse.
  * [http://www.interaktonline.com/Products/Eclipse/JSEclipse/Installation-Update/ Download]
+ * Help > Software Updates > Add Site > [http://download.macromedia.com/pub/labs/jseclipse/autoinstall/]     
 
 = Code Metrics =
  How many lines of code have you written for your application? How is your code?
