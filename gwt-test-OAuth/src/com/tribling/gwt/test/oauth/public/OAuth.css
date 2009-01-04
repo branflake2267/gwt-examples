@@ -9,7 +9,7 @@ body {
   margin-right: auto;
   width: 600px;
   
-  border:1px solid #aaa;
+  border:1px solid #AAA;
 }
  
 .gwt-TextBox {
@@ -41,7 +41,7 @@ body {
 	padding-right: 6px;
 }
 .login-Ui-InputLabel {
-	color: #aaa;
+	color: #AAA;
 }
 .login-Ui-InputOptions {
 }
@@ -58,31 +58,50 @@ body {
 	margin-right: 3px;
 }
 
+.CreateUserAccount {
+	padding: 7px;
+}
 .CreateUserAccount-Notification {
 	margin-top: 2px;
 	margin-bottom: 2px;
 	font-weight: bold;
 	color: #805506;
-	border: 1px solid #aaa;
+	border: 1px solid #AAA;
 	background-color: #F8FAB9;
 }
+.CreateUserAccount-Field {
+	width: 125px;	
+	font-weight: bold;
+}
+.CreateUserAccount-ErrorInput {
+	border: 1px solid #FF0000;
+	margin: 2px;
+	padding: 2px;
+}
+.CreateUserAccount-CharCountPass {
+	color: #00FF00;
+}
+.CreateUserAccount-CharCountError {
+	color: #FF0000;
+}
+
 
 
 .test1 {
-	border:1px solid #FF0000;
+	border: 1px solid #FF0000;
 }
 .test2 {
-	border:1px solid #FFFF00;
+	border: 1px solid #FFFF00;
 }
 .test3 {
-	border:1px solid #00FF00;	
+	border: 1px solid #00FF00;	
 }
 .test4 {
-	border:1px solid #000000;
+	border: 1px solid #000000;
 }
 .test5 {
-	border:1px solid grey;
+	border: 1px solid grey;
 }
 .test6 {
-	border:1px solid #0000FF;
+	border: 1px solid #0000FF;
 }

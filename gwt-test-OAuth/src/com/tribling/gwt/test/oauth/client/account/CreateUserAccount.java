@@ -2,10 +2,13 @@ package com.tribling.gwt.test.oauth.client.account;
 
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
@@ -23,7 +26,7 @@ import com.tribling.gwt.test.oauth.client.oauth.Sha1;
 import com.tribling.gwt.test.oauth.client.rpc.Rpc;
 import com.tribling.gwt.test.oauth.client.rpc.RpcServiceAsync;
 
-public class CreateUserAccount extends DialogBox implements ClickListener, KeyboardListener, FocusListener {
+public class CreateUserAccount extends DialogBox implements ClickListener, KeyboardListener, FocusListener, ChangeListener {
 
   // rpc system
   private RpcServiceAsync callRpcService = null;
@@ -31,30 +34,58 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   // main widget div
   private VerticalPanel pWidget = new VerticalPanel();
   
+  // general notification of error after rpc, maybe combine into key/secret error too
   private VerticalPanel pNotification = new VerticalPanel();
   
+  // when notification is needed for key error
+  private FlowPanel pKeyError = new FlowPanel();
+ 
+  // key container
+  private VerticalPanel pKey = new VerticalPanel();
+  
+  // when notification is needed for secret error
+  private FlowPanel pSecretError = new FlowPanel();
+  
+  // secret container
+  private VerticalPanel pSecret = new VerticalPanel();
+  
+  // key character count
+  private FlowPanel pKeyCount1 = new FlowPanel();
+  private FlowPanel pKeyCount2 = new FlowPanel();
+  
+  // secret character count
+  private FlowPanel pSecretCount1 = new FlowPanel();
+  private FlowPanel pSecretCount2 = new FlowPanel();
+  
   // inputs
-  // username (email)
-  private TextBox tbU1 = new TextBox();
-  private TextBox tbU2 = new TextBox();
+  // Key (username)
+  private TextBox tbK1 = new TextBox();
+  private TextBox tbK2 = new TextBox();
   
-  // password
-  private TextBox tbP1 = new TextBox();
-  private TextBox tbP2 = new TextBox();
+  // Secret (password)
+  private TextBox tbS1 = new TextBox();
+  private TextBox tbS2 = new TextBox();
   
+  // buttons
   private PushButton bCreateAccount = new PushButton("Create Account");
   private PushButton bClose = new PushButton("Close");
+  private CheckBox cbAccept = new CheckBox("Accept terms of use and privacy agreement?");
   
   // terms of use container
   private TextArea taTerms = new TextArea();
-  
-  private CheckBox cbAccept = new CheckBox("Accept terms of use and privacy agreement?");
   
   // consumer access Token
   // tells me that the web application has access to the system
   // will be used to send with UserData
   private OAuthTokenData accessToken = null;
    
+  // minumum lengths for consumerKey and Secret
+  final private int consumerKey_Len = 6;
+  final private int consumerSecret_Len = 6;
+  
+  // after all checks are processed, then we can create a user
+  private boolean canCreateUser = false;
+  
   /**
    * constructor - init widget
    */
@@ -62,7 +93,8 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     
     setAnimationEnabled(true);
     
-    setTitle("Create New Account");
+    //set the title of the top of the window
+    setText("Create New Account");
     
     setWidget(pWidget);
     
@@ -72,12 +104,24 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     bCreateAccount.addFocusListener(this);
     bClose.addClickListener(this);
     
+    tbK1.addChangeListener(this);
+    tbK2.addChangeListener(this);
+    tbS1.addChangeListener(this);
+    tbS2.addChangeListener(this);
+    tbK1.addKeyboardListener(this);
+    tbK2.addKeyboardListener(this);
+    tbS1.addKeyboardListener(this);
+    tbS2.addKeyboardListener(this);
+      
     // init rpc
     callRpcService = Rpc.initRpc();
     
     // Style
+    pWidget.setStyleName("CreateUserAccount");
     pNotification.setWidth("100%");
     pNotification.setStyleName("CreateUserAccount-Notification");
+    
+    
   }
   
   /**
@@ -85,90 +129,108 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
    */
   public void draw() {
     
-    tbU1.setWidth("300px");
-    tbU2.setWidth("300px");
-    tbP1.setWidth("300px");
-    tbP2.setWidth("300px");
+    tbK1.setWidth("300px");
+    tbK2.setWidth("300px");
+    tbS1.setWidth("300px");
+    tbS2.setWidth("300px");
     taTerms.setWidth("100%");
     
     taTerms.setEnabled(false);
     
-    String t = "Create New Account";
+    Label lk1 = new Label("Username");
+    Label lk2 = new Label("Verify Username");
     
-    setText(t);
-    HTML title = new HTML(t);
-
-    Label lu1 = new Label("Username");
-    Label lu2 = new Label("Verify Username");
+    Label ls1 = new Label("Password");
+    Label ls2 = new Label("Verify Password");
     
-    Label lp1 = new Label("Password");
-    Label lp2 = new Label("Verify Password");
+    pKeyCount1.add(new HTML("0"));
+    pKeyCount2.add(new HTML("0"));
+    pSecretCount1.add(new HTML("0"));
+    pSecretCount2.add(new HTML("0"));
     
+    // control buttons
     HorizontalPanel hpBottom = new HorizontalPanel();
     hpBottom.add(bClose);
     hpBottom.add(new HTML("&nbsp;&nbsp;"));
     hpBottom.add(bCreateAccount);
     
-    // size of input table
-    int r = 5;
-    int c = 2;
+    // key 1
+    HorizontalPanel hpK1 = new HorizontalPanel();
+    hpK1.setSpacing(4);
+    hpK1.add(lk1);
+    hpK1.add(tbK1);
+    hpK1.add(pKeyCount1);
     
-    Grid grid = new Grid(r, c);
+    // key 2
+    HorizontalPanel hpK2 = new HorizontalPanel();
+    hpK2.setSpacing(4);
+    hpK2.add(lk2);
+    hpK2.add(tbK2);
+    hpK2.add(pKeyCount2);
     
-    // username
-    grid.setWidget(0, 0, lu1);
-    grid.setWidget(0, 1, tbU1);
-    grid.setWidget(1, 0, lu2);
-    grid.setWidget(1, 1, tbU2);
+    // secret 1
+    HorizontalPanel hpS1 = new HorizontalPanel();
+    hpS1.setSpacing(4);
+    hpS1.add(ls1);
+    hpS1.add(tbS1);
+    hpS1.add(pSecretCount1);
     
-    // spacer
-    grid.setWidget(2, 0, new HTML("&nbsp;"));
-    grid.setWidget(2, 1, new HTML("&nbsp;"));
+    // secret 2
+    HorizontalPanel hpS2 = new HorizontalPanel();
+    hpS2.setSpacing(4);
+    hpS2.add(ls2);
+    hpS2.add(tbS2);
+    hpS2.add(pSecretCount2);
     
-    // password
-    grid.setWidget(3, 0, lp1);
-    grid.setWidget(3, 1, tbP1);
-    grid.setWidget(4, 0, lp2);
-    grid.setWidget(4, 1, tbP2);
+    // key container
+    pKey.add(pKeyError);
+    pKey.add(hpK1);
+    pKey.add(hpK2);
     
-    pWidget.add(title);
-    pWidget.add(grid);
+    // secret container
+    pSecret.add(pSecretError);
+    pSecret.add(hpS1);
+    pSecret.add(hpS2);
+    
+    pWidget.add(pKey);
+    pWidget.add(pSecret);
     pWidget.add(new HTML("&nbsp;"));
-    pWidget.add(new HTML("Terms Of Use"));
+    pWidget.add(new HTML("Terms of Use"));
     pWidget.add(taTerms); 
     pWidget.add(new HTML("&nbsp;"));
     pWidget.add(cbAccept);
     pWidget.add(new HTML("&nbsp;"));
     pWidget.add(hpBottom);
+    
+    pKey.setStyleName("");
+    pSecret.setStyleName("");
+    
+    // fields
+    lk1.setStyleName("CreateUserAccount-Field");
+    lk2.setStyleName("CreateUserAccount-Field");
+    ls1.setStyleName("CreateUserAccount-Field");
+    ls2.setStyleName("CreateUserAccount-Field");
+    
+    hpK1.setCellVerticalAlignment(lk1, VerticalPanel.ALIGN_MIDDLE);
+    hpK2.setCellVerticalAlignment(lk2, VerticalPanel.ALIGN_MIDDLE);
+    hpK1.setCellVerticalAlignment(pKeyCount1, VerticalPanel.ALIGN_MIDDLE);
+    hpK2.setCellVerticalAlignment(pKeyCount2, VerticalPanel.ALIGN_MIDDLE);
+    
+    hpS1.setCellVerticalAlignment(ls1, VerticalPanel.ALIGN_MIDDLE);
+    hpS2.setCellVerticalAlignment(ls2, VerticalPanel.ALIGN_MIDDLE);
+    hpS1.setCellVerticalAlignment(pSecretCount1, VerticalPanel.ALIGN_MIDDLE);
+    hpS2.setCellVerticalAlignment(pSecretCount2, VerticalPanel.ALIGN_MIDDLE);
+    
+    pKeyCount1.setStyleName("CreateUserAccount-CharCountError");
+    pKeyCount2.setStyleName("CreateUserAccount-CharCountError");
+    pSecretCount1.setStyleName("CreateUserAccount-CharCountError");
+    pSecretCount2.setStyleName("CreateUserAccount-CharCountError");
   }
   
   public void setAccessToken(OAuthTokenData accessToken) {
     this.accessToken = accessToken;
   }
-  
-  private void notify(UserData userData) {
-    
-    String err = "";
-    switch (userData.error) {
-    case UserData.SYSTEM_ERROR:
-      err = "System error occurred. Contact the administrator.";
-      break;
-    case UserData.USER_EXISTS:
-      err = "This user name exists already. Please choose another.";
-      break;
-    case UserData.USERNAME_DONTMATCH:
-      err = "Usernames don't match.";
-      break;
-    case UserData.PASSWORD_DONTMATCH:
-      err = "Passwords don't match.";
-      break;
-    }
-    
-    if (err.length() > 0) {
-      drawNotification(err);
-    }
-  }
-  
+
   /**
    * draw a notification
    * 
@@ -193,8 +255,8 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   
   private boolean doesKeysMatch() {
   
-    String u1 = tbU1.getText().trim();
-    String u2 = tbU2.getText().trim();
+    String u1 = tbK1.getText().trim();
+    String u2 = tbK2.getText().trim();
     
     // TODO - no spaces in middle?
     
@@ -209,8 +271,8 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   
   private boolean doesPasswordMatch() {
     
-    String p1 = tbP1.getText().trim();
-    String p2 = tbP2.getText().trim();
+    String p1 = tbS1.getText().trim();
+    String p2 = tbS2.getText().trim();
     
     // TODO - no spaces in middle?
     
@@ -236,15 +298,53 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     isUserExistRpc(userData);
   }
   
+  private void createUserStart() {
+    
+    checkForErrors();
+    
+    if (canCreateUser == false) {
+      System.out.println("createUserStart(): checkerrors failed");
+      return;
+    }
+
+    doesConsumerExistAlready();
+  }
+  
+  private void drawKeyNotify(boolean bol, int error) {
+    pKeyError.clear();
+    if (bol == true) {
+      pKey.setStyleName("CreateUserAccount-ErrorInput");
+      if (error > 0) {
+        pKeyError.add(new HTML(UserData.getError(error)));
+      }
+    } else {
+      pKey.removeStyleName("CreateUserAccount-ErrorInput");
+    }
+  }
+  
+  private void drawSecretNotify(boolean bol, int error) {
+    pSecretError.clear();
+    if (bol == true) {
+      pSecret.setStyleName("CreateUserAccount-ErrorInput");
+      if (error > 0) {
+        pSecretError.add(new HTML(UserData.getError(error)));
+      }
+    } else {
+      pSecret.removeStyleName("CreateUserAccount-ErrorInput");
+      pSecretError.clear();
+    }
+  }
+  
   private void processKeyExist(UserData userData) {
     
     if (userData.error > 0) {
-      notify(userData);
+      drawNotification(userData.getNotification());
       return;
     }
     
     // create account if there is no duplication
-    processCreate();
+    //processCreate();
+    Window.alert("create start...");
   }
   
   /**
@@ -259,19 +359,19 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
    * @return
    */
   private String getKeyHash() {
-    String key = tbP1.getText().trim();
+    String key = tbS1.getText().trim();
     Sha1 sha = new Sha1();
     String hash = sha.b64_sha1(key);
     return hash;
   }
   
   private String getKey() {
-    String key = tbP1.getText().trim();
+    String key = tbS1.getText().trim();
     return key;
   }
   
   private String getPasswordHash() {
-    String password = tbP1.getText().trim();
+    String password = tbS1.getText().trim();
     Sha1 sha = new Sha1();
     String hash = sha.b64_sha1(password);
     return hash;
@@ -279,29 +379,63 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   
   private void checkForErrors() {
     
+    System.out.println("check for errors"); 
+    
+    drawKeyNotify(false, 0);
+    drawSecretNotify(false, 0);
+    
+    // are things blank?
+    String k = tbK1.getText().trim();
+    String s = tbS1.getText().trim();
+    
+    if (k.length() < consumerKey_Len && s.length() < consumerSecret_Len) {
+      drawKeyNotify(true, UserData.KEYS_SHORT);
+      drawSecretNotify(true, UserData.SECRETS_SHORT);
+
+      return;
+    }
+    if (k.length() < consumerKey_Len) {
+      drawKeyNotify(true, UserData.KEYS_SHORT);
+
+      return;
+    }
+    if (s.length() < consumerSecret_Len) {
+      drawSecretNotify(true, UserData.SECRETS_SHORT);
+
+      return;
+    }
+    
+    
+    // Matching
+    
     // do keys match
     boolean keysMatch = doesKeysMatch();
     
     // do passwords match
-    boolean passwordsMatch = doesPasswordMatch();
+    boolean secretsMatch = doesPasswordMatch();
     
-    UserData userData = new UserData();
-    if (keysMatch == false && passwordsMatch == false); {
-      userData.error = UserData.BOTH_DONTMATCH;
+    int error = 0;
+    if (keysMatch == false && secretsMatch == false) {
+      error = UserData.BOTH_DONTMATCH;
+      drawKeyNotify(true, error);
+      drawSecretNotify(true, error);
     }
     
     if (keysMatch == false) {
-      userData.error = UserData.USERNAME_DONTMATCH;
+      error = UserData.KEYS_DONTMATCH;
+      drawKeyNotify(true, error);
+    } 
+    
+    if (secretsMatch == false) {
+      error = UserData.SECRETS_DONTMATCH;
+      drawSecretNotify(true, error);
     }
     
-    if (passwordsMatch == false) {
-      userData.error = UserData.PASSWORD_DONTMATCH;
+    if (error > 0) {
+      return;
     }
     
-    if (userData.error > 0) {
-      notify(userData);
-    }
-    
+    canCreateUser = true;
   }
   
   /**
@@ -337,15 +471,83 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     
   }
   
+  private void countCharacters(int input, TextBox tb) {
+    
+    int ilen = tb.getText().length();
+    String len = Integer.toString(ilen);
+        
+    switch (input) {
+    case 1: // key 1
+      pKeyCount1.clear();
+      pKeyCount1.add(new HTML(len));
+      if (ilen > consumerKey_Len) {
+        pKeyCount1.removeStyleName("CreateUserAccount-CharCountError");
+        pKeyCount1.setStyleName("CreateUserAccount-CharCountPass");
+      } else {
+        pKeyCount1.setStyleName("CreateUserAccount-CharCountError");
+        pKeyCount1.removeStyleName("CreateUserAccount-CharCountPass");
+      }
+      break;
+    case 2: // key 2;
+      pKeyCount2.clear();
+      pKeyCount2.add(new HTML(len));
+      if (ilen > consumerKey_Len) {
+        pKeyCount2.removeStyleName("CreateUserAccount-CharCountError");
+        pKeyCount2.setStyleName("CreateUserAccount-CharCountPass");
+      } else {
+        pKeyCount2.setStyleName("CreateUserAccount-CharCountError");
+        pKeyCount2.removeStyleName("CreateUserAccount-CharCountPass");
+      }
+      break;
+    case 3: // secret 1
+      pSecretCount1.clear();
+      pSecretCount1.add(new HTML(len));
+      if (ilen > consumerSecret_Len) {
+        pSecretCount1.removeStyleName("CreateUserAccount-CharCountError");
+        pSecretCount1.setStyleName("CreateUserAccount-CharCountPass");
+      } else {
+        pSecretCount1.setStyleName("CreateUserAccount-CharCountError");
+        pSecretCount1.removeStyleName("CreateUserAccount-CharCountPass");
+      }
+      break;
+    case 4: // secret 2
+      pSecretCount2.clear();
+      pSecretCount2.add(new HTML(len));
+      if (ilen > consumerSecret_Len) {
+        pSecretCount2.removeStyleName("CreateUserAccount-CharCountError");
+        pSecretCount2.setStyleName("CreateUserAccount-CharCountPass");
+      } else {
+        pSecretCount2.setStyleName("CreateUserAccount-CharCountError");
+        pSecretCount2.removeStyleName("CreateUserAccount-CharCountPass");
+      }
+      break;
+    }
+    
+  }
+  
   public void onClick(Widget sender) {
     
     if (sender == bCreateAccount) {
-      doesConsumerExistAlready();
+      createUserStart();
       
     } else if (sender == bClose) {
       this.hide();
       // lets reset the historyToken, in-case user decides to click on create account agian
       History.newItem("account_Login");
+    }
+    
+  }
+  
+  public void onChange(Widget sender) {
+    
+    if (sender == tbK1) {
+      countCharacters(1, tbK1);
+    } else if (sender == tbK2) {
+      countCharacters(2, tbK2);
+    } else if (sender == tbS1) {
+      countCharacters(3, tbS1);
+    } else if (sender == tbS2) {
+      countCharacters(4, tbS2);
     }
     
   }
@@ -357,11 +559,21 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   }
 
   public void onKeyUp(Widget sender, char keyCode, int modifiers) {
+    
+    if (sender == tbK1) {
+      countCharacters(1, tbK1);
+    } else if (sender == tbK2) {
+      countCharacters(2, tbK2);
+    } else if (sender == tbS1) {
+      countCharacters(3, tbS1);
+    } else if (sender == tbS2) {
+      countCharacters(4, tbS2);
+    }
+    
   }
   
   public void onFocus(Widget sender) {
     if (sender == bCreateAccount) {
-      checkForErrors();
     }
   }
 
@@ -407,6 +619,9 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     };
     callRpcService.createUser(userData, callback);
   }
+
+
+
 
 
   

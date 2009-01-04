@@ -16,7 +16,7 @@ import org.apache.commons.lang.StringEscapeUtils;
  * @author branflake2267
  *
  */
-public class Db_Conn {
+public abstract class Db_Conn {
 	
   // for debugging
   public boolean debug = true;
