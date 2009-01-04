@@ -4,7 +4,7 @@
 <wiki:toc max_depth="2"/>
 
 = Eclipse =
- * [Eclipse_Advantages]- Why Eclipse kicks butt as an IDE.
+ * [Eclipse_Advantages] - Why Eclipse kicks butt as an IDE for java.
 
 = Reference =
  * [http://eclipse.org Eclipse IDE Home] 
