@@ -109,9 +109,10 @@ sudo svnadmin create /home/svn/myproject
  * Remember to close JDBC resultSets
  * On Large JDBC recordsets, read row by row.
 {{{
-# read row by row, and don't load the entire recordset
+// read row by row, and don't load the entire recordset
 Statement select = connection.createStatement(java.sql.ResultSet.TYPE_FORWARD_ONLY, java.sql.ResultSet.CONCUR_READ_ONLY);
-select.setFetchSize(Integer.MIN_VALUE); 
+// fetch size - how many rows to read at a time. 
+select.setFetchSize(100);  
 ResultSet result = select.executeQuery(query);
 }}}
 
