@@ -1,4 +1,4 @@
-import com.gawkat.gwt.test.oauth.client.oauth.Sha1;
+import com.gawkat.gwt.oauth.client.oauth.Sha1;
 
 
 public class MakeConsumerSecret {
