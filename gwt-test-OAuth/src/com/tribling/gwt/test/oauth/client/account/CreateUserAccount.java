@@ -69,10 +69,20 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   // buttons
   private PushButton bCreateAccount = new PushButton("Create Account");
   private PushButton bClose = new PushButton("Close");
+  
+  
+  // accept panel
+  private VerticalPanel pAccept = new VerticalPanel();
+  
+  // accept error notification
+  private FlowPanel pAcceptError = new FlowPanel();
+  
+  // accept privacy agreement and terms of use
   private CheckBox cbAccept = new CheckBox("Accept terms of use and privacy agreement?");
   
   // terms of use container
   private TextArea taTerms = new TextArea();
+  
   
   // consumer access Token
   // tells me that the web application has access to the system
@@ -91,19 +101,22 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
    */
   public CreateUserAccount() {
     
+    // make it cool
     setAnimationEnabled(true);
     
-    //set the title of the top of the window
+    // set the title of the top of the window
     setText("Create New Account");
     
+    // init widget
     setWidget(pWidget);
     
+    // draw widget
     draw();
     
+    // observe
     bCreateAccount.addClickListener(this);
     bCreateAccount.addFocusListener(this);
     bClose.addClickListener(this);
-    
     tbK1.addChangeListener(this);
     tbK2.addChangeListener(this);
     tbS1.addChangeListener(this);
@@ -116,12 +129,13 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     // init rpc
     callRpcService = Rpc.initRpc();
     
-    // Style
+    // style
     pWidget.setStyleName("CreateUserAccount");
     pNotification.setWidth("100%");
     pNotification.setStyleName("CreateUserAccount-Notification");
-    
-    
+    pSecretError.addStyleName("CreateUserAccount-Error");
+    pKeyError.addStyleName("CreateUserAccount-Error");
+    pAcceptError.addStyleName("CreateUserAccount-Error");
   }
   
   /**
@@ -192,13 +206,16 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     pSecret.add(hpS1);
     pSecret.add(hpS2);
     
+    pAccept.add(pAcceptError);
+    pAccept.add(cbAccept);
+    
     pWidget.add(pKey);
     pWidget.add(pSecret);
     pWidget.add(new HTML("&nbsp;"));
     pWidget.add(new HTML("Terms of Use"));
     pWidget.add(taTerms); 
     pWidget.add(new HTML("&nbsp;"));
-    pWidget.add(cbAccept);
+    pWidget.add(pAccept);
     pWidget.add(new HTML("&nbsp;"));
     pWidget.add(hpBottom);
     
@@ -284,6 +301,20 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     return pass;
   }
   
+  private void createUserStart() {
+    
+    // verify the inputs have data, and has what is needed.
+    checkForErrors();
+    
+    if (canCreateUser == false) {
+      System.out.println("createUserStart(): checkerrors failed");
+      return;
+    }
+
+    // check to see if the user is in the database?
+    doesConsumerExistAlready();
+  }
+
   /**
    * check if the user exist in the system already?
    */
@@ -296,18 +327,6 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     userData.sign();
     
     isUserExistRpc(userData);
-  }
-  
-  private void createUserStart() {
-    
-    checkForErrors();
-    
-    if (canCreateUser == false) {
-      System.out.println("createUserStart(): checkerrors failed");
-      return;
-    }
-
-    doesConsumerExistAlready();
   }
   
   private void drawKeyNotify(boolean bol, int error) {
@@ -335,6 +354,19 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     }
   }
   
+  private void drawAcceptNotify(boolean bol, int error) {
+    pAcceptError.clear();
+    if (bol == true) {
+      pAccept.setStyleName("CreateUserAccount-ErrorInput");
+      if (error > 0) {
+        pAcceptError.add(new HTML(UserData.getError(error)));
+      }
+    } else {
+      pAccept.removeStyleName("CreateUserAccount-ErrorInput");
+      pAcceptError.clear();
+    }
+  }
+  
   private void processKeyExist(UserData userData) {
     
     if (userData.error > 0) {
@@ -343,8 +375,7 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     }
     
     // create account if there is no duplication
-    //processCreate();
-    Window.alert("create start...");
+    createUserAccount();
   }
   
   /**
@@ -421,35 +452,46 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
       drawSecretNotify(true, error);
     }
     
+    // keys match?
     if (keysMatch == false) {
       error = UserData.KEYS_DONTMATCH;
       drawKeyNotify(true, error);
     } 
     
+    // secrets match?
     if (secretsMatch == false) {
       error = UserData.SECRETS_DONTMATCH;
       drawSecretNotify(true, error);
     }
     
+    // accepted checked?
+    boolean accepted = cbAccept.isChecked();
+    if (accepted == false) {
+      error = UserData.ACCEPT_TERMS;
+      drawAcceptNotify(true, error);
+      return;
+    }
+    
+    // there is an error to deal with
     if (error > 0) {
       return;
     }
     
+    // reset the errors
+    drawKeyNotify(false, 0);
+    drawSecretNotify(false, 0);
+    drawAcceptNotify(false, 0);
+    
+    // we can check to see if user exists now.
     canCreateUser = true;
   }
   
   /**
-   * process the account creation after all the things are met
+   * create user account after it passes all the checks
    */
-  private void processCreate() {
+  private void createUserAccount() {
     
-    // do keys match
-    boolean keysMatch = doesKeysMatch();
-    
-    // do passwords match
-    boolean passwordsMatch = doesPasswordMatch();
-    
-    if (keysMatch == false && passwordsMatch == false) {
+    if (canCreateUser == false) {
       return;
     }
 
@@ -458,6 +500,7 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     userData.accessToken = accessToken;
     userData.consumerKey = getKey(); // could be - getKeyHash();;
     userData.consumerSecret = getPasswordHash();
+    userData.acceptTerms = cbAccept.isChecked();
     userData.sign();
     
     createAccountRpc(userData);
@@ -574,6 +617,7 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   
   public void onFocus(Widget sender) {
     if (sender == bCreateAccount) {
+      // nothing to do here
     }
   }
 

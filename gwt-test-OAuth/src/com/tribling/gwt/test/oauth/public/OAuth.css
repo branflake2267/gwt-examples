@@ -69,6 +69,9 @@ body {
 	border: 1px solid #AAA;
 	background-color: #F8FAB9;
 }
+.CreateUserAccount-Error {
+	color: red;
+}
 .CreateUserAccount-Field {
 	width: 125px;	
 	font-weight: bold;

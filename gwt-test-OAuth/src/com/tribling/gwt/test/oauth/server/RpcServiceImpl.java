@@ -136,8 +136,12 @@ public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
 	}
 
   public UserData createUser(UserData userData) {
+    
+    // used to sign the new user
+    String url = getRequestUrlOAuth();
+    
     Db_User db = new Db_User();
-    return db.createUser(userData);
+    return db.createUser(userData, url);
   }
   
   public UserData isUserNameExist(UserData userData) {

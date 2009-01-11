@@ -116,6 +116,14 @@ public class OAuthTokenData implements IsSerializable {
 	}
 	
 	/**
+	 * use this to check agianst the database
+	 * @return
+	 */
+	public String getConsumerSecret() {
+	  return this.oauth_consumer_key;
+	}
+	
+	/**
 	 * sign the token
 	 * 
 	 * signature = concat(consumerSecret+tokenSecret)
@@ -210,6 +218,14 @@ public class OAuthTokenData implements IsSerializable {
 	public void  setAccessToken(String token, String secret) {
 	  this.oauth_token = token;
 	  this.oauth_token_secret = secret;
+	}
+	
+	public String getAccessToken_key() {
+	  return this.oauth_token;
+	}
+	
+	public String getAccessToken_secret() {
+	  return this.oauth_token_secret;
 	}
 	
 	/**
