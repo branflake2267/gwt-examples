@@ -1,4 +1,4 @@
-package com.tribling.gwt.oauth.server;
+package com.gawkat.gwt.oauth.server;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import com.gawkat.gwt.oauth.client.account.UserData;
 import com.gawkat.gwt.oauth.client.oauth.OAuthTokenData;
 import com.gawkat.gwt.oauth.client.rpc.RpcService;
+import com.gawkat.gwt.oauth.server.db.Db_User;
+import com.gawkat.gwt.oauth.server.oauth.OAuthServer;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.tribling.gwt.oauth.server.db.Db_User;
-import com.tribling.gwt.oauth.server.oauth.OAuthServer;
 
 public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
 

@@ -1,4 +1,4 @@
-package com.tribling.gwt.oauth.server.db;
+package com.gawkat.gwt.oauth.server.db;
 
 /**
  * data connection information
