@@ -5,10 +5,10 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.gawkat.gwt.test.oauth.client.account.UserData;
+import com.gawkat.gwt.test.oauth.client.oauth.OAuthTokenData;
+import com.gawkat.gwt.test.oauth.client.rpc.RpcService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.tribling.gwt.test.oauth.client.account.UserData;
-import com.tribling.gwt.test.oauth.client.oauth.OAuthTokenData;
-import com.tribling.gwt.test.oauth.client.rpc.RpcService;
 import com.tribling.gwt.test.oauth.server.db.Db_User;
 import com.tribling.gwt.test.oauth.server.oauth.OAuthServer;
 

@@ -1,7 +1,7 @@
 package com.tribling.gwt.test.oauth.server.db;
 
-import com.tribling.gwt.test.oauth.client.account.UserData;
-import com.tribling.gwt.test.oauth.client.oauth.OAuthTokenData;
+import com.gawkat.gwt.test.oauth.client.account.UserData;
+import com.gawkat.gwt.test.oauth.client.oauth.OAuthTokenData;
 import com.tribling.gwt.test.oauth.server.oauth.OAuthServer;
 
 /**
