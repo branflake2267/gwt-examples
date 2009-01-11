@@ -1,8 +1,8 @@
 package com.gawkat.gwt.test.oauth.client;
 
-import com.gawkat.gwt.test.oauth.client.oauth.Sha1;
-import com.gawkat.gwt.test.oauth.client.tests.TestRpcCall;
-import com.gawkat.gwt.test.oauth.client.ui.LoginUi;
+import com.gawkat.gwt.oauth.client.oauth.Sha1;
+import com.gawkat.gwt.oauth.client.tests.TestRpcCall;
+import com.gawkat.gwt.oauth.client.ui.LoginUi;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ClickListener;
