@@ -24,6 +24,7 @@ import com.tribling.gwt.test.oauth.client.oauth.OAuthTokenData;
  */
 public class LoginUi extends Composite implements ChangeListener, HistoryListener {
 
+  // observe changeEvents
 	private ChangeListenerCollection changeListeners;
 	private int changeEvent; 
 	
@@ -38,12 +39,14 @@ public class LoginUi extends Composite implements ChangeListener, HistoryListene
 	private int uiType = 0;
   
 	// ui types
-  public static int LOGIN_HORIZONTAL = 1;
-  public static int LOGIN_VERTICAL = 2;
+  final public static int LOGIN_HORIZONTAL = 1;
+  final public static int LOGIN_VERTICAL = 2;
 	
-  // observe/listen for these events
-  public static int LOGIN = 1;
-  public static int FORGOT_PASSWORD = 2;
+  // change Events to observe for
+  final public static int LOGIN = 1;
+  final public static int FORGOT_PASSWORD = 3;
+  final public static int LOGOUT = 4;
+  final public static int NEW_USER_CREATED = CreateUserAccount.NEW_USER_CREATED; 
   
   // consumer accessToken
   // used for account login
@@ -86,13 +89,15 @@ public class LoginUi extends Composite implements ChangeListener, HistoryListene
 		setObserver();
 	}
 	
+	/**
+	 * observe login ui that was choose
+	 */
 	public void setObserver() {
 		if (uiType == LOGIN_HORIZONTAL) {
 			loginUiH.addChangeListener(this);
 		} else if (uiType == LOGIN_VERTICAL) {
-		  // TODO
+		  loginUiV.addChangeListener(this);
 		}
-		
 	}
 	
 	/**
@@ -106,7 +111,7 @@ public class LoginUi extends Composite implements ChangeListener, HistoryListene
 		if (uiType == LOGIN_HORIZONTAL) {
 			loginUiH.draw();
 		} else if (uiType == LOGIN_VERTICAL) {
-		  // TODO
+		  loginUiV.draw();
 		}
 	}
 	
@@ -164,18 +169,39 @@ public class LoginUi extends Composite implements ChangeListener, HistoryListene
 	  createUserAccount.setAnimationEnabled(true);
 	  createUserAccount.setAccessToken(accessToken);
 	  createUserAccount.center();
+	  
+	  // observe for account creation
+	  createUserAccount.addChangeListener(new ChangeListener() {
+      public void onChange(Widget sender) {
+        CreateUserAccount cua = (CreateUserAccount) sender;
+        int changeEvent = cua.getChangeEvent();
+        if (changeEvent == CreateUserAccount.NEW_USER_CREATED) {
+          fireChange(NEW_USER_CREATED);
+        }
+      }
+    }
+	  );
 	}
 	
 	public void onChange(Widget sender) {
-		
+	  
+		int changeEvent = 0;
 		if (uiType == LOGIN_HORIZONTAL) {
+		  
 			if (sender == loginUiH) {
-				fireChange(loginUiH.getChangeEvent());
+				changeEvent = loginUiH.getChangeEvent();
 			}
+			
 		} else if (uiType == LOGIN_VERTICAL) {
+		  
 			if (sender == loginUiV) {
-				// TODO 
+				changeEvent = loginUiV.getChangeEvent();
 			}
+			
+		}
+		
+		if (changeEvent > 0) {
+		  fireChange(changeEvent);
 		}
 		
 	}

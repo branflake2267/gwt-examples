@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.ChangeListenerCollection;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.Widget;
 import com.tribling.gwt.test.oauth.client.oauth.OAuthTokenData;
 import com.tribling.gwt.test.oauth.client.oauth.SessionData;
 import com.tribling.gwt.test.oauth.client.rpc.Rpc;
@@ -22,10 +23,12 @@ import com.tribling.gwt.test.oauth.client.ui.LoginUi;
  * @author branflake2267
  *
  */
-public class SessionManager extends Composite {
+public class SessionManager extends Composite implements ChangeListener {
 
+  // rpc system
 	public RpcServiceAsync callRpcService;
 	
+	// observe events
 	private ChangeListenerCollection changeListeners;
 	private int changeEvent; 
 	
@@ -52,8 +55,11 @@ public class SessionManager extends Composite {
 	 * constructor
 	 */
 	public SessionManager() {
+	  
 		// init rpc
 		callRpcService = Rpc.initRpc();
+		
+		loginUi.addChangeListener(this);
 	}
 	
 	/**
@@ -208,14 +214,9 @@ public class SessionManager extends Composite {
 	  
 	  // TODO - work around get rid of port
 	  url = url.replaceFirst(":[0-9]+", "");
-	  
 	  //Window.alert("signing: url: " + url);
 	  
 	  return url;
-	}
-	
-	private void setObserver() {
-	  // TODO
 	}
 	
 	public int getChangeEvent() {
@@ -239,6 +240,21 @@ public class SessionManager extends Composite {
 		if (changeListeners != null)
 			changeListeners.remove(listener);
 	}
+	
+  public void onChange(Widget sender) {
+    
+    int changeEvent = 0;
+    if (sender == loginUi) {
+      changeEvent = loginUi.getChangeEvent();
+      if (changeEvent == LoginUi.NEW_USER_CREATED) {
+        // TODO - what to do
+        Window.alert("Ready to move to new user settings");
+        
+        // TODO - set login ui to display logged in.
+      }
+    }
+    
+  }
 	
 	/**
 	 * A. Request request token (get consumer(web app) access)
@@ -264,6 +280,9 @@ public class SessionManager extends Composite {
 		// execute rpc and wait for its response
 		callRpcService.requestToken(tokenData, callback);
 	}
+
+  
+
 	
 	
 	

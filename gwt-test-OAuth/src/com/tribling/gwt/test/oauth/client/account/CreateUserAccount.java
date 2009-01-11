@@ -5,6 +5,7 @@ import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.ChangeListener;
+import com.google.gwt.user.client.ui.ChangeListenerCollection;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -30,6 +31,10 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
 
   // rpc system
   private RpcServiceAsync callRpcService = null;
+  
+  // for observing
+  private ChangeListenerCollection changeListeners;
+  private int changeEvent;
   
   // main widget div
   private VerticalPanel pWidget = new VerticalPanel();
@@ -95,6 +100,9 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   
   // after all checks are processed, then we can create a user
   private boolean canCreateUser = false;
+  
+  // Change Events
+  final public static int NEW_USER_CREATED = 100; 
   
   /**
    * constructor - init widget
@@ -508,10 +516,24 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   
   private void processAccountCreation(UserData userData) {
     
+    // are there errors???
+    if (userData.error > 0) {
+      // TODO - if certian errors, draw specific notices around key/secret
+      drawNotification(UserData.getError(userData.error));
+      return;
+    }
+    
+    // notify parent of change
+    fireChange(NEW_USER_CREATED);
+   
+    // TODO
+    // have parent grab userAccessToken
+    // have parent switch to logged in
+    // have parent switch to new user view
+    
     // close this
-    
-    // change to logged in, set the consumerToken
-    
+    this.hide();
+    this.removeFromParent();
   }
   
   private void countCharacters(int input, TextBox tb) {
@@ -566,6 +588,28 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
       break;
     }
     
+  }
+  
+  public int getChangeEvent() {
+    return changeEvent;
+  }
+  
+  private void fireChange(int changeEvent) {
+    this.changeEvent = changeEvent;
+    if (changeListeners != null) {
+      changeListeners.fireChange(this);
+    }
+  }
+  
+  public void addChangeListener(ChangeListener listener) {
+    if (changeListeners == null)
+      changeListeners = new ChangeListenerCollection();
+    changeListeners.add(listener);
+  }
+  
+  public void removeChangeListener(ChangeListener listener) {
+    if (changeListeners != null)
+      changeListeners.remove(listener);
   }
   
   public void onClick(Widget sender) {
