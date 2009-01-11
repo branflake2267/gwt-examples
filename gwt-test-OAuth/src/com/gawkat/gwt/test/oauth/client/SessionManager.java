@@ -1,10 +1,10 @@
 package com.gawkat.gwt.test.oauth.client;
 
-import com.gawkat.gwt.test.oauth.client.oauth.OAuthTokenData;
-import com.gawkat.gwt.test.oauth.client.oauth.SessionData;
-import com.gawkat.gwt.test.oauth.client.rpc.Rpc;
-import com.gawkat.gwt.test.oauth.client.rpc.RpcServiceAsync;
-import com.gawkat.gwt.test.oauth.client.ui.LoginUi;
+import com.gawkat.gwt.oauth.client.oauth.OAuthTokenData;
+import com.gawkat.gwt.oauth.client.oauth.SessionData;
+import com.gawkat.gwt.oauth.client.rpc.Rpc;
+import com.gawkat.gwt.oauth.client.rpc.RpcServiceAsync;
+import com.gawkat.gwt.oauth.client.ui.LoginUi;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
