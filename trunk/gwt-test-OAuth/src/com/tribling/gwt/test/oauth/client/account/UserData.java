@@ -6,6 +6,9 @@ import com.tribling.gwt.test.oauth.client.oauth.Sha1;
 
 public class UserData implements IsSerializable {
 
+  // used on server side
+  public int userId = 0;
+  
   // consumer accessToken
   // web application has access
   // will be used to verify this application can create users
@@ -20,7 +23,7 @@ public class UserData implements IsSerializable {
   public String consumerSecret = null;
 
   // accept terms of use
-  boolean acceptTerms = false;
+  public boolean acceptTerms = false;
   
   // error notifications
   public int error = 0;
@@ -38,6 +41,9 @@ public class UserData implements IsSerializable {
   final public static int SECRET1_SHORT = 10;
   final public static int SECRET2_SHORT = 11;
   final public static int BOTH_SHORT = 12;
+  final public static int SIGNATURE_ERROR = 13;
+  final public static int ACCEPT_TERMS = 14;
+  final public static int ERR_NO_USER = 15;
   
   // hash of this objects vars
   // verify it was disturbed during transit
@@ -85,22 +91,26 @@ public class UserData implements IsSerializable {
   }
   
   public String getNotification() {
-    String err = "";
+    String s = "";
     switch (error) {
+    case SIGNATURE_ERROR:
+      s = "Signature does not match. Verification of signature problem. Internal error.";
+      break;
     case UserData.SYSTEM_ERROR:
-      err = "System error occurred. Contact the administrator.";
+      s = "System error occurred. Contact the administrator.";
       break;
     case UserData.KEY_EXISTS:
-      err = "This user name exists already. Please choose another.";
+      s = "This user name exists already. Please choose another.";
       break;
     case UserData.KEYS_DONTMATCH:
-      err = "Usernames don't match.";
+      s = "Usernames don't match.";
       break;
     case UserData.SECRETS_DONTMATCH:
-      err = "Passwords don't match.";
+      s = "Passwords don't match.";
       break;
+    
     }
-    return err;
+    return s;
   }
   
   /**
@@ -150,6 +160,9 @@ public class UserData implements IsSerializable {
       break;
     case BOTH_SHORT:
       s = "Add more characters to both the username and password.";
+      break;
+    case ACCEPT_TERMS:
+      s = "You need to accept the terms of use and privacy agreements to use this application.";
       break;
     }
     

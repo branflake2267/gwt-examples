@@ -257,6 +257,43 @@ public abstract class Db_Conn {
 	}
 
 	/**
+	 * get String from query
+	 * 
+	 * @param sql
+	 * @return
+	 */
+	 public String getQueryString(String sql) {
+
+	    if (sql == null) {
+	      System.out.println("sql query was null.");
+	      return null;
+	    }
+	    
+	    if (sql.length() == 0) {
+	      System.out.println("no sq query existed.");
+	      return null;
+	    }
+	    
+	    String s = null;
+	    try {
+	      Connection conn = this.getDbConnRead();
+	      Statement select = conn.createStatement();
+	      ResultSet result = select.executeQuery(sql);
+	      while (result.next()) {
+	        s = result.getString(1);
+	      }
+	      select.close();
+	      result.close();
+	      conn.close();
+	    } catch (SQLException e) {
+	      System.err.println("Mysql Statement Error: " + sql);
+	      e.printStackTrace();
+	    }
+
+	    return s;
+	  }
+	
+	/**
 	 * quick query an int value
 	 * 
 	 * @param sql

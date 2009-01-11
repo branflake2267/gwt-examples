@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.UUID;
 
+import com.tribling.gwt.test.oauth.client.account.UserData;
 import com.tribling.gwt.test.oauth.client.oauth.OAuthTokenData;
 import com.tribling.gwt.test.oauth.server.db.Db_Conn;
 
@@ -30,8 +31,6 @@ public class OAuthServer extends Db_Conn {
 	 */
 	public OAuthTokenData requestToken(OAuthTokenData token, String url) {
 		
-		// debug
-		System.out.println("Request Token: url: " + url);
 		debug("requestToken: token: " + token.toString() + " url: " + url);
 		
 		// get the application data according to the consumerKey Given, then lets see if it matches up
@@ -47,16 +46,16 @@ public class OAuthServer extends Db_Conn {
 		OAuthTokenData returnToken = new OAuthTokenData();
 		
 		// examine if we can go to the next step
-		if (verifySignature == false | verifyNonce == false) {
+		if (appData.applicationId == 0 |  verifySignature == false | verifyNonce == false) {
 			returnToken.setResult(OAuthTokenData.ERROR);
 		} else {
 			returnToken.setResult(OAuthTokenData.SUCCESS);
 		}
 		
 		// on success - grant request token access
-		AccessTokenData at = new AccessTokenData();;
+		AccessTokenData at = new AccessTokenData();
 		if (returnToken.getResult() == OAuthTokenData.SUCCESS) {
-			at = setAccessToken(appData.applicationId);
+			at = setAccessToken_application(appData.applicationId);
 			returnToken.setAccessToken(at.accessToken, at.accessTokenSecret);
 		}
 		
@@ -78,7 +77,113 @@ public class OAuthServer extends Db_Conn {
 	}
 	
 	/**
-	 * get the applications id - from consumer key and password
+	 * get user Access Token
+	 * 
+   * TODO - I am going to have to come back and rewrite this later. 
+   * This isn't correct yet. Need more awakeness. :)
+   * 
+	 * 
+	 * @param appAccessToken - apps access token with users key and secret transfer app access to user access
+	 * @param url
+	 * @return
+	 */
+	public OAuthTokenData getUserAccessToken(OAuthTokenData appAccessToken, String url) {
+	  
+	   // debug
+    debug("getAccessToken: token: " + appAccessToken.toString() + " url: " + url);
+    
+    // get userData to verify agianst - this will also tell if the user exists
+    UserData userData = getUserData(appAccessToken);
+        
+    // verify the signed signature from the client matches the local
+    // TODO - should I be verifying with consumerSecret?
+    boolean verifySignature = appAccessToken.verify(url, userData.consumerSecret);
+
+    // check nonce 
+    boolean verifyNonce = verifyNonceHasntBeenUsed(appAccessToken, 0, userData.userId);
+
+    // verify application's access, then transfer it to the user if all passes
+    int accessId = getAccessId(appAccessToken);
+    
+    
+    // examine if we can go to the next step
+    if (accessId == 0 | userData.userId == 0 | 
+            userData.error > 0 | 
+            verifySignature == false | 
+            verifyNonce == false) {
+      appAccessToken.setResult(OAuthTokenData.ERROR);
+    } else {
+      appAccessToken.setResult(OAuthTokenData.SUCCESS);
+    }
+    
+	  // change access token session to user
+    if (appAccessToken.getResult() == OAuthTokenData.SUCCESS) {
+      setAccessToken_user(accessId, userData.userId);
+    } else {
+      // TODO - what to do, what to do?
+    }
+    
+    // set nonce, so it can't be used again. 
+    setNonce(appAccessToken, url, 0, userData.userId);
+    
+    
+    // sign the token for transport back
+    // TODO should I be signing with consumer secret?
+    try {
+      appAccessToken.sign(url, userData.consumerSecret);
+    } catch (Exception e) {
+      debug("requestToken: ****** ERROR SIGNING");
+      e.printStackTrace();
+    }
+
+    // if we make it this far, it becomes userAccessToken
+    // this is just for looks
+    OAuthTokenData userAccessToken = appAccessToken;
+    
+    // transport back to client
+    return userAccessToken;
+	}
+	
+	/**
+	 * find the user from consumerKey and consumerSecret
+	 * also finds if the user actually exists
+	 * will use it to verify the signing
+	 * 
+	 * @param token
+	 * @return
+	 */
+	private UserData getUserData(OAuthTokenData token) {
+   
+	  String consumerKey = escapeForSql(token.getConsumerKey());
+	  String consumerSecret = escapeForSql(token.getConsumerSecret());
+	  
+	  // find user
+	  String sql = "SELECT UserId " +
+	  		"FROM user " +
+	  		"WHERE " +
+	  		"(ConsumerKey='" + consumerKey + "') AND " +
+	  		"(ConsumerSecret='" + consumerSecret + "');";
+	  
+	  int userId = getQueryInt(sql);
+	  
+	  // no user Found - make an error
+	  if (userId == 0) {
+  	  UserData udError = new UserData();
+  	  udError.error = UserData.ERR_NO_USER;
+	    return udError;
+	  }
+	  
+	  // found a user
+	  UserData ud = new UserData();
+	  ud.consumerKey = token.getConsumerKey();
+	  ud.consumerSecret = token.getConsumerSecret();
+	  ud.userId = userId;
+	  
+    return ud;
+  }
+
+  /**
+	 * get the applications id - from app consumer key 
 	 * 
 	 * @param token
 	 * @return
@@ -168,6 +273,9 @@ public class OAuthServer extends Db_Conn {
 	 * @param userId
 	 */
 	private void setNonce(OAuthTokenData token, String url, int appId, int userId) {
+	  
+	  // TODO - this seems like there could be collissions possibly with Nonce?
+	  
 		String sql = "INSERT INTO session_nonce SET " +
 				"Url='" + escapeForSql(url) + "', " + 
 				"ApplicationId='" + escapeForSql(appId) + "', " +
@@ -180,12 +288,12 @@ public class OAuthServer extends Db_Conn {
 	}
 
 	/**
-	 * get unique accessToken
+	 * set a unique access token for the session for the application
 	 * 
 	 * @param applicationId
 	 * @return
 	 */
-	private AccessTokenData setAccessToken(int applicationId) {
+	private AccessTokenData setAccessToken_application(int applicationId) {
 		
 		String accessKey = getAccessKey();
 		String accessSecret = getAccessSecret();
@@ -195,7 +303,7 @@ public class OAuthServer extends Db_Conn {
 				"AccessTokenSecret='" + accessSecret + "', " +
 				"DateCreated=UNIX_TIMESTAMP(NOW());";
 	
-		int id = setQuery(sql);
+		setQuery(sql);
 		
 		// transport back
 		AccessTokenData at = new AccessTokenData();
@@ -205,7 +313,56 @@ public class OAuthServer extends Db_Conn {
 	}
 	
 	/**
+	 * get the AccessId - verify there is a session token
+	 * 
+	 * @param appAccessToken
+	 * @return
+	 */
+	private int getAccessId(OAuthTokenData appAccessToken) {
+	  
+    String appConsumerKey = escapeForSql(appAccessToken.getAccessToken_key());
+    String appConsumerSecret = escapeForSql(appAccessToken.getAccessToken_secret());
+	  
+	  String sql = "SELECT Id " +
+	  		"FROM session_accesstoken " +
+	  		"WHERE " +
+	  		"(AccessToken='" + appConsumerKey + "') AND " +
+	  		"(AccessTokenSecret='" + appConsumerSecret + "');";
+	  
+	  int accessId = getQueryInt(sql);
+	  
+	  return accessId;
+	}
+	
+	/**
+	 * set the access token for the session, but then then transfer it to this user here
+	 * 
+	 * @param accessId
+	 * @param userId
+	 * @return
+	 */
+	private boolean setAccessToken_user(int accessId, int userId) {
+    
+    String sql = "UPDATE session_accesstoken SET " +
+        "UserId='" + userId + "', " +
+        "DateUpdated=UNIX_TIMESTAMP(NOW()) " +
+        "WHERE (Id='" + accessId + "');";
+  
+    int id = setQuery(sql);
+    
+    if (id > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+	
+	/**
 	 * get accessToken (key)
+	 * Creates a unique AccessKey for the session
+	 * 
+	 *   The goal here is to have a unique Key and Secret for the Session which the
+	 *   App or User can own for the session. Everything builds up to this.
 	 * 
 	 * @return
 	 */
@@ -216,11 +373,16 @@ public class OAuthServer extends Db_Conn {
 	
 	/**
 	 * get accesstoken (secret)
+	 * Creates a unique Secret for teh session
+	 * 
+	 *   The goal here is to have a unique Key and Secret for the Session which the
+   *   App or User can own for the session. Everything builds up to this.
 	 * 
 	 * @return
 	 */
   private String getAccessSecret() {
 
+    // TODO - is this the length i want?
     int nounceLength = 15;
     String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
     String s = "";
@@ -237,6 +399,7 @@ public class OAuthServer extends Db_Conn {
 		return false;
 	}
 	
+
 
 	
 }
