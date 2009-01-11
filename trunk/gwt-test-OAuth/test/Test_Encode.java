@@ -1,4 +1,3 @@
-import com.google.gwt.http.client.URL;
 
 
 public class Test_Encode {

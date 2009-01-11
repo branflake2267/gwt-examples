@@ -1,4 +1,4 @@
-import com.tribling.gwt.test.oauth.client.global.Global_Domain;
+import com.gawkat.gwt.test.oauth.client.global.Global_Domain;
 
 
 public class Test_Realm {

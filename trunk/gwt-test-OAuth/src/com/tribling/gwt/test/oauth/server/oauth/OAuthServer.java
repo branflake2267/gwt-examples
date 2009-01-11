@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.UUID;
 
-import com.tribling.gwt.test.oauth.client.account.UserData;
-import com.tribling.gwt.test.oauth.client.oauth.OAuthTokenData;
+import com.gawkat.gwt.test.oauth.client.account.UserData;
+import com.gawkat.gwt.test.oauth.client.oauth.OAuthTokenData;
 import com.tribling.gwt.test.oauth.server.db.Db_Conn;
 
 public class OAuthServer extends Db_Conn {
