@@ -1,4 +1,4 @@
-import com.gawkat.gwt.test.oauth.client.global.Global_String;
+import com.gawkat.gwt.oauth.client.global.Global_String;
 
 
 public class Test_RemoveBadHTML {
