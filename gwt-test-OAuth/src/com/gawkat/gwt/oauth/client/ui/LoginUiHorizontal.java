@@ -1,7 +1,7 @@
 package com.gawkat.gwt.oauth.client.ui;
 
+import com.gawkat.gwt.oauth.client.LoadingWidget;
 import com.gawkat.gwt.oauth.client.global.Global_String;
-import com.gawkat.gwt.test.oauth.client.LoadingWidget;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ChangeListenerCollection;
