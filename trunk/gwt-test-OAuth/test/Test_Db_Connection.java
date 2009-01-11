@@ -1,4 +1,4 @@
-import com.tribling.gwt.oauth.server.db.Db_Conn;
+import com.gawkat.gwt.oauth.server.db.Db_Conn;
 
 
 public class Test_Db_Connection {
