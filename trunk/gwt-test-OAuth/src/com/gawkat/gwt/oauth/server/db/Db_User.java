@@ -1,8 +1,8 @@
-package com.tribling.gwt.oauth.server.db;
+package com.gawkat.gwt.oauth.server.db;
 
 import com.gawkat.gwt.oauth.client.account.UserData;
 import com.gawkat.gwt.oauth.client.oauth.OAuthTokenData;
-import com.tribling.gwt.oauth.server.oauth.OAuthServer;
+import com.gawkat.gwt.oauth.server.oauth.OAuthServer;
 
 /**
  * database methods for user

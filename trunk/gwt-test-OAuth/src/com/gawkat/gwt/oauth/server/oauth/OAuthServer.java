@@ -1,4 +1,4 @@
-package com.tribling.gwt.oauth.server.oauth;
+package com.gawkat.gwt.oauth.server.oauth;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -8,7 +8,7 @@ import java.util.UUID;
 
 import com.gawkat.gwt.oauth.client.account.UserData;
 import com.gawkat.gwt.oauth.client.oauth.OAuthTokenData;
-import com.tribling.gwt.oauth.server.db.Db_Conn;
+import com.gawkat.gwt.oauth.server.db.Db_Conn;
 
 public class OAuthServer extends Db_Conn {
 	
