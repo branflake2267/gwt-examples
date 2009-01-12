@@ -15,19 +15,16 @@
  * [http://term.ie/oauth/example/] - oauth test server
  * [http://term.ie/oauth/example/client.php] -oauth test client
 
- == My SVN Source ==
-  [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/gwt-test-OAuth] - My Eclipse project 
+== My SVN Source ==
+ [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/gwt-test-OAuth] - My Eclipse project 
 
 = Demo =
  [http://gawkat.com/OAuth/] - Current build - under development
 
 = Available Secure Hash Functions =
-Hashing (digest) a consomerKey, Urlbasestring or (rpc:dataobject) can be done by different methods.
+ Hashing (digest) a consomerKey, Urlbasestring or (rpc:dataobject) can be done by different methods.
 
- == MD5 ==
- com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator is built in, but will not inherit correctly. My beef with this class is there not literature to the purpose to why they use this or need it for that mater. 
-
- == Sha1 ==
+== Sha1 ==
  You can also use Sha1 to get a hash/digest. I am writing the sha1.js to java so I can use it both on the server and client side with ease.
  * [http://pajhome.org.uk/crypt/md5/sha1src.html] - sha1.js hash functions
 
@@ -40,3 +37,59 @@ Hashing (digest) a consomerKey, Urlbasestring or (rpc:dataobject) can be done by
 
 = The Flow =
 [http://oauth.net/core/diagram.png]
+
+= Database =
+
+ updated on 1/11/2009
+{{{
+CREATE TABLE `application` (
+  `ApplicationId` int(11) NOT NULL auto_increment,
+  `ConsumerKey` varchar(50) NOT NULL,
+  `ConsumerSecret` varbinary(150) NOT NULL COMMENT 'case sensitive',
+  `DateCreated` int(11) NOT NULL default '0',
+  `DateUpdated` int(11) default '0',
+  PRIMARY KEY  (`ApplicationId`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1
+
+CREATE TABLE `group` (
+  `GroupId` int(11) NOT NULL auto_increment,
+  `UserId` int(11) NOT NULL default '0',
+  `Name` varchar(50) NOT NULL,
+  `Description` text,
+  `DateCreated` int(11) NOT NULL default '0',
+  `DateUpdated` int(11) default '0',
+  PRIMARY KEY  (`GroupId`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1
+
+CREATE TABLE `session_accesstoken` (
+  `Id` int(11) NOT NULL auto_increment,
+  `ApplicationId` int(11) NOT NULL default '0',
+  `UserId` int(11) default '0',
+  `AccessToken` varbinary(100) NOT NULL,
+  `AccessTokenSecret` varbinary(100) NOT NULL,
+  `DateCreated` int(11) NOT NULL default '0',
+  `DateUpdated` int(11) default '0',
+  PRIMARY KEY  USING BTREE (`Id`)
+) ENGINE=MyISAM AUTO_INCREMENT=117 DEFAULT CHARSET=latin1
+
+CREATE TABLE `session_nonce` (
+  `NonceId` int(11) NOT NULL auto_increment,
+  `Url` text,
+  `UserId` int(11) default '0',
+  `ApplicationId` int(11) default '0',
+  `Nonce` varbinary(30) default NULL,
+  `DateCreated` int(11) NOT NULL default '0',
+  `DateUpdated` int(11) default '0',
+  PRIMARY KEY  USING BTREE (`NonceId`)
+) ENGINE=MyISAM AUTO_INCREMENT=148 DEFAULT CHARSET=latin1
+
+CREATE TABLE `user` (
+  `UserId` int(11) NOT NULL auto_increment,
+  `ConsumerKey` varbinary(150) NOT NULL COMMENT 'case sensitive hash',
+  `ConsumerSecret` varbinary(150) NOT NULL COMMENT 'case sensitive hash',
+  `AcceptTerms` tinyint(1) default NULL,
+  `DateCreated` int(11) NOT NULL default '0',
+  `DateUpdated` int(11) default '0',
+  PRIMARY KEY  (`UserId`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1
+}}}
