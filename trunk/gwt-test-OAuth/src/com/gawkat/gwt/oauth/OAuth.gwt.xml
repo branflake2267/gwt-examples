@@ -1,7 +1,7 @@
 <module>
 
-	  <!-- Top Level project - user management system using oAuth     -->
-
+      <!-- Top Level project - user management system using oAuth     -->
+	  <!-- refer to gwt-Core also!!!                                  -->
 	 
 	  <!-- Inherit the core Web Toolkit stuff.                        -->
       <inherits name='com.google.gwt.user.User'/>
