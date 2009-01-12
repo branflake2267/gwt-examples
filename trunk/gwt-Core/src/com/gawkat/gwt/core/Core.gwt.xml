@@ -1,5 +1,6 @@
 <module>
 
+	  <!-- Main module - manages the projects and widgets             -->
       
 
       <!-- Other module inherits                                      -->
