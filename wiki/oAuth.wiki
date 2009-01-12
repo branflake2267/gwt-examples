@@ -25,7 +25,7 @@
  Hashing (digest) a consomerKey, Urlbasestring or (rpc:dataobject) can be done by different methods.
 
 == Sha1 ==
- You can also use Sha1 to get a hash/digest. I am writing the sha1.js to java so I can use it both on the server and client side with ease.
+ You can also use Sha1 to get a hash/digest. I am writing the sha1.js to java so I can use it both on the server and client side with ease. I rewrote sha1.js to a java method which can be used on both the client and server side.
  * [http://pajhome.org.uk/crypt/md5/sha1src.html] - sha1.js hash functions
 
  To include Sha1 in your project, you will need to import it in (...public>yourProject.gwt.xml)
