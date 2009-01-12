@@ -8,7 +8,7 @@
 <wiki:toc max_depth="2"/>
 
 = Current Status =
- I started building a gwt project to test oAuth. It works great. So I am going to make a user managment system out of it, and include it into my other applications. (Jan/2009)
+ I started building a gwt project to test oAuth. It works great. So I am going to make a user management system out of it, and include it into my other applications. (Jan/2009)
 
 
 = oAuth and GWT =
