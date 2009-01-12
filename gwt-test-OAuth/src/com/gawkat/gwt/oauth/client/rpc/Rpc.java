@@ -18,7 +18,7 @@ public class Rpc {
 	public static RpcServiceAsync initRpc() {
 		RpcServiceAsync callRpcService = (RpcServiceAsync) GWT.create(RpcService.class);
 		ServiceDefTarget endpoint = (ServiceDefTarget) callRpcService;
-		String moduleRelativeURL = GWT.getModuleBaseURL() + "rpcServiceSession";
+		String moduleRelativeURL = GWT.getModuleBaseURL() + "rpcServiceAccounts";
 		endpoint.setServiceEntryPoint(moduleRelativeURL);
 		
 		return callRpcService;
