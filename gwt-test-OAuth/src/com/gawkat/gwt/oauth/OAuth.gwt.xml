@@ -1,5 +1,7 @@
 <module>
 
+	  <!-- Top Level project - user management system using oAuth     -->
+
 	 
 	  <!-- Inherit the core Web Toolkit stuff.                        -->
       <inherits name='com.google.gwt.user.User'/>
