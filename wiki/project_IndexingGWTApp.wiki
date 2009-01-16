@@ -41,6 +41,39 @@ public class HowItWorks extends Composite {
 		initWidget(pWidget);
 	}
 }
+
+public class HTMLInclude extends HTML {
+
+  public HTMLInclude(final String url) {
+
+    super();
+
+    final HTMLInclude widget = this;
+
+    try {
+      new RequestBuilder(RequestBuilder.GET, url).sendRequest("",
+          new RequestCallback() {
+
+            public void onError(Request request, Throwable exception) {
+              GWT.log("HTMLInclude: error fetching " + url, exception);
+            }
+
+            public void onResponseReceived(Request request, Response response) {
+              if (response.getStatusCode() == 200) {
+                widget.setHTML(response.getText());
+              } else {
+                GWT.log("HTMLInclude: bad code when fetching " + url + "["
+                    + response.getStatusCode() + "]", null);
+              }
+            }
+
+          });
+    } catch (RequestException e) {
+      GWT.log("HTMLInclude: exception thrown fetching " + url, e);
+    }
+
+  }
+}
 }}}
  
  This is what I put on the the page the spider sees. If a javascript client loads the page, the user will get redirected back to the application, where this content is stored.
