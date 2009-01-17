@@ -3,6 +3,7 @@ package com.gawkat.gwt.core.client;
 import java.util.HashMap;
 
 import com.gawkat.gwt.oauth.client.SessionManager;
+import com.gawkat.gwt.oauth.client.account.AccountManagementNavigation;
 import com.gawkat.gwt.oauth.client.global.QueryString;
 import com.gawkat.gwt.oauth.client.global.QueryStringData;
 import com.gawkat.gwt.oauth.client.ui.LoginUi;
@@ -31,6 +32,9 @@ public class Core implements EntryPoint, HistoryListener {
   // this manages the users privileges to protected resources
   private SessionManager sessionManager = null;
   
+  // have ready the accounts management after init
+  private AccountManagementNavigation accountManagement = null;
+  
   // go to this when there is no historyToken. All navigation will use historyToken/anchors
   private String defaultHomePage = "home";
   
@@ -45,7 +49,6 @@ public class Core implements EntryPoint, HistoryListener {
     // session management for the application
     initSessionManager();
     
-    
   }
   
   /**
@@ -59,7 +62,10 @@ public class Core implements EntryPoint, HistoryListener {
   }
   
   private void drawAccountsManagement(QueryStringData qsd) {
-    
+    if (accountManagement == null) {
+      accountManagement = new AccountManagementNavigation();
+    }
+    accountManagement.setQueryStringData(qsd);
   }
 
   /**
