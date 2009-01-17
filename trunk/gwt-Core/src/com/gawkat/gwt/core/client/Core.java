@@ -24,14 +24,14 @@ import com.google.gwt.user.client.ui.Widget;
 public class Core implements EntryPoint, HistoryListener {
 
   // web site consumer key
+  // hash - hmac_sha1 - key="salt", data="password"
   private String appConsumerKey = "Gawkat.com_oAuthApp_02";
-  
-   // hash - hmac_sha1 - key="salt", data="password"
   private String appConsumerSecret = "c1d0e06998305903ac76f589bbd6d4b61a670ba6";
   
-  // this manages the users priviledges to protected resources
+  // this manages the users privileges to protected resources
   private SessionManager sessionManager = null;
   
+  // go to this when there is no historyToken. All navigation will use historyToken/anchors
   private String defaultHomePage = "home";
   
   /**
@@ -58,7 +58,7 @@ public class Core implements EntryPoint, HistoryListener {
    sessionManager.setLoginUiDiv("LoginUI", LoginUi.LOGIN_HORIZONTAL);
   }
   
-  private void accountsManagement(QueryStringData qsd) {
+  private void drawAccountsManagement(QueryStringData qsd) {
     
   }
 
@@ -77,8 +77,8 @@ public class Core implements EntryPoint, HistoryListener {
     if (historyToken.length() == 0) {
       History.newItem(defaultHomePage);
       
-    } else if (historyToken.contains("account_")) {
-      accountsManagement(qsd);
+    } else if (historyToken.matches("account_.*")) { // draw account mangement with anything that has account_ in the anchor
+      drawAccountsManagement(qsd);
     }
     
   }
