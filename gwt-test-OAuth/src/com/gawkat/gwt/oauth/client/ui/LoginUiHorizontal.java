@@ -256,8 +256,7 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		
 	}
 	
-	// TODO
-	private void drawError(String error) {
+	public void drawError(String error) {
 		hideLoading();
 		
 		pError.clear();

@@ -95,6 +95,7 @@ public class OAuthTokenData implements IsSerializable {
 	// result of request
 	public static final int SUCCESS = 1;
 	public static final int ERROR = 2;
+	public static final int ERROR_NOUSERMATCH = 3; // user can't get logged in
 	private int resultOfRequest = 0;
 	
 	// when need of console output, turn this on
@@ -371,5 +372,24 @@ public class OAuthTokenData implements IsSerializable {
       debugIndex++;
     }
   }
+  
+  /**
+   * TODO 
+   * 
+   * @return
+   */
+  public String getResultMessage() {
+    String s = "";
+    switch (resultOfRequest) {
+    case ERROR:
+      s = "Error";
+      break;
+    case ERROR_NOUSERMATCH:
+      s = "I can't find you. Try agian.";
+      break;
+    }
+    return s;
+  }
+  
 
 }
