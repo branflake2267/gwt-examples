@@ -51,6 +51,9 @@ public class SessionManager extends Composite implements ChangeListener {
   // this will apply with user creation
   private OAuthTokenData accessToken = null;
 
+  // use this to verify signature
+  private String consumerSecret = null;
+  
   /**
    * constructor
    */
@@ -186,15 +189,34 @@ public class SessionManager extends Composite implements ChangeListener {
     }
   }
 
+  /**
+   * TODO needs testing and finishing
+   * 
+   * this is after rpc and after login button
+   * 
+   * @param token
+   */
   private void reqeust_User_Access_Token_Response(OAuthTokenData token) {
 
-    // TODO - verify signature
-
-    // TODO - deal with the errors
+    String url = getUrl();
+    
+    // verify signature
+    boolean verify = token.verify(url, consumerSecret);
+    if (verify == false) {
+      loginUi.drawError("Signature did not match. Transit Error.");
+    }
+    
+    // deal with the errors
+    int result = token.getResult();
+    if (result > OAuthTokenData.SUCCESS) {
+      loginUi.drawError(token.getResultMessage());
+      return;
+    } 
 
     this.accessToken = token;
 
-    // TODO - set Login Status
+    // show logged in
+    loginUi.setLoginStatus(true);
 
     // Notify change logged in
     fireChange(EventManager.LOGGEDIN);
@@ -209,7 +231,7 @@ public class SessionManager extends Composite implements ChangeListener {
 
     // get credentials from LoginUi
     String consumerKey = loginUi.getConsumerKey();
-    String consumerSecret = loginUi.getConsumerSecret();
+    consumerSecret = loginUi.getConsumerSecret();
 
     // take appAccessToken, and ask for a user access token
     // setup a request token for user
@@ -221,6 +243,11 @@ public class SessionManager extends Composite implements ChangeListener {
     getUserAccessToken(tokenData);
   }
 
+  /**
+   * 
+   * TODO
+   * 
+   */
   private void logout() {
 
     Window.alert("not done");
