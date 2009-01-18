@@ -62,9 +62,7 @@ public class OAuthTokenData implements IsSerializable {
 	// application id, or user id
 	private String oauth_consumer_key;
 	
-	// token secret
-	private String oauth_token_secret;
-	
+
 	// random string - protects against replay attacks
 	private String oauth_nounce;
 	
@@ -77,9 +75,14 @@ public class OAuthTokenData implements IsSerializable {
 	// timestamp this object was created
 	private int oauth_timestamp;
 	
+	
 	// token(id) given from server on return
 	private String oauth_token;
 	
+	 // token secret
+  private String oauth_token_secret;
+	
+  
 	// version used, another var added for signature uniqueness
 	private String oauth_version = "1.0";
 	
@@ -113,14 +116,6 @@ public class OAuthTokenData implements IsSerializable {
 	
 	public String getConsumerKey() {
 		return this.oauth_consumer_key;
-	}
-	
-	/**
-	 * use this to check agianst the database
-	 * @return
-	 */
-	public String getConsumerSecret() {
-	  return this.oauth_consumer_key;
 	}
 	
 	/**

@@ -1,10 +1,15 @@
 package com.gawkat.gwt.oauth.client.account;
 
 import com.gawkat.gwt.oauth.client.global.QueryStringData;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+/**
+ * manage account management system navigation 
+ * 
+ * @author branflake2267
+ *
+ */
 public class AccountManagementNavigation {
 
   // using historyToken for navigation, with parameters
@@ -51,11 +56,12 @@ public class AccountManagementNavigation {
   /**
    * render/draw the widgets according to the url 
    * 
-   * reserved 
-   * account_Login for LoginUi
-   * account_ForgotPassword for LoginUi
-   * account_Create for LoginUi
-   *
+   * RESERVED
+   * account_Login - for LoginUi
+   * account_Logout - for LoginUi
+   * account_Create - for LoginUi
+   * account_ForgotPassword - for LoginUi
+   * 
    */
   private void navigate() {
     

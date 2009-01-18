@@ -1,5 +1,6 @@
 package com.gawkat.gwt.oauth.client.ui;
 
+import com.gawkat.gwt.oauth.client.EventManager;
 import com.gawkat.gwt.oauth.client.LoadingWidget;
 import com.gawkat.gwt.oauth.client.global.Global_String;
 import com.google.gwt.user.client.Timer;
@@ -53,9 +54,9 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	// forgot password, ask for it
 	private PushButton bForgot = new PushButton("Get Password");
 	
-	private Hyperlink hAccountSettings;
-	private Hyperlink hAccountCreate;
-	private Hyperlink hAccountLogout;
+	private Hyperlink hAccountSettings = null;
+	private Hyperlink hAccountCreate = null;
+	private Hyperlink hAccountLogout = null;
 	
 	private Hyperlink hForgotPassword = new Hyperlink("Forgot Password","account_ForgotPassword");
 	private Hyperlink hAccountLogin = new Hyperlink("Login","account_Login");
@@ -125,16 +126,15 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		
 		if (loginStatus == false) {
 			drawLoginInputs();
-		} 
-		
-		// TODO - what will happen if this was called, and one was already logged in
+		} else if (loginStatus == true) {
+		  drawLoggedIn();
+		}
 		
 	}
 	
 	public void setLoginStatus(boolean bol) {
 		this.loginStatus = bol;
-		
-		// TODO - redraw?
+		draw();
 	}
 	
 	/**
@@ -150,7 +150,7 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		tbConsumerSecretPass.setVisible(true);
 		tbConsumerSecretPass.setText(password);
 		
-		fireChange(LoginUi.LOGIN);
+		fireChange(EventManager.LOGIN);
 	}
 	
 	private void drawLoginInputs() {
@@ -242,12 +242,17 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	private void drawLoggedIn() {
 		hideLoading();
 		
-		hAccountSettings = new Hyperlink("My Account","account");
+    pUi.clear();
+		
+		hAccountSettings = new Hyperlink("My Account","account_Profile");
 		hAccountLogout = new Hyperlink("Logout", "account_Logout");
 		
 		HorizontalPanel hp = new HorizontalPanel();
 		hp.add(hAccountSettings);
+		hp.add(new HTML("&nbsp;&nbsp;"));
 		hp.add(hAccountLogout);
+		
+		pUi.add(hp);
 		
 	}
 	
@@ -322,6 +327,7 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	}
 	
 	private void changePasswordInput() {
+	  tbConsumerSecretPass.setEnabled(true);
 		tbConsumerSecret.setVisible(false);
 		tbConsumerSecretPass.setVisible(true);
 		tbConsumerSecretPass.setFocus(true);
@@ -362,11 +368,11 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	  
 		if (sender == bLogin) {
 			drawLoading();
-			fireChange(LoginUi.LOGIN);
+			fireChange(EventManager.LOGIN);
 		
 		} else if (sender == bForgot) {
 			drawLoading();
-			fireChange(LoginUi.FORGOT_PASSWORD);
+			fireChange(EventManager.FORGOT_PASSWORD);
 		
 		} else if (sender == tbConsumerKey) {
 			checkInputLabel_key(true);
@@ -375,7 +381,7 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 			changePasswordInput();
 		
 		} else if (sender == cbRemberMe) {
-		  // TODO
+		  // TODO - save a cookie
 		
 		} else if (sender == hForgotPassword) {
 			drawForgotPassword();

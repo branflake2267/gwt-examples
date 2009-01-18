@@ -1,5 +1,6 @@
 package com.gawkat.gwt.oauth.client.ui;
 
+import com.gawkat.gwt.oauth.client.EventManager;
 import com.gawkat.gwt.oauth.client.account.CreateUserAccount;
 import com.gawkat.gwt.oauth.client.oauth.OAuthTokenData;
 import com.google.gwt.user.client.History;
@@ -13,6 +14,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * This will be the hook into the types of UIs that one could possibly use
+ * this is just the middle man for the user interfaces
  * 
  * TODO - method for deciding which UI to use, horizontal inputs, vertical inputs, separate forgot system...
  * TODO - this may need to set another loginui in the entry method, complicated at this point, do later
@@ -25,8 +27,8 @@ import com.google.gwt.user.client.ui.Widget;
 public class LoginUi extends Composite implements ChangeListener, HistoryListener {
 
   // observe changeEvents
-	private ChangeListenerCollection changeListeners;
-	private int changeEvent; 
+	private ChangeListenerCollection changeListeners = null;
+	private int changeEvent = 0; 
 	
 	// main panel
 	private FlowPanel pWidget = new FlowPanel();
@@ -42,11 +44,6 @@ public class LoginUi extends Composite implements ChangeListener, HistoryListene
   final public static int LOGIN_HORIZONTAL = 1;
   final public static int LOGIN_VERTICAL = 2;
 	
-  // change Events to observe for
-  final public static int LOGIN = 1;
-  final public static int FORGOT_PASSWORD = 3;
-  final public static int LOGOUT = 4;
-  final public static int NEW_USER_CREATED = CreateUserAccount.NEW_USER_CREATED; 
   
   // consumer accessToken
   // used for account login
@@ -139,29 +136,28 @@ public class LoginUi extends Composite implements ChangeListener, HistoryListene
 	}
 	
 	public String getConsumerKey() {
-		
 		String s = null;
 		if (uiType == LOGIN_HORIZONTAL) {
 			s = loginUiH.getConsumerKey();
 		} else if (uiType == LOGIN_VERTICAL) {
-		}
-		
+		  // TODO
+		}	
 		return s;
 	}
 	
 	public String getConsumerSecret() {
-		
 		String s = null;
 		if (uiType == LOGIN_HORIZONTAL) {
 			s = loginUiH.getConsumerSecret();
 		} else if (uiType == LOGIN_VERTICAL) {
+		  // TODO
 		}
-		
 		return s;
 	}
 
 	public void eraseCredentials() {
 		// TODO - after login, erase the credentials in the login widget
+	  // Leave no traces behind to sniff
 	}
 	
 	private void drawCreateAccount() {
@@ -175,8 +171,13 @@ public class LoginUi extends Composite implements ChangeListener, HistoryListene
       public void onChange(Widget sender) {
         CreateUserAccount cua = (CreateUserAccount) sender;
         int changeEvent = cua.getChangeEvent();
-        if (changeEvent == CreateUserAccount.NEW_USER_CREATED) {
-          fireChange(NEW_USER_CREATED);
+        if (changeEvent == EventManager.NEW_USER_CREATED) {
+          
+          // change status to logged in
+          // TODO need an option to verify latter
+          setLoginStatus(true);
+          
+          fireChange(EventManager.NEW_USER_CREATED);
         }
       }
     }
@@ -200,6 +201,7 @@ public class LoginUi extends Composite implements ChangeListener, HistoryListene
 			
 		}
 		
+		// this is just the middle man to the user interfaces
 		if (changeEvent > 0) {
 		  fireChange(changeEvent);
 		}
@@ -235,6 +237,7 @@ public class LoginUi extends Composite implements ChangeListener, HistoryListene
       drawCreateAccount();
       
     } else if (historyToken.equals("account_ForgotPassword")) {
+      // TODO
       Window.alert("fogot");
       
     }
