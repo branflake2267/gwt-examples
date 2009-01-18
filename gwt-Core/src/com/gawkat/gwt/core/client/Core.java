@@ -12,6 +12,7 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Image;
@@ -22,7 +23,7 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class Core implements EntryPoint, HistoryListener {
+public class Core implements EntryPoint, HistoryListener, ChangeListener {
 
   // web site consumer key
   // hash - hmac_sha1 - key="salt", data="password"
@@ -49,6 +50,7 @@ public class Core implements EntryPoint, HistoryListener {
     // session management for the application
     initSessionManager();
     
+     
   }
   
   /**
@@ -59,6 +61,9 @@ public class Core implements EntryPoint, HistoryListener {
    sessionManager = new SessionManager();
    sessionManager.setAppConsumerKey(appConsumerKey, appConsumerSecret); 
    sessionManager.setLoginUiDiv("LoginUI", LoginUi.LOGIN_HORIZONTAL);
+   
+   // observe for login events ...
+   sessionManager.addChangeListener(this);
   }
   
   private void drawAccountsManagement(QueryStringData qsd) {
@@ -85,6 +90,23 @@ public class Core implements EntryPoint, HistoryListener {
       
     } else if (historyToken.matches("account_.*")) { // draw account mangement with anything that has account_ in the anchor
       drawAccountsManagement(qsd);
+    
+      
+    } else if (historyToken.matches("other_.*")) {
+      // TODO application management
+    }
+    
+  }
+
+ 
+  /**
+   * 
+   */
+  public void onChange(Widget sender) {
+ 
+    // TODO - what to do after login??
+    if (sender == sessionManager) {
+      
     }
     
   }
