@@ -1,5 +1,6 @@
 package com.gawkat.gwt.oauth.client.account;
 
+import com.gawkat.gwt.oauth.client.EventManager;
 import com.gawkat.gwt.oauth.client.oauth.OAuthTokenData;
 import com.gawkat.gwt.oauth.client.oauth.Sha1;
 import com.gawkat.gwt.oauth.client.rpc.Rpc;
@@ -100,7 +101,7 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   private boolean canCreateUser = false;
   
   // Change Events
-  final public static int NEW_USER_CREATED = 100; 
+
   
   /**
    * constructor - init widget
@@ -522,7 +523,7 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     }
     
     // notify parent of change
-    fireChange(NEW_USER_CREATED);
+    fireChange(EventManager.NEW_USER_CREATED);
    
     // TODO
     // have parent grab userAccessToken
