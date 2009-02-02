@@ -637,7 +637,6 @@ public static native void test(String html) /*-{
 
 = Get Browser Type =
  Get the type of browser using the application. 
-
 {{{
 public static native String getUserAgent() /*-{ 
   var ua = navigator.userAgent.toLowerCase();
