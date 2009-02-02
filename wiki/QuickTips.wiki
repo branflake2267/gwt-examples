@@ -634,3 +634,33 @@ public static native void test(String html) /*-{
   win.document.write(html);
 }-*/;
 }}}
+
+= Get Browser Type =
+ Get the type of browser using the application. 
+
+{{{
+public static native String getUserAgent() /*-{ 
+  var ua = navigator.userAgent.toLowerCase();
+  
+  if (ua.indexOf("opera") != -1) { 
+          return "opera"; 
+  } 
+  if (ua.indexOf("webkit") != -1) { 
+          return "safari"; 
+  } 
+  if ((ua.indexOf("msie 6.0") != -1) 
+  ||  (ua.indexOf("msie 7.0") != -1)) { 
+          return "ie6"; 
+  } 
+  if (ua.indexOf("gecko") != -1) { 
+          var result = /rv:([0-9]+)\.([0-9]+)/.exec(ua); 
+          if (result && result.length == 3) { 
+                  var version = (parseInt(result[1]) * 10) + parseInt(result[2]); 
+                  if (version >= 18) 
+                          return "gecko1_8"; 
+          } 
+          return "gecko"; 
+  } 
+  return "unknown"; 
+}-*/; 
+}}}
