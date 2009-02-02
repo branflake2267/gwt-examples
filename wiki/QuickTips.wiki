@@ -626,7 +626,6 @@ private String getRequestUrlOAuth() {
 
 = Send a Widget To Popup Window =
  This is what I do so i can print a widget. I send the widget.toString(); to popup window.
-
 {{{
 // Send html (widget.toString();) to popup window
 public static native void test(String html) /*-{
