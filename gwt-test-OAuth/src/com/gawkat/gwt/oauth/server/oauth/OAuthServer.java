@@ -39,15 +39,13 @@ public class OAuthServer extends Db_Conn {
     boolean verifySignature = token.verify(url, appData.consumerSecret);
 
     // check nonce
-    boolean verifyNonce = verifyNonceHasntBeenUsed(token,
-            appData.applicationId, 0);
+    boolean verifyNonce = verifyNonceHasntBeenUsed(token, appData.applicationId, 0);
 
     // prepare for transport back
     OAuthTokenData returnToken = new OAuthTokenData();
 
     // examine if we can go to the next step
-    if (appData.applicationId == 0 | verifySignature == false
-            | verifyNonce == false) {
+    if (appData.applicationId == 0 | verifySignature == false | verifyNonce == false) {
       returnToken.setResult(OAuthTokenData.ERROR);
     } else {
       returnToken.setResult(OAuthTokenData.SUCCESS);
@@ -89,31 +87,26 @@ public class OAuthServer extends Db_Conn {
    * @param url
    * @return
    */
-  public OAuthTokenData getUserAccessToken(OAuthTokenData appAccessToken,
-          String url) {
+  public OAuthTokenData getUserAccessToken(OAuthTokenData appAccessToken, String url) {
 
     // debug
-    debug("getAccessToken: token: " + appAccessToken.toString() + " url: "
-            + url);
+    debug("getAccessToken: token: " + appAccessToken.toString() + " url: " + url);
 
     // get userData to verify agianst - this will also tell if the user exists
     UserData userData = getUserData(appAccessToken);
 
     // verify the signed signature from the client matches the local
     // TODO - should I be verifying with consumerSecret?
-    boolean verifySignature = appAccessToken.verify(url,
-            userData.consumerSecret);
+    boolean verifySignature = appAccessToken.verify(url, userData.consumerSecret);
 
     // check nonce
-    boolean verifyNonce = verifyNonceHasntBeenUsed(appAccessToken, 0,
-            userData.userId);
+    boolean verifyNonce = verifyNonceHasntBeenUsed(appAccessToken, 0, userData.userId);
 
     // verify application's access, then transfer it to the user if all passes
     int accessId = getAccessId(appAccessToken);
 
     // examine if we can go to the next step
-    if (accessId == 0 | userData.userId == 0 | userData.error > 0
-            | verifySignature == false | verifyNonce == false) {
+    if (accessId == 0 | userData.userId == 0 | userData.error > 0 | verifySignature == false | verifyNonce == false) {
       appAccessToken.setResult(OAuthTokenData.ERROR);
     } else {
       appAccessToken.setResult(OAuthTokenData.SUCCESS);

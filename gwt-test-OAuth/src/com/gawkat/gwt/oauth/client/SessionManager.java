@@ -381,7 +381,7 @@ public class SessionManager extends Composite implements ChangeListener {
     };
 
     // execute rpc and wait for its response
-    callRpcService.requestToken(tokenData, callback);
+    callRpcService.getUserAccessToken(tokenData, callback);
   }
 
 }

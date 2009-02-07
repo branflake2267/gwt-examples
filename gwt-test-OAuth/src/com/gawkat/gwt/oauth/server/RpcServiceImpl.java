@@ -154,7 +154,11 @@ public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
     return db.forgotPassword(userData);
   }
   
-  public OAuthTokenData getUserAccessToken(OAuthTokenData appAccessToken, String url) {
+  public OAuthTokenData getUserAccessToken(OAuthTokenData appAccessToken) {
+    
+    // used to sign the new user
+    String url = getRequestUrlOAuth();
+    
     OAuthServer oauth = new OAuthServer();
     OAuthTokenData rtnToken = oauth.getUserAccessToken(appAccessToken, url);
     return rtnToken;
