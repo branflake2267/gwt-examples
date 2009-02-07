@@ -31,16 +31,13 @@ public class SessionManager extends Composite implements ChangeListener {
   private ChangeListenerCollection changeListeners = null;
   private int changeEvent = 0;
   
-  // store the granted access token and related info in here
-  private SessionData session = null;
-
   // div tag that holds the login ui widget
   private String loginUiDiv = null;
 
   // TODO - move this to LoginUi, as the master of the User Input systems one
   // could use, horizontal, vertical, separate forgot...
   // TODO - will do this later, as to the complication to code
-  private LoginUi loginUi = new LoginUi();
+  private LoginUi loginUi = null;
 
   // errors
   private String errDiv = "No div tag exists for this widget. debug: setLoginUiDiv() <div id='" + loginUiDiv + "'></div>";
@@ -59,9 +56,13 @@ public class SessionManager extends Composite implements ChangeListener {
    */
   public SessionManager() {
 
+    // init the login ui
+    loginUi = new LoginUi();
+    
     // init rpc
     callRpcService = Rpc.initRpc();
 
+    // observe
     loginUi.addChangeListener(this);
   }
 
@@ -122,14 +123,6 @@ public class SessionManager extends Composite implements ChangeListener {
     loginUi.autoLogin(email, password);
   }
 
-  public SessionData getSession() {
-    if (session == null) {
-      // TODO - ask to login?
-      return null;
-    }
-    return session;
-  }
-
   /**
    * set web site/application consumer key - determined by service provider A.
    * used to request request token -> grant access token?
@@ -172,8 +165,6 @@ public class SessionManager extends Composite implements ChangeListener {
    */
   private void request_Request_Token_Response(OAuthTokenData token) {
 
-    // TODO - verify signature
-
     this.accessToken = token;
 
     int result = token.getResult();
@@ -196,7 +187,7 @@ public class SessionManager extends Composite implements ChangeListener {
    * 
    * @param token
    */
-  private void reqeust_User_Access_Token_Response(OAuthTokenData token) {
+  private void request_User_Access_Token_Response(OAuthTokenData token) {
 
     String url = getUrl();
     
@@ -250,17 +241,25 @@ public class SessionManager extends Composite implements ChangeListener {
    */
   private void logout() {
 
-    Window.alert("not done");
+    //Window.alert("logout in sesssion manager");
 
-    // TODO - erases traces
-    // reset possible vars in all session levels
-
-    // TODO - (reset) request the access token agian b/c users token will be
-    // destroyed
-
+    loginUi.setLoginStatus(false);
+    
+    accessToken = null;
+    consumerSecret = null;
+       
     fireChange(EventManager.LOGGEDOUT);
+    
   }
 
+  private void forgotPassword() {
+    Window.alert("forgot password in session manager");
+  }
+  
+  private void displayProfile() {
+    Window.alert("display profile in session manager");
+  }
+  
   /**
    * C.2 if C doesn't pass error check the credentials - ask agian - show the
    * errors in processing
@@ -324,6 +323,10 @@ public class SessionManager extends Composite implements ChangeListener {
         login();
       } else if (changeEvent == EventManager.LOGOUT) {
         logout();
+      } else if (changeEvent == EventManager.FORGOT_PASSWORD) {
+        forgotPassword();
+      } else if (changeEvent == EventManager.PROFILE) {
+        displayProfile();
       }
     }
 
@@ -374,7 +377,7 @@ public class SessionManager extends Composite implements ChangeListener {
       // on success
       public void onSuccess(OAuthTokenData token) {
 
-        reqeust_User_Access_Token_Response(token);
+        request_User_Access_Token_Response(token);
 
         // TODO hide loading
       }

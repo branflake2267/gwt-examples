@@ -8,12 +8,20 @@ package com.gawkat.gwt.oauth.client.oauth;
  */
 public class SessionData {
 
-	public OAuthTokenData token = new OAuthTokenData();
+	public OAuthTokenData token = null;
 	
 	/**
 	 * constructor
 	 */
 	public SessionData() {
+	}
+	
+	public void setToken(OAuthTokenData token) {
+	  this.token = token;
+	}
+	
+	public OAuthTokenData getToken() {
+	  return this.token;
 	}
 	
 	public void logout() {

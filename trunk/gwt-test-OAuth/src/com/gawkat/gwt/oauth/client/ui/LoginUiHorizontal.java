@@ -125,6 +125,8 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	public void draw() {
 		
 		if (loginStatus == false) {
+		  tbConsumerKey.setText("");
+		  tbConsumerSecretPass.setText("");
 			drawLoginInputs();
 		} else if (loginStatus == true) {
 		  drawLoggedIn();
@@ -307,7 +309,7 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	}
 	
 	private void hideLoading() {
-		//wLoading.hide();
+		wLoading.hide();
 		
 		tbConsumerKey.setEnabled(true);
 		tbConsumerSecretPass.setEnabled(false);
