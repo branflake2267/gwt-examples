@@ -2,6 +2,7 @@ package com.gawkat.gwt.core.client;
 
 import java.util.HashMap;
 
+import com.gawkat.gwt.oauth.client.EventManager;
 import com.gawkat.gwt.oauth.client.SessionManager;
 import com.gawkat.gwt.oauth.client.account.AccountManagementNavigation;
 import com.gawkat.gwt.oauth.client.global.QueryString;
@@ -49,8 +50,6 @@ public class Core implements EntryPoint, HistoryListener, ChangeListener {
     
     // session management for the application
     initSessionManager();
-    
-     
   }
   
   /**
@@ -100,13 +99,20 @@ public class Core implements EntryPoint, HistoryListener, ChangeListener {
 
  
   /**
-   * 
+   * observer
    */
   public void onChange(Widget sender) {
  
-    // TODO - what to do after login??
     if (sender == sessionManager) {
-      
+      int changeEvent = sessionManager.getChangeEvent();
+      if (changeEvent == EventManager.LOGGEDIN) {
+        
+        // TODO - after login, do something
+        
+      } else if (changeEvent == EventManager.LOGGEDOUT) {
+        sessionManager.setAppConsumerKey(appConsumerKey, appConsumerSecret); // reset the session entirely
+        History.newItem("home"); // reset app 
+      }
     }
     
   }
