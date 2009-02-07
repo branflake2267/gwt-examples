@@ -22,10 +22,11 @@ public interface RpcService extends RemoteService {
 	 */
 	public OAuthTokenData requestToken(OAuthTokenData tokenData);
 	
-	
   public UserData createUser(UserData userData);
   
   public UserData isUserNameExist(UserData userData);
   
   public UserData forgotPassword(UserData userData);
+  
+  public OAuthTokenData getUserAccessToken(OAuthTokenData appAccessToken);
 }

@@ -3,6 +3,7 @@ package com.gawkat.gwt.oauth.client.ui;
 import com.gawkat.gwt.oauth.client.EventManager;
 import com.gawkat.gwt.oauth.client.account.CreateUserAccount;
 import com.gawkat.gwt.oauth.client.oauth.OAuthTokenData;
+import com.gawkat.gwt.oauth.client.oauth.Sha1;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
 import com.google.gwt.user.client.Window;
@@ -161,7 +162,12 @@ public class LoginUi extends Composite implements ChangeListener, HistoryListene
 		} else if (uiType == LOGIN_VERTICAL) {
 		  // TODO
 		}
-		return s;
+		
+		// create digest of password, before sending it to the server
+		Sha1 sha = new Sha1();
+		String hash = sha.b64_sha1(s);
+		
+    return hash;
 	}
 
 	public void eraseCredentials() {
