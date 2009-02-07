@@ -170,11 +170,6 @@ public class LoginUi extends Composite implements ChangeListener, HistoryListene
     return hash;
 	}
 
-	public void eraseCredentials() {
-		// TODO - after login, erase the credentials in the login widget
-	  // Leave no traces behind to sniff
-	}
-	
 	private void drawCreateAccount() {
 	  CreateUserAccount createUserAccount = new CreateUserAccount();
 	  createUserAccount.setAnimationEnabled(true);
@@ -252,10 +247,14 @@ public class LoginUi extends Composite implements ChangeListener, HistoryListene
       drawCreateAccount();
       
     } else if (historyToken.equals("account_ForgotPassword")) {
-      // TODO
-      Window.alert("fogot");
+      fireChange(EventManager.FORGOT_PASSWORD);
       
-    }
+    } else if (historyToken.equals("account_Logout")) {
+      fireChange(EventManager.LOGOUT);
+      
+    } else if (historyToken.equals("account_Profile")) {
+      fireChange(EventManager.PROFILE);
+    } 
     
   }
 

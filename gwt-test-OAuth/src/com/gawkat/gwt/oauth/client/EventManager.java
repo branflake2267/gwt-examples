@@ -28,4 +28,6 @@ public class EventManager {
   // a new user was created
   final public static int NEW_USER_CREATED = 6;
   
+  // show account profile
+  final public static int PROFILE = 7;
 }
