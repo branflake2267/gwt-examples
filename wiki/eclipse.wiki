@@ -102,7 +102,11 @@ sudo svnadmin create /home/svn/myproject
  TODO 
 
 = Trouble Shooting =
- TODO
+
+== Project Build Error ==
+ If you compiled your project and you get an rpc error, you may want to clean your project. This will clean and build your compiled classes. > bin folder
+ * Goto Main Menu > Project > Clean 
+
 == Java Heap Size / JVM Memory ==
  If you get a java heap size error you will need to incease it or rewrite your application to use less. 
  * Remember to close JDBC statements
