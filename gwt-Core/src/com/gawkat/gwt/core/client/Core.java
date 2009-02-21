@@ -2,12 +2,12 @@ package com.gawkat.gwt.core.client;
 
 import java.util.HashMap;
 
-import com.gawkat.gwt.oauth.client.EventManager;
-import com.gawkat.gwt.oauth.client.SessionManager;
-import com.gawkat.gwt.oauth.client.account.AccountManagementNavigation;
-import com.gawkat.gwt.oauth.client.global.QueryString;
-import com.gawkat.gwt.oauth.client.global.QueryStringData;
-import com.gawkat.gwt.oauth.client.ui.LoginUi;
+import com.gawkat.gwt.system.client.EventManager;
+import com.gawkat.gwt.system.client.SessionManager;
+import com.gawkat.gwt.system.client.account.AccountManagementNavigation;
+import com.gawkat.gwt.system.client.global.QueryString;
+import com.gawkat.gwt.system.client.global.QueryStringData;
+import com.gawkat.gwt.system.client.ui.LoginUi;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
