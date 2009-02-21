@@ -6,11 +6,11 @@ package com.gawkat.gwt.oauth.server.db;
  * @author branflake2267
  *
  */
-public class Db_ConnData {
+public class ConnData {
 
 	// what server/computer is the database on?
-	public String host;
-	public int port;
+	public String host = null;
+	public int port = 0;
 	
 	// whatis the jdbc driver you are using
 	// mysql: com.mysql.jdbc.Driver
@@ -19,11 +19,11 @@ public class Db_ConnData {
 	public String driver;
 	
 	// credentials
-	public String username;
-	public String password;
+	public String username = null;
+	public String password = null;
 	
 	// database to use
-	public String database;
+	public String database = null;
 	
 	/**
 	 * get connection url

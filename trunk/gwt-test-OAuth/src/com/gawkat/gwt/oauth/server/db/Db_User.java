@@ -61,11 +61,12 @@ public class Db_User extends Db_Conn {
       accept = 1;
     }
     
-    String sql = "INSERT INTO `user` SET " +
-    		"ConsumerKey='" + consumerKey + "', " +
-    		"ConsumerSecret='" + consumerSecret + "', " +
+    String sql = "INSERT INTO `thing` SET " +
+    		"ThingTypeId='2', " +
+    		"`Key`='" + consumerKey + "', " +
+    		"Secret='" + consumerSecret + "', " +
     		"AcceptTerms='" + accept + "', " +
-    		"DateCreated=UNIX_TIMESTAMP(NOW());";
+    		"DateCreated=NOW();";
     
     System.out.println("sql: " + sql);
     
@@ -124,15 +125,17 @@ public class Db_User extends Db_Conn {
   
     String sql = "";
     if (1 == 1) { // just key
-      sql = "SELECT UserId FROM `user` " +
+      sql = "SELECT ThingId FROM `thing` " +
       "WHERE " +
-      "(ConsumerKey='" + userConsumerKey + "');";
+      "(ThingTypeId='2') AND " +
+      "(`Key`='" + userConsumerKey + "');";
       
     } else if (2 == 3) { // key and secret
-      sql = "SELECT UserId FROM `user` " +
+      sql = "SELECT ThingId FROM `thing` " +
       "WHERE " +
-      "(ConsumerKey='" + userConsumerKey + "') AND " +
-      "(ConsumerSecret='" + userConsumerSecret + "');";
+      "(ThingTypeId='2') AND " +
+      "(`Key`='" + userConsumerKey + "') AND " +
+      "(Secret='" + userConsumerSecret + "');";
      }
 
     System.out.println("query: " + sql);
