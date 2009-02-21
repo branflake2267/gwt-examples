@@ -1,6 +1,6 @@
 package com.gawkat.gwt.oauth.client.oauth;
 
-import com.gawkat.gwt.oauth.client.oauth.Sha1;
+import com.gawkat.gwt.system.client.oauth.Sha1;
 
 
 
