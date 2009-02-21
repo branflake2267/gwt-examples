@@ -1,6 +1,6 @@
 <module>
 
-      <!-- Top Level project - user management system using oAuth     -->
+      <!-- Top Level project - user management system using Oauth     -->
 	  <!-- refer to gwt-Core also!!!                                  -->
 	 
 	  <!-- Inherit the core Web Toolkit stuff.                        -->
@@ -15,14 +15,14 @@
 
       <!-- Specify the app entry point class.                         -->
       <!-- This is becoming a utility module -->
-      <!-- <entry-point class='com.gawkat.gwt.oauth.client.OAuth'/>   -->
+      <!-- <entry-point class='com.gawkat.gwt.system.client.System'/>   -->
     
       <!-- Specify the application specific style sheet.              -->
-      <stylesheet src='OAuth.css' />
+      <stylesheet src='System.css' />
       
 
 	  <!-- servlet context - points to the class that the rpc request goes to     -->
-	  <servlet path="/rpcServiceAccounts" class="com.gawkat.gwt.oauth.server.RpcServiceImpl" />
+	  <servlet path="/rpcServiceAccounts" class="com.gawkat.gwt.system.server.RpcServiceImpl" />
 	
 	
 </module>
