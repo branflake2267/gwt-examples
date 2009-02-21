@@ -4,7 +4,7 @@
       
 
       <!-- Other module inherits                                      -->
-	  <inherits name='com.gawkat.gwt.oauth.OAuth' />
+	  <inherits name='com.gawkat.gwt.system.System' />
 	  
 
       <!-- Specify the app entry point class.                         -->

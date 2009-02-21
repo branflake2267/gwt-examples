@@ -5,6 +5,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/opt/google/gwt/gwt-linux-1.5.3/gwt-user.jar"/>
 	<classpathentry kind="var" path="JUNIT_HOME/junit.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/gwt-OAuth"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/gwt-System"/>
+	<classpathentry kind="lib" path="/gwt-System/src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
