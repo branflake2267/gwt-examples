@@ -668,5 +668,5 @@ public static native String getUserAgent() /*-{
  * 1. Add project to build path. click on project > build path > projects > add (project)
  * 2. Add source code folder. click on project > build path > libraries > add class folder > add the projects class folder. !!!! this is important to do and the most frustrating to remember !!!
  * 3. Add project inherits in project.gwt.xml file. Edit file add >  <inherits name='com.gawkat.gwt.system.System' />
- * 4. remove parents project entry point, you will not need two entry points. Think of it like this, both projects xml files will be parse, and added together. So remove duplicate items. 
- * 5. check my example out gwt-Core Top level proejct and gwt-System, included project in gwt-Core.
+ * 4. Remove parents project entry point, you will not need two entry points. Think of it like this, both projects xml files will be parsed, and added together. So remove duplicate items. 
+ * 5. Check my example out gwt-Core Top level proejct and gwt-System, included project in gwt-Core.
