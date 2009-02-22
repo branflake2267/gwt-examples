@@ -1,7 +1,0 @@
-#!/bin/sh
-OAUTH=`/home/branflake2267/workspace/gwt-OAuth/src:/home/branflake2267/workspace/gwt-OAuth/bin`;
-APPDIR=`dirname $0`;
-java  -Xmx256M -cp "$APPDIR/src:$APPDIR/bin:/opt/google/gwt/gwt-linux-1.5.3/gwt-user.jar:/opt/google/gwt/gwt-linux-1.5.3/gwt-dev-linux.jar:$OAUTH" com.google.gwt.dev.GWTCompiler -out "$APPDIR/www" "$@" com.gawkat.gwt.core.Core;
-
-
-
