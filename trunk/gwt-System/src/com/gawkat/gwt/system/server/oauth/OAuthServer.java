@@ -9,7 +9,6 @@ import java.util.UUID;
 import com.gawkat.gwt.system.client.account.UserData;
 import com.gawkat.gwt.system.client.oauth.OAuthTokenData;
 import com.gawkat.gwt.system.server.db.Db_Conn;
-import com.mysql.jdbc.EscapeTokenizer;
 
 public class OAuthServer extends Db_Conn {
 
