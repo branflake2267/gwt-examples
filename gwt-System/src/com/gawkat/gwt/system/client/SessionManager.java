@@ -1,7 +1,6 @@
 package com.gawkat.gwt.system.client;
 
 import com.gawkat.gwt.system.client.oauth.OAuthTokenData;
-import com.gawkat.gwt.system.client.oauth.SessionData;
 import com.gawkat.gwt.system.client.rpc.Rpc;
 import com.gawkat.gwt.system.client.rpc.RpcServiceAsync;
 import com.gawkat.gwt.system.client.ui.LoginUi;
@@ -68,7 +67,7 @@ public class SessionManager extends Composite implements ChangeListener {
 
   /**
    * !!!!THIS HAS TO BE DONE FIRST!!!! set the login div tag in html page
-   * 
+   *  
    * @param loginUiDiv
    */
   public void setLoginUiDiv(String loginUiDiv, int uiType) {

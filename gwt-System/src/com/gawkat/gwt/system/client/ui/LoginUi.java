@@ -6,7 +6,6 @@ import com.gawkat.gwt.system.client.oauth.OAuthTokenData;
 import com.gawkat.gwt.system.client.oauth.Sha1;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ChangeListenerCollection;
 import com.google.gwt.user.client.ui.Composite;

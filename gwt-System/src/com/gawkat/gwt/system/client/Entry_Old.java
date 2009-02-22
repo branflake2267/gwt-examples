@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class OAuth implements EntryPoint, ClickListener, ChangeListener {
+public class Entry_Old implements EntryPoint, ClickListener, ChangeListener {
 
 	// web site consumer key
 	private String appConsumerKey = "Gawkat.com_oAuthApp_01";
