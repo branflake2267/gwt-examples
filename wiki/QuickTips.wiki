@@ -851,7 +851,9 @@ public class Page extends Composite implements ClickListener, ChangeListener {
       if (i == lastPage + 1) {
         break;
       }
-      drawPageButton(pNextPages, i);
+      if (totalPages > i) {
+        drawPageButton(pNextPages, i);
+      }
     }
   }
   
@@ -977,6 +979,7 @@ public class Page extends Composite implements ClickListener, ChangeListener {
       setLimit();
     }
   }
+  
 }
 }}}
 
