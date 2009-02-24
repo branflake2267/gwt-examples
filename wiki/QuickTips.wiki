@@ -979,7 +979,9 @@ public class Page extends Composite implements ClickListener, ChangeListener {
   }
 }
 }}}
+
  Paging Button
+{{{
 public class PageButton extends Composite implements ClickListener {
 
   private ChangeListenerCollection changeListeners = null;
@@ -1016,6 +1018,4 @@ public class PageButton extends Composite implements ClickListener {
    }
   }
 }
-{{{
-
 }}}
