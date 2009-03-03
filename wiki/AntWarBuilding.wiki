@@ -1,4 +1,12 @@
 #summary About building your gwt 1.6+ projects
 
 = Project Building in GWT 1.6+ =
- Coming soon.
+ You can quickly build your application for your production server with Ant.
+
+ #. Project > right click build.xml > Run As > Select 'External Tools Configurations' 
+ #. Look at > Targets (tab) - compare that with the build.xml editor window
+ #. Select Run
+
+ OR 
+ 
+ #. Play button arrow with toolbox in graphics buttons menu > External Tools configurations (for First Time) | Select Project
