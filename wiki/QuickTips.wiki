@@ -238,7 +238,7 @@ public class CalculatorWidget extends Composite implements ClickListener, Keyboa
  * @param value - what is the value's index your looking for
  * @return
  */
-public int getListBoxIndexByValue(ListBox lb, String value) {
+public static int getListBoxValuesIndex(ListBox lb, String value) {
   if (value == null) {
     return 0;
   }
