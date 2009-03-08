@@ -252,6 +252,18 @@ public static int getListBoxValuesIndex(ListBox lb, String value) {
 }
 }}}
 
+= Get Listbox Selected Value (int) =
+ Get a listbox's selected value
+{{{
+  public static int getSelectedValue(ListBox lb) {
+    int sel = lb.getSelectedIndex();
+    int r = 0;
+    if (sel > 0) {
+      r = Integer.parseInt(lb.getValue(sel));
+    }
+    return r;
+  }
+}}}
 = Get Widget(s) Data In a Panel =
  Getting Widgets in a panel is a nice way to interact with widgets you make. You can add several widgets into a panel, and get all of them by looping through the widgets in the panel. I make a specific panel to put all my reminder widgets in. Then I gather data and use it elsewhere.
 {{{
