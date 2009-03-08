@@ -233,23 +233,22 @@ public class CalculatorWidget extends Composite implements ClickListener, Keyboa
 {{{
 /**
  * get list box value's index
- * @param lb ListBox - what listbox are you looking for value's index
- * @param SelectedValue - what is the value's index your looking for
+ *
+ * @param lb - what listbox are you looking for value's index
+ * @param value - what is the value's index your looking for
  * @return
  */
-public int getListBoxIndexByValue(ListBox lb, String SelectedValue) {
-	
-	if (SelectedValue == null) {
-		return 0;
-	}
-	
-	for (int i = 0; i < lb.getItemCount(); i++) {
-		String CompareValue = lb.getValue(i);
-		if (SelectedValue.equals(CompareValue)) {
-			return i;
-		}
-	}
-	return 0;
+public int getListBoxIndexByValue(ListBox lb, String value) {
+  if (value == null) {
+    return 0;
+  }
+  for (int i = 0; i < lb.getItemCount(); i++) {
+    String CompareValue = lb.getValue(i);
+    if (value.equals(CompareValue)) {
+      return i;
+    }
+  }
+  return 0;
 }
 }}}
 
