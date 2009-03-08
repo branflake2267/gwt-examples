@@ -255,7 +255,7 @@ public static int getListBoxValuesIndex(ListBox lb, String value) {
 = Get Listbox Selected Value (int) =
  Get a listbox's selected value
 {{{
-  public static int getSelectedValue(ListBox lb) {
+  public static int getListBoxSelectedValue(ListBox lb) {
     int sel = lb.getSelectedIndex();
     int r = 0;
     if (sel > 0) {
