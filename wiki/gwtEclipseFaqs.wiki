@@ -100,11 +100,11 @@ echo $GWT_HOME
   # Add this
 {{{
 # restart user session for this to take effect
-GWT_EXTERNAL_BROWSER="/usr/local/firefox32/firefox"
+GWT_EXTERNAL_BROWSER="/usr/bin/firefox"
 }}}
   # or add it to ~/.profile (user home directory)
 {{{
-export GWT_EXTERNAL_BROWSER="/usr/local/firefox32/firefox"
+export GWT_EXTERNAL_BROWSER="/usr/bin/firefox"
 }}}
   # Test it in bash/shell
 {{{
