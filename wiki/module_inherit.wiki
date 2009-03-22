@@ -7,3 +7,9 @@
  #. put this in the project.gwt.xml file -> <inherits name='com.gawkat.gwt.project'/>
  #. goto debug configurations > project > classpath > user entries > add project
  #. then add src folder > goto Advanced > add folder > select src folder
+
+
+= TODO =
+ * how to configure ant to copy other module classes to main module war directory
+ * how to configure ant to compile classes and move them to main module
+ * how to configure ant to compile sub module and move it to the main module war directory
