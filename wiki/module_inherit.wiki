@@ -2,6 +2,6 @@
 
 = Eclipse Setup to Inherit Other Source modules =
 
- #. Right click project > Libraries > Add class folder > Other projects class path to ./src
+ #. Right click project > select properties > Libraries > Add class folder > Other projects class path to ./src
  #. put this in the project.gwt.xml file -> <inherits name='com.gawkat.gwt.project'/>
  #. goto Projects Debug configurations > Add other project to classpath
