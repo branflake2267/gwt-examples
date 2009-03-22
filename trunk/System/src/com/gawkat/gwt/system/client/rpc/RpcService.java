@@ -5,7 +5,7 @@ import com.gawkat.gwt.system.client.oauth.OAuthTokenData;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-@RemoteServiceRelativePath("rpcSystem")
+@RemoteServiceRelativePath("system")
 public interface RpcService extends RemoteService {
 
 	/**
