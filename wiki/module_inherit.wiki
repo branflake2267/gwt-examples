@@ -10,6 +10,7 @@
 
 
 = TODO =
+ * how to configure ant to add sub modules classpath to ant build system
  * how to configure ant to copy other module classes to main module war directory
  * how to configure ant to compile classes and move them to main module
  * how to configure ant to compile sub module and move it to the main module war directory
