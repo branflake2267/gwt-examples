@@ -5,4 +5,4 @@
  #. Right click project > select properties > Libraries tab > Add other projects ./src folder
  #. then goto Projects tab > Add other project
  #. put this in the project.gwt.xml file -> <inherits name='com.gawkat.gwt.project'/>
- 
+ #. goto debug configurations > project > classpath > user entries > add project and add project src folder
