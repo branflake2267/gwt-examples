@@ -44,7 +44,7 @@
         <path refid="project.class.path"/>
       	
       	<!-- ~~~~~~~~~~~~~~~~~~~~~  system source include - does this work??? not yet!!! ~~~~~~~~~~~~~~~~~~~~~ -->
-      	<path refid="system.class.path"/>
+      	<!-- <path refid="system.class.path"/> -->
       	
       </classpath>
       <!-- add jvmarg -Xss16M or similar if you see a StackOverflowError -->
@@ -58,11 +58,11 @@
     <java failonerror="true" fork="true" classname="com.google.gwt.dev.HostedMode">
       <classpath>
         <pathelement location="src"/>
+        <path refid="project.class.path"/>
       	
       	<!-- ~~~~~~~~~~~~~~~~~~~~~  system source include - does this work??? not yet!!! ~~~~~~~~~~~~~~~~~~~~~ -->
-      	<path refid="system.class.path"/>
+      	<!-- <path refid="system.class.path"/> -->
       	
-        <path refid="project.class.path"/>
       </classpath>
       <jvmarg value="-Xmx256M"/>
       <arg value="-startupUrl"/>
