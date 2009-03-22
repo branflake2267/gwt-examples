@@ -1,4 +1,4 @@
-#summary including other modules, inheriting other modules
+#summary including other eclipse source modules, inheriting other eclipse source modules
 
 = Eclipse Setup to Inherit Other Source modules =
 
