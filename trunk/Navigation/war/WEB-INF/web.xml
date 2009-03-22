@@ -10,6 +10,15 @@
     <welcome-file>Navigation.html</welcome-file>
   </welcome-file-list>
   
+    <!-- Servlets -->
+  <servlet>
+    <servlet-name>servletRpc</servlet-name>
+    <servlet-class>com.gawkat.gwt.system.server.RpcServiceImpl</servlet-class>
+  </servlet>
   
+  <servlet-mapping>
+    <servlet-name>servletRpc</servlet-name>
+    <url-pattern>/system/system</url-pattern>
+  </servlet-mapping>
 
 </web-app>

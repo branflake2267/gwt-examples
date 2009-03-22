@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project name="Navigation" default="build" basedir=".">
+	
   <!-- Configure path to GWT SDK -->
   <property name="gwt.sdk" location="/opt/google/gwt/gwt-linux-1.6.2" />
 
+  <!-- Trying to include sub module into this main module -->
+  <path id="system.class.path">
+    <fileset dir="../gwt-System/src">
+       <include name="**/*.java"/>
+    </fileset>
+  </path> 
+	
   <path id="project.class.path">
     <pathelement location="war/WEB-INF/classes"/>
     <pathelement location="${gwt.sdk}/gwt-user.jar"/>
@@ -11,18 +19,17 @@
     <fileset dir="war/WEB-INF/lib" includes="**/*.jar"/>
   </path>
 
+	
   <target name="libs" description="Copy libs to WEB-INF/lib">
     <mkdir dir="war/WEB-INF/lib" />
     <copy todir="war/WEB-INF/lib" file="${gwt.sdk}/gwt-servlet.jar" />
     <!-- Add any additional server libs that need to be copied -->
   </target>
 
+	
   <target name="javac" depends="libs" description="Compile java source">
     <mkdir dir="war/WEB-INF/classes"/>
-    <javac srcdir="src" includes="**" encoding="utf-8"
-        destdir="war/WEB-INF/classes"
-        source="1.5" target="1.5" nowarn="true"
-        debug="true" debuglevel="lines,vars,source">
+    <javac srcdir="src" includes="**" encoding="utf-8" destdir="war/WEB-INF/classes" source="1.5" target="1.5" nowarn="true" debug="true" debuglevel="lines,vars,source">    	
       <classpath refid="project.class.path"/>
     </javac>
     <copy todir="war/WEB-INF/classes">
@@ -35,6 +42,10 @@
       <classpath>
         <pathelement location="src"/>
         <path refid="project.class.path"/>
+      	
+      	<!-- ~~~~~~~~~~~~~~~~~~~~~  system source include - does this work??? not yet!!! ~~~~~~~~~~~~~~~~~~~~~ -->
+      	<path refid="system.class.path"/>
+      	
       </classpath>
       <!-- add jvmarg -Xss16M or similar if you see a StackOverflowError -->
       <jvmarg value="-Xmx256M"/>
@@ -47,6 +58,10 @@
     <java failonerror="true" fork="true" classname="com.google.gwt.dev.HostedMode">
       <classpath>
         <pathelement location="src"/>
+      	
+      	<!-- ~~~~~~~~~~~~~~~~~~~~~  system source include - does this work??? not yet!!! ~~~~~~~~~~~~~~~~~~~~~ -->
+      	<path refid="system.class.path"/>
+      	
         <path refid="project.class.path"/>
       </classpath>
       <jvmarg value="-Xmx256M"/>
@@ -57,6 +72,7 @@
     </java>
   </target>
 
+	
   <target name="build" depends="gwtc" description="Build this project" />
 
   <target name="war" depends="build" description="Create a war file">
