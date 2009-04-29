@@ -24,7 +24,7 @@
  # auto suggestion to fixing, like a object type rename objecta ob = getObjectB();
  # Marking //TODO tasktodo is great. marks a link on the right side too.
  # when entering in "string (hit enter)" it will concat the string onto the next line. it will auto add " + at the end of the line and start qoutes on next.
- # when highlighting parentheses across strings \[(\]((( ))))\[)\]. it highlights the parentheses across strings like var += "[(](("; var += "))[)]"; This is really cool in mysql query building.
+ # when highlighting parentheses across strings {(}((( )))){)}. it highlights the parentheses across strings like var += "{(}(("; var += ")){)}"; This is really cool in mysql query building.
 
 = Other Things Related =
 
