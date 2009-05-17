@@ -4,6 +4,7 @@
  This is me trying to find a consistent strategy for application navigation and interaction.
 
 = Here is how I see it =
+ This could use some adjusting to transpose it into the new event system. Although the point is the same.
 [http://gwt-examples.googlecode.com/files/GWT_Application_Navigation.png]
 
 = Personal Notes =
