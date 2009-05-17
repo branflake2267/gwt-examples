@@ -1,0 +1,17 @@
+.combine {
+  border: 1px solid #66B3FF;
+  margin: 15px;
+  padding: 20px;
+}
+
+.left {
+  border: 1px solid #66B3FF;
+  width: 150px;
+  height: 150px;
+}
+
+.right {
+  border: 1px solid #66B3FF;
+  width: 150px;
+  height: 150px;
+}
