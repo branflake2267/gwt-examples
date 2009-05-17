@@ -75,7 +75,7 @@ public class Combine extends Composite implements ClickHandler, ChangeHandler {
     
     //System.out.println("click");
 
-    // click handlers send int he clicks on the left and right widgets.
+    // click handlers send in the clicks on the left and right widgets to here
     
   }
 
