@@ -7,7 +7,6 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.users.User;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
@@ -58,6 +57,7 @@ public class MathData implements IsSerializable {
   @Persistent
   private int theAnswer;
 
+  // TODO - is there a way to keep this only on the server side, b/c gwt won't compile this for client side
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
   private Key key;
