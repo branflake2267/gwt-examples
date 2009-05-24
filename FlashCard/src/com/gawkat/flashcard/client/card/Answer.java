@@ -41,6 +41,10 @@ public class Answer extends Composite implements HasChangeHandlers, ClickHandler
   
   public Answer() {
     
+    bAnswer.setTitle("Click this or hit the `Enter` key to submit your answer.");
+    bHint.setTitle("This will give you the answer.");
+    tbAnswer.setTitle("Enter your answer here.");
+    
     HorizontalPanel hp = new HorizontalPanel();
     hp.add(tbAnswer);
     hp.add(new HTML("&nbsp;"));
@@ -53,7 +57,7 @@ public class Answer extends Composite implements HasChangeHandlers, ClickHandler
     initWidget(pWidget);
     
     pWidget.setStyleName("answer");
-    tbAnswer.setWidth("30px");
+    tbAnswer.addStyleName("tbanswer");
     
     bAnswer.addClickHandler(this);
     bHint.addClickHandler(this);

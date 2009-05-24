@@ -41,7 +41,7 @@ public class Navigation extends Composite {
     initWidget(pWidget);
     
     //style
-    pWidget.setCellHorizontalAlignment(wMenu, HorizontalPanel.ALIGN_CENTER);
+    pWidget.setCellHorizontalAlignment(wMenu, HorizontalPanel.ALIGN_RIGHT);
     pWidget.setCellHorizontalAlignment(wCard, HorizontalPanel.ALIGN_CENTER);
     pWidget.setCellHorizontalAlignment(wAnswer, HorizontalPanel.ALIGN_CENTER);
     pWidget.setStyleName("navigation");
