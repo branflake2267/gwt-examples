@@ -1,6 +1,7 @@
 package com.gawkat.flashcard.client.rpc;
 
 import com.gawkat.flashcard.client.card.MathData;
+import com.gawkat.flashcard.client.login.LoginData;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -11,5 +12,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 public interface RpcService extends RemoteService {
   
   public MathData getMathData(MathData mathData);
+ 
+  public LoginData getLoginData(String requestUri);
   
 }

@@ -2,9 +2,9 @@ package com.gawkat.flashcard.server;
 
 import com.gawkat.flashcard.client.card.MathData;
 
-public class DB_MathData {
+public class MathDataServer {
 
-  public DB_MathData() {
+  public MathDataServer() {
   }
   
   public MathData getMathData(MathData mathData) {

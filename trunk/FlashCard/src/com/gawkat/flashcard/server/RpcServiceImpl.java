@@ -1,6 +1,7 @@
 package com.gawkat.flashcard.server;
 
 import com.gawkat.flashcard.client.card.MathData;
+import com.gawkat.flashcard.client.login.LoginData;
 import com.gawkat.flashcard.client.rpc.RpcService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -11,8 +12,13 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
 
   public MathData getMathData(MathData mathData) {
-    DB_MathData process = new DB_MathData();
+    MathDataServer process = new MathDataServer();
     return process.getMathData(mathData);
+  }
+  
+  public LoginData getLoginData(String requestUri) {
+    LoginServer login = new LoginServer();
+    return login.getLoginData(requestUri);
   }
   
 }

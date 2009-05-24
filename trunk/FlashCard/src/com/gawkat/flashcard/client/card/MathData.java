@@ -104,7 +104,7 @@ public class MathData implements IsSerializable {
   }
   
   /**
-   * save to datastore
+   * save to jdo datastore
    */
   public void save() {
   
