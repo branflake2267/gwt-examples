@@ -43,6 +43,8 @@ public class Menu extends Composite {
 
       }
     });
+   
+    pWidget.setStyleName("menu");
     
   }
   

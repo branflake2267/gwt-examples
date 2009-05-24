@@ -52,12 +52,14 @@ public class Answer extends Composite implements HasChangeHandlers, ClickHandler
     
     initWidget(pWidget);
     
+    pWidget.setStyleName("answer");
     tbAnswer.setWidth("30px");
     
     bAnswer.addClickHandler(this);
     bHint.addClickHandler(this);
     tbAnswer.addKeyDownHandler(this);
     tbAnswer.addKeyPressHandler(this);
+    
   }
   
   public void setState(boolean b) {

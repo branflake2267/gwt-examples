@@ -32,8 +32,11 @@ public class Notify extends Composite {
     initWidget(pWidget);
     
     pNotice.setWidth("100%");
-    //pWidget.setCellHorizontalAlignment(hp, HorizontalPanel.ALIGN_CENTER);
-    hp.setCellHorizontalAlignment(pNotice, HorizontalPanel.ALIGN_CENTER);
+    pWidget.setCellHorizontalAlignment(hp, HorizontalPanel.ALIGN_CENTER);
+    //hp.setCellHorizontalAlignment(pNotice, HorizontalPanel.ALIGN_CENTER);
+    
+    // test
+    pWidget.addStyleName("notify");
   }
   
   public void drawNotice(int type) {
