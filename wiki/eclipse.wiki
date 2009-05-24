@@ -41,7 +41,7 @@
  * Using subclipse takes less steps to install than polarions team provider connector
 
 == SVN From Polarion ==
- Every upgrade of ecplipse or Polarions Team Provider has corrupted my eclipse install to the point I have to reinstall eclipse. I have had to do it so many times, I finally just gave Subclipse a try, and it works great. In fact its faster loading the svn repository than polarion's plugin. 
+ Every upgrade of Eclipse or Polarion's Team Provider plugin has corrupted my eclipse install to the point I have to reinstall eclipse. I have had to do it so many times, I finally just gave Subclipse a try, and it works great. In fact its faster loading the svn repository than polarion's plugin. 
 
 == Create SVN Repository ==
  
