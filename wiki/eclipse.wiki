@@ -35,17 +35,11 @@
  * I recommend starting with *Eclipse for Java Developers EE* download. You can install more features later that you may desire with software updates.
 
 = SVN - Subversion =
- * 1. Help > Software Updates > Available Software > Ganymede > Collaboration Tools > Subversion SVN Team Provider
- * 2. Help > Software Updates > Available Software > Add Site > [http://www.polarion.org/projects/subversive/download/eclipse/2.0/ganymede-site/ SVN Connectors]
- * 3. Update Site Polarion.org > (Check) Subversion SVN Connectors, (Check) SVNkit 1.2.0
- * 4. Window > Prefrences > (type filter SVN) > Team > SVN > SVN Connector > *Select SVN Kit 1.2.0* - A connector method has to be selected to connect to a SVN repository.
- * [http://www.eclipse.org/subversive/downloads.php] Eclipse reference
-== Share Project ==
- Share your eclipse GWT project with multiple computers and developers.
- * 1. (Right Click on Project Name) > Team > Share Project > (follow steps)
-
-= SVN Subclipse =
+ * Install Subclipse
  * [http://subclipse.tigris.org/servlets/ProjectProcess?pageID=p4wYuA Subclipse]
+
+== SVN From Polarion ==
+ Every upgrade of ecplipse or Polarions Team Provider has corrupted my eclipse install to the point I have to reinstall eclipse. I have had to do it so many times, I finally just gave Subclipse a try, and it works great. In fact its faster loading the svn repository than polarion's plugin. 
 
 == Import Project From Respository ==
  * 1. File > New Other > (type filter SVN) > SVN Projects From SVN > (Enter URL), (Enter Username), (Enter Password)
