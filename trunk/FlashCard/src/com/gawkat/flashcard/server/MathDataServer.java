@@ -24,9 +24,9 @@ public class MathDataServer {
       mathData = getEasy(mathData);
     }
     
-    // remember the last values the user pulled
+    // TODO remember the last values the user pulled
     // this will only save if a user is logged in
-    mathData.save();
+    //mathData.save();
     
     return mathData;
   }
