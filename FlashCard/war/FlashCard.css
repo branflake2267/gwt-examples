@@ -7,6 +7,28 @@ body {
   border: 1px solid #66B3FF;
 }
 
+.menu {
+  padding: 4px;
+}
+
+.card {
+  padding: 4px;
+}
+
+.answer {
+  padding: 4px;
+}
+  .tbanswer {
+    width: 30px;
+  }
+  .tbanswer:focus {
+    /*border-color: #FFCC33;*/
+  }
+
+.notify {
+  padding: 4px;
+}
+
 .test1 {
-  border: 1px solid #66B3FF;
+  border: 1px solid #FFB3FF;
 }
