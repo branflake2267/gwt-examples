@@ -25,8 +25,9 @@ public class MathDataServer {
       mathData = getEasy(mathData);
     }
     
+    // save last position  
     MathDataJdo mdj = new MathDataJdo();
-    mdj.saveMathData(mathData);
+    mdj.saveMathDataJdo(mathData);
     
     return mathData;
   }
@@ -34,15 +35,20 @@ public class MathDataServer {
   private MathData getStart() {
 
     // is the user logged in?
-    User user = null;
-    if (login.getLoginData().isLoggedIn() == true) {
-      user = login.getUser();
+    MathData mathData = null;
+    if (login.getLoginData().isLoggedIn() == true) { // logged in, get last saved position
+      
+      MathDataJdo mdj = new MathDataJdo();
+      mathData = mdj.getMathDataJdo();
+      
+      if (mathData == null) {
+        mathData = new MathData();
+      }
+      
+    } else { // not logged in, start fresh from 0 * 0
+      mathData = new MathData(); 
     }
-    
-    // TODO - if the user is logged in, see if there is a previous mathData to use
-    
-    MathData mathData = new MathData();
-    
+
     return mathData;
   }
   
