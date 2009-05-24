@@ -24,6 +24,7 @@ public class Card extends Composite {
     
     initWidget(pWidget);
   
+    pWidget.setStyleName("card");
   }
 
   private void setA(int a) {

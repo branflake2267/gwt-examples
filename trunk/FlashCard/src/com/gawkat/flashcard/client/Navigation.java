@@ -45,6 +45,7 @@ public class Navigation extends Composite {
     pWidget.setCellHorizontalAlignment(wCard, HorizontalPanel.ALIGN_CENTER);
     pWidget.setCellHorizontalAlignment(wAnswer, HorizontalPanel.ALIGN_CENTER);
     pWidget.setStyleName("navigation");
+    wNotify.setWidth("100%");
     
     rpc = Rpc.init();
     
