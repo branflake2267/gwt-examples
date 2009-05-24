@@ -6,7 +6,11 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+// TODO - this can't be compiled, can I skip it for client side compiling?
+//@GWT.compilerSkip.ServersideOnly
 import com.google.appengine.api.datastore.Key;
+
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
@@ -57,10 +61,10 @@ public class MathData implements IsSerializable {
   @Persistent
   private int theAnswer;
 
-  // TODO - is there a way to keep this only on the server side, b/c gwt won't compile this for client side
+  // TODO - compiler won't compile this import - transient should skip import too
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-  private Key key;
+  transient private Key key;
 
 
   /**
