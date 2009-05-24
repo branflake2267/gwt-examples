@@ -44,6 +44,9 @@
  Share your eclipse GWT project with multiple computers and developers.
  * 1. (Right Click on Project Name) > Team > Share Project > (follow steps)
 
+= SVN Subclipse =
+ * [http://subclipse.tigris.org/servlets/ProjectProcess?pageID=p4wYuA Subclipse]
+
 == Import Project From Respository ==
  * 1. File > New Other > (type filter SVN) > SVN Projects From SVN > (Enter URL), (Enter Username), (Enter Password)
  * URLs: https://gwt-examples.googlecode.com/svn/trunk/ username:googleAccount,  password:sourcePassword
