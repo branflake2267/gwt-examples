@@ -1,6 +1,11 @@
 package com.gawkat.flashcard.server.jdo;
 
 import javax.jdo.PersistenceManager;
+import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
 
 import com.gawkat.flashcard.client.card.MathData;
 import com.gawkat.flashcard.server.LoginServer;
@@ -9,12 +14,26 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.users.User;
 
+@PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class MathDataJdo {
   
+  @PrimaryKey
+  @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+  private Key key = null;
+    
+  @Persistent
+  private MathData mathData = null;
+  
+  /**
+   * constructor
+   */
+  public MathDataJdo() {
+  }
+   
   /**
    * save to jdo datastore
    */
-  public void saveMathData(MathData mathData) {
+  public void saveMathDataJdo(MathData mathData) {
 
     LoginServer login = new LoginServer();
     User user = login.getUser();
@@ -23,15 +42,16 @@ public class MathDataJdo {
     if (user == null) {
       return;
     }
-
+    
+    this.mathData = mathData;
+    
     // setup the primary key
-    Key key = KeyFactory.createKey(MathData.class.getSimpleName(), user.getEmail());
-    mathData.setKey(key);
+    key = KeyFactory.createKey(MathDataJdo.class.getSimpleName(), user.getEmail());
     
     // save the object to the store
     PersistenceManager pm = PMF.get().getPersistenceManager();
     try {
-      pm.makePersistent(mathData);
+      pm.makePersistent(this);
     } finally {
       pm.close();
     }
@@ -44,7 +64,7 @@ public class MathDataJdo {
    * @param user
    * @return
    */
-  public MathData getMathData() {
+  public MathData getMathDataJdo() {
     
     LoginServer login = new LoginServer();
     User user = login.getUser();
@@ -54,16 +74,20 @@ public class MathDataJdo {
     }
 
     // setup the primary key
-    Key key = KeyFactory.createKey(MathData.class.getSimpleName(), user.getEmail());
+    key = KeyFactory.createKey(MathDataJdo.class.getSimpleName(), user.getEmail());
 
     // save the object to the store
     PersistenceManager pm = PMF.get().getPersistenceManager();
     
     // query the mathData by key
-    MathData mathData = pm.getObjectById(MathData.class, key);
+    MathDataJdo mathDataJdo = pm.getObjectById(MathDataJdo.class, key);
     
     pm.close();
-   
+  
+    mathData = mathDataJdo.mathData;
+    
     return mathData;
   }
+  
+  
 }

@@ -1,15 +1,12 @@
 package com.gawkat.flashcard.client.card;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
 
 // TODO - this can't be compiled, can I skip it for client side compiling?
-//@GWT.compilerSkip.ServersideOnly
-import com.google.appengine.api.datastore.Key;
-
+// @GWT.compilerSkip.ServersideOnly
+//import com.google.appengine.api.datastore.Key;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
@@ -58,15 +55,20 @@ public class MathData implements IsSerializable {
   @Persistent
   private int b = 0;
   
-  @Persistent
   private int theAnswer;
 
-  // TODO - compiler won't compile this import - transient should skip import too
-  @PrimaryKey
-  @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-  transient private Key key;
 
+  // TODO - compiler won't compile this import - transient should skip import during compile
+  //@PrimaryKey
+  //@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+  //transient private Key key;
 
+  /**
+   * constructor
+   */
+  public MathData() {
+  }
+  
   /**
    * set data
    * 
@@ -95,10 +97,6 @@ public class MathData implements IsSerializable {
     this.a = a;
     this.operator = o;
     this.b = b;
-  }
-  
-  public void setKey(Key key) {
-    this.key = key;
   }
   
   public int getA() {
