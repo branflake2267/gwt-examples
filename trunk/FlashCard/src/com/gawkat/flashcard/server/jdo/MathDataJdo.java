@@ -3,6 +3,7 @@ package com.gawkat.flashcard.server.jdo;
 import javax.jdo.PersistenceManager;
 
 import com.gawkat.flashcard.client.card.MathData;
+import com.gawkat.flashcard.server.LoginServer;
 import com.gawkat.flashcard.server.PMF;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -13,8 +14,11 @@ public class MathDataJdo {
   /**
    * save to jdo datastore
    */
-  public void saveMathData(User user, MathData mathData) {
+  public void saveMathData(MathData mathData) {
 
+    LoginServer login = new LoginServer();
+    User user = login.getUser();
+    
     // only save if user exists
     if (user == null) {
       return;
@@ -40,7 +44,10 @@ public class MathDataJdo {
    * @param user
    * @return
    */
-  public MathData getMathData(User user) {
+  public MathData getMathData() {
+    
+    LoginServer login = new LoginServer();
+    User user = login.getUser();
     
     if (user == null) {
       return null;
