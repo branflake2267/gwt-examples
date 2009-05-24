@@ -1,6 +1,7 @@
 package com.gawkat.flashcard.server;
 
 import com.gawkat.flashcard.client.card.MathData;
+import com.gawkat.flashcard.server.jdo.MathDataJdo;
 import com.google.appengine.api.users.User;
 
 public class MathDataServer {
@@ -24,9 +25,8 @@ public class MathDataServer {
       mathData = getEasy(mathData);
     }
     
-    // TODO remember the last values the user pulled
-    // this will only save if a user is logged in
-    //mathData.save();
+    MathDataJdo mdj = new MathDataJdo();
+    mdj.saveMathData(mathData);
     
     return mathData;
   }
