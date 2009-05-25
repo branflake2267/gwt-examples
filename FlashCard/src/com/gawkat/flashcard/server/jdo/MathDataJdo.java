@@ -1,6 +1,7 @@
 package com.gawkat.flashcard.server.jdo;
 
 import javax.jdo.PersistenceManager;
+import javax.jdo.annotations.Embedded;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.NotPersistent;
@@ -22,7 +23,9 @@ public class MathDataJdo {
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
   private Key key;
  
-  @NotPersistent
+  // TODO I am not sure this will work sticking object  as persistent here. 
+  @Persistent
+  @Embedded
   private MathData mathData;
  
   @Persistent
@@ -95,9 +98,9 @@ public class MathDataJdo {
     if (mathDataJdo == null) {
       mathData = null;
     } else {
-      //if (mathDataJdo.mathData != null) {
-        //mathData = mathDataJdo.mathData.getMathData();
-      //}
+      if (mathDataJdo.mathData != null) {
+        mathData = mathDataJdo.mathData;
+      }
     }
     
     return mathData;
