@@ -13,8 +13,10 @@ public class MathDataServer {
   
   public MathData getMathData(MathData mathData) {
     
+    boolean skip = false;
     if (mathData == null) {
       mathData = getStart();
+      skip = true;
     }
  
     if (mathData.getDifficulty() == MathData.HARD) {
@@ -24,8 +26,12 @@ public class MathDataServer {
     } else { 
       mathData = getEasy(mathData);
     }
+ 
+    if (skip != true) {
+      save(mathData);
+      skip = false;
+    }
     
-    save(mathData);
     
     return mathData;
   }

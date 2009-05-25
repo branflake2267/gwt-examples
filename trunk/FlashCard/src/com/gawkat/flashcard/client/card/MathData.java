@@ -1,5 +1,7 @@
 package com.gawkat.flashcard.client.card;
 
+import javax.jdo.annotations.EmbeddedOnly;
+import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 // TODO - this can't be compiled, can I skip it for client side compiling?
@@ -8,7 +10,8 @@ import javax.jdo.annotations.Persistent;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-
+@PersistenceCapable
+@EmbeddedOnly
 public class MathData implements IsSerializable {
 
   // coming from client or heading back to client
