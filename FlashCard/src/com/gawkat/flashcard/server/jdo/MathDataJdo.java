@@ -100,8 +100,8 @@ public class MathDataJdo {
     if (mathDataJdo == null) {
       mathData = null;
     } else {
-      if (mathDataJdo.mathData != null) {
-        mathData = mathDataJdo.mathData;
+      if (mathDataJdo.getMathData() != null) {
+        mathData = mathDataJdo.getMathData();
       }
     }
     
@@ -118,6 +118,10 @@ public class MathDataJdo {
   
   public void setTesting(int testing)  {
     this.testing = testing;
+  }
+  
+  public MathData getMathData() {
+    return this.mathData;
   }
   
 }
