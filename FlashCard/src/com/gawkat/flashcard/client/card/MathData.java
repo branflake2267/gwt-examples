@@ -1,7 +1,5 @@
 package com.gawkat.flashcard.client.card;
 
-import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 // TODO - this can't be compiled, can I skip it for client side compiling?
@@ -10,7 +8,7 @@ import javax.jdo.annotations.Persistent;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-@PersistenceCapable(identityType = IdentityType.APPLICATION)
+
 public class MathData implements IsSerializable {
 
   // coming from client or heading back to client
@@ -27,7 +25,7 @@ public class MathData implements IsSerializable {
   public final static int EASY = 1;
   public final static int MEDIUM = 2;
   public final static int HARD = 3;
-  
+   
   // variables
   @Persistent
   private int difficulty = EASY;
@@ -43,26 +41,28 @@ public class MathData implements IsSerializable {
   
   @Persistent
   private int maxB = 11;
-  
-  private long answer = 0;
-  
+ 
   @Persistent
   private int a = 0;
   
-  @Persistent
+  @Persistent 
   private int operator = MULTIPLY;
   
   @Persistent
   private int b = 0;
   
+  private long answer = 0;
+  
   private int theAnswer;
 
 
   // TODO - compiler won't compile this import - transient should skip import during compile
-  //@PrimaryKey
-  //@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+  // I am using MathDataJdo to wrap this up on server side
+  // @--PrimaryKey
+  // @--Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
   //transient private Key key;
 
+  
   /**
    * constructor
    */
@@ -188,4 +188,31 @@ public class MathData implements IsSerializable {
     }
     return b;
   }
+  
+  public MathData getMathData() {
+    
+    MathData mathData = new MathData();
+    mathData.minA = minA;
+    mathData.maxA = maxA;
+    mathData.minB = minB;
+    mathData.maxB = maxB;
+    mathData.a = a;
+    mathData.operator = operator;
+    mathData.b = b;
+    
+    return mathData;
+  }
+  
+  public void setMathData(MathData mathData) {
+    
+    this.set(mathData.getDifficulty(), 
+        mathData.getMinA(), mathData.getMaxA(), 
+        mathData.getMinB(), mathData.getMaxB());
+    
+    this.setMath(mathData.getA(), mathData.getOperator(), 
+        mathData.getB());
+    
+  }
+  
+  
 }
