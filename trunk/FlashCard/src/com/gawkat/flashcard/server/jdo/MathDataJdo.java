@@ -16,17 +16,18 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.users.User;
 
-@PersistenceCapable(identityType = IdentityType.APPLICATION)
+@PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class MathDataJdo {
  
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
   private Key key;
  
-  // TODO I am not sure this will work sticking object  as persistent here. 
+  // this will save the data and I see it on the dataviewer
+  // TODO - now why can't I get the data
   @Persistent
   @Embedded
-  private MathData mathData;
+  private MathData mathData = null;
  
   @Persistent
   private int testing = 0;
@@ -83,13 +84,14 @@ public class MathDataJdo {
  
     // save the object to the store
     PersistenceManager pm = PMF.get().getPersistenceManager();
-    
+    pm.setDetachAllOnCommit(true);
+
     // query the mathData by key
     MathDataJdo mathDataJdo = null;
     try {
       mathDataJdo = pm.getObjectById(MathDataJdo.class, key);
     } catch (Exception e) {
-      //e.printStackTrace();
+      e.printStackTrace();
     }
 
     pm.close();

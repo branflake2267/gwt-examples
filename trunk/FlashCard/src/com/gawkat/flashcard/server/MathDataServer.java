@@ -41,6 +41,18 @@ public class MathDataServer {
     mdj.setMathData(mathData);
     mdj.saveMathDataJdo();
   }
+  
+  private MathData getSavedMathData() {
+    
+    MathDataJdo mdj = new MathDataJdo();
+    MathData mathData = mdj.getMathDataJdo();
+    
+    if (mathData == null) {
+      mathData = new MathData();
+    }
+    
+    return mathData;
+  }
 
   private MathData getStart() {
 
@@ -48,13 +60,7 @@ public class MathDataServer {
     MathData mathData = null;
     if (login.getLoginData().isLoggedIn() == true) { // logged in, get last saved position
       
-      // get saved math data
-      MathDataJdo mdj = new MathDataJdo();
-      mathData = mdj.getMathDataJdo();
-      
-      if (mathData == null) {
-        mathData = new MathData();
-      }
+      mathData = getSavedMathData();
       
     } else { // not logged in, start fresh from 0 * 0
       mathData = new MathData(); 
