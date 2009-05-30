@@ -23,30 +23,38 @@ public class NumberBox extends Composite implements ClickHandler, BlurHandler {
   public NumberBox() {
     
     HorizontalPanel hp = new HorizontalPanel();
-    hp.add(tbNumber);
+    //hp.add(tbNumber);
     hp.add(pText);
     
     pWidget.add(hp);
     
     initWidget(pWidget);
     
-    pWidget.setVisible(false);
+    // style
+    hp.setWidth("100%");
+    pText.setWidth("100%");
     
+    
+    // TODO
     tbNumber.addClickHandler(this);
     tbNumber.addBlurHandler(this);
     
+    //hp.addStyleName("test1");
+    //pText.addStyleName("test2");
+    //pWidget.addStyleName("test3");
   }
 
   public void setNumber(int i) {
     this.inumber = i;
+    drawText();
   }
   
-  public void display(boolean b) {
+  public void animate(boolean b) {
     
     if (b == true) {
-      pWidget.setVisible(true);
+      
     } else if (b == false) {
-      pWidget.setVisible(false);
+      
     }
     
   }
@@ -56,11 +64,13 @@ public class NumberBox extends Composite implements ClickHandler, BlurHandler {
     // TODO - draw small size then grow it to 100%
   }
   
-  private void drawText(boolean b) {
+  private void drawText() {
     pText.clear();
     HTML h = new HTML(Integer.toString(inumber));
-    h.setStyleName("flashcard-numbertxt");
+    h.setStyleName("flashcard-minmax");
     pText.add(h);
+    
+    pText.setCellHorizontalAlignment(h, HorizontalPanel.ALIGN_CENTER);
   }
   
   public void onClick(ClickEvent event) {

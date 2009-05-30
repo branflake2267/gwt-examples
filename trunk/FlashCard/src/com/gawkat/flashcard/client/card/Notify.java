@@ -172,12 +172,19 @@ public class Notify extends Composite {
     case 23:
       s = "You Can Do It";
       break;
+    case 24:
+      s = "Wow";
+      break;
+    case 25:
+      s = "Yipeee";
+      break;
     }
     
     return s;
   }
 
   private int getRandom() {
-    return (int) Math.floor(Math.random() * 23);
+    int howmany = 26; // remember I use a zero ordinal number in the switch above
+    return (int) Math.floor(Math.random() * howmany);
   }
 }
