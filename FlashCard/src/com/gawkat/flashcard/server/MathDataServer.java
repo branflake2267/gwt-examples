@@ -2,7 +2,6 @@ package com.gawkat.flashcard.server;
 
 import com.gawkat.flashcard.client.card.MathData;
 import com.gawkat.flashcard.server.jdo.MathDataJdo;
-import com.google.appengine.api.users.User;
 
 public class MathDataServer {
 

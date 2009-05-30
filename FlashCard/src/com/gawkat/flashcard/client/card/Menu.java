@@ -21,7 +21,7 @@ public class Menu extends Composite {
     
     initWidget(pWidget);
     
-    pWidget.setStyleName("menu");
+    pWidget.setStyleName("flashcard-menu");
 
   }
   

@@ -44,8 +44,9 @@ public class Navigation extends Composite {
     pWidget.setCellHorizontalAlignment(wMenu, HorizontalPanel.ALIGN_RIGHT);
     pWidget.setCellHorizontalAlignment(wCard, HorizontalPanel.ALIGN_CENTER);
     pWidget.setCellHorizontalAlignment(wAnswer, HorizontalPanel.ALIGN_CENTER);
-    pWidget.setStyleName("navigation");
+    pWidget.setStyleName("flashcard-navigation");
     wNotify.setWidth("100%");
+    wCard.setWidth("100%");
     
     rpc = Rpc.init();
     

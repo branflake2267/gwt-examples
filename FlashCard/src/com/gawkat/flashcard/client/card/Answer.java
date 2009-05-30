@@ -56,8 +56,8 @@ public class Answer extends Composite implements HasChangeHandlers, ClickHandler
     
     initWidget(pWidget);
     
-    pWidget.setStyleName("answer");
-    tbAnswer.addStyleName("tbanswer");
+    pWidget.setStyleName("flashcard-answer");
+    tbAnswer.addStyleName("flashcard-tbanswer");
     
     bAnswer.addClickHandler(this);
     bHint.addClickHandler(this);
