@@ -4,6 +4,8 @@ import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -12,13 +14,28 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class NumberBox extends Composite implements ClickHandler, BlurHandler {
   
+  private final static int GROW = 1;
+  private final static int SHRINK = 2;
+  
+  private int doAnimate = 0;
+  
   private VerticalPanel pWidget = new VerticalPanel();
   
   private TextBox tbNumber = new TextBox();
   
   private HorizontalPanel pText = new HorizontalPanel();
   
+  private HTML h = new HTML();
+  
   private int inumber = 0;
+  
+  private boolean animationInProgress = false;
+  
+  private int sizebottom = 50;
+  
+  private int sizetop = 150;
+  
+  private int size = sizebottom;
   
   public NumberBox() {
     
@@ -42,6 +59,8 @@ public class NumberBox extends Composite implements ClickHandler, BlurHandler {
     //hp.addStyleName("test1");
     //pText.addStyleName("test2");
     //pWidget.addStyleName("test3");
+    
+    setDefaultSize();
   }
 
   public void setNumber(int i) {
@@ -49,16 +68,87 @@ public class NumberBox extends Composite implements ClickHandler, BlurHandler {
     drawText();
   }
   
-  public void animate(boolean b) {
+  public void doAnimation(boolean b) {
     
     if (b == true) {
-      
+      grow();
     } else if (b == false) {
-      
+      shrink();
     }
     
   }
+  
+  private void grow() {
+    doAnimate = GROW;
+    if (animationInProgress == false) {
+      animationInProgress = true;
+      setSize();
+      animate();
+    }
     
+  }
+  
+  private void shrink() {
+    doAnimate = SHRINK;
+    if (animationInProgress == false) {
+      animationInProgress = true;
+      setSize();
+      animate();
+    }
+  }
+  
+  private void animate() {
+    
+    if (animationInProgress == false) {
+      return;
+    }
+    
+    // timer used for a small delay
+    Timer t = new Timer() {
+      public void run() {
+        setSize();
+        
+        // recursion - animationInProgress controls break
+        animate(); 
+      }
+    };
+    t.schedule(1);
+    
+  }
+  
+  private void setSize() {
+    
+    if (doAnimate == GROW) {
+      setSizeGrow();
+    } else if (doAnimate == SHRINK) {
+      setSizeShrink();
+    }
+    setFontSize();
+    
+  }
+  
+  /**
+   * grow the font size
+   */
+  private void setSizeGrow() {
+    if (size >= sizetop) {
+      animationInProgress = false;
+    }
+    size++;
+    size++;
+    //System.out.println("++size: " + size);
+  }
+  
+  private void setSizeShrink() {
+    if (size <= sizebottom) {
+      animationInProgress = false;
+    }
+    size--;
+    size--;
+    //System.out.println("--size: " + size);
+  }
+  
+  // TODO - have a custom input box on click
   private void drawInputBox() {
     pWidget.clear();
     // TODO - draw small size then grow it to 100%
@@ -66,11 +156,20 @@ public class NumberBox extends Composite implements ClickHandler, BlurHandler {
   
   private void drawText() {
     pText.clear();
-    HTML h = new HTML(Integer.toString(inumber));
+    h = new HTML(Integer.toString(inumber));
     h.setStyleName("flashcard-minmax");
     pText.add(h);
-    
     pText.setCellHorizontalAlignment(h, HorizontalPanel.ALIGN_CENTER);
+  }
+  
+  private void setFontSize() {
+    String style = size + "%";
+    DOM.setStyleAttribute(h.getElement(), "fontSize", style);
+  }
+  
+  private void setDefaultSize() {
+    size = sizebottom;
+    setFontSize();
   }
   
   public void onClick(ClickEvent event) {
