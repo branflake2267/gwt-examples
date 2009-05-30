@@ -1,20 +1,18 @@
 package com.gawkat.flashcard.client.card;
 
 import com.gawkat.flashcard.client.NumberBox;
-import com.google.gwt.event.dom.client.BlurEvent;
-import com.google.gwt.event.dom.client.BlurHandler;
-import com.google.gwt.event.dom.client.FocusEvent;
-import com.google.gwt.event.dom.client.FocusHandler;
-import com.google.gwt.user.client.Window;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class Card extends Composite implements FocusHandler, BlurHandler {
+public class Card extends Composite implements MouseOverHandler, MouseOutHandler {
 
   private VerticalPanel pWidget = new VerticalPanel();
   
@@ -64,12 +62,13 @@ public class Card extends Composite implements FocusHandler, BlurHandler {
     
     initWidget(pWidget);
   
-    pA.addFocusHandler(this);
-    pA.addBlurHandler(this);
-    pO.addFocusHandler(this);
-    pO.addBlurHandler(this);
-    pB.addFocusHandler(this);
-    pB.addBlurHandler(this);
+    pA.addMouseOverHandler(this);
+    pO.addMouseOverHandler(this);
+    pB.addMouseOverHandler(this);
+    
+    pA.addMouseOutHandler(this);
+    pO.addMouseOutHandler(this);
+    pB.addMouseOutHandler(this);
     
     // style
     pWidget.addStyleName("flashcard-card");
@@ -102,8 +101,8 @@ public class Card extends Composite implements FocusHandler, BlurHandler {
     minb.setWidth("50px");
     pBi.setWidth("50px");
     maxb.setWidth("50px");
-   
     
+
     //pA.addStyleName("test1");
     //pO.addStyleName("test2");
     //pB.addStyleName("test3");
@@ -161,17 +160,16 @@ public class Card extends Composite implements FocusHandler, BlurHandler {
   }
 
   private void drawControlsA(boolean b) {
-    mina.animate(b);
-    maxa.animate(b);
+    mina.doAnimation(b);
+    maxa.doAnimation(b);
   }
   
   private void drawControlsB(boolean b) {
-    minb.animate(b);
-    maxb.animate(b);
+    minb.doAnimation(b);
+    maxb.doAnimation(b);
   }
-  
-  public void onFocus(FocusEvent event) {
-    
+
+  public void onMouseOver(MouseOverEvent event) {
     Widget sender = (Widget) event.getSource();
     
     if (sender == pA) {
@@ -185,7 +183,7 @@ public class Card extends Composite implements FocusHandler, BlurHandler {
     
   }
 
-  public void onBlur(BlurEvent event) {
+  public void onMouseOut(MouseOutEvent event) {
     
     Widget sender = (Widget) event.getSource();
     
