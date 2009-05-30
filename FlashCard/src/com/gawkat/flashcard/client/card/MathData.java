@@ -33,13 +33,13 @@ public class MathData implements IsSerializable {
   private int minA = 0;
   
   @Persistent
-  private int maxA = 11;
+  private int maxA = 12;
   
   @Persistent
   private int minB = 0;
   
   @Persistent
-  private int maxB = 11;
+  private int maxB = 12;
  
   @Persistent
   private int a = 0;

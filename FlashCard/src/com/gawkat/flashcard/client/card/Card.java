@@ -29,6 +29,9 @@ public class Card extends Composite implements FocusHandler, BlurHandler {
   private NumberBox mina = new NumberBox();
   private NumberBox maxa = new NumberBox();
   
+  private NumberBox minb = new NumberBox();
+  private NumberBox maxb = new NumberBox();
+  
   private MathData mathData = null;
   
   /**
@@ -37,16 +40,17 @@ public class Card extends Composite implements FocusHandler, BlurHandler {
   public Card() {
     
     HorizontalPanel hp1 = new HorizontalPanel();
-    HorizontalPanel hp2 = new HorizontalPanel();
-    HorizontalPanel hp3 = new HorizontalPanel();
-    
     hp1.add(mina);
     hp1.add(pAi);
     hp1.add(maxa);
     
+    HorizontalPanel hp2 = new HorizontalPanel();
     hp2.add(pOi);
     
+    HorizontalPanel hp3 = new HorizontalPanel();
+    hp3.add(minb);
     hp3.add(pBi);
+    hp3.add(maxb);
     
     // focus panels - init controls off this
     pA.add(hp1);
@@ -68,7 +72,7 @@ public class Card extends Composite implements FocusHandler, BlurHandler {
     pB.addBlurHandler(this);
     
     // style
-    pWidget.setStyleName("flashcard-card");
+    pWidget.addStyleName("flashcard-card");
     pA.setWidth("100%");
     pO.setWidth("100%");
     pB.setWidth("100%");
@@ -76,14 +80,36 @@ public class Card extends Composite implements FocusHandler, BlurHandler {
     hp2.setWidth("100%");
     hp3.setWidth("100%");
     
+
     hp1.setCellHorizontalAlignment(pAi, HorizontalPanel.ALIGN_CENTER);
-    hp2.setCellHorizontalAlignment(pOi, HorizontalPanel.ALIGN_CENTER);
-    hp3.setCellHorizontalAlignment(pBi, HorizontalPanel.ALIGN_CENTER);
+    hp1.setCellHorizontalAlignment(mina, HorizontalPanel.ALIGN_CENTER);
+    hp1.setCellHorizontalAlignment(maxa, HorizontalPanel.ALIGN_CENTER);
+    hp1.setCellVerticalAlignment(mina, HorizontalPanel.ALIGN_BOTTOM);
+    hp1.setCellVerticalAlignment(maxa, HorizontalPanel.ALIGN_BOTTOM);
     
-    //pA.setStyleName("test1");
-    //pO.setStyleName("test2");
-    //pB.setStyleName("test3");
-    //pAi.setStyleName("test4");
+    hp2.setCellHorizontalAlignment(pOi, HorizontalPanel.ALIGN_CENTER);
+    
+    hp3.setCellHorizontalAlignment(pBi, HorizontalPanel.ALIGN_CENTER);
+    hp3.setCellHorizontalAlignment(minb, HorizontalPanel.ALIGN_CENTER);
+    hp3.setCellHorizontalAlignment(maxb, HorizontalPanel.ALIGN_CENTER);
+    hp3.setCellVerticalAlignment(minb, HorizontalPanel.ALIGN_BOTTOM);
+    hp3.setCellVerticalAlignment(maxb, HorizontalPanel.ALIGN_BOTTOM);
+    
+    mina.setWidth("50px");
+    pAi.setWidth("50px");
+    maxa.setWidth("50px");
+    
+    minb.setWidth("50px");
+    pBi.setWidth("50px");
+    maxb.setWidth("50px");
+   
+    
+    //pA.addStyleName("test1");
+    //pO.addStyleName("test2");
+    //pB.addStyleName("test3");
+    //pAi.addStyleName("test4");
+    //hp1.addStyleName("test5");
+    //mina.addStyleName("test3");
   }
 
   private void setAi(int a) {
@@ -91,15 +117,17 @@ public class Card extends Composite implements FocusHandler, BlurHandler {
     String s = Integer.toString(a);
     HTML h = new HTML(s);
     pAi.add(h);
-    h.setStyleName("flashcard-number");
+    h.addStyleName("flashcard-number");
+    pAi.setCellHorizontalAlignment(h, HorizontalPanel.ALIGN_CENTER);
   }
   
   private void setOi(int o) {
     pOi.clear();
     HTML h = new HTML(MathData.getOperator(o));
     pOi.add(h);
-    h.setStyleName("flashcard-operator");
+    h.addStyleName("flashcard-operator");
     pOi.setVerticalAlignment(VerticalPanel.ALIGN_MIDDLE);
+    pOi.setCellHorizontalAlignment(h, HorizontalPanel.ALIGN_CENTER);
   }
   
   private void setBi(int b) {
@@ -107,7 +135,8 @@ public class Card extends Composite implements FocusHandler, BlurHandler {
     String s = Integer.toString(b);
     HTML h = new HTML(s);
     pBi.add(h);
-    h.setStyleName("flashcard-number");
+    h.addStyleName("flashcard-number");
+    pBi.setCellHorizontalAlignment(h, HorizontalPanel.ALIGN_CENTER);
   }
   
   public void setMathData(MathData mathData) {
@@ -119,6 +148,9 @@ public class Card extends Composite implements FocusHandler, BlurHandler {
     mina.setNumber(mathData.getMinA());
     maxa.setNumber(mathData.getMaxA());
     
+    minb.setNumber(mathData.getMinB());
+    maxb.setNumber(mathData.getMaxB());
+    
     drawMathData();
   }
   
@@ -128,9 +160,14 @@ public class Card extends Composite implements FocusHandler, BlurHandler {
     setBi(mathData.getB()); 
   }
 
-  private void drawAControls(boolean b) {
-    mina.display(b);
-    maxa.display(b);
+  private void drawControlsA(boolean b) {
+    mina.animate(b);
+    maxa.animate(b);
+  }
+  
+  private void drawControlsB(boolean b) {
+    minb.animate(b);
+    maxb.animate(b);
   }
   
   public void onFocus(FocusEvent event) {
@@ -138,12 +175,12 @@ public class Card extends Composite implements FocusHandler, BlurHandler {
     Widget sender = (Widget) event.getSource();
     
     if (sender == pA) {
-      drawAControls(true);
+      drawControlsA(true);
       
     } else if (sender == pO) {
       
     } else if (sender == pB) {
-      
+      drawControlsB(true);
     }
     
   }
@@ -153,11 +190,11 @@ public class Card extends Composite implements FocusHandler, BlurHandler {
     Widget sender = (Widget) event.getSource();
     
     if (sender == pA) {
-      drawAControls(false);
+      drawControlsA(false);
     } else if (sender == pO) {
       
     } else if (sender == pB) {
-      
+      drawControlsB(false);
     }
     
   }
