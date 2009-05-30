@@ -36,7 +36,7 @@ public class Notify extends Composite {
     //hp.setCellHorizontalAlignment(pNotice, HorizontalPanel.ALIGN_CENTER);
     
     // test
-    pWidget.addStyleName("notify");
+    pWidget.addStyleName("flashcard-notify");
   }
   
   public void drawNotice(int type) {
@@ -69,7 +69,9 @@ public class Notify extends Composite {
 
   private void draw(String s) {
     pNotice.clear();
-    pNotice.add(new HTML(s));
+    HTML h = new HTML(s);
+    pNotice.add(h);
+    h.setStyleName("flashcard-notifyaffirm ");
   }
   
   public void setAnswer(int answer) {
@@ -131,12 +133,51 @@ public class Notify extends Composite {
     case 10:
       s = "Keep Going";
       break;
+    case 11:
+      s = "Cool";
+      break;
+    case 12:
+      s = "Wonderful";
+      break;
+    case 13:
+      s = "Nice";
+      break;
+    case 14:
+      s = "Amazing";
+      break;
+    case 15:
+      s = "Great";
+      break;
+    case 16:
+      s = "Brilliant";
+      break;
+    case 17:
+      s = "Sensational";
+      break;
+    case 18:
+      s = "Outstanding";
+      break;
+    case 19:
+      s = "Correct";
+      break;
+    case 20:
+      s = "Wahooo!";
+      break;
+    case 21:
+      s = "Lovely";
+      break;
+    case 22:
+      s = "Beautiful";
+      break;
+    case 23:
+      s = "You Can Do It";
+      break;
     }
     
     return s;
   }
 
   private int getRandom() {
-    return (int) Math.floor(Math.random() * 10);
+    return (int) Math.floor(Math.random() * 23);
   }
 }

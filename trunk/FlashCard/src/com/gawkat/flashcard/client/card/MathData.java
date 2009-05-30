@@ -4,10 +4,6 @@ import javax.jdo.annotations.EmbeddedOnly;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
-// TODO - this can't be compiled, can I skip it for client side compiling?
-// @GWT.compilerSkip.ServersideOnly
-//import com.google.appengine.api.datastore.Key;
-
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 @PersistenceCapable
@@ -151,7 +147,7 @@ public class MathData implements IsSerializable {
   public static String getOperator(int o) {
     String s = "";
     if (o == MULTIPLY) {
-      s = "*";
+      s = "x";
     } else if (o == DIVISION) {
       s = "/";
     } else if (o == ADD) {
