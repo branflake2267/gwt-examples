@@ -1,4 +1,4 @@
-package com.gawkat.flashcard.client;
+package com.gawkat.flashcard.client.card;
 
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -17,9 +17,14 @@ public class NumberBox extends Composite implements ClickHandler, BlurHandler {
   private final static int GROW = 1;
   private final static int SHRINK = 2;
   
+  public final static int LEFT = 1;
+  public final static int RIGHT = 2;
+  
   private int doAnimate = 0;
   
   private VerticalPanel pWidget = new VerticalPanel();
+  
+  private AddMinus wAddMinus = new AddMinus();
   
   private TextBox tbNumber = new TextBox();
   
@@ -37,11 +42,16 @@ public class NumberBox extends Composite implements ClickHandler, BlurHandler {
   
   private int size = sizebottom;
   
-  public NumberBox() {
+  public NumberBox(int leftright) {
     
     HorizontalPanel hp = new HorizontalPanel();
-    //hp.add(tbNumber);
+    if (leftright == 1) {
+      hp.add(wAddMinus);
+    }
     hp.add(pText);
+    if (leftright == 2) {
+      hp.add(wAddMinus);
+    }
     
     pWidget.add(hp);
     

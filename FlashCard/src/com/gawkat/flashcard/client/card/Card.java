@@ -1,6 +1,5 @@
 package com.gawkat.flashcard.client.card;
 
-import com.gawkat.flashcard.client.NumberBox;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -24,11 +23,11 @@ public class Card extends Composite implements MouseOverHandler, MouseOutHandler
   private HorizontalPanel pOi = new HorizontalPanel();
   private HorizontalPanel pBi = new HorizontalPanel();
   
-  private NumberBox mina = new NumberBox();
-  private NumberBox maxa = new NumberBox();
+  private NumberBox mina = new NumberBox(NumberBox.LEFT);
+  private NumberBox maxa = new NumberBox(NumberBox.RIGHT);
   
-  private NumberBox minb = new NumberBox();
-  private NumberBox maxb = new NumberBox();
+  private NumberBox minb = new NumberBox(NumberBox.LEFT);
+  private NumberBox maxb = new NumberBox(NumberBox.RIGHT);
   
   private MathData mathData = null;
   
