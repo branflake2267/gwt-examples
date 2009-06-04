@@ -1,9 +1,14 @@
 package com.gawkat.flashcard.client.card;
 
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Composite;
@@ -11,8 +16,9 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
-public class NumberBox extends Composite implements ClickHandler, BlurHandler {
+public class NumberBox extends Composite implements ClickHandler, BlurHandler, ChangeHandler {
   
   private final static int GROW = 1;
   private final static int SHRINK = 2;
@@ -36,11 +42,13 @@ public class NumberBox extends Composite implements ClickHandler, BlurHandler {
   
   private boolean animationInProgress = false;
   
-  private int sizebottom = 50;
+  private int sizebottom = 55;
   
   private int sizetop = 150;
   
   private int size = sizebottom;
+  
+  private int change = 0;
   
   public NumberBox(int leftright) {
     
@@ -57,14 +65,17 @@ public class NumberBox extends Composite implements ClickHandler, BlurHandler {
     
     initWidget(pWidget);
     
-    // style
-    hp.setWidth("100%");
-    pText.setWidth("100%");
-    
+    // style     
+    pWidget.setCellHorizontalAlignment(hp, HorizontalPanel.ALIGN_CENTER);
+    hp.setCellVerticalAlignment(wAddMinus, VerticalPanel.ALIGN_MIDDLE);
+    h.setStyleName("flashcard-minmax");
     
     // TODO
     tbNumber.addClickHandler(this);
     tbNumber.addBlurHandler(this);
+    tbNumber.addChangeHandler(this);
+    
+    wAddMinus.addChangeHandler(this);
     
     //hp.addStyleName("test1");
     //pText.addStyleName("test2");
@@ -143,6 +154,7 @@ public class NumberBox extends Composite implements ClickHandler, BlurHandler {
   private void setSizeGrow() {
     if (size >= sizetop) {
       animationInProgress = false;
+      wAddMinus.setVisible(true);
     }
     size++;
     size++;
@@ -152,10 +164,15 @@ public class NumberBox extends Composite implements ClickHandler, BlurHandler {
   private void setSizeShrink() {
     if (size <= sizebottom) {
       animationInProgress = false;
+      
     }
     size--;
     size--;
     //System.out.println("--size: " + size);
+    
+    if (wAddMinus.isVisible() == true) {
+      wAddMinus.setVisible(false);
+    }
   }
   
   // TODO - have a custom input box on click
@@ -167,9 +184,9 @@ public class NumberBox extends Composite implements ClickHandler, BlurHandler {
   private void drawText() {
     pText.clear();
     h = new HTML(Integer.toString(inumber));
-    h.setStyleName("flashcard-minmax");
     pText.add(h);
     pText.setCellHorizontalAlignment(h, HorizontalPanel.ALIGN_CENTER);
+    setFontSize();
   }
   
   private void setFontSize() {
@@ -182,11 +199,58 @@ public class NumberBox extends Composite implements ClickHandler, BlurHandler {
     setFontSize();
   }
   
+  private void processChange() {
+    
+    int change = wAddMinus.getChange();
+    if (change == AddMinus.PLUS) {
+      inumber++;
+    } else if (change == AddMinus.MINUS) {
+      inumber--;
+    }
+    drawText();
+    fireChange();
+  }
+  
+  /**
+   * TODO upgrade this to the gwt event system
+   * 
+   * @return
+   */
+  public int getChange() {
+    return this.change;
+  }
+  
+  public int getNumber() {
+    return inumber;
+  }
+  
+  /**
+   * fire a change event
+   */
+  private void fireChange() {
+    NativeEvent nativeEvent = Document.get().createChangeEvent();
+    ChangeEvent.fireNativeEvent(nativeEvent, this);
+  }
+  
   public void onClick(ClickEvent event) {
     
   }
 
   public void onBlur(BlurEvent event) {
+    
+  }
+
+  public HandlerRegistration addChangeHandler(ChangeHandler handler) {
+    return addDomHandler(handler, ChangeEvent.getType());
+  }
+  
+  public void onChange(ChangeEvent event) {
+   
+    Widget sender = (Widget) event.getSource();
+    
+    if (sender == wAddMinus) {
+      processChange();
+    }
     
   }
   

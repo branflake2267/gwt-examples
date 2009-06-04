@@ -10,6 +10,12 @@ public class MathDataServer {
   public MathDataServer() {
   }
   
+  /**
+   * main rpc method
+   * 
+   * @param mathData
+   * @return
+   */
   public MathData getMathData(MathData mathData) {
     
     boolean skip = false;
@@ -88,15 +94,39 @@ public class MathDataServer {
     int a = mathData.getA();
     int b = mathData.getB();
     
+    boolean skipa = false;
+    boolean skipb = false;
+    
+    if (a < mathData.getMinA()) {
+      a = mathData.getMinA();
+      skipa = true;
+    } else if (a > mathData.getMaxA()) {
+      a = mathData.getMaxA();
+      skipa = true;
+    }
+    
+    if (b < mathData.getMinB()) {
+      b = mathData.getMinB();
+      skipb = true;
+    } else if (b > mathData.getMaxB()) {
+      b = mathData.getMaxB();
+      skipb = true;
+    }
+    
     // if b > max then start over to min
-    if (b > mathData.getMaxB()) { 
+    if (b >= mathData.getMaxB() && skipa == false) { 
       b = mathData.getMinB();
       a++;
       if (a > mathData.getMaxA()) {
         a = mathData.getMinA();
       }
-    } else {
-      b++;
+    } else  {
+      if (skipb == false) {
+        b++;
+      }
+      if (b > mathData.getMaxB()) {
+        b = mathData.getMinB();
+      }
     }
     
     mathData.setMath(a, mathData.getOperator(), b);

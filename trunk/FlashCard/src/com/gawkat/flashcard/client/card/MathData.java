@@ -85,6 +85,22 @@ public class MathData implements IsSerializable {
    this.maxB = maxB; 
   }
 
+  public void setMinA(int minA) {
+    this.minA = minA;
+  }
+  
+  public void setMaxA(int maxA) {
+    this.maxA = maxA;
+  }
+  
+  public void setMinB(int minB) {
+    this.minB = minB;
+  }
+  
+  public void setMaxB(int maxB) {
+    this.maxB = maxB;
+  }
+  
   /**
    * set math
    * 

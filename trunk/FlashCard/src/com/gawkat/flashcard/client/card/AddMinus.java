@@ -12,21 +12,22 @@ import com.google.gwt.event.dom.client.HasChangeHandlers;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class AddMinus extends Composite implements ClickHandler, HasChangeHandlers {
 
-  private static final int PLUS = 1;
-  private static final int MINUS = 2;
+  public static final int PLUS = 1;
+  public static final int MINUS = 2;
   
-  private int clicked = 0;
+  private int change = 0;
   
   private VerticalPanel pWidget = new VerticalPanel();
   
-  private PushButton bPlus = new PushButton("+");
-  private PushButton bMinus = new PushButton("-");
+  private HTML bPlus = new HTML("+");
+  private HTML bMinus = new HTML("-");
   
   public AddMinus() {
 
@@ -40,19 +41,31 @@ public class AddMinus extends Composite implements ClickHandler, HasChangeHandle
     
     bPlus.addStyleName("flashcard-bplusminus");
     bMinus.addStyleName("flashcard-bplusminus");
-  }
+    pWidget.setCellHorizontalAlignment(bPlus, HorizontalPanel.ALIGN_CENTER);
+    pWidget.setCellHorizontalAlignment(bMinus, HorizontalPanel.ALIGN_CENTER);
+    
+    
+    //pWidget.addStyleName("test1");
+    
 
+    this.setVisible(false);
+  }
+  
   public void onClick(ClickEvent event) {
     
     Widget sender = (Widget) event.getSource();
     
     if (sender == bPlus) {
-      clicked = PLUS;
+      change = PLUS;
     } else if (sender == bMinus) {
-      clicked = MINUS;
+      change = MINUS;
     }
     
     fireChange();
+  }
+  
+  public int getChange() {
+    return this.change;
   }
   
   /**
