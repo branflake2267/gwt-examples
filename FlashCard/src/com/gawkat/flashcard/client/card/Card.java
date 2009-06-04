@@ -1,5 +1,7 @@
 package com.gawkat.flashcard.client.card;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -11,8 +13,15 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class Card extends Composite implements MouseOverHandler, MouseOutHandler {
+public class Card extends Composite implements MouseOverHandler, MouseOutHandler, ChangeHandler {
 
+  public static final int MINA = 1;
+  public static final int MAXA = 2;
+  public static final int MINB = 3;
+  public static final int MAXB = 4;
+  
+  private int change = 0;
+  
   private VerticalPanel pWidget = new VerticalPanel();
   
   private FocusPanel pA = new FocusPanel();
@@ -71,6 +80,9 @@ public class Card extends Composite implements MouseOverHandler, MouseOutHandler
     
     // style
     pWidget.addStyleName("flashcard-card");
+    pA.addStyleName("flashcard-panel");
+    pO.addStyleName("flashcard-panel");
+    pB.addStyleName("flashcard-panel");
     pA.setWidth("100%");
     pO.setWidth("100%");
     pB.setWidth("100%");
@@ -101,6 +113,11 @@ public class Card extends Composite implements MouseOverHandler, MouseOutHandler
     pBi.setWidth("50px");
     maxb.setWidth("50px");
     
+    mina.addChangeHandler(this);
+    maxa.addChangeHandler(this);
+    // TODO operator
+    minb.addChangeHandler(this);
+    maxb.addChangeHandler(this);
 
     //pA.addStyleName("test1");
     //pO.addStyleName("test2");
@@ -192,6 +209,25 @@ public class Card extends Composite implements MouseOverHandler, MouseOutHandler
       
     } else if (sender == pB) {
       drawControlsB(false);
+    }
+    
+  }
+
+  public void onChange(ChangeEvent event) {
+  
+    Widget sender = (Widget) event.getSource();
+    
+    if (sender == mina) {
+      mathData.setMinA(mina.getNumber());
+      
+    } else if (sender == maxa) {
+      mathData.setMaxA(maxa.getNumber());
+      
+    } else if (sender == minb) {
+      mathData.setMinB(minb.getNumber());
+      
+    } else if (sender == maxb) {
+      mathData.setMaxB(maxb.getNumber());
     }
     
   }
