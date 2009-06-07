@@ -21,7 +21,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
     height = 210, //
     thumbnail = "/images/thumbnail.png", //
     screenshot = "/images/screenshot.png")
-public class FlashCard_Gadget extends Gadget<UserPreferences> {
+public class FlashCard_Gadget extends Gadget<UserPreferences> implements MyGadgetFeatures {
   
   public void init(UserPreferences preferences) {
     
