@@ -36,9 +36,11 @@ public class FlashCard_Gadget extends Gadget<UserPreferences> implements MyGadge
     
     vp.setCellHorizontalAlignment(nav, HorizontalPanel.ALIGN_CENTER);
     
+    // TODO - this work??
+    onModuleLoad();
   }
 
-  
+
  
 
   

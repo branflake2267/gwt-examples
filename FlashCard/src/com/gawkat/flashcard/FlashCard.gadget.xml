@@ -17,10 +17,13 @@
 
 
 	<!-- Specify the app entry point class.                         -->
+	
+	<!--  TODO do i need this?? -->
 	<entry-point class='com.gawkat.flashcard.client.FlashCard' /> 
 	
-	
-	<!-- TODO - this doesn't seem to make the thing compile either. -->
+	<!--  TODO do I need this?? -->
 	<entry-point class='com.gawkat.flashcard.client.gadget.FlashCard_Gadget' />
 	
 </module>
+
+<!-- TODO this will allow the GWT eclipse plugin to compile the gadget, and product an xml file -->
