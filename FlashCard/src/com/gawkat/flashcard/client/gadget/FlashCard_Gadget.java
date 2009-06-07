@@ -18,10 +18,11 @@ import com.google.gwt.user.client.ui.VerticalPanel;
     author_email = "branflake2267@gmail.com", //
     author_affiliation = "GoneVertical.com", //
     author_location="Arlington, WA, 98223", //
-    height = 210, //
     thumbnail = "/images/thumbnail.png", //
     screenshot = "/images/screenshot.png")
 public class FlashCard_Gadget extends Gadget<UserPreferences> implements MyGadgetFeatures {
+  
+  // TODO - gadget preferences doesn't set up artifact needed for compile
   
   public void init(UserPreferences preferences) {
     
