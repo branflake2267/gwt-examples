@@ -37,6 +37,10 @@ body {
   padding: 4px;
 }
 
+.flashcard-panel {
+ padding: 4px;
+}
+
 .flashcard-number {
   font-size: 170%;
 }
@@ -44,6 +48,13 @@ body {
   font-size: 140%;
 }
 
+.flashcard-bplusminus {
+  font-size: 110%;
+  height: 7px;
+  padding: 3px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
 .flashcard-answer {
   padding: 4px;
@@ -63,5 +74,8 @@ body {
 }
 
 .flashcard-minmax {
- font-size: 50%;
+ font-size: 55%;
 }
+
+
+
