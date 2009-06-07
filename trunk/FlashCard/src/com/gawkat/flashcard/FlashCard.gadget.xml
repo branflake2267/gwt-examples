@@ -17,7 +17,7 @@
 
 
 	<!-- Specify the app entry point class.                         -->
-	<entry-point class='com.gawkat.flashcard.client.FlashCard' />
+	<entry-point class='com.gawkat.flashcard.client.FlashCard' /> 
 	
 	
 	<!-- TODO - this doesn't seem to make the thing compile either. -->

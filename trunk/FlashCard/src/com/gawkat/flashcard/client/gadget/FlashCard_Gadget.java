@@ -26,6 +26,7 @@ public class FlashCard_Gadget extends Gadget<UserPreferences> implements MyGadge
   
   public void init(UserPreferences preferences) {
     
+    /*
     VerticalPanel vp = new VerticalPanel();
     vp.setWidth("100%");
     RootPanel.get().add(vp);
@@ -35,7 +36,7 @@ public class FlashCard_Gadget extends Gadget<UserPreferences> implements MyGadge
     nav.start();
     
     vp.setCellHorizontalAlignment(nav, HorizontalPanel.ALIGN_CENTER);
-    
+    */
   }
 
   
