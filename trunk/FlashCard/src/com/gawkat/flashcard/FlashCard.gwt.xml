@@ -2,20 +2,20 @@
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.6.4//EN" "http://google-web-toolkit.googlecode.com/svn/tags/1.6.4/distro-source/core/src/gwt-module.dtd">
 <module rename-to='flashcard'>
 
-  <!-- Google Analytics -->
-  <script src="/ga.js"/>
+	<!-- Google Analytics -->
+	<script src="/ga.js" />
 
-  <!-- Inherit the core Web Toolkit stuff.                        -->
-  <inherits name='com.google.gwt.user.User'/>
+	<!-- Inherit the core Web Toolkit stuff.                        -->
+	<inherits name='com.google.gwt.user.User' />
 
-  <!-- CSS -->
-  <inherits name='com.google.gwt.user.theme.standard.Standard'/>
+	<!-- CSS -->
+	<inherits name='com.google.gwt.user.theme.standard.Standard' />
+	<stylesheet src="FlashCard.css" />
+
+	<!-- Other module inherits                                      -->
+	<inherits name='com.google.gwt.gadgets.Gadgets' />
 
 
-  <!-- Other module inherits                                      -->
-
-  
-
-  <!-- Specify the app entry point class.                         -->
-  <entry-point class='com.gawkat.flashcard.client.FlashCard'/>
+	<!-- Specify the app entry point class.                         -->
+	<entry-point class='com.gawkat.flashcard.client.FlashCard' />
 </module>
