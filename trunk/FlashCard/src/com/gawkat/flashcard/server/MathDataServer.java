@@ -129,7 +129,11 @@ public class MathDataServer {
       }
     }
     
-    mathData.setMath(a, mathData.getOperator(), b);
+    try {
+      mathData.setMath(a, mathData.getOperator(), b);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     
     return mathData;
   }

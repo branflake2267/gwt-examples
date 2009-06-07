@@ -90,19 +90,17 @@ public class MathDataJdo {
     try {
       mathDataJdo = pm.getObjectById(MathDataJdo.class, key);
     } catch (Exception e) {
-      e.printStackTrace();
+      //e.printStackTrace();
     }
 
-    pm.close();
-  
     MathData mathData = null;
     if (mathDataJdo == null) {
       mathData = null;
     } else {
-      if (mathDataJdo.getMathData() != null) {
-        mathData = mathDataJdo.getMathData();
-      }
+       mathData = mathDataJdo.mathData;
     }
+    
+    pm.close();
     
     return mathData;
   }
