@@ -10,6 +10,8 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+// TODO - this will not compile correctly.
+
 @ModulePrefs(//
     title = "Math Flash Card", //
     directory_title = "Math Flash Card - Keep your brain trained.", //
