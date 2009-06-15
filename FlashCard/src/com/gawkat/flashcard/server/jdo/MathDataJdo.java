@@ -10,7 +10,6 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.gawkat.flashcard.client.card.MathData;
 import com.gawkat.flashcard.server.LoginServer;
-import com.gawkat.flashcard.server.PMF;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.users.User;
