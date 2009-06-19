@@ -10,3 +10,12 @@
  OR 
  
  #. Play button arrow with toolbox in graphics buttons menu > External Tools configurations (for First Time) | Select Project
+
+
+== Eclipse Plugin ==
+ The eclipse plugin has the compile feature options built in.
+
+* Right click on project > Debug As > Web Application
+ OR
+* Hit the Red"G" Box icon top left, and compile options will appear
+ 
