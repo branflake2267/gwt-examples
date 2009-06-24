@@ -4,6 +4,7 @@
  You can quickly build your application for your production server with Ant.
 
  #. Project > right click build.xml > Run As > Select 'External Tools Configurations' 
+ #. (Don't forget to: External Tools Configuration > goto Targets > select War 'create a war file' - Green Arrow with toolbox icon)
  #. Look at > Targets (tab) - compare that with the build.xml editor window
  #. Select Run
 
