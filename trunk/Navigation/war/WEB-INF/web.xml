@@ -18,7 +18,7 @@
   
   <servlet-mapping>
     <servlet-name>servletRpc</servlet-name>
-    <url-pattern>/system/system</url-pattern>
+    <url-pattern>/navigation/system</url-pattern>
   </servlet-mapping>
 
 </web-app>
