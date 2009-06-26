@@ -17,7 +17,7 @@ import org.apache.commons.lang.StringEscapeUtils;
  * @author branflake2267
  *
  */
-public abstract class Db_Conn {
+public class Db_Conn {
 
   // for debugging
   public boolean debug = true;
@@ -57,20 +57,20 @@ public abstract class Db_Conn {
 
     // setup design db write (hosted mode)
     ConnData w1 = new ConnData();
-    w1.host = "192.168.10.91";
+    w1.host = "192.168.10.79";
     w1.port = 3306;
     w1.driver = "com.mysql.jdbc.Driver";
-    w1.username = "oAuth";
-    w1.password = "oAuth*7";
+    w1.username = "core";
+    w1.password = "core*7";
     w1.database = "core";
 
     // setup design db read (hosted mode)
     ConnData r1 = new ConnData();
-    r1.host = "192.168.10.91";
+    r1.host = "192.168.10.79";
     r1.port = 3306;
     r1.driver = "com.mysql.jdbc.Driver";
-    r1.username = "oAuth";
-    r1.password = "oAuth*7";
+    r1.username = "core";
+    r1.password = "core*7";
     r1.database = "core";
 
 
@@ -79,8 +79,8 @@ public abstract class Db_Conn {
     w2.host = "192.168.12.81";
     w2.port = 3306;
     w2.driver = "com.mysql.jdbc.Driver";
-    w2.username = "oAuth";
-    w2.password = "oAuth*7";
+    w2.username = "core";
+    w2.password = "core*7";
     w2.database = "core";
 
     // setup production db read
@@ -88,8 +88,8 @@ public abstract class Db_Conn {
     r2.host = "192.168.12.81";
     r2.port = 3306;
     r2.driver = "com.mysql.jdbc.Driver";
-    r2.username = "oAuth";
-    r2.password = "oAuth*7";
+    r2.username = "core";
+    r2.password = "core*7";
     r2.database = "core";
 
     if (getHostedMode() == true) {
