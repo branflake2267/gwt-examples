@@ -36,8 +36,8 @@ public class Navigation implements EntryPoint, HistoryListener, ChangeListener {
  
   // web site consumer key
   // hash - hmac_sha1 - key="salt", data="password"
-  private String appConsumerKey = "app1";
-  private String appConsumerSecret = "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8";
+  private String appConsumerKey = "demo_application";
+  private String appConsumerSecret = "c1d0e06998305903ac76f589bbd6d4b61a670ba6"; //salt:password
   
   // this manages the users privileges to protected resources
   private SessionManager sessionManager = null;
