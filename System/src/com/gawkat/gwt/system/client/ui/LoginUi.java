@@ -1,9 +1,9 @@
-package com.gawkat.gwt.system.client.ui;
+package com.gawkat.core.client.ui;
 
 import com.gawkat.core.client.EventManager;
 import com.gawkat.core.client.account.CreateUserAccount;
-import com.gawkat.gwt.system.client.oauth.OAuthTokenData;
-import com.gawkat.gwt.system.client.oauth.Sha1;
+import com.gawkat.core.client.oauth.OAuthTokenData;
+import com.gawkat.core.client.oauth.Sha1;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
 import com.google.gwt.user.client.ui.ChangeListener;

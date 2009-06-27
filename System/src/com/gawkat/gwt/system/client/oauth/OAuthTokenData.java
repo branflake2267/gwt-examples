@@ -1,8 +1,8 @@
-package com.gawkat.gwt.system.client.oauth;
+package com.gawkat.core.client.oauth;
 
 import java.util.Date;
 
-import com.gawkat.gwt.system.client.global.Global_Domain;
+import com.gawkat.core.client.global.Global_Domain;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**

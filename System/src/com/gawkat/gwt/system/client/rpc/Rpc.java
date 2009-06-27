@@ -1,4 +1,4 @@
-package com.gawkat.gwt.system.client.rpc;
+package com.gawkat.core.client.rpc;
 
 import com.google.gwt.core.client.GWT;
 

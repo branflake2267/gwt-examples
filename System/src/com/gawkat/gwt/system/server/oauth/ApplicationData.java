@@ -1,4 +1,4 @@
-package com.gawkat.gwt.system.server.oauth;
+
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 

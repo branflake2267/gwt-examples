@@ -1,4 +1,4 @@
-package com.gawkat.gwt.system.server.db;
+package com.gawkat.core.server.db;
 
 /**
  * data connection information

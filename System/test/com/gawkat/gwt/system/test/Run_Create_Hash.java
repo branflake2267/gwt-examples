@@ -1,6 +1,6 @@
 package com.gawkat.gwt.system.test;
 
-import com.gawkat.gwt.system.client.oauth.Sha1;
+import com.gawkat.core.client.oauth.Sha1;
 
 public class Run_Create_Hash {
 

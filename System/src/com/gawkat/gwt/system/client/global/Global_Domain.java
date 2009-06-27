@@ -1,4 +1,4 @@
-package com.gawkat.gwt.system.client.global;
+package com.gawkat.core.client.global;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 

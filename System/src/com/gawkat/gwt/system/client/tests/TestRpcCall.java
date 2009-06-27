@@ -1,7 +1,7 @@
-package com.gawkat.gwt.system.client.tests;
+package com.gawkat.core.client.tests;
 
-import com.gawkat.gwt.system.client.rpc.Rpc;
-import com.gawkat.gwt.system.client.rpc.RpcServiceAsync;
+import com.gawkat.core.client.rpc.Rpc;
+import com.gawkat.core.client.rpc.RpcServiceAsync;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;

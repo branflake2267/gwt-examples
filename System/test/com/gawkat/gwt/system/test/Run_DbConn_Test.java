@@ -1,7 +1,7 @@
 package com.gawkat.gwt.system.test;
 
-import com.gawkat.gwt.system.server.db.Db_Conn;
-import com.gawkat.gwt.system.server.db.Db_User;
+import com.gawkat.core.server.db.Db_Conn;
+import com.gawkat.core.server.db.Db_User;
 
 public class Run_DbConn_Test {
 
