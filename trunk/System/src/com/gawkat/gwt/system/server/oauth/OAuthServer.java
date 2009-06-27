@@ -1,4 +1,4 @@
-package com.gawkat.gwt.system.server.oauth;
+
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -7,8 +7,8 @@ import java.sql.Statement;
 import java.util.UUID;
 
 import com.gawkat.core.client.account.UserData;
-import com.gawkat.gwt.system.client.oauth.OAuthTokenData;
-import com.gawkat.gwt.system.server.db.Db_Conn;
+import com.gawkat.core.client.oauth.OAuthTokenData;
+import com.gawkat.core.server.db.Db_Conn;
 
 public class OAuthServer extends Db_Conn {
 

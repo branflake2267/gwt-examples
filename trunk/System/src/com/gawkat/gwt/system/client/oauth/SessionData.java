@@ -1,4 +1,4 @@
-package com.gawkat.gwt.system.client.oauth;
+package com.gawkat.core.client.oauth;
 
 /**
  * store the session data to pass around to the widgets that need access

@@ -1,9 +1,9 @@
 package com.gawkat.core.client;
 
-import com.gawkat.gwt.system.client.oauth.OAuthTokenData;
-import com.gawkat.gwt.system.client.rpc.Rpc;
-import com.gawkat.gwt.system.client.rpc.RpcServiceAsync;
-import com.gawkat.gwt.system.client.ui.LoginUi;
+import com.gawkat.core.client.oauth.OAuthTokenData;
+import com.gawkat.core.client.rpc.Rpc;
+import com.gawkat.core.client.rpc.RpcServiceAsync;
+import com.gawkat.core.client.ui.LoginUi;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;

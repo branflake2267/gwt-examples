@@ -1,4 +1,4 @@
-package com.gawkat.gwt.system.client.oauth;
+package com.gawkat.core.client.oauth;
 
 import java.util.ArrayList;
 

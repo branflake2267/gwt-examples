@@ -1,4 +1,4 @@
-package com.gawkat.gwt.system.client.ui;
+package com.gawkat.core.client.ui;
 
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ChangeListenerCollection;
