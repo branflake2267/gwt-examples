@@ -1,4 +1,4 @@
-package com.gawkat.gwt.system.client;
+package com.gawkat.core.client;
 
 /**
  * instead of keeping events in text, better in int, take less space

@@ -1,7 +1,7 @@
 package com.gawkat.gwt.system.client.ui;
 
-import com.gawkat.gwt.system.client.EventManager;
-import com.gawkat.gwt.system.client.LoadingWidget;
+import com.gawkat.core.client.EventManager;
+import com.gawkat.core.client.LoadingWidget;
 import com.gawkat.gwt.system.client.global.Global_String;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.ChangeListener;

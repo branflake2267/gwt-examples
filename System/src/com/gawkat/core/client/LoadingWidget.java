@@ -1,4 +1,4 @@
-package com.gawkat.gwt.system.client;
+package com.gawkat.core.client;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Timer;

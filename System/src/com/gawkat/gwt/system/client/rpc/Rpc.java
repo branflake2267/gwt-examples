@@ -1,7 +1,6 @@
 package com.gawkat.gwt.system.client.rpc;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
 public class Rpc {
 	

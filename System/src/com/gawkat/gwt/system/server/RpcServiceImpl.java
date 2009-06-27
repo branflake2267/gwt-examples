@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.gawkat.gwt.system.client.account.UserData;
+import com.gawkat.core.client.account.UserData;
 import com.gawkat.gwt.system.client.oauth.OAuthTokenData;
 import com.gawkat.gwt.system.client.rpc.RpcService;
 import com.gawkat.gwt.system.server.db.Db_User;
