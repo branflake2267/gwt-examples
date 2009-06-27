@@ -19,6 +19,6 @@
  #. Right click on project > Debug As > Web Application
  #. OR
  #. Hit the Red"G" Box icon top left, and compile options will appear
- #. create a war, by zipping up the war directory and rename it ROOT.war or Project.war
+ #. create a war, by zipping up the war directory and rename it ROOT.war or Project.war (move libraries if need be, if there linked and not in the library folder)
  #. (on ubuntu, select all files and folders in war, right click and Create Archive)
  
