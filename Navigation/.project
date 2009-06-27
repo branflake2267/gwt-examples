@@ -16,9 +16,9 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>src_system</name>
+			<name>src_core</name>
 			<type>2</type>
-			<location>/home/design/workspace/gwt-System/src</location>
+			<location>/home/design/workspace/Core/src</location>
 		</link>
 	</linkedResources>
 </projectDescription>
