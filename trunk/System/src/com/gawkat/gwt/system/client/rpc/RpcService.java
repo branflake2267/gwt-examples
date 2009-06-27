@@ -1,6 +1,6 @@
 package com.gawkat.gwt.system.client.rpc;
 
-import com.gawkat.gwt.system.client.account.UserData;
+import com.gawkat.core.client.account.UserData;
 import com.gawkat.gwt.system.client.oauth.OAuthTokenData;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;

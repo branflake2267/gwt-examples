@@ -1,7 +1,7 @@
 package com.gawkat.gwt.system.client.ui;
 
-import com.gawkat.gwt.system.client.EventManager;
-import com.gawkat.gwt.system.client.account.CreateUserAccount;
+import com.gawkat.core.client.EventManager;
+import com.gawkat.core.client.account.CreateUserAccount;
 import com.gawkat.gwt.system.client.oauth.OAuthTokenData;
 import com.gawkat.gwt.system.client.oauth.Sha1;
 import com.google.gwt.user.client.History;

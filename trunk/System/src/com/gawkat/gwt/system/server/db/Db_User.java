@@ -1,6 +1,6 @@
 package com.gawkat.gwt.system.server.db;
 
-import com.gawkat.gwt.system.client.account.UserData;
+import com.gawkat.core.client.account.UserData;
 import com.gawkat.gwt.system.client.oauth.OAuthTokenData;
 import com.gawkat.gwt.system.server.oauth.OAuthServer;
 

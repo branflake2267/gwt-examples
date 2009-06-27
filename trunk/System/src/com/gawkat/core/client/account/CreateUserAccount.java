@@ -1,6 +1,6 @@
-package com.gawkat.gwt.system.client.account;
+package com.gawkat.core.client.account;
 
-import com.gawkat.gwt.system.client.EventManager;
+import com.gawkat.core.client.EventManager;
 import com.gawkat.gwt.system.client.oauth.OAuthTokenData;
 import com.gawkat.gwt.system.client.oauth.Sha1;
 import com.gawkat.gwt.system.client.rpc.Rpc;

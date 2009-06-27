@@ -1,4 +1,4 @@
-package com.gawkat.gwt.system.client;
+package com.gawkat.core.client;
 
 import com.gawkat.gwt.system.client.oauth.OAuthTokenData;
 import com.gawkat.gwt.system.client.rpc.Rpc;

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.UUID;
 
-import com.gawkat.gwt.system.client.account.UserData;
+import com.gawkat.core.client.account.UserData;
 import com.gawkat.gwt.system.client.oauth.OAuthTokenData;
 import com.gawkat.gwt.system.server.db.Db_Conn;
 
