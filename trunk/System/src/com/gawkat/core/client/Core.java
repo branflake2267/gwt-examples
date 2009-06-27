@@ -5,7 +5,7 @@ import com.google.gwt.core.client.EntryPoint;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class System implements EntryPoint {
+public class Core implements EntryPoint {
 
 
   public void onModuleLoad() {
