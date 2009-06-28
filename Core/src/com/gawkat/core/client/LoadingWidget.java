@@ -24,7 +24,7 @@ public class LoadingWidget extends Composite {
 	 */
 	public LoadingWidget() {
 		
-		String sImage = GWT.getModuleBaseURL() + "/images/loading.gif";
+		String sImage = "/images/loading.gif";
 	    Image image = new Image(sImage);
 		
 	    pWidget.add(image);
