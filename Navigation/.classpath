@@ -2,8 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="src_core"/>
-	<classpathentry kind="lib" path="/opt/google/gwt/gwt-linux-1.6.2/gwt-user.jar"/>
-	<classpathentry kind="lib" path="/opt/google/gwt/gwt-linux-1.6.2/gwt-dev-linux.jar"/>
+	<classpathentry kind="lib" path="/opt/google/gwt/gwt-linux-1.6.4/gwt-user.jar"/>
+	<classpathentry kind="lib" path="/opt/google/gwt/gwt-linux-1.6.4/gwt-dev-linux.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Core"/>
