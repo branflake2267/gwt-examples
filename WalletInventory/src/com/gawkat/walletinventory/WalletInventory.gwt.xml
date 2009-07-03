@@ -10,6 +10,7 @@
 
 
   <!-- Other module inherits                                      -->
+  <inherits name='com.gawkat.core.Core'/>
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='com.gawkat.walletinventory.client.WalletInventory'/>
