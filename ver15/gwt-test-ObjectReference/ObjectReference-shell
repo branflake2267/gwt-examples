@@ -1,3 +1,0 @@
-#!/bin/sh
-APPDIR=`dirname $0`;
-java  -cp "$APPDIR/src:$APPDIR/bin:/home/branflake2267/MyWorkingCopy/java_ide/gwt-linux-1.4.60/gwt-user.jar:/home/branflake2267/MyWorkingCopy/java_ide/gwt-linux-1.4.60/gwt-dev-linux.jar" com.google.gwt.dev.GWTShell -out "$APPDIR/www" "$@" com.tribling.gwt.test.objectreference.ObjectReference/ObjectReference.html;

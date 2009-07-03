@@ -1,3 +1,0 @@
-#!/bin/sh
-APPDIR=`dirname $0`;
-java  -cp "$APPDIR/src:$APPDIR/bin:/opt/gwt-linux/gwt-user.jar:/opt/gwt-linux/gwt-dev-linux.jar" com.google.gwt.dev.GWTShell -out "$APPDIR/www" "$@" com.tribling.gwt.RPC.basic.RPCbasic/RPCbasic.html;

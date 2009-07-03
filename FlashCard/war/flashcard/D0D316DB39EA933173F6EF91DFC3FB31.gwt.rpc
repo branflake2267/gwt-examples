@@ -1,7 +1,0 @@
-com.gawkat.flashcard.client.card.MathData, true
-com.gawkat.flashcard.client.login.LoginData, true
-com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException, true
-java.lang.Exception, false
-java.lang.RuntimeException, false
-java.lang.String, true
-java.lang.Throwable, false
