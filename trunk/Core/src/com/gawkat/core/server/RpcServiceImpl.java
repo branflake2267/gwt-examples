@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.client.rpc.RpcService;
-import com.gawkat.core.server.db.Db_User;
+import com.gawkat.core.server.db.User;
 import com.gawkat.core.server.db.oauth.OAuthServer;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -141,17 +141,17 @@ public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
     // used to sign the new user
     String url = getRequestUrlOAuth();
     
-    Db_User db = new Db_User();
+    User db = new User();
     return db.createUser(userData, url);
   }
   
   public UserData isUserNameExist(UserData userData) {
-    Db_User db = new Db_User();
+    User db = new User();
     return db.isUserNameExist(userData);
   }
   
   public UserData forgotPassword(UserData userData) {
-    Db_User db = new Db_User();
+    User db = new User();
     return db.forgotPassword(userData);
   }
   

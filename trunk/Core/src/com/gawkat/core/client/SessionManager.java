@@ -1,5 +1,6 @@
 package com.gawkat.core.client;
 
+import com.gawkat.core.client.EventManager;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.client.rpc.Rpc;
 import com.gawkat.core.client.rpc.RpcServiceAsync;
@@ -15,7 +16,6 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * manages the users session, authentication/authorization to protected
  * resources on a remote server
  * 
  * @author branflake2267

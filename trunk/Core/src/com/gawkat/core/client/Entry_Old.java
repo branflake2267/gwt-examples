@@ -1,5 +1,6 @@
 package com.gawkat.core.client;
 
+import com.gawkat.core.client.SessionManager;
 import com.gawkat.core.client.oauth.Sha1;
 import com.gawkat.core.client.tests.TestRpcCall;
 import com.gawkat.core.client.ui.LoginUi;
@@ -12,6 +13,7 @@ import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -135,5 +137,6 @@ public class Entry_Old implements EntryPoint, ClickListener, ChangeListener {
 		}
 		
 	}
-	
+
+  
 }

@@ -1,6 +1,5 @@
 package com.gawkat.core.client.ui;
 
-import com.gawkat.core.client.EventManager;
 import com.gawkat.core.client.account.CreateUserAccount;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.client.oauth.Sha1;
@@ -12,8 +11,12 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import com.gawkat.core.client.EventManager;
+
 /**
- * This will be the hook into the types of UIs that one could possibly use
+ * Th
+import core.client.EventManager;
+is will be the hook into the types of UIs that one could possibly use
  * this is just the middle man for the user interfaces
  * 
  * TODO - method for deciding which UI to use, horizontal inputs, vertical inputs, separate forgot system...
