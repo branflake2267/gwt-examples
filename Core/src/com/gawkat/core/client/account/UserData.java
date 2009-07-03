@@ -6,8 +6,26 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class UserData implements IsSerializable {
 
+  // possible errors for error notifications
+  final public static int SYSTEM_ERROR = 1;
+  final public static int KEY_EXISTS = 2;
+  final public static int KEYS_DONTMATCH = 3;
+  final public static int SECRETS_DONTMATCH = 4;
+  final public static int BOTH_DONTMATCH = 5;
+  final public static int KEYS_SHORT = 6;
+  final public static int KEY1_SHORT = 7;
+  final public static int KEY2_SHORT = 8;
+  final public static int SECRETS_SHORT = 9;
+  final public static int SECRET1_SHORT = 10;
+  final public static int SECRET2_SHORT = 11;
+  final public static int BOTH_SHORT = 12;
+  final public static int SIGNATURE_ERROR = 13;
+  final public static int ACCEPT_TERMS = 14;
+  final public static int ERR_NO_USER = 15;
+  
+  
   // used on server side
-  public int userId = 0;
+  public Long userId;
   
   // consumer accessToken
   // web application has access
@@ -28,22 +46,7 @@ public class UserData implements IsSerializable {
   // error notifications
   public int error = 0;
   
-  // possible errors for error notifications
-  final public static int SYSTEM_ERROR = 1;
-  final public static int KEY_EXISTS = 2;
-  final public static int KEYS_DONTMATCH = 3;
-  final public static int SECRETS_DONTMATCH = 4;
-  final public static int BOTH_DONTMATCH = 5;
-  final public static int KEYS_SHORT = 6;
-  final public static int KEY1_SHORT = 7;
-  final public static int KEY2_SHORT = 8;
-  final public static int SECRETS_SHORT = 9;
-  final public static int SECRET1_SHORT = 10;
-  final public static int SECRET2_SHORT = 11;
-  final public static int BOTH_SHORT = 12;
-  final public static int SIGNATURE_ERROR = 13;
-  final public static int ACCEPT_TERMS = 14;
-  final public static int ERR_NO_USER = 15;
+
   
   // hash of this objects vars
   // verify it was disturbed during transit

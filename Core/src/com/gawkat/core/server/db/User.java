@@ -3,6 +3,8 @@ package com.gawkat.core.server.db;
 import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.server.db.oauth.OAuthServer;
+import com.gawkat.core.server.jdo.ThingJdo;
+import com.gawkat.core.server.jdo.Thing_TypeJdo;
 
 /**
  * database methods for user
@@ -10,12 +12,12 @@ import com.gawkat.core.server.db.oauth.OAuthServer;
  * @author branflake2267
  *
  */
-public class Db_User extends Db_Conn {
+public class User {
 
   /**
    * constructor
    */
-  public Db_User() {
+  public User() {
   }
   
   private boolean verifyUserData(UserData userData) {
@@ -51,26 +53,19 @@ public class Db_User extends Db_Conn {
       return udErr;
     }
     
-    // prepare insert
-    String consumerKey = escapeForSql(userData.consumerKey);
-    String consumerSecret = escapeForSql(userData.consumerSecret);
+    
+    // TODO - deal with this in a thing hash table
     boolean acceptTerms = userData.acceptTerms;
     
-    int accept = 0;
-    if(acceptTerms == true) {
-      accept = 1;
-    }
     
-    String sql = "INSERT INTO `thing` SET " +
-    		"ThingTypeId='2', " +
-    		"`Key`='" + consumerKey + "', " +
-    		"Secret='" + consumerSecret + "', " +
-    		"AcceptTerms='" + accept + "', " +
-    		"DateCreated=NOW();";
+    long thingTypeId = Thing_TypeJdo.TYPE_USER;
+    String key = userData.consumerKey;
+    String secret = userData.consumerSecret;
     
-    System.out.println("sql: " + sql);
+    ThingJdo user = new ThingJdo();
+    user.insert(thingTypeId, key, secret);
     
-    int newUserId = setQuery(sql);
+    Long newUserId = user.getId();
     
     // TODO - error???
     if (newUserId == 0) {
@@ -120,27 +115,10 @@ public class Db_User extends Db_Conn {
     }
     
     // TODO - I think I need to run more checking later
-    userConsumerKey = escapeForSql(userConsumerKey);
-    userConsumerSecret = escapeForSql(userConsumerSecret);
-  
-    String sql = "";
-    if (1 == 1) { // just key
-      sql = "SELECT ThingId FROM `thing` " +
-      "WHERE " +
-      "(ThingTypeId='2') AND " +
-      "(`Key`='" + userConsumerKey + "');";
-      
-    } else if (2 == 3) { // key and secret
-      sql = "SELECT ThingId FROM `thing` " +
-      "WHERE " +
-      "(ThingTypeId='2') AND " +
-      "(`Key`='" + userConsumerKey + "') AND " +
-      "(Secret='" + userConsumerSecret + "');";
-     }
 
-    System.out.println("query: " + sql);
-    
-    int userId = getQueryInt(sql);
+    // get userId
+    ThingJdo[] users = ThingJdo.query((long)Thing_TypeJdo.TYPE_USER, userData.consumerKey);
+    Long userId = users[0].getId();
     
     boolean exists = false;
     if (userId > 0) {

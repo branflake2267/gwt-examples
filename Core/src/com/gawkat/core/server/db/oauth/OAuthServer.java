@@ -7,11 +7,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.UUID;
 
+import javax.mail.Session;
+
 import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
-import com.gawkat.core.server.db.Db_Conn;
+import com.gawkat.core.server.jdo.Session_AccessTokenJdo;
+import com.gawkat.core.server.jdo.Session_NonceJdo;
+import com.gawkat.core.server.jdo.ThingJdo;
+import com.gawkat.core.server.jdo.Thing_TypeJdo;
 
-public class OAuthServer extends Db_Conn {
+public class OAuthServer {
 
   final private static int APPLICATION = 1;
   final private static int USER = 2;
@@ -22,6 +27,15 @@ public class OAuthServer extends Db_Conn {
   public OAuthServer() {
   }
 
+  /**
+   * use this to debug
+   * 
+   * @param debug
+   */
+  private void debug(String debug) {
+    System.out.println(debug);
+  }
+  
   /**
    * A. -> (B. grant request token): Can we go to the next step? Service
    * Provider (this), can grant request token?
@@ -43,7 +57,7 @@ public class OAuthServer extends Db_Conn {
     boolean verifySignature = token.verify(url, appData.consumerSecret);
 
     // check nonce
-    boolean verifyNonce = verifyNonceHasntBeenUsed(token, APPLICATION, appData.applicationId);
+    boolean verifyNonce = verifyNonceHasntBeenUsed(token, (long) Thing_TypeJdo.TYPE_APPLICATION, appData.applicationId);
 
     // prepare for transport back
     OAuthTokenData returnToken = new OAuthTokenData();
@@ -63,7 +77,7 @@ public class OAuthServer extends Db_Conn {
     }
 
     // set nonce, so it can't be used again
-    setNonce(token, url, APPLICATION, appData.applicationId);
+    setNonce(token, url, (long) Thing_TypeJdo.TYPE_APPLICATION, appData.applicationId);
 
     debug("requestToken: url: " + url + " secret: " + at.accessTokenSecret);
 
@@ -103,10 +117,10 @@ public class OAuthServer extends Db_Conn {
     boolean verifySignature = appAccessToken.verify(url, userData.consumerSecret);
 
     // check nonce
-    boolean verifyNonce = verifyNonceHasntBeenUsed(appAccessToken, USER, userData.userId);
+    boolean verifyNonce = verifyNonceHasntBeenUsed(appAccessToken, (long) Thing_TypeJdo.TYPE_USER, userData.userId);
 
     // verify application's access, then transfer it to the user if all passes
-    int accessId = getAccessId(appAccessToken);
+    Long accessId = getAccessId(appAccessToken);
 
     // examine if we can go to the next step
     if (accessId == 0 | userData.userId == 0 | userData.error > 0 | verifySignature == false | verifyNonce == false) {
@@ -123,7 +137,7 @@ public class OAuthServer extends Db_Conn {
     }
 
     // set nonce, so it can't be used again.
-    setNonce(appAccessToken, url, USER, userData.userId);
+    setNonce(appAccessToken, url, (long) Thing_TypeJdo.TYPE_USER, userData.userId);
 
     // sign the token for transport back
     // TODO should I be signing with consumer secret?
@@ -151,39 +165,13 @@ public class OAuthServer extends Db_Conn {
    */
   private UserData getUserData(OAuthTokenData token) {
 
-    String consumerKey = escapeForSql(token.getConsumerKey());
+    String consumerKey = token.getConsumerKey();
 
-    // find user
-    String sql = "SELECT ThingId, Secret FROM `thing` " + 
-          "WHERE " +
-          "(ThingTypeId='2') AND " +
-          "(`Key`='" + consumerKey + "');"; 
+    // get user (thing)
+    ThingJdo[] users = ThingJdo.query((long)Thing_TypeJdo.TYPE_USER, consumerKey);
+    Long userId = users[0].getId();
+    String consumerSecret = users[0].getSecret();
     
-    int userId = 0;
-    String consumerSecret = null;
-    try {
-      Connection conn = this.getDbConnRead();
-      Statement select = conn.createStatement();
-      ResultSet result = select.executeQuery(sql);
-      while (result.next()) {
-        userId = result.getInt(1);
-        consumerSecret = result.getString(2);
-      }
-      select.close();
-      result.close();
-      conn.close();
-    } catch (SQLException e) {
-      System.err.println("Mysql Statement Error: " + sql);
-      e.printStackTrace();
-    }
-
-    // no user Found - make an error
-    if (userId == 0) {
-      UserData udError = new UserData();
-      udError.error = UserData.ERR_NO_USER;
-      return udError;
-    }
-
     // found a user
     UserData ud = new UserData();
     ud.consumerKey = token.getConsumerKey();
@@ -205,35 +193,19 @@ public class OAuthServer extends Db_Conn {
       System.out.println("No tokenData exists. ERROR: getApplicationId()");
     }
 
-    String ck = escapeForSql(token.getConsumerKey());
-
-    String sql = "SELECT ThingId, `Key`, Secret " +
-    		"FROM `thing` " +
-    		"WHERE " +
-    		"(ThingTypeId='1') AND " +
-    		"(`Key`='" + ck + "')";
-
-    // debug
-    System.out.println("sql query: " + sql);
-
+    String ck = token.getConsumerKey();
+    
+    // get user (thing)
+    ThingJdo[] apps = ThingJdo.query((long) Thing_TypeJdo.TYPE_APPLICATION, ck);
+    Long applicationId = apps[0].getId();
+    String consumerKey = apps[0].getKey();
+    String consumerSecret = apps[0].getSecret();
+    
     ApplicationData appData = new ApplicationData();
-    try {
-      Connection conn = this.getDbConnRead();
-      Statement select = conn.createStatement();
-      ResultSet result = select.executeQuery(sql);
-      while (result.next()) {
-        appData.applicationId = result.getInt(1);
-        appData.consumerKey = result.getString(2);
-        appData.consumerSecret = result.getString(3);
-      }
-      select.close();
-      result.close();
-      conn.close();
-    } catch (SQLException e) {
-      System.err.println("Mysql Statement Error: " + sql);
-      e.printStackTrace();
-    }
-
+    appData.applicationId = applicationId;
+    appData.consumerKey = consumerKey;
+    appData.consumerSecret = consumerSecret;
+      
     return appData;
   }
 
@@ -246,7 +218,7 @@ public class OAuthServer extends Db_Conn {
    * @param thingId 
    * @return
    */
-  private boolean verifyNonceHasntBeenUsed(OAuthTokenData token, int thingTypeId, int thingId) {
+  private boolean verifyNonceHasntBeenUsed(OAuthTokenData token, Long thingTypeId, Long thingId) {
 
     String whereQuery = "(ThingTypeID='" + thingTypeId + "') AND (ThingId='" + thingId + "')";
    
@@ -254,22 +226,12 @@ public class OAuthServer extends Db_Conn {
       System.out.println("ERROR: verifyNonce(), for some reason there is no appId or userId");
       return false;
     }
+    
+    String nonce = token.getNonce();
 
-    // NOTE: Nonce is case sensitive in sql table
-    String sql = "SELECT NonceId " + 
-      "FROM session_nonce " + 
-      "WHERE " + whereQuery + " AND " + 
-      "(Nonce='" + token.getNonce() + "');";
-
-    // debug
-    System.out.println("Query Nonce:" + sql);
-
-    int i = getQueryInt(sql);
-    boolean b = true;
-    if (i > 0) {
-      b = false;
-    }
-    return b;
+    boolean found = Session_NonceJdo.doesNonceExist(thingTypeId, thingId, nonce);
+ 
+    return found;
   }
 
   /**
@@ -280,19 +242,9 @@ public class OAuthServer extends Db_Conn {
    * @param thingTypeId
    * @param thingId
    */
-  private void setNonce(OAuthTokenData token, String url, int thingTypeId, int thingId) {
-
-    // TODO - this seems like there could be collissions possibly with Nonce?
-
-    String sql = "INSERT INTO session_nonce SET " + 
-      "Url='" + escapeForSql(url) + "', " + 
-      "ThingTypeId='" + thingTypeId + "', " + 
-      "ThingId='" + thingId + "', " + 
-      "Nonce='" + escapeForSql(token.getNonce()) + "', " + 
-      "DateCreated=NOW();";
-
-    System.out.println("setNonce query: " + sql);
-    setQuery(sql);
+  private void setNonce(OAuthTokenData token, String url, Long thingTypeId, Long thingId) {
+    Session_NonceJdo n = new Session_NonceJdo();
+    n.insert(url, thingTypeId, thingId, token.getNonce());
   }
 
   /**
@@ -301,52 +253,40 @@ public class OAuthServer extends Db_Conn {
    * @param applicationId
    * @return
    */
-  private AccessTokenData setAccessToken_application(int applicationId) {
+  private AccessTokenData setAccessToken_application(Long applicationId) {
 
-    // TODO - on getAccessId - do I get applicationId?
+    String accessKey = getAccessKey();
+    String accessSecret = getAccessSecret();
+
+    Session_AccessTokenJdo sa = new Session_AccessTokenJdo();
+    boolean success = sa.insert((long)Thing_TypeJdo.TYPE_APPLICATION, applicationId, accessKey, accessSecret);
     
-    String accessKey = escapeForSql(getAccessKey());
-    String accessSecret = escapeForSql(getAccessSecret());
-
-    String sql = "INSERT INTO session_accesstoken SET " +
-      "ThingTypeId='1', " +
-      "ThingId='" + applicationId + "', " +
-      "AccessToken='" + accessKey + "'," + 
-      "AccessTokenSecret='" + accessSecret + "', " + 
-      "DateCreated=NOW();";
-
-    setQuery(sql);
-
-    // transport back
     AccessTokenData at = new AccessTokenData();
-    at.accessToken = accessKey;
-    at.accessTokenSecret = accessSecret;
+    if (success == true) {
+      at.accessToken = accessKey;
+      at.accessTokenSecret = accessSecret;
+    } else {
+      at = null;
+    }
+    
     return at;
   }
 
   /**
    * get the AccessId - verify there is a session token
    * 
-   * TODO For user??
-   * 
    * @param appAccessToken
    * @return
    */
-  private int getAccessId(OAuthTokenData appAccessToken) {
+  private Long getAccessId(OAuthTokenData appAccessToken) {
 
-    // TODO - look for applicationID ??????
+    String appConsumerKey = appAccessToken.getAccessToken_key();
+    String appConsumerSecret = appAccessToken.getAccessToken_secret();
+
+    Session_AccessTokenJdo[] sas = Session_AccessTokenJdo.query(appConsumerKey, appConsumerSecret);
+    Session_AccessTokenJdo sa = sas[0];
     
-    String appConsumerKey = escapeForSql(appAccessToken.getAccessToken_key());
-    String appConsumerSecret = escapeForSql(appAccessToken.getAccessToken_secret());
-
-    String sql = "SELECT Id " + 
-      "FROM session_accesstoken " + 
-      "WHERE " + 
-      // TODO ??? "(ThingTypeId='2') AND " +
-      "(AccessToken='" + appConsumerKey + "') AND " + 
-      "(AccessTokenSecret='" + appConsumerSecret + "');";
-
-    int accessId = getQueryInt(sql);
+    Long accessId = sa.getId();
 
     return accessId;
   }
@@ -355,24 +295,14 @@ public class OAuthServer extends Db_Conn {
    * set the access token for the session, but then then transfer it to this
    * user here
    * 
-   * @param accessId
+   * @param id - the unique data object id for that token
    * @param userId
    * @return
    */
-  private boolean setAccessToken_user(int accessId, int userId) {
+  private boolean setAccessToken_user(Long id, Long userId) {
 
-    String sql = "UPDATE session_accesstoken SET " +
-      "ThingId='" + userId + "', " + 
-      "DateUpdated=NOW() " + 
-      "WHERE (Id='" + accessId + "') AND (ThingTypeId='2');";
-
-    int id = setQuery(sql);
-
-    if (id > 0) {
-      return true;
-    } else {
-      return false;
-    }
+    return Session_AccessTokenJdo.updateAccessToken(id, userId);
+     
   }
 
   /**
@@ -398,7 +328,6 @@ public class OAuthServer extends Db_Conn {
    */
   private String getAccessSecret() {
 
-    // TODO - is this the length i want?
     int nounceLength = 15;
     String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
     String s = "";

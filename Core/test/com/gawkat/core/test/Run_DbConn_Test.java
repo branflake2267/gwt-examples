@@ -1,7 +1,6 @@
 package com.gawkat.core.test;
 
-import com.gawkat.core.server.db.Db_Conn;
-import com.gawkat.core.server.db.Db_User;
+import com.gawkat.core.server.db.User;
 
 public class Run_DbConn_Test {
 
@@ -10,10 +9,10 @@ public class Run_DbConn_Test {
    */
   public static void main(String[] args) {
     
-    Db_Conn db = new Db_Conn();
+    //Db_Conn db = new Db_Conn();
     
-    String sql = "SELECT ThingId FROM thing LIMIT 0,1;";
-    db.getQueryInt(sql);
+    //String sql = "SELECT ThingId FROM thing LIMIT 0,1;";
+    //db.getQueryInt(sql);
   }
 
 }

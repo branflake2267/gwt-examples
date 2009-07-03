@@ -1,6 +1,6 @@
 package com.gawkat.core.client.account;
 
-import com.gawkat.core.client.EventManager;
+
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.client.oauth.Sha1;
 import com.gawkat.core.client.rpc.Rpc;
@@ -25,6 +25,8 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+
+import com.gawkat.core.client.EventManager;
 
 public class CreateUserAccount extends DialogBox implements ClickListener, KeyboardListener, FocusListener, ChangeListener {
 
