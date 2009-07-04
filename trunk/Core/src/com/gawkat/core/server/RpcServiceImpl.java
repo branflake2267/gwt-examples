@@ -13,6 +13,7 @@ import com.gawkat.core.client.rpc.RpcService;
 import com.gawkat.core.server.db.ThingType;
 import com.gawkat.core.server.db.User;
 import com.gawkat.core.server.db.oauth.OAuthServer;
+import com.gawkat.core.server.jdo.SetDefaults;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 @SuppressWarnings("serial")
@@ -177,6 +178,11 @@ public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
   public ThingTypeData[] getThingTypes(ThingTypeFilterData filter) {
     ThingType thingType = new ThingType();
     return thingType.getThingTypes(filter);
+  }
+  
+  public boolean setDefaults(int defaultType) {
+    SetDefaults sd = new SetDefaults();
+    return sd.setDefaults(defaultType);
   }
   
 }

@@ -3,6 +3,7 @@ package com.gawkat.core.client;
 import java.util.HashMap;
 
 import com.gawkat.core.client.account.AccountManagementNavigation;
+import com.gawkat.core.client.admin.thingtype.ThingTypes;
 import com.gawkat.core.client.global.QueryString;
 import com.gawkat.core.client.global.QueryStringData;
 import com.gawkat.core.client.ui.LoginUi;
@@ -22,10 +23,17 @@ public class Core implements EntryPoint {
   
   public void onModuleLoad() {
     
-    RootPanel.get().add(new HTML("loaded"));
+    //RootPanel.get().add(new HTML("loaded"));
     
+    testThingTypes();
   }
 
+  private void testThingTypes() {
+    
+    ThingTypes w = new ThingTypes();
+    w.draw();
+    RootPanel.get().add(w);
+  }
  
 
 

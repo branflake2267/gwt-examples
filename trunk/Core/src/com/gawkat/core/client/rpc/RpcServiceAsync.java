@@ -34,4 +34,6 @@ public interface RpcServiceAsync {
   
   public void getThingTypes(ThingTypeFilterData filter, AsyncCallback<ThingTypeData[]> callback);
   
+  public void setDefaults(int defaultType, AsyncCallback<Boolean> callback);
+  
 }

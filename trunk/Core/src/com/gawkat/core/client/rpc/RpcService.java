@@ -36,4 +36,5 @@ public interface RpcService extends RemoteService {
   
   public ThingTypeData[] getThingTypes(ThingTypeFilterData filter);
   
+  public boolean setDefaults(int defaultType);
 }
