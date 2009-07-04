@@ -4,6 +4,9 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ThingTypeData implements IsSerializable {
 
+  // to set the defaults use this int
+  public static final int DEFAULT_TYPE = 1;
+  
   private Long id;
   
   private String name;

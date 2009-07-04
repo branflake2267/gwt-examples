@@ -2,11 +2,16 @@ package com.gawkat.core.client.admin.thingtype;
 
 import com.gawkat.core.client.rpc.Rpc;
 import com.gawkat.core.client.rpc.RpcServiceAsync;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
-public class ThingTypes extends Composite {
+public class ThingTypes extends Composite implements ClickHandler {
 
   private RpcServiceAsync call = null;
   
@@ -16,6 +21,8 @@ public class ThingTypes extends Composite {
   
   private VerticalPanel pList = new VerticalPanel();
   
+  private PushButton bDefault = new PushButton("Defaults");
+  
   public ThingTypes() {
     
     pWidget.add(pMenu);
@@ -24,23 +31,59 @@ public class ThingTypes extends Composite {
     initWidget(pWidget);
     
     call = Rpc.initRpc();
+    
+    drawMenu();
+  }
+  
+  public void draw() {
+    getThingTypesRpc();
+  }
+  
+  public void drawMenu() {
+    
+    HorizontalPanel hp = new HorizontalPanel();
+    hp.add(bDefault);
+    
+    pWidget.add(hp);
+    
+    bDefault.addClickHandler(this);
   }
   
   private void process(ThingTypeData[] thingTypeData) {
     
+    if (thingTypeData == null) {
+      return;
+    }
+    
     for (int i=0; i < thingTypeData.length; i++){
       addThingType(thingTypeData[i]);
     }
-    
   }
   
   private void addThingType(ThingTypeData thingTypeData) {
     ThingType t = new ThingType();
+    t.setData(thingTypeData);
     pList.add(t);
+  }
+  
+  /**
+   * add the defaults application, user, group
+   */
+  private void setThingTypeDefault() {
+    
+    call.setDefaults(ThingTypeData.DEFAULT_TYPE, new AsyncCallback<Boolean>() {
+      public void onSuccess(Boolean result) {
+        draw();
+      }
+      public void onFailure(Throwable caught) {
+      }
+    });
+    
   }
   
   private void getThingTypesRpc() {
     
+    // TODO use this later
     ThingTypeFilterData filter = new ThingTypeFilterData();
     
     call.getThingTypes(filter, new AsyncCallback<ThingTypeData[]>() {
@@ -51,6 +94,15 @@ public class ThingTypes extends Composite {
       }
     });
     
+  }
+
+  public void onClick(ClickEvent event) {
+  
+    Widget sender = (Widget) event.getSource();
+    
+    if (sender == bDefault) {
+      setThingTypeDefault();
+    }
   }
   
 }
