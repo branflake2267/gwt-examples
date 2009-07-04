@@ -18,7 +18,7 @@
   
   <servlet-mapping>
     <servlet-name>rpcServlet</servlet-name>
-    <url-pattern>/core/rpcservice</url-pattern>
+    <url-pattern>/core/rpccore</url-pattern>
   </servlet-mapping>
 
 </web-app>
