@@ -1,0 +1,124 @@
+package com.gawkat.core.client;
+
+import java.util.HashMap;
+
+import com.gawkat.core.client.account.AccountManagementNavigation;
+import com.gawkat.core.client.global.QueryString;
+import com.gawkat.core.client.global.QueryStringData;
+import com.gawkat.core.client.ui.LoginUi;
+import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.HistoryListener;
+import com.google.gwt.user.client.ui.ChangeListener;
+import com.google.gwt.user.client.ui.Widget;
+
+/**
+ * Entry point classes define <code>onModuleLoad()</code>.
+ */
+public class Core implements EntryPoint, ChangeListener, HistoryListener {
+
+
+	  private String appConsumerKey = "demo_application";
+	  private String appConsumerSecret = "c1d0e06998305903ac76f589bbd6d4b61a670ba6"; //salt:password
+	  
+	  // this manages the users privileges to protected resources
+	  private SessionManager sessionManager = null;
+	  
+	  // have ready the accounts management after init
+	  private AccountManagementNavigation accountManagement = null;
+	  
+	  // go to this when there is no historyToken. All navigation will use historyToken/anchors
+	  private String defaultHomePage = "home";
+	  
+	  /**
+	   * This is the entry point method.
+	   */
+	  public void onModuleLoad() {
+
+	    // observe the url for changes
+	    History.addHistoryListener(this);
+	    
+	    // session management for the application
+	    initSessionManager();
+	    
+	    /*
+	    VerticalPanel vp = new VerticalPanel();
+	    RootPanel.get().add(vp);
+	    vp.setWidth("100%");
+	    
+	    Items items = new Items();
+	    vp.add(items);
+	    items.draw();
+	    
+	    items.addStyleName("wi-home");
+	    
+	    vp.setCellHorizontalAlignment(items, HorizontalPanel.ALIGN_CENTER);
+	    */
+	  }
+	  
+	  /**
+	   * manage the session and acess to protected resources 
+	   * for the web site and user using the web site
+	   */
+	  private void initSessionManager() {
+	   sessionManager = new SessionManager();
+	   sessionManager.setAppConsumerKey(appConsumerKey, appConsumerSecret); 
+	   sessionManager.setLoginUiDiv("LoginUI", LoginUi.LOGIN_HORIZONTAL);
+	   
+	   // observe for login events ...
+	   sessionManager.addChangeListener(this);
+	  }
+	  
+	  private void drawAccountsManagement(QueryStringData qsd) {
+	    if (accountManagement == null) {
+	      accountManagement = new AccountManagementNavigation();
+	    }
+	    accountManagement.setQueryStringData(qsd);
+	  }
+
+
+	  /**
+	   * observe the url for changes
+	   */
+	  public void onHistoryChanged(String historyToken) {
+	    
+	    // this allows us to get the parameters in the historyToken domain.tld/page.html#anchor?params
+	    QueryString parse = new QueryString();
+	    QueryStringData qsd = parse.getQueryStringData();
+	    historyToken = qsd.getHistoryToken();
+	    HashMap<String, String> params = qsd.getParameters();
+	    
+	    // url navigation - with parameters
+	    if (historyToken.length() == 0) {
+	      History.newItem(defaultHomePage);
+	      
+	    } else if (historyToken.matches("account_.*")) { // draw account mangement with anything that has account_ in the anchor
+	      drawAccountsManagement(qsd);
+	    
+	      
+	    } else if (historyToken.matches("other_.*")) {
+	      // TODO application management
+	    }
+	    
+	  }
+
+	 
+	  /**
+	   * observer
+	   */
+	  public void onChange(Widget sender) {
+	 
+	    if (sender == sessionManager) {
+	      int changeEvent = sessionManager.getChangeEvent();
+	      if (changeEvent == EventManager.LOGGEDIN) {
+	        
+	        // TODO - after login, do something
+	        
+	      } else if (changeEvent == EventManager.LOGGEDOUT) {
+	        sessionManager.setAppConsumerKey(appConsumerKey, appConsumerSecret); // reset the session entirely
+	        History.newItem("home"); // reset app 
+	      }
+	    }
+	    
+	  }
+}
