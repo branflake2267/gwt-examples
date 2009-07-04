@@ -1,6 +1,0 @@
-com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException, true
-com.tribling.gwt.test.oauth.client.oauth.OAuthTokenData, true
-java.lang.Exception, false
-java.lang.RuntimeException, false
-java.lang.String, true
-java.lang.Throwable, false
