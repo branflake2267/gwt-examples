@@ -6,8 +6,11 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 import com.gawkat.core.client.account.UserData;
+import com.gawkat.core.client.admin.thingtype.ThingTypeData;
+import com.gawkat.core.client.admin.thingtype.ThingTypeFilterData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.client.rpc.RpcService;
+import com.gawkat.core.server.db.ThingType;
 import com.gawkat.core.server.db.User;
 import com.gawkat.core.server.db.oauth.OAuthServer;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -165,4 +168,15 @@ public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
     return rtnToken;
   }
 	
+  /**
+   * get thing types
+   * 
+   * @param filter
+   * @return
+   */
+  public ThingTypeData[] getThingTypes(ThingTypeFilterData filter) {
+    ThingType thingType = new ThingType();
+    return thingType.getThingTypes(filter);
+  }
+  
 }

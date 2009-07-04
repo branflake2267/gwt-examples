@@ -11,6 +11,9 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.gawkat.core.client.admin.thingtype.ThingTypeData;
+import com.gawkat.core.client.admin.thingtype.ThingTypeFilterData;
+
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class Thing_TypeJdo {
@@ -37,6 +40,10 @@ public class Thing_TypeJdo {
     return this.thingTypeId;
   }
   
+  public String getName() {
+    return this.name;
+  }
+  
   public void insert(String name) {
     this.name = name;
     this.dateCreated = new Date();
@@ -55,7 +62,7 @@ public class Thing_TypeJdo {
     }
   }
   
-  public Thing_TypeJdo[] query(String name) {
+  public static Thing_TypeJdo[] query(String name) {
     
     Thing_TypeJdo[] things = null;
 
@@ -88,5 +95,42 @@ public class Thing_TypeJdo {
 
     return things;
   }
+  
+  public static ThingTypeData[] query(ThingTypeFilterData filter) {
+    
+    // TODO configure drill to setup filters
+    
+    ThingTypeData[] t = null;
+
+    PersistenceManager pm = PMF.get().getPersistenceManager();
+    try {
+
+      //String filter = "name==\"" + name + "\"";
+      Query query = pm.newQuery(ThingJdo.class);
+
+      try {
+        List<Thing_TypeJdo> results = (List<Thing_TypeJdo>) query.execute();
+        if (results.iterator().hasNext()) {
+          t = new ThingTypeData[results.size()];
+          int i=0;
+          for (Thing_TypeJdo o : results) {
+            t[i] = new ThingTypeData();
+            t[i].set(o.getId(), o.getName());
+            i++;
+          }
+        } else {
+          t = null;
+        }
+      } finally {
+        query.closeAll();
+      }
+
+    } finally {
+      pm.close();
+    }
+
+    return t;
+  }
+  
   
 }
