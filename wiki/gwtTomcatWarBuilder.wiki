@@ -1,5 +1,4 @@
 #summary gwt Tomcat War Builder
-#labels Featured
 
 = Deprecated This Page =
  I am going to stop support on the TomcatWarBuilder shortly. I didn't realize at the time that Ant could do the job so much better. Google has come up with an excellent system in 1.6+. I am excited about using future releases because of the entire change.
