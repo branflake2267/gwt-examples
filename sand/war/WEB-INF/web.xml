@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+  
+<!-- 
+/etc/tomcat6/server.xml
+
+      <Host name="localhost"  appBase="webapps" unpackWARs="true" autoDeploy="true" xmlValidation="false" xmlNamespaceAware="false">
+
+		<Context path="/sand" docBase="sand" debug="5" reloadable="true" crossContext="true">
+	
+			<Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource"
+			      maxActive="10" maxIdle="5" maxWait="10000"
+			      username="Branflake2267" password="password" driverClassName="com.mysql.jdbc.Driver"
+			      url="jdbc:mysql://192.168.10.79:3306/test?autoReconnect=true"/>
+	
+		</Context>
+
+      </Host>
+-->
+  
+<!-- 
+// need to insert this or make another policy file
+/etc/tomcat6/policy.d/100gwt.policy
+
+// servlet permission for mysql access/connection 
+grant codeBase "file:/var/lib/tomcat6/webapps/sand/-" {
+  permission java.net.SocketPermission "192.168.12.81:3306", "connect";
+};
+
+// OR
+
+// servlet permission for all security, so you can do all with servlet.
+// I do this b/c of the passing of private variables in my serialized objects
+grant codeBase "file:/var/lib/tomcat6/webapps/sand/-" {
+  permission java.security.AllPermission;
+};
+-->
+  
+  <resource-ref>
+      <description>DB Connection</description>
+      <res-ref-name>jdbc/TestDB</res-ref-name>
+      <res-type>javax.sql.DataSource</res-type>
+      <res-auth>Container</res-auth>
+  </resource-ref>
+  
+  
+  <!-- Servlets -->
+  <servlet>
+    <servlet-name>greetServlet</servlet-name>
+    <servlet-class>com.gawkat.server.GreetingServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>greetServlet</servlet-name>
+    <url-pattern>/sand/greet</url-pattern>
+  </servlet-mapping>
+  
+  <!-- Default page to serve -->
+  <welcome-file-list>
+    <welcome-file>sand.html</welcome-file>
+  </welcome-file-list>
+
+</web-app>
