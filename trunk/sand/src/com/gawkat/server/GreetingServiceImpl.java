@@ -41,8 +41,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
   
   private void tryConnection() {
     
-    String serverType = getServletContext().getServerInfo();
-    System.out.println("serverType: " + serverType);
+    String serverInfo = getServletContext().getServerInfo();
+    System.out.println("serverType: " + serverInfo);
     
     
     Context initContext = null;
