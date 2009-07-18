@@ -12,6 +12,9 @@
 
 		<Context path="/sand" docBase="sand" debug="5" reloadable="true" crossContext="true">
 	
+	        <!-- sticking this here won't allow you to use the manager to uplaod wars, need to stick this in context.xml -->
+			<!-- like stick this in context.xml file in the tomcat/context.xml or Add -->
+			<!-- like stick this in /etc/tomcat6/context.xml ->  <WatchedResource>META-INF/context.xml</WatchedResource> -->
 			<Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource"
 			      maxActive="10" maxIdle="5" maxWait="10000"
 			      username="Branflake2267" password="password" driverClassName="com.mysql.jdbc.Driver"
