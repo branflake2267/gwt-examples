@@ -16,6 +16,7 @@
 			<!-- like stick this in context.xml file in the tomcat/context.xml or Add -->
 			<!-- like stick this in /etc/tomcat6/context.xml ->  <WatchedResource>META-INF/context.xml</WatchedResource> -->
 			<Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource"
+			      removeAbandoned="true" removeAbandonedTimeout="30" logAbandoned="true"
 			      maxActive="10" maxIdle="5" maxWait="10000"
 			      username="Branflake2267" password="password" driverClassName="com.mysql.jdbc.Driver"
 			      url="jdbc:mysql://192.168.10.79:3306/test?autoReconnect=true"/>
