@@ -23,7 +23,7 @@ public class TestJdo {
     try {
       tx.begin();
   
-      pm.makePersistent(new com.gawkat.jdo.server.data.Employee("Levi Donnelson", s, 2589));
+      pm.makePersistent(new com.gawkat.jdo.server.data.Employee("test", s, 2589));
   
       tx.commit();
     } finally {
