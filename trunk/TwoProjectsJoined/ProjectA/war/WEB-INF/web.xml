@@ -4,8 +4,14 @@
     "http://java.sun.com/dtd/web-app_2_3.dtd">
 
 <web-app>
+
+  <!-- Default page to serve -->
+  <welcome-file-list>
+    <welcome-file>ProjectA.html</welcome-file>
+  </welcome-file-list>
   
-  <!-- Servlets -->
+  
+  <!-- Servlets Project A -->
   <servlet>
     <servlet-name>greetServlet</servlet-name>
     <servlet-class>com.gawkat.projecta.server.GreetingServiceImpl</servlet-class>
@@ -16,9 +22,23 @@
     <url-pattern>/projecta/greet</url-pattern>
   </servlet-mapping>
   
-  <!-- Default page to serve -->
-  <welcome-file-list>
-    <welcome-file>ProjectA.html</welcome-file>
-  </welcome-file-list>
+  
+    <!-- Servlets Project B -->
+  <servlet>
+    <servlet-name>rpcb</servlet-name>
+    <servlet-class>com.gawkat.projectb.server.RpcServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>rpcb</servlet-name>
+    <url-pattern>/projecta/rpcb</url-pattern>
+  </servlet-mapping>
+  
+  
+
+
+
+
+
 
 </web-app>
