@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.7.0//EN" "http://google-web-toolkit.googlecode.com/svn/tags/1.7.0/distro-source/core/src/gwt-module.dtd">
+<module rename-to='projecta'>
+
+  <inherits name='com.google.gwt.user.User'/>
+
+
+  <inherits name='com.google.gwt.user.theme.standard.Standard'/>
+
+  <!-- inherit a sub project with widgets -->
+  <inherits name='com.gawkat.projectb.ProjectB'/>
+  
+
+  <entry-point class='com.gawkat.projecta.client.ProjectA'/>
+  
+  
+</module>
