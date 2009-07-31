@@ -90,8 +90,14 @@
 	</target>
 	
 	<!--
-	(chain)
+	(dependencies)
 	war -> build -> gwtc -> javac -> libs
+	-->
+	
+	<!--
+	1. right click on me, debug as > Ant Build
+	2. Goto play arrow with tool box (debug menu icons) > External Tools Configurations > 
+	   Targets (tab) > select War > unselect build (war does this) - this will build the war
 	-->
 
 </project>
