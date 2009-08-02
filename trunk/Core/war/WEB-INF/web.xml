@@ -12,12 +12,12 @@
   
   <!-- Servlets -->
   <servlet>
-    <servlet-name>rpcServlet</servlet-name>
-    <servlet-class>com.gawkat.core.server.RpcServiceImpl</servlet-class>
+    <servlet-name>rpcCoreServlet</servlet-name>
+    <servlet-class>com.gawkat.core.server.RpcCoreServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>rpcServlet</servlet-name>
+    <servlet-name>rpcCoreServlet</servlet-name>
     <url-pattern>/core/rpccore</url-pattern>
   </servlet-mapping>
 
