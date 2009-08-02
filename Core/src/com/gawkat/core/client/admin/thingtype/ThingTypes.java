@@ -1,7 +1,7 @@
 package com.gawkat.core.client.admin.thingtype;
 
-import com.gawkat.core.client.rpc.Rpc;
-import com.gawkat.core.client.rpc.RpcServiceAsync;
+import com.gawkat.core.client.rpc.RpcCore;
+import com.gawkat.core.client.rpc.RpcCoreServiceAsync;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -13,7 +13,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ThingTypes extends Composite implements ClickHandler {
 
-  private RpcServiceAsync call = null;
+  private RpcCoreServiceAsync call = null;
   
   private VerticalPanel pWidget = new VerticalPanel();
   
@@ -30,7 +30,7 @@ public class ThingTypes extends Composite implements ClickHandler {
     
     initWidget(pWidget);
     
-    call = Rpc.initRpc();
+    call = RpcCore.initRpc();
     
     drawMenu();
   }

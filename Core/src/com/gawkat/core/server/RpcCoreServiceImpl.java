@@ -9,7 +9,7 @@ import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.admin.thingtype.ThingTypeData;
 import com.gawkat.core.client.admin.thingtype.ThingTypeFilterData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
-import com.gawkat.core.client.rpc.RpcService;
+import com.gawkat.core.client.rpc.RpcCoreService;
 import com.gawkat.core.server.db.ThingType;
 import com.gawkat.core.server.db.User;
 import com.gawkat.core.server.db.oauth.OAuthServer;
@@ -17,7 +17,7 @@ import com.gawkat.core.server.jdo.SetDefaults;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 @SuppressWarnings("serial")
-public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
+public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreService {
 
 	/**
 	 * clear a eclipse notification with this

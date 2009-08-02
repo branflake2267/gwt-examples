@@ -2,8 +2,8 @@ package com.gawkat.core.client;
 
 import com.gawkat.core.client.EventManager;
 import com.gawkat.core.client.oauth.OAuthTokenData;
-import com.gawkat.core.client.rpc.Rpc;
-import com.gawkat.core.client.rpc.RpcServiceAsync;
+import com.gawkat.core.client.rpc.RpcCore;
+import com.gawkat.core.client.rpc.RpcCoreServiceAsync;
 import com.gawkat.core.client.ui.LoginUi;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
@@ -24,7 +24,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class SessionManager extends Composite implements ChangeListener {
 
   // rpc system
-  public RpcServiceAsync callRpcService;
+  public RpcCoreServiceAsync callRpcService;
 
   // observe events
   private ChangeListenerCollection changeListeners = null;
@@ -59,7 +59,7 @@ public class SessionManager extends Composite implements ChangeListener {
     loginUi = new LoginUi();
     
     // init rpc
-    callRpcService = Rpc.initRpc();
+    callRpcService = RpcCore.initRpc();
 
     // observe
     loginUi.addChangeListener(this);

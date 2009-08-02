@@ -6,7 +6,7 @@ import com.gawkat.core.client.admin.thingtype.ThingTypeFilterData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public interface RpcServiceAsync {
+public interface RpcCoreServiceAsync {
 
 	/**
 	 * example rpc request with the callback
