@@ -8,7 +8,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 @RemoteServiceRelativePath("rpccore")
-public interface RpcService extends RemoteService {
+public interface RpcCoreService extends RemoteService {
 
 	/**
 	 * example rpc request
@@ -37,4 +37,5 @@ public interface RpcService extends RemoteService {
   public ThingTypeData[] getThingTypes(ThingTypeFilterData filter);
   
   public boolean setDefaults(int defaultType);
+  
 }

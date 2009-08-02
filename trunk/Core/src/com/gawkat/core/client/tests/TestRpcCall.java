@@ -1,7 +1,7 @@
 package com.gawkat.core.client.tests;
 
-import com.gawkat.core.client.rpc.Rpc;
-import com.gawkat.core.client.rpc.RpcServiceAsync;
+import com.gawkat.core.client.rpc.RpcCore;
+import com.gawkat.core.client.rpc.RpcCoreServiceAsync;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class TestRpcCall extends Composite {
 
-	public RpcServiceAsync callRpcService;
+	public RpcCoreServiceAsync callRpcService;
 	
 	private VerticalPanel pWidget = new VerticalPanel();
 
@@ -18,7 +18,7 @@ public class TestRpcCall extends Composite {
 
 		// init the rpc proxy
 		// its publicly available to the other classes
-		callRpcService = Rpc.initRpc();
+		callRpcService = RpcCore.initRpc();
 		
 		// init a composite widget
 		initWidget(pWidget);

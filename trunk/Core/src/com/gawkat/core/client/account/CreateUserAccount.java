@@ -3,8 +3,8 @@ package com.gawkat.core.client.account;
 
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.client.oauth.Sha1;
-import com.gawkat.core.client.rpc.Rpc;
-import com.gawkat.core.client.rpc.RpcServiceAsync;
+import com.gawkat.core.client.rpc.RpcCore;
+import com.gawkat.core.client.rpc.RpcCoreServiceAsync;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -31,7 +31,7 @@ import com.gawkat.core.client.EventManager;
 public class CreateUserAccount extends DialogBox implements ClickListener, KeyboardListener, FocusListener, ChangeListener {
 
   // rpc system
-  private RpcServiceAsync callRpcService = null;
+  private RpcCoreServiceAsync callRpcService = null;
   
   // for observing
   private ChangeListenerCollection changeListeners;
@@ -136,7 +136,7 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     tbS2.addKeyboardListener(this);
       
     // init rpc
-    callRpcService = Rpc.initRpc();
+    callRpcService = RpcCore.initRpc();
     
     // style
     pWidget.setStyleName("CreateUserAccount");
