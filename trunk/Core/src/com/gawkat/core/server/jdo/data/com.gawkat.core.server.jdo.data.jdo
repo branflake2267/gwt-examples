@@ -5,7 +5,7 @@
 <jdo>
     <package name="com.gawkat.core.server.jdo.data">
         <class
-              name="Session_NonceJdo">
+              name="SessionNonceJdo">
             <field
                   name="nonceId"
                   persistence-modifier="persistent"/>
@@ -50,7 +50,7 @@
                   persistence-modifier="persistent"/>
         </class>
         <class
-              name="Session_AccessTokenJdo">
+              name="SessionAccessTokenJdo">
             <field
                   name="id"
                   persistence-modifier="persistent"/>

@@ -60,6 +60,14 @@ public class ThingJdo {
     this.secret = secret;
     this.dateCreated = new Date();
     
+    // do not insert duplicate
+    ThingJdo[] tt = ThingJdo.query(thingTypeId, key);
+    if (tt != null && tt.length > 0) {
+      //ThingJdo rr = this; // TODO make this instance = tt
+      //rr = tt[0];
+      return;
+    }
+    
     PersistenceManager pm = PMF.get().getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
