@@ -19,10 +19,8 @@ public class ThingType {
    * @return
    */
   public ThingTypeData[] getThingTypes(ThingTypeFilterData filter) {
-    
     ThingTypeJdo[] thingTypeJdo = ThingTypeJdo.query(filter);
     ThingTypeData[] r = ThingTypeJdo.convert(thingTypeJdo);
-    
     return r;
   }
 

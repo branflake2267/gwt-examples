@@ -1,5 +1,6 @@
 package com.gawkat.core.client.ui;
 
+import com.gawkat.core.client.EventManager;
 import com.gawkat.core.client.account.CreateUserAccount;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.client.oauth.Sha1;
@@ -10,8 +11,6 @@ import com.google.gwt.user.client.ui.ChangeListenerCollection;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
-
-import com.gawkat.core.client.EventManager;
 
 /**
  * Th
