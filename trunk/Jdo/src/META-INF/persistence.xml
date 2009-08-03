@@ -4,6 +4,6 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd" version="1.0">
 
     <persistence-unit name="TEST">
-        <mapping-file>/home/branflake2267/workspace/Jdo/src/com/gawkat/jdo/server/data/com.gawkat.jdo.server.data.jdo</mapping-file>
+        <mapping-file>/home/branflake2267/workspace/Jdo/src/com/gawkat/jdo/server/data/package.jdo</mapping-file>
     </persistence-unit>
 </persistence>
