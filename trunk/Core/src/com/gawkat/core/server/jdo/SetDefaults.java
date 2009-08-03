@@ -1,10 +1,14 @@
 package com.gawkat.core.server.jdo;
 
-import com.gawkat.core.server.jdo.data.Thing_TypeJdo;
+import com.gawkat.core.server.jdo.data.ThingJdo;
+import com.gawkat.core.server.jdo.data.ThingTypeJdo;
 
 public class SetDefaults {
 
   public static int THINGTYPES = 1;
+  public static int THINGAPP = 2;
+  public static int THINGUSER = 3;  
+
   
   public SetDefaults() {
   }
@@ -13,24 +17,51 @@ public class SetDefaults {
     
     if (defaultType == SetDefaults.THINGTYPES) {
       setThingTypes();
+    } else if (defaultType == SetDefaults.THINGAPP) {
+      setApplication();
+    } else if (defaultType == SetDefaults.THINGUSER) {
+      setUser();
     }
+    
     
     return true;
   }
   
-  public void setThingTypes() {
+  /**
+   * set default things
+   */
+  private void setThingTypes() {
     
-    Thing_TypeJdo a = new Thing_TypeJdo();
+    ThingTypeJdo a = new ThingTypeJdo();
     a.insert("Application");
     
-    Thing_TypeJdo b = new Thing_TypeJdo();
+    ThingTypeJdo b = new ThingTypeJdo();
     b.insert("User");
     
-    Thing_TypeJdo c = new Thing_TypeJdo();
+    ThingTypeJdo c = new ThingTypeJdo();
     c.insert("Group");
     
   }
   
-
+  /**
+   * set default application
+   */
+  private void setApplication() {
+    
+    long thingTypeId = 1;
+    String key = "App_Test";
+    String secret = "";
+    
+    ThingJdo a = new ThingJdo();
+    a.insert(thingTypeId, key, secret);
+    
+  }
+  
+  /**
+   * set a default user for testing
+   */
+  private void setUser() {
+    
+  }
   
 }

@@ -74,7 +74,7 @@
                   persistence-modifier="persistent"/>
         </class>
         <class
-              name="Thing_TypeJdo">
+              name="ThingTypeJdo">
             <field
                   name="thingTypeId"
                   persistence-modifier="persistent"/>
