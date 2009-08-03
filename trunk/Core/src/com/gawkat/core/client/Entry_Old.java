@@ -1,7 +1,7 @@
 package com.gawkat.core.client;
 
 import com.gawkat.core.client.oauth.Sha1;
-import com.gawkat.core.client.tests.TestRpcCall;
+import com.gawkat.core.client.tests.TestRpcCallWidget;
 import com.gawkat.core.client.ui.LoginUi;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.ChangeListener;
@@ -84,6 +84,7 @@ public class Entry_Old implements EntryPoint, ClickListener, ChangeListener {
 	private void initSessionManager() {
 		sessionManager = new SessionManager();
 		sessionManager.setAppConsumerKey(appConsumerKey, appConsumerSecret); 
+		// TODO - set this into another widget?
 		sessionManager.setLoginUiDiv("LoginUI", LoginUi.LOGIN_HORIZONTAL);
 	}
 	
@@ -114,7 +115,7 @@ public class Entry_Old implements EntryPoint, ClickListener, ChangeListener {
 	 * test out rpc
 	 */
 	private void testRpcSetup() {
-		TestRpcCall testRpc = new TestRpcCall();
+		TestRpcCallWidget testRpc = new TestRpcCallWidget();
 		RootPanel.get().add(testRpc);
 	}
 
