@@ -191,7 +191,7 @@ public class OAuthServer {
     
     // get user (thing)
     ThingJdo[] apps = ThingJdo.query((long) ThingTypeJdo.TYPE_APPLICATION, ck);
-    Long applicationId = apps[0].getId();
+    long applicationId = apps[0].getId();
     String consumerKey = apps[0].getKey();
     String consumerSecret = apps[0].getSecret();
     

@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.ChangeListenerCollection;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -25,12 +26,12 @@ public class SessionManager extends Composite implements ChangeListener {
   // rpc system
   public RpcCoreServiceAsync callRpcService;
 
+  private VerticalPanel loginHolder = null;
+  
   // observe events
   private ChangeListenerCollection changeListeners = null;
   private int changeEvent = 0;
   
-  // div tag that holds the login ui widget
-  private String loginUiDiv = null;
 
   // TODO - move this to LoginUi, as the master of the User Input systems one
   // could use, horizontal, vertical, separate forgot...
@@ -38,7 +39,6 @@ public class SessionManager extends Composite implements ChangeListener {
   private LoginUi loginUi = null;
 
   // errors
-  private String errDiv = "No div tag exists for this widget. debug: setLoginUiDiv() <div id='" + loginUiDiv + "'></div>";
   private String errApKey = "No consumer key was set (for application/web site). debug: setAppConsumerKey()";
 
   // Once the consumer gets Access, save the token for use
@@ -52,7 +52,8 @@ public class SessionManager extends Composite implements ChangeListener {
   /**
    * constructor
    */
-  public SessionManager() {
+  public SessionManager(VerticalPanel loginHolder) {
+    this.loginHolder = loginHolder;
 
     // init the login ui
     loginUi = new LoginUi();
@@ -65,47 +66,16 @@ public class SessionManager extends Composite implements ChangeListener {
   }
 
   /**
-   * !!!!THIS HAS TO BE DONE FIRST!!!! set the login div tag in html page
-   *  
-   * @param loginUiDiv
+   * set User Interface style - this must be done second
+   * 
+   * @param uiType
    */
-  public void setLoginUiDiv(String loginUiDiv, int uiType) {
-
-    if (loginUiDiv == null) {
-      //System.out.println("loginUiDiv tag is null. debug: setLoginUiDiv()");
-    }
-
-    if (loginUiDiv.length() == 0) {
-      //System.out.println("Be sure to actually write in a tag id. debug: setLoginUiDiv()");
-    }
-
-    // This should notify when there is no div tag to stick the widget in.
-    // This is a common error that happens, when using another widget in your
-    // project or using it as a standalone
-    // And is hard to debug when compiled and used outside the debugger shell.
-    try {
-      RootPanel.get(loginUiDiv).isAttached();
-    } catch (Exception e) {
-      //System.out.println(errDiv);
-      Window.alert(errDiv);
-    }
-
-    // what div is the user interface going to be stuck in
-    this.loginUiDiv = loginUiDiv;
-
-    // set the type of user interface with inputs
+  public void setUi(int uiType) {
     loginUi.setUi(uiType);
-
   }
 
   public void drawUi() {
-    try {
-      RootPanel.get(loginUiDiv).isAttached();
-    } catch (Exception e) {
-      //System.out.println(errDiv);
-      Window.alert(errDiv);
-    }
-    RootPanel.get(loginUiDiv).add(loginUi);
+    loginHolder.add(loginUi);
     loginUi.draw(accessToken);
   }
 

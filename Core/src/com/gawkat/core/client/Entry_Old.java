@@ -82,10 +82,10 @@ public class Entry_Old implements EntryPoint, ClickListener, ChangeListener {
 	 * for the web site and user using the web site
 	 */
 	private void initSessionManager() {
-		sessionManager = new SessionManager();
+		//sessionManager = new SessionManager();
 		sessionManager.setAppConsumerKey(appConsumerKey, appConsumerSecret); 
 		// TODO - set this into another widget?
-		sessionManager.setLoginUiDiv("LoginUI", LoginUi.LOGIN_HORIZONTAL);
+		//sessionManager.setUi("LoginUI", LoginUi.LOGIN_HORIZONTAL);
 	}
 	
 	/**
@@ -100,7 +100,7 @@ public class Entry_Old implements EntryPoint, ClickListener, ChangeListener {
 		sessionManager.autoLogin(email, password);
 		
 		// observe session manager
-		sessionManager.addChangeListener(this);
+		//sessionManager.addChangeListener(this);
 	}
 	
 	/**
