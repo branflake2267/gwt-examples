@@ -1,10 +1,14 @@
 package com.gawkat.core.server.jdo.data;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
+import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+import javax.jdo.Transaction;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
@@ -14,7 +18,7 @@ import javax.jdo.annotations.PrimaryKey;
 import com.gawkat.core.server.jdo.PMF;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
-public class Session_NonceJdo {
+public class SessionNonceJdo {
 
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
@@ -53,9 +57,15 @@ public class Session_NonceJdo {
     this.dateCreated = new Date();
     
     PersistenceManager pm = PMF.get().getPersistenceManager();
+    Transaction tx = pm.currentTransaction();
     try {
+      tx.begin();
       pm.makePersistent(this);
+      tx.commit();
     } finally {
+      if (tx.isActive()) {
+        tx.rollback();
+      }
       pm.close();
     }
   }
@@ -70,26 +80,33 @@ public class Session_NonceJdo {
    */
   public static boolean doesNonceExist(Long thingTypeId, Long thingId, String nonce) {
 
+    String qfilter = "thingTypeId==" + thingTypeId + " && thingId==\"" + thingId + "\" && nonce==\"" + nonce + "\" ";
+    
     boolean found = false;
 
     PersistenceManager pm = PMF.get().getPersistenceManager();
+    Transaction tx = pm.currentTransaction();
     try {
+      tx.begin();
 
-      String filter = "thingTypeId==" + thingTypeId + " && thingId==\"" + thingId + "\" && nonce==\"" + nonce + "\" ";
-      Query query = pm.newQuery(Session_NonceJdo.class,filter);
+      Extent<SessionNonceJdo> e = pm.getExtent(SessionNonceJdo.class, true);
+      Query q = pm.newQuery(e, qfilter);
+      q.execute();
 
-      try {
-        List<Session_NonceJdo> results = (List<Session_NonceJdo>) query.execute();
-        if (results.iterator().hasNext()) {
-          found = true;
-        } else {
-          found = false;
-        }
-      } finally {
-        query.closeAll();
+      Collection<SessionNonceJdo> c = (Collection<SessionNonceJdo>) q.execute();
+      Iterator<SessionNonceJdo> iter = c.iterator();
+      while (iter.hasNext()) {
+        found = true;
       }
 
+      tx.commit();
+      q.closeAll();
+    } catch (Exception e) {
+      e.printStackTrace();
     } finally {
+      if (tx.isActive()) {
+        tx.rollback();
+      }
       pm.close();
     }
 

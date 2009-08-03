@@ -11,7 +11,7 @@ public class Run_SetDefaults {
    
     SetDefaults sd = new SetDefaults();
     // sd.setDefaults(SetDefaults.THINGTYPES);
-    //sd.setDefaults(SetDefaults.THINGAPP);
+    sd.setDefaults(SetDefaults.THINGAPP);
     sd.setDefaults(SetDefaults.THINGUSER);
 
   }

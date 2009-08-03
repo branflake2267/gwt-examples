@@ -111,7 +111,7 @@ public class ThingTypeJdo {
       Extent<ThingTypeJdo> e = pm.getExtent(ThingTypeJdo.class, true);
       Query q = pm.newQuery(e, qfilter);
       q.execute();
-      
+
       Collection<ThingTypeJdo> c = (Collection<ThingTypeJdo>) q.execute();
       Iterator<ThingTypeJdo> iter = c.iterator();
       while (iter.hasNext()) {

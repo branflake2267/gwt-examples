@@ -1,10 +1,15 @@
 package com.gawkat.core.server.jdo.data;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
+import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+import javax.jdo.Transaction;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
@@ -14,7 +19,7 @@ import javax.jdo.annotations.PrimaryKey;
 import com.gawkat.core.server.jdo.PMF;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
-public class Session_AccessTokenJdo {
+public class SessionAccessTokenJdo {
 
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
@@ -52,21 +57,36 @@ public class Session_AccessTokenJdo {
     this.accessTokenSecret = accessTokenSecret;
     this.dateCreated = new Date();
     
-    PersistenceManager pm = PMF.get().getPersistenceManager();
     boolean success = false;
+    PersistenceManager pm = PMF.get().getPersistenceManager();
+    Transaction tx = pm.currentTransaction();
     try {
+      tx.begin();
       pm.makePersistent(this);
+      tx.commit();
       success = true;
     } finally {
+      if (tx.isActive()) {
+          tx.rollback();
+      }
       pm.close();
     }
     return success;
   }
   
+  /**
+   * get identity
+   * 
+   * @return
+   */
   public Long getId() {
     return this.id;
   }
   
+  /**
+   * get thing id
+   * @param thingId
+   */
   public void setThingId(Long thingId) {
     this.thingId = thingId;
   }
@@ -78,38 +98,43 @@ public class Session_AccessTokenJdo {
    * @param accessTokenSecret
    * @return
    */
-  public static Session_AccessTokenJdo[] query(String accessToken, String accessTokenSecret) {
-    
-   Session_AccessTokenJdo[] at = null;
+  public static SessionAccessTokenJdo[] query(String accessToken, String accessTokenSecret) {
+
+    String qfilter = "accessToken==\"" + accessToken + "\" && accessTokenSecret==\"" + accessTokenSecret + "\" ";
+
+    ArrayList<SessionAccessTokenJdo> aT = new ArrayList<SessionAccessTokenJdo>();
 
     PersistenceManager pm = PMF.get().getPersistenceManager();
+    Transaction tx = pm.currentTransaction();
     try {
+      tx.begin();
 
-      String filter = "accessToken==\"" + accessToken + "\" && accessTokenSecret==\"" + accessTokenSecret + "\" ";
-      Query query = pm.newQuery(Session_AccessTokenJdo.class, filter);
+      Extent<ThingTypeJdo> e = pm.getExtent(ThingTypeJdo.class, true);
+      Query q = pm.newQuery(e, qfilter);
+      q.execute();
 
-      try {
-        List<Session_AccessTokenJdo> results = (List<Session_AccessTokenJdo>) query.execute();
-        if (results.iterator().hasNext()) {
-          at = new Session_AccessTokenJdo[results.size()];
-          int i=0;
-          for (Session_AccessTokenJdo o : results) {
-            at[i] = new Session_AccessTokenJdo();
-            at[i] = o;
-            i++;
-          }
-        } else {
-          at = null;
-        }
-      } finally {
-        query.closeAll();
+      Collection<SessionAccessTokenJdo> c = (Collection<SessionAccessTokenJdo>) q.execute();
+      Iterator<SessionAccessTokenJdo> iter = c.iterator();
+      while (iter.hasNext()) {
+        SessionAccessTokenJdo t = (SessionAccessTokenJdo) iter.next();
+        aT.add(t);
       }
 
+      tx.commit();
+      q.closeAll();
+    } catch (Exception e) {
+      e.printStackTrace();
     } finally {
+      if (tx.isActive()) {
+        tx.rollback();
+      }
       pm.close();
     }
 
-    return at;
+    SessionAccessTokenJdo[] r = new SessionAccessTokenJdo[aT.size()];
+    aT.toArray(r);
+    
+    return r;
   }
   
   /**
@@ -123,14 +148,20 @@ public class Session_AccessTokenJdo {
     boolean success = false;
     
     PersistenceManager pm = PMF.get().getPersistenceManager();
+    Transaction tx = pm.currentTransaction();
     try {
-      Session_AccessTokenJdo sa = null;
-      sa = pm.getObjectById(Session_AccessTokenJdo.class, id);
+      tx.begin();
+      SessionAccessTokenJdo sa = null;
+      sa = pm.getObjectById(SessionAccessTokenJdo.class, id);
       sa.setThingId(userId);
       // TODO - was I supposed to change the ThingTypeId to user?
       pm.makePersistent(sa);
       success = true;
+      tx.commit();
     } finally {
+      if (tx.isActive()) {
+        tx.rollback();
+      }
       pm.close();
     }
     

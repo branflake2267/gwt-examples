@@ -5,8 +5,8 @@ import java.util.UUID;
 
 import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
-import com.gawkat.core.server.jdo.data.Session_AccessTokenJdo;
-import com.gawkat.core.server.jdo.data.Session_NonceJdo;
+import com.gawkat.core.server.jdo.data.SessionAccessTokenJdo;
+import com.gawkat.core.server.jdo.data.SessionNonceJdo;
 import com.gawkat.core.server.jdo.data.ThingJdo;
 import com.gawkat.core.server.jdo.data.ThingTypeJdo;
 
@@ -223,7 +223,7 @@ public class OAuthServer {
     
     String nonce = token.getNonce();
 
-    boolean found = Session_NonceJdo.doesNonceExist(thingTypeId, thingId, nonce);
+    boolean found = SessionNonceJdo.doesNonceExist(thingTypeId, thingId, nonce);
  
     return found;
   }
@@ -237,7 +237,7 @@ public class OAuthServer {
    * @param thingId
    */
   private void setNonce(OAuthTokenData token, String url, Long thingTypeId, Long thingId) {
-    Session_NonceJdo n = new Session_NonceJdo();
+    SessionNonceJdo n = new SessionNonceJdo();
     n.insert(url, thingTypeId, thingId, token.getNonce());
   }
 
@@ -252,7 +252,7 @@ public class OAuthServer {
     String accessKey = getAccessKey();
     String accessSecret = getAccessSecret();
 
-    Session_AccessTokenJdo sa = new Session_AccessTokenJdo();
+    SessionAccessTokenJdo sa = new SessionAccessTokenJdo();
     boolean success = sa.insert((long)ThingTypeJdo.TYPE_APPLICATION, applicationId, accessKey, accessSecret);
     
     AccessTokenData at = new AccessTokenData();
@@ -277,8 +277,8 @@ public class OAuthServer {
     String appConsumerKey = appAccessToken.getAccessToken_key();
     String appConsumerSecret = appAccessToken.getAccessToken_secret();
 
-    Session_AccessTokenJdo[] sas = Session_AccessTokenJdo.query(appConsumerKey, appConsumerSecret);
-    Session_AccessTokenJdo sa = sas[0];
+    SessionAccessTokenJdo[] sas = SessionAccessTokenJdo.query(appConsumerKey, appConsumerSecret);
+    SessionAccessTokenJdo sa = sas[0];
     
     Long accessId = sa.getId();
 
@@ -295,7 +295,7 @@ public class OAuthServer {
    */
   private boolean setAccessToken_user(Long id, Long userId) {
 
-    return Session_AccessTokenJdo.updateAccessToken(id, userId);
+    return SessionAccessTokenJdo.updateAccessToken(id, userId);
      
   }
 

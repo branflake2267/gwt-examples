@@ -54,7 +54,7 @@ public class SetDefaults {
     
     long thingTypeId = ThingTypeData.TYPE_APPLICATION;
     String key = "App_Test";
-    String secret = sha.b64_sha1("password");
+    String secret = sha.hex_hmac_sha1("salt", "password");
     
     ThingJdo a = new ThingJdo();
     a.insert(thingTypeId, key, secret);
@@ -69,7 +69,7 @@ public class SetDefaults {
     
     long thingTypeId = ThingTypeData.TYPE_USER;
     String key = "test";
-    String secret = sha.b64_sha1("testpassword");
+    String secret = sha.hex_hmac_sha1("salt", "password");
     
     ThingJdo a = new ThingJdo();
     a.insert(thingTypeId, key, secret);
