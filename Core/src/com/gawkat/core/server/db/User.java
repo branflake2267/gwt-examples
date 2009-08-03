@@ -3,8 +3,8 @@ package com.gawkat.core.server.db;
 import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.server.db.oauth.OAuthServer;
-import com.gawkat.core.server.jdo.ThingJdo;
-import com.gawkat.core.server.jdo.Thing_TypeJdo;
+import com.gawkat.core.server.jdo.data.ThingJdo;
+import com.gawkat.core.server.jdo.data.Thing_TypeJdo;
 
 /**
  * database methods for user

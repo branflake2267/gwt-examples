@@ -2,7 +2,7 @@ package com.gawkat.core.server.db;
 
 import com.gawkat.core.client.admin.thingtype.ThingTypeData;
 import com.gawkat.core.client.admin.thingtype.ThingTypeFilterData;
-import com.gawkat.core.server.jdo.Thing_TypeJdo;
+import com.gawkat.core.server.jdo.data.Thing_TypeJdo;
 
 public class ThingType {
   
