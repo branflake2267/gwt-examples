@@ -8,13 +8,13 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class TestRpcCall extends Composite {
+public class TestRpcCallWidget extends Composite {
 
 	public RpcCoreServiceAsync callRpcService;
 	
 	private VerticalPanel pWidget = new VerticalPanel();
 
-	public TestRpcCall() {
+	public TestRpcCallWidget() {
 
 		// init the rpc proxy
 		// its publicly available to the other classes

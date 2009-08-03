@@ -1,4 +1,4 @@
-package com.gawkat.core.client;
+package com.gawkat.core.client.tests;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
