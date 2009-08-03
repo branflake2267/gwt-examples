@@ -14,7 +14,7 @@ import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.server.jdo.data.Session_AccessTokenJdo;
 import com.gawkat.core.server.jdo.data.Session_NonceJdo;
 import com.gawkat.core.server.jdo.data.ThingJdo;
-import com.gawkat.core.server.jdo.data.Thing_TypeJdo;
+import com.gawkat.core.server.jdo.data.ThingTypeJdo;
 
 public class OAuthServer {
 
@@ -57,7 +57,7 @@ public class OAuthServer {
     boolean verifySignature = token.verify(url, appData.consumerSecret);
 
     // check nonce
-    boolean verifyNonce = verifyNonceHasntBeenUsed(token, (long) Thing_TypeJdo.TYPE_APPLICATION, appData.applicationId);
+    boolean verifyNonce = verifyNonceHasntBeenUsed(token, (long) ThingTypeJdo.TYPE_APPLICATION, appData.applicationId);
 
     // prepare for transport back
     OAuthTokenData returnToken = new OAuthTokenData();
@@ -77,7 +77,7 @@ public class OAuthServer {
     }
 
     // set nonce, so it can't be used again
-    setNonce(token, url, (long) Thing_TypeJdo.TYPE_APPLICATION, appData.applicationId);
+    setNonce(token, url, (long) ThingTypeJdo.TYPE_APPLICATION, appData.applicationId);
 
     debug("requestToken: url: " + url + " secret: " + at.accessTokenSecret);
 
@@ -117,7 +117,7 @@ public class OAuthServer {
     boolean verifySignature = appAccessToken.verify(url, userData.consumerSecret);
 
     // check nonce
-    boolean verifyNonce = verifyNonceHasntBeenUsed(appAccessToken, (long) Thing_TypeJdo.TYPE_USER, userData.userId);
+    boolean verifyNonce = verifyNonceHasntBeenUsed(appAccessToken, (long) ThingTypeJdo.TYPE_USER, userData.userId);
 
     // verify application's access, then transfer it to the user if all passes
     Long accessId = getAccessId(appAccessToken);
@@ -137,7 +137,7 @@ public class OAuthServer {
     }
 
     // set nonce, so it can't be used again.
-    setNonce(appAccessToken, url, (long) Thing_TypeJdo.TYPE_USER, userData.userId);
+    setNonce(appAccessToken, url, (long) ThingTypeJdo.TYPE_USER, userData.userId);
 
     // sign the token for transport back
     // TODO should I be signing with consumer secret?
@@ -168,7 +168,7 @@ public class OAuthServer {
     String consumerKey = token.getConsumerKey();
 
     // get user (thing)
-    ThingJdo[] users = ThingJdo.query((long)Thing_TypeJdo.TYPE_USER, consumerKey);
+    ThingJdo[] users = ThingJdo.query((long)ThingTypeJdo.TYPE_USER, consumerKey);
     Long userId = users[0].getId();
     String consumerSecret = users[0].getSecret();
     
@@ -196,7 +196,7 @@ public class OAuthServer {
     String ck = token.getConsumerKey();
     
     // get user (thing)
-    ThingJdo[] apps = ThingJdo.query((long) Thing_TypeJdo.TYPE_APPLICATION, ck);
+    ThingJdo[] apps = ThingJdo.query((long) ThingTypeJdo.TYPE_APPLICATION, ck);
     Long applicationId = apps[0].getId();
     String consumerKey = apps[0].getKey();
     String consumerSecret = apps[0].getSecret();
@@ -259,7 +259,7 @@ public class OAuthServer {
     String accessSecret = getAccessSecret();
 
     Session_AccessTokenJdo sa = new Session_AccessTokenJdo();
-    boolean success = sa.insert((long)Thing_TypeJdo.TYPE_APPLICATION, applicationId, accessKey, accessSecret);
+    boolean success = sa.insert((long)ThingTypeJdo.TYPE_APPLICATION, applicationId, accessKey, accessSecret);
     
     AccessTokenData at = new AccessTokenData();
     if (success == true) {

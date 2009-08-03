@@ -4,7 +4,7 @@ import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.server.db.oauth.OAuthServer;
 import com.gawkat.core.server.jdo.data.ThingJdo;
-import com.gawkat.core.server.jdo.data.Thing_TypeJdo;
+import com.gawkat.core.server.jdo.data.ThingTypeJdo;
 
 /**
  * database methods for user
@@ -58,7 +58,7 @@ public class User {
     boolean acceptTerms = userData.acceptTerms;
     
     
-    long thingTypeId = Thing_TypeJdo.TYPE_USER;
+    long thingTypeId = ThingTypeJdo.TYPE_USER;
     String key = userData.consumerKey;
     String secret = userData.consumerSecret;
     
@@ -117,7 +117,7 @@ public class User {
     // TODO - I think I need to run more checking later
 
     // get userId
-    ThingJdo[] users = ThingJdo.query((long)Thing_TypeJdo.TYPE_USER, userData.consumerKey);
+    ThingJdo[] users = ThingJdo.query((long)ThingTypeJdo.TYPE_USER, userData.consumerKey);
     Long userId = users[0].getId();
     
     boolean exists = false;

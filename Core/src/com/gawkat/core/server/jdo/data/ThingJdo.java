@@ -50,7 +50,7 @@ public class ThingJdo {
    * @param key
    * @param secret
    */
-  public void insert(Long thingTypeId, String key, String secret) {
+  public void insert(long thingTypeId, String key, String secret) {
     this.thingTypeId = thingTypeId;
     this.key = key;
     this.secret = secret;
@@ -82,7 +82,7 @@ public class ThingJdo {
    * @param thingId
    * @return
    */
-  public static ThingJdo query(Long thingId) {
+  public static ThingJdo query(long thingId) {
     ThingJdo thing = null;
     PersistenceManager pm = PMF.get().getPersistenceManager();
     try {
@@ -94,12 +94,12 @@ public class ThingJdo {
   }
   
   /**
-   * query things by key
+   * query thing by key
    * 
    * @param key
    * @return
    */
-  public static ThingJdo[] query(Long thingTypeId, String key) {
+  public static ThingJdo[] query(long thingTypeId, String key) {
     
     ThingJdo[] things = null;
 
