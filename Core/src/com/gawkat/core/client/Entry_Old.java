@@ -1,6 +1,5 @@
 package com.gawkat.core.client;
 
-import com.gawkat.core.client.SessionManager;
 import com.gawkat.core.client.oauth.Sha1;
 import com.gawkat.core.client.tests.TestRpcCall;
 import com.gawkat.core.client.ui.LoginUi;

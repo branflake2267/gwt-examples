@@ -1,13 +1,7 @@
 package com.gawkat.core.server.db.oauth;
 
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.UUID;
-
-import javax.mail.Session;
 
 import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.oauth.OAuthTokenData;

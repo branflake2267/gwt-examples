@@ -1,6 +1,5 @@
 package com.gawkat.core.client;
 
-import com.gawkat.core.client.EventManager;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.client.rpc.RpcCore;
 import com.gawkat.core.client.rpc.RpcCoreServiceAsync;
