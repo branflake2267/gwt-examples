@@ -1,5 +1,7 @@
 package com.gawkat.core.server.jdo;
 
+import com.gawkat.core.server.jdo.data.Thing_TypeJdo;
+
 public class SetDefaults {
 
   public static int THINGTYPES = 1;

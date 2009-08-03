@@ -11,10 +11,10 @@ import javax.mail.Session;
 
 import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
-import com.gawkat.core.server.jdo.Session_AccessTokenJdo;
-import com.gawkat.core.server.jdo.Session_NonceJdo;
-import com.gawkat.core.server.jdo.ThingJdo;
-import com.gawkat.core.server.jdo.Thing_TypeJdo;
+import com.gawkat.core.server.jdo.data.Session_AccessTokenJdo;
+import com.gawkat.core.server.jdo.data.Session_NonceJdo;
+import com.gawkat.core.server.jdo.data.ThingJdo;
+import com.gawkat.core.server.jdo.data.Thing_TypeJdo;
 
 public class OAuthServer {
 
