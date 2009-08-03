@@ -9,12 +9,13 @@ import com.gawkat.core.client.ui.LoginUi;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
 import com.google.gwt.user.client.ui.ChangeListener;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class LoginWidget implements HistoryListener, ChangeListener {
+public class LoginWidget extends Composite implements HistoryListener, ChangeListener {
 
-  private String appConsumerKey = "demo_application";
-  private String appConsumerSecret = "c1d0e06998305903ac76f589bbd6d4b61a670ba6"; //salt:password
+  private VerticalPanel pWidget = new VerticalPanel();
   
   // this manages the users privileges to protected resources
   private SessionManager sessionManager = null;
@@ -23,19 +24,30 @@ public class LoginWidget implements HistoryListener, ChangeListener {
   private AccountManagementNavigation accountManagement = null;
   
   // go to this when there is no historyToken. All navigation will use historyToken/anchors
-  private String defaultHomePage = "home";
+  // TODO move this to home?
+  private String defaultAppState = "home";
+
+  // application credentials
+  private String appConsumerKey = null;
+  private String appConsumerSecret = null;
   
   /**
-   * This is the entry point method.
+   * constructor 
+   * 
+   * @param appConsumerKey
+   * @param appConsumerSecret
    */
-  public void LoginWidget() {
-
+  public LoginWidget(String appConsumerKey, String appConsumerSecret) {
+    this.appConsumerKey = appConsumerKey;
+    this.appConsumerSecret = appConsumerSecret;
+    
+    initWidget(pWidget);
+    
     // observe the url for changes
     History.addHistoryListener(this);
     
     // session management for the application
     initSessionManager();
-    
   }
   
   /**
@@ -43,9 +55,9 @@ public class LoginWidget implements HistoryListener, ChangeListener {
    * for the web site and user using the web site
    */
   private void initSessionManager() {
-   sessionManager = new SessionManager();
+   sessionManager = new SessionManager(pWidget);
+   sessionManager.setUi(LoginUi.LOGIN_HORIZONTAL);
    sessionManager.setAppConsumerKey(appConsumerKey, appConsumerSecret); 
-   sessionManager.setLoginUiDiv("LoginUI", LoginUi.LOGIN_HORIZONTAL);
    
    // observe for login events ...
    sessionManager.addChangeListener(this);
@@ -72,7 +84,7 @@ public class LoginWidget implements HistoryListener, ChangeListener {
     
     // url navigation - with parameters
     if (historyToken.length() == 0) {
-      History.newItem(defaultHomePage);
+      History.newItem(defaultAppState);
       
     } else if (historyToken.matches("account_.*")) { // draw account mangement with anything that has account_ in the anchor
       drawAccountsManagement(qsd);
