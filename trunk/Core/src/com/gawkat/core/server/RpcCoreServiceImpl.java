@@ -123,19 +123,16 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
 	 */
 	public OAuthTokenData requestToken(OAuthTokenData tokenData) {
 	  
-	  System.out.println("1. Impl: requestToken: ");
+	  System.out.println("1. Impl: requestToken(): ");
 		
 	  String url = getRequestUrlOAuth();
 		
-	  System.out.println("2. Impl: requestToken: ");
+	  System.out.println("2. Impl: requestToken(): ");
 	  
 		OAuthServer oauth = new OAuthServer();
-		
-		System.out.println("3. Impl: requestToken: ");
-		
 		OAuthTokenData rtnToken = oauth.requestToken(tokenData, url);
 		
-		System.out.println("4. Impl: requestToken: ");
+		System.out.println("3. Impl: requestToken(): ");
 		
 		return rtnToken;
 	}

@@ -54,6 +54,7 @@ public class SessionNonceJdo {
     this.url = url;
     this.thingTypeId = thingTypeId;
     this.thingId = thingId;
+    this.nonce = nonce;
     this.dateCreated = new Date();
     
     PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -71,7 +72,7 @@ public class SessionNonceJdo {
   }
   
   /**
-   * does this nonce exist, b/c if it does, its not to be used agian
+   * does this nonce exist - nonce is a one time use only
    * 
    * @param thingTypeId
    * @param thingId
@@ -80,7 +81,7 @@ public class SessionNonceJdo {
    */
   public static boolean doesNonceExist(Long thingTypeId, Long thingId, String nonce) {
 
-    String qfilter = "thingTypeId==" + thingTypeId + " && thingId==\"" + thingId + "\" && nonce==\"" + nonce + "\" ";
+    String qfilter = "thingTypeId==" + thingTypeId + " && thingId==" + thingId + " && nonce==\"" + nonce + "\" ";
     
     boolean found = false;
 

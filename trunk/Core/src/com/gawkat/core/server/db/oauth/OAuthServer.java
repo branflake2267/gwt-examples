@@ -48,22 +48,22 @@ public class OAuthServer {
     ApplicationData appData = getApplicationId(token);
 
     // verify the signed signature from the client matches the local
-    boolean verifySignature = token.verify(url, appData.consumerSecret);
+    boolean doesSignatureMatch = token.verify(url, appData.consumerSecret);
 
-    // check nonce
-    boolean verifyNonce = verifyNonceHasntBeenUsed(token, (long) ThingTypeJdo.TYPE_APPLICATION, appData.applicationId);
+    // check nonce - makeure it does not exist
+    boolean nonceIsUsed = verifyNonceHasntBeenUsed(token, (long) ThingTypeJdo.TYPE_APPLICATION, appData.applicationId);
 
     // prepare for transport back
     OAuthTokenData returnToken = new OAuthTokenData();
 
     // examine if we can go to the next step
-    if (appData.applicationId == 0 | verifySignature == false | verifyNonce == false) {
+    if (appData.applicationId == 0 | doesSignatureMatch == false | nonceIsUsed == true) {
       returnToken.setResult(OAuthTokenData.ERROR);
     } else {
       returnToken.setResult(OAuthTokenData.SUCCESS);
     }
 
-    // on success - grant request token access
+    // on application credentials success - grant request token access
     AccessTokenData at = new AccessTokenData();
     if (returnToken.getResult() == OAuthTokenData.SUCCESS) {
       at = setAccessToken_application(appData.applicationId);
