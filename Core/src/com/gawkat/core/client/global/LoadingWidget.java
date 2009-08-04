@@ -1,4 +1,4 @@
-package com.gawkat.core.client;
+package com.gawkat.core.client.global;
 
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Composite;
@@ -30,7 +30,7 @@ public class LoadingWidget extends Composite {
 
     initWidget(pWidget);
 
-    pWidget.setStyleName("LoadingImage");
+    pWidget.setStyleName("core-loadingimage");
 
     hide();
   }

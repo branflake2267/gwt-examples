@@ -1,9 +1,9 @@
 package com.gawkat.core.client.ui;
 
 
-import com.gawkat.core.client.EventManager;
-import com.gawkat.core.client.LoadingWidget;
+import com.gawkat.core.client.global.EventManager;
 import com.gawkat.core.client.global.Global_String;
+import com.gawkat.core.client.global.LoadingWidget;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ChangeListenerCollection;
@@ -60,8 +60,8 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	private Hyperlink hAccountCreate = null;
 	private Hyperlink hAccountLogout = null;
 	
-	private Hyperlink hForgotPassword = new Hyperlink("Forgot Password","account_ForgotPassword");
-	private Hyperlink hAccountLogin = new Hyperlink("Login","account_Login");
+	private Hyperlink hForgotPassword = new Hyperlink("Forgot Password", "login_ForgotPassword");
+	private Hyperlink hAccountLogin = new Hyperlink("Login", "login_Login");
 	
 	
 	// true, when logged in, false, when not
@@ -111,7 +111,7 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		hForgotPassword.addClickListener(this);
 		
 		// style
-		pWidget.setStyleName("login-Ui");
+		pWidget.setStyleName("core-login-ui");
 		
 		// defaults
 		pError.setVisible(false);
@@ -120,8 +120,6 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		
 		// debug
 		//pWidget.addStyleName("test2");
-
-		
 	}
 	
 	public void draw() {
@@ -169,7 +167,7 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		cbRemberMe.setText("Remember Me");
 		
 		
-		hAccountCreate = new Hyperlink("Create Account", "account_Create");
+		hAccountCreate = new Hyperlink("Create Account", "login_Create");
 		
 		tbConsumerKey.setTitle(inputLabel_ConsumerKey);
 		tbConsumerSecret.setTitle(inputLabel_consumerSecret);
@@ -207,14 +205,14 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		drawInputLabel_key();
 		drawInputLabel_secret();
 		
-		tbConsumerKey.addStyleName("login-Ui-InputConsumerKey");
-		tbConsumerSecret.addStyleName("login-Ui-InputConsumerSecret");
-		tbConsumerSecretPass.addStyleName("login-Ui-InputConsumerSecret");
+		tbConsumerKey.addStyleName("core-login-ui-inputconsumerkey");
+		tbConsumerSecret.addStyleName("core-login-ui-inputconsumersecret");
+		tbConsumerSecretPass.addStyleName("core-login-ui-inputconsumersecret");
 		pOptions.setCellHorizontalAlignment(hForgotPassword, HorizontalPanel.ALIGN_RIGHT);
 		pOptions.setCellHorizontalAlignment(hAccountCreate, HorizontalPanel.ALIGN_RIGHT);
 		pOptions.setCellVerticalAlignment(hForgotPassword, VerticalPanel.ALIGN_BOTTOM);
 		pOptions.setCellVerticalAlignment(hAccountCreate, VerticalPanel.ALIGN_BOTTOM);
-		pOptions.addStyleName("login-Ui-InputOptions");
+		pOptions.addStyleName("core-login-ui-inputoptions");
 		pOptions.setWidth("100%");
 
 		
@@ -238,7 +236,7 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		pUi.add(hp);
 		
 		// style
-		hForgotPassword.addStyleName("login-Ui-InputOptions");
+		hForgotPassword.addStyleName("core-login-ui-inputoptions");
 		hp.setCellVerticalAlignment(hAccountLogin, VerticalPanel.ALIGN_BOTTOM);
 	}
 	
@@ -249,7 +247,7 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
     pUi.clear();
 		
 		hAccountSettings = new Hyperlink("My Account","account_Profile");
-		hAccountLogout = new Hyperlink("Logout", "account_Logout");
+		hAccountLogout = new Hyperlink("Logout", "login_Logout");
 		
 		HorizontalPanel hp = new HorizontalPanel();
 		hp.add(hAccountSettings);
@@ -283,12 +281,12 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	
 	private void drawInputLabel_key() {
 		tbConsumerKey.setText(inputLabel_ConsumerKey);
-		tbConsumerKey.addStyleName("login-Ui-InputLabel");
+		tbConsumerKey.addStyleName("core-login-ui-inputlabel");
 	}
 	
 	private void drawInputLabel_secret() {
 		tbConsumerSecret.setText(inputLabel_consumerSecret);
-		tbConsumerSecret.addStyleName("login-Ui-InputLabel");
+		tbConsumerSecret.addStyleName("core-login-ui-inputlabel");
 	}
 	
 	protected String getConsumerKey() {
@@ -321,11 +319,11 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		
 		if (getConsumerKey().length() == 0 && click == false) {
 			tbConsumerKey.setText(inputLabel_ConsumerKey);
-			tbConsumerKey.addStyleName("login-Ui-InputLabel");
+			tbConsumerKey.addStyleName("core-login-ui-inputlabel");
 			
 		} else if (getConsumerKey().equals(inputLabel_ConsumerKey) == true) {
 			tbConsumerKey.setText("");
-			tbConsumerKey.removeStyleName("login-Ui-InputLabel");
+			tbConsumerKey.removeStyleName("core-login-ui-inputlabel");
 		}
 	}
 	

@@ -3,8 +3,10 @@ package com.gawkat.core.client;
 import java.util.HashMap;
 
 import com.gawkat.core.client.account.AccountManagementNavigation;
+import com.gawkat.core.client.global.EventManager;
 import com.gawkat.core.client.global.QueryString;
 import com.gawkat.core.client.global.QueryStringData;
+import com.gawkat.core.client.global.SessionManager;
 import com.gawkat.core.client.ui.LoginUi;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.HistoryListener;
@@ -20,13 +22,6 @@ public class LoginWidget extends Composite implements HistoryListener, ChangeLis
   // this manages the users privileges to protected resources
   private SessionManager sessionManager = null;
   
-  // have ready the accounts management after init
-  private AccountManagementNavigation accountManagement = null;
-  
-  // go to this when there is no historyToken. All navigation will use historyToken/anchors
-  // TODO move this to home?
-  private String defaultAppState = "home";
-
   // application credentials
   private String appConsumerKey = null;
   private String appConsumerSecret = null;
@@ -51,7 +46,7 @@ public class LoginWidget extends Composite implements HistoryListener, ChangeLis
   }
   
   /**
-   * manage the session and acess to protected resources 
+   * manage the session and access to protected resources 
    * for the web site and user using the web site
    */
   private void initSessionManager() {
@@ -63,14 +58,6 @@ public class LoginWidget extends Composite implements HistoryListener, ChangeLis
    sessionManager.addChangeListener(this);
   }
   
-  private void drawAccountsManagement(QueryStringData qsd) {
-    if (accountManagement == null) {
-      accountManagement = new AccountManagementNavigation();
-    }
-    accountManagement.setQueryStringData(qsd);
-  }
-
-
   /**
    * observe the url for changes
    */
@@ -82,21 +69,10 @@ public class LoginWidget extends Composite implements HistoryListener, ChangeLis
     historyToken = qsd.getHistoryToken();
     HashMap<String, String> params = qsd.getParameters();
     
-    // url navigation - with parameters
-    if (historyToken.length() == 0) {
-      History.newItem(defaultAppState);
-      
-    } else if (historyToken.matches("account_.*")) { // draw account mangement with anything that has account_ in the anchor
-      drawAccountsManagement(qsd);
-    
-      
-    } else if (historyToken.matches("other_.*")) {
-      // TODO application management
-    }
+    // TODO - change app state?
     
   }
 
- 
   /**
    * observer
    */

@@ -1,6 +1,7 @@
 package com.gawkat.core.client;
 
 import com.gawkat.core.client.admin.thingtype.ThingTypes;
+import com.gawkat.core.client.global.LoadingWidget;
 import com.gawkat.core.client.tests.TestRpcCallWidget;
 import com.gawkat.core.client.ui.LoginUi;
 import com.google.gwt.core.client.EntryPoint;
@@ -15,20 +16,27 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class Core implements EntryPoint {
 
+  // application credentials
   private String appConsumerKey = "demo_application";
   private String appConsumerSecret = "c1d0e06998305903ac76f589bbd6d4b61a670ba6"; //salt:password
   
-  private String defaultAppState = "home";
-  
+  /**
+   * load on entry
+   */
   public void onModuleLoad() {
     
+    // init the login widget
     LoginWidget loginWidget = new LoginWidget(appConsumerKey, appConsumerSecret);
     
     VerticalPanel pWidget = new VerticalPanel();
     pWidget.add(loginWidget);
     
+    pWidget.setWidth("600px");
+    pWidget.setCellHorizontalAlignment(loginWidget, HorizontalPanel.ALIGN_RIGHT);
+    
     RootPanel.get().add(pWidget);
-  
+    
+
   }
 
   /**

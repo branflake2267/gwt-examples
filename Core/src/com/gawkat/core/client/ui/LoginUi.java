@@ -1,7 +1,7 @@
 package com.gawkat.core.client.ui;
 
-import com.gawkat.core.client.EventManager;
 import com.gawkat.core.client.account.CreateUserAccount;
+import com.gawkat.core.client.global.EventManager;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.client.oauth.Sha1;
 import com.google.gwt.user.client.History;
@@ -244,16 +244,16 @@ public class LoginUi extends Composite implements ChangeListener, HistoryListene
  
   public void onHistoryChanged(String historyToken) {
    
-    if (historyToken.equals("account_Create")) {
+    if (historyToken.equals("login_Create")) {
       drawCreateAccount();
       
-    } else if (historyToken.equals("account_ForgotPassword")) {
+    } else if (historyToken.equals("login_ForgotPassword")) {
       fireChange(EventManager.FORGOT_PASSWORD);
       
-    } else if (historyToken.equals("account_Logout")) {
+    } else if (historyToken.equals("login_Logout")) {
       fireChange(EventManager.LOGOUT);
       
-    } else if (historyToken.equals("account_Profile")) {
+    } else if (historyToken.equals("login_Profile")) {
       fireChange(EventManager.PROFILE);
     } 
     

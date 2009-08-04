@@ -1,4 +1,4 @@
-package com.gawkat.core.client;
+package com.gawkat.core.client.global;
 
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.client.rpc.RpcCore;
@@ -26,7 +26,7 @@ public class SessionManager extends Composite implements ChangeListener {
   // rpc system
   public RpcCoreServiceAsync callRpcService;
 
-  private VerticalPanel loginHolder = null;
+  private VerticalPanel ploginHolder = null;
   
   // observe events
   private ChangeListenerCollection changeListeners = null;
@@ -53,7 +53,7 @@ public class SessionManager extends Composite implements ChangeListener {
    * constructor
    */
   public SessionManager(VerticalPanel loginHolder) {
-    this.loginHolder = loginHolder;
+    this.ploginHolder = loginHolder;
 
     // init the login ui
     loginUi = new LoginUi();
@@ -75,7 +75,7 @@ public class SessionManager extends Composite implements ChangeListener {
   }
 
   public void drawUi() {
-    loginHolder.add(loginUi);
+    ploginHolder.add(loginUi);
     loginUi.draw(accessToken);
   }
 
@@ -186,6 +186,7 @@ public class SessionManager extends Composite implements ChangeListener {
    */
   private void login() {
 
+    // get url application is loaded on
     String url = getUrl();
 
     // get credentials from LoginUi
@@ -209,15 +210,12 @@ public class SessionManager extends Composite implements ChangeListener {
    */
   private void logout() {
 
-    //Window.alert("logout in sesssion manager");
-
     loginUi.setLoginStatus(false);
     
     accessToken = null;
     consumerSecret = null;
        
     fireChange(EventManager.LOGGEDOUT);
-    
   }
 
   private void forgotPassword() {
