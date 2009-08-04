@@ -131,8 +131,11 @@ public class SessionAccessTokenJdo {
       pm.close();
     }
 
-    SessionAccessTokenJdo[] r = new SessionAccessTokenJdo[aT.size()];
-    aT.toArray(r);
+    SessionAccessTokenJdo[] r = null;
+    if (aT.size() > 0) {
+      r = new SessionAccessTokenJdo[aT.size()];
+      aT.toArray(r);
+    }
     
     return r;
   }

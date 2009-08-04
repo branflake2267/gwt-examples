@@ -130,8 +130,13 @@ public class ThingTypeJdo {
       pm.close();
     }
     
-    ThingTypeJdo[] r = new ThingTypeJdo[aT.size()];
-    aT.toArray(r);
+
+    ThingTypeJdo[] r = null;
+    if (aT.size() > 0) {
+      r = new ThingTypeJdo[aT.size()];
+      aT.toArray(r);
+    }
+    
     return r;
   }
   
@@ -176,8 +181,11 @@ public class ThingTypeJdo {
       pm.close();
     }
 
-    ThingTypeJdo[] r = new ThingTypeJdo[aT.size()];
-    aT.toArray(r);
+    ThingTypeJdo[] r = null;
+    if (aT.size() > 0) {
+      r = new ThingTypeJdo[aT.size()];
+      aT.toArray(r);
+    }
     return r;
   }
   

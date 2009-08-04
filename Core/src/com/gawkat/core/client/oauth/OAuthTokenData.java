@@ -96,6 +96,7 @@ public class OAuthTokenData implements IsSerializable {
 	public static final int SUCCESS = 1;
 	public static final int ERROR = 2;
 	public static final int ERROR_NOUSERMATCH = 3; // user can't get logged in
+	public static final int ERROR_USERNOTFOUND = 4;
 	private int resultOfRequest = 0;
 	
 	// when need of console output, turn this on
@@ -152,7 +153,10 @@ public class OAuthTokenData implements IsSerializable {
 	 * @return
 	 */
 	public boolean verify(String url, String consumerSecret) {
-		
+		if (url == null | consumerSecret == null) {
+		  return false;
+		}
+	  
 	  debug("verify: url: " + url + " consumerSecret: " + consumerSecret);
 		
 		// removing port for now, rpc method is different
@@ -381,11 +385,17 @@ public class OAuthTokenData implements IsSerializable {
   public String getResultMessage() {
     String s = "";
     switch (resultOfRequest) {
+    case SUCCESS:
+      // no need to show success
+      break;
     case ERROR:
       s = "Error";
       break;
     case ERROR_NOUSERMATCH:
       s = "I can't find you. Try agian.";
+      break;
+    case ERROR_USERNOTFOUND:
+      s = "I can't find you. Try agian. ";
       break;
     }
     return s;

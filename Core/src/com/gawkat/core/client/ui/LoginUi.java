@@ -115,12 +115,12 @@ public class LoginUi extends Composite implements ChangeListener, HistoryListene
 	}
 	
 	public void drawError(String error) {
-	   if (uiType == LOGIN_HORIZONTAL) {
-	      loginUiH.drawError(error);
-	    } else if (uiType == LOGIN_VERTICAL) {
-	      // TODO
-	    }
-	    
+	  if (uiType == LOGIN_HORIZONTAL) {
+	    loginUiH.drawError(error);
+	  } else if (uiType == LOGIN_VERTICAL) {
+	    // TODO
+	  }
+
 	}
 	
 	/**

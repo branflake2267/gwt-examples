@@ -168,8 +168,11 @@ public class ThingJdo {
       pm.close();
     }
 
-    ThingJdo[] r = new ThingJdo[aT.size()];
-    aT.toArray(r);
+    ThingJdo[] r = null;
+    if (aT.size() > 0) {
+      r = new ThingJdo[aT.size()];
+      aT.toArray(r);
+    }
     return r;
   }
 
