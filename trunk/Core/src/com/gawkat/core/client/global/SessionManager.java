@@ -167,7 +167,7 @@ public class SessionManager extends Composite implements ChangeListener {
     
     // deal with the errors
     int result = token.getResult();
-    if (result > OAuthTokenData.SUCCESS) {
+    if (result > OAuthTokenData.SUCCESS) { // all greater than success to be shown
       loginUi.drawError(token.getResultMessage());
       return;
     } 

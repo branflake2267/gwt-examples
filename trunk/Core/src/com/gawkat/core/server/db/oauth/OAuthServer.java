@@ -103,9 +103,13 @@ public class OAuthServer {
     // debug
     debug("getAccessToken: token: " + appAccessToken.toString() + " url: " + url);
 
-    // get userData to verify agianst - this will also tell if the user exists
+    // find the user? - return null if none
     UserData userData = getUserData(appAccessToken);
-
+    if(userData == null) {
+      appAccessToken.setResult(OAuthTokenData.ERROR_USERNOTFOUND);
+      return appAccessToken;
+    }
+    
     // verify the signed signature from the client matches the local
     // TODO - should I be verifying with consumerSecret?
     boolean verifySignature = appAccessToken.verify(url, userData.consumerSecret);
@@ -117,13 +121,18 @@ public class OAuthServer {
     Long accessId = getAccessId(appAccessToken);
 
     // examine if we can go to the next step
-    if (accessId == 0 | userData.userId == 0 | userData.error > 0 | verifySignature == false | verifyNonce == false) {
+    if (userData != null && 
+        accessId == 0 | 
+        userData.userId == 0 | 
+        userData.error > 0 | 
+        verifySignature == false | verifyNonce == false) {
+      // TODO - make the error more granular
       appAccessToken.setResult(OAuthTokenData.ERROR);
     } else {
       appAccessToken.setResult(OAuthTokenData.SUCCESS);
     }
 
-    // change access token session to user
+    // change access token session to user - after app credentials pass
     if (appAccessToken.getResult() == OAuthTokenData.SUCCESS) {
       setAccessToken_user(accessId, userData.userId);
     } else {
@@ -163,14 +172,16 @@ public class OAuthServer {
 
     // get user (thing)
     ThingJdo[] users = ThingJdo.query((long)ThingTypeJdo.TYPE_USER, consumerKey);
-    Long userId = users[0].getId();
-    String consumerSecret = users[0].getSecret();
     
-    // found a user
-    UserData ud = new UserData();
-    ud.consumerKey = token.getConsumerKey();
-    ud.consumerSecret = consumerSecret;
-    ud.userId = userId;
+    UserData ud = null;
+    if (users == null) {
+      // skip
+    } else {
+      ud = new UserData();
+      ud.consumerKey = token.getConsumerKey();
+      ud.userId = users[0].getId();
+      ud.consumerSecret = users[0].getSecret();
+    }
 
     return ud;
   }
@@ -212,8 +223,10 @@ public class OAuthServer {
    * @param thingId 
    * @return
    */
-  private boolean verifyNonceHasntBeenUsed(OAuthTokenData token, Long thingTypeId, Long thingId) {
-
+  private boolean verifyNonceHasntBeenUsed(OAuthTokenData token, long thingTypeId, long thingId) {
+    if (token == null | thingTypeId == 0 | thingId == 0) {
+      return false;
+    }
     String whereQuery = "(ThingTypeID='" + thingTypeId + "') AND (ThingId='" + thingId + "')";
    
     if (whereQuery.length() == 0) {

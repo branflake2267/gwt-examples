@@ -112,6 +112,7 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		
 		// style
 		pWidget.setStyleName("core-login-ui");
+		pError.setStyleName("core-Notification");
 		
 		// defaults
 		pError.setVisible(false);
@@ -259,24 +260,31 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	}
 	
 	public void drawError(String error) {
-		hideLoading();
-		
-		pError.clear();
-		pError.setVisible(true);
-		
-		error = Global_String.removeHtmlTags(error);
-		HTML htmlError = new HTML(error);
-		
-		pError.add(htmlError);
-		
-		// hide error shortly after fire
-		Timer t = new Timer() {
-            public void run() {
-            	pError.setVisible(false);
-            }
-	    };
-	    t.schedule(3000);
+	  hideLoading();
 
+	  pError.clear();
+	  pError.setVisible(true);
+
+	  error = Global_String.removeHtmlTags(error);
+	  HTML htmlError = new HTML(error);
+
+	  pError.add(htmlError);
+
+	  // hide error shortly after fire
+	  Timer t = new Timer() {
+	    public void run() {
+	      pError.setVisible(false);
+	    }
+	  };
+	  t.schedule(3000);
+
+	  // reset password
+	  resetInputSecret();
+	}
+	
+	private void resetInputSecret() {
+	  tbConsumerSecretPass.setText("");
+	  changePasswordInput();
 	}
 	
 	private void drawInputLabel_key() {
@@ -332,7 +340,6 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		tbConsumerSecret.setVisible(false);
 		tbConsumerSecretPass.setVisible(true);
 		tbConsumerSecretPass.setFocus(true);
-	
 	}
 	
 	private void checkInputLabel_secret() {

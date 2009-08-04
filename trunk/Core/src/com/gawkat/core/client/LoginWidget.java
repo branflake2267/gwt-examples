@@ -85,8 +85,9 @@ public class LoginWidget extends Composite implements HistoryListener, ChangeLis
         // TODO - after login, do something
         
       } else if (changeEvent == EventManager.LOGGEDOUT) {
-        sessionManager.setAppConsumerKey(appConsumerKey, appConsumerSecret); // reset the session entirely
-        History.newItem("home"); // reset app 
+        sessionManager.setAppConsumerKey(appConsumerKey, appConsumerSecret); 
+        //History.newItem("home"); // reset app
+        // TODO set application to default state?
       }
     }
     
