@@ -19,9 +19,85 @@ test1 {
 }
 
 
+.gwt-TextBox {
+  border: 1px solid #66B3FF;
+}
+ 
+.gwt-PasswordTextBox {
+  border: 1px solid #66B3FF;
+}
+
+.gwt-TextBox-readonly {
+  color: #888;
+}
+
+.gwt-CheckBox { 
+}
+.gwt-CheckBox-disabled {
+  color: #888;
+}
+
+
+
 
 .core-loadingimage {
 }
 
+.core-Notification {
+}
+
+/* login ui widget */
 .core-login-ui {
+  font-size: 90%;
+  width: 300px;
+  padding: 3px;
+  padding-right: 6px;
+}
+.core-login-ui-inputconsumerkey {
+  width: 120px;
+  margin-right: 3px;
+}
+.core-login-ui-inputconsumersecret {
+  width: 120px;
+  margin-right: 3px;
+}
+.core-login-ui-inputoptions {
+}
+.core-login-ui-inputoptions a {
+  font-size: 89%;
+}
+.core-login-ui-inputlabel {
+  color: #AAA;
+}
+
+
+/* create account widget*/
+.core-CreateUserAccount {
+  padding: 7px;
+}
+.core-CreateUserAccount-Notification {
+  margin-top: 2px;
+  margin-bottom: 2px;
+  font-weight: bold;
+  color: #805506;
+  border: 1px solid #AAA;
+  background-color: #F8FAB9;
+}
+.core-CreateUserAccount-Error {
+  color: red;
+}
+.core-CreateUserAccount-Field {
+  width: 125px;   
+  font-weight: bold;
+}
+.core-CreateUserAccount-CharCountError {
+  color: #FF0000;
+}
+.core-CreateUserAccount-CharCountPass {
+  color: #00FF00;
+}
+.core-CreateUserAccount-ErrorInput {
+  border: 1px solid #FF0000;
+  margin: 2px;
+  padding: 2px;
 }

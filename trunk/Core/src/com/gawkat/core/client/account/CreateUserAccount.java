@@ -1,7 +1,7 @@
 package com.gawkat.core.client.account;
 
 
-import com.gawkat.core.client.EventManager;
+import com.gawkat.core.client.global.EventManager;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.client.oauth.Sha1;
 import com.gawkat.core.client.rpc.RpcCore;
@@ -140,10 +140,10 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     // style
     pWidget.setStyleName("CreateUserAccount");
     pNotification.setWidth("100%");
-    pNotification.setStyleName("CreateUserAccount-Notification");
-    pSecretError.addStyleName("CreateUserAccount-Error");
-    pKeyError.addStyleName("CreateUserAccount-Error");
-    pAcceptError.addStyleName("CreateUserAccount-Error");
+    pNotification.setStyleName("core-CreateUserAccount-Notification");
+    pSecretError.addStyleName("core-CreateUserAccount-Error");
+    pKeyError.addStyleName("core-CreateUserAccount-Error");
+    pAcceptError.addStyleName("core-CreateUserAccount-Error");
   }
   
   /**
@@ -231,10 +231,10 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     pSecret.setStyleName("");
     
     // fields
-    lk1.setStyleName("CreateUserAccount-Field");
-    lk2.setStyleName("CreateUserAccount-Field");
-    ls1.setStyleName("CreateUserAccount-Field");
-    ls2.setStyleName("CreateUserAccount-Field");
+    lk1.setStyleName("core-CreateUserAccount-Field");
+    lk2.setStyleName("core-CreateUserAccount-Field");
+    ls1.setStyleName("core-CreateUserAccount-Field");
+    ls2.setStyleName("core-CreateUserAccount-Field");
     
     hpK1.setCellVerticalAlignment(lk1, VerticalPanel.ALIGN_MIDDLE);
     hpK2.setCellVerticalAlignment(lk2, VerticalPanel.ALIGN_MIDDLE);
@@ -246,10 +246,10 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     hpS1.setCellVerticalAlignment(pSecretCount1, VerticalPanel.ALIGN_MIDDLE);
     hpS2.setCellVerticalAlignment(pSecretCount2, VerticalPanel.ALIGN_MIDDLE);
     
-    pKeyCount1.setStyleName("CreateUserAccount-CharCountError");
-    pKeyCount2.setStyleName("CreateUserAccount-CharCountError");
-    pSecretCount1.setStyleName("CreateUserAccount-CharCountError");
-    pSecretCount2.setStyleName("CreateUserAccount-CharCountError");
+    pKeyCount1.setStyleName("core-CreateUserAccount-CharCountError");
+    pKeyCount2.setStyleName("core-CreateUserAccount-CharCountError");
+    pSecretCount1.setStyleName("core-CreateUserAccount-CharCountError");
+    pSecretCount2.setStyleName("core-CreateUserAccount-CharCountError");
   }
   
   public void setAccessToken(OAuthTokenData accessToken) {
@@ -266,7 +266,7 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     pNotification.setVisible(true);
     
     HTML html = new HTML(s);
-    html.addStyleName("Notification");
+    html.addStyleName("core-Notification");
     html.setHorizontalAlignment(HorizontalPanel.ALIGN_CENTER);
     pNotification.add(html);
     
@@ -340,24 +340,24 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   private void drawKeyNotify(boolean bol, int error) {
     pKeyError.clear();
     if (bol == true) {
-      pKey.setStyleName("CreateUserAccount-ErrorInput");
+      pKey.setStyleName("core-CreateUserAccount-ErrorInput");
       if (error > 0) {
         pKeyError.add(new HTML(UserData.getError(error)));
       }
     } else {
-      pKey.removeStyleName("CreateUserAccount-ErrorInput");
+      pKey.removeStyleName("core-CreateUserAccount-ErrorInput");
     }
   }
   
   private void drawSecretNotify(boolean bol, int error) {
     pSecretError.clear();
     if (bol == true) {
-      pSecret.setStyleName("CreateUserAccount-ErrorInput");
+      pSecret.setStyleName("core-CreateUserAccount-ErrorInput");
       if (error > 0) {
         pSecretError.add(new HTML(UserData.getError(error)));
       }
     } else {
-      pSecret.removeStyleName("CreateUserAccount-ErrorInput");
+      pSecret.removeStyleName("core-CreateUserAccount-ErrorInput");
       pSecretError.clear();
     }
   }
@@ -365,12 +365,12 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   private void drawAcceptNotify(boolean bol, int error) {
     pAcceptError.clear();
     if (bol == true) {
-      pAccept.setStyleName("CreateUserAccount-ErrorInput");
+      pAccept.setStyleName("core-CreateUserAccount-ErrorInput");
       if (error > 0) {
         pAcceptError.add(new HTML(UserData.getError(error)));
       }
     } else {
-      pAccept.removeStyleName("CreateUserAccount-ErrorInput");
+      pAccept.removeStyleName("core-CreateUserAccount-ErrorInput");
       pAcceptError.clear();
     }
   }
@@ -546,44 +546,44 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
       pKeyCount1.clear();
       pKeyCount1.add(new HTML(len));
       if (ilen > consumerKey_Len) {
-        pKeyCount1.removeStyleName("CreateUserAccount-CharCountError");
-        pKeyCount1.setStyleName("CreateUserAccount-CharCountPass");
+        pKeyCount1.removeStyleName("core-CreateUserAccount-CharCountError");
+        pKeyCount1.setStyleName("core-CreateUserAccount-CharCountPass");
       } else {
-        pKeyCount1.setStyleName("CreateUserAccount-CharCountError");
-        pKeyCount1.removeStyleName("CreateUserAccount-CharCountPass");
+        pKeyCount1.setStyleName("core-CreateUserAccount-CharCountError");
+        pKeyCount1.removeStyleName("core-CreateUserAccount-CharCountPass");
       }
       break;
     case 2: // key 2;
       pKeyCount2.clear();
       pKeyCount2.add(new HTML(len));
       if (ilen > consumerKey_Len) {
-        pKeyCount2.removeStyleName("CreateUserAccount-CharCountError");
-        pKeyCount2.setStyleName("CreateUserAccount-CharCountPass");
+        pKeyCount2.removeStyleName("core-CreateUserAccount-CharCountError");
+        pKeyCount2.setStyleName("core-CreateUserAccount-CharCountPass");
       } else {
-        pKeyCount2.setStyleName("CreateUserAccount-CharCountError");
-        pKeyCount2.removeStyleName("CreateUserAccount-CharCountPass");
+        pKeyCount2.setStyleName("core-CreateUserAccount-CharCountError");
+        pKeyCount2.removeStyleName("core-CreateUserAccount-CharCountPass");
       }
       break;
     case 3: // secret 1
       pSecretCount1.clear();
       pSecretCount1.add(new HTML(len));
       if (ilen > consumerSecret_Len) {
-        pSecretCount1.removeStyleName("CreateUserAccount-CharCountError");
-        pSecretCount1.setStyleName("CreateUserAccount-CharCountPass");
+        pSecretCount1.removeStyleName("core-CreateUserAccount-CharCountError");
+        pSecretCount1.setStyleName("core-CreateUserAccount-CharCountPass");
       } else {
-        pSecretCount1.setStyleName("CreateUserAccount-CharCountError");
-        pSecretCount1.removeStyleName("CreateUserAccount-CharCountPass");
+        pSecretCount1.setStyleName("core-CreateUserAccount-CharCountError");
+        pSecretCount1.removeStyleName("core-CreateUserAccount-CharCountPass");
       }
       break;
     case 4: // secret 2
       pSecretCount2.clear();
       pSecretCount2.add(new HTML(len));
       if (ilen > consumerSecret_Len) {
-        pSecretCount2.removeStyleName("CreateUserAccount-CharCountError");
-        pSecretCount2.setStyleName("CreateUserAccount-CharCountPass");
+        pSecretCount2.removeStyleName("core-CreateUserAccount-CharCountError");
+        pSecretCount2.setStyleName("core-CreateUserAccount-CharCountPass");
       } else {
-        pSecretCount2.setStyleName("CreateUserAccount-CharCountError");
-        pSecretCount2.removeStyleName("CreateUserAccount-CharCountPass");
+        pSecretCount2.setStyleName("core-CreateUserAccount-CharCountError");
+        pSecretCount2.removeStyleName("core-CreateUserAccount-CharCountPass");
       }
       break;
     }
