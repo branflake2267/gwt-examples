@@ -5,12 +5,9 @@
 <jdo>
     <package name="com.gawkat.core.server.jdo.data">
         <class
-              name="SessionNonceJdo">
+              name="SessionAccessTokenJdo">
             <field
-                  name="nonceId"
-                  persistence-modifier="persistent"/>
-            <field
-                  name="url"
+                  name="id"
                   persistence-modifier="persistent"/>
             <field
                   name="thingTypeId"
@@ -19,7 +16,10 @@
                   name="thingId"
                   persistence-modifier="persistent"/>
             <field
-                  name="nonce"
+                  name="accessToken"
+                  persistence-modifier="persistent"/>
+            <field
+                  name="accessTokenSecret"
                   persistence-modifier="persistent"/>
             <field
                   name="dateCreated"
@@ -50,9 +50,12 @@
                   persistence-modifier="persistent"/>
         </class>
         <class
-              name="SessionAccessTokenJdo">
+              name="SessionNonceJdo">
             <field
-                  name="id"
+                  name="nonceId"
+                  persistence-modifier="persistent"/>
+            <field
+                  name="url"
                   persistence-modifier="persistent"/>
             <field
                   name="thingTypeId"
@@ -61,10 +64,7 @@
                   name="thingId"
                   persistence-modifier="persistent"/>
             <field
-                  name="accessToken"
-                  persistence-modifier="persistent"/>
-            <field
-                  name="accessTokenSecret"
+                  name="nonce"
                   persistence-modifier="persistent"/>
             <field
                   name="dateCreated"
@@ -86,6 +86,21 @@
                   persistence-modifier="persistent"/>
             <field
                   name="dateUpdated"
+                  persistence-modifier="persistent"/>
+        </class>
+        <class
+              name="ThingPermission">
+            <field
+                  name="permissionId"
+                  persistence-modifier="persistent"/>
+            <field
+                  name="thingId"
+                  persistence-modifier="persistent"/>
+            <field
+                  name="hasPermissionToThingId"
+                  persistence-modifier="persistent"/>
+            <field
+                  name="access"
                   persistence-modifier="persistent"/>
         </class>
     </package>

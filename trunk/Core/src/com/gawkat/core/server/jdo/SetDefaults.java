@@ -43,6 +43,9 @@ public class SetDefaults {
     ThingTypeJdo c = new ThingTypeJdo();
     c.insert("Group"); // id:3
     
+    ThingTypeJdo d = new ThingTypeJdo();
+    d.insert("Widget"); // id:4
+    
   }
   
   /**
