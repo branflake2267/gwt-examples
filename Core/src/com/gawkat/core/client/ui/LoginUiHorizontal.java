@@ -4,6 +4,14 @@ package com.gawkat.core.client.ui;
 import com.gawkat.core.client.global.EventManager;
 import com.gawkat.core.client.global.Global_String;
 import com.gawkat.core.client.global.LoadingWidget;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
+import com.google.gwt.event.dom.client.FocusEvent;
+import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ChangeListenerCollection;
@@ -12,24 +20,30 @@ import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusListener;
+import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.PushButton;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 
-public class LoginUiHorizontal extends Composite implements ClickListener, KeyboardListener, ChangeListener, FocusListener {
+public class LoginUiHorizontal extends Composite implements ClickListener, KeyboardListener, ChangeListener, FocusListener, 
+MouseOverHandler, MouseOutHandler {
 
 	private ChangeListenerCollection changeListeners;
 	private int changeEvent; 
 	
 	// main widget div
-	private FlowPanel pWidget = new FlowPanel();
+	private FocusPanel pWidget = new FocusPanel();
+	
+	// remember me, create ...
+	private HorizontalPanel pOptions = new HorizontalPanel();
 	
 	// used for a username
 	private TextBox tbConsumerKey = new TextBox();
@@ -72,6 +86,8 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	private String inputLabel_ConsumerKey = "Username";
 	private String inputLabel_consumerSecret = "Password";
 	
+	private boolean hoverOnOff = false;
+	
 	/**
 	 * constructor
 	 */
@@ -84,6 +100,16 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		pWidget.add(hp);
 		
 		initWidget(pWidget);
+		
+
+		pWidget.addMouseOverHandler(this);
+		pWidget.addMouseOutHandler(this);
+		tbConsumerKey.addMouseOverHandler(this);
+		tbConsumerKey.addMouseOutHandler(this);
+		tbConsumerSecret.addMouseOverHandler(this);
+		tbConsumerSecret.addMouseOutHandler(this);
+		tbConsumerSecretPass.addMouseOverHandler(this);
+		tbConsumerSecretPass.addMouseOutHandler(this);
 		
 		// observers
 		bLogin.addClickListener(this);
@@ -185,22 +211,11 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		ploginItems.add(tbConsumerSecretPass);
 		ploginItems.add(bLogin);
 		
-		
-		// login options
-		HorizontalPanel pOptions = new HorizontalPanel();
-		//pOptions.setSpacing(4);
-		pOptions.add(cbRemberMe);
-		pOptions.add(hForgotPassword);
-		pOptions.add(hAccountCreate);
-		
 		VerticalPanel vp = new VerticalPanel();
 		vp.setWidth("100%");
 		vp.add(ploginItems);
-		vp.add(pOptions);
-		
-		// TODO - move this to a floating overlay
-		vp.add(pError);
 
+		
 		pUi.add(vp);
 		
 		drawInputLabel_key();
@@ -216,9 +231,58 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		pOptions.addStyleName("core-login-ui-inputoptions");
 		pOptions.setWidth("100%");
 
+    // login options
+    drawOptions();
+    drawError();
+		
 		
 		//vp.addStyleName("test1");
 		//pOptions.addStyleName("test2");
+	}
+	
+	private void drawOptions() {
+	  pOptions.clear();
+    pOptions.add(cbRemberMe);
+    pOptions.add(hForgotPassword);
+    pOptions.add(hAccountCreate);
+    pOptions.setVisible(false);
+    RootPanel.get().add(pOptions);
+    
+    pOptions.addStyleName("core-login-ui-options");
+	}
+	
+	private void drawError() {
+	  pError.setVisible(false);
+	  RootPanel.get().add(pError);
+	}
+	
+	private void turnOnOptions(boolean b) {
+	  int left = pWidget.getAbsoluteLeft();
+	  int top = pWidget.getAbsoluteTop() + pWidget.getOffsetHeight();
+	  int width = pWidget.getOffsetWidth();
+	  pOptions.setWidth(""+width+"px");
+	  RootPanel.get().setWidgetPosition(pOptions, left, top);
+	  if (b == true) {
+	    hoverOnOff = true;
+	    pOptions.setVisible(true);
+	  } else if (b == false) {
+	   hoverOnOff = false;
+	  }
+	  hideOptionsSlowly();
+	}
+	
+	private void hideOptionsSlowly() {
+	  if (hoverOnOff == true) {
+	    return;
+	  }
+	  Timer t = new Timer() {
+      public void run() {
+        if (hoverOnOff == false) {
+          pOptions.setVisible(false);
+        }
+      }
+    };
+    t.schedule(4000);
 	}
 	
 	private void drawForgotPassword() {
@@ -260,6 +324,13 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	}
 	
 	public void drawError(String error) {
+	  
+	  int left = pWidget.getAbsoluteLeft();
+    int top = pWidget.getAbsoluteTop() + pWidget.getOffsetHeight();
+    int width = pWidget.getOffsetWidth();
+    pOptions.setWidth(""+width+"px");
+    RootPanel.get().setWidgetPosition(pError, left, top);
+
 	  hideLoading();
 
 	  pError.clear();
@@ -276,7 +347,7 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 	      pError.setVisible(false);
 	    }
 	  };
-	  t.schedule(3000);
+	  t.schedule(4000);
 
 	  // reset password
 	  resetInputSecret();
@@ -452,6 +523,24 @@ public class LoginUiHorizontal extends Composite implements ClickListener, Keybo
 		} else if (sender == cbRemberMe) {
 		}
 	}
+
+  public void onMouseOver(MouseOverEvent event) {
+    
+    Widget sender = (Widget) event.getSource();
+    if (sender == pWidget) {
+      turnOnOptions(true);
+    }
+    
+  }
+
+  public void onMouseOut(MouseOutEvent event) {
+    
+    Widget sender = (Widget) event.getSource();
+    if (sender == pWidget) {
+      turnOnOptions(false);
+    }
+    
+  }
 	
 	
 }

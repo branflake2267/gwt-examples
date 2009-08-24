@@ -130,19 +130,19 @@ public class OAuthTokenData implements IsSerializable {
 	 */
 	public void sign(String url, String secret) {
 		
+    // removing port for now, rpc method different
+    url = url.replaceAll(":[0-9]+", "");
+	  
 		//debug
-		debug("sign: url: " + url + " secret: " + secret);
-		
-		// removing port for now, rpc method different
-		url = url.replaceAll(":[0-9]+", "");
-		
+		debug("sign(): url: " + url + " secret: " + secret);
+
 		String key = getConcatConsumerSecretAndTokenSecret(secret);
 		String data = getSignatureBaseString(url);
 		
 		Sha1 sha = new Sha1();
 		this.oauth_signature = sha.b64_hmac_sha1(key, data);
 		
-		debug("sign: auth_signature: " + oauth_signature);
+		debug("OAuthTockenData.sign(): signingData: " + data + " auth_signature: " + oauth_signature);
 	}
 	
 	/**
@@ -157,11 +157,17 @@ public class OAuthTokenData implements IsSerializable {
 		  return false;
 		}
 	  
-	  debug("verify: url: " + url + " consumerSecret: " + consumerSecret);
+
 		
 		// removing port for now, rpc method is different
-		url = url.replaceAll(":[0-9]+", ""); 
+    url = url.replaceAll(":[0-9]+", ""); 
 		
+    // // debug
+    String debugbeforekey = getConcatConsumerSecretAndTokenSecret(consumerSecret);
+    String debugbeforedata = getSignatureBaseString(url);
+    
+	  debug("verify: url: " + url + " consumerSecret: " + consumerSecret);
+
 		String verify = this.oauth_signature;
 		sign(url, consumerSecret);
 		boolean bol = false;
@@ -169,7 +175,10 @@ public class OAuthTokenData implements IsSerializable {
 			bol = true;
 		}
 		
-		debug("verify: signature: [true|false]: " + bol);
+	
+		debug("verify(): signature: [true|false]: " + bol + " auth_signature Given: " + oauth_signature + " verify: " + verify);
+		
+		//debug("secret: " + consumerSecret + " dataBefore: " + debugbeforedata);
 		
 		return bol;
 	}
