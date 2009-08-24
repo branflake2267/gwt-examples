@@ -21,9 +21,9 @@ public class SetDefaults {
     if (defaultType == SetDefaults.THINGTYPES) {
       setThingTypes();
     } else if (defaultType == SetDefaults.THINGAPP) {
-      setApplication();
+      createApplication();
     } else if (defaultType == SetDefaults.THINGUSER) {
-      setUser();
+      createUser();
     }
     
     return true;
@@ -48,7 +48,7 @@ public class SetDefaults {
   /**
    * set default application
    */
-  private void setApplication() {
+  private void createApplication() {
     
     Sha1 sha = new Sha1();
     
@@ -64,12 +64,14 @@ public class SetDefaults {
   /**
    * set a default user for testing
    */
-  private void setUser() {
+  private void createUser() {
     Sha1 sha = new Sha1();
     
     long thingTypeId = ThingTypeData.TYPE_USER;
     String key = "demo_user";
-    String secret = sha.hex_hmac_sha1("salt", "password");
+    String password = "password";
+    String secret = sha.b64_sha1(password);
+    //String secret = sha.hex_hmac_sha1("salt", "password"); // would need to do this on the client side too.
     
     ThingJdo a = new ThingJdo();
     a.insert(thingTypeId, key, secret);

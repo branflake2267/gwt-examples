@@ -1,5 +1,5 @@
 
-test1 {
+.test1 {
 	border:1px solid #FF0000;
 }
 .test2 {
@@ -59,6 +59,10 @@ test1 {
   width: 300px;
   padding: 3px;
   padding-right: 6px;
+}
+.core-login-ui-options {
+  background: white;
+  padding: 4px;
 }
 .core-login-ui-inputconsumerkey {
   width: 120px;

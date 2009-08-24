@@ -41,7 +41,7 @@ public class OAuthServer {
    */
   public OAuthTokenData requestToken(OAuthTokenData token, String url) {
 
-    debug("requestToken: token: " + token.toString() + " url: " + url);
+    debug("requestToken:  url: " + url);
 
     // get the application data according to the consumerKey Given, then lets
     // see if it matches up
@@ -51,13 +51,13 @@ public class OAuthServer {
     boolean doesSignatureMatch = token.verify(url, appData.consumerSecret);
 
     // check nonce - makeure it does not exist
-    boolean nonceIsUsed = verifyNonceHasntBeenUsed(token, (long) ThingTypeJdo.TYPE_APPLICATION, appData.applicationId);
+    boolean nonceAlreadyUsed = hasNonceBeenFoundUsed(token, (long) ThingTypeJdo.TYPE_APPLICATION, appData.applicationId);
 
     // prepare for transport back
     OAuthTokenData returnToken = new OAuthTokenData();
 
     // examine if we can go to the next step
-    if (appData.applicationId == 0 | doesSignatureMatch == false | nonceIsUsed == true) {
+    if (appData.applicationId == 0 | doesSignatureMatch == false | nonceAlreadyUsed == true) {
       returnToken.setResult(OAuthTokenData.ERROR);
     } else {
       returnToken.setResult(OAuthTokenData.SUCCESS);
@@ -114,8 +114,8 @@ public class OAuthServer {
     // TODO - should I be verifying with consumerSecret?
     boolean verifySignature = appAccessToken.verify(url, userData.consumerSecret);
 
-    // check nonce
-    boolean verifyNonce = verifyNonceHasntBeenUsed(appAccessToken, (long) ThingTypeJdo.TYPE_USER, userData.userId);
+    // if true - thats bad
+    boolean nonceAlreadyUsed = hasNonceBeenFoundUsed(appAccessToken, (long) ThingTypeJdo.TYPE_USER, userData.userId);
 
     // verify application's access, then transfer it to the user if all passes
     Long accessId = getAccessId(appAccessToken);
@@ -125,7 +125,7 @@ public class OAuthServer {
         accessId == 0 | 
         userData.userId == 0 | 
         userData.error > 0 | 
-        verifySignature == false | verifyNonce == false) {
+        verifySignature == false | nonceAlreadyUsed == true) {
       // TODO - make the error more granular
       appAccessToken.setResult(OAuthTokenData.ERROR);
     } else {
@@ -223,7 +223,7 @@ public class OAuthServer {
    * @param thingId 
    * @return
    */
-  private boolean verifyNonceHasntBeenUsed(OAuthTokenData token, long thingTypeId, long thingId) {
+  private boolean hasNonceBeenFoundUsed(OAuthTokenData token, long thingTypeId, long thingId) {
     if (token == null | thingTypeId == 0 | thingId == 0) {
       return false;
     }

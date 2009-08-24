@@ -52,6 +52,7 @@ public class SessionAccessTokenJdo {
    * @param accessTokenSecret
    */
   public boolean insert(Long thingTypeId, Long thingId, String accessToken, String accessTokenSecret) {
+    this.thingTypeId = thingTypeId;
     this.thingId = thingId;
     this.accessToken = accessToken;
     this.accessTokenSecret = accessTokenSecret;
@@ -109,7 +110,7 @@ public class SessionAccessTokenJdo {
     try {
       tx.begin();
 
-      Extent<ThingTypeJdo> e = pm.getExtent(ThingTypeJdo.class, true);
+      Extent<SessionAccessTokenJdo> e = pm.getExtent(SessionAccessTokenJdo.class, true);
       Query q = pm.newQuery(e, qfilter);
       q.execute();
 

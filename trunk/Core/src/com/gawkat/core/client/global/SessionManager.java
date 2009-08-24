@@ -50,7 +50,10 @@ public class SessionManager extends Composite implements ChangeListener {
   private String consumerSecret = null;
   
   /**
-   * constructor
+   * constructor - init widget - start the session manager
+   * 
+   * @param accessToken - link to the token from parent
+   * @param loginHolder
    */
   public SessionManager(VerticalPanel loginHolder) {
     this.ploginHolder = loginHolder;
@@ -116,6 +119,15 @@ public class SessionManager extends Composite implements ChangeListener {
 
     // ask the server now
     request_Request_Token(token);
+  }
+  
+  /**
+   * get access token after login
+   * 
+   * @return
+   */
+  public OAuthTokenData getAccessToken() {
+    return this.accessToken;
   }
 
   /**
