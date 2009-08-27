@@ -2,18 +2,22 @@ package com.gawkat.core.server.jdo;
 
 import com.gawkat.core.client.admin.thingtype.ThingTypeData;
 import com.gawkat.core.client.oauth.Sha1;
+import com.gawkat.core.server.ServerPersistence;
 import com.gawkat.core.server.jdo.data.ThingJdo;
 import com.gawkat.core.server.jdo.data.ThingTypeJdo;
 
 public class SetDefaults {
 
+  private ServerPersistence sp = null;
+  
   // what to set on using this class
   public static int THINGTYPES = 1;
   public static int THINGAPP = 2;
   public static int THINGUSER = 3;  
 
   
-  public SetDefaults() {
+  public SetDefaults(ServerPersistence sp) {
+    this.sp = sp;
   }
   
   public boolean setDefaults(int defaultType) {

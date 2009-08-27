@@ -89,7 +89,7 @@
                   persistence-modifier="persistent"/>
         </class>
         <class
-              name="ThingPermission">
+              name="ThingPermissionJdo">
             <field
                   name="permissionId"
                   persistence-modifier="persistent"/>

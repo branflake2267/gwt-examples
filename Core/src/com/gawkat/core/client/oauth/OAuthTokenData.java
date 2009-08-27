@@ -153,12 +153,11 @@ public class OAuthTokenData implements IsSerializable {
 	 * @return
 	 */
 	public boolean verify(String url, String consumerSecret) {
+	  
 		if (url == null | consumerSecret == null) {
 		  return false;
 		}
-	  
 
-		
 		// removing port for now, rpc method is different
     url = url.replaceAll(":[0-9]+", ""); 
 		
@@ -175,7 +174,6 @@ public class OAuthTokenData implements IsSerializable {
 			bol = true;
 		}
 		
-	
 		debug("verify(): signature: [true|false]: " + bol + " auth_signature Given: " + oauth_signature + " verify: " + verify);
 		
 		//debug("secret: " + consumerSecret + " dataBefore: " + debugbeforedata);

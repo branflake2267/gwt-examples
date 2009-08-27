@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
+import com.gawkat.core.server.ServerPersistence;
 import com.gawkat.core.server.jdo.data.SessionAccessTokenJdo;
 import com.gawkat.core.server.jdo.data.SessionNonceJdo;
 import com.gawkat.core.server.jdo.data.ThingJdo;
@@ -12,13 +13,16 @@ import com.gawkat.core.server.jdo.data.ThingTypeJdo;
 
 public class OAuthServer {
 
-  final private static int APPLICATION = 1;
-  final private static int USER = 2;
+  private ServerPersistence sp = null;
+  
+  private static final int APPLICATION = 1;
+  private static final int USER = 2;
   
   /**
    * constructor
    */
-  public OAuthServer() {
+  public OAuthServer(ServerPersistence sp) {
+    this.sp = sp;
   }
 
   /**
@@ -39,8 +43,10 @@ public class OAuthServer {
    * @param token
    * @return
    */
-  public OAuthTokenData requestToken(OAuthTokenData token, String url) {
+  public OAuthTokenData requestToken(OAuthTokenData token) {
 
+    String url = sp.getRequestUrlOAuth();
+    
     debug("requestToken:  url: " + url);
 
     // get the application data according to the consumerKey Given, then lets
@@ -98,8 +104,10 @@ public class OAuthServer {
    * @param url
    * @return
    */
-  public OAuthTokenData getUserAccessToken(OAuthTokenData appAccessToken, String url) {
+  public OAuthTokenData getUserAccessToken(OAuthTokenData appAccessToken) {
 
+    String url = sp.getRequestUrlOAuth();
+    
     // debug
     debug("getAccessToken: token: " + appAccessToken.toString() + " url: " + url);
 
@@ -143,7 +151,6 @@ public class OAuthServer {
     setNonce(appAccessToken, url, (long) ThingTypeJdo.TYPE_USER, userData.userId);
 
     // sign the token for transport back
-    // TODO should I be signing with consumer secret?
     try {
       appAccessToken.sign(url, userData.consumerSecret);
     } catch (Exception e) {
@@ -200,20 +207,42 @@ public class OAuthServer {
 
     String ck = token.getConsumerKey();
     
-    // get user (thing)
-    ThingJdo[] apps = ThingJdo.query((long) ThingTypeJdo.TYPE_APPLICATION, ck);
-    long applicationId = apps[0].getId();
-    String consumerKey = apps[0].getKey();
-    String consumerSecret = apps[0].getSecret();
+    // get application (thing)
+    ThingJdo[] things = ThingJdo.query((long) ThingTypeJdo.TYPE_APPLICATION, ck);
+    long id = things[0].getId();
+    String consumerKey = things[0].getKey();
+    String consumerSecret = things[0].getSecret();
     
-    ApplicationData appData = new ApplicationData();
-    appData.applicationId = applicationId;
-    appData.consumerKey = consumerKey;
-    appData.consumerSecret = consumerSecret;
+    ApplicationData r = new ApplicationData();
+    r.applicationId = id;
+    r.consumerKey = consumerKey;
+    r.consumerSecret = consumerSecret;
       
-    return appData;
+    return r;
   }
+  
+  private UserData getUserId(OAuthTokenData accessToken) {
 
+    if (accessToken == null) {
+      System.out.println("No tokenData exists. ERROR: User.getUserId()");
+    }
+
+    String getConsumerKeyUser = accessToken.getConsumerKey();
+    
+    // get user (thing)
+    ThingJdo[] things = ThingJdo.query((long) ThingTypeJdo.TYPE_USER, getConsumerKeyUser);
+    long id = things[0].getId();
+    String consumerKey = things[0].getKey();
+    String consumerSecret = things[0].getSecret();
+    
+    UserData r = new UserData();
+    r.userId = id;
+    r.consumerKey = consumerKey;
+    r.consumerSecret = consumerSecret;
+      
+    return r;
+  }
+  
   /**
    * verify this nonce has not been used before nonce - 30 chars, and is unique
    * for each request
@@ -307,9 +336,7 @@ public class OAuthServer {
    * @return
    */
   private boolean setAccessToken_user(Long id, Long userId) {
-
     return SessionAccessTokenJdo.updateAccessToken(id, userId);
-     
   }
 
   /**
@@ -346,9 +373,5 @@ public class OAuthServer {
 
   }
 
-  // TODO
-  private boolean verifyAccessToken(int applicationId, String accessToken, String accessTokenSecret) {
-    return false;
-  }
 
 }

@@ -2,14 +2,18 @@ package com.gawkat.core.server.db;
 
 import com.gawkat.core.client.admin.thingtype.ThingTypeData;
 import com.gawkat.core.client.admin.thingtype.ThingTypeFilterData;
+import com.gawkat.core.server.ServerPersistence;
 import com.gawkat.core.server.jdo.data.ThingTypeJdo;
 
 public class ThingType {
   
+  private ServerPersistence sp = null;
+  
   /**
    * constructor
    */
-  public ThingType() {
+  public ThingType(ServerPersistence sp) {
+    this.sp = sp;
   }
   
   /**

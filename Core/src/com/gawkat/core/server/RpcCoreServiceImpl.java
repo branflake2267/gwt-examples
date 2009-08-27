@@ -25,96 +25,17 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * get request url
-	 * 
-	 * @return
+	 * store server persistence items
 	 */
-	private String getRequestUrl() {
-
-		HttpServletRequest request = getThreadLocalRequest();
-		String host = request.getRemoteHost();
-		String path = request.getPathInfo();
-		int port = request.getRemotePort();
-		
-		String url = "";
-		if (port == 80) {
-			url = "http://" + host + path;
-		} else if (port == 443) {
-			url = "https://" + host + path;
-		} else {
-			url = "http://" + host + ":" + port + path;
-		}
-		
-		return url;
-	}
-	
-	/**
-	 * get request url path for oauth - minus port
-	 * 
-	 * ajax requests come in on different ports, as far as I can tell
-	 * maybe its only in hosted mode
-	 * 
-	 * @return
-	 */
-	private String getRequestUrlOAuth() {
-
-		HttpServletRequest request = getThreadLocalRequest();
-		String host = getHost(request);
-		String path = request.getRequestURI();
-		
-		// take off the servlet context path
-		String newPath = "";
-		if (path != null) {
-	    String re = "(.*/)";
-	    Pattern p = Pattern.compile(re);
-	    Matcher m = p.matcher(path);
-	    boolean found = m.find();
-	    if (found == true) {
-	      newPath = m.group(1);
-	    }
-		}
-
-		String url = host + newPath;
-		
-		return url;		
-	}
-	
-	private String getHost(HttpServletRequest request) {
-	  String s = "";
-	  
-	  StringBuffer url = request.getRequestURL();
-	  
-	  int sep = 0;
-	  int col = 0;
-	  for (int i=0; i < url.length(); i++) {
-	    
-	    String c = Character.toString(url.charAt(i));
-	    
-	    if (c.equals(":")) {
-	      col++;
-	      if (col == 2) {
-	        break;
-	      }
-	    }
-	    
-	    if (c.equals("/")) {
-	      sep++;
-	      if (sep == 3) {
-	        break;
-	      }
-	    }
-	    
-	    s += c;
-	  }
-	  
-	  return s;
-	}
+	private ServerPersistence sp = new ServerPersistence();
 	
 	/**
 	 * test method for rpc
 	 */
 	public String testMethod(String s) {
+	  sp.start(getThreadLocalRequest());
 		s += " was modified on the server.";
+		sp.end();
 		return s;
 	}
 
@@ -122,47 +43,42 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
 	 * A. ->(B.?) grant request token?
 	 */
 	public OAuthTokenData requestToken(OAuthTokenData tokenData) {
-	  
-	  System.out.println("1. Impl: requestToken(): ");
-		
-	  String url = getRequestUrlOAuth();
-		
-	  System.out.println("2. Impl: requestToken(): ");
-	  
-		OAuthServer oauth = new OAuthServer();
-		OAuthTokenData rtnToken = oauth.requestToken(tokenData, url);
-		
-		System.out.println("3. Impl: requestToken(): ");
-		
-		return rtnToken;
+	  sp.start(getThreadLocalRequest());
+		OAuthServer oauth = new OAuthServer(sp);
+		OAuthTokenData r = oauth.requestToken(tokenData);
+		sp.end();
+		return r;
 	}
 
   public UserData createUser(UserData userData) {
-    
-    // used to sign the new user
-    String url = getRequestUrlOAuth();
-    
-    User db = new User();
-    return db.createUser(userData, url);
+    sp.start(getThreadLocalRequest());
+    User db = new User(sp);
+    UserData r = db.createUser(userData);
+    sp.end();
+    return r;
   }
   
-  public UserData isUserNameExist(UserData userData) {
-    User db = new User();
-    return db.isUserNameExist(userData);
+  public UserData doesUserNameExist(UserData userData) {
+    sp.start(getThreadLocalRequest());
+    User db = new User(sp);
+    UserData r = db.getUserExist(userData);
+    sp.end();
+    return r;
   }
   
   public UserData forgotPassword(UserData userData) {
-    User db = new User();
-    return db.forgotPassword(userData);
+    sp.start(getThreadLocalRequest());
+    User db = new User(sp);
+    UserData r = db.forgotPassword(userData);
+    sp.end();
+    return r;
   }
   
   public OAuthTokenData getUserAccessToken(OAuthTokenData appAccessToken) {
-    
-    // used to sign the new user
-    String url = getRequestUrlOAuth();
-    
-    OAuthServer oauth = new OAuthServer();
-    OAuthTokenData rtnToken = oauth.getUserAccessToken(appAccessToken, url);
+    sp.start(getThreadLocalRequest());
+    OAuthServer oauth = new OAuthServer(sp);
+    OAuthTokenData rtnToken = oauth.getUserAccessToken(appAccessToken);
+    sp.end();
     return rtnToken;
   }
 	
@@ -173,13 +89,22 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
    * @return
    */
   public ThingTypeData[] getThingTypes(ThingTypeFilterData filter) {
-    ThingType thingType = new ThingType();
-    return thingType.getThingTypes(filter);
+    sp.start(getThreadLocalRequest());
+    ThingType thingType = new ThingType(sp);
+    ThingTypeData[] r = thingType.getThingTypes(filter);
+    sp.end();
+    return r;
   }
   
+  /**
+   * set default items in db
+   */
   public boolean setDefaults(int defaultType) {
-    SetDefaults sd = new SetDefaults();
-    return sd.setDefaults(defaultType);
+    sp.start(getThreadLocalRequest());
+    SetDefaults sd = new SetDefaults(sp);
+    boolean r = sd.setDefaults(defaultType);
+    sp.end();
+    return r;
   }
   
 }
