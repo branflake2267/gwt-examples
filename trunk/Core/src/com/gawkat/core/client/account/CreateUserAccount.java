@@ -685,7 +685,7 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
         // TODO hide loading
       }
     };
-    callRpcService.isUserNameExist(userData, callback);
+    callRpcService.doesUserNameExist(userData, callback);
   }
 
   /**

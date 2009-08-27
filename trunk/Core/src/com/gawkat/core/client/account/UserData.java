@@ -25,7 +25,7 @@ public class UserData implements IsSerializable {
   
   
   // used on server side
-  public Long userId;
+  public long userId;
   
   // consumer accessToken
   // web application has access
@@ -71,18 +71,15 @@ public class UserData implements IsSerializable {
   
   /**
    * verify this objects varibles
-   * TODO - add some salt?
    * 
    * @return
    */
-  public boolean verify() {
+  public boolean verifySignature() {
     Sha1 sha = new Sha1();
-    
     boolean pass = false;
     if (this.signature.equals(sha.b64_sha1(getSignatureBaseString()))) {
       pass = true;
     }
-    
     return pass;
   }
   

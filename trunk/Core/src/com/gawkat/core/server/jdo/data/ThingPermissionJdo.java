@@ -18,7 +18,7 @@ import javax.jdo.annotations.PrimaryKey;
 import com.gawkat.core.server.jdo.PMF;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
-public class ThingPermission {
+public class ThingPermissionJdo {
 
   // can't see or write a thing
   public static final int PNO_ACCESS = 0;
@@ -56,9 +56,9 @@ public class ThingPermission {
    * @param hasPermissionToThingId
    * @return
    */
-  public static ThingPermission query(long thingId, long hasPermissionToThingId) {
+  public static ThingPermissionJdo query(long thingId, long hasPermissionToThingId) {
 
-    ArrayList<ThingPermission> aT = new ArrayList<ThingPermission>();
+    ArrayList<ThingPermissionJdo> aT = new ArrayList<ThingPermissionJdo>();
 
     String qfilter = "thingId==" + thingId + " && hasPermissionToThingId==" + hasPermissionToThingId + " ";
 
@@ -67,14 +67,14 @@ public class ThingPermission {
     try {
       tx.begin();
 
-      Extent<ThingPermission> e = pm.getExtent(ThingPermission.class, true);
+      Extent<ThingPermissionJdo> e = pm.getExtent(ThingPermissionJdo.class, true);
       Query q = pm.newQuery(e, qfilter);
       q.execute();
 
-      Collection<ThingPermission> c = (Collection<ThingPermission>) q.execute();
-      Iterator<ThingPermission> iter = c.iterator();
+      Collection<ThingPermissionJdo> c = (Collection<ThingPermissionJdo>) q.execute();
+      Iterator<ThingPermissionJdo> iter = c.iterator();
       while (iter.hasNext()) {
-        ThingPermission t = (ThingPermission) iter.next();
+        ThingPermissionJdo t = (ThingPermissionJdo) iter.next();
         aT.add(t);
       }
 
@@ -87,13 +87,13 @@ public class ThingPermission {
       pm.close();
     }
 
-    ThingPermission[] r = null;
+    ThingPermissionJdo[] r = null;
     if (aT.size() > 0) {
-      r = new ThingPermission[aT.size()];
+      r = new ThingPermissionJdo[aT.size()];
       aT.toArray(r);
     }
     
-    ThingPermission rr = null;
+    ThingPermissionJdo rr = null;
     if (r != null && r.length > 0) {
       rr = r[0];
     }
@@ -114,7 +114,7 @@ public class ThingPermission {
     this.access = access;
 
     // do not insert duplicate
-    ThingPermission tt = ThingPermission.query(thingId, hasPermissionToThingId);
+    ThingPermissionJdo tt = ThingPermissionJdo.query(thingId, hasPermissionToThingId);
     if (tt != null) {
       return;
     }

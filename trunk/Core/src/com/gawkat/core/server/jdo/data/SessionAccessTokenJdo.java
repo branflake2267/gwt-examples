@@ -16,6 +16,9 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.gawkat.core.client.account.ThingData;
+import com.gawkat.core.client.account.UserData;
+import com.gawkat.core.server.db.ThingType;
 import com.gawkat.core.server.jdo.PMF;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
@@ -80,7 +83,7 @@ public class SessionAccessTokenJdo {
    * 
    * @return
    */
-  public Long getId() {
+  public long getId() {
     return this.id;
   }
   
@@ -88,8 +91,20 @@ public class SessionAccessTokenJdo {
    * get thing id
    * @param thingId
    */
-  public void setThingId(Long thingId) {
+  public void setThingId(long thingId) {
     this.thingId = thingId;
+  }
+  
+  public void setThingTypeId(long thingTypeId) {
+    this.thingTypeId = thingTypeId;
+  }
+  
+  public long getThingId() {
+    return thingId;
+  }
+  
+  public long getThingTypeId() {
+    return thingTypeId;
   }
   
   /**
@@ -142,12 +157,27 @@ public class SessionAccessTokenJdo {
   }
   
   /**
+   * get the owner of the session
+   * 
+   * @param accessToken
+   * @param accessTokenSecret
+   * @return
+   */
+  public ThingData getThingData(String accessToken, String accessTokenSecret) {
+    SessionAccessTokenJdo[] s = query(accessToken, accessTokenSecret);
+    ThingData t = new ThingData();
+    t.thingTypeId = s[0].getThingTypeId();
+    t.thingId = s[0].getThingId();
+    return t;
+  }
+  
+  /**
    * update Access Token and change the owner to userId;
    * @param id
    * @param userId
    * @return
    */
-  public static boolean updateAccessToken(Long id, Long userId) {
+  public static boolean updateAccessToken(long id, long userId) {
     
     boolean success = false;
     
@@ -158,7 +188,7 @@ public class SessionAccessTokenJdo {
       SessionAccessTokenJdo sa = null;
       sa = pm.getObjectById(SessionAccessTokenJdo.class, id);
       sa.setThingId(userId);
-      // TODO - was I supposed to change the ThingTypeId to user?
+      sa.setThingTypeId(ThingTypeJdo.TYPE_USER); // switch session var to the user and not the application
       pm.makePersistent(sa);
       success = true;
       tx.commit();

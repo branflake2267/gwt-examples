@@ -8,25 +8,13 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface RpcCoreServiceAsync {
 
-	/**
-	 * example rpc request with the callback
-	 * 
-	 * @param s
-	 * @param callback
-	 */
 	public void testMethod(String s, AsyncCallback<String> callback);
 	
-	/**
-	 * A. grant request token?
-	 * 
-	 * @param tokenData
-	 * @param callback
-	 */
 	public void requestToken(OAuthTokenData tokenData, AsyncCallback<OAuthTokenData> callback);
 	
   public void createUser(UserData userData, AsyncCallback<UserData> callback);
   
-  public void isUserNameExist(UserData userData, AsyncCallback<UserData> callback);
+  public void doesUserNameExist(UserData userData, AsyncCallback<UserData> callback);
   
   public void forgotPassword(UserData userData, AsyncCallback<UserData> callback);
   

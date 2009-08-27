@@ -1,8 +1,13 @@
 package com.gawkat.core.server.db;
 
+import java.awt.datatransfer.StringSelection;
+
+import com.gawkat.core.client.account.ThingData;
 import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
+import com.gawkat.core.server.ServerPersistence;
 import com.gawkat.core.server.db.oauth.OAuthServer;
+import com.gawkat.core.server.jdo.data.SessionAccessTokenJdo;
 import com.gawkat.core.server.jdo.data.ThingJdo;
 import com.gawkat.core.server.jdo.data.ThingTypeJdo;
 
@@ -14,20 +19,20 @@ import com.gawkat.core.server.jdo.data.ThingTypeJdo;
  */
 public class User {
 
+  private ServerPersistence sp = null;
+  
   /**
    * constructor
    */
-  public User() {
+  public User(ServerPersistence sp) {
+    this.sp = sp;
   }
   
   private boolean verifyUserData(UserData userData) {
-    
     boolean pass = false;
-    
-    if (userData.verify() == true) {
+    if (userData.verifySignature() == true) {
       pass = true;
     }
-    
     return pass;
   }
   
@@ -46,7 +51,9 @@ public class User {
    * @param url - used for signing
    * @return
    */
-  public UserData createUser(UserData userData, String url) {
+  public UserData createUser(UserData userData) {
+    
+    String url = sp.getRequestUrlOAuth();
     
     if (verifyUserData(userData) == false) {
       UserData udErr = getError(UserData.SIGNATURE_ERROR);
@@ -74,21 +81,21 @@ public class User {
     
     // create user oAuthToken access token
     UserData newUd = new UserData();
-    newUd.accessToken = getUserAccessToken(userData, url); 
+    newUd.accessToken = getUserAccessToken(userData); 
     newUd.sign();
     
     return newUd;
   }
   
   /**
-   * check to see if the user exists already
-   *   TODO - key could be a hash?
+   * does the user exist in the database?
    * 
    * @param userData
    * @return
    */
-  public UserData isUserNameExist(UserData userData) {
+  public UserData getUserExist(UserData userData) {
     
+    // did everything pass?
     if (verifyUserData(userData) == false) {
       UserData udErr = getError(UserData.SIGNATURE_ERROR);
       return udErr;
@@ -154,7 +161,9 @@ public class User {
    * @param userId
    * @return
    */
-  private OAuthTokenData getUserAccessToken(UserData userData, String url) {
+  private OAuthTokenData getUserAccessToken(UserData userData) {
+    
+    String url = sp.getRequestUrlOAuth();
     
     // create a userAccessToken
     // which is used to exchange the appAccessToken to userAccessToken
@@ -162,14 +171,34 @@ public class User {
     appAccessToken.setConsumerKey(userData.consumerKey);
     appAccessToken.sign(url, userData.consumerSecret);
     
-    OAuthServer oAuthServer = new OAuthServer();
-    OAuthTokenData userAccessToken = oAuthServer.getUserAccessToken(appAccessToken, url);
+    OAuthServer oAuthServer = new OAuthServer(sp);
+    OAuthTokenData userAccessToken = oAuthServer.getUserAccessToken(appAccessToken);
     
     return userAccessToken;
   }
   
-  
-  
+  /**
+   * get the user from the session
+   *   this looks up the session token and secret created for this session
+   *   
+   * @param accessToken
+   * @return
+   */
+  public ThingData getUser(OAuthTokenData accessToken) {
+    
+    String ct = accessToken.getAccessToken_key(); // at this point its a consumer token, and not the hash
+    String cs = accessToken.getAccessToken_secret();
+    
+    SessionAccessTokenJdo s = new SessionAccessTokenJdo();
+    ThingData t = s.getThingData(ct, cs);
+    
+    // the id has to be a user
+    if (t.thingTypeId != 2) {
+      t = null;
+    }
+    
+    return t;
+  }
   
   
   
