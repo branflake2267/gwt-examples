@@ -1,11 +1,12 @@
 package com.gawkat.core.client;
 
+import com.gawkat.core.client.account.LoginWidget;
+import com.gawkat.core.client.account.ui.LoginUi;
 import com.gawkat.core.client.admin.thingtype.ThingTypes;
 import com.gawkat.core.client.global.EventManager;
 import com.gawkat.core.client.global.LoadingWidget;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.client.tests.TestRpcCallWidget;
-import com.gawkat.core.client.ui.LoginUi;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -21,22 +22,17 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class Core implements EntryPoint, ChangeHandler {
 
-  private LoginWidget wLogin = null;
+  private ClientPersistence cp = new ClientPersistence();
   
-  // application credentials
-  private String appConsumerKey = "demo_application";
-  private String appConsumerSecret = "c1d0e06998305903ac76f589bbd6d4b61a670ba6"; //salt:password
-  
-  // link into the accessToken instead of pulling it out
-  private OAuthTokenData accessToken = null;
-  
+  private LoginWidget wLogin = new LoginWidget(cp);
+   
   /**
    * load on entry
    */
   public void onModuleLoad() {
     
-    // init the login widget
-    wLogin = new LoginWidget(appConsumerKey, appConsumerSecret);
+    wLogin.initSession();
+    wLogin.setUi(LoginUi.LOGIN_HORIZONTAL);
     
     VerticalPanel pWidget = new VerticalPanel();
     pWidget.add(wLogin);
@@ -51,9 +47,8 @@ public class Core implements EntryPoint, ChangeHandler {
   
   private void processLoginEvent() {
     
-    int event = wLogin.getEvent();
+    int event = wLogin.getChangeEvent();
     if (event == EventManager.LOGGEDIN) {
-      accessToken = wLogin.getAccessToken(); 
       //Window.alert("test log in");
     } else if (event == EventManager.LOGGEDOUT) {
       // TODO what to do?

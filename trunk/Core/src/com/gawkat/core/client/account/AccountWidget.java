@@ -1,8 +1,7 @@
-package com.gawkat.core.client;
+package com.gawkat.core.client.account;
 
 import java.util.HashMap;
 
-import com.gawkat.core.client.account.AccountManagementNavigation;
 import com.gawkat.core.client.global.QueryString;
 import com.gawkat.core.client.global.QueryStringData;
 import com.google.gwt.user.client.ui.Composite;

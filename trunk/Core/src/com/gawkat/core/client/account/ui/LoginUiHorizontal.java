@@ -1,17 +1,26 @@
-package com.gawkat.core.client.ui;
+package com.gawkat.core.client.account.ui;
 
 
+import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.global.EventManager;
 import com.gawkat.core.client.global.Global_String;
 import com.gawkat.core.client.global.LoadingWidget;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ChangeListenerCollection;
@@ -33,10 +42,11 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 
-public class LoginUiHorizontal extends Composite implements ClickListener, KeyboardListener, ChangeListener, FocusListener, 
-MouseOverHandler, MouseOutHandler {
+public class LoginUiHorizontal extends Composite implements KeyboardListener, FocusListener, 
+MouseOverHandler, MouseOutHandler, ClickHandler {
 
-	private ChangeListenerCollection changeListeners;
+  private ClientPersistence cp = null;
+  
 	private int changeEvent; 
 	
 	// main widget div
@@ -70,12 +80,12 @@ MouseOverHandler, MouseOutHandler {
 	// forgot password, ask for it
 	private PushButton bForgot = new PushButton("Get Password");
 	
-	private Hyperlink hAccountSettings = null;
-	private Hyperlink hAccountCreate = null;
-	private Hyperlink hAccountLogout = null;
+	private HTML hAccountSettings = null;
+	private HTML hAccountCreate = null;
+	private HTML hAccountLogout = null;
 	
-	private Hyperlink hForgotPassword = new Hyperlink("Forgot Password", "login_ForgotPassword");
-	private Hyperlink hAccountLogin = new Hyperlink("Login", "login_Login");
+	private HTML hForgotPassword = new HTML("<a>Forgot Password</a>");
+	private HTML hAccountLogin = new HTML("<a>Login</a>");
 	
 	
 	// true, when logged in, false, when not
@@ -87,12 +97,13 @@ MouseOverHandler, MouseOutHandler {
 	private String inputLabel_consumerSecret = "Password";
 	
 	private boolean hoverOnOff = false;
-	
+
 	/**
 	 * constructor
 	 */
-	public LoginUiHorizontal() {
-	
+	public LoginUiHorizontal(ClientPersistence cp) {
+	  this.cp = cp;
+	  
 		HorizontalPanel hp = new HorizontalPanel();
 		hp.add(wLoading);
 		hp.add(pUi);
@@ -101,6 +112,8 @@ MouseOverHandler, MouseOutHandler {
 		
 		initWidget(pWidget);
 		
+		// defaults
+		bForgot.setVisible(false);
 
 		pWidget.addMouseOverHandler(this);
 		pWidget.addMouseOutHandler(this);
@@ -112,29 +125,29 @@ MouseOverHandler, MouseOutHandler {
 		tbConsumerSecretPass.addMouseOutHandler(this);
 		
 		// observers
-		bLogin.addClickListener(this);
-		bForgot.addClickListener(this);
+		bLogin.addClickHandler(this);
+		bForgot.addClickHandler(this);
 		
-		tbConsumerKey.addClickListener(this);
-		tbConsumerKey.addChangeListener(this);
+		tbConsumerKey.addClickHandler(this);
+		tbConsumerKey.addClickHandler(this);
 		tbConsumerKey.addKeyboardListener(this);
 		tbConsumerKey.addFocusListener(this);
 		
-		tbConsumerSecret.addClickListener(this);
-		tbConsumerSecret.addChangeListener(this);
+		tbConsumerSecret.addClickHandler(this);
+		tbConsumerSecret.addClickHandler(this);
 		tbConsumerSecret.addKeyboardListener(this);
 		tbConsumerSecret.addFocusListener(this);
 
-		tbConsumerSecretPass.addClickListener(this);
-		tbConsumerSecretPass.addChangeListener(this);
+		tbConsumerSecretPass.addClickHandler(this);
+		tbConsumerSecretPass.addClickHandler(this);
 		tbConsumerSecretPass.addKeyboardListener(this);
 		tbConsumerSecretPass.addFocusListener(this);
 		
 		cbRemberMe.addKeyboardListener(this);
-		cbRemberMe.addClickListener(this);
+		cbRemberMe.addClickHandler(this);
 		
-		hAccountLogin.addClickListener(this);
-		hForgotPassword.addClickListener(this);
+		hAccountLogin.addClickHandler(this);
+		hForgotPassword.addClickHandler(this);
 		
 		// style
 		pWidget.setStyleName("core-login-ui");
@@ -189,12 +202,12 @@ MouseOverHandler, MouseOutHandler {
 		tbConsumerSecretPass.setVisible(false);
 		
 		// reset ui
-		pUi.clear();
+		clear();
 		
 		cbRemberMe.setText("Remember Me");
 		
 		
-		hAccountCreate = new Hyperlink("Create Account", "login_Create");
+		hAccountCreate = new HTML("<a>Create Account</a>");
 		
 		tbConsumerKey.setTitle(inputLabel_ConsumerKey);
 		tbConsumerSecret.setTitle(inputLabel_consumerSecret);
@@ -256,7 +269,13 @@ MouseOverHandler, MouseOutHandler {
 	  RootPanel.get().add(pError);
 	}
 	
-	private void turnOnOptions(boolean b) {
+	private void displayOptions(boolean b) {
+	  if (loginStatus == true) {
+	    return;
+	  }
+	  if (bForgot.isVisible() == true) {
+	    return;
+	  }
 	  int left = pWidget.getAbsoluteLeft();
 	  int top = pWidget.getAbsoluteTop() + pWidget.getOffsetHeight();
 	  int width = pWidget.getOffsetWidth();
@@ -288,10 +307,13 @@ MouseOverHandler, MouseOutHandler {
 	private void drawForgotPassword() {
 		
 		// reset ui
-		pUi.clear();
+		clear();
 		
 		bForgot.setTitle("This will reset your password, and send you a email of the new password to login.");
 
+		// tells the options not to show this way
+		bForgot.setVisible(true);
+		
 		HorizontalPanel hp = new HorizontalPanel();
 		hp.setSpacing(4);
 		hp.add(tbConsumerKey);
@@ -305,14 +327,12 @@ MouseOverHandler, MouseOutHandler {
 		hp.setCellVerticalAlignment(hAccountLogin, VerticalPanel.ALIGN_BOTTOM);
 	}
 	
-	// TODO
 	private void drawLoggedIn() {
 		hideLoading();
+    clear();
 		
-    pUi.clear();
-		
-		hAccountSettings = new Hyperlink("My Account","account_Profile");
-		hAccountLogout = new Hyperlink("Logout", "login_Logout");
+		hAccountSettings = new HTML("<a>My Account</a>");
+		hAccountLogout = new HTML("<a>Logout</a>");
 		
 		HorizontalPanel hp = new HorizontalPanel();
 		hp.add(hAccountSettings);
@@ -320,7 +340,12 @@ MouseOverHandler, MouseOutHandler {
 		hp.add(hAccountLogout);
 		
 		pUi.add(hp);
-		
+	}
+	
+	private void clear() {
+	  // I use the bForgot to tell the options not to show up
+	  bForgot.setVisible(false);
+	  pUi.clear();
 	}
 	
 	public void drawError(String error) {
@@ -342,6 +367,7 @@ MouseOverHandler, MouseOutHandler {
 	  pError.add(htmlError);
 
 	  // hide error shortly after fire
+	  // TODO - this has some multiple fires going, this needs to have a cancel system - later 
 	  Timer t = new Timer() {
 	    public void run() {
 	      pError.setVisible(false);
@@ -420,56 +446,50 @@ MouseOverHandler, MouseOutHandler {
 		} 
 	}
 	
-	public int getChangeEvent() {
-		return changeEvent;
-	}
-	
-	private void fireChange(int changeEvent) {
-		this.changeEvent = changeEvent;
-		
-		if (changeListeners != null) {
-			changeListeners.fireChange(this);
-		}
-	}
-	
-	public void addChangeListener(ChangeListener listener) {
-		if (changeListeners == null)
-			changeListeners = new ChangeListenerCollection();
-		changeListeners.add(listener);
-	}
-	
-	public void removeChangeListener(ChangeListener listener) {
-		if (changeListeners != null)
-			changeListeners.remove(listener);
-	}
-
-	public void onClick(Widget sender) {
+  public int getChangeEvent() {
+    return changeEvent;
+  }
+  
+  private void fireChange(int changeEvent) {
+    this.changeEvent = changeEvent;
+    NativeEvent nativeEvent = Document.get().createChangeEvent();
+    ChangeEvent.fireNativeEvent(nativeEvent, this);
+  }
+  
+  public HandlerRegistration addChangeHandler(ChangeHandler handler) {
+    return addDomHandler(handler, ChangeEvent.getType());
+  }
+  
+	public void onClick(ClickEvent event) {
 	  
-		if (sender == bLogin) {
-			drawLoading();
-			fireChange(EventManager.LOGIN);
-		
-		} else if (sender == bForgot) {
-			drawLoading();
-			fireChange(EventManager.FORGOT_PASSWORD);
-		
-		} else if (sender == tbConsumerKey) {
-			checkInputLabel_key(true);
-		
-		} else if (sender == tbConsumerSecret) {
-			changePasswordInput();
-		
-		} else if (sender == cbRemberMe) {
-		  // TODO - save a cookie
-		
-		} else if (sender == hForgotPassword) {
-			drawForgotPassword();
-		
-		} else if (sender == hAccountLogin) {
-			drawLoginInputs();
-		}
-		
-	}
+	  // hide the options on event
+	  pOptions.setVisible(false);
+	  
+	  Widget sender = (Widget) event.getSource();
+    if (sender == bLogin) {
+      drawLoading();
+      fireChange(EventManager.LOGIN);
+    
+    } else if (sender == bForgot) {
+      drawLoading();
+      fireChange(EventManager.FORGOT_PASSWORD);
+    
+    } else if (sender == tbConsumerKey) {
+      checkInputLabel_key(true);
+    
+    } else if (sender == tbConsumerSecret) {
+      changePasswordInput();
+    
+    } else if (sender == cbRemberMe) {
+      // TODO - save a cookie
+    
+    } else if (sender == hForgotPassword) {
+      drawForgotPassword();
+    
+    } else if (sender == hAccountLogin) {
+      drawLoginInputs();
+    }
+  }
 
 	public void onKeyDown(Widget sender, char keyCode, int modifiers) {
 		if (sender == tbConsumerKey) {
@@ -510,6 +530,8 @@ MouseOverHandler, MouseOutHandler {
 		  // TODO
 		}
 	}
+	
+	
 
 	public void onFocus(Widget sender) {
 	}
@@ -528,7 +550,7 @@ MouseOverHandler, MouseOutHandler {
     
     Widget sender = (Widget) event.getSource();
     if (sender == pWidget) {
-      turnOnOptions(true);
+      displayOptions(true);
     }
     
   }
@@ -537,10 +559,13 @@ MouseOverHandler, MouseOutHandler {
     
     Widget sender = (Widget) event.getSource();
     if (sender == pWidget) {
-      turnOnOptions(false);
+      displayOptions(false);
     }
     
   }
-	
+
+  
+
+
 	
 }
