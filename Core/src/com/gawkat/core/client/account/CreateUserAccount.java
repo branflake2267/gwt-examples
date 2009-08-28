@@ -6,6 +6,11 @@ import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.client.oauth.Sha1;
 import com.gawkat.core.client.rpc.RpcCore;
 import com.gawkat.core.client.rpc.RpcCoreServiceAsync;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -30,7 +35,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class CreateUserAccount extends DialogBox implements ClickListener, KeyboardListener, FocusListener, ChangeListener {
 
   // rpc system
-  private RpcCoreServiceAsync callRpcService = null;
+  private RpcCoreServiceAsync rpc = null;
   
   // for observing
   private ChangeListenerCollection changeListeners;
@@ -135,7 +140,7 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     tbS2.addKeyboardListener(this);
       
     // init rpc
-    callRpcService = RpcCore.initRpc();
+    rpc = RpcCore.initRpc();
     
     // style
     pWidget.setStyleName("CreateUserAccount");
@@ -261,7 +266,7 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
    * 
    * @param s
    */
-  public void drawNotification(String s) {
+  private void drawNotification(String s) {
     pNotification.clear();
     pNotification.setVisible(true);
     
@@ -596,20 +601,12 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   
   private void fireChange(int changeEvent) {
     this.changeEvent = changeEvent;
-    if (changeListeners != null) {
-      changeListeners.fireChange(this);
-    }
+    NativeEvent nativeEvent = Document.get().createChangeEvent();
+    ChangeEvent.fireNativeEvent(nativeEvent, this);
   }
   
-  public void addChangeListener(ChangeListener listener) {
-    if (changeListeners == null)
-      changeListeners = new ChangeListenerCollection();
-    changeListeners.add(listener);
-  }
-  
-  public void removeChangeListener(ChangeListener listener) {
-    if (changeListeners != null)
-      changeListeners.remove(listener);
+  public HandlerRegistration addChangeHandler(ChangeHandler handler) {
+    return addDomHandler(handler, ChangeEvent.getType());
   }
   
   public void onClick(Widget sender) {
@@ -685,7 +682,7 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
         // TODO hide loading
       }
     };
-    callRpcService.doesUserNameExist(userData, callback);
+    rpc.doesUserNameExist(userData, callback);
   }
 
   /**
@@ -705,7 +702,7 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
         // TODO hide loading
       }
     };
-    callRpcService.createUser(userData, callback);
+    rpc.createUser(userData, callback);
   }
 
 

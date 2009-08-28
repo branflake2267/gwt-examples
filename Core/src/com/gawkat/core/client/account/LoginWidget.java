@@ -1,10 +1,17 @@
-package com.gawkat.core.client.global;
+package com.gawkat.core.client.account;
 
+import com.gawkat.core.client.ClientPersistence;
+import com.gawkat.core.client.account.ui.LoginUi;
+import com.gawkat.core.client.global.EventManager;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.client.rpc.RpcCore;
 import com.gawkat.core.client.rpc.RpcCoreServiceAsync;
-import com.gawkat.core.client.ui.LoginUi;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.ChangeListener;
@@ -21,96 +28,82 @@ import com.google.gwt.user.client.ui.Widget;
  * @author branflake2267
  * 
  */
-public class SessionManager extends Composite implements ChangeListener {
+public class LoginWidget extends Composite implements ChangeHandler {
 
-  // rpc system
-  public RpcCoreServiceAsync callRpcService;
-
-  private VerticalPanel ploginHolder = null;
+  private ClientPersistence cp = null;
   
-  // observe events
-  private ChangeListenerCollection changeListeners = null;
+  // rpc system
+  public RpcCoreServiceAsync rpc;
+
+  private VerticalPanel pWidget = new VerticalPanel();
+  
   private int changeEvent = 0;
   
-
-  // TODO - move this to LoginUi, as the master of the User Input systems one
-  // could use, horizontal, vertical, separate forgot...
-  // TODO - will do this later, as to the complication to code
-  private LoginUi loginUi = null;
+  // login inputs
+  private LoginUi wloginUi = null;
 
   // errors
   private String errApKey = "No consumer key was set (for application/web site). debug: setAppConsumerKey()";
 
-  // Once the consumer gets Access, save the token for use
-  // This will apply on user login
-  // this will apply with user creation
-  private OAuthTokenData accessToken = null;
-
   // use this to verify signature
   private String consumerSecret = null;
-  
-  /**
-   * constructor - init widget - start the session manager
-   * 
-   * @param accessToken - link to the token from parent
-   * @param loginHolder
-   */
-  public SessionManager(VerticalPanel loginHolder) {
-    this.ploginHolder = loginHolder;
 
-    // init the login ui
-    loginUi = new LoginUi();
+  /**
+   * login widget
+   * 
+   * @param cp
+   */
+  public LoginWidget(ClientPersistence cp) {
+    this.cp  = cp;
+  
+    wloginUi = new LoginUi(cp);
+    
+    pWidget.add(wloginUi);
+    
+    initWidget(pWidget);
+
     
     // init rpc
-    callRpcService = RpcCore.initRpc();
+    rpc = RpcCore.initRpc();
 
     // observe
-    loginUi.addChangeListener(this);
+    wloginUi.addChangeHandler(this);
+   
   }
 
+  /**
+   * start the session, by having the application get token
+   */
+  public void initSession() {
+    setAppConsumerKey();
+  }
+  
   /**
    * set User Interface style - this must be done second
    * 
    * @param uiType
    */
   public void setUi(int uiType) {
-    loginUi.setUi(uiType);
+    wloginUi.setUi(uiType);
   }
 
-  public void drawUi() {
-    ploginHolder.add(loginUi);
-    loginUi.draw(accessToken);
-  }
-
-  /**
-   * use this for testing/debugging
-   * 
-   * TODO !!! remove after testing - remove later
-   * 
-   * @param email
-   * @param password
-   */
-  public void autoLogin(String email, String password) {
-    loginUi.autoLogin(email, password);
+  private void drawUi() {
+    pWidget.add(wloginUi);
+    wloginUi.draw();
   }
 
   /**
+   * A. the start of application getting access:
    * set web site/application consumer key - determined by service provider A.
    * used to request request token -> grant access token?
    * 
    * @param consumerKey
    */
-  public void setAppConsumerKey(String consumerKey, String consumerSecret) {
+  public void setAppConsumerKey() {
 
-    // TODO - session cookie choice?
-
-    // TODO - check for saved session cookie?
-
-    // TODO - if session cookie, auto login?
-
-    // get the application base url only, b/c of rpc method,
-    // requests will happen on different ports, and with different servlet
-    // context
+    String consumerKey = cp.getAppConsumerKey();
+    String consumerSecret = cp.getAppConsumerSecret();
+    
     String url = getUrl();
     OAuthTokenData token = new OAuthTokenData();
     token.setConsumerKey(consumerKey);
@@ -121,15 +114,6 @@ public class SessionManager extends Composite implements ChangeListener {
     request_Request_Token(token);
   }
   
-  /**
-   * get access token after login
-   * 
-   * @return
-   */
-  public OAuthTokenData getAccessToken() {
-    return this.accessToken;
-  }
-
   /**
    * A. request request token ask for request token, grant access, or report
    * findings (error,other)
@@ -145,7 +129,7 @@ public class SessionManager extends Composite implements ChangeListener {
    */
   private void request_Request_Token_Response(OAuthTokenData token) {
 
-    this.accessToken = token;
+    cp.setAccessToken(token);
 
     int result = token.getResult();
     switch (result) {
@@ -174,20 +158,20 @@ public class SessionManager extends Composite implements ChangeListener {
     // verify signature
     boolean verify = token.verify(url, consumerSecret);
     if (verify == false) {
-      loginUi.drawError("Signature did not match. Transit Error.");
+      wloginUi.drawError("Signature did not match. Transit Error.");
     }
     
     // deal with the errors
     int result = token.getResult();
     if (result > OAuthTokenData.SUCCESS) { // all greater than success to be shown
-      loginUi.drawError(token.getResultMessage());
+      wloginUi.drawError(token.getResultMessage());
       return;
     } 
 
-    this.accessToken = token;
+    cp.setAccessToken(token);
 
     // show logged in
-    loginUi.setLoginStatus(true);
+    wloginUi.setLoginStatus(true);
 
     // Notify change logged in
     fireChange(EventManager.LOGGEDIN);
@@ -202,12 +186,12 @@ public class SessionManager extends Composite implements ChangeListener {
     String url = getUrl();
 
     // get credentials from LoginUi
-    String consumerKey = loginUi.getConsumerKey();
-    consumerSecret = loginUi.getConsumerSecret();
+    String consumerKey = wloginUi.getConsumerKey();
+    consumerSecret = wloginUi.getConsumerSecret();
 
     // take appAccessToken, and ask for a user access token
     // setup a request token for user
-    OAuthTokenData tokenData = this.accessToken;
+    OAuthTokenData tokenData = cp.getAccessToken();
     tokenData.setConsumerKey(consumerKey);
     tokenData.sign(url, consumerSecret);
 
@@ -215,18 +199,10 @@ public class SessionManager extends Composite implements ChangeListener {
     getUserAccessToken(tokenData);
   }
 
-  /**
-   * 
-   * TODO
-   * 
-   */
   private void logout() {
-
-    loginUi.setLoginStatus(false);
-    
-    accessToken = null;
+    wloginUi.setLoginStatus(false);
+    cp.setAccessToken(null);
     consumerSecret = null;
-       
     fireChange(EventManager.LOGGEDOUT);
   }
 
@@ -251,50 +227,34 @@ public class SessionManager extends Composite implements ChangeListener {
   }
 
   /**
-   * get client's url
-   * 
-   * TODO - add ./folder?
-   * 
+   * get client's url - doesn't use port
    * @return
    */
   private String getUrl() {
-
     String url = GWT.getModuleBaseURL();
-
-    // TODO - work around get rid of port
     url = url.replaceFirst(":[0-9]+", "");
-    // Window.alert("signing: url: " + url);
-
     return url;
   }
 
   public int getChangeEvent() {
     return changeEvent;
   }
-
+  
   private void fireChange(int changeEvent) {
     this.changeEvent = changeEvent;
-    if (changeListeners != null) {
-      changeListeners.fireChange(this);
-    }
+    NativeEvent nativeEvent = Document.get().createChangeEvent();
+    ChangeEvent.fireNativeEvent(nativeEvent, this);
+  }
+  
+  public HandlerRegistration addChangeHandler(ChangeHandler handler) {
+    return addDomHandler(handler, ChangeEvent.getType());
   }
 
-  public void addChangeListener(ChangeListener listener) {
-    if (changeListeners == null)
-      changeListeners = new ChangeListenerCollection();
-    changeListeners.add(listener);
-  }
-
-  public void removeChangeListener(ChangeListener listener) {
-    if (changeListeners != null)
-      changeListeners.remove(listener);
-  }
-
-  public void onChange(Widget sender) {
-
+  public void onChange(ChangeEvent event) {
+    Widget sender = (Widget) event.getSource();
     int changeEvent = 0;
-    if (sender == loginUi) {
-      changeEvent = loginUi.getChangeEvent();
+    if (sender == wloginUi) {
+      changeEvent = wloginUi.getChangeEvent();
       if (changeEvent == EventManager.NEW_USER_CREATED) {
         // nothing to do here for now
       } else if (changeEvent == EventManager.LOGIN) {
@@ -307,62 +267,45 @@ public class SessionManager extends Composite implements ChangeListener {
         displayProfile();
       }
     }
-
+    // notify client persistence
+    cp.fireChange(changeEvent);
   }
 
   /**
    * A. Request request token (get consumer(web app) access)
+   * get application token
    */
   private void requestToken(OAuthTokenData tokenData) {
 
-    // TODO Show loading
-
     AsyncCallback<OAuthTokenData> callback = new AsyncCallback<OAuthTokenData>() {
-      // on failure
       public void onFailure(Throwable ex) {
-        // TODO - use an specialized re-try connection interface for this
         RootPanel.get().add(new HTML(ex.toString()));
       }
-
-      // on success
       public void onSuccess(OAuthTokenData token) {
         request_Request_Token_Response(token);
-
-        // TODO hide loading
       }
     };
-
-    // execute rpc and wait for its response
-    callRpcService.requestToken(tokenData, callback);
+    rpc.requestToken(tokenData, callback);
   }
 
   /**
-   * login rpc
+   * get user access
    * 
    * @param tokenData
    */
   private void getUserAccessToken(OAuthTokenData tokenData) {
 
-    // TODO Show loading
-
     AsyncCallback<OAuthTokenData> callback = new AsyncCallback<OAuthTokenData>() {
-      // on failure
       public void onFailure(Throwable ex) {
-        // TODO - use an specialized re-try connection interface for this
         RootPanel.get().add(new HTML(ex.toString()));
       }
-
-      // on success
       public void onSuccess(OAuthTokenData token) {
-
         request_User_Access_Token_Response(token);
-
-        // TODO hide loading
       }
     };
-
-    // execute rpc and wait for its response
-    callRpcService.getUserAccessToken(tokenData, callback);
+    rpc.getUserAccessToken(tokenData, callback);
   }
+
+ 
 
 }

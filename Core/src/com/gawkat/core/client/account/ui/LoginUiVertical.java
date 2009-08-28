@@ -1,5 +1,6 @@
-package com.gawkat.core.client.ui;
+package com.gawkat.core.client.account.ui;
 
+import com.gawkat.core.client.ClientPersistence;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ChangeListenerCollection;
 import com.google.gwt.user.client.ui.Composite;
@@ -12,12 +13,13 @@ public class LoginUiVertical extends Composite {
   private int changeEvent;
   
   private VerticalPanel pWidget = new VerticalPanel();
+  private ClientPersistence cp;
   
   /**
    * constructor - init widget
    */
-  public LoginUiVertical() {
-    
+  public LoginUiVertical(ClientPersistence cp) {
+    this.cp = cp;
     initWidget(pWidget);
     
   }
