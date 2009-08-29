@@ -1,0 +1,13 @@
+com.gawkat.core.client.account.UserData, true
+com.gawkat.core.client.account.thingtype.ThingTypeData, true
+[Lcom.gawkat.core.client.account.thingtype.ThingTypeData;, true
+com.gawkat.core.client.account.thingtype.ThingTypeFilterData, true
+com.gawkat.core.client.account.thingtype.ThingTypesData, true
+com.gawkat.core.client.oauth.OAuthTokenData, true
+com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException, true
+java.lang.Exception, false
+java.lang.Long, true
+java.lang.Number, false
+java.lang.RuntimeException, false
+java.lang.String, true
+java.lang.Throwable, false

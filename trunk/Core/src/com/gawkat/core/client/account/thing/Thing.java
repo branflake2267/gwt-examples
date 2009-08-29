@@ -1,4 +1,4 @@
-package com.gawkat.core.client.account.thingtype;
+package com.gawkat.core.client.account.thing;
 
 import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.Row;
@@ -14,7 +14,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -23,7 +22,7 @@ import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ThingType extends Composite implements ChangeHandler, ClickHandler {
+public class Thing extends Composite implements ChangeHandler, ClickHandler {
 
   private ClientPersistence cp = null;
   
@@ -42,7 +41,7 @@ public class ThingType extends Composite implements ChangeHandler, ClickHandler 
   private HorizontalPanel hpDelete = new HorizontalPanel();
   private PushButton bDelete = new PushButton("X");
    
-  private ThingTypeData thingTypeData = null;
+  private ThingData thingData = null;
   
   private boolean edit = false;
   
@@ -50,7 +49,7 @@ public class ThingType extends Composite implements ChangeHandler, ClickHandler 
   
   private int changeEvent = 0;
   
-  public ThingType(ClientPersistence cp) {
+  public Thing(ClientPersistence cp) {
     this.cp = cp;
     
     hpName.add(tbName);
@@ -69,9 +68,9 @@ public class ThingType extends Composite implements ChangeHandler, ClickHandler 
     rpc = RpcCore.initRpc();
   }
 
-  public void setData(int row, ThingTypeData thingTypeData) {
+  public void setData(int row, ThingData thingData) {
     this.row = row;
-    this.thingTypeData = thingTypeData;
+    this.thingData = thingData;
     pWidget.setRow(row);
     draw();
   }
@@ -83,7 +82,7 @@ public class ThingType extends Composite implements ChangeHandler, ClickHandler 
     
     pCount.add(new HTML(Integer.toString(row)));
     
-    String name = thingTypeData.getName();
+    String name = ""; //thingData.getName();
     fpName.add(new HTML(name));
     
     pWidget.add(pCount);
@@ -96,22 +95,24 @@ public class ThingType extends Composite implements ChangeHandler, ClickHandler 
   }
   
   public void edit(boolean b) {
+    /*
     if (b == true) {
-      tbName.setText(thingTypeData.getName());
+      tbName.setText(thingData.getName());
       tbName.setVisible(true);
       fpName.setVisible(false);
     } else if (b == false) {
       String name = tbName.getText();
-      thingTypeData.setName(name);
+      thingData.setName(name);
       fpName.clear();
       fpName.add(new HTML(name));
       tbName.setVisible(false);
     }
+    */
   }
 
-  public ThingTypeData getData() {
-    thingTypeData.setName(tbName.getText().trim());
-    return thingTypeData;
+  public ThingData getData() {
+    //thingData.setName(tbName.getText().trim());
+    return null;
   }
   
   private void delete() {
@@ -131,7 +132,7 @@ public class ThingType extends Composite implements ChangeHandler, ClickHandler 
     if (b == true) {
       this.removeFromParent();
     } else {
-      Window.alert("Wasn't able to delete thingType. Please try again?");
+      Window.alert("Wasn't able to delete thing. Please try again?");
     }
   }
   
@@ -174,15 +175,16 @@ public class ThingType extends Composite implements ChangeHandler, ClickHandler 
   }
   
   private void deleteRpc() {
-   
-    rpc.deleteThingType(cp.getAccessToken(), thingTypeData, new AsyncCallback<Boolean>() {
+    /*
+    rpc.deleteThingType(cp.getAccessToken(), thingData, new AsyncCallback<Boolean>() {
       public void onSuccess(Boolean b) {
         deleteIt(b);
       }
       public void onFailure(Throwable caught) { 
       }
     });
-    
+    */  
   }
-
+  
+  
 }
