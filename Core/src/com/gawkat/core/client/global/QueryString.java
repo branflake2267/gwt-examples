@@ -5,24 +5,19 @@ import java.util.HashMap;
 import com.google.gwt.user.client.History;
 
 /**
- * store the history token and its parameters in an object for use to navigate
- * 
  * @author branflake2267
  * 
  */
 public class QueryString {
 
-  /**
-   * constructor - data storage object
-   */
   public QueryString() {
   }
 
   /**
-   * get queryString parameters with history token
+   * get query string parameters anywhere
    * @return
    */
-  public QueryStringData getQueryStringData() {
+  public static QueryStringData getQueryStringData() {
 
     String historyToken = History.getToken();
     
@@ -43,7 +38,7 @@ public class QueryString {
    * @param historyToken
    * @return
    */
-  private String getHistoryToken_Anchor(String historyToken) {
+  private static String getHistoryToken_Anchor(String historyToken) {
 
     // skip if there is no question mark
     if (!historyToken.contains("?")) {
@@ -65,7 +60,7 @@ public class QueryString {
    * @param historyToken (anchor tag)
    * @return HashMap of the parameters ([varName, var] OR [key, value])
    */
-  private HashMap<String, String> getHistoryToken_Parameters(String historyToken) {
+  private static HashMap<String, String> getHistoryToken_Parameters(String historyToken) {
 
     // skip if there is no question mark
     if (!historyToken.contains("?")) {

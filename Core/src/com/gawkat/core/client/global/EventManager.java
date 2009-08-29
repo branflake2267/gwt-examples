@@ -30,4 +30,13 @@ public class EventManager {
   
   // show account profile
   final public static int PROFILE = 7;
+ 
+  public static final int DELETE_YES = 20;
+  public static final int DELETE_NO = 21;
+  
+  public static final int ACCOUNT_CREATE = 100;
+  public static final int ACCOUNT_PROFILE = 101;
+  
+  public static final int ROW_OVER = 50;
+  public static final int ROW_OUT = 51;
 }
