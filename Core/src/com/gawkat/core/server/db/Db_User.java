@@ -1,9 +1,7 @@
 package com.gawkat.core.server.db;
 
-import java.awt.datatransfer.StringSelection;
-
-import com.gawkat.core.client.account.ThingData;
 import com.gawkat.core.client.account.UserData;
+import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.server.ServerPersistence;
 import com.gawkat.core.server.db.oauth.OAuthServer;
@@ -17,14 +15,14 @@ import com.gawkat.core.server.jdo.data.ThingTypeJdo;
  * @author branflake2267
  *
  */
-public class User {
+public class Db_User {
 
   private ServerPersistence sp = null;
   
   /**
    * constructor
    */
-  public User(ServerPersistence sp) {
+  public Db_User(ServerPersistence sp) {
     this.sp = sp;
   }
   
@@ -52,8 +50,6 @@ public class User {
    * @return
    */
   public UserData createUser(UserData userData) {
-    
-    String url = sp.getRequestUrlOAuth();
     
     if (verifyUserData(userData) == false) {
       UserData udErr = getError(UserData.SIGNATURE_ERROR);
@@ -125,7 +121,10 @@ public class User {
 
     // get userId
     ThingJdo[] users = ThingJdo.query((long)ThingTypeJdo.TYPE_USER, userData.consumerKey);
-    Long userId = users[0].getId();
+    long userId = 0;
+    if (users != null && users.length > 0) {
+      userId = users[0].getId();
+    }
     
     boolean exists = false;
     if (userId > 0) {
@@ -167,7 +166,7 @@ public class User {
     
     // create a userAccessToken
     // which is used to exchange the appAccessToken to userAccessToken
-    OAuthTokenData appAccessToken = userData.accessToken;
+    OAuthTokenData appAccessToken = userData.accessToken; // this is the app token shipped in
     appAccessToken.setConsumerKey(userData.consumerKey);
     appAccessToken.sign(url, userData.consumerSecret);
     
