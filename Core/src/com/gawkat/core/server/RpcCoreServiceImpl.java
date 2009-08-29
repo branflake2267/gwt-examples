@@ -1,17 +1,13 @@
 package com.gawkat.core.server;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.gawkat.core.client.account.UserData;
-import com.gawkat.core.client.admin.thingtype.ThingTypeData;
-import com.gawkat.core.client.admin.thingtype.ThingTypeFilterData;
+import com.gawkat.core.client.account.thingtype.ThingTypeData;
+import com.gawkat.core.client.account.thingtype.ThingTypeFilterData;
+import com.gawkat.core.client.account.thingtype.ThingTypesData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.client.rpc.RpcCoreService;
-import com.gawkat.core.server.db.ThingType;
-import com.gawkat.core.server.db.User;
+import com.gawkat.core.server.db.Db_ThingType;
+import com.gawkat.core.server.db.Db_User;
 import com.gawkat.core.server.db.oauth.OAuthServer;
 import com.gawkat.core.server.jdo.SetDefaults;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -52,7 +48,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
 
   public UserData createUser(UserData userData) {
     sp.start(getThreadLocalRequest());
-    User db = new User(sp);
+    Db_User db = new Db_User(sp);
     UserData r = db.createUser(userData);
     sp.end();
     return r;
@@ -60,7 +56,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   
   public UserData doesUserNameExist(UserData userData) {
     sp.start(getThreadLocalRequest());
-    User db = new User(sp);
+    Db_User db = new Db_User(sp);
     UserData r = db.getUserExist(userData);
     sp.end();
     return r;
@@ -68,7 +64,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   
   public UserData forgotPassword(UserData userData) {
     sp.start(getThreadLocalRequest());
-    User db = new User(sp);
+    Db_User db = new Db_User(sp);
     UserData r = db.forgotPassword(userData);
     sp.end();
     return r;
@@ -82,16 +78,18 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
     return rtnToken;
   }
 	
+  
+  
   /**
    * get thing types
    * 
    * @param filter
    * @return
    */
-  public ThingTypeData[] getThingTypes(ThingTypeFilterData filter) {
+  public ThingTypesData getThingTypes(OAuthTokenData accessToken, ThingTypeFilterData filter) {
     sp.start(getThreadLocalRequest());
-    ThingType thingType = new ThingType(sp);
-    ThingTypeData[] r = thingType.getThingTypes(filter);
+    Db_ThingType thingType = new Db_ThingType(sp);
+    ThingTypesData r = thingType.getThingTypes(filter);
     sp.end();
     return r;
   }
@@ -99,10 +97,26 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   /**
    * set default items in db
    */
-  public boolean setDefaults(int defaultType) {
+  public boolean setDefaults(OAuthTokenData accessToken, int defaultType) {
     sp.start(getThreadLocalRequest());
     SetDefaults sd = new SetDefaults(sp);
     boolean r = sd.setDefaults(defaultType);
+    sp.end();
+    return r;
+  }
+  
+  public ThingTypesData saveThingTypes(OAuthTokenData accessToken, ThingTypeFilterData filter, ThingTypeData[] thingTypeData) {
+    sp.start(getThreadLocalRequest());
+    Db_ThingType t = new Db_ThingType(sp);
+    ThingTypesData r = t.saveThingTypes(filter, thingTypeData);
+    sp.end();
+    return r;
+  }
+  
+  public boolean deleteThingType(OAuthTokenData accessToken, ThingTypeData thingTypeData) {
+    sp.start(getThreadLocalRequest());
+    Db_ThingType t = new Db_ThingType(sp);
+    boolean r = t.delete(accessToken, thingTypeData);
     sp.end();
     return r;
   }
