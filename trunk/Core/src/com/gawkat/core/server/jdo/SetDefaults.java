@@ -1,6 +1,6 @@
 package com.gawkat.core.server.jdo;
 
-import com.gawkat.core.client.admin.thingtype.ThingTypeData;
+import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.oauth.Sha1;
 import com.gawkat.core.server.ServerPersistence;
 import com.gawkat.core.server.jdo.data.ThingJdo;
@@ -37,7 +37,7 @@ public class SetDefaults {
    * set default things
    */
   private void setThingTypes() {
-    
+    /*
     ThingTypeJdo a = new ThingTypeJdo();
     a.insert("Application"); // id:1
     
@@ -49,7 +49,7 @@ public class SetDefaults {
     
     ThingTypeJdo d = new ThingTypeJdo();
     d.insert("Widget"); // id:4
-    
+    */
   }
   
   /**
