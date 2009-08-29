@@ -60,6 +60,11 @@
   padding: 3px;
   padding-right: 6px;
 }
+.core-login-ui-options a {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
 .core-login-ui-options {
   background: white;
   padding: 4px;
@@ -111,4 +116,39 @@
   border: 1px solid #FF0000;
   margin: 2px;
   padding: 2px;
+}
+
+.core-Profile {
+  padding: 7px;
+}
+
+
+.core-Account-Menu {
+  padding: 4px;
+}
+.core-Account-Breadcrumbs {
+  padding: 4px;
+}
+
+.core-row-top {
+  font-weight: bold;
+  background-color: #D1D1D1;
+}
+.core-row-cell {
+	padding-left: 3px;
+	padding-right: 3px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.core-row-odd {
+  background-color: #E7EEFC;
+}
+.core-row-even {
+  background-color: #F0FEFF;
+}
+.core-row-selected {
+  background-color: #F8D869;
+}
+.core-row-hover {
+  background-color: #fdf2cb;
 }
