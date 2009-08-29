@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
@@ -16,9 +15,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import com.gawkat.core.client.account.ThingData;
-import com.gawkat.core.client.account.UserData;
-import com.gawkat.core.server.db.ThingType;
+import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.server.jdo.PMF;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
