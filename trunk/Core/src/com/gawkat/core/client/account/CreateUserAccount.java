@@ -1,8 +1,8 @@
 package com.gawkat.core.client.account;
 
 
+import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.global.EventManager;
-import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.client.oauth.Sha1;
 import com.gawkat.core.client.rpc.RpcCore;
 import com.gawkat.core.client.rpc.RpcCoreServiceAsync;
@@ -10,15 +10,14 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.ChangeListener;
-import com.google.gwt.user.client.ui.ChangeListenerCollection;
 import com.google.gwt.user.client.ui.CheckBox;
-import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.HTML;
@@ -32,14 +31,14 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CreateUserAccount extends DialogBox implements ClickListener, KeyboardListener, FocusListener, ChangeListener {
+public class CreateUserAccount extends Composite implements KeyboardListener, FocusListener, ClickHandler, ChangeHandler {
 
+  private ClientPersistence cp = null;
+  
   // rpc system
   private RpcCoreServiceAsync rpc = null;
   
-  // for observing
-  private ChangeListenerCollection changeListeners;
-  private int changeEvent;
+  private int changeEvent = 0;
   
   // main widget div
   private VerticalPanel pWidget = new VerticalPanel();
@@ -78,9 +77,8 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   
   // buttons
   private PushButton bCreateAccount = new PushButton("Create Account");
-  private PushButton bClose = new PushButton("Close");
-  
-  
+
+
   // accept panel
   private VerticalPanel pAccept = new VerticalPanel();
   
@@ -93,12 +91,6 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   // terms of use container
   private TextArea taTerms = new TextArea();
   
-  
-  // consumer access Token
-  // tells me that the web application has access to the system
-  // will be used to send with UserData
-  private OAuthTokenData accessToken = null;
-   
   // minumum lengths for consumerKey and Secret
   final private int consumerKey_Len = 6;
   final private int consumerSecret_Len = 6;
@@ -106,34 +98,27 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   // after all checks are processed, then we can create a user
   private boolean canCreateUser = false;
   
-  // Change Events
-
   
   /**
    * constructor - init widget
    */
-  public CreateUserAccount() {
-    
-    // make it cool
-    setAnimationEnabled(true);
-    
-    // set the title of the top of the window
-    setText("Create New Account");
+  public CreateUserAccount(ClientPersistence cp) {
+    this.cp = cp;
     
     // init widget
-    setWidget(pWidget);
+    initWidget(pWidget);
     
     // draw widget
     draw();
     
     // observe
-    bCreateAccount.addClickListener(this);
+    bCreateAccount.addClickHandler(this);
     bCreateAccount.addFocusListener(this);
-    bClose.addClickListener(this);
-    tbK1.addChangeListener(this);
-    tbK2.addChangeListener(this);
-    tbS1.addChangeListener(this);
-    tbS2.addChangeListener(this);
+
+    tbK1.addChangeHandler(this);
+    tbK2.addChangeHandler(this);
+    tbS1.addChangeHandler(this);
+    tbS2.addChangeHandler(this);
     tbK1.addKeyboardListener(this);
     tbK2.addKeyboardListener(this);
     tbS1.addKeyboardListener(this);
@@ -164,8 +149,9 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     
     taTerms.setEnabled(false);
     
-    Label lk1 = new Label("Username");
-    Label lk2 = new Label("Verify Username");
+    String un = cp.getInputLabel_ConsumerKey();
+    Label lk1 = new Label(un);
+    Label lk2 = new Label("Verify " + un);
     
     Label ls1 = new Label("Password");
     Label ls2 = new Label("Verify Password");
@@ -177,7 +163,6 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     
     // control buttons
     HorizontalPanel hpBottom = new HorizontalPanel();
-    hpBottom.add(bClose);
     hpBottom.add(new HTML("&nbsp;&nbsp;"));
     hpBottom.add(bCreateAccount);
     
@@ -257,10 +242,6 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     pSecretCount2.setStyleName("core-CreateUserAccount-CharCountError");
   }
   
-  public void setAccessToken(OAuthTokenData accessToken) {
-    this.accessToken = accessToken;
-  }
-
   /**
    * draw a notification
    * 
@@ -334,12 +315,12 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   private void doesConsumerExistAlready() {
     
     UserData userData = new UserData();
-    userData.accessToken = accessToken;
+    userData.accessToken = cp.getAccessToken();
     userData.consumerKey = getKey(); // could be -> getKeyHash();
     userData.consumerSecret = getPasswordHash();
     userData.sign();
     
-    isUserExistRpc(userData);
+    doesUserExistRpc(userData);
   }
   
   private void drawKeyNotify(boolean bol, int error) {
@@ -410,7 +391,7 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   }
   
   private String getKey() {
-    String key = tbS1.getText().trim();
+    String key = tbK1.getText().trim();
     return key;
   }
   
@@ -510,10 +491,10 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
 
     // prepare for transport
     UserData userData = new UserData();
-    userData.accessToken = accessToken;
+    userData.accessToken = cp.getAccessToken();
     userData.consumerKey = getKey(); // could be - getKeyHash();;
     userData.consumerSecret = getPasswordHash();
-    userData.acceptTerms = cbAccept.isChecked();
+    userData.acceptTerms = cbAccept.getValue();
     userData.sign();
     
     createAccountRpc(userData);
@@ -521,24 +502,22 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
   
   private void processAccountCreation(UserData userData) {
     
+    if (userData == null) {
+      return;
+    }
+    
     // are there errors???
     if (userData.error > 0) {
-      // TODO - if certian errors, draw specific notices around key/secret
       drawNotification(UserData.getError(userData.error));
       return;
     }
     
-    // notify parent of change
-    fireChange(EventManager.NEW_USER_CREATED);
-   
-    // TODO
-    // have parent grab userAccessToken
-    // have parent switch to logged in
-    // have parent switch to new user view
+    cp.setAccessToken(userData.accessToken);
+
+    History.newItem("account_Profile");
     
-    // close this
-    this.hide();
-    this.removeFromParent();
+    // Notify change logged in - needs to notify Login Widget
+    cp.fireChange(EventManager.NEW_USER_CREATED);
   }
   
   private void countCharacters(int input, TextBox tb) {
@@ -609,21 +588,16 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     return addDomHandler(handler, ChangeEvent.getType());
   }
   
-  public void onClick(Widget sender) {
-    
+  public void onClick(ClickEvent event) {
+    Widget sender = (Widget) event.getSource();
     if (sender == bCreateAccount) {
       createUserStart();
       
-    } else if (sender == bClose) {
-      this.hide();
-      // lets reset the historyToken, in-case user decides to click on create account agian
-      History.newItem("account_Login");
-    }
-    
+    } 
   }
   
-  public void onChange(Widget sender) {
-    
+  public void onChange(ChangeEvent event) {
+    Widget sender = (Widget) event.getSource();
     if (sender == tbK1) {
       countCharacters(1, tbK1);
     } else if (sender == tbK2) {
@@ -633,7 +607,6 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     } else if (sender == tbS2) {
       countCharacters(4, tbS2);
     }
-    
   }
   
   public void onKeyDown(Widget sender, char keyCode, int modifiers) {
@@ -670,16 +643,14 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
    * 
    * @param userData
    */
-  private void isUserExistRpc(UserData userData) {
+  private void doesUserExistRpc(UserData userData) {
     
     AsyncCallback<UserData> callback = new AsyncCallback<UserData>() {
       public void onFailure(Throwable ex) {
-        // TODO 
         RootPanel.get().add(new HTML(ex.toString()));
       }
       public void onSuccess(UserData userData) {
         processKeyExist(userData);
-        // TODO hide loading
       }
     };
     rpc.doesUserNameExist(userData, callback);
@@ -694,16 +665,18 @@ public class CreateUserAccount extends DialogBox implements ClickListener, Keybo
     
     AsyncCallback<UserData> callback = new AsyncCallback<UserData>() {
       public void onFailure(Throwable ex) {
-        // TODO 
         RootPanel.get().add(new HTML(ex.toString()));
       }
       public void onSuccess(UserData userData) {
         processAccountCreation(userData);
-        // TODO hide loading
       }
     };
     rpc.createUser(userData, callback);
   }
+
+
+
+
 
 
 

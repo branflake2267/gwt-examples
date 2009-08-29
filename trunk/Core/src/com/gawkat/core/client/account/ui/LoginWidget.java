@@ -1,7 +1,8 @@
-package com.gawkat.core.client.account;
+package com.gawkat.core.client.account.ui;
+
+import java.util.Date;
 
 import com.gawkat.core.client.ClientPersistence;
-import com.gawkat.core.client.account.ui.LoginUi;
 import com.gawkat.core.client.global.EventManager;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.client.rpc.RpcCore;
@@ -12,10 +13,9 @@ import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.ChangeListener;
-import com.google.gwt.user.client.ui.ChangeListenerCollection;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -69,6 +69,7 @@ public class LoginWidget extends Composite implements ChangeHandler {
     // observe
     wloginUi.addChangeHandler(this);
    
+    cp.addChangeHandler(this);
   }
 
   /**
@@ -175,6 +176,8 @@ public class LoginWidget extends Composite implements ChangeHandler {
 
     // Notify change logged in
     fireChange(EventManager.LOGGEDIN);
+    
+    setSessionCookie();
   }
 
   /**
@@ -189,6 +192,21 @@ public class LoginWidget extends Composite implements ChangeHandler {
     String consumerKey = wloginUi.getConsumerKey();
     consumerSecret = wloginUi.getConsumerSecret();
 
+    if (consumerKey.trim().length() == 0 && consumerSecret.trim().length() == 0) {
+      wloginUi.drawError("Please enter a username and password");
+      return;
+    }
+    
+    if (consumerKey.trim().length() == 0) {
+      wloginUi.drawError("Please enter a username");
+      return;
+    }
+    
+    if (consumerSecret.trim().length() == 0) {
+      wloginUi.drawError("Please enter a password");
+      return;
+    }
+    
     // take appAccessToken, and ask for a user access token
     // setup a request token for user
     OAuthTokenData tokenData = cp.getAccessToken();
@@ -214,16 +232,26 @@ public class LoginWidget extends Composite implements ChangeHandler {
     Window.alert("display profile in session manager");
   }
   
-  /**
-   * C.2 if C doesn't pass error check the credentials - ask agian - show the
-   * errors in processing
-   */
-  private void getUsersAuthorization_Reponse() {
-
-  }
-
   private void setSessionCookie() {
-    // TODO - set the session as a cookie to remember to login agian
+    String at = "";
+    String as = "";
+    if (wloginUi.getRememberMe() == true) {
+     at = cp.getAccessToken().getAccessToken_key();
+     as = cp.getAccessToken().getAccessToken_secret();
+    } 
+    
+    Date expires = new Date();
+    long nowLong = expires.getTime();
+    nowLong = nowLong + (1000 * 60 * 60 * 24 * 7); //seven days
+    expires.setTime(nowLong);
+    
+    String name = "accessToken";
+    String value = at;
+    Cookies.setCookie(name, value, expires);
+    
+    name = "AccessSecret";
+    value = as;
+    Cookies.setCookie(name, value, expires);
   }
 
   /**
@@ -253,11 +281,14 @@ public class LoginWidget extends Composite implements ChangeHandler {
   public void onChange(ChangeEvent event) {
     Widget sender = (Widget) event.getSource();
     int changeEvent = 0;
-    if (sender == wloginUi) {
-      changeEvent = wloginUi.getChangeEvent();
+    if (sender == cp) {
+      changeEvent = cp.getChangeEvent();
       if (changeEvent == EventManager.NEW_USER_CREATED) {
-        // nothing to do here for now
-      } else if (changeEvent == EventManager.LOGIN) {
+        wloginUi.setLoginStatus(true);
+      } 
+    } else if (sender == wloginUi) {
+      changeEvent = wloginUi.getChangeEvent();
+      if (changeEvent == EventManager.LOGIN) {
         login();
       } else if (changeEvent == EventManager.LOGOUT) {
         logout();
@@ -265,10 +296,8 @@ public class LoginWidget extends Composite implements ChangeHandler {
         forgotPassword();
       } else if (changeEvent == EventManager.PROFILE) {
         displayProfile();
-      }
+      } 
     }
-    // notify client persistence
-    cp.fireChange(changeEvent);
   }
 
   /**
