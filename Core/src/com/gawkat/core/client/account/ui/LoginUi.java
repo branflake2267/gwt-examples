@@ -1,20 +1,12 @@
 package com.gawkat.core.client.account.ui;
 
 import com.gawkat.core.client.ClientPersistence;
-import com.gawkat.core.client.account.CreateUserAccount;
-import com.gawkat.core.client.account.MyAccount;
-import com.gawkat.core.client.global.EventManager;
-import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.client.oauth.Sha1;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.HistoryListener;
-import com.google.gwt.user.client.ui.ChangeListener;
-import com.google.gwt.user.client.ui.ChangeListenerCollection;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -73,6 +65,16 @@ public class LoginUi extends Composite implements ChangeHandler {
 		
 		// observe the accounts/session ui for changes
 		setObserver();
+	}
+	
+	public boolean getRememberMe() {
+	  boolean b = false;
+	  if (uiType == LOGIN_HORIZONTAL) {
+	    b = loginUiH.getRememberMe();
+    } else if (uiType == LOGIN_VERTICAL) {
+      // TODO
+    }
+	  return b;
 	}
 	
 	/**

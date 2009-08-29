@@ -5,27 +5,20 @@ import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.global.EventManager;
 import com.gawkat.core.client.global.Global_String;
 import com.gawkat.core.client.global.LoadingWidget;
+import com.gawkat.core.client.global.QueryString;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
-import com.google.gwt.event.dom.client.BlurEvent;
-import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.FocusEvent;
-import com.google.gwt.event.dom.client.FocusHandler;
-import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.ui.ChangeListener;
-import com.google.gwt.user.client.ui.ChangeListenerCollection;
 import com.google.gwt.user.client.ui.CheckBox;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusListener;
@@ -75,17 +68,18 @@ MouseOverHandler, MouseOutHandler, ClickHandler {
 	private	FlowPanel pUi = new FlowPanel();
 	
 	// login button
-	private PushButton bLogin = new PushButton("Login");
+	private PushButton bLogin = new PushButton("SignIn");
 	
 	// forgot password, ask for it
 	private PushButton bForgot = new PushButton("Get Password");
 	
-	private HTML hAccountSettings = null;
-	private HTML hAccountCreate = null;
-	private HTML hAccountLogout = null;
+	private Hyperlink hAccountProfile = new Hyperlink("My Account", "account_Profile");
+	private Hyperlink hAccountCreate = new Hyperlink("Create Account", "account_Create");
+	private Hyperlink hAccountLogout = new Hyperlink("SignOut", "account_Logout");
 	
+  // lets not change the url for these
 	private HTML hForgotPassword = new HTML("<a>Forgot Password</a>");
-	private HTML hAccountLogin = new HTML("<a>Login</a>");
+	private HTML hAccountLogin = new HTML("<a>SignIn</a>");
 	
 	
 	// true, when logged in, false, when not
@@ -93,7 +87,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler {
 	private boolean loginStatus = false;
 	
 	// input box labels
-	private String inputLabel_ConsumerKey = "Username";
+	private String inputLabel_ConsumerKey = "";
 	private String inputLabel_consumerSecret = "Password";
 	
 	private boolean hoverOnOff = false;
@@ -104,8 +98,11 @@ MouseOverHandler, MouseOutHandler, ClickHandler {
 	public LoginUiHorizontal(ClientPersistence cp) {
 	  this.cp = cp;
 	  
+	  inputLabel_ConsumerKey = cp.getInputLabel_ConsumerKey();
+	  
 		HorizontalPanel hp = new HorizontalPanel();
 		hp.add(wLoading);
+		hp.add(new HTML("&nbsp;"));
 		hp.add(pUi);
 		
 		pWidget.add(hp);
@@ -127,6 +124,9 @@ MouseOverHandler, MouseOutHandler, ClickHandler {
 		// observers
 		bLogin.addClickHandler(this);
 		bForgot.addClickHandler(this);
+		hAccountCreate.addClickHandler(this);
+		hAccountLogout.addClickHandler(this);
+		hAccountProfile.addClickHandler(this);
 		
 		tbConsumerKey.addClickHandler(this);
 		tbConsumerKey.addClickHandler(this);
@@ -179,22 +179,6 @@ MouseOverHandler, MouseOutHandler, ClickHandler {
 		draw();
 	}
 	
-	/**
-	 * auto put a name and password in, and submit for testing/debugging
-	 * 
-	 * !!!! Remove me later - for testing
-	 * 
-	 */
-	public void autoLogin(String key, String password) {
-		drawLoading();
-		tbConsumerKey.setText(key);
-		tbConsumerSecret.setVisible(false);
-		tbConsumerSecretPass.setVisible(true);
-		tbConsumerSecretPass.setText(password);
-		
-		fireChange(EventManager.LOGIN);
-	}
-	
 	private void drawLoginInputs() {
 		
 		//default
@@ -205,9 +189,6 @@ MouseOverHandler, MouseOutHandler, ClickHandler {
 		clear();
 		
 		cbRemberMe.setText("Remember Me");
-		
-		
-		hAccountCreate = new HTML("<a>Create Account</a>");
 		
 		tbConsumerKey.setTitle(inputLabel_ConsumerKey);
 		tbConsumerSecret.setTitle(inputLabel_consumerSecret);
@@ -276,6 +257,13 @@ MouseOverHandler, MouseOutHandler, ClickHandler {
 	  if (bForgot.isVisible() == true) {
 	    return;
 	  }
+	  if (pOptions == null) {
+	    return;
+	  }
+	  if (pOptions.isAttached() == false) {
+	    return;
+	  }
+	  
 	  int left = pWidget.getAbsoluteLeft();
 	  int top = pWidget.getAbsoluteTop() + pWidget.getOffsetHeight();
 	  int width = pWidget.getOffsetWidth();
@@ -331,11 +319,10 @@ MouseOverHandler, MouseOutHandler, ClickHandler {
 		hideLoading();
     clear();
 		
-		hAccountSettings = new HTML("<a>My Account</a>");
-		hAccountLogout = new HTML("<a>Logout</a>");
+
 		
 		HorizontalPanel hp = new HorizontalPanel();
-		hp.add(hAccountSettings);
+		hp.add(hAccountProfile);
 		hp.add(new HTML("&nbsp;&nbsp;"));
 		hp.add(hAccountLogout);
 		
@@ -446,6 +433,10 @@ MouseOverHandler, MouseOutHandler, ClickHandler {
 		} 
 	}
 	
+	public boolean getRememberMe() {
+	  return cbRemberMe.getValue();
+	}
+	
   public int getChangeEvent() {
     return changeEvent;
   }
@@ -488,7 +479,19 @@ MouseOverHandler, MouseOutHandler, ClickHandler {
     
     } else if (sender == hAccountLogin) {
       drawLoginInputs();
+    
+    } else if (sender == hAccountCreate) {
+      if (QueryString.getQueryStringData().getHistoryToken().equals("account_Create")) {
+        cp.fireChange(EventManager.ACCOUNT_CREATE);
+      }
+    } else if (sender == hAccountProfile) {
+      if (QueryString.getQueryStringData().getHistoryToken().equals("account_Profile")) {
+        cp.fireChange(EventManager.ACCOUNT_PROFILE);
+      }
+    } else if (sender == hAccountLogout) {
+      fireChange(EventManager.LOGOUT);
     }
+    
   }
 
 	public void onKeyDown(Widget sender, char keyCode, int modifiers) {

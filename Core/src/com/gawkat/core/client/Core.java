@@ -1,21 +1,16 @@
 package com.gawkat.core.client;
 
-import com.gawkat.core.client.account.LoginWidget;
+import com.gawkat.core.client.account.AccountWidget;
+import com.gawkat.core.client.account.thingtype.ThingTypes;
 import com.gawkat.core.client.account.ui.LoginUi;
-import com.gawkat.core.client.admin.thingtype.ThingTypes;
-import com.gawkat.core.client.global.EventManager;
-import com.gawkat.core.client.global.LoadingWidget;
-import com.gawkat.core.client.oauth.OAuthTokenData;
-import com.gawkat.core.client.tests.TestRpcCallWidget;
+import com.gawkat.core.client.account.ui.LoginWidget;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -25,7 +20,9 @@ public class Core implements EntryPoint, ChangeHandler {
   private ClientPersistence cp = new ClientPersistence();
   
   private LoginWidget wLogin = new LoginWidget(cp);
-   
+  
+  private AccountWidget wAccount = new AccountWidget(cp);
+  
   /**
    * load on entry
    */
@@ -36,41 +33,46 @@ public class Core implements EntryPoint, ChangeHandler {
     
     VerticalPanel pWidget = new VerticalPanel();
     pWidget.add(wLogin);
+    pWidget.add(wAccount);
     
-    pWidget.setWidth("600px");
+    pWidget.setWidth("800px");
     pWidget.setCellHorizontalAlignment(wLogin, HorizontalPanel.ALIGN_RIGHT);
     
     RootPanel.get().add(pWidget);
 
     wLogin.addChangeHandler(this);
+    
+    wAccount.draw();
+    
+    pWidget.setStyleName("test2");
+    
+    initHistory();
   }
   
-  private void processLoginEvent() {
+  private void initHistory() {
     
-    int event = wLogin.getChangeEvent();
-    if (event == EventManager.LOGGEDIN) {
-      //Window.alert("test log in");
-    } else if (event == EventManager.LOGGEDOUT) {
-      // TODO what to do?
+    String historyToken = History.getToken();
+    
+    if (historyToken.length() == 0) {
+      History.newItem("account_Types");
     }
     
   }
+  
+ 
 
   /**
    * for setup
    */
   private void testThingTypes() {
-    ThingTypes w = new ThingTypes();
+    ThingTypes w = new ThingTypes(cp);
     w.draw();
     RootPanel.get().add(w);
   }
 
   public void onChange(ChangeEvent event) {
     
-    Widget sender = (Widget) event.getSource();
-    if (sender == wLogin) {
-      processLoginEvent();
-    }
+  
     
   }
 
