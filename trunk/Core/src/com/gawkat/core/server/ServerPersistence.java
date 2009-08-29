@@ -3,10 +3,7 @@ package com.gawkat.core.server;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.jdo.PersistenceManager;
 import javax.servlet.http.HttpServletRequest;
-
-import com.gawkat.core.server.jdo.PMF;
 
 public class ServerPersistence {
 
