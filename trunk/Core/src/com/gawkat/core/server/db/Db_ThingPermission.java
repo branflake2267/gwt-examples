@@ -1,18 +1,16 @@
 package com.gawkat.core.server.db;
 
-import com.gawkat.core.client.account.ThingData;
-import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.account.permission.ThingPermissionData;
 import com.gawkat.core.client.account.permission.ThingPermissionsData;
+import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.server.ServerPersistence;
-import com.gawkat.core.server.jdo.data.ThingPermissionJdo;
 
-public class ThingPermission {
+public class Db_ThingPermission {
 
   private ServerPersistence sp = new ServerPersistence();
   
-  public ThingPermission(ServerPersistence sp) {
+  public Db_ThingPermission(ServerPersistence sp) {
     this.sp = sp;
   }
  
@@ -38,7 +36,7 @@ public class ThingPermission {
   private ThingPermissionData[] getThingPermissions(OAuthTokenData accessToken, long thingId) {
     
     // get the user of the session, asking for permission to use this thing
-    User u = new User(sp);
+    Db_User u = new Db_User(sp);
     ThingData t = u.getUser(accessToken);
     
     //ThingPermissionJdo[] tpjs = ThingPermissionJdo.query(t.thingId, thingId);
