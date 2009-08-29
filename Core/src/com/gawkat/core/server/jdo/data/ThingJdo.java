@@ -168,7 +168,7 @@ public class ThingJdo {
       pm.close();
     }
 
-    ThingJdo[] r = null;
+    ThingJdo[] r = new ThingJdo[aT.size()];
     if (aT.size() > 0) {
       r = new ThingJdo[aT.size()];
       aT.toArray(r);

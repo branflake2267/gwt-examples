@@ -2,7 +2,6 @@ package com.gawkat.core.server.jdo.data;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Iterator;
 
 import javax.jdo.Extent;

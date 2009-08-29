@@ -15,8 +15,8 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import com.gawkat.core.client.admin.thingtype.ThingTypeData;
-import com.gawkat.core.client.admin.thingtype.ThingTypeFilterData;
+import com.gawkat.core.client.account.thingtype.ThingTypeData;
+import com.gawkat.core.client.account.thingtype.ThingTypeFilterData;
 import com.gawkat.core.server.jdo.PMF;
 
 
@@ -43,6 +43,22 @@ public class ThingTypeJdo {
   private Date dateUpdated;
   
   /**
+   * constructor
+   */
+  public ThingTypeJdo() { 
+  }
+  
+  /**
+   * constructor
+   * 
+   * @param thingTypeData
+   */
+  public ThingTypeJdo(ThingTypeData thingTypeData) {
+    this.thingTypeId = thingTypeData.getId();
+    this.name = thingTypeData.getName();
+  }
+
+  /**
    * get Identity
    * 
    * @return
@@ -65,8 +81,7 @@ public class ThingTypeJdo {
    * 
    * @param name
    */
-  public void insert(String name) {
-    this.name = name;
+  public void insert() {
     this.dateCreated = new Date();
     
     // don't insert if name already exists
@@ -187,6 +202,35 @@ public class ThingTypeJdo {
       aT.toArray(r);
     }
     return r;
+  }
+  
+  public static boolean deleteThingTypeDataJdo(ThingTypeData thingTypeData) {
+    
+    ThingTypeJdo ttj = new ThingTypeJdo(thingTypeData);
+    
+    PersistenceManager pm = PMF.get().getPersistenceManager();
+    Transaction tx = pm.currentTransaction();
+    boolean b = false;
+    try {
+      tx.begin();
+
+      ThingTypeJdo ttj2 = (ThingTypeJdo) pm.getObjectById(ThingTypeJdo.class, ttj.getId());
+      pm.deletePersistent(ttj2);
+      
+      tx.commit();
+      b = true;
+    } catch (Exception e) {
+      e.printStackTrace();
+      b = false;
+    } finally {
+      if (tx.isActive()) {
+        tx.rollback();
+        b = false;
+      }
+      pm.close();
+    }
+    
+    return b;
   }
   
   /**
