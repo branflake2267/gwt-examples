@@ -126,7 +126,7 @@ public class OAuthServer {
     boolean nonceAlreadyUsed = hasNonceBeenFoundUsed(appAccessToken, (long) ThingTypeJdo.TYPE_USER, userData.userId);
 
     // verify application's access, then transfer it to the user if all passes
-    Long accessId = getAccessId(appAccessToken);
+    long accessId = getAccessId(appAccessToken);
 
     // examine if we can go to the next step
     if (userData != null && 
@@ -150,6 +150,9 @@ public class OAuthServer {
     // set nonce, so it can't be used again.
     setNonce(appAccessToken, url, (long) ThingTypeJdo.TYPE_USER, userData.userId);
 
+    // be sure not to send back the userkey, b/c it transforms into token
+    appAccessToken.setConsumerKey(null);
+    
     // sign the token for transport back
     try {
       appAccessToken.sign(url, userData.consumerSecret);
@@ -314,15 +317,18 @@ public class OAuthServer {
    * @param appAccessToken
    * @return
    */
-  private Long getAccessId(OAuthTokenData appAccessToken) {
+  private long getAccessId(OAuthTokenData appAccessToken) {
 
     String appConsumerKey = appAccessToken.getAccessToken_key();
     String appConsumerSecret = appAccessToken.getAccessToken_secret();
 
     SessionAccessTokenJdo[] sas = SessionAccessTokenJdo.query(appConsumerKey, appConsumerSecret);
-    SessionAccessTokenJdo sa = sas[0];
-    
-    Long accessId = sa.getId();
+    SessionAccessTokenJdo sa = null;
+    if (sas != null) {
+      sa = sas[0];
+    }
+
+    long accessId = sa.getId();
 
     return accessId;
   }
