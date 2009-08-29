@@ -162,9 +162,7 @@ public class SessionAccessTokenJdo {
    */
   public ThingData getThingData(String accessToken, String accessTokenSecret) {
     SessionAccessTokenJdo[] s = query(accessToken, accessTokenSecret);
-    ThingData t = new ThingData();
-    t.thingTypeId = s[0].getThingTypeId();
-    t.thingId = s[0].getThingId();
+    ThingData t = new ThingData(s[0].getThingTypeId(), s[0].getThingId());
     return t;
   }
   

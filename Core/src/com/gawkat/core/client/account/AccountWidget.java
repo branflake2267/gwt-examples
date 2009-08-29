@@ -1,7 +1,5 @@
 package com.gawkat.core.client.account;
 
-import org.apache.poi.hssf.record.formula.Ptg;
-
 import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.global.QueryString;
 import com.gawkat.core.client.global.QueryStringData;

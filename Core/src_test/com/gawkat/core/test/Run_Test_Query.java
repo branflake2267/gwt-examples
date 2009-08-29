@@ -1,9 +1,5 @@
 package com.gawkat.core.test;
 
-import com.gawkat.core.client.account.thingtype.ThingTypeData;
-import com.gawkat.core.client.account.thingtype.ThingTypeFilterData;
-import com.gawkat.core.server.ServerPersistence;
-import com.gawkat.core.server.db.Db_ThingType;
 
 public class Run_Test_Query {
 

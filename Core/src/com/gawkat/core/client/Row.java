@@ -1,8 +1,6 @@
 package com.gawkat.core.client;
 
-import com.gawkat.core.client.global.EventManager;
 import com.gawkat.core.client.global.Style;
-import com.gawkat.core.server.db.Db_ThingType;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ChangeEvent;

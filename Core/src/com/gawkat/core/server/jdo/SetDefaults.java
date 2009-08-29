@@ -4,7 +4,6 @@ import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.oauth.Sha1;
 import com.gawkat.core.server.ServerPersistence;
 import com.gawkat.core.server.jdo.data.ThingJdo;
-import com.gawkat.core.server.jdo.data.ThingTypeJdo;
 
 public class SetDefaults {
 

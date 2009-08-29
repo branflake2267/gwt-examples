@@ -192,7 +192,7 @@ public class Db_User {
     ThingData t = s.getThingData(ct, cs);
     
     // the id has to be a user
-    if (t.thingTypeId != 2) {
+    if (t.getThingTypeId() != 2) {
       t = null;
     }
     
