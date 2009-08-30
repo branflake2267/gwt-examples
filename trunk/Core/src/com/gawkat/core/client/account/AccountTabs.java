@@ -3,6 +3,7 @@ package com.gawkat.core.client.account;
 import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.account.permission.ThingPermissions;
 import com.gawkat.core.client.account.thing.Things;
+import com.gawkat.core.client.account.thingstufftype.ThingStuffTypes;
 import com.gawkat.core.client.account.thingtype.ThingTypes;
 import com.gawkat.core.client.global.QueryString;
 import com.gawkat.core.client.global.QueryStringData;
@@ -27,6 +28,7 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
   private ThingTypes wTypes = null;
   private Things wThings = null;
   private ThingPermissions wPerm = null;
+  private ThingStuffTypes wStuffTypes = null;
   
   public AccountTabs(ClientPersistence cp) {
     this.cp = cp;
@@ -35,11 +37,13 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
     wTypes = new ThingTypes(cp);
     wThings = new Things(cp);
     wPerm = new ThingPermissions(cp);
+    wStuffTypes = new ThingStuffTypes(cp);
     
     pWidget.add(wProfile, "My Profile");
     pWidget.add(wTypes, "Thing Types");
     pWidget.add(wThings, "Things");
     pWidget.add(wPerm, "Permission");
+    pWidget.add(wStuffTypes, "Thing Stuff Types");
     
     initWidget(pWidget);
     
@@ -68,6 +72,8 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
       pWidget.selectTab(2);
     } else if (ht.equals("account_Permission") == true) {
       pWidget.selectTab(3);
+    } else if (ht.equals("account_StuffType") == true) {
+      pWidget.selectTab(4);
     }
     
   }
@@ -81,10 +87,14 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
   }
   
   private void drawThings() {
-
+    wThings.draw();
   }
   
   private void drawPermssion() {
+  }
+  
+  private void drawStuffType() {
+    wStuffTypes.draw();
   }
 
   public void onBeforeSelection(BeforeSelectionEvent<Integer> event) {
@@ -99,6 +109,8 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
       drawThings();
     } else if (tab == 3) {
       drawPermssion();
+    } else if (tab == 4) {
+      drawStuffType();
     }
     
   }
@@ -116,6 +128,8 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
       History.newItem("account_Things");
     } else if (tab == 3) {
       History.newItem("account_Permission");
+    } else if (tab == 4) {
+      History.newItem("account_StuffType");
     }
     
   }

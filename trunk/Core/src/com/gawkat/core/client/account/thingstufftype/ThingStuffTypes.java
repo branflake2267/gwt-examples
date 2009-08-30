@@ -1,7 +1,8 @@
-package com.gawkat.core.client.account.thingtype;
+package com.gawkat.core.client.account.thingstufftype;
 
 import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.Row;
+import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.global.LoadingWidget;
 import com.gawkat.core.client.rpc.RpcCore;
 import com.gawkat.core.client.rpc.RpcCoreServiceAsync;
@@ -17,7 +18,7 @@ import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ThingTypes extends Composite implements ClickHandler, ChangeHandler {
+public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHandler {
 
   private ClientPersistence cp = null;
   private RpcCoreServiceAsync rpc = null;
@@ -29,13 +30,13 @@ public class ThingTypes extends Composite implements ClickHandler, ChangeHandler
   
   private VerticalPanel pListTop = new VerticalPanel();
   private VerticalPanel pList = new VerticalPanel();
-  private int[] widths = new int[3];
+  private int[] widths = new int[4];
   
-  private PushButton bDefault = new PushButton("Add Defaults");
   private PushButton bAdd = new PushButton("Add");
-  private PushButton bSave = new PushButton("Save");
   
-  public ThingTypes(ClientPersistence cp) {
+  private ThingData thingData = null;
+  
+  public ThingStuffTypes(ClientPersistence cp) {
     this.cp = cp;
     
     pWidget.add(pMenu);
@@ -49,7 +50,10 @@ public class ThingTypes extends Composite implements ClickHandler, ChangeHandler
     drawMenu();
     
     bAdd.addClickHandler(this);
-    bSave.addClickHandler(this);
+  }
+  
+  public void setData(ThingData thingData) {
+    this.thingData = thingData;
   }
   
   public void draw() {
@@ -59,54 +63,51 @@ public class ThingTypes extends Composite implements ClickHandler, ChangeHandler
   public void drawMenu() {
     
     HorizontalPanel hp = new HorizontalPanel();
-    hp.add(bDefault);
-    hp.add(new HTML("&nbsp;"));
     hp.add(bAdd);
-    hp.add(new HTML("&nbsp;"));
-    hp.add(bSave);
     hp.add(new HTML("&nbsp;"));
     hp.add(wLoading);
     
     pMenu.add(hp);
-    
-    bDefault.addClickHandler(this);
   }
   
   private void drawTopRow() {
     pListTop.clear();
     HTML l1 = new HTML("#");
     HTML l2 = new HTML("Name");
-    HTML l3 = new HTML("&nbsp;");
+    HTML l3 = new HTML("Type");
+    HTML l4 = new HTML("&nbsp;");
 
     l1.setStyleName("core-row-top");
     l2.setStyleName("core-row-top");
     l3.setStyleName("core-row-top");
+    l4.setStyleName("core-row-top");
     
     Row th = new Row();
     th.add(l1, HorizontalPanel.ALIGN_CENTER);
     th.add(l2, HorizontalPanel.ALIGN_CENTER);
     th.add(l3, HorizontalPanel.ALIGN_CENTER);
+    th.add(l4, HorizontalPanel.ALIGN_CENTER);
     
     pListTop.add(th);
   }
   
-  private void process(ThingTypesData thingTypesData) {
+  private void process(ThingStuffTypesData thingStuffTypesData) {
     
     pList.clear();
     
-    if (thingTypesData == null) {
+    if (thingStuffTypesData == null) {
       return;
     }
     
-    if (thingTypesData.thingTypeData == null) {
+    if (thingStuffTypesData.thingStuffTypeData == null) {
       return;
     }
-    ThingTypeData[] thingTypeData = thingTypesData.thingTypeData;
+    ThingStuffTypeData[] ThingStuffTypeData = thingStuffTypesData.thingStuffTypeData;
     
     drawTopRow();
 
-    for (int i=0; i < thingTypeData.length; i++){
-      addThingType(i, thingTypeData[i]);
+    for (int i=0; i < ThingStuffTypeData.length; i++){
+      addThingType(i, ThingStuffTypeData[i]);
     }
     
     setWidths();
@@ -119,12 +120,12 @@ public class ThingTypes extends Composite implements ClickHandler, ChangeHandler
     }
     
     for (int i=0; i < pList.getWidgetCount(); i++) {
-      ThingType t = (ThingType) pList.getWidget(i);
+      ThingStuffType t = (ThingStuffType) pList.getWidget(i);
       widths = Row.getMaxWidths(widths, t.getRow().getWidths());
     }
     
     for (int i=0; i < pList.getWidgetCount(); i++) {
-      ThingType t = (ThingType) pList.getWidget(i);
+      ThingStuffType t = (ThingStuffType) pList.getWidget(i);
       t.getRow().setWidths(widths);
     }
     
@@ -132,9 +133,9 @@ public class ThingTypes extends Composite implements ClickHandler, ChangeHandler
     th.setWidths(widths);
   }
   
-  private ThingType addThingType(int i, ThingTypeData thingTypeData) {
-    ThingType t = new ThingType(cp);
-    t.setData(i, thingTypeData);
+  private ThingStuffType addThingType(int i, ThingStuffTypeData ThingStuffTypeData) {
+    ThingStuffType t = new ThingStuffType(cp);
+    t.setData(i, ThingStuffTypeData);
     pList.add(t);
     widths = Row.getMaxWidths(widths, t.getRow().getWidths());
     t.edit(true);
@@ -143,50 +144,34 @@ public class ThingTypes extends Composite implements ClickHandler, ChangeHandler
   
   private void add() {
     int i = pList.getWidgetCount();
-    ThingTypeData thingTypeData = new ThingTypeData();
-    ThingType t = addThingType(i, thingTypeData);
+    if (i==0) {
+      drawTopRow();
+    }
+    ThingStuffTypeData ThingStuffTypeData = new ThingStuffTypeData();
+    ThingStuffType t = addThingType(i, ThingStuffTypeData);
     t.getRow().setWidths(widths);
     setWidths();
   }
   
   private void save() {
     int wc = pList.getWidgetCount();
-    ThingTypeData[] thingTypeData = new ThingTypeData[wc];
+    ThingStuffTypeData[] ThingStuffTypeData = new ThingStuffTypeData[wc];
     
-    for (int i=0; i < thingTypeData.length; i++) {
-      ThingType tt = (ThingType) pList.getWidget(i);
-      ThingTypeData td = tt.getData();
-      thingTypeData[i] = td;
+    for (int i=0; i < ThingStuffTypeData.length; i++) {
+      ThingStuffType tt = (ThingStuffType) pList.getWidget(i);
+      ThingStuffTypeData td = tt.getData();
+      ThingStuffTypeData[i] = td;
     }
-    saveThingTypesRpc(thingTypeData);
+    saveThingTypesRpc(ThingStuffTypeData);
   }
   
   public void onClick(ClickEvent event) {
     
     Widget sender = (Widget) event.getSource();
     
-    if (sender == bDefault) {
-      setThingTypeDefault();
-    } else if (sender == bAdd) {
+    if (sender == bAdd) {
       add();
-    } else if (sender == bSave) {
-      save();
     }
-  }
-  
-  /**
-   * add the defaults application, user, group
-   */
-  private void setThingTypeDefault() {
-    
-    rpc.setDefaults(cp.getAccessToken(), ThingTypeData.DEFAULT_TYPE, new AsyncCallback<Boolean>() {
-      public void onSuccess(Boolean result) {
-        draw();
-      }
-      public void onFailure(Throwable caught) { 
-      }
-    });
-    
   }
   
   private void getThingTypesRpc() {
@@ -194,11 +179,11 @@ public class ThingTypes extends Composite implements ClickHandler, ChangeHandler
     wLoading.show();
     
     // TODO use this later
-    ThingTypeFilterData filter = new ThingTypeFilterData();
+    ThingStuffTypeFilterData filter = new ThingStuffTypeFilterData();
     
-    rpc.getThingTypes(cp.getAccessToken(), filter, new AsyncCallback<ThingTypesData>() {
-      public void onSuccess(ThingTypesData thingTypesData) {
-        process(thingTypesData);
+    rpc.getThingStuffTypes(cp.getAccessToken(), filter, new AsyncCallback<ThingStuffTypesData>() {
+      public void onSuccess(ThingStuffTypesData ThingStuffTypesData) {
+        process(ThingStuffTypesData);
         wLoading.hide();
       }
       public void onFailure(Throwable caught) {
@@ -212,16 +197,16 @@ public class ThingTypes extends Composite implements ClickHandler, ChangeHandler
     //setWidths();
   }
 
-  private void saveThingTypesRpc(ThingTypeData[] thingTypeData) {
+  private void saveThingTypesRpc(ThingStuffTypeData[] ThingStuffTypeData) {
     
     wLoading.show();
     
     // TODO
-    ThingTypeFilterData filter = new ThingTypeFilterData();
+    ThingStuffTypeFilterData filter = new ThingStuffTypeFilterData();
 
-    rpc.saveThingTypes(cp.getAccessToken(), filter, thingTypeData, new AsyncCallback<ThingTypesData>() {
-      public void onSuccess(ThingTypesData thingTypesData) {
-        process(thingTypesData);
+    rpc.saveThingStuffTypes(cp.getAccessToken(), filter, ThingStuffTypeData, new AsyncCallback<ThingStuffTypesData>() {
+      public void onSuccess(ThingStuffTypesData ThingStuffTypesData) {
+        process(ThingStuffTypesData);
         wLoading.hide();
       }
       public void onFailure(Throwable caught) {
@@ -229,6 +214,8 @@ public class ThingTypes extends Composite implements ClickHandler, ChangeHandler
     });
     
   }
+
+ 
 
   
 }

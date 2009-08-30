@@ -34,6 +34,9 @@ public class EventManager {
   public static final int DELETE_YES = 20;
   public static final int DELETE_NO = 21;
   
+  public static final int THING_EDIT = 30;
+  public static final int THING_VIEW = 31;
+  
   public static final int ACCOUNT_CREATE = 100;
   public static final int ACCOUNT_PROFILE = 101;
   

@@ -1,11 +1,19 @@
 package com.gawkat.core.server;
 
 import com.gawkat.core.client.account.UserData;
+import com.gawkat.core.client.account.thing.ThingData;
+import com.gawkat.core.client.account.thing.ThingFilterData;
+import com.gawkat.core.client.account.thing.ThingsData;
+import com.gawkat.core.client.account.thingstufftype.ThingStuffTypeData;
+import com.gawkat.core.client.account.thingstufftype.ThingStuffTypeFilterData;
+import com.gawkat.core.client.account.thingstufftype.ThingStuffTypesData;
 import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.account.thingtype.ThingTypeFilterData;
 import com.gawkat.core.client.account.thingtype.ThingTypesData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.client.rpc.RpcCoreService;
+import com.gawkat.core.server.db.Db_Thing;
+import com.gawkat.core.server.db.Db_ThingStuffType;
 import com.gawkat.core.server.db.Db_ThingType;
 import com.gawkat.core.server.db.Db_User;
 import com.gawkat.core.server.db.oauth.OAuthServer;
@@ -117,6 +125,54 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
     sp.start(getThreadLocalRequest());
     Db_ThingType t = new Db_ThingType(sp);
     boolean r = t.delete(accessToken, thingTypeData);
+    sp.end();
+    return r;
+  }
+  
+  public ThingsData getThings(OAuthTokenData accessToken, ThingFilterData filter) {
+    sp.start(getThreadLocalRequest());
+    Db_Thing t = new Db_Thing(sp);
+    ThingsData r = t.getThings(accessToken, filter);
+    sp.end();
+    return r;
+  }
+  
+  public ThingsData saveThings(OAuthTokenData accessToken, ThingFilterData filter, ThingData[] thingData) {
+    sp.start(getThreadLocalRequest());
+    Db_Thing t = new Db_Thing(sp);
+    ThingsData r = t.saveThings(accessToken, filter, thingData);
+    sp.end();
+    return r;
+  }
+  
+  public boolean deleteThing(OAuthTokenData accessToken, ThingData thingData) {
+    sp.start(getThreadLocalRequest());
+    Db_Thing t = new Db_Thing(sp);
+    boolean r = t.deleteThing(accessToken, thingData);
+    sp.end();
+    return r;
+  }
+
+  public boolean deleteThingStuffType(OAuthTokenData accessToken, ThingStuffTypeData thingStuffTypeData) {
+    sp.start(getThreadLocalRequest());
+    Db_ThingStuffType t = new Db_ThingStuffType(sp);
+    boolean r = t.delete(accessToken, thingStuffTypeData);
+    sp.end();
+    return r;
+  }
+
+  public ThingStuffTypesData getThingStuffTypes(OAuthTokenData accessToken, ThingStuffTypeFilterData filter) {
+    sp.start(getThreadLocalRequest());
+    Db_ThingStuffType t = new Db_ThingStuffType(sp);
+    ThingStuffTypesData r = t.getThingStuffTypes(accessToken, filter);
+    sp.end();
+    return r;
+  }
+
+  public ThingStuffTypesData saveThingStuffTypes(OAuthTokenData accessToken, ThingStuffTypeFilterData filter, ThingStuffTypeData[] thingStuffTypeData) {
+    sp.start(getThreadLocalRequest());
+    Db_ThingStuffType t = new Db_ThingStuffType(sp);
+    ThingStuffTypesData r = t.saveThingStuffTypes(accessToken, filter, thingStuffTypeData);
     sp.end();
     return r;
   }

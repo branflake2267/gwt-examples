@@ -15,6 +15,9 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.gawkat.core.client.account.thing.ThingData;
+import com.gawkat.core.client.account.thing.ThingFilterData;
+import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.server.jdo.PMF;
 
 
@@ -87,7 +90,7 @@ public class ThingJdo {
    * 
    * @return
    */
-  public Long getId() {
+  public Long getThingId() {
     return this.thingId;
   }
   
@@ -176,8 +179,61 @@ public class ThingJdo {
     return r;
   }
 
+  public static ThingData[] query(ThingFilterData filter) {
+    
+    long thingTypeId = filter.thingTypeId;
+    
+    ArrayList<ThingJdo> aT = new ArrayList<ThingJdo>();
 
+    String qfilter = null;
+    if (filter.thingTypeId > 0) {
+      qfilter = "thingTypeId==" + thingTypeId + "";
+    }
+    
+    PersistenceManager pm = PMF.get().getPersistenceManager();
+    Transaction tx = pm.currentTransaction();
+    try {
+      tx.begin();
 
+      Extent<ThingJdo> e = pm.getExtent(ThingJdo.class, true);
+      Query q = pm.newQuery(e, qfilter);
+      q.execute();
+      
+      Collection<ThingJdo> c = (Collection<ThingJdo>) q.execute();
+      Iterator<ThingJdo> iter = c.iterator();
+      while (iter.hasNext()) {
+        ThingJdo t = (ThingJdo) iter.next();
+        aT.add(t);
+      }
+
+      tx.commit();
+      q.closeAll();
+    } finally {
+      if (tx.isActive()) {
+        tx.rollback();
+      }
+      pm.close();
+    }
+
+    ThingJdo[] tj = new ThingJdo[aT.size()];
+    if (aT.size() > 0) {
+      tj = new ThingJdo[aT.size()];
+      aT.toArray(tj);
+    }
+    
+    ThingData[] td = convert(tj);
+    
+    return td;
+  }
+  
+  public static ThingData[] convert(ThingJdo[] thingJdo) {
+    ThingData[] r = new ThingData[thingJdo.length];
+    for (int i=0; i < thingJdo.length; i++) {
+      r[i] = new ThingData();
+      r[i].setData(thingJdo[i].thingTypeId, thingJdo[i].thingId, thingJdo[i].key);
+    }
+    return r;
+  }
 
 
   

@@ -2,6 +2,7 @@ package com.gawkat.core.client.account.thing;
 
 import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.Row;
+import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.global.DeleteDialog;
 import com.gawkat.core.client.global.EventManager;
 import com.gawkat.core.client.rpc.RpcCore;
@@ -33,44 +34,43 @@ public class Thing extends Composite implements ChangeHandler, ClickHandler {
   private Row pWidget = new Row();
   
   private FlowPanel pCount = new FlowPanel();
- 
-  private HorizontalPanel hpName = new HorizontalPanel();
-  private FlowPanel fpName = new FlowPanel();
-  private TextBox tbName = new TextBox();
+  private FlowPanel pType = new FlowPanel();
+  private FlowPanel pName = new FlowPanel();
+  private HorizontalPanel pModify = new HorizontalPanel();
   
-  private HorizontalPanel hpDelete = new HorizontalPanel();
   private PushButton bDelete = new PushButton("X");
+  private PushButton bEdit = new PushButton("Edit");
+  private PushButton bView = new PushButton("View"); // TODO - use this later
    
   private ThingData thingData = null;
-  
-  private boolean edit = false;
-  
+
   private int row = 0;
   
   private int changeEvent = 0;
   
+  private ThingTypeData thingTypeData = null;
+  
   public Thing(ClientPersistence cp) {
     this.cp = cp;
     
-    hpName.add(tbName);
-    hpName.add(fpName);
-    
-    hpDelete.add(bDelete);
+    pModify.add(bDelete);
+    pModify.add(new HTML("&nbsp;"));   
+    pModify.add(bEdit);
     
     initWidget(pWidget);
     
-    tbName.setVisible(false);
-    fpName.setVisible(true);
-    
     pWidget.addChangeHandler(this);
     bDelete.addClickHandler(this);
+    bEdit.addClickHandler(this);
+    bView.addClickHandler(this);
     
     rpc = RpcCore.initRpc();
   }
 
-  public void setData(int row, ThingData thingData) {
+  public void setData(int row, ThingData thingData, ThingTypeData thingTypeData) {
     this.row = row;
     this.thingData = thingData;
+    this.thingTypeData = thingTypeData;
     pWidget.setRow(row);
     draw();
   }
@@ -78,41 +78,25 @@ public class Thing extends Composite implements ChangeHandler, ClickHandler {
   private void draw() {
     
     pWidget.clear();
-    fpName.clear();
+    pName.clear();
     
     pCount.add(new HTML(Integer.toString(row)));
-    
-    String name = ""; //thingData.getName();
-    fpName.add(new HTML(name));
+    pType.add(new HTML(thingTypeData.getName()));
+    pName.add(new HTML(thingData.getKey()));
     
     pWidget.add(pCount);
-    pWidget.add(hpName);
-    pWidget.add(hpDelete);
+    pWidget.add(pType);
+    pWidget.add(pName);
+    pWidget.add(pModify);
   }
   
   public Row getRow() {
     return pWidget;
   }
   
-  public void edit(boolean b) {
-    /*
-    if (b == true) {
-      tbName.setText(thingData.getName());
-      tbName.setVisible(true);
-      fpName.setVisible(false);
-    } else if (b == false) {
-      String name = tbName.getText();
-      thingData.setName(name);
-      fpName.clear();
-      fpName.add(new HTML(name));
-      tbName.setVisible(false);
-    }
-    */
-  }
 
   public ThingData getData() {
-    //thingData.setName(tbName.getText().trim());
-    return null;
+    return thingData;
   }
   
   private void delete() {
@@ -141,11 +125,9 @@ public class Thing extends Composite implements ChangeHandler, ClickHandler {
     if (sender == pWidget) {
       int changeEvent = pWidget.getChangeEvent();
       if (changeEvent == EventManager.ROW_OVER) {
-        edit(true);
-        fireChange(changeEvent);
+       
       } else if (changeEvent == EventManager.ROW_OUT) {
-        edit(false);
-        fireChange(changeEvent);
+        
       }
     }
     
@@ -170,6 +152,10 @@ public class Thing extends Composite implements ChangeHandler, ClickHandler {
     Widget sender = (Widget) event.getSource();
     if (sender == bDelete) {
       delete();
+    } else if (sender == bEdit) {
+      fireChange(EventManager.THING_EDIT);
+    } else if (sender == bView) {
+      fireChange(EventManager.THING_VIEW);
     }
     
   }

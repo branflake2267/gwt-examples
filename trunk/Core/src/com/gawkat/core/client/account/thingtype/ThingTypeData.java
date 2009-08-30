@@ -12,36 +12,19 @@ public class ThingTypeData implements IsSerializable {
   // to set the defaults use this int
   public static final int DEFAULT_TYPE = 1;
   
-  // identity
-  private Long id;
+  private long id;
   
-  // name of thingType
   private String name;
   
-  /**
-   * set thingType
-   * @param id
-   * @param name
-   */
-  public void set(Long id, String name) {
+  public void set(long id, String name) {
     this.id = id;
     this.name = name;
   }
   
-  /**
-   * get identity
-   * 
-   * @return
-   */
-  public Long getId() {
+  public long getId() {
     return this.id;
   }
   
-  /**
-   * get thingType name
-   * 
-   * @return
-   */
   public String getName() {
     return this.name;
   }
