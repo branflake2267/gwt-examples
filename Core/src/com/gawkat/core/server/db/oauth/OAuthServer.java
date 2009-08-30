@@ -189,7 +189,7 @@ public class OAuthServer {
     } else {
       ud = new UserData();
       ud.consumerKey = token.getConsumerKey();
-      ud.userId = users[0].getId();
+      ud.userId = users[0].getThingId();
       ud.consumerSecret = users[0].getSecret();
     }
 
@@ -212,7 +212,7 @@ public class OAuthServer {
     
     // get application (thing)
     ThingJdo[] things = ThingJdo.query((long) ThingTypeJdo.TYPE_APPLICATION, ck);
-    long id = things[0].getId();
+    long id = things[0].getThingId();
     String consumerKey = things[0].getKey();
     String consumerSecret = things[0].getSecret();
     
@@ -234,7 +234,7 @@ public class OAuthServer {
     
     // get user (thing)
     ThingJdo[] things = ThingJdo.query((long) ThingTypeJdo.TYPE_USER, getConsumerKeyUser);
-    long id = things[0].getId();
+    long id = things[0].getThingId();
     String consumerKey = things[0].getKey();
     String consumerSecret = things[0].getSecret();
     

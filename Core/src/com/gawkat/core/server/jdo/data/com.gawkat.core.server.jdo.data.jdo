@@ -5,6 +5,24 @@
 <jdo>
     <package name="com.gawkat.core.server.jdo.data">
         <class
+              name="ThingStuffJdo">
+            <field
+                  name="thingStuffId"
+                  persistence-modifier="persistent"/>
+            <field
+                  name="thingStuffTypeId"
+                  persistence-modifier="persistent"/>
+            <field
+                  name="value"
+                  persistence-modifier="persistent"/>
+            <field
+                  name="valueBol"
+                  persistence-modifier="persistent"/>
+            <field
+                  name="valueDouble"
+                  persistence-modifier="persistent"/>
+        </class>
+        <class
               name="SessionAccessTokenJdo">
             <field
                   name="id"
@@ -20,6 +38,39 @@
                   persistence-modifier="persistent"/>
             <field
                   name="accessTokenSecret"
+                  persistence-modifier="persistent"/>
+            <field
+                  name="dateCreated"
+                  persistence-modifier="persistent"/>
+            <field
+                  name="dateUpdated"
+                  persistence-modifier="persistent"/>
+        </class>
+        <class
+              name="ThingPermissionJdo">
+            <field
+                  name="permissionId"
+                  persistence-modifier="persistent"/>
+            <field
+                  name="thingId"
+                  persistence-modifier="persistent"/>
+            <field
+                  name="hasPermissionToThingId"
+                  persistence-modifier="persistent"/>
+            <field
+                  name="access"
+                  persistence-modifier="persistent"/>
+        </class>
+        <class
+              name="ThingStuffTypeJdo">
+            <field
+                  name="stuffTypeId"
+                  persistence-modifier="persistent"/>
+            <field
+                  name="name"
+                  persistence-modifier="persistent"/>
+            <field
+                  name="valueTypeId"
                   persistence-modifier="persistent"/>
             <field
                   name="dateCreated"
@@ -86,21 +137,6 @@
                   persistence-modifier="persistent"/>
             <field
                   name="dateUpdated"
-                  persistence-modifier="persistent"/>
-        </class>
-        <class
-              name="ThingPermissionJdo">
-            <field
-                  name="permissionId"
-                  persistence-modifier="persistent"/>
-            <field
-                  name="thingId"
-                  persistence-modifier="persistent"/>
-            <field
-                  name="hasPermissionToThingId"
-                  persistence-modifier="persistent"/>
-            <field
-                  name="access"
                   persistence-modifier="persistent"/>
         </class>
     </package>

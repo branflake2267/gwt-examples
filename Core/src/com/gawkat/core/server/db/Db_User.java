@@ -68,7 +68,7 @@ public class Db_User {
     ThingJdo user = new ThingJdo();
     user.insert(thingTypeId, key, secret);
     
-    Long newUserId = user.getId();
+    Long newUserId = user.getThingId();
     
     // TODO - error???
     if (newUserId == 0) {
@@ -123,7 +123,7 @@ public class Db_User {
     ThingJdo[] users = ThingJdo.query((long)ThingTypeJdo.TYPE_USER, userData.consumerKey);
     long userId = 0;
     if (users != null && users.length > 0) {
-      userId = users[0].getId();
+      userId = users[0].getThingId();
     }
     
     boolean exists = false;

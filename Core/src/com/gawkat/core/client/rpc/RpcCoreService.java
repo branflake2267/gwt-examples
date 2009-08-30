@@ -1,6 +1,12 @@
 package com.gawkat.core.client.rpc;
 
 import com.gawkat.core.client.account.UserData;
+import com.gawkat.core.client.account.thing.ThingData;
+import com.gawkat.core.client.account.thing.ThingFilterData;
+import com.gawkat.core.client.account.thing.ThingsData;
+import com.gawkat.core.client.account.thingstufftype.ThingStuffTypeData;
+import com.gawkat.core.client.account.thingstufftype.ThingStuffTypeFilterData;
+import com.gawkat.core.client.account.thingstufftype.ThingStuffTypesData;
 import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.account.thingtype.ThingTypeFilterData;
 import com.gawkat.core.client.account.thingtype.ThingTypesData;
@@ -24,11 +30,18 @@ public interface RpcCoreService extends RemoteService {
   public OAuthTokenData getUserAccessToken(OAuthTokenData appAccessToken);
   
   
-  public ThingTypesData getThingTypes(OAuthTokenData accessToken, ThingTypeFilterData filter);
-  
   public boolean setDefaults(OAuthTokenData accessToken, int defaultType);
-  
+  public ThingTypesData getThingTypes(OAuthTokenData accessToken, ThingTypeFilterData filter);
   public ThingTypesData saveThingTypes(OAuthTokenData accessToken, ThingTypeFilterData filter, ThingTypeData[] thingTypeData);
-  
   public boolean deleteThingType(OAuthTokenData accessToken, ThingTypeData thingTypeData);
+  
+  
+  public ThingsData getThings(OAuthTokenData accessToken, ThingFilterData filter);
+  public ThingsData saveThings(OAuthTokenData accessToken, ThingFilterData filter, ThingData[] thingData);
+  public boolean deleteThing(OAuthTokenData accessToken, ThingData thingData);
+  
+  
+  public ThingStuffTypesData getThingStuffTypes(OAuthTokenData accessToken, ThingStuffTypeFilterData filter);
+  public ThingStuffTypesData saveThingStuffTypes(OAuthTokenData accessToken, ThingStuffTypeFilterData filter, ThingStuffTypeData[] thingStuffTypeData);
+  public boolean deleteThingStuffType(OAuthTokenData accessToken, ThingStuffTypeData thingStuffTypeData);
 }

@@ -1,9 +1,11 @@
-package com.gawkat.core.client.account.thingtype;
+package com.gawkat.core.client.account.thingstufftype;
 
 import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.Row;
+import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.global.DeleteDialog;
 import com.gawkat.core.client.global.EventManager;
+import com.gawkat.core.client.global.Global_ListBox;
 import com.gawkat.core.client.rpc.RpcCore;
 import com.gawkat.core.client.rpc.RpcCoreServiceAsync;
 import com.google.gwt.dom.client.Document;
@@ -19,11 +21,12 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ThingType extends Composite implements ChangeHandler, ClickHandler {
+public class ThingStuffType extends Composite implements ChangeHandler, ClickHandler {
 
   private ClientPersistence cp = null;
   
@@ -42,7 +45,9 @@ public class ThingType extends Composite implements ChangeHandler, ClickHandler 
   private HorizontalPanel hpDelete = new HorizontalPanel();
   private PushButton bDelete = new PushButton("X");
    
-  private ThingTypeData thingTypeData = null;
+  private ThingStuffTypeData thingStuffTypeData = null;
+  
+  private ListBox lbValueType = new ListBox();
   
   private boolean edit = false;
   
@@ -50,7 +55,7 @@ public class ThingType extends Composite implements ChangeHandler, ClickHandler 
   
   private int changeEvent = 0;
   
-  public ThingType(ClientPersistence cp) {
+  public ThingStuffType(ClientPersistence cp) {
     this.cp = cp;
     
     hpName.add(tbName);
@@ -69,9 +74,9 @@ public class ThingType extends Composite implements ChangeHandler, ClickHandler 
     rpc = RpcCore.initRpc();
   }
 
-  public void setData(int row, ThingTypeData thingTypeData) {
+  public void setData(int row, ThingStuffTypeData thingStuffTypeData) {
     this.row = row;
-    this.thingTypeData = thingTypeData;
+    this.thingStuffTypeData = thingStuffTypeData;
     pWidget.setRow(row);
     draw();
   }
@@ -83,12 +88,23 @@ public class ThingType extends Composite implements ChangeHandler, ClickHandler 
     
     pCount.add(new HTML(Integer.toString(row)));
     
-    String name = thingTypeData.getName();
+    String name = thingStuffTypeData.getName();
     fpName.add(new HTML(name));
     
     pWidget.add(pCount);
     pWidget.add(hpName);
+    pWidget.add(lbValueType);
     pWidget.add(hpDelete);
+   
+    drawLb();
+  }
+  
+  private void drawLb() {
+    lbValueType.addItem("String", Integer.toString(ThingStuffTypeData.VT_STRING));
+    lbValueType.addItem("Boolean", Integer.toString(ThingStuffTypeData.VT_BOOLEAN));
+    lbValueType.addItem("Double", Integer.toString(ThingStuffTypeData.VT_DOUBLE));
+    
+    Global_ListBox.setSelected(lbValueType, thingStuffTypeData.getValueTypeId());
   }
   
   public Row getRow() {
@@ -97,21 +113,22 @@ public class ThingType extends Composite implements ChangeHandler, ClickHandler 
   
   public void edit(boolean b) {
     if (b == true) {
-      tbName.setText(thingTypeData.getName());
+      tbName.setText(thingStuffTypeData.getName());
       tbName.setVisible(true);
       fpName.setVisible(false);
     } else if (b == false) {
       String name = tbName.getText();
-      thingTypeData.setName(name);
+      thingStuffTypeData.setName(name);
       fpName.clear();
       fpName.add(new HTML(name));
       tbName.setVisible(false);
     }
   }
 
-  public ThingTypeData getData() {
-    thingTypeData.setName(tbName.getText().trim());
-    return thingTypeData;
+  public ThingStuffTypeData getData() {
+    thingStuffTypeData.setName(tbName.getText().trim());
+    thingStuffTypeData.setValueTypeId(Global_ListBox.getSelectedValue(lbValueType));
+    return thingStuffTypeData;
   }
   
   private void delete() {
@@ -120,7 +137,7 @@ public class ThingType extends Composite implements ChangeHandler, ClickHandler 
       public void onChange(ChangeEvent event) {
         DeleteDialog dd = (DeleteDialog) event.getSource();
         int changeEvent = dd.getChangeEvent();
-        if (changeEvent == EventManager.DELETE_YES && thingTypeData.getId() > 0) {
+        if (changeEvent == EventManager.DELETE_YES && thingStuffTypeData.getId() > 0) {
           deleteRpc();
         } else {
           deleteIt(true);
@@ -177,7 +194,7 @@ public class ThingType extends Composite implements ChangeHandler, ClickHandler 
   
   private void deleteRpc() {
    
-    rpc.deleteThingType(cp.getAccessToken(), thingTypeData, new AsyncCallback<Boolean>() {
+    rpc.deleteThingStuffType(cp.getAccessToken(), thingStuffTypeData, new AsyncCallback<Boolean>() {
       public void onSuccess(Boolean b) {
         deleteIt(b);
       }
