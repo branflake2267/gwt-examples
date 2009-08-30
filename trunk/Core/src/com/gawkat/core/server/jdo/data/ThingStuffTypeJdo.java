@@ -22,10 +22,6 @@ import com.gawkat.core.server.jdo.PMF;
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class ThingStuffTypeJdo {
 
-  public static final int VT_STRING = 0;
-  public static final int VT_BOOLEAN = 1;
-  public static final int VT_DOUBLE = 2;
-  
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
   private long stuffTypeId;
@@ -34,7 +30,7 @@ public class ThingStuffTypeJdo {
   private String name = null;
   
   @Persistent
-  private int valueTypeId = VT_STRING;
+  private int valueTypeId = ThingStuffTypeData.VT_STRING;
   
   @Persistent
   private Date dateCreated;

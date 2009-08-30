@@ -1,6 +1,7 @@
 package com.gawkat.core.client.account.thing;
 
 import com.gawkat.core.client.ClientPersistence;
+import com.gawkat.core.client.account.thingstuff.ThingStuffs;
 import com.gawkat.core.client.account.thingstufftype.ThingStuffTypes;
 import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.account.thingtype.ThingTypesData;
@@ -23,8 +24,6 @@ public class ThingEdit extends Composite {
   private HorizontalPanel pTop = new HorizontalPanel();
   private VerticalPanel pStuff = new VerticalPanel();
   
-  private PushButton bAdd = new PushButton("Add Data");
-
   public ThingEdit(ClientPersistence cp) {
     this.cp = cp;
     
@@ -45,17 +44,18 @@ public class ThingEdit extends Composite {
   }
   
   private void drawStuff() {
-    ThingStuffTypes wStuff = new ThingStuffTypes(cp);
+    ThingStuffs wStuff = new ThingStuffs(cp);
     pStuff.add(wStuff);
     wStuff.setData(thingData);
+    wStuff.draw();
   }
   
   private void drawTop() {
     ThingTypeData thingTypeData = thingTypesData.getThingType(thingData.getThingTypeId());
     
-    pTop.add(new HTML("Id: " + thingData.getThingId()));
-    pTop.add(new HTML("&nbsp;&nbsp;"));
     pTop.add(new HTML("Type: " + thingTypeData.getName()));
+    pTop.add(new HTML("&nbsp;&nbsp;"));
+    pTop.add(new HTML("Id: " + thingData.getThingId()));
     pTop.add(new HTML("&nbsp;&nbsp;"));
     pTop.add(new HTML("Key: " + thingData.getKey()));
   }

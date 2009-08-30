@@ -4,9 +4,17 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ThingStuffTypeData implements IsSerializable {
 
-  public static final int VT_STRING = 0;
-  public static final int VT_BOOLEAN = 1;
-  public static final int VT_DOUBLE = 2;
+  public static final int VT_STRING = 1;
+  public static final int VT_BOOLEAN = 2;
+  public static final int VT_DOUBLE = 3;
+  public static final int VT_INT = 4;
+  public static final int VT_STRING_LARGE = 5; // text area
+  public static final int VT_STRING_CASE = 6; // text box case sensitive
+  public static final int VT_STRING_LARGE_CASE = 7; // text area case sensitive
+  public static final int VT_HTML = 8;
+  public static final int VT_URL = 9;
+  public static final int VT_EMAIL = 10;
+  public static final int VT_PHONE = 11;
   
   private long id;
   

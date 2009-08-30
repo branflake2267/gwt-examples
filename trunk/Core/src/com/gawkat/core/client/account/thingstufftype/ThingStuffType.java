@@ -100,9 +100,19 @@ public class ThingStuffType extends Composite implements ChangeHandler, ClickHan
   }
   
   private void drawLb() {
-    lbValueType.addItem("String", Integer.toString(ThingStuffTypeData.VT_STRING));
-    lbValueType.addItem("Boolean", Integer.toString(ThingStuffTypeData.VT_BOOLEAN));
-    lbValueType.addItem("Double", Integer.toString(ThingStuffTypeData.VT_DOUBLE));
+    lbValueType.addItem("Text", Integer.toString(ThingStuffTypeData.VT_STRING));
+    lbValueType.addItem("Checkbox", Integer.toString(ThingStuffTypeData.VT_BOOLEAN));
+    lbValueType.addItem("Decimal", Integer.toString(ThingStuffTypeData.VT_DOUBLE));
+    lbValueType.addItem("Number", Integer.toString(ThingStuffTypeData.VT_INT));
+    
+    lbValueType.addItem("Large Text Box", Integer.toString(ThingStuffTypeData.VT_STRING_LARGE));
+    lbValueType.addItem("Text Case Sensitive", Integer.toString(ThingStuffTypeData.VT_STRING_CASE));
+    lbValueType.addItem("Large Text Area Case Sensitive", Integer.toString(ThingStuffTypeData.VT_STRING_LARGE_CASE));
+    
+    lbValueType.addItem("HTML", Integer.toString(ThingStuffTypeData.VT_HTML));
+    lbValueType.addItem("URL", Integer.toString(ThingStuffTypeData.VT_URL));
+    lbValueType.addItem("Email", Integer.toString(ThingStuffTypeData.VT_EMAIL));
+    lbValueType.addItem("HTML", Integer.toString(ThingStuffTypeData.VT_PHONE));
     
     Global_ListBox.setSelected(lbValueType, thingStuffTypeData.getValueTypeId());
   }

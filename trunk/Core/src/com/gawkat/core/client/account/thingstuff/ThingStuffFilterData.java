@@ -4,7 +4,11 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ThingStuffFilterData implements IsSerializable {
   
-  private long start = 0;
-  private long limit = 0;
+  public long start = 0;
+  public long limit = 0;
+  
+  public long thingStuffId = 0;
+  
+  
 
 }

@@ -21,6 +21,12 @@
             <field
                   name="valueDouble"
                   persistence-modifier="persistent"/>
+            <field
+                  name="dateCreated"
+                  persistence-modifier="persistent"/>
+            <field
+                  name="dateUpdated"
+                  persistence-modifier="persistent"/>
         </class>
         <class
               name="SessionAccessTokenJdo">

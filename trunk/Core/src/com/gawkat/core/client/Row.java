@@ -104,6 +104,15 @@ public class Row extends Composite implements MouseOverHandler, MouseOutHandler 
     return a;
   }
 
+  public void setWidthOnColumn(int columnIndex, int width) {
+    int wc = hp.getWidgetCount();
+    if (columnIndex > wc) {
+      return;
+    }
+    Widget w = (HorizontalPanel) hp.getWidget(columnIndex);
+    w.setWidth(width + "px");
+  }
+  
   public int getChangeEvent() {
     return changeEvent;
   }

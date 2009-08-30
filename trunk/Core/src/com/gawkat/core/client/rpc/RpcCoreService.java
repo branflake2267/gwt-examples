@@ -4,6 +4,9 @@ import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thing.ThingFilterData;
 import com.gawkat.core.client.account.thing.ThingsData;
+import com.gawkat.core.client.account.thingstuff.ThingStuffData;
+import com.gawkat.core.client.account.thingstuff.ThingStuffFilterData;
+import com.gawkat.core.client.account.thingstuff.ThingStuffsData;
 import com.gawkat.core.client.account.thingstufftype.ThingStuffTypeData;
 import com.gawkat.core.client.account.thingstufftype.ThingStuffTypeFilterData;
 import com.gawkat.core.client.account.thingstufftype.ThingStuffTypesData;
@@ -11,6 +14,7 @@ import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.account.thingtype.ThingTypeFilterData;
 import com.gawkat.core.client.account.thingtype.ThingTypesData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
+import com.gawkat.core.server.db.Db_ThingStuff;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -44,4 +48,8 @@ public interface RpcCoreService extends RemoteService {
   public ThingStuffTypesData getThingStuffTypes(OAuthTokenData accessToken, ThingStuffTypeFilterData filter);
   public ThingStuffTypesData saveThingStuffTypes(OAuthTokenData accessToken, ThingStuffTypeFilterData filter, ThingStuffTypeData[] thingStuffTypeData);
   public boolean deleteThingStuffType(OAuthTokenData accessToken, ThingStuffTypeData thingStuffTypeData);
+  
+  public ThingStuffsData getThingStuffData(OAuthTokenData accessToken, ThingStuffFilterData filter);
+  public ThingStuffsData saveThingStuffData(OAuthTokenData accessToken, ThingStuffFilterData filter, ThingStuffData[] thingStuffData);
+  public boolean deleteThingStuffData(OAuthTokenData accessToken, long thingStuffId);
 }

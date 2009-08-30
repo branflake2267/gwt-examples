@@ -4,6 +4,9 @@ import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thing.ThingFilterData;
 import com.gawkat.core.client.account.thing.ThingsData;
+import com.gawkat.core.client.account.thingstuff.ThingStuffData;
+import com.gawkat.core.client.account.thingstuff.ThingStuffFilterData;
+import com.gawkat.core.client.account.thingstuff.ThingStuffsData;
 import com.gawkat.core.client.account.thingstufftype.ThingStuffTypeData;
 import com.gawkat.core.client.account.thingstufftype.ThingStuffTypeFilterData;
 import com.gawkat.core.client.account.thingstufftype.ThingStuffTypesData;
@@ -13,11 +16,13 @@ import com.gawkat.core.client.account.thingtype.ThingTypesData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.client.rpc.RpcCoreService;
 import com.gawkat.core.server.db.Db_Thing;
+import com.gawkat.core.server.db.Db_ThingStuff;
 import com.gawkat.core.server.db.Db_ThingStuffType;
 import com.gawkat.core.server.db.Db_ThingType;
 import com.gawkat.core.server.db.Db_User;
 import com.gawkat.core.server.db.oauth.OAuthServer;
 import com.gawkat.core.server.jdo.SetDefaults;
+import com.gawkat.core.server.jdo.data.ThingStuffJdo;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 @SuppressWarnings("serial")
@@ -173,6 +178,30 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
     sp.start(getThreadLocalRequest());
     Db_ThingStuffType t = new Db_ThingStuffType(sp);
     ThingStuffTypesData r = t.saveThingStuffTypes(accessToken, filter, thingStuffTypeData);
+    sp.end();
+    return r;
+  }
+  
+  public ThingStuffsData getThingStuffData(OAuthTokenData accessToken, ThingStuffFilterData filter) {
+    sp.start(getThreadLocalRequest());
+    Db_ThingStuff db = new Db_ThingStuff(sp);
+    ThingStuffsData r = db.getThingStuffData(accessToken, filter);
+    sp.end();
+    return r;
+  }
+  
+  public ThingStuffsData saveThingStuffData(OAuthTokenData accessToken, ThingStuffFilterData filter, ThingStuffData[] thingStuffData) {
+    sp.start(getThreadLocalRequest());
+    Db_ThingStuff db = new Db_ThingStuff(sp);
+    ThingStuffsData r = db.saveThingStuffData(accessToken, filter, thingStuffData);
+    sp.end();
+    return null;
+  }
+  
+  public boolean deleteThingStuffData(OAuthTokenData accessToken, long thingStuffId) {
+    sp.start(getThreadLocalRequest());
+    Db_ThingStuff db = new Db_ThingStuff(sp);
+    boolean r = db.deleteThingStuffData(accessToken, thingStuffId);
     sp.end();
     return r;
   }
