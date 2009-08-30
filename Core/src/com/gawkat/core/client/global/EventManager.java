@@ -37,9 +37,13 @@ public class EventManager {
   public static final int THING_EDIT = 30;
   public static final int THING_VIEW = 31;
   
+  public static final int THINGSTUFF_TYPECHANGE = 40;
+  
   public static final int ACCOUNT_CREATE = 100;
   public static final int ACCOUNT_PROFILE = 101;
   
   public static final int ROW_OVER = 50;
   public static final int ROW_OUT = 51;
+  
+ 
 }

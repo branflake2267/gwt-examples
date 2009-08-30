@@ -33,6 +33,7 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
   private int[] widths = new int[4];
   
   private PushButton bAdd = new PushButton("Add");
+  private PushButton bSave = new PushButton("Save");
   
   private ThingData thingData = null;
   
@@ -50,6 +51,7 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
     drawMenu();
     
     bAdd.addClickHandler(this);
+    bSave.addClickHandler(this);
   }
   
   public void setData(ThingData thingData) {
@@ -64,6 +66,8 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
     
     HorizontalPanel hp = new HorizontalPanel();
     hp.add(bAdd);
+    hp.add(new HTML("&nbsp;"));
+    hp.add(bSave);
     hp.add(new HTML("&nbsp;"));
     hp.add(wLoading);
     
@@ -107,7 +111,7 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
     drawTopRow();
 
     for (int i=0; i < ThingStuffTypeData.length; i++){
-      addThingType(i, ThingStuffTypeData[i]);
+      addStuffType(i, ThingStuffTypeData[i]);
     }
     
     setWidths();
@@ -133,7 +137,7 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
     th.setWidths(widths);
   }
   
-  private ThingStuffType addThingType(int i, ThingStuffTypeData ThingStuffTypeData) {
+  private ThingStuffType addStuffType(int i, ThingStuffTypeData ThingStuffTypeData) {
     ThingStuffType t = new ThingStuffType(cp);
     t.setData(i, ThingStuffTypeData);
     pList.add(t);
@@ -148,7 +152,7 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
       drawTopRow();
     }
     ThingStuffTypeData ThingStuffTypeData = new ThingStuffTypeData();
-    ThingStuffType t = addThingType(i, ThingStuffTypeData);
+    ThingStuffType t = addStuffType(i, ThingStuffTypeData);
     t.getRow().setWidths(widths);
     setWidths();
   }
@@ -171,6 +175,8 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
     
     if (sender == bAdd) {
       add();
+    } else if (sender == bSave) {
+      save();
     }
   }
   

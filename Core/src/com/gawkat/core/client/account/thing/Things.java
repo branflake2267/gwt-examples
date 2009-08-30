@@ -200,7 +200,7 @@ public class Things extends Composite implements ClickHandler {
       wEdit.setVisible(true);
       bBack.setVisible(true);
       bAdd.setVisible(false);
-      bSave.setVisible(true);
+      bSave.setVisible(false);
     } else if (b == false ) {
       pListTop.setVisible(true);
       pList.setVisible(true);

@@ -27,7 +27,6 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
   private Profile wProfile = null;
   private ThingTypes wTypes = null;
   private Things wThings = null;
-  private ThingPermissions wPerm = null;
   private ThingStuffTypes wStuffTypes = null;
   
   public AccountTabs(ClientPersistence cp) {
@@ -35,16 +34,14 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
     
     wProfile = new Profile(cp);
     wTypes = new ThingTypes(cp);
-    wThings = new Things(cp);
-    wPerm = new ThingPermissions(cp);
     wStuffTypes = new ThingStuffTypes(cp);
+    wThings = new Things(cp);
     
     pWidget.add(wProfile, "My Profile");
     pWidget.add(wTypes, "Thing Types");
-    pWidget.add(wThings, "Things");
-    pWidget.add(wPerm, "Permission");
     pWidget.add(wStuffTypes, "Thing Stuff Types");
-    
+    pWidget.add(wThings, "Things");
+
     initWidget(pWidget);
     
     pWidget.setWidth("100%");
@@ -68,13 +65,11 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
       pWidget.selectTab(0);
     } else if (ht.equals("account_Types") == true) {
       pWidget.selectTab(1);
-    } else if (ht.equals("account_Things") == true) {
-      pWidget.selectTab(2);
-    } else if (ht.equals("account_Permission") == true) {
-      pWidget.selectTab(3);
     } else if (ht.equals("account_StuffType") == true) {
-      pWidget.selectTab(4);
-    }
+      pWidget.selectTab(2);
+    } else if (ht.equals("account_Things") == true) {
+      pWidget.selectTab(3);
+    } 
     
   }
   
@@ -86,17 +81,14 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
     wTypes.draw();
   }
   
-  private void drawThings() {
-    wThings.draw();
-  }
-  
-  private void drawPermssion() {
-  }
-  
   private void drawStuffType() {
     wStuffTypes.draw();
   }
-
+  
+  private void drawThings() {
+    wThings.draw();
+  }
+ 
   public void onBeforeSelection(BeforeSelectionEvent<Integer> event) {
     
     int tab = event.getItem();
@@ -106,12 +98,10 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
     } else if (tab == 1) {
       drawTypes();
     } else if (tab == 2) {
-      drawThings();
-    } else if (tab == 3) {
-      drawPermssion();
-    } else if (tab == 4) {
       drawStuffType();
-    }
+    } else if (tab == 3) {
+      drawThings();
+    } 
     
   }
 
@@ -125,12 +115,10 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
     } else if (tab == 1) {
       History.newItem("account_Types");
     } else if (tab == 2) {
-      History.newItem("account_Things");
-    } else if (tab == 3) {
-      History.newItem("account_Permission");
-    } else if (tab == 4) {
       History.newItem("account_StuffType");
-    }
+    } else if (tab == 3) {
+      History.newItem("account_Things");
+    } 
     
   }
 
