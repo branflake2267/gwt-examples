@@ -187,7 +187,7 @@ public class ThingStuffs extends Composite implements ClickHandler {
     setWidths();
   }
   
-  private void save() {
+  public void save() {
     
     int wc = pListStuff.getWidgetCount();
     ThingStuffData[] thingStuffData = new ThingStuffData[wc];
@@ -199,6 +199,10 @@ public class ThingStuffs extends Composite implements ClickHandler {
     }
     
     saveThingTypesRpc(thingStuffData);
+  }
+  
+  public void clear() {
+    pListStuff.clear();
   }
   
   public void onClick(ClickEvent event) {

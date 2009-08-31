@@ -48,7 +48,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   private TextArea taValue = new TextArea();
 
   // owner
-  private ThingData thingData = null;
+  private ThingData thingData = new ThingData();
   
   private ThingStuffData thingStuffData = null;
   
@@ -306,7 +306,12 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   private int getDataTypeId() {
     int thingStuffId = Global_ListBox.getSelectedValue(lbTypes);
     ThingStuffTypeData type = thingStuffTypesData.getStuffTypeData(thingStuffId);
-    int typeId = type.getValueTypeId();
+    int typeId = 0;
+    if (type == null) {
+      typeId = 0;
+    } else {
+      typeId = type.getValueTypeId();
+    }
     return typeId;
   }
   

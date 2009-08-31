@@ -15,6 +15,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -105,8 +106,10 @@ public class Thing extends Composite implements ChangeHandler, ClickHandler {
       public void onChange(ChangeEvent event) {
         DeleteDialog dd = (DeleteDialog) event.getSource();
         int changeEvent = dd.getChangeEvent();
-        if (changeEvent == EventManager.DELETE_YES) {
+        if (changeEvent == EventManager.DELETE_YES && thingData.getThingId() > 0) {
           deleteRpc();
+        } else if (changeEvent == EventManager.DELETE_YES) {
+          deleteIt(true);
         }
       }
     });
@@ -161,15 +164,13 @@ public class Thing extends Composite implements ChangeHandler, ClickHandler {
   }
   
   private void deleteRpc() {
-    /*
-    rpc.deleteThingType(cp.getAccessToken(), thingData, new AsyncCallback<Boolean>() {
+    rpc.deleteThing(cp.getAccessToken(), thingData, new AsyncCallback<Boolean>() {
       public void onSuccess(Boolean b) {
         deleteIt(b);
       }
-      public void onFailure(Throwable caught) { 
+      public void onFailure(Throwable caught) {
       }
     });
-    */  
   }
   
   
