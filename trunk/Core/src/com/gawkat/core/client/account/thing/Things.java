@@ -178,7 +178,16 @@ public class Things extends Composite implements ClickHandler {
   }
   
   private void save() {
+    
+    if (wEdit.isVisible() == true) {
+      wEdit.save();
+    }
+
     int wc = pList.getWidgetCount();
+    if (wc == 0) {
+      return;
+    }
+    
     ThingData[] thingData = new ThingData[wc];
     
     for (int i=0; i < thingData.length; i++) {
@@ -200,8 +209,9 @@ public class Things extends Composite implements ClickHandler {
       wEdit.setVisible(true);
       bBack.setVisible(true);
       bAdd.setVisible(false);
-      bSave.setVisible(false);
+      bSave.setVisible(true);
     } else if (b == false ) {
+      wEdit.clear();
       pListTop.setVisible(true);
       pList.setVisible(true);
       wEdit.setVisible(false);

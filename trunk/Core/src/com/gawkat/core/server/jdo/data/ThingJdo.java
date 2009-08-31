@@ -63,6 +63,18 @@ public class ThingJdo {
     }
   }
   
+  public void setData(ThingJdo thingData) {
+    this.thingId = thingData.getThingId();
+    this.thingTypeId = thingData.getThingTypeId();
+    this.key = thingData.getKey();
+    //this.secret = thingData.getSecret(); // TODO?
+    if (thingId > 0) {
+      dateUpdated = new Date();
+    } else {
+      dateCreated = new Date();
+    }
+  }
+  
   /**
    * insert thing
    * 
@@ -96,38 +108,50 @@ public class ThingJdo {
     }
   }
   
-  /**
-   * get identity
-   * 
-   * @return
-   */
-  public Long getThingId() {
+  public boolean save(ThingData thingData) {
+    setData(thingData);
+
+    boolean b = false;
+    PersistenceManager pm = PMF.get().getPersistenceManager();
+    Transaction tx = pm.currentTransaction();
+    try {
+      tx.begin();
+
+      if (thingId > 0) { // update
+        ThingJdo update = pm.getObjectById(ThingJdo.class, thingId);
+        update.setData(thingData);
+      } else { // insert    
+        pm.makePersistent(this);
+      }
+      tx.commit();
+      b = true;
+    } finally {
+      if (tx.isActive()) {
+        tx.rollback();
+        b = false;
+      }
+      pm.close();
+    }
+
+    return b;
+  }
+  
+  public long getThingId() {
     return this.thingId;
   }
   
-  /**
-   * get key (usernameKey, applicationKey,...)
-   * @return
-   */
+  public long getThingTypeId() {
+    return thingTypeId;
+  }
+  
   public String getKey() {
     return this.key;
   }
   
-  /**
-   * get secret
-   * 
-   * @return
-   */
   public String getSecret() {
     return this.secret;
   }
   
-  /**
-   * query a thing by its id
-   * 
-   * @param thingId
-   * @return
-   */
   public static ThingJdo query(long thingId) {
     ThingJdo thing = null;
     PersistenceManager pm = PMF.get().getPersistenceManager();
