@@ -16,7 +16,7 @@ public class ThingStuffTypeData implements IsSerializable {
   public static final int VT_EMAIL = 10;
   public static final int VT_PHONE = 11;
   
-  private long id;
+  private long stuffTypeId;
   
   private int valueTypeId = VT_STRING;
   
@@ -26,13 +26,13 @@ public class ThingStuffTypeData implements IsSerializable {
   }
   
   public void setData(long id, String name, int valueTypeId) {
-    this.id = id;
+    this.stuffTypeId = id;
     this.name = name;
     this.valueTypeId = valueTypeId;
   }
   
-  public long getId() {
-    return this.id;
+  public long getStuffTypeId() {
+    return this.stuffTypeId;
   }
   
   public String getName() {

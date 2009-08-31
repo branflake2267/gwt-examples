@@ -42,8 +42,8 @@ public class Db_ThingStuff {
   }
   
   private void save(ThingStuffData thingStuffData) {
-    ThingStuffJdo db = new ThingStuffJdo(thingStuffData);
-    db.save();
+    ThingStuffJdo db = new ThingStuffJdo();
+    db.save(thingStuffData);
   }
 
   public boolean deleteThingStuffData(OAuthTokenData accessToken, long thingStuffId) {

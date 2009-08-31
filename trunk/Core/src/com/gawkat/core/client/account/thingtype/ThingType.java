@@ -122,7 +122,7 @@ public class ThingType extends Composite implements ChangeHandler, ClickHandler 
         int changeEvent = dd.getChangeEvent();
         if (changeEvent == EventManager.DELETE_YES && thingTypeData.getId() > 0) {
           deleteRpc();
-        } else {
+        } else if (changeEvent == EventManager.DELETE_YES) {
           deleteIt(true);
         }
       }

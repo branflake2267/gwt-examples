@@ -2,6 +2,7 @@ package com.gawkat.core.client.account.thingstuff;
 
 import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.Row;
+import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thingstufftype.ThingStuffTypeData;
 import com.gawkat.core.client.account.thingstufftype.ThingStuffTypesData;
 import com.gawkat.core.client.account.thingtype.ThingTypesData;
@@ -46,10 +47,15 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   private CheckBox cbValue = new CheckBox();
   private TextArea taValue = new TextArea();
 
+  // owner
+  private ThingData thingData = null;
+  
   private ThingStuffData thingStuffData = null;
   
   private PushButton bDelete = new PushButton("X");
-  
+
+  private ThingStuffTypesData thingStuffTypesData = null;
+
   public ThingStuff(ClientPersistence cp) {
     this.cp = cp;
     
@@ -66,9 +72,11 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     lbTypes.addChangeHandler(this);
   }
   
-  public void setData(ThingStuffTypesData thingStuffTypesData, ThingStuffData thingStuffData) {
+  public void setData(ThingData thingData, ThingStuffTypesData thingStuffTypesData, ThingStuffData thingStuffData) {
+    this.thingData = thingData;
     this.thingStuffData = thingStuffData;
-    drawListBoxTypes(thingStuffTypesData);
+    this.thingStuffTypesData = thingStuffTypesData;
+    drawListBoxTypes();
     drawInput();
   }
   
@@ -79,7 +87,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   private void drawInput() {
     pInput.clear();
       
-    long typeId = thingStuffData.getThingStuffTypeId();
+    long typeId = getDataTypeId();
     if (typeId == ThingStuffTypeData.VT_STRING) {
       drawInput(typeId, thingStuffData.getValue());
     } else if (typeId == ThingStuffTypeData.VT_BOOLEAN) {
@@ -158,7 +166,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     double valueDouble = 0;
     long valueInt = 0;
     
-    long typeId = thingStuffData.getThingStuffTypeId();
+    long typeId = getDataTypeId();
     if (typeId == ThingStuffTypeData.VT_STRING) {
       value = getTextBox_String();
       valueBol = false;
@@ -221,19 +229,18 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
       valueInt = 0;
     }
     
-    thingStuffData.setThingStuffTypeId(typeId);
+    int stuffTypeId = Global_ListBox.getSelectedValue(lbTypes);
+    thingStuffData.setThingStuffTypeId(stuffTypeId);
     thingStuffData.setValue(value);
     thingStuffData.setValue(valueBol);
     thingStuffData.setValue(valueDouble);
     thingStuffData.setValue(valueInt);
     
+    thingStuffData.setThingId(thingData.getThingId());
+    
     return thingStuffData;
   }
 
-  private long getThingStuffTypeId() {
-    return Global_ListBox.getSelectedValue(lbTypes);
-  }
-  
   private String getTextBox_String() {
     return tbValue.getText().trim();
   }
@@ -279,7 +286,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     tbValue.setText(Long.toString(valueInt));
   }
 
-  private void drawListBoxTypes(ThingStuffTypesData thingStuffTypesData) {
+  private void drawListBoxTypes() {
     lbTypes.clear();
     if (thingStuffTypesData == null) {
       return;
@@ -287,51 +294,62 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     lbTypes.addItem("Select", "0");
     for (int i=0; i < thingStuffTypesData.thingStuffTypeData.length; i++) {
       String item = thingStuffTypesData.thingStuffTypeData[i].getName();
-      String value = Long.toString(thingStuffTypesData.thingStuffTypeData[i].getValueTypeId());
+      String value = Long.toString(thingStuffTypesData.thingStuffTypeData[i].getStuffTypeId());
       lbTypes.addItem(item, value);
+      System.out.println("item: " + item + " value: " + value);
     }
+        
+    long sel = thingStuffData.getThingStuffTypeId();
+    Global_ListBox.setSelected(lbTypes, (int) sel);
+  }
+  
+  private int getDataTypeId() {
+    int thingStuffId = Global_ListBox.getSelectedValue(lbTypes);
+    ThingStuffTypeData type = thingStuffTypesData.getStuffTypeData(thingStuffId);
+    int typeId = type.getValueTypeId();
+    return typeId;
   }
   
   private void changeType() {
-    int thingStuffTypeId = Global_ListBox.getSelectedValue(lbTypes);
-    thingStuffData.setThingStuffTypeId(thingStuffTypeId);
+    int dataTypeId = getDataTypeId();
     drawInput();
-    resizeInput(thingStuffTypeId);
+    resizeInput(dataTypeId);
     fireChange(EventManager.THINGSTUFF_TYPECHANGE);
   }
   
-  private void resizeInput(int typeId) {
+  private void resizeInput(int dataTypeId) {
 
     int wt = tbValue.getOffsetWidth();
     int wtc = cbValue.getOffsetWidth();
     int wta = taValue.getOffsetWidth();
     int width = 0;
-    if (typeId == ThingStuffTypeData.VT_STRING) {
+    if (dataTypeId == ThingStuffTypeData.VT_STRING) {
       width = wt;
-    } else if (typeId == ThingStuffTypeData.VT_BOOLEAN) {
+    } else if (dataTypeId == ThingStuffTypeData.VT_BOOLEAN) {
       width = wtc;
-    } else if (typeId == ThingStuffTypeData.VT_DOUBLE) {
+    } else if (dataTypeId == ThingStuffTypeData.VT_DOUBLE) {
       width = wt;
-    } else if (typeId == ThingStuffTypeData.VT_INT) {
+    } else if (dataTypeId == ThingStuffTypeData.VT_INT) {
       width = wt;
-    } else if (typeId == ThingStuffTypeData.VT_STRING_LARGE) {
+    } else if (dataTypeId == ThingStuffTypeData.VT_STRING_LARGE) {
       width = wta;
-    } else if (typeId == ThingStuffTypeData.VT_STRING_CASE) {
+    } else if (dataTypeId == ThingStuffTypeData.VT_STRING_CASE) {
       width = wt;
-    } else if (typeId == ThingStuffTypeData.VT_STRING_LARGE_CASE) {
+    } else if (dataTypeId == ThingStuffTypeData.VT_STRING_LARGE_CASE) {
       width = wta;
-    } else if (typeId == ThingStuffTypeData.VT_HTML) {
+    } else if (dataTypeId == ThingStuffTypeData.VT_HTML) {
       width = wta;
-    } else if (typeId == ThingStuffTypeData.VT_URL) {
+    } else if (dataTypeId == ThingStuffTypeData.VT_URL) {
       width = wt;
-    } else if (typeId == ThingStuffTypeData.VT_EMAIL) {
+    } else if (dataTypeId == ThingStuffTypeData.VT_EMAIL) {
       width = wt;
-    } else if (typeId == ThingStuffTypeData.VT_PHONE) {
+    } else if (dataTypeId == ThingStuffTypeData.VT_PHONE) {
       width = wt;
     } else {
       width = wt;
     } 
     pInput.setWidth(width + "px");
+    System.out.println("resize: " + width);
   }
   
   private void delete() {

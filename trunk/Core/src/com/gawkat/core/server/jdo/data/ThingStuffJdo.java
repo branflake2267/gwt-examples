@@ -19,6 +19,7 @@ import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thing.ThingFilterData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffFilterData;
+import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.server.jdo.PMF;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
@@ -30,6 +31,10 @@ public class ThingStuffJdo {
   
   @Persistent
   private long thingStuffTypeId;
+  
+  // owner
+  @Persistent
+  private long thingId;
   
   // values that can be stored
   @Persistent
@@ -57,8 +62,29 @@ public class ThingStuffJdo {
   }
   
   public ThingStuffJdo(ThingStuffData thingStuffData) {
+    setData(thingStuffData);
+  }
+  
+  public void setData(ThingStuffData thingStuffData) {
     this.thingStuffId = thingStuffData.getId();
     this.thingStuffTypeId = thingStuffData.getThingStuffTypeId();
+    this.thingId = thingStuffData.getThingId();
+    this.value = thingStuffData.getValue();
+    this.valueBol = thingStuffData.getValueBol();
+    this.valueDouble = thingStuffData.getValueDouble();
+    this.valueInt = thingStuffData.getValueInt();
+    
+    if (thingStuffId > 0) {
+      this.dateUpdated = new Date();
+    } else {
+      this.dateCreated = new Date();
+    }
+  }
+  
+  public void setData(ThingStuffJdo thingStuffData) {
+    this.thingStuffId = thingStuffData.getId();
+    this.thingStuffTypeId = thingStuffData.getThingStuffTypeId();
+    this.thingId = thingStuffData.getThingId();
     this.value = thingStuffData.getValue();
     this.valueBol = thingStuffData.getValueBol();
     this.valueDouble = thingStuffData.getValueDouble();
@@ -79,6 +105,10 @@ public class ThingStuffJdo {
     return thingStuffTypeId;
   }
   
+  public long getThingId() {
+    return thingId;
+  }
+   
   public long getId() {
     return thingStuffId;
   }
@@ -110,51 +140,26 @@ public class ThingStuffJdo {
   public double getValueDouble() {
     return valueDouble;
   }
-  
-  public void save() {
-    PersistenceManager pm = PMF.get().getPersistenceManager();
-    Transaction tx = pm.currentTransaction();
-    try {
-      tx.begin();
-      pm.makePersistent(this);
-      tx.commit();
-    } finally {
-      if (tx.isActive()) {
-          tx.rollback();
-      }
-      pm.close();
-    }
+ 
+  public long getValueInt() {
+    return valueInt;
   }
   
-  /**
-   * insert thing
-   * 
-   * @param thingTypeId
-   * @param key
-   * @param secret
-   */
-  @Deprecated
-  public void save(long thingStuffId, long thingStuffTypeId, String value, boolean valueBol, double valueDouble) {
-    this.thingStuffId = thingStuffId;
-    this.thingStuffTypeId = thingStuffTypeId;
-    this.value = value;
-    this.valueBol = valueBol;
-    this.valueDouble = valueDouble;
-    this.dateCreated = new Date();
-        
+  public void save(ThingStuffData thingStuffData) {
+    setData(thingStuffData);
+    
     PersistenceManager pm = PMF.get().getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
       
       if (thingStuffId > 0) { // update
-        ThingStuffJdo thingStuff = pm.getObjectById(ThingStuffJdo.class, thingStuffId);
-        thingStuff = this;
-        pm.makePersistent(thingStuff);
-      } else { // insert
+        ThingStuffJdo update = pm.getObjectById(ThingStuffJdo.class, thingStuffId);
+        update.setData(thingStuffData);
+      } else { // insert    
         pm.makePersistent(this);
       }
-     
+      
       tx.commit();
     } finally {
       if (tx.isActive()) {
@@ -189,13 +194,13 @@ public class ThingStuffJdo {
   
   public static ThingStuffData[] query(ThingStuffFilterData filter) {
     
-    long thingStuffId = filter.thingStuffId;
+    long thingId = filter.thingId;
     
     ArrayList<ThingStuffJdo> aT = new ArrayList<ThingStuffJdo>();
 
     String qfilter = null;
-    if (filter.thingStuffId > 0) {
-      qfilter = "thingStuffId==" + thingStuffId + "";
+    if (filter.thingId > 0) {
+      qfilter = "thingId==" + thingId + "";
     }
     
     PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -238,6 +243,7 @@ public class ThingStuffJdo {
     ThingStuffData[] r = new ThingStuffData[thingJdo.length];
     for (int i=0; i < thingJdo.length; i++) {
       r[i] = new ThingStuffData(
+          thingJdo[i].thingId,
           thingJdo[i].thingStuffId, 
           thingJdo[i].thingStuffTypeId, 
           thingJdo[i].value, 
@@ -247,5 +253,75 @@ public class ThingStuffJdo {
     }
     return r;
   }
+  
+  public static boolean delete(ThingStuffData thingStuffData) {
+    
+    ThingStuffJdo ttj = new ThingStuffJdo();
+    ttj.setData(thingStuffData);
+    
+    PersistenceManager pm = PMF.get().getPersistenceManager();
+    Transaction tx = pm.currentTransaction();
+    boolean b = false;
+    try {
+      tx.begin();
 
+      ThingStuffJdo ttj2 = (ThingStuffJdo) pm.getObjectById(ThingStuffJdo.class, ttj.getId());
+      pm.deletePersistent(ttj2);
+      
+      tx.commit();
+      b = true;
+    } catch (Exception e) {
+      e.printStackTrace();
+      b = false;
+    } finally {
+      if (tx.isActive()) {
+        tx.rollback();
+        b = false;
+      }
+      pm.close();
+    }
+    
+    return b;
+  }
+
+  public static boolean delete(ThingData thingData) {
+    
+    if (thingData == null) {
+      return false;
+    }
+    
+    long thingId = thingData.getThingId();
+    
+    if (thingId == 0) {
+      return false;
+    }
+    
+    String qfilter = "thingId==" + thingId + "";
+
+    PersistenceManager pm = PMF.get().getPersistenceManager();
+    Transaction tx = pm.currentTransaction();
+    try {
+      tx.begin();
+
+      Extent<ThingStuffJdo> e = pm.getExtent(ThingStuffJdo.class, true);
+      Query q = pm.newQuery(e, qfilter);
+      q.execute();
+      
+      Collection<ThingStuffJdo> c = (Collection<ThingStuffJdo>) q.execute();
+
+      // delete all
+      pm.deletePersistentAll(c);
+
+      tx.commit();
+      q.closeAll();
+    } finally {
+      if (tx.isActive()) {
+        tx.rollback();
+      }
+      pm.close();
+    }
+    
+    return true;
+  }
+  
 }

@@ -3,11 +3,15 @@ package com.gawkat.core.client.account.thingstuff;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ThingStuffData implements IsSerializable {
-
-  private long thingStuffId = 0;
   
+  private long thingStuffId = 0;
+
+  // what type of data is it?
   private long thingStuffTypeId = 0;
-    
+
+  // owner
+  private long thingId = 0;
+  
   // values that can be stored
   private String value = null;
   private boolean valueBol = false;
@@ -20,7 +24,9 @@ public class ThingStuffData implements IsSerializable {
   public ThingStuffData() {
   }
   
-  public ThingStuffData(long thingStuffId, long thingStuffTypeId, String value, boolean valueBol, double valueDouble, long valueInt) {
+  public ThingStuffData(long thingId, long thingStuffId, 
+      long thingStuffTypeId, String value, boolean valueBol, double valueDouble, long valueInt) {
+    this.thingId = thingId;
     this.thingStuffId = thingStuffId;
     this.thingStuffTypeId = thingStuffTypeId;
     this.value = value;
@@ -31,6 +37,14 @@ public class ThingStuffData implements IsSerializable {
   
   public long getId() {
     return thingStuffId;
+  }
+  
+  public long getThingId() {
+    return thingId;
+  }
+  
+  public void setThingId(long thingId) {
+    this.thingId = thingId;
   }
   
   public long getThingStuffTypeId() {

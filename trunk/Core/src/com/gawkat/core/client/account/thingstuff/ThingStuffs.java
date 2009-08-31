@@ -163,7 +163,7 @@ public class ThingStuffs extends Composite implements ClickHandler {
   private ThingStuff addStuff(int i, ThingStuffData thingStuffData) {
     ThingStuff t = new ThingStuff(cp);
     pListStuff.add(t);
-    t.setData(thingStuffTypesData, thingStuffData);
+    t.setData(thingData, thingStuffTypesData, thingStuffData);
     widths = Row.getMaxWidths(widths, t.getRow().getWidths());
     t.addChangeHandler(new ChangeHandler() {
       public void onChange(ChangeEvent event) {
@@ -218,6 +218,7 @@ public class ThingStuffs extends Composite implements ClickHandler {
     
     // TODO use this later
     ThingStuffFilterData filter = new ThingStuffFilterData();
+    filter.thingId = thingData.getThingId();
     
     rpc.getThingStuffData(cp.getAccessToken(), filter, new AsyncCallback<ThingStuffsData>() {
       public void onSuccess(ThingStuffsData thingStuffsData) {
@@ -239,6 +240,7 @@ public class ThingStuffs extends Composite implements ClickHandler {
   
     // TODO
     ThingStuffFilterData filter = new ThingStuffFilterData();
+    filter.thingId = thingData.getThingId();
 
     rpc.saveThingStuffData(cp.getAccessToken(), filter, thingStuffData, new AsyncCallback<ThingStuffsData>() {
       public void onSuccess(ThingStuffsData thingStuffsData) {
