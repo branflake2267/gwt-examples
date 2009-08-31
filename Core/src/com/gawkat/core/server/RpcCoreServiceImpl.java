@@ -195,7 +195,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
     Db_ThingStuff db = new Db_ThingStuff(sp);
     ThingStuffsData r = db.saveThingStuffData(accessToken, filter, thingStuffData);
     sp.end();
-    return null;
+    return r;
   }
   
   public boolean deleteThingStuffData(OAuthTokenData accessToken, long thingStuffId) {

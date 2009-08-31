@@ -44,6 +44,7 @@ public class ThingEdit extends Composite {
   }
   
   private void drawStuff() {
+    pStuff.clear();
     ThingStuffs wStuff = new ThingStuffs(cp);
     pStuff.add(wStuff);
     wStuff.setData(thingData);
@@ -51,6 +52,7 @@ public class ThingEdit extends Composite {
   }
   
   private void drawTop() {
+    pTop.clear();
     ThingTypeData thingTypeData = thingTypesData.getThingType(thingData.getThingTypeId());
     
     pTop.add(new HTML("Type: " + thingTypeData.getName()));

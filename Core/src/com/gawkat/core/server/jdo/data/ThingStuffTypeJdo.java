@@ -42,10 +42,16 @@ public class ThingStuffTypeJdo {
   public ThingStuffTypeJdo() {
   }
   
-  public ThingStuffTypeJdo(ThingStuffTypeData thingStuffTypeData) {
-    this.stuffTypeId = thingStuffTypeData.getId();
+  public void setData(ThingStuffTypeData thingStuffTypeData) {
+    this.stuffTypeId = thingStuffTypeData.getStuffTypeId();
     this.name = thingStuffTypeData.getName();
     this.valueTypeId = thingStuffTypeData.getValueTypeId();
+    
+    if (stuffTypeId > 0) {
+      dateUpdated = new Date();
+    } else {
+      dateCreated = new Date();
+    }
   }
   
   public long getId() {
@@ -69,20 +75,20 @@ public class ThingStuffTypeJdo {
    * 
    * @param name
    */
-  public void insert() {
-    this.dateCreated = new Date();
-    
-    // don't insert if name already exists
-    ThingStuffTypeJdo[] tt = query(name);
-    if (tt != null && tt.length > 0) {
-      return;
-    }
+  public void save(ThingStuffTypeData thingStuffTypeData) {
+    setData(thingStuffTypeData);
     
     PersistenceManager pm = PMF.get().getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
-      pm.makePersistent(this);
+      if (stuffTypeId > 0) {
+        ThingStuffTypeJdo update = pm.getObjectById(ThingStuffTypeJdo.class, stuffTypeId);
+        update.setData(thingStuffTypeData);
+      } else {
+        pm.makePersistent(this);
+      }
+      
       tx.commit();
     } finally {
       if (tx.isActive()) {
@@ -151,7 +157,7 @@ public class ThingStuffTypeJdo {
       // TODO build filter
       Extent<ThingStuffTypeJdo> e = pm.getExtent(ThingStuffTypeJdo.class, true);
       Query q = pm.newQuery(e);
-      q.setRange(0, 10); // TODO - finish range
+      //q.setRange(0, 10); // TODO - finish range
       q.execute();
       
       Collection<ThingStuffTypeJdo> c = (Collection<ThingStuffTypeJdo>) q.execute();
@@ -182,7 +188,8 @@ public class ThingStuffTypeJdo {
   
   public static boolean delete(ThingStuffTypeData thingStuffTypeData) {
     
-    ThingStuffTypeJdo ttj = new ThingStuffTypeJdo(thingStuffTypeData);
+    ThingStuffTypeJdo ttj = new ThingStuffTypeJdo();
+    ttj.setData(thingStuffTypeData);
     
     PersistenceManager pm = PMF.get().getPersistenceManager();
     Transaction tx = pm.currentTransaction();

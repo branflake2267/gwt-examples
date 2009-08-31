@@ -175,7 +175,7 @@ public class ThingTypeJdo {
       // TODO build filter
       Extent<ThingTypeJdo> e = pm.getExtent(ThingTypeJdo.class, true);
       Query q = pm.newQuery(e);
-      q.setRange(0, 10); // TODO - finish range
+      //q.setRange(0, 10); // TODO - finish range
       q.execute();
       
       Collection<ThingTypeJdo> c = (Collection<ThingTypeJdo>) q.execute();

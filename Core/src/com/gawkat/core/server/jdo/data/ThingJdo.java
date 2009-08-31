@@ -17,6 +17,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thing.ThingFilterData;
+import com.gawkat.core.client.account.thingstuff.ThingStuffData;
 import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.server.jdo.PMF;
 
@@ -50,6 +51,18 @@ public class ThingJdo {
   public ThingJdo() {
   }
   
+  public void setData(ThingData thingData) {
+    this.thingId = thingData.getThingId();
+    this.thingTypeId = thingData.getThingTypeId();
+    this.key = thingData.getKey();
+    //this.secret = thingData.getSecret(); // TODO?
+    if (thingId > 0) {
+      dateUpdated = new Date();
+    } else {
+      dateCreated = new Date();
+    }
+  }
+  
   /**
    * insert thing
    * 
@@ -66,8 +79,6 @@ public class ThingJdo {
     // do not insert duplicate
     ThingJdo[] tt = ThingJdo.query(thingTypeId, key);
     if (tt != null && tt.length > 0) {
-      //ThingJdo rr = this; // TODO make this instance = tt
-      //rr = tt[0];
       return;
     }
     
@@ -235,6 +246,55 @@ public class ThingJdo {
     return r;
   }
 
+  // TODO - delete child objects
+  public static boolean delete(ThingData thingData) {
+    
+    if (thingData == null) {
+      return false;
+    }
+    
+    if (thingData.getThingId() == 0) {
+      return false;
+    }
+    
+    deleteSub(thingData);
+    
+    ThingJdo ttj = new ThingJdo();
+    ttj.setData(thingData);
+    
+    PersistenceManager pm = PMF.get().getPersistenceManager();
+    Transaction tx = pm.currentTransaction();
+    boolean b = false;
+    try {
+      tx.begin();
 
+      ThingJdo ttj2 = (ThingJdo) pm.getObjectById(ThingJdo.class, ttj.getThingId());
+      pm.deletePersistent(ttj2);
+            
+      tx.commit();
+      b = true;
+    } catch (Exception e) {
+      e.printStackTrace();
+      b = false;
+    } finally {
+      if (tx.isActive()) {
+        tx.rollback();
+        b = false;
+      }
+      pm.close();
+    }
+    
+    return b;
+  }
+
+  /**
+   * delete other data too
+   * 
+   * @param thingData
+   */
+  private static void deleteSub(ThingData thingData) {
+    // stuff data
+    ThingStuffJdo.delete(thingData);
+  }
   
 }

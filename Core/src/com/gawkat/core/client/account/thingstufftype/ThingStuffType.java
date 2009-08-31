@@ -147,7 +147,7 @@ public class ThingStuffType extends Composite implements ChangeHandler, ClickHan
       public void onChange(ChangeEvent event) {
         DeleteDialog dd = (DeleteDialog) event.getSource();
         int changeEvent = dd.getChangeEvent();
-        if (changeEvent == EventManager.DELETE_YES && thingStuffTypeData.getId() > 0) {
+        if (changeEvent == EventManager.DELETE_YES && thingStuffTypeData.getStuffTypeId() > 0) {
           deleteRpc();
         } else {
           deleteIt(true);

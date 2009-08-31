@@ -40,14 +40,12 @@ public class Db_ThingStuffType {
   }
 
   private void save(ThingStuffTypeData thingStuffTypeData) {
-    ThingStuffTypeJdo j = new ThingStuffTypeJdo(thingStuffTypeData);
-    j.insert();
+    ThingStuffTypeJdo j = new ThingStuffTypeJdo();
+    j.save(thingStuffTypeData);
   }
 
   public boolean delete(OAuthTokenData accessToken, ThingStuffTypeData thingStuffTypeData) {
-    
     boolean b = ThingStuffTypeJdo.delete(thingStuffTypeData);
-    
     return b;
   }
   
