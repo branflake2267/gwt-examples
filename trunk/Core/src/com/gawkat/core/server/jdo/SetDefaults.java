@@ -4,6 +4,7 @@ import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.oauth.Sha1;
 import com.gawkat.core.server.ServerPersistence;
 import com.gawkat.core.server.jdo.data.ThingJdo;
+import com.gawkat.core.server.jdo.data.ThingTypeJdo;
 
 public class SetDefaults {
 
@@ -36,19 +37,45 @@ public class SetDefaults {
    * set default things
    */
   private void setThingTypes() {
-    /*
+    
+    ServerPersistence sp = new ServerPersistence();
+    
+    ThingTypeData at = new ThingTypeData();
+    at.setName("Application");
+    
+    ThingTypeData bt = new ThingTypeData();
+    bt.setName("User");
+    
+    ThingTypeData ct = new ThingTypeData();
+    ct.setName("Group");
+    
+    ThingTypeData dt = new ThingTypeData();
+    dt.setName("Widget");
+    
+    ThingTypeData et = new ThingTypeData();
+    et.setName("Permission");
+    
+    
     ThingTypeJdo a = new ThingTypeJdo();
-    a.insert("Application"); // id:1
+    a.setData(at);
+    a.insert();
     
     ThingTypeJdo b = new ThingTypeJdo();
-    b.insert("User"); // id:2
+    b.setData(bt);
+    b.insert();
     
     ThingTypeJdo c = new ThingTypeJdo();
-    c.insert("Group"); // id:3
+    c.setData(ct);
+    c.insert();
     
     ThingTypeJdo d = new ThingTypeJdo();
-    d.insert("Widget"); // id:4
-    */
+    d.setData(dt);
+    d.insert();
+    
+    ThingTypeJdo e = new ThingTypeJdo();
+    e.setData(et);
+    e.insert();
+    
   }
   
   /**

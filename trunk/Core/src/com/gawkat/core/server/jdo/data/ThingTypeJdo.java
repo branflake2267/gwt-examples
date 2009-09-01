@@ -58,6 +58,11 @@ public class ThingTypeJdo {
     this.name = thingTypeData.getName();
   }
 
+  public void setData(ThingTypeData thingTypeData) {
+    this.thingTypeId = thingTypeData.getId();
+    this.name = thingTypeData.getName();
+  }
+  
   /**
    * get Identity
    * 
