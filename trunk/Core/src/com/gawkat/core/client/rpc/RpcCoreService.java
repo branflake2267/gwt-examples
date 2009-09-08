@@ -4,6 +4,8 @@ import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thing.ThingFilterData;
 import com.gawkat.core.client.account.thing.ThingsData;
+import com.gawkat.core.client.account.thing.hierarchy.HierarchyData;
+import com.gawkat.core.client.account.thing.hierarchy.HierarchyFilterData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffFilterData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffsData;
@@ -52,4 +54,6 @@ public interface RpcCoreService extends RemoteService {
   public ThingStuffsData getThingStuffData(OAuthTokenData accessToken, ThingStuffFilterData filter);
   public ThingStuffsData saveThingStuffData(OAuthTokenData accessToken, ThingStuffFilterData filter, ThingStuffData[] thingStuffData);
   public boolean deleteThingStuffData(OAuthTokenData accessToken, long thingStuffId);
+  
+  public HierarchyData getHierarchy(OAuthTokenData accessToken, HierarchyFilterData filter);
 }
