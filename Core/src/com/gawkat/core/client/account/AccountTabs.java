@@ -3,6 +3,7 @@ package com.gawkat.core.client.account;
 import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.account.permission.ThingPermissions;
 import com.gawkat.core.client.account.thing.Things;
+import com.gawkat.core.client.account.thing.hierarchy.HierarchyView;
 import com.gawkat.core.client.account.thingstufftype.ThingStuffTypes;
 import com.gawkat.core.client.account.thingtype.ThingTypes;
 import com.gawkat.core.client.global.QueryString;
@@ -28,6 +29,7 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
   private ThingTypes wTypes = null;
   private Things wThings = null;
   private ThingStuffTypes wStuffTypes = null;
+  private HierarchyView wHierarchyView = null;
   
   public AccountTabs(ClientPersistence cp) {
     this.cp = cp;
@@ -36,11 +38,13 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
     wTypes = new ThingTypes(cp);
     wStuffTypes = new ThingStuffTypes(cp);
     wThings = new Things(cp);
+    wHierarchyView = new HierarchyView(cp);
     
     pWidget.add(wProfile, "My Profile");
     pWidget.add(wTypes, "Thing Types");
     pWidget.add(wStuffTypes, "Thing Stuff Types");
     pWidget.add(wThings, "Things");
+    pWidget.add(wHierarchyView, "Hierarchy");
 
     initWidget(pWidget);
     
@@ -69,7 +73,9 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
       pWidget.selectTab(2);
     } else if (ht.equals("account_Things") == true) {
       pWidget.selectTab(3);
-    } 
+    } else if (ht.equals("account_ThingsHierarchy") == true) {
+      pWidget.selectTab(4);
+    }
     
   }
   
@@ -88,6 +94,10 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
   private void drawThings() {
     wThings.draw();
   }
+  
+  private void drawThingsHierarchy() {
+    wHierarchyView.draw();
+  }
  
   public void onBeforeSelection(BeforeSelectionEvent<Integer> event) {
     
@@ -101,7 +111,10 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
       drawStuffType();
     } else if (tab == 3) {
       drawThings();
+    } else if (tab == 4) {
+      drawThingsHierarchy();
     } 
+    
     
   }
 
@@ -118,6 +131,8 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
       History.newItem("account_StuffType");
     } else if (tab == 3) {
       History.newItem("account_Things");
+    } else if (tab == 4) {
+      History.newItem("account_ThingsHierarchy");
     } 
     
   }

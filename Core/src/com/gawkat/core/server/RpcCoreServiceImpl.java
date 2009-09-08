@@ -4,6 +4,8 @@ import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thing.ThingFilterData;
 import com.gawkat.core.client.account.thing.ThingsData;
+import com.gawkat.core.client.account.thing.hierarchy.HierarchyData;
+import com.gawkat.core.client.account.thing.hierarchy.HierarchyFilterData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffFilterData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffsData;
@@ -15,6 +17,7 @@ import com.gawkat.core.client.account.thingtype.ThingTypeFilterData;
 import com.gawkat.core.client.account.thingtype.ThingTypesData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.client.rpc.RpcCoreService;
+import com.gawkat.core.server.db.Db_Hierarchy;
 import com.gawkat.core.server.db.Db_Thing;
 import com.gawkat.core.server.db.Db_ThingStuff;
 import com.gawkat.core.server.db.Db_ThingStuffType;
@@ -202,6 +205,14 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
     sp.start(getThreadLocalRequest());
     Db_ThingStuff db = new Db_ThingStuff(sp);
     boolean r = db.deleteThingStuffData(accessToken, thingStuffId);
+    sp.end();
+    return r;
+  }
+  
+  public HierarchyData getHierarchy(OAuthTokenData accessToken, HierarchyFilterData filter) {
+    sp.start(getThreadLocalRequest());
+    Db_Hierarchy db = new Db_Hierarchy(sp);
+    HierarchyData r = db.getHierarchy(accessToken, filter);
     sp.end();
     return r;
   }
