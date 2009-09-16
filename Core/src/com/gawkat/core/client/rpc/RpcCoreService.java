@@ -1,5 +1,6 @@
 package com.gawkat.core.client.rpc;
 
+import com.gawkat.core.client.account.ChangePasswordData;
 import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thing.ThingFilterData;
@@ -16,7 +17,6 @@ import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.account.thingtype.ThingTypeFilterData;
 import com.gawkat.core.client.account.thingtype.ThingTypesData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
-import com.gawkat.core.server.db.Db_ThingStuff;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -32,6 +32,8 @@ public interface RpcCoreService extends RemoteService {
   public UserData doesUserNameExist(UserData userData);
   
   public UserData forgotPassword(UserData userData);
+  
+  public boolean changePassword(OAuthTokenData accessToken, ChangePasswordData changePassswordData);
   
   public OAuthTokenData getUserAccessToken(OAuthTokenData appAccessToken);
   

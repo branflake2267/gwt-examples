@@ -51,30 +51,17 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
  
   // key container
   private VerticalPanel pKey = new VerticalPanel();
-  
-  // when notification is needed for secret error
-  private FlowPanel pSecretError = new FlowPanel();
-  
-  // secret container
-  private VerticalPanel pSecret = new VerticalPanel();
+
+  // Key (username)
+  private TextBox tbK1 = new TextBox();
+  private TextBox tbK2 = new TextBox();
   
   // key character count
   private FlowPanel pKeyCount1 = new FlowPanel();
   private FlowPanel pKeyCount2 = new FlowPanel();
   
-  // secret character count
-  private FlowPanel pSecretCount1 = new FlowPanel();
-  private FlowPanel pSecretCount2 = new FlowPanel();
-  
-  // inputs
-  // Key (username)
-  private TextBox tbK1 = new TextBox();
-  private TextBox tbK2 = new TextBox();
-  
-  // Secret (password)
-  private TextBox tbS1 = new TextBox();
-  private TextBox tbS2 = new TextBox();
-  
+  private PasswordWidget wSecret = new PasswordWidget();
+
   // buttons
   private PushButton bCreateAccount = new PushButton("Create Account");
 
@@ -117,12 +104,10 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
 
     tbK1.addChangeHandler(this);
     tbK2.addChangeHandler(this);
-    tbS1.addChangeHandler(this);
-    tbS2.addChangeHandler(this);
+
     tbK1.addKeyboardListener(this);
     tbK2.addKeyboardListener(this);
-    tbS1.addKeyboardListener(this);
-    tbS2.addKeyboardListener(this);
+
       
     // init rpc
     rpc = RpcCore.initRpc();
@@ -131,7 +116,7 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
     pWidget.setStyleName("CreateUserAccount");
     pNotification.setWidth("100%");
     pNotification.setStyleName("core-CreateUserAccount-Notification");
-    pSecretError.addStyleName("core-CreateUserAccount-Error");
+    
     pKeyError.addStyleName("core-CreateUserAccount-Error");
     pAcceptError.addStyleName("core-CreateUserAccount-Error");
   }
@@ -143,8 +128,7 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
     
     tbK1.setWidth("300px");
     tbK2.setWidth("300px");
-    tbS1.setWidth("300px");
-    tbS2.setWidth("300px");
+
     taTerms.setWidth("100%");
     
     taTerms.setEnabled(false);
@@ -152,15 +136,10 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
     String un = cp.getInputLabel_ConsumerKey();
     Label lk1 = new Label(un);
     Label lk2 = new Label("Verify " + un);
-    
-    Label ls1 = new Label("Password");
-    Label ls2 = new Label("Verify Password");
-    
+        
     pKeyCount1.add(new HTML("0"));
     pKeyCount2.add(new HTML("0"));
-    pSecretCount1.add(new HTML("0"));
-    pSecretCount2.add(new HTML("0"));
-    
+
     // control buttons
     HorizontalPanel hpBottom = new HorizontalPanel();
     hpBottom.add(new HTML("&nbsp;&nbsp;"));
@@ -180,35 +159,16 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
     hpK2.add(tbK2);
     hpK2.add(pKeyCount2);
     
-    // secret 1
-    HorizontalPanel hpS1 = new HorizontalPanel();
-    hpS1.setSpacing(4);
-    hpS1.add(ls1);
-    hpS1.add(tbS1);
-    hpS1.add(pSecretCount1);
-    
-    // secret 2
-    HorizontalPanel hpS2 = new HorizontalPanel();
-    hpS2.setSpacing(4);
-    hpS2.add(ls2);
-    hpS2.add(tbS2);
-    hpS2.add(pSecretCount2);
-    
     // key container
     pKey.add(pKeyError);
     pKey.add(hpK1);
     pKey.add(hpK2);
     
-    // secret container
-    pSecret.add(pSecretError);
-    pSecret.add(hpS1);
-    pSecret.add(hpS2);
-    
     pAccept.add(pAcceptError);
     pAccept.add(cbAccept);
     
     pWidget.add(pKey);
-    pWidget.add(pSecret);
+    pWidget.add(wSecret);
     pWidget.add(new HTML("&nbsp;"));
     pWidget.add(new HTML("Terms of Use"));
     pWidget.add(taTerms); 
@@ -217,29 +177,18 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
     pWidget.add(new HTML("&nbsp;"));
     pWidget.add(hpBottom);
     
-    pKey.setStyleName("");
-    pSecret.setStyleName("");
-    
     // fields
     lk1.setStyleName("core-CreateUserAccount-Field");
     lk2.setStyleName("core-CreateUserAccount-Field");
-    ls1.setStyleName("core-CreateUserAccount-Field");
-    ls2.setStyleName("core-CreateUserAccount-Field");
-    
+
     hpK1.setCellVerticalAlignment(lk1, VerticalPanel.ALIGN_MIDDLE);
     hpK2.setCellVerticalAlignment(lk2, VerticalPanel.ALIGN_MIDDLE);
     hpK1.setCellVerticalAlignment(pKeyCount1, VerticalPanel.ALIGN_MIDDLE);
     hpK2.setCellVerticalAlignment(pKeyCount2, VerticalPanel.ALIGN_MIDDLE);
     
-    hpS1.setCellVerticalAlignment(ls1, VerticalPanel.ALIGN_MIDDLE);
-    hpS2.setCellVerticalAlignment(ls2, VerticalPanel.ALIGN_MIDDLE);
-    hpS1.setCellVerticalAlignment(pSecretCount1, VerticalPanel.ALIGN_MIDDLE);
-    hpS2.setCellVerticalAlignment(pSecretCount2, VerticalPanel.ALIGN_MIDDLE);
-    
     pKeyCount1.setStyleName("core-CreateUserAccount-CharCountError");
     pKeyCount2.setStyleName("core-CreateUserAccount-CharCountError");
-    pSecretCount1.setStyleName("core-CreateUserAccount-CharCountError");
-    pSecretCount2.setStyleName("core-CreateUserAccount-CharCountError");
+
   }
   
   /**
@@ -280,20 +229,7 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
     
   }
   
-  private boolean doesPasswordMatch() {
-    
-    String p1 = tbS1.getText().trim();
-    String p2 = tbS2.getText().trim();
-    
-    // TODO - no spaces in middle?
-    
-    boolean pass = false;
-    if (p1.equals(p2)) {
-      pass = true;
-    } 
-    
-    return pass;
-  }
+
   
   private void createUserStart() {
     
@@ -317,7 +253,7 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
     UserData userData = new UserData();
     userData.accessToken = cp.getAccessToken();
     userData.consumerKey = getKey(); // could be -> getKeyHash();
-    userData.consumerSecret = getPasswordHash();
+    userData.consumerSecret = wSecret.getPasswordHash();
     userData.sign();
     
     doesUserExistRpc(userData);
@@ -332,19 +268,6 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
       }
     } else {
       pKey.removeStyleName("core-CreateUserAccount-ErrorInput");
-    }
-  }
-  
-  private void drawSecretNotify(boolean bol, int error) {
-    pSecretError.clear();
-    if (bol == true) {
-      pSecret.setStyleName("core-CreateUserAccount-ErrorInput");
-      if (error > 0) {
-        pSecretError.add(new HTML(UserData.getError(error)));
-      }
-    } else {
-      pSecret.removeStyleName("core-CreateUserAccount-ErrorInput");
-      pSecretError.clear();
     }
   }
   
@@ -384,7 +307,7 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
    * @return
    */
   private String getKeyHash() {
-    String key = tbS1.getText().trim();
+    String key = wSecret.getS1();
     Sha1 sha = new Sha1();
     String hash = sha.b64_sha1(key);
     return hash;
@@ -395,27 +318,22 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
     return key;
   }
   
-  private String getPasswordHash() {
-    String password = tbS1.getText().trim();
-    Sha1 sha = new Sha1();
-    String hash = sha.b64_sha1(password);
-    return hash;
-  }
+ 
   
   private void checkForErrors() {
     
     System.out.println("check for errors"); 
     
     drawKeyNotify(false, 0);
-    drawSecretNotify(false, 0);
+    wSecret.drawSecretNotify(false, 0);
     
     // are things blank?
     String k = tbK1.getText().trim();
-    String s = tbS1.getText().trim();
+    String s = wSecret.getS1();
     
     if (k.length() < consumerKey_Len && s.length() < consumerSecret_Len) {
       drawKeyNotify(true, UserData.KEYS_SHORT);
-      drawSecretNotify(true, UserData.SECRETS_SHORT);
+      wSecret.drawSecretNotify(true, UserData.SECRETS_SHORT);
 
       return;
     }
@@ -425,7 +343,7 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
       return;
     }
     if (s.length() < consumerSecret_Len) {
-      drawSecretNotify(true, UserData.SECRETS_SHORT);
+      wSecret.drawSecretNotify(true, UserData.SECRETS_SHORT);
 
       return;
     }
@@ -437,13 +355,13 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
     boolean keysMatch = doesKeysMatch();
     
     // do passwords match
-    boolean secretsMatch = doesPasswordMatch();
+    boolean secretsMatch = wSecret.doesPasswordMatch();
     
     int error = 0;
     if (keysMatch == false && secretsMatch == false) {
       error = UserData.BOTH_DONTMATCH;
       drawKeyNotify(true, error);
-      drawSecretNotify(true, error);
+      wSecret.drawSecretNotify(true, error);
     }
     
     // keys match?
@@ -455,7 +373,7 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
     // secrets match?
     if (secretsMatch == false) {
       error = UserData.SECRETS_DONTMATCH;
-      drawSecretNotify(true, error);
+      wSecret.drawSecretNotify(true, error);
     }
     
     // accepted checked?
@@ -473,7 +391,7 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
     
     // reset the errors
     drawKeyNotify(false, 0);
-    drawSecretNotify(false, 0);
+    wSecret.drawSecretNotify(false, 0);
     drawAcceptNotify(false, 0);
     
     // we can check to see if user exists now.
@@ -493,7 +411,7 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
     UserData userData = new UserData();
     userData.accessToken = cp.getAccessToken();
     userData.consumerKey = getKey(); // could be - getKeyHash();;
-    userData.consumerSecret = getPasswordHash();
+    userData.consumerSecret = wSecret.getPasswordHash();
     userData.acceptTerms = cbAccept.getValue();
     userData.sign();
     
@@ -548,28 +466,6 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
         pKeyCount2.removeStyleName("core-CreateUserAccount-CharCountPass");
       }
       break;
-    case 3: // secret 1
-      pSecretCount1.clear();
-      pSecretCount1.add(new HTML(len));
-      if (ilen > consumerSecret_Len) {
-        pSecretCount1.removeStyleName("core-CreateUserAccount-CharCountError");
-        pSecretCount1.setStyleName("core-CreateUserAccount-CharCountPass");
-      } else {
-        pSecretCount1.setStyleName("core-CreateUserAccount-CharCountError");
-        pSecretCount1.removeStyleName("core-CreateUserAccount-CharCountPass");
-      }
-      break;
-    case 4: // secret 2
-      pSecretCount2.clear();
-      pSecretCount2.add(new HTML(len));
-      if (ilen > consumerSecret_Len) {
-        pSecretCount2.removeStyleName("core-CreateUserAccount-CharCountError");
-        pSecretCount2.setStyleName("core-CreateUserAccount-CharCountPass");
-      } else {
-        pSecretCount2.setStyleName("core-CreateUserAccount-CharCountError");
-        pSecretCount2.removeStyleName("core-CreateUserAccount-CharCountPass");
-      }
-      break;
     }
     
   }
@@ -602,11 +498,7 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
       countCharacters(1, tbK1);
     } else if (sender == tbK2) {
       countCharacters(2, tbK2);
-    } else if (sender == tbS1) {
-      countCharacters(3, tbS1);
-    } else if (sender == tbS2) {
-      countCharacters(4, tbS2);
-    }
+    } 
   }
   
   public void onKeyDown(Widget sender, char keyCode, int modifiers) {
@@ -621,11 +513,7 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
       countCharacters(1, tbK1);
     } else if (sender == tbK2) {
       countCharacters(2, tbK2);
-    } else if (sender == tbS1) {
-      countCharacters(3, tbS1);
-    } else if (sender == tbS2) {
-      countCharacters(4, tbS2);
-    }
+    } 
     
   }
   
@@ -673,17 +561,5 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
     };
     rpc.createUser(userData, callback);
   }
-
-
-
-
-
-
-
-
-
-  
-
-  
   
 }

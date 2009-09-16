@@ -5,10 +5,11 @@ import com.gawkat.core.client.Row;
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thingstufftype.ThingStuffTypeData;
 import com.gawkat.core.client.account.thingstufftype.ThingStuffTypesData;
-import com.gawkat.core.client.account.thingtype.ThingTypesData;
 import com.gawkat.core.client.global.DeleteDialog;
 import com.gawkat.core.client.global.EventManager;
 import com.gawkat.core.client.global.Global_ListBox;
+import com.gawkat.core.client.rpc.RpcCore;
+import com.gawkat.core.client.rpc.RpcCoreServiceAsync;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -17,6 +18,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -26,12 +28,14 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.server.rpc.RPC;
 
 public class ThingStuff extends Composite implements ClickHandler, ChangeHandler {
   
   private ClientPersistence cp = null;
+  
+  private RpcCoreServiceAsync rpc;
   
   private int changeEvent = 0;
   
@@ -70,6 +74,8 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     
     bDelete.addClickHandler(this);
     lbTypes.addChangeHandler(this);
+    
+    rpc = RpcCore.initRpc();
   }
   
   public void setData(ThingData thingData, ThingStuffTypesData thingStuffTypesData, ThingStuffData thingStuffData) {
@@ -364,7 +370,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
         DeleteDialog dd = (DeleteDialog) event.getSource();
         int changeEvent = dd.getChangeEvent();
         if (changeEvent == EventManager.DELETE_YES && thingStuffData.getId() > 0) {
-          deleteRpc();
+          deleteRpc(thingStuffData.getId());
         } else {
           deleteIt(true);
         }
@@ -376,7 +382,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     if (b == true) {
       this.removeFromParent();
     } else {
-      Window.alert("Wasn't able to delete thingType. Please try again?");
+      Window.alert("Wasn't able to delete it. Please try again?");
     }
   }
   
@@ -402,17 +408,23 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     }
   }
 
-
   public void onChange(ChangeEvent event) {
     Widget sender = (Widget) event.getSource();
     if (sender == lbTypes) {
       changeType();
     }
   }
-
   
-  private void deleteRpc() {
+  private void deleteRpc(long thingStuffId) {
     
+    rpc.deleteThingStuffData(cp.getAccessToken(), thingStuffId, new AsyncCallback<Boolean>() {
+      public void onSuccess(Boolean b) {
+        deleteIt(b);
+      }
+      public void onFailure(Throwable caught) {
+        // TODO
+      }
+    });
   }
  
 }

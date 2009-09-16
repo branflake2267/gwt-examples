@@ -1,5 +1,6 @@
 package com.gawkat.core.server.db;
 
+import com.gawkat.core.client.account.ChangePasswordData;
 import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
@@ -200,7 +201,18 @@ public class Db_User {
   }
   
   
-  
+  public boolean changePassword(OAuthTokenData accessToken, ChangePasswordData changePassswordData) {
+    
+    // TODO access ok?
+        
+    ThingData thingData = changePassswordData.getThingData();
+    String secretHash = changePassswordData.getSecret();
+    
+    ThingJdo t = new ThingJdo();
+    t.savePassword(thingData, secretHash);
+    
+    return true;
+  }
   
   
   

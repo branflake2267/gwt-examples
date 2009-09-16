@@ -17,8 +17,6 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thing.ThingFilterData;
-import com.gawkat.core.client.account.thingstuff.ThingStuffData;
-import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.server.jdo.PMF;
 
 
@@ -75,6 +73,16 @@ public class ThingJdo {
     }
   }
   
+  public ThingData getThingData() {
+    ThingData thingData = new ThingData();
+    thingData.setData(thingTypeId, thingId, key);
+    return thingData;
+  }
+  
+  public void setSecret(String secret) {
+    this.secret = secret;
+  }
+  
   /**
    * insert thing
    * 
@@ -120,6 +128,34 @@ public class ThingJdo {
       if (thingId > 0) { // update
         ThingJdo update = pm.getObjectById(ThingJdo.class, thingId);
         update.setData(thingData);
+      } else { // insert    
+        pm.makePersistent(this);
+      }
+      tx.commit();
+      b = true;
+    } finally {
+      if (tx.isActive()) {
+        tx.rollback();
+        b = false;
+      }
+      pm.close();
+    }
+
+    return b;
+  }
+  
+  public boolean savePassword(ThingData thingData, String secretHash) {
+    setData(thingData);
+
+    boolean b = false;
+    PersistenceManager pm = PMF.get().getPersistenceManager();
+    Transaction tx = pm.currentTransaction();
+    try {
+      tx.begin();
+
+      if (thingId > 0) { // update
+        ThingJdo update = pm.getObjectById(ThingJdo.class, thingId);
+        update.setSecret(secretHash);
       } else { // insert    
         pm.makePersistent(this);
       }

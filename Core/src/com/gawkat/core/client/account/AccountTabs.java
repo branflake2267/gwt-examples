@@ -1,7 +1,6 @@
 package com.gawkat.core.client.account;
 
 import com.gawkat.core.client.ClientPersistence;
-import com.gawkat.core.client.account.permission.ThingPermissions;
 import com.gawkat.core.client.account.thing.Things;
 import com.gawkat.core.client.account.thing.hierarchy.HierarchyView;
 import com.gawkat.core.client.account.thingstufftype.ThingStuffTypes;

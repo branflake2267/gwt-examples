@@ -1,6 +1,5 @@
 package com.gawkat.core.client.account.thing;
 
-import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.account.thingtype.ThingTypesData;
 import com.google.gwt.user.client.rpc.IsSerializable;
 

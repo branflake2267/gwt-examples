@@ -39,6 +39,10 @@ public class ThingStuffData implements IsSerializable {
     return thingStuffId;
   }
   
+  public void setId(long thingStuffId) {
+    this.thingStuffId = thingStuffId;
+  }
+  
   public long getThingId() {
     return thingId;
   }

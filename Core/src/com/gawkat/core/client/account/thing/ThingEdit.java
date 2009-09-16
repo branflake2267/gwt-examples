@@ -1,10 +1,12 @@
 package com.gawkat.core.client.account.thing;
 
 import com.gawkat.core.client.ClientPersistence;
+import com.gawkat.core.client.account.ChangePassword;
 import com.gawkat.core.client.account.thingstuff.ThingStuffs;
-import com.gawkat.core.client.account.thingstufftype.ThingStuffTypes;
 import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.account.thingtype.ThingTypesData;
+import com.gawkat.core.client.rpc.RpcCore;
+import com.gawkat.core.client.rpc.RpcCoreServiceAsync;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Composite;
@@ -19,6 +21,8 @@ import com.google.gwt.user.client.ui.Widget;
 public class ThingEdit extends Composite implements ClickHandler {
   
   private ClientPersistence cp = null;
+  
+  private RpcCoreServiceAsync rpc = null;
   
   private VerticalPanel pWidget = new VerticalPanel();
   
@@ -46,6 +50,8 @@ public class ThingEdit extends Composite implements ClickHandler {
     initWidget(pWidget);
     
     bChangePassword.addClickHandler(this);
+    
+    rpc = RpcCore.initRpc();
   }
   
   public void setData(ThingData thingData, ThingTypesData thingTypesData) {
@@ -96,7 +102,9 @@ public class ThingEdit extends Composite implements ClickHandler {
   }
   
   private void changePassword() {
-    // TODO
+    ChangePassword p = new ChangePassword(cp);
+    p.draw(thingData);
+    p.center();
   }
   
   public void save() {
@@ -107,6 +115,8 @@ public class ThingEdit extends Composite implements ClickHandler {
     wStuff.clear();
   }
 
+
+  
   public void onClick(ClickEvent event) {
     
     Widget sender = (Widget) event.getSource();
@@ -116,5 +126,7 @@ public class ThingEdit extends Composite implements ClickHandler {
     }
     
   }
+  
+
 
 }

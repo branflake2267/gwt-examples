@@ -1,6 +1,5 @@
 package com.gawkat.core.client.account.thing.hierarchy;
 
-import com.gawkat.core.client.account.thingset.ThingSetOfFilterData;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class HierarchyFilterData implements IsSerializable {
