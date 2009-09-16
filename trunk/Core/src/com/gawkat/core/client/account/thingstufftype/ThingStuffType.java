@@ -2,7 +2,6 @@ package com.gawkat.core.client.account.thingstufftype;
 
 import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.Row;
-import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.global.DeleteDialog;
 import com.gawkat.core.client.global.EventManager;
 import com.gawkat.core.client.global.Global_ListBox;

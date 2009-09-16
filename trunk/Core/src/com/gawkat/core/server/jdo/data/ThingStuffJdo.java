@@ -16,10 +16,8 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.gawkat.core.client.account.thing.ThingData;
-import com.gawkat.core.client.account.thing.ThingFilterData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffFilterData;
-import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.server.jdo.PMF;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
@@ -252,6 +250,19 @@ public class ThingStuffJdo {
           thingJdo[i].valueInt);
     }
     return r;
+  }
+  
+  public static boolean delete(long thingStuffId) {
+    if (thingStuffId == 0) {
+      return false;
+    }
+    
+    ThingStuffData thingStuffData = new ThingStuffData();
+    thingStuffData.setId(thingStuffId);
+    
+    boolean b = delete(thingStuffData);
+    
+    return b;
   }
   
   public static boolean delete(ThingStuffData thingStuffData) {

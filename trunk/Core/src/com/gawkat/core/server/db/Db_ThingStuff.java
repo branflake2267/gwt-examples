@@ -47,8 +47,9 @@ public class Db_ThingStuff {
   }
 
   public boolean deleteThingStuffData(OAuthTokenData accessToken, long thingStuffId) {
-    
-    return false;
+    ThingStuffJdo db = new ThingStuffJdo();
+    boolean b = db.delete(thingStuffId);
+    return b;
   }
   
 }

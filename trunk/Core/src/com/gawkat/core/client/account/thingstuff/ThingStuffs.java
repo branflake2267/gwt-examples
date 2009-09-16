@@ -3,13 +3,10 @@ package com.gawkat.core.client.account.thingstuff;
 import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.Row;
 import com.gawkat.core.client.account.thing.ThingData;
-import com.gawkat.core.client.account.thingstufftype.ThingStuffType;
-import com.gawkat.core.client.account.thingstufftype.ThingStuffTypeData;
-import com.gawkat.core.client.account.thingstufftype.ThingStuffTypeFilterData;
-import com.gawkat.core.client.account.thingstufftype.ThingStuffTypes;
 import com.gawkat.core.client.account.thingstufftype.ThingStuffTypesData;
 import com.gawkat.core.client.global.EventManager;
 import com.gawkat.core.client.global.LoadingWidget;
+import com.gawkat.core.client.global.Style;
 import com.gawkat.core.client.rpc.RpcCore;
 import com.gawkat.core.client.rpc.RpcCoreServiceAsync;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -66,6 +63,11 @@ public class ThingStuffs extends Composite implements ClickHandler {
     
     bAdd.addClickHandler(this);
     bSave.addClickHandler(this);
+    
+    // defaults
+    bSave.setVisible(false);
+    
+    pWidget.setStyleName("core-Account-ThingStuffs");
   }
   
   /**
@@ -173,6 +175,9 @@ public class ThingStuffs extends Composite implements ClickHandler {
         }
       }
     });
+    String style = Style.getRowStyle(i);
+    t.addStyleName(style);
+    
     return t;
   }
   

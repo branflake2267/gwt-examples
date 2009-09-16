@@ -2,7 +2,6 @@ package com.gawkat.core.client.account.thing;
 
 import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.Row;
-import com.gawkat.core.client.account.thingtype.ThingType;
 import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.account.thingtype.ThingTypesData;
 import com.gawkat.core.client.global.EventManager;

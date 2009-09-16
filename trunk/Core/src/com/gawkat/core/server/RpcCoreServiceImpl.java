@@ -1,5 +1,6 @@
 package com.gawkat.core.server;
 
+import com.gawkat.core.client.account.ChangePasswordData;
 import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thing.ThingFilterData;
@@ -25,7 +26,6 @@ import com.gawkat.core.server.db.Db_ThingType;
 import com.gawkat.core.server.db.Db_User;
 import com.gawkat.core.server.db.oauth.OAuthServer;
 import com.gawkat.core.server.jdo.SetDefaults;
-import com.gawkat.core.server.jdo.data.ThingStuffJdo;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 @SuppressWarnings("serial")
@@ -216,5 +216,12 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
     sp.end();
     return r;
   }
-  
+
+  public boolean changePassword(OAuthTokenData accessToken, ChangePasswordData changePassswordData) {
+    sp.start(getThreadLocalRequest());
+    Db_User db = new Db_User(sp);
+    boolean r = db.changePassword(accessToken, changePassswordData);
+    sp.end();
+    return r;
+  }
 }

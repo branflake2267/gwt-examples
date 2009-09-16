@@ -1,5 +1,6 @@
 package com.gawkat.core.client.rpc;
 
+import com.gawkat.core.client.account.ChangePasswordData;
 import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thing.ThingFilterData;
@@ -29,6 +30,8 @@ public interface RpcCoreServiceAsync {
   public void doesUserNameExist(UserData userData, AsyncCallback<UserData> callback);
   
   public void forgotPassword(UserData userData, AsyncCallback<UserData> callback);
+  
+  public void changePassword(OAuthTokenData accessToken, ChangePasswordData changePassswordData, AsyncCallback<Boolean> callback);
   
   public void getUserAccessToken(OAuthTokenData appAccessToken, AsyncCallback<OAuthTokenData> callback);
   
