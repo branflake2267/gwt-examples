@@ -130,6 +130,11 @@
   padding: 4px;
 }
 
+.core-Account-ThingStuffs {
+  padding: 4px;
+  border: 1px solid #aaa;
+}
+
 .core-row-top {
   font-weight: bold;
   background-color: #D1D1D1;
