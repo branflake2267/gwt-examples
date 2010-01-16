@@ -1,0 +1,159 @@
+
+.test1 {
+	border:1px solid #FF0000;
+}
+.test2 {
+	border:1px solid #FFFF00;
+}
+.test3 {
+	border:1px solid #00FF00;	
+}
+.test4 {
+	border:1px solid #000000;
+}
+.test5 {
+	border:1px solid grey;
+}
+.test6 {
+	border:1px solid #0000FF;
+}
+
+
+.gwt-TextBox {
+  border: 1px solid #66B3FF;
+}
+ 
+.gwt-PasswordTextBox {
+  border: 1px solid #66B3FF;
+}
+
+.gwt-TextBox-readonly {
+  color: #888;
+}
+
+.gwt-CheckBox { 
+}
+.gwt-CheckBox-disabled {
+  color: #888;
+}
+
+
+
+
+.core-loadingimage {
+}
+
+.core-Notification {
+  margin-top: 2px;
+  margin-bottom: 2px;
+  padding: 3px;
+  font-weight: bold;
+  color: #805506;
+  border: 1px solid #aaa;
+  background-color: #F8FAB9;
+}
+
+/* login ui widget */
+.core-login-ui {
+  font-size: 90%;
+  width: 300px;
+  padding: 3px;
+  padding-right: 6px;
+}
+.core-login-ui-options a {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.core-login-ui-options {
+  background: white;
+  padding: 4px;
+}
+.core-login-ui-inputconsumerkey {
+  width: 120px;
+  margin-right: 3px;
+}
+.core-login-ui-inputconsumersecret {
+  width: 120px;
+  margin-right: 3px;
+}
+.core-login-ui-inputoptions {
+}
+.core-login-ui-inputoptions a {
+  font-size: 89%;
+}
+.core-login-ui-inputlabel {
+  color: #AAA;
+}
+
+
+/* create account widget*/
+.core-CreateUserAccount {
+  padding: 7px;
+}
+.core-CreateUserAccount-Notification {
+  margin-top: 2px;
+  margin-bottom: 2px;
+  font-weight: bold;
+  color: #805506;
+  border: 1px solid #AAA;
+  background-color: #F8FAB9;
+}
+.core-CreateUserAccount-Error {
+  color: red;
+}
+.core-CreateUserAccount-Field {
+  width: 125px;   
+  font-weight: bold;
+}
+.core-CreateUserAccount-CharCountError {
+  color: #FF0000;
+}
+.core-CreateUserAccount-CharCountPass {
+  color: #00FF00;
+}
+.core-CreateUserAccount-ErrorInput {
+  border: 1px solid #FF0000;
+  margin: 2px;
+  padding: 2px;
+}
+
+.core-Profile {
+  padding: 7px;
+}
+
+
+.core-Account-Menu {
+  padding: 4px;
+}
+.core-Account-Breadcrumbs {
+  padding: 4px;
+}
+
+.core-Account-ThingStuffs {
+  padding: 4px;
+  border: 1px solid #aaa;
+}
+
+.core-row-top {
+  font-weight: bold;
+  background-color: #D1D1D1;
+}
+.core-row-cell {
+	padding-left: 3px;
+	padding-right: 3px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.core-row-odd {
+  background-color: #E7EEFC;
+}
+.core-row-even {
+  background-color: #F0FEFF;
+}
+.core-row-selected {
+  background-color: #F8D869;
+}
+.core-row-hover {
+  background-color: #fdf2cb;
+}
