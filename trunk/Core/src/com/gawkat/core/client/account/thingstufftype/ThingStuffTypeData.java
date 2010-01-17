@@ -26,17 +26,17 @@ public class ThingStuffTypeData implements IsSerializable {
   }
   
   public void setData(long id, String name, int valueTypeId) {
-    this.stuffTypeId = id;
+    stuffTypeId = id;
     this.name = name;
     this.valueTypeId = valueTypeId;
   }
   
   public long getStuffTypeId() {
-    return this.stuffTypeId;
+    return stuffTypeId;
   }
   
   public String getName() {
-    return this.name;
+    return name;
   }
   
   public void setName(String name) {
@@ -49,6 +49,10 @@ public class ThingStuffTypeData implements IsSerializable {
   
   public int getValueTypeId() {
     return valueTypeId;
+  }
+
+	public long getId() {
+	  return stuffTypeId;
   }
   
 }

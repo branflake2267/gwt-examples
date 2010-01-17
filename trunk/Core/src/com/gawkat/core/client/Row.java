@@ -82,6 +82,9 @@ public class Row extends Composite implements MouseOverHandler, MouseOutHandler 
   }
   
   public void setWidths(int[] widths) {
+  	if (widths == null) {
+  		return;
+  	}
     for (int i=0; i < hp.getWidgetCount(); i++) {
       hp.getWidget(i).setWidth(widths[i] + "px");
     }
@@ -96,6 +99,9 @@ public class Row extends Composite implements MouseOverHandler, MouseOutHandler 
   }
   
   public static int[] getMaxWidths(int[] a, int[] b) {
+  	if (a == null || b == null || (a.length != b.length)) {
+  		return null;
+  	}
     for (int i=0; i < a.length; i++) {
       if (b[i] > a[i]) {
         a[i] = b[i];

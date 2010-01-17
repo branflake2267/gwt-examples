@@ -2,6 +2,7 @@ package com.gawkat.core.server.jdo.data;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 
 import javax.jdo.Extent;
@@ -14,6 +15,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.gawkat.core.client.account.permission.ThingPermissionData;
 import com.gawkat.core.server.jdo.PMF;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
@@ -47,8 +49,32 @@ public class ThingPermissionJdo {
   // what type of permission - CONSTANT
   @Persistent
   private int access = PNO_ACCESS;
+  
+  private Date dateCreated;
+  private Date dateUpdated;
 
-  /**
+  public ThingPermissionJdo() {
+  }
+  
+  public void setData(ThingPermissionData thingPermissionData) {
+  	setKey(thingPermissionData.getId());
+  	
+  	// TODO set data
+  	
+  	if (thingPermissionData.getHasPermssionToThingId() > 0) {
+  	  dateUpdated = new Date();
+    } else {
+      dateCreated = new Date();
+    }
+  }
+  
+  private void setKey(long id) {
+  	if (id > 0) {
+  		permissionId = id;
+  	}
+  }
+
+	/**
    * query permission
    * 
    * @param thingId

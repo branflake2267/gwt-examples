@@ -107,6 +107,8 @@ public class Things extends Composite implements ClickHandler {
     th.add(l4, HorizontalPanel.ALIGN_CENTER);
     
     pListTop.add(th);
+    
+    widths = Row.getMaxWidths(widths, th.getWidths());
   }
   
   private void process(ThingsData thingsData) {
@@ -122,7 +124,7 @@ public class Things extends Composite implements ClickHandler {
     }
     ThingData[] t = thingsData.thingData;
     
-    this.thingTypesData = thingsData.thingTypesData;
+    thingTypesData = thingsData.thingTypesData;
     
     drawTopRow();
 
