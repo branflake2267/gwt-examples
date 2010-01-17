@@ -25,7 +25,7 @@ public class ThingStuffJdo {
 
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-  private long thingStuffId;
+  private Long thingStuffId;
   
   @Persistent
   private long thingStuffTypeId;
@@ -60,11 +60,17 @@ public class ThingStuffJdo {
   }
   
   public ThingStuffJdo(ThingStuffData thingStuffData) {
+  	if (thingStuffData == null) {
+  		return;
+  	}
     setData(thingStuffData);
   }
   
   public void setData(ThingStuffData thingStuffData) {
-    this.thingStuffId = thingStuffData.getId();
+  	if (thingStuffData == null) {
+  		return;
+  	}
+  	setKey(thingStuffData.getId());
     this.thingStuffTypeId = thingStuffData.getThingStuffTypeId();
     this.thingId = thingStuffData.getThingId();
     this.value = thingStuffData.getValue();
@@ -72,15 +78,18 @@ public class ThingStuffJdo {
     this.valueDouble = thingStuffData.getValueDouble();
     this.valueInt = thingStuffData.getValueInt();
     
-    if (thingStuffId > 0) {
+    if (thingStuffId != null && thingStuffId > 0) {
       this.dateUpdated = new Date();
     } else {
       this.dateCreated = new Date();
     }
   }
-  
-  public void setData(ThingStuffJdo thingStuffData) {
-    this.thingStuffId = thingStuffData.getId();
+
+	public void setData(ThingStuffJdo thingStuffData) {
+		if (thingStuffData == null) {
+			return;
+		}
+		setKey(thingStuffData.getId());
     this.thingStuffTypeId = thingStuffData.getThingStuffTypeId();
     this.thingId = thingStuffData.getThingId();
     this.value = thingStuffData.getValue();
@@ -88,13 +97,19 @@ public class ThingStuffJdo {
     this.valueDouble = thingStuffData.getValueDouble();
     this.valueInt = thingStuffData.getValueInt();
     
-    if (thingStuffId > 0) {
+    if (thingStuffId != null && thingStuffId > 0) {
       this.dateUpdated = new Date();
     } else {
       this.dateCreated = new Date();
     }
   }
-  
+	
+  private void setKey(long id) {
+	  if (id > 0) {
+	  	thingStuffId = id;
+	  }
+  }
+
   public long getStuffId() {
     return thingStuffId;
   }

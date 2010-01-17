@@ -130,6 +130,10 @@ public class LoginWidget extends Composite implements ChangeHandler {
    */
   private void request_Request_Token_Response(OAuthTokenData token) {
 
+  	if (token == null) {
+  		return;
+  	}
+  	
     cp.setAccessToken(token);
 
     int result = token.getResult();

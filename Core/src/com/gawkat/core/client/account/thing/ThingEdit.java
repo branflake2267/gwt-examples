@@ -80,7 +80,7 @@ public class ThingEdit extends Composite implements ClickHandler {
     HorizontalPanel hp = new HorizontalPanel();
     pTop.add(hp);
     
-    hp.add(new HTML("Type: " + thingTypeData.getName()));
+    //hp.add(new HTML("Type: " + thingTypeData.getName())); // TODO enable
     hp.add(new HTML("&nbsp;&nbsp;&nbsp;"));
     hp.add(new HTML("Id: " + thingData.getThingId()));
 

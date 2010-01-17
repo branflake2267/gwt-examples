@@ -24,7 +24,7 @@ public class ThingStuffTypeJdo {
 
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-  private long stuffTypeId;
+  private Long stuffTypeId = null;
   
   @Persistent
   private String name = null;
@@ -43,15 +43,24 @@ public class ThingStuffTypeJdo {
   }
   
   public void setData(ThingStuffTypeData thingStuffTypeData) {
-    this.stuffTypeId = thingStuffTypeData.getStuffTypeId();
-    this.name = thingStuffTypeData.getName();
-    this.valueTypeId = thingStuffTypeData.getValueTypeId();
+  	if (thingStuffTypeData == null) {
+  		return;
+  	}
+  	setKey(thingStuffTypeData.getId());
+    name = thingStuffTypeData.getName();
+    valueTypeId = thingStuffTypeData.getValueTypeId();
     
-    if (stuffTypeId > 0) {
+    if (stuffTypeId != null && stuffTypeId > 0) {
       dateUpdated = new Date();
     } else {
       dateCreated = new Date();
     }
+  }
+
+  private void setKey(long id) {
+  	if (id > 0) {
+  		stuffTypeId = id;
+  	}
   }
   
   public long getId() {
@@ -82,7 +91,7 @@ public class ThingStuffTypeJdo {
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
-      if (stuffTypeId > 0) {
+      if (stuffTypeId != null && stuffTypeId > 0) {
         ThingStuffTypeJdo update = pm.getObjectById(ThingStuffTypeJdo.class, stuffTypeId);
         update.setData(thingStuffTypeData);
       } else {

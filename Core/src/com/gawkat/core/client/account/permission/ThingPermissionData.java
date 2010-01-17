@@ -28,5 +28,24 @@ public class ThingPermissionData implements IsSerializable {
   
   // what type of permission - CONSTANT
   private int access = PNO_ACCESS;
+
+  public ThingPermissionData() {	
+  }
+  
+	public long getId() {
+	  return permissionId;
+  }
+	
+	public long getThingId() {
+		return thingId;
+	}
+	
+	public long getHasPermssionToThingId() {
+		return hasPermissionToThingId;
+	}
+	
+	public int getAccess() {
+		return access;
+	}
   
 }

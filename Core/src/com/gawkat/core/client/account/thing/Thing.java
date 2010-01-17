@@ -68,6 +68,9 @@ public class Thing extends Composite implements ChangeHandler, ClickHandler {
   }
 
   public void setData(int row, ThingData thingData, ThingTypeData thingTypeData) {
+  	//if (thingData == null || thingTypeData == null) {
+  		//return;
+  	//}
     this.row = row;
     this.thingData = thingData;
     this.thingTypeData = thingTypeData;
@@ -81,7 +84,7 @@ public class Thing extends Composite implements ChangeHandler, ClickHandler {
     pName.clear();
     
     pCount.add(new HTML(Integer.toString(row)));
-    pType.add(new HTML(thingTypeData.getName()));
+    //pType.add(new HTML(thingTypeData.getName())); // TODO enable if worky
     pName.add(new HTML(thingData.getKey()));
     
     pWidget.add(pCount);

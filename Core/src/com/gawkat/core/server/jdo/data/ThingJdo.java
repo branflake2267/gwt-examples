@@ -50,18 +50,30 @@ public class ThingJdo {
   }
   
   public void setData(ThingData thingData) {
-    this.thingId = thingData.getThingId();
-    this.thingTypeId = thingData.getThingTypeId();
-    this.key = thingData.getKey();
+  	if (thingData == null) {
+  		return;
+  	}
+  	setKey(thingData.getThingId());
+  	thingId = thingData.getThingId();
+    thingTypeId = thingData.getThingTypeId();
+    key = thingData.getKey();
+    
     //this.secret = thingData.getSecret(); // TODO?
-    if (thingId > 0) {
+    
+    if (thingId != null && thingId > 0) {
       dateUpdated = new Date();
     } else {
       dateCreated = new Date();
     }
   }
   
-  public void setData(ThingJdo thingData) {
+  private void setKey(long id) {
+	  if (id > 0) {
+	  	thingId = id;
+	  }
+  }
+
+	public void setData(ThingJdo thingData) {
     this.thingId = thingData.getThingId();
     this.thingTypeId = thingData.getThingTypeId();
     this.key = thingData.getKey();

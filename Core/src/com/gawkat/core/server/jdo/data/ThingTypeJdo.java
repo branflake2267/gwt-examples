@@ -18,6 +18,8 @@ import javax.jdo.annotations.PrimaryKey;
 import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.account.thingtype.ThingTypeFilterData;
 import com.gawkat.core.server.jdo.PMF;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
@@ -27,7 +29,6 @@ public class ThingTypeJdo {
   public static final int TYPE_APPLICATION = 1;
   public static final int TYPE_USER = 2;
   public static final int TYPE_GROUP = 3;
-  
   
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
@@ -54,13 +55,29 @@ public class ThingTypeJdo {
    * @param thingTypeData
    */
   public ThingTypeJdo(ThingTypeData thingTypeData) {
-    this.thingTypeId = thingTypeData.getId();
-    this.name = thingTypeData.getName();
+  	setKey(thingTypeData.getId()); 
+  	
+    name = thingTypeData.getName();
   }
 
   public void setData(ThingTypeData thingTypeData) {
-    this.thingTypeId = thingTypeData.getId();
-    this.name = thingTypeData.getName();
+  	if (thingTypeData == null) {
+  		return;
+  	}
+  	setKey(thingTypeData.getId());
+    name = thingTypeData.getName();
+    
+    if (thingTypeId != null && thingTypeId > 0) {
+    	dateUpdated = new Date();
+    } else {
+    	dateCreated = new Date();
+    }
+  }
+  
+  private void setKey(long id) {
+  	if (id > 0) {
+  		thingTypeId = id;
+  	}
   }
   
   /**
@@ -69,7 +86,7 @@ public class ThingTypeJdo {
    * @return
    */
   public Long getId() {
-    return this.thingTypeId;
+    return thingTypeId;
   }
   
   /**
@@ -245,6 +262,9 @@ public class ThingTypeJdo {
    * @return
    */
   public static ThingTypeData[] convert(ThingTypeJdo[] thingTypeJdo) {
+  	if (thingTypeJdo == null) {
+  		return null;
+  	}
     ThingTypeData[] r = new ThingTypeData[thingTypeJdo.length];
     for (int i=0; i < thingTypeJdo.length; i++) {
       r[i] = new ThingTypeData();

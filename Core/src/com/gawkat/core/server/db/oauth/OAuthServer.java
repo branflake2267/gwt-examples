@@ -53,6 +53,11 @@ public class OAuthServer {
     // see if it matches up
     ApplicationData appData = getApplicationId(token);
 
+    if (appData == null) {
+    	System.out.println("No applications are set yet.");
+    	return null;
+    }
+    
     // verify the signed signature from the client matches the local
     boolean doesSignatureMatch = token.verify(url, appData.consumerSecret);
 
@@ -212,6 +217,10 @@ public class OAuthServer {
     
     // get application (thing)
     ThingJdo[] things = ThingJdo.query((long) ThingTypeJdo.TYPE_APPLICATION, ck);
+    if (things == null || things.length == 0) {
+    	System.out.println("no applications set");
+    	return null;
+    }
     long id = things[0].getThingId();
     String consumerKey = things[0].getKey();
     String consumerSecret = things[0].getSecret();
