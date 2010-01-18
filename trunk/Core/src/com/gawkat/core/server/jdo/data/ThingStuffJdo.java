@@ -166,7 +166,7 @@ public class ThingStuffJdo {
     try {
       tx.begin();
       
-      if (thingStuffId > 0) { // update
+      if (thingStuffId != null && thingStuffId > 0) { // update
         ThingStuffJdo update = pm.getObjectById(ThingStuffJdo.class, thingStuffId);
         update.setData(thingStuffData);
       } else { // insert    

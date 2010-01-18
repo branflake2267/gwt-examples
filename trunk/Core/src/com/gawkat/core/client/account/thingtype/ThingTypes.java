@@ -5,6 +5,7 @@ import com.gawkat.core.client.Row;
 import com.gawkat.core.client.global.LoadingWidget;
 import com.gawkat.core.client.rpc.RpcCore;
 import com.gawkat.core.client.rpc.RpcCoreServiceAsync;
+import com.gawkat.core.server.jdo.SetDefaults;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -48,6 +49,7 @@ public class ThingTypes extends Composite implements ClickHandler, ChangeHandler
     
     drawMenu();
     
+    bDefault.addClickHandler(this);
     bAdd.addClickHandler(this);
     bSave.addClickHandler(this);
   }
@@ -69,7 +71,7 @@ public class ThingTypes extends Composite implements ClickHandler, ChangeHandler
     
     pMenu.add(hp);
     
-    bDefault.addClickHandler(this);
+    
   }
   
   private void drawTopRow() {
@@ -166,7 +168,7 @@ public class ThingTypes extends Composite implements ClickHandler, ChangeHandler
     Widget sender = (Widget) event.getSource();
     
     if (sender == bDefault) {
-      setThingTypeDefault();
+      setDefaults();
     } else if (sender == bAdd) {
       add();
     } else if (sender == bSave) {
@@ -177,16 +179,14 @@ public class ThingTypes extends Composite implements ClickHandler, ChangeHandler
   /**
    * add the defaults application, user, group
    */
-  private void setThingTypeDefault() {
-    
-    rpc.setDefaults(cp.getAccessToken(), ThingTypeData.DEFAULT_TYPE, new AsyncCallback<Boolean>() {
+  private void setDefaults() {
+    rpc.setDefaults(cp.getAccessToken(), SetDefaults.THINGTYPES, new AsyncCallback<Boolean>() {
       public void onSuccess(Boolean result) {
         draw();
       }
       public void onFailure(Throwable caught) { 
       }
     });
-    
   }
   
   private void getThingTypesRpc() {

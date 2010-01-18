@@ -6,6 +6,7 @@ import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.global.LoadingWidget;
 import com.gawkat.core.client.rpc.RpcCore;
 import com.gawkat.core.client.rpc.RpcCoreServiceAsync;
+import com.gawkat.core.server.jdo.SetDefaults;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -32,6 +33,7 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
   private VerticalPanel pList = new VerticalPanel();
   private int[] widths = new int[4];
   
+  private PushButton bDefault = new PushButton("Add Defaults");
   private PushButton bAdd = new PushButton("Add");
   private PushButton bSave = new PushButton("Save");
   
@@ -50,6 +52,7 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
     
     drawMenu();
     
+    bDefault.addClickHandler(this);
     bAdd.addClickHandler(this);
     bSave.addClickHandler(this);
   }
@@ -169,11 +172,23 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
     saveThingTypesRpc(ThingStuffTypeData);
   }
   
+  private void setDefaults() {
+    rpc.setDefaults(cp.getAccessToken(), SetDefaults.THINGTYPES, new AsyncCallback<Boolean>() {
+      public void onSuccess(Boolean result) {
+        draw();
+      }
+      public void onFailure(Throwable caught) { 
+      }
+    });
+  }
+  
   public void onClick(ClickEvent event) {
     
     Widget sender = (Widget) event.getSource();
     
-    if (sender == bAdd) {
+    if (sender == bDefault) {
+      setDefaults();
+    } else if (sender == bAdd) {
       add();
     } else if (sender == bSave) {
       save();
