@@ -65,6 +65,8 @@ public class AccountWidget extends Composite implements ValueChangeHandler<Strin
     pMenu.addStyleName("core-Account-Menu");
     
     drawMenu();
+    
+    pWidget.addStyleName("test1");
   }
   
   private void initHistory() {
