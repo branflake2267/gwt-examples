@@ -2,7 +2,7 @@ package com.gawkat.core.client.account;
 
 import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.account.thing.Things;
-import com.gawkat.core.client.account.thing.ownership.OwnershipView;
+import com.gawkat.core.client.account.thing.ownership.ThingLink;
 import com.gawkat.core.client.account.thingstufftype.ThingStuffTypes;
 import com.gawkat.core.client.account.thingtype.ThingTypes;
 import com.gawkat.core.client.global.QueryString;
@@ -24,26 +24,20 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
   private TabPanel pWidget = new TabPanel();
   
   // tabed widgets
-  private Profile wProfile = null;
   private ThingTypes wTypes = null;
-  private Things wThings = null;
   private ThingStuffTypes wStuffTypes = null;
-  private OwnershipView wOwnerShipView = null;
+  private Things wThings = null;
   
   public AccountTabs(ClientPersistence cp) {
     this.cp = cp;
     
-    wProfile = new Profile(cp);
     wTypes = new ThingTypes(cp);
     wStuffTypes = new ThingStuffTypes(cp);
     wThings = new Things(cp);
-    wOwnerShipView = new OwnershipView(cp);
     
-    pWidget.add(wProfile, "My Profile");
     pWidget.add(wTypes, "Thing Types");
-    pWidget.add(wStuffTypes, "Thing Stuff Types");
+    pWidget.add(wStuffTypes, "Stuff Types");
     pWidget.add(wThings, "Things");
-    pWidget.add(wOwnerShipView, "Thing Ownerships");
 
     initWidget(pWidget);
     
@@ -64,22 +58,16 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
     QueryStringData qsd = QueryString.getQueryStringData();
     
     String ht = qsd.getHistoryToken();
-    if (ht.equals("account_Profile") == true) {
+    if (ht.equals("account_Types") == true) {
       pWidget.selectTab(0);
-    } else if (ht.equals("account_Types") == true) {
-      pWidget.selectTab(1);
+      
     } else if (ht.equals("account_StuffType") == true) {
-      pWidget.selectTab(2);
+      pWidget.selectTab(1);
+      
     } else if (ht.equals("account_Things") == true) {
-      pWidget.selectTab(3);
-    } else if (ht.equals("account_ThingsHierarchy") == true) {
-      pWidget.selectTab(4);
+      pWidget.selectTab(2);
     }
     
-  }
-  
-  private void drawProfile() {
-    wProfile.draw();
   }
   
   private void drawTypes() {
@@ -89,29 +77,24 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
   private void drawStuffType() {
     wStuffTypes.draw();
   }
-  
+
   private void drawThings() {
     wThings.draw();
   }
   
-  private void drawThingsHierarchy() {
-    wOwnerShipView.draw();
-  }
- 
   public void onBeforeSelection(BeforeSelectionEvent<Integer> event) {
     
     int tab = event.getItem();
     
     if (tab == 0) {
-      drawProfile();
-    } else if (tab == 1) {
       drawTypes();
-    } else if (tab == 2) {
+      
+    } else if (tab == 1) {
       drawStuffType();
-    } else if (tab == 3) {
+      
+    } else if (tab == 2) {
       drawThings();
-    } else if (tab == 4) {
-      drawThingsHierarchy();
+      
     } 
     
     
@@ -123,15 +106,14 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
     int tab = event.getSelectedItem();
     
     if (tab == 0) {
-      History.newItem("account_Profile");
-    } else if (tab == 1) {
       History.newItem("account_Types");
-    } else if (tab == 2) {
+      
+    } else if (tab == 1) {
       History.newItem("account_StuffType");
-    } else if (tab == 3) {
+      
+    } else if (tab == 2) {
       History.newItem("account_Things");
-    } else if (tab == 4) {
-      History.newItem("account_ThingsHierarchy");
+      
     } 
     
   }

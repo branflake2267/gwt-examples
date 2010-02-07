@@ -2,7 +2,7 @@ package com.gawkat.core.client.account.thing.ownership;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class OwnershipFilterData implements IsSerializable {
+public class ThingLinkFilterData implements IsSerializable {
 
   public int start = 0;
   

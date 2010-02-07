@@ -4,13 +4,30 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class SetDefaultsData implements IsSerializable {
 
-  // what to set on using this class
-  public static int THINGTYPES = 1;
   
-  public static int THINGAPP = 2;
-  
-  public static int THINGUSER = 3;  
-  
-  public static int THINGS = 4;
+	/**
+	 * constant for set defaults
+	 */
+	public static int DEFAULT_THINGS = 1;
 	
+	/**
+	 * constant for set defaults
+	 */
+  public static int DEFAULT_THING_TYPES = 2;
+  
+	/**
+	 * constant for set defaults
+	 */
+  public static int DEFAULT_THING_APPLICATIONS = 3;
+  
+	/**
+	 * constant for set defaults
+	 */
+  public static int DEFAULT_THING_USERS = 4;  
+  
+	/**
+	 * constant for set defaults
+	 */
+  public static final int DEFAULT_THING_STUFF_TYPES = 5;
+  
 }

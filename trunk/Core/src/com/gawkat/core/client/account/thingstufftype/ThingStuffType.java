@@ -149,7 +149,7 @@ public class ThingStuffType extends Composite implements ChangeHandler, ClickHan
         if (changeEvent == EventManager.DELETE_YES && thingStuffTypeData.getStuffTypeId() > 0) {
           deleteRpc();
         } else {
-          deleteIt(true);
+          //deleteIt(false);
         }
       }
     });

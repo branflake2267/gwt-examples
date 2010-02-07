@@ -249,7 +249,7 @@ public class Things extends Composite implements ClickHandler {
   }
   
   private void setDefaults() {
-    rpc.setDefaults(cp.getAccessToken(), SetDefaultsData.THINGS, new AsyncCallback<Boolean>() {
+    rpc.setDefaults(cp.getAccessToken(), SetDefaultsData.DEFAULT_THINGS, new AsyncCallback<Boolean>() {
       public void onSuccess(Boolean result) {
         draw();
       }
