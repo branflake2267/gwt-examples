@@ -1,7 +1,7 @@
 package com.gawkat.core.server.db;
 
-import com.gawkat.core.client.account.thing.hierarchy.HierarchyData;
-import com.gawkat.core.client.account.thing.hierarchy.HierarchyFilterData;
+import com.gawkat.core.client.account.thing.ownership.OwnershipData;
+import com.gawkat.core.client.account.thing.ownership.OwnershipFilterData;
 import com.gawkat.core.client.account.thingset.ThingSetOfData;
 import com.gawkat.core.client.account.thingset.ThingSetOfFilterData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
@@ -15,14 +15,14 @@ public class Db_Hierarchy {
     this.sp = sp;
   }
   
-  public HierarchyData getHierarchy(OAuthTokenData accessToken, HierarchyFilterData filter) {
+  public OwnershipData getHierarchy(OAuthTokenData accessToken, OwnershipFilterData filter) {
     
     ThingSetOfFilterData thingSetOfFilterData = new ThingSetOfFilterData();
     
     Db_ThingSet dbTs = new Db_ThingSet(sp);
     ThingSetOfData[] tsd = dbTs.getThingSet(thingSetOfFilterData);
     
-    HierarchyData h = new HierarchyData();
+    OwnershipData h = new OwnershipData();
     h.thingSetData = tsd;
     
     return h;

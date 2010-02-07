@@ -2,7 +2,7 @@ package com.gawkat.core.client.account;
 
 import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.account.thing.Things;
-import com.gawkat.core.client.account.thing.hierarchy.HierarchyView;
+import com.gawkat.core.client.account.thing.ownership.OwnershipView;
 import com.gawkat.core.client.account.thingstufftype.ThingStuffTypes;
 import com.gawkat.core.client.account.thingtype.ThingTypes;
 import com.gawkat.core.client.global.QueryString;
@@ -28,7 +28,7 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
   private ThingTypes wTypes = null;
   private Things wThings = null;
   private ThingStuffTypes wStuffTypes = null;
-  private HierarchyView wHierarchyView = null;
+  private OwnershipView wOwnerShipView = null;
   
   public AccountTabs(ClientPersistence cp) {
     this.cp = cp;
@@ -37,13 +37,13 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
     wTypes = new ThingTypes(cp);
     wStuffTypes = new ThingStuffTypes(cp);
     wThings = new Things(cp);
-    wHierarchyView = new HierarchyView(cp);
+    wOwnerShipView = new OwnershipView(cp);
     
     pWidget.add(wProfile, "My Profile");
     pWidget.add(wTypes, "Thing Types");
     pWidget.add(wStuffTypes, "Thing Stuff Types");
     pWidget.add(wThings, "Things");
-    pWidget.add(wHierarchyView, "Hierarchy");
+    pWidget.add(wOwnerShipView, "Thing Ownerships");
 
     initWidget(pWidget);
     
@@ -95,7 +95,7 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
   }
   
   private void drawThingsHierarchy() {
-    wHierarchyView.draw();
+    wOwnerShipView.draw();
   }
  
   public void onBeforeSelection(BeforeSelectionEvent<Integer> event) {

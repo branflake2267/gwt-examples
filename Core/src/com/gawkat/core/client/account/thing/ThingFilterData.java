@@ -8,6 +8,9 @@ public class ThingFilterData implements IsSerializable {
   
   public long limit = 0;
   
+  /**
+   * filter by type
+   */
   public long thingTypeId = 0;
   
 }

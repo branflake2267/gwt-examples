@@ -1,8 +1,8 @@
-package com.gawkat.core.client.account.thing.hierarchy;
+package com.gawkat.core.client.account.thing.ownership;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class HierarchyFilterData implements IsSerializable {
+public class OwnershipFilterData implements IsSerializable {
 
   public int start = 0;
   

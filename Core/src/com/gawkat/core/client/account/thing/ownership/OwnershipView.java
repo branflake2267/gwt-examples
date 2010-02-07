@@ -1,16 +1,16 @@
-package com.gawkat.core.client.account.thing.hierarchy;
+package com.gawkat.core.client.account.thing.ownership;
 
 import com.gawkat.core.client.ClientPersistence;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class HierarchyView extends Composite {
+public class OwnershipView extends Composite {
   
   private ClientPersistence cp = null;
   
   private VerticalPanel pWidget = new VerticalPanel();
   
-  public HierarchyView(ClientPersistence cp) {
+  public OwnershipView(ClientPersistence cp) {
     this.cp = cp;
     
     initWidget(pWidget);

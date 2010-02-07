@@ -268,7 +268,7 @@ public class OAuthServer {
     if (token == null | thingTypeId == 0 | thingId == 0) {
       return false;
     }
-    String whereQuery = "(ThingTypeID='" + thingTypeId + "') AND (ThingId='" + thingId + "')";
+    String whereQuery = "(ThingTypeId='" + thingTypeId + "') AND (ThingId='" + thingId + "')";
    
     if (whereQuery.length() == 0) {
       System.out.println("ERROR: verifyNonce(), for some reason there is no appId or userId");

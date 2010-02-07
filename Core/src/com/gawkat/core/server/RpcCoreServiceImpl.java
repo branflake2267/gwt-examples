@@ -5,8 +5,8 @@ import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thing.ThingFilterData;
 import com.gawkat.core.client.account.thing.ThingsData;
-import com.gawkat.core.client.account.thing.hierarchy.HierarchyData;
-import com.gawkat.core.client.account.thing.hierarchy.HierarchyFilterData;
+import com.gawkat.core.client.account.thing.ownership.OwnershipData;
+import com.gawkat.core.client.account.thing.ownership.OwnershipFilterData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffFilterData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffsData;
@@ -209,10 +209,10 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
     return r;
   }
   
-  public HierarchyData getHierarchy(OAuthTokenData accessToken, HierarchyFilterData filter) {
+  public OwnershipData getHierarchy(OAuthTokenData accessToken, OwnershipFilterData filter) {
     sp.start(getThreadLocalRequest());
     Db_Hierarchy db = new Db_Hierarchy(sp);
-    HierarchyData r = db.getHierarchy(accessToken, filter);
+    OwnershipData r = db.getHierarchy(accessToken, filter);
     sp.end();
     return r;
   }
