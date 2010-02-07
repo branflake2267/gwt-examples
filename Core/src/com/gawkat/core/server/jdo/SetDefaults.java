@@ -1,6 +1,7 @@
 package com.gawkat.core.server.jdo;
 
 import com.gawkat.core.client.SetDefaultsData;
+import com.gawkat.core.client.account.thingstuff.ThingStuffData;
 import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.oauth.Sha1;
 import com.gawkat.core.server.ServerPersistence;
@@ -20,24 +21,34 @@ public class SetDefaults {
   
   public boolean setDefaults(int defaultType) {
     
-    if (defaultType == SetDefaultsData.THINGTYPES) {
+    if (defaultType == SetDefaultsData.DEFAULT_THING_TYPES) { // thing types
       setThingTypes();
     
-    } else if (defaultType == SetDefaultsData.THINGAPP) {
+    } else if (defaultType == SetDefaultsData.DEFAULT_THING_APPLICATIONS) { // thing
       createApplication();
     
-    } else if (defaultType == SetDefaultsData.THINGUSER) {
+    } else if (defaultType == SetDefaultsData.DEFAULT_THING_USERS) { // thing
       createUser();
       
-    } else if (defaultType == SetDefaultsData.THINGS) {
+    } else if (defaultType == SetDefaultsData.DEFAULT_THINGS) { // things
     	 createApplication();
     	 createUser();
+    	 
+    } else if (defaultType == SetDefaultsData.DEFAULT_THING_STUFF_TYPES) {
+    	createStuffTypes();
     }
     
     return true;
   }
   
-  /**
+  private void createStuffTypes() {
+  	
+  	
+  	//ThingStuffData asd = new ThingStuffData(thingId, thingStuffId, thingStuffTypeId, value, valueBol, valueDouble, valueInt)
+	  
+  }
+
+	/**
    * set default things
    */
   private void setThingTypes() {
@@ -48,7 +59,7 @@ public class SetDefaults {
     at.setName("Application");
     
     ThingTypeData bt = new ThingTypeData();
-    bt.setName("User");
+    bt.setName("Person");
     
     ThingTypeData ct = new ThingTypeData();
     ct.setName("Group");
@@ -59,6 +70,11 @@ public class SetDefaults {
     ThingTypeData et = new ThingTypeData();
     et.setName("Permission");
     
+    ThingTypeData ft = new ThingTypeData();
+    ft.setName("Thing Link");
+    
+    ThingTypeData gt = new ThingTypeData();
+    gt.setName("Thing Stuff Template");
     
     ThingTypeJdo a = new ThingTypeJdo();
     a.setData(at);
@@ -79,6 +95,14 @@ public class SetDefaults {
     ThingTypeJdo e = new ThingTypeJdo();
     e.setData(et);
     e.insert();
+    
+    ThingTypeJdo f = new ThingTypeJdo();
+    f.setData(ft);
+    f.insert();
+    
+    ThingTypeJdo g = new ThingTypeJdo();
+    g.setData(gt);
+    g.insert();
     
   }
   
@@ -113,5 +137,6 @@ public class SetDefaults {
     ThingJdo a = new ThingJdo();
     a.insert(thingTypeId, key, secret);
   }
+  
   
 }

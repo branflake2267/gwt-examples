@@ -72,7 +72,6 @@ public class ThingTypes extends Composite implements ClickHandler, ChangeHandler
     
     pMenu.add(hp);
     
-    
   }
   
   private void drawTopRow() {
@@ -181,7 +180,7 @@ public class ThingTypes extends Composite implements ClickHandler, ChangeHandler
    * add the defaults application, user, group
    */
   private void setDefaults() {
-    rpc.setDefaults(cp.getAccessToken(), SetDefaultsData.THINGS, new AsyncCallback<Boolean>() {
+    rpc.setDefaults(cp.getAccessToken(), SetDefaultsData.DEFAULT_THING_TYPES, new AsyncCallback<Boolean>() {
       public void onSuccess(Boolean result) {
         draw();
       }

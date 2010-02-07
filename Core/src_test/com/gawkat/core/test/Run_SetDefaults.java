@@ -14,9 +14,9 @@ public class Run_SetDefaults {
     ServerPersistence sp = new ServerPersistence();
     
     SetDefaults sd = new SetDefaults(sp);
-    sd.setDefaults(SetDefaultsData.THINGTYPES);
-    sd.setDefaults(SetDefaultsData.THINGAPP);
-    sd.setDefaults(SetDefaultsData.THINGUSER);
+    sd.setDefaults(SetDefaultsData.DEFAULT_THING_TYPES);
+    sd.setDefaults(SetDefaultsData.DEFAULT_THING_APPLICATIONS);
+    sd.setDefaults(SetDefaultsData.DEFAULT_THING_USERS);
 
   }
 

@@ -5,8 +5,8 @@ import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thing.ThingFilterData;
 import com.gawkat.core.client.account.thing.ThingsData;
-import com.gawkat.core.client.account.thing.ownership.OwnershipData;
-import com.gawkat.core.client.account.thing.ownership.OwnershipFilterData;
+import com.gawkat.core.client.account.thing.ownership.ThingLinksData;
+import com.gawkat.core.client.account.thing.ownership.ThingLinkFilterData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffFilterData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffsData;
@@ -57,5 +57,5 @@ public interface RpcCoreService extends RemoteService {
   public ThingStuffsData saveThingStuffData(OAuthTokenData accessToken, ThingStuffFilterData filter, ThingStuffData[] thingStuffData);
   public boolean deleteThingStuffData(OAuthTokenData accessToken, long thingStuffId);
   
-  public OwnershipData getHierarchy(OAuthTokenData accessToken, OwnershipFilterData filter);
+  public ThingLinksData getHierarchy(OAuthTokenData accessToken, ThingLinkFilterData filter);
 }

@@ -68,6 +68,8 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
   public void drawMenu() {
     
     HorizontalPanel hp = new HorizontalPanel();
+    hp.add(bDefault);
+    hp.add(new HTML("&nbsp;"));
     hp.add(bAdd);
     hp.add(new HTML("&nbsp;"));
     hp.add(bSave);
