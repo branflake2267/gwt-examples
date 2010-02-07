@@ -2,6 +2,7 @@ package com.gawkat.core.client.account.thingtype;
 
 import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.Row;
+import com.gawkat.core.client.SetDefaultsData;
 import com.gawkat.core.client.global.LoadingWidget;
 import com.gawkat.core.client.rpc.RpcCore;
 import com.gawkat.core.client.rpc.RpcCoreServiceAsync;
@@ -180,7 +181,7 @@ public class ThingTypes extends Composite implements ClickHandler, ChangeHandler
    * add the defaults application, user, group
    */
   private void setDefaults() {
-    rpc.setDefaults(cp.getAccessToken(), SetDefaults.THINGTYPES, new AsyncCallback<Boolean>() {
+    rpc.setDefaults(cp.getAccessToken(), SetDefaultsData.THINGS, new AsyncCallback<Boolean>() {
       public void onSuccess(Boolean result) {
         draw();
       }

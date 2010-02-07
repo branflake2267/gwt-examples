@@ -173,7 +173,7 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
   }
   
   private void setDefaults() {
-    rpc.setDefaults(cp.getAccessToken(), SetDefaults.THINGTYPES, new AsyncCallback<Boolean>() {
+    rpc.setDefaults(cp.getAccessToken(), 1, new AsyncCallback<Boolean>() {
       public void onSuccess(Boolean result) {
         draw();
       }

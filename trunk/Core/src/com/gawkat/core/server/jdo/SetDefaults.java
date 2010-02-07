@@ -1,5 +1,6 @@
 package com.gawkat.core.server.jdo;
 
+import com.gawkat.core.client.SetDefaultsData;
 import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.oauth.Sha1;
 import com.gawkat.core.server.ServerPersistence;
@@ -10,10 +11,7 @@ public class SetDefaults {
 
   private ServerPersistence sp = null;
   
-  // what to set on using this class
-  public static int THINGTYPES = 1;
-  public static int THINGAPP = 2;
-  public static int THINGUSER = 3;  
+
 
   
   public SetDefaults(ServerPersistence sp) {
@@ -22,12 +20,18 @@ public class SetDefaults {
   
   public boolean setDefaults(int defaultType) {
     
-    if (defaultType == SetDefaults.THINGTYPES) {
+    if (defaultType == SetDefaultsData.THINGTYPES) {
       setThingTypes();
-    } else if (defaultType == SetDefaults.THINGAPP) {
+    
+    } else if (defaultType == SetDefaultsData.THINGAPP) {
       createApplication();
-    } else if (defaultType == SetDefaults.THINGUSER) {
+    
+    } else if (defaultType == SetDefaultsData.THINGUSER) {
       createUser();
+      
+    } else if (defaultType == SetDefaultsData.THINGS) {
+    	 createApplication();
+    	 createUser();
     }
     
     return true;

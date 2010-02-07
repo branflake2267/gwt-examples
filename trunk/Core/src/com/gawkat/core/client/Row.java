@@ -1,5 +1,6 @@
 package com.gawkat.core.client;
 
+import com.gawkat.core.client.global.HorizontalPanelEvent;
 import com.gawkat.core.client.global.Style;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
@@ -18,21 +19,18 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentConstant;
 
 public class Row extends Composite implements MouseOverHandler, MouseOutHandler {
-
-  private FocusPanel pWidget = new FocusPanel();
   
-  private HorizontalPanel hp = new HorizontalPanel();
+  private HorizontalPanelEvent hp = new HorizontalPanelEvent();
   
   private int row = 0;
   
   private int changeEvent = 0;
   
   public Row() {
-    pWidget.add(hp);
-    initWidget(pWidget);
+    initWidget(hp);
   
-    pWidget.addMouseOverHandler(this);
-    pWidget.addMouseOutHandler(this);
+    hp.addMouseOverHandler(this);
+    hp.addMouseOutHandler(this);
     
     //hp.setStyleName("core-row-cell");
     hp.setSpacing(3);
@@ -56,14 +54,14 @@ public class Row extends Composite implements MouseOverHandler, MouseOutHandler 
   
   private void setStyle() {
     String style = Style.getRowStyle(row);
-    pWidget.addStyleName(style);
+    hp.addStyleName(style);
   }
   
   private void setStyleHover(boolean b) {
     if (b == true) {
-      pWidget.addStyleName(Style.getRowStyleHover());
+      hp.addStyleName(Style.getRowStyleHover());
     } else if (b == false) {
-      pWidget.removeStyleName(Style.getRowStyleHover());
+      hp.removeStyleName(Style.getRowStyleHover());
     }
   }
 

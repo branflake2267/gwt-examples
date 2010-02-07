@@ -2,7 +2,9 @@ package com.gawkat.core.client.account.thing;
 
 import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.Row;
+import com.gawkat.core.client.SetDefaultsData;
 import com.gawkat.core.client.account.thingtype.ThingTypeData;
+import com.gawkat.core.client.account.thingtype.ThingTypeFilterData;
 import com.gawkat.core.client.account.thingtype.ThingTypesData;
 import com.gawkat.core.client.global.EventManager;
 import com.gawkat.core.client.global.LoadingWidget;
@@ -82,6 +84,8 @@ public class Things extends Composite implements ClickHandler {
     
     HorizontalPanel hp = new HorizontalPanel();
     hp.add(bBack);
+    hp.add(bDefault);
+    hp.add(new HTML("&nbsp;"));
     hp.add(bAdd);
     hp.add(new HTML("&nbsp;"));
     hp.add(bSave);
@@ -199,7 +203,7 @@ public class Things extends Composite implements ClickHandler {
       ThingData td = tt.getData();
       thingData[i] = td;
     }
-    //saveThingsRpc(thingData);
+    saveThingsRpc(thingData);
   }
   
   private void view(ThingData thingData) {
@@ -245,7 +249,7 @@ public class Things extends Composite implements ClickHandler {
   }
   
   private void setDefaults() {
-    rpc.setDefaults(cp.getAccessToken(), SetDefaults.THINGTYPES, new AsyncCallback<Boolean>() {
+    rpc.setDefaults(cp.getAccessToken(), SetDefaultsData.THINGS, new AsyncCallback<Boolean>() {
       public void onSuccess(Boolean result) {
         draw();
       }
@@ -277,22 +281,20 @@ public class Things extends Composite implements ClickHandler {
     
   }
 
-  private void saveThingsRpc(ThingTypeData[] thingData) {
-    /*
+  private void saveThingsRpc(ThingData[] thingData) {
+    
     wLoading.show();
     
-    // TODO
-    ThingTypeFilterData filter = new ThingTypeFilterData();
+    ThingFilterData filter = new ThingFilterData();
 
-    rpc.saveThingTypes(cp.getAccessToken(), filter, thingTypeData, new AsyncCallback<ThingTypesData>() {
-      public void onSuccess(ThingTypesData thingTypesData) {
-        process(thingTypesData);
-        wLoading.hide();
-      }
-      public void onFailure(Throwable caught) {
-      }
-    });
-    */
+    rpc.saveThings(cp.getAccessToken(), filter, thingData, new AsyncCallback<ThingsData>() {
+			public void onSuccess(ThingsData thingData) {
+				process(thingData);
+			}
+			public void onFailure(Throwable caught) {
+			}
+		});
+    
   }
 
   
