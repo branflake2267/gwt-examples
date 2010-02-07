@@ -101,7 +101,7 @@ public class ThingStuffType extends Composite implements ChangeHandler, ClickHan
   private void drawLb() {
     lbValueType.addItem("Text", Integer.toString(ThingStuffTypeData.VT_STRING));
     lbValueType.addItem("Checkbox", Integer.toString(ThingStuffTypeData.VT_BOOLEAN));
-    lbValueType.addItem("Decimal", Integer.toString(ThingStuffTypeData.VT_DOUBLE));
+    lbValueType.addItem("Decimal", Integer.toString(ThingStuffTypeData.VT_STRING));
     lbValueType.addItem("Number", Integer.toString(ThingStuffTypeData.VT_INT));
     
     lbValueType.addItem("Large Text Box", Integer.toString(ThingStuffTypeData.VT_STRING_LARGE));
@@ -111,7 +111,8 @@ public class ThingStuffType extends Composite implements ChangeHandler, ClickHan
     lbValueType.addItem("HTML", Integer.toString(ThingStuffTypeData.VT_HTML));
     lbValueType.addItem("URL", Integer.toString(ThingStuffTypeData.VT_URL));
     lbValueType.addItem("Email", Integer.toString(ThingStuffTypeData.VT_EMAIL));
-    lbValueType.addItem("HTML", Integer.toString(ThingStuffTypeData.VT_PHONE));
+    lbValueType.addItem("Phone", Integer.toString(ThingStuffTypeData.VT_PHONE));
+    lbValueType.addItem("Money", Integer.toString(ThingStuffTypeData.VT_STRING));
     
     Global_ListBox.setSelected(lbValueType, thingStuffTypeData.getValueTypeId());
   }

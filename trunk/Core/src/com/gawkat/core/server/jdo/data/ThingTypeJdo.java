@@ -103,7 +103,7 @@ public class ThingTypeJdo {
    * 
    * @param name
    */
-  public void insert() {
+  public void insertUnique() {
     this.dateCreated = new Date();
     
     // don't insert if name already exists

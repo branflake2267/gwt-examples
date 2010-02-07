@@ -39,9 +39,10 @@ public class Core implements EntryPoint, ChangeHandler {
     pWidget.setWidth("800px");
     pWidget.setCellHorizontalAlignment(wLogin, HorizontalPanel.ALIGN_RIGHT);
     
-    pWidget.setStyleName("test1"); // root
-    wLogin.addStyleName("test2");
-    wAccount.addStyleName("test3");
+    // Debug
+    //pWidget.setStyleName("test1"); 
+    //wLogin.addStyleName("test2");
+    //wAccount.addStyleName("test3");
     
     VerticalPanel pcenter = new VerticalPanel();
     pcenter.add(pWidget);
