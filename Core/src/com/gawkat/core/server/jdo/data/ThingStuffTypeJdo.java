@@ -80,6 +80,34 @@ public class ThingStuffTypeJdo {
   }
 
   /**
+   * insert only if unique
+   */
+  public void insertUnique() {
+    this.dateCreated = new Date();
+    
+    // don't insert if name already exists
+    ThingStuffTypeJdo[] tt = query(name);
+    if (tt != null && tt.length > 0) {
+      return;
+    }
+    
+    PersistenceManager pm = PMF.get().getPersistenceManager();
+    Transaction tx = pm.currentTransaction();
+    try {
+      tx.begin();
+      pm.makePersistent(this);
+      tx.commit();
+    } finally {
+      if (tx.isActive()) {
+          tx.rollback();
+      }
+      pm.close();
+    }
+    
+    System.out.println("saved: thingStuffTypeId:" + getId());
+  }
+  
+  /**
    * can only insert unique names
    * 
    * @param name

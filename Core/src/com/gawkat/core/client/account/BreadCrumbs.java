@@ -65,6 +65,15 @@ public class BreadCrumbs extends Composite implements ValueChangeHandler<String>
       name = "Create";
     } else if (qsd.getHistoryToken().matches("account_Profile") == true) {
       name = "Profile";
+      
+    } else if (qsd.getHistoryToken().matches("account_Things") == true) {
+      name = "Things";
+      
+    } else if (qsd.getHistoryToken().matches("account_StuffType") == true) {
+      name = "Thing Stuff Types";
+      
+    } else if (qsd.getHistoryToken().matches("account_Types") == true) {
+      name = "Thing Types";
     }
     
     if (name.length() == 0) {

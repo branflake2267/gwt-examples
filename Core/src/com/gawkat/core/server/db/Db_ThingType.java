@@ -53,7 +53,7 @@ public class Db_ThingType {
 
   private void save(ThingTypeData thingTypeData) {
     ThingTypeJdo j = new ThingTypeJdo(thingTypeData);
-    j.insert();
+    j.insertUnique();
   }
 
   public boolean delete(OAuthTokenData accessToken, ThingTypeData thingTypeData) {

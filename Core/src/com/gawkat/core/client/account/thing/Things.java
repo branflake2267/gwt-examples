@@ -83,8 +83,9 @@ public class Things extends Composite implements ClickHandler {
   public void drawMenu() {
     
     HorizontalPanel hp = new HorizontalPanel();
-    hp.add(bBack);
     hp.add(bDefault);
+    hp.add(new HTML("&nbsp;"));
+    hp.add(bBack);
     hp.add(new HTML("&nbsp;"));
     hp.add(bAdd);
     hp.add(new HTML("&nbsp;"));

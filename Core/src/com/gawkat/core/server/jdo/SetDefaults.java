@@ -2,10 +2,12 @@ package com.gawkat.core.server.jdo;
 
 import com.gawkat.core.client.SetDefaultsData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffData;
+import com.gawkat.core.client.account.thingstufftype.ThingStuffTypeData;
 import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.oauth.Sha1;
 import com.gawkat.core.server.ServerPersistence;
 import com.gawkat.core.server.jdo.data.ThingJdo;
+import com.gawkat.core.server.jdo.data.ThingStuffTypeJdo;
 import com.gawkat.core.server.jdo.data.ThingTypeJdo;
 
 public class SetDefaults {
@@ -43,9 +45,89 @@ public class SetDefaults {
   
   private void createStuffTypes() {
   	
+  	ThingStuffTypeData a = new ThingStuffTypeData();
+  	a.setData(0, "Text", ThingStuffTypeData.VT_STRING);
   	
-  	//ThingStuffData asd = new ThingStuffData(thingId, thingStuffId, thingStuffTypeId, value, valueBol, valueDouble, valueInt)
-	  
+  	ThingStuffTypeData b = new ThingStuffTypeData();
+  	b.setData(0, "CheckBox", ThingStuffTypeData.VT_BOOLEAN);
+  	
+  	ThingStuffTypeData c = new ThingStuffTypeData();
+  	c.setData(0, "Decimal", ThingStuffTypeData.VT_DOUBLE);
+  	
+  	ThingStuffTypeData d = new ThingStuffTypeData();
+  	d.setData(0, "Number", ThingStuffTypeData.VT_INT);
+
+  	ThingStuffTypeData e = new ThingStuffTypeData();
+  	e.setData(0, "Large Text Box", ThingStuffTypeData.VT_STRING_LARGE);
+  	
+  	ThingStuffTypeData f = new ThingStuffTypeData();
+  	f.setData(0, "Text Case Sensitive", ThingStuffTypeData.VT_STRING_CASE);
+  	
+  	ThingStuffTypeData g = new ThingStuffTypeData();
+  	g.setData(0, "Large Text Area Case Sensitive", ThingStuffTypeData.VT_STRING_LARGE_CASE);
+  	
+  	ThingStuffTypeData i = new ThingStuffTypeData();
+  	i.setData(0, "HTML", ThingStuffTypeData.VT_HTML);
+  	
+  	ThingStuffTypeData j = new ThingStuffTypeData();
+  	j.setData(0, "URL", ThingStuffTypeData.VT_URL);
+  	
+  	ThingStuffTypeData k = new ThingStuffTypeData();
+  	k.setData(0, "Email", ThingStuffTypeData.VT_EMAIL);
+  	
+  	ThingStuffTypeData l = new ThingStuffTypeData();
+  	l.setData(0, "Phone", ThingStuffTypeData.VT_PHONE);
+  	
+  	ThingStuffTypeData m = new ThingStuffTypeData();
+  	m.setData(0, "Money", ThingStuffTypeData.VT_STRING);
+  	
+  	ThingStuffTypeJdo j1 = new ThingStuffTypeJdo();
+  	j1.setData(a);
+  	j1.insertUnique();
+  	
+  	ThingStuffTypeJdo j2 = new ThingStuffTypeJdo();
+  	j2.setData(b);
+  	j2.insertUnique();
+  	
+  	ThingStuffTypeJdo j3 = new ThingStuffTypeJdo();
+  	j3.setData(c);
+  	j3.insertUnique();
+  	
+  	ThingStuffTypeJdo j4 = new ThingStuffTypeJdo();
+  	j4.setData(d);
+  	j4.insertUnique();
+  	
+  	ThingStuffTypeJdo j5 = new ThingStuffTypeJdo();
+  	j5.setData(e);
+  	j5.insertUnique();
+  	
+  	ThingStuffTypeJdo j6 = new ThingStuffTypeJdo();
+  	j6.setData(f);
+  	j6.insertUnique();
+  	
+  	ThingStuffTypeJdo j7 = new ThingStuffTypeJdo();
+  	j7.setData(g);
+  	j7.insertUnique();
+  	
+  	ThingStuffTypeJdo j8 = new ThingStuffTypeJdo();
+  	j8.setData(i);
+  	j8.insertUnique();
+  	
+  	ThingStuffTypeJdo j9 = new ThingStuffTypeJdo();
+  	j9.setData(j);
+  	j9.insertUnique();
+  	
+  	ThingStuffTypeJdo j10 = new ThingStuffTypeJdo();
+  	j10.setData(k);
+  	j10.insertUnique();
+  	
+  	ThingStuffTypeJdo j11 = new ThingStuffTypeJdo();
+  	j11.setData(l);
+  	j11.insertUnique();
+  	
+  	ThingStuffTypeJdo j12 = new ThingStuffTypeJdo();
+  	j12.setData(m);
+  	j12.insertUnique();
   }
 
 	/**
@@ -71,38 +153,31 @@ public class SetDefaults {
     et.setName("Permission");
     
     ThingTypeData ft = new ThingTypeData();
-    ft.setName("Thing Link");
-    
-    ThingTypeData gt = new ThingTypeData();
-    gt.setName("Thing Stuff Template");
+    ft.setName("Thing Stuff Template");
     
     ThingTypeJdo a = new ThingTypeJdo();
     a.setData(at);
-    a.insert();
+    a.insertUnique();
     
     ThingTypeJdo b = new ThingTypeJdo();
     b.setData(bt);
-    b.insert();
+    b.insertUnique();
     
     ThingTypeJdo c = new ThingTypeJdo();
     c.setData(ct);
-    c.insert();
+    c.insertUnique();
     
     ThingTypeJdo d = new ThingTypeJdo();
     d.setData(dt);
-    d.insert();
+    d.insertUnique();
     
     ThingTypeJdo e = new ThingTypeJdo();
     e.setData(et);
-    e.insert();
+    e.insertUnique();
     
     ThingTypeJdo f = new ThingTypeJdo();
     f.setData(ft);
-    f.insert();
-    
-    ThingTypeJdo g = new ThingTypeJdo();
-    g.setData(gt);
-    g.insert();
+    f.insertUnique();
     
   }
   

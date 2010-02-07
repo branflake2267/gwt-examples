@@ -2,6 +2,7 @@ package com.gawkat.core.client.account.thingstufftype;
 
 import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.Row;
+import com.gawkat.core.client.SetDefaultsData;
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.global.LoadingWidget;
 import com.gawkat.core.client.rpc.RpcCore;
@@ -175,7 +176,7 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
   }
   
   private void setDefaults() {
-    rpc.setDefaults(cp.getAccessToken(), 1, new AsyncCallback<Boolean>() {
+    rpc.setDefaults(cp.getAccessToken(), SetDefaultsData.DEFAULT_THING_STUFF_TYPES, new AsyncCallback<Boolean>() {
       public void onSuccess(Boolean result) {
         draw();
       }

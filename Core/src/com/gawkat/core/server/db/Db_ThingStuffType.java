@@ -21,7 +21,7 @@ public class Db_ThingStuffType {
     
     ThingStuffTypesData r = new ThingStuffTypesData();
     r.thingStuffTypeData = t;
-    r.total = 0; //TODO - how to ???
+    r.total = 0; //TODO - how to get total ???
     
     return r;
   }
