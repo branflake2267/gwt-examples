@@ -20,6 +20,17 @@ public class ThingStuffTypeData implements IsSerializable {
   public static final int VT_EMAIL = 10;
   public static final int VT_PHONE = 11;
   
+  /**
+   * Thing Link - link to another thing - thing relationships
+   */
+	public static final int VT_LINK = 12;
+	
+	/**
+	 * file types
+	 */
+	public static final int VT_FILE = 13;
+	
+  
   private long stuffTypeId;
   
   private int valueTypeId = VT_STRING;

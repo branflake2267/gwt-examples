@@ -164,8 +164,8 @@ public class ThingStuffs extends Composite implements ClickHandler {
   
   private ThingStuff addStuff(int i, ThingStuffData thingStuffData) {
     ThingStuff t = new ThingStuff(cp);
-    pListStuff.add(t);
     t.setData(thingData, thingStuffTypesData, thingStuffData);
+    pListStuff.add(t);
     widths = Row.getMaxWidths(widths, t.getRow().getWidths());
     t.addChangeHandler(new ChangeHandler() {
       public void onChange(ChangeEvent event) {
