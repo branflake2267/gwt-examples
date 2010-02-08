@@ -81,6 +81,12 @@ public class SetDefaults {
   	ThingStuffTypeData m = new ThingStuffTypeData();
   	m.setData(0, "Money", ThingStuffTypeData.VT_STRING);
   	
+  	ThingStuffTypeData n = new ThingStuffTypeData();
+  	n.setData(0, "Thing Link", ThingStuffTypeData.VT_LINK);
+  	
+  	ThingStuffTypeData o = new ThingStuffTypeData();
+  	o.setData(0, "File", ThingStuffTypeData.VT_FILE);
+  	
   	ThingStuffTypeJdo j1 = new ThingStuffTypeJdo();
   	j1.setData(a);
   	j1.insertUnique();
@@ -128,6 +134,14 @@ public class SetDefaults {
   	ThingStuffTypeJdo j12 = new ThingStuffTypeJdo();
   	j12.setData(m);
   	j12.insertUnique();
+  	
+  	ThingStuffTypeJdo j13 = new ThingStuffTypeJdo();
+  	j13.setData(n);
+  	j13.insertUnique();
+  	
+  	ThingStuffTypeJdo j14 = new ThingStuffTypeJdo();
+  	j14.setData(o);
+  	j14.insertUnique();
   }
 
 	/**

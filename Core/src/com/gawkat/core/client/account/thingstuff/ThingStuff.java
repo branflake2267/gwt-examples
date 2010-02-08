@@ -96,10 +96,13 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     long typeId = getDataTypeId();
     if (typeId == ThingStuffTypeData.VT_STRING) {
       drawInput(typeId, thingStuffData.getValue());
+      
     } else if (typeId == ThingStuffTypeData.VT_BOOLEAN) {
       drawInput(thingStuffData.getValueBol());
+      
     } else if (typeId == ThingStuffTypeData.VT_DOUBLE) {
       drawInput(thingStuffData.getValueDouble());
+      
     } else if (typeId == ThingStuffTypeData.VT_INT) {
       drawInput(thingStuffData.getValueInt());
       
@@ -123,6 +126,9 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
       
     } else if (typeId == ThingStuffTypeData.VT_PHONE) {
       drawInput(typeId, thingStuffData.getValue());
+      
+    } else if (typeId == ThingStuffTypeData.VT_LINK) {
+    	drawInput(thingStuffData.getValueInt());
       
     } else {
       drawInputBlank();
@@ -159,10 +165,16 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     } else if (typeId == ThingStuffTypeData.VT_PHONE) {
       w = tbValue;
       tbValue.setText(value);
+      
+    } else if (typeId == ThingStuffTypeData.VT_LINK) {
+      w = tbValue;
+      tbValue.setText(value);
     }
+    
     if (w != null) {
       pInput.add(w);
     }
+    
   }
   
   public ThingStuffData getData() {
@@ -228,6 +240,11 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
       valueBol = false;
       valueDouble = 0;
       valueInt = 0;
+    } else if (typeId == ThingStuffTypeData.VT_LINK) {
+      value = null;
+      valueBol = false;
+      valueDouble = 0;
+      valueInt = getTextBox_Long();
     } else {
       value = getTextBox_String();
       valueBol = false;
@@ -235,12 +252,19 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
       valueInt = 0;
     }
     
+    System.out.println(valueInt);
+    
     int stuffTypeId = Global_ListBox.getSelectedValue(lbTypes);
     thingStuffData.setThingStuffTypeId(stuffTypeId);
     thingStuffData.setValue(value);
     thingStuffData.setValue(valueBol);
-    thingStuffData.setValue(valueDouble);
-    thingStuffData.setValue(valueInt);
+    
+    // TODO - doubleVal still comes through
+    // not able to use the setters for this b/c it won't carry the variables values through the cast 2/7/2010
+    //thingStuffData.setValue(valueDouble);
+    //thingStuffData.setValue(valueInt);
+    thingStuffData.valueDouble = getTextBox_Double();
+    thingStuffData.valueInt = getTextBox_Long();
     
     thingStuffData.setThingId(thingData.getThingId());
     
@@ -356,10 +380,18 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
       width = wt;
     } else if (dataTypeId == ThingStuffTypeData.VT_PHONE) {
       width = wt;
+    } else if (dataTypeId == ThingStuffTypeData.VT_LINK) {
+      width = wt;
     } else {
       width = wt;
     } 
-    pInput.setWidth(width + "px");
+    
+    if (width > 50) {
+    	pInput.setWidth(width + "px");
+    	tbValue.setWidth(width + "px");
+    	taValue.setWidth(width + "px");
+    }
+    
     System.out.println("resize: " + width);
   }
   
