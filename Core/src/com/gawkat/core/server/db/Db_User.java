@@ -66,7 +66,7 @@ public class Db_User {
     String key = userData.consumerKey;
     String secret = userData.consumerSecret;
     
-    ThingJdo user = new ThingJdo();
+    ThingJdo user = new ThingJdo(sp);
     user.insert(thingTypeId, key, secret);
     
     Long newUserId = user.getThingId();
@@ -208,7 +208,7 @@ public class Db_User {
     ThingData thingData = changePassswordData.getThingData();
     String secretHash = changePassswordData.getSecret();
     
-    ThingJdo t = new ThingJdo();
+    ThingJdo t = new ThingJdo(sp);
     t.savePassword(thingData, secretHash);
     
     return true;
