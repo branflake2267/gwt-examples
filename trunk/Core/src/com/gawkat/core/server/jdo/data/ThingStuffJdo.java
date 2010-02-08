@@ -11,6 +11,7 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
@@ -18,11 +19,15 @@ import javax.jdo.annotations.PrimaryKey;
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffFilterData;
+import com.gawkat.core.server.ServerPersistence;
 import com.gawkat.core.server.jdo.PMF;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class ThingStuffJdo {
 
+	@NotPersistent
+	private ServerPersistence sp = null;
+	
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
   private Long thingStuffId;
@@ -53,13 +58,20 @@ public class ThingStuffJdo {
   @Persistent
   private Date dateUpdated;
   
+  @Persistent
+  private long createdByThingId = 0;
+  
+  @Persistent
+  private long updatedByThingId = 0;
+  
   /**
    * constructor
    */
-  public ThingStuffJdo() {
+  public ThingStuffJdo(ServerPersistence sp) {
+  	this.sp = sp;
   }
   
-  public ThingStuffJdo(ThingStuffData thingStuffData) {
+  public ThingStuffJdo(ServerPersistence sp, ThingStuffData thingStuffData) {
   	if (thingStuffData == null) {
   		return;
   	}
@@ -267,7 +279,7 @@ public class ThingStuffJdo {
     return r;
   }
   
-  public static boolean delete(long thingStuffId) {
+  public static boolean delete(ServerPersistence sp, long thingStuffId) {
     if (thingStuffId == 0) {
       return false;
     }
@@ -275,14 +287,14 @@ public class ThingStuffJdo {
     ThingStuffData thingStuffData = new ThingStuffData();
     thingStuffData.setId(thingStuffId);
     
-    boolean b = delete(thingStuffData);
+    boolean b = delete(sp, thingStuffData);
     
     return b;
   }
   
-  public static boolean delete(ThingStuffData thingStuffData) {
+  public static boolean delete(ServerPersistence sp, ThingStuffData thingStuffData) {
     
-    ThingStuffJdo ttj = new ThingStuffJdo();
+    ThingStuffJdo ttj = new ThingStuffJdo(sp);
     ttj.setData(thingStuffData);
     
     PersistenceManager pm = PMF.get().getPersistenceManager();

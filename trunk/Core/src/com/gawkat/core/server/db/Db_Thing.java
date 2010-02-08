@@ -36,7 +36,7 @@ public class Db_Thing {
   }
   
   public boolean deleteThing(OAuthTokenData accessToken, ThingData thingData) {
-    boolean b = ThingJdo.delete(thingData);
+    boolean b = ThingJdo.delete(sp, thingData);
     return b;
   }
   

@@ -42,13 +42,13 @@ public class Db_ThingStuff {
   }
   
   private void save(ThingStuffData thingStuffData) {
-    ThingStuffJdo db = new ThingStuffJdo();
+    ThingStuffJdo db = new ThingStuffJdo(sp);
     db.save(thingStuffData);
   }
 
   public boolean deleteThingStuffData(OAuthTokenData accessToken, long thingStuffId) {
-    ThingStuffJdo db = new ThingStuffJdo();
-    boolean b = db.delete(thingStuffId);
+    ThingStuffJdo db = new ThingStuffJdo(sp);
+    boolean b = db.delete(sp, thingStuffId);
     return b;
   }
   

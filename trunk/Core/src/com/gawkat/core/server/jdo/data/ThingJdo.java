@@ -11,18 +11,23 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thing.ThingFilterData;
+import com.gawkat.core.server.ServerPersistence;
 import com.gawkat.core.server.jdo.PMF;
 
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class ThingJdo {
 
+	@NotPersistent
+	private ServerPersistence sp = null;
+	
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
   private Long thingId;
@@ -36,17 +41,24 @@ public class ThingJdo {
   
   @Persistent
   private String secret;
-  
+   
   @Persistent
   private Date dateCreated;
   
   @Persistent
   private Date dateUpdated;
   
+  @Persistent
+  private long createdByThingId = 0;
+  
+  @Persistent
+  private long updatedByThingId = 0;
+  
   /**
    * constructor
    */
-  public ThingJdo() {
+  public ThingJdo(ServerPersistence sp) {
+  	this.sp = sp;
   }
   
   public void setData(ThingData thingData) {
@@ -319,7 +331,7 @@ public class ThingJdo {
   }
 
   // TODO - delete child objects
-  public static boolean delete(ThingData thingData) {
+  public static boolean delete(ServerPersistence sp, ThingData thingData) {
     
     if (thingData == null) {
       return false;
@@ -331,7 +343,7 @@ public class ThingJdo {
     
     deleteSub(thingData);
     
-    ThingJdo ttj = new ThingJdo();
+    ThingJdo ttj = new ThingJdo(sp);
     ttj.setData(thingData);
     
     PersistenceManager pm = PMF.get().getPersistenceManager();

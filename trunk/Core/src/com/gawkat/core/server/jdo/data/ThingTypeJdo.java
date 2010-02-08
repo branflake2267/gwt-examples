@@ -43,6 +43,12 @@ public class ThingTypeJdo {
   @Persistent
   private Date dateUpdated;
   
+  @Persistent
+  private long createdByThingId = 0;
+  
+  @Persistent
+  private long updatedByThingId = 0;
+  
   /**
    * constructor
    */
