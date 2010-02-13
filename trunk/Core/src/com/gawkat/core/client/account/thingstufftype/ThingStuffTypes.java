@@ -32,7 +32,7 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
   
   private VerticalPanel pListTop = new VerticalPanel();
   private VerticalPanel pList = new VerticalPanel();
-  private int[] widths = new int[4];
+  private int[] widths = new int[5];
   
   private PushButton bDefault = new PushButton("Add Defaults");
   private PushButton bAdd = new PushButton("Add");
@@ -83,20 +83,23 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
   private void drawTopRow() {
     pListTop.clear();
     HTML l1 = new HTML("#");
-    HTML l2 = new HTML("Name");
-    HTML l3 = new HTML("Type");
-    HTML l4 = new HTML("&nbsp;");
+    HTML l2 = new HTML("Id");
+    HTML l3 = new HTML("Name");
+    HTML l4 = new HTML("Type");
+    HTML l5 = new HTML("&nbsp;");
 
     l1.setStyleName("core-row-top");
     l2.setStyleName("core-row-top");
     l3.setStyleName("core-row-top");
     l4.setStyleName("core-row-top");
+    l5.setStyleName("core-row-top");
     
     Row th = new Row();
     th.add(l1, HorizontalPanel.ALIGN_CENTER);
     th.add(l2, HorizontalPanel.ALIGN_CENTER);
     th.add(l3, HorizontalPanel.ALIGN_CENTER);
     th.add(l4, HorizontalPanel.ALIGN_CENTER);
+    th.add(l5, HorizontalPanel.ALIGN_CENTER);
     
     pListTop.add(th);
   }

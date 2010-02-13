@@ -83,11 +83,22 @@ public class Thing extends Composite implements ChangeHandler, ClickHandler {
     pWidget.clear();
     pName.clear();
     
+    // C0: count
     pCount.add(new HTML(Integer.toString(row)));
-    //pType.add(new HTML(thingTypeData.getName())); // TODO enable if worky
+   
+    // C1: Id
+    HTML pId = new HTML(Long.toString(thingData.getThingId()));
+   
+    // C2: thing type - app, user, group...
+    //pType.add(new HTML(thingTypeData.getName())); 
+    
+    // C2: name
     pName.add(new HTML(thingData.getKey()));
     
+    // C3: buttons
+    
     pWidget.add(pCount);
+    pWidget.add(pId);
     pWidget.add(pType);
     pWidget.add(pName);
     pWidget.add(pModify);

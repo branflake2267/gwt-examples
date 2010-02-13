@@ -85,12 +85,22 @@ public class ThingStuffType extends Composite implements ChangeHandler, ClickHan
     pWidget.clear();
     fpName.clear();
     
+    // C0: count
     pCount.add(new HTML(Integer.toString(row)));
     
+    // C1: Id
+    HTML pId = new HTML(Long.toString(thingStuffTypeData.getId()));
+    
+    // C2: name
     String name = thingStuffTypeData.getName();
     fpName.add(new HTML(name));
     
+    // C3: value type
+    
+    // C4: delete button
+    
     pWidget.add(pCount);
+    pWidget.add(pId);
     pWidget.add(hpName);
     pWidget.add(lbValueType);
     pWidget.add(hpDelete);

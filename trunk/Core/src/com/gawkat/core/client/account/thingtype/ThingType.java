@@ -81,12 +81,22 @@ public class ThingType extends Composite implements ChangeHandler, ClickHandler 
     pWidget.clear();
     fpName.clear();
     
+    // C0: count
     pCount.add(new HTML(Integer.toString(row)));
     
+    // C1: id
+    long id = thingTypeData.getId();
+    HTML pId = new HTML(Long.toString(id));
+    
+    // C2: name
     String name = thingTypeData.getName();
     fpName.add(new HTML(name));
     
+    // C3: delete button
+    
+    // Columns
     pWidget.add(pCount);
+    pWidget.add(pId);
     pWidget.add(hpName);
     pWidget.add(hpDelete);
   }
