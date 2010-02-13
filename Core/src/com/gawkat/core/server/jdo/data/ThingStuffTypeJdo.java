@@ -62,7 +62,7 @@ public class ThingStuffTypeJdo {
     }
   }
 
-  private void setKey(long id) {
+  public void setKey(long id) {
   	if (id > 0) {
   		stuffTypeId = id;
   	}

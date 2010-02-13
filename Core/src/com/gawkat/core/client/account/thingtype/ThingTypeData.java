@@ -32,4 +32,8 @@ public class ThingTypeData implements IsSerializable {
   public void setName(String name) {
     this.name = name;
   }
+
+	public void setKey(int id) {
+	  this.id = id;
+  }
 }

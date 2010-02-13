@@ -30,11 +30,11 @@ public class SetDefaults {
       createApplication();
     
     } else if (defaultType == SetDefaultsData.DEFAULT_THING_USERS) { // thing
-      createUser();
+      createUsers();
       
     } else if (defaultType == SetDefaultsData.DEFAULT_THINGS) { // things
     	 createApplication();
-    	 createUser();
+    	 createUsers();
     	 
     } else if (defaultType == SetDefaultsData.DEFAULT_THING_STUFF_TYPES) {
     	createStuffTypes();
@@ -44,6 +44,24 @@ public class SetDefaults {
   }
   
   private void createStuffTypes() {
+  	
+  	// requried
+  	// can login to site
+  	ThingStuffTypeData a0 = new ThingStuffTypeData();
+  	a0.setData(0, "Can login to site", ThingStuffTypeData.VT_BOOLEAN);
+  	ThingStuffTypeJdo ja0 = new ThingStuffTypeJdo();
+  	ja0.setData(a0);
+  	ja0.setKey(1);
+  	ja0.insertUnique();
+  	
+  	// can be administrator
+  	ThingStuffTypeData a1 = new ThingStuffTypeData();
+  	a1.setData(0, "Is site Admin", ThingStuffTypeData.VT_BOOLEAN);
+  	ThingStuffTypeJdo ja1 = new ThingStuffTypeJdo();
+  	ja1.setData(a1);
+  	ja1.setKey(2);
+  	ja1.insertUnique();
+  	
   	
   	ThingStuffTypeData a = new ThingStuffTypeData();
   	a.setData(0, "Text", ThingStuffTypeData.VT_STRING);
@@ -152,22 +170,29 @@ public class SetDefaults {
     ServerPersistence sp = new ServerPersistence();
     
     ThingTypeData at = new ThingTypeData();
+    at.setKey(1);
     at.setName("Application");
     
     ThingTypeData bt = new ThingTypeData();
+    bt.setKey(2);
     bt.setName("Person");
     
     ThingTypeData ct = new ThingTypeData();
+    ct.setKey(3);
     ct.setName("Group");
     
     ThingTypeData dt = new ThingTypeData();
+    dt.setKey(4);
     dt.setName("Widget");
     
     ThingTypeData et = new ThingTypeData();
+    et.setKey(5);
     et.setName("Permission");
     
     ThingTypeData ft = new ThingTypeData();
+    ft.setKey(6);
     ft.setName("Thing Stuff Template");
+    
     
     ThingTypeJdo a = new ThingTypeJdo();
     a.setData(at);
@@ -211,10 +236,36 @@ public class SetDefaults {
     
   }
   
+  private void createUsers() {
+  	createUser1();
+  	createUser2();
+  }
+  
   /**
    * set a default user for testing
    */
-  private void createUser() {
+  private void createUser1() {
+    Sha1 sha = new Sha1();
+    
+    long thingTypeId = ThingTypeData.TYPE_USER;
+    String key = "Administrator";
+    String password = "password";
+    String secret = sha.b64_sha1(password);
+    //String secret = sha.hex_hmac_sha1("salt", "password"); // would need to do this on the client side too.
+    
+    ThingJdo a = new ThingJdo(sp);
+    a.insert(thingTypeId, key, secret);
+    
+    // TODO add can login
+    
+    // TODO add is admin
+    
+  }
+  
+  /**
+   * set a default user for testing
+   */
+  private void createUser2() {
     Sha1 sha = new Sha1();
     
     long thingTypeId = ThingTypeData.TYPE_USER;
@@ -225,6 +276,8 @@ public class SetDefaults {
     
     ThingJdo a = new ThingJdo(sp);
     a.insert(thingTypeId, key, secret);
+    
+    // TODO add can login
   }
   
   

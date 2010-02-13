@@ -15,6 +15,9 @@ public class ThingTypesData implements IsSerializable {
    * @return
    */
   public ThingTypeData getThingType(long thingTypeId) {
+  	if (thingTypeData == null) {
+  		return null;
+  	}
     ThingTypeData r = null;
     for (int i=0; i < thingTypeData.length; i++) {
       long id = thingTypeData[i].getId();
