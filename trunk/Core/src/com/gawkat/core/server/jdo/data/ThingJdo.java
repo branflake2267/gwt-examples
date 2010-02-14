@@ -114,7 +114,7 @@ public class ThingJdo {
    * @param key
    * @param secret
    */
-  public void insert(long thingTypeId, String key, String secret) {
+  public void insertUnique(long thingTypeId, String key, String secret) {
     this.thingTypeId = thingTypeId;
     this.key = key;
     this.secret = secret;
@@ -379,6 +379,10 @@ public class ThingJdo {
   private static void deleteSub(ThingData thingData) {
     // stuff data
     ThingStuffJdo.delete(thingData);
+  }
+
+	public void setThingId(long thingId) {
+	  this.thingId = thingId;
   }
   
 }

@@ -7,16 +7,14 @@ import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.oauth.Sha1;
 import com.gawkat.core.server.ServerPersistence;
 import com.gawkat.core.server.jdo.data.ThingJdo;
+import com.gawkat.core.server.jdo.data.ThingStuffJdo;
 import com.gawkat.core.server.jdo.data.ThingStuffTypeJdo;
 import com.gawkat.core.server.jdo.data.ThingTypeJdo;
 
 public class SetDefaults {
 
   private ServerPersistence sp = null;
-  
-
-
-  
+ 
   public SetDefaults(ServerPersistence sp) {
     this.sp = sp;
   }
@@ -49,20 +47,21 @@ public class SetDefaults {
   	// can login to site
   	ThingStuffTypeData a0 = new ThingStuffTypeData();
   	a0.setData(0, "Can login to site", ThingStuffTypeData.VT_BOOLEAN);
+  	
   	ThingStuffTypeJdo ja0 = new ThingStuffTypeJdo();
-  	ja0.setData(a0);
   	ja0.setKey(1);
+  	ja0.setData(a0);
   	ja0.insertUnique();
   	
   	// can be administrator
   	ThingStuffTypeData a1 = new ThingStuffTypeData();
   	a1.setData(0, "Is site Admin", ThingStuffTypeData.VT_BOOLEAN);
   	ThingStuffTypeJdo ja1 = new ThingStuffTypeJdo();
-  	ja1.setData(a1);
   	ja1.setKey(2);
+  	ja1.setData(a1);
   	ja1.insertUnique();
   	
-  	
+/*  	
   	ThingStuffTypeData a = new ThingStuffTypeData();
   	a.setData(0, "Text", ThingStuffTypeData.VT_STRING);
   	
@@ -160,6 +159,8 @@ public class SetDefaults {
   	ThingStuffTypeJdo j14 = new ThingStuffTypeJdo();
   	j14.setData(o);
   	j14.insertUnique();
+  	*/
+  	
   }
 
 	/**
@@ -232,7 +233,8 @@ public class SetDefaults {
     String secret = sha.hex_hmac_sha1("salt", "password");
     
     ThingJdo a = new ThingJdo(sp);
-    a.insert(thingTypeId, key, secret);
+    a.setThingId(1);
+    a.insertUnique(thingTypeId, key, secret);
     
   }
   
@@ -242,7 +244,7 @@ public class SetDefaults {
   }
   
   /**
-   * set a default user for testing
+   * create administrator
    */
   private void createUser1() {
     Sha1 sha = new Sha1();
@@ -254,16 +256,30 @@ public class SetDefaults {
     //String secret = sha.hex_hmac_sha1("salt", "password"); // would need to do this on the client side too.
     
     ThingJdo a = new ThingJdo(sp);
-    a.insert(thingTypeId, key, secret);
+    a.setThingId(2);
+    a.insertUnique(thingTypeId, key, secret);
     
-    // TODO add can login
+    // set can login
+    ThingStuffData ts = new ThingStuffData();
+    ts.setThingId(2);
+    ts.setThingStuffTypeId(1);
+    ts.setValue(true);
     
-    // TODO add is admin
+    ThingStuffJdo tsj = new ThingStuffJdo(sp);
+    tsj.save(ts);
     
+    // set admin true
+    ThingStuffData ts2 = new ThingStuffData();
+    ts2.setThingId(2);
+    ts2.setThingStuffTypeId(2);
+    ts2.setValue(true);
+    
+    ThingStuffJdo tsj2 = new ThingStuffJdo(sp);
+    tsj2.save(ts2);
   }
   
   /**
-   * set a default user for testing
+   * create demo user
    */
   private void createUser2() {
     Sha1 sha = new Sha1();
@@ -275,9 +291,17 @@ public class SetDefaults {
     //String secret = sha.hex_hmac_sha1("salt", "password"); // would need to do this on the client side too.
     
     ThingJdo a = new ThingJdo(sp);
-    a.insert(thingTypeId, key, secret);
+    a.setThingId(3);
+    a.insertUnique(thingTypeId, key, secret);
     
-    // TODO add can login
+    // set can login
+    ThingStuffData ts = new ThingStuffData();
+    ts.setThingId(3);
+    ts.setThingStuffTypeId(1);
+    ts.setValue(true);
+    
+    ThingStuffJdo tsj = new ThingStuffJdo(sp);
+    tsj.save(ts);
   }
   
   
