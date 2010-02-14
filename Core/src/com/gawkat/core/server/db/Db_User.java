@@ -67,7 +67,7 @@ public class Db_User {
     String secret = userData.consumerSecret;
     
     ThingJdo user = new ThingJdo(sp);
-    user.insert(thingTypeId, key, secret);
+    user.insertUnique(thingTypeId, key, secret);
     
     Long newUserId = user.getThingId();
     
