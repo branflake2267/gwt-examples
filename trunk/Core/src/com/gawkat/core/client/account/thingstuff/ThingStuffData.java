@@ -18,6 +18,9 @@ public class ThingStuffData implements IsSerializable {
   
   private boolean valueBol = false;
   
+  // define the link type - adjetives of the relationship
+  private long[] thingStuffIdsAbout = null;
+  
   /**
    * opening
    */
@@ -31,8 +34,15 @@ public class ThingStuffData implements IsSerializable {
   public ThingStuffData() {
   }
   
-  public ThingStuffData(long thingId, long thingStuffId, 
-      long thingStuffTypeId, String value, boolean valueBol, double valueDouble, long valueInt) {
+  public ThingStuffData(
+  		long thingId, 
+  		long thingStuffId, 
+      long thingStuffTypeId, 
+      String value, 
+      boolean valueBol, 
+      double valueDouble, 
+      long valueInt,
+      long[] thingStuffTypeIdsAbout) {
   	
     this.thingId = thingId;
     this.thingStuffId = thingStuffId;
@@ -41,6 +51,7 @@ public class ThingStuffData implements IsSerializable {
     this.valueBol = valueBol;
     this.valueDouble = valueDouble;
     this.valueInt = valueInt;
+    this.thingStuffIdsAbout = thingStuffTypeIdsAbout;
   }
   
   public long getId() {
@@ -98,6 +109,13 @@ public class ThingStuffData implements IsSerializable {
   public long getValueInt() {
     return valueInt;
   }
+
+	public long[] getThingStuffIdsAbout() {
+	  return thingStuffIdsAbout;
+  }
   
+	public void setThingStuffIdsAbout(long[] thingStuffIdsAbout) {
+		this.thingStuffIdsAbout = thingStuffIdsAbout;
+	}
   
 }

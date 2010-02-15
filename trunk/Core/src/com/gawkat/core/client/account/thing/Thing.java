@@ -90,7 +90,9 @@ public class Thing extends Composite implements ChangeHandler, ClickHandler {
     HTML pId = new HTML(Long.toString(thingData.getThingId()));
    
     // C2: thing type - app, user, group...
-    pType.add(new HTML(thingTypeData.getName())); 
+    if (thingTypeData != null) {
+    	pType.add(new HTML(thingTypeData.getName())); 
+    }
     
     // C2: name
     pName.add(new HTML(thingData.getKey()));

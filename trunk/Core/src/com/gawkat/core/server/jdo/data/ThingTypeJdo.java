@@ -135,6 +135,28 @@ public class ThingTypeJdo {
   }
   
   /**
+   * insert new 
+   */
+  public void insert() {
+    this.dateCreated = new Date();
+     
+    PersistenceManager pm = PMF.get().getPersistenceManager();
+    Transaction tx = pm.currentTransaction();
+    try {
+      tx.begin();
+      pm.makePersistent(this);
+      tx.commit();
+    } finally {
+      if (tx.isActive()) {
+          tx.rollback();
+      }
+      pm.close();
+    }
+    
+    System.out.println("saved: thingTypeId:" + getId());
+  }
+  
+  /**
    * query thingType
    * 
    * @param name
