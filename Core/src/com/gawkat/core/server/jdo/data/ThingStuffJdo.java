@@ -38,7 +38,7 @@ public class ThingStuffJdo {
   // owner
   @Persistent
   private long thingId;
-  
+   
   // values that can be stored
   @Persistent
   private String value = null;
@@ -63,6 +63,10 @@ public class ThingStuffJdo {
   
   @Persistent
   private long updatedByThingId = 0;
+  
+  // define the link types
+  @Persistent
+  private long[] thingStuffIds_About = null;
   
   /**
    * constructor
@@ -89,6 +93,7 @@ public class ThingStuffJdo {
     this.valueBol = thingStuffData.getValueBol();
     this.valueDouble = thingStuffData.getValueDouble();
     this.valueInt = thingStuffData.getValueInt();
+    this.thingStuffIds_About = thingStuffData.getThingStuffIdsAbout();
     
     if (thingStuffId != null && thingStuffId > 0) {
       this.dateUpdated = new Date();
@@ -108,6 +113,7 @@ public class ThingStuffJdo {
     this.valueBol = thingStuffData.getValueBol();
     this.valueDouble = thingStuffData.getValueDouble();
     this.valueInt = thingStuffData.getValueInt();
+    this.thingStuffIds_About = thingStuffData.getThingStuffIdsAbout();
     
     if (thingStuffId != null && thingStuffId > 0) {
       this.dateUpdated = new Date();
@@ -116,7 +122,15 @@ public class ThingStuffJdo {
     }
   }
 	
-  private void setKey(long id) {
+  public long[] getThingStuffIdsAbout() {
+	  return thingStuffIds_About;
+  }
+  
+  public void setThingStuffIdsAbout(long[] thingStuffIds_About) {
+  	this.thingStuffIds_About = thingStuffIds_About;
+  }
+
+	private void setKey(long id) {
 	  if (id > 0) {
 	  	thingStuffId = id;
 	  }
@@ -274,12 +288,13 @@ public class ThingStuffJdo {
           thingJdo[i].value, 
           thingJdo[i].valueBol, 
           thingJdo[i].valueDouble,
-          thingJdo[i].valueInt);
+          thingJdo[i].valueInt, 
+          thingJdo[i].thingStuffIds_About);
     }
     return r;
   }
   
-  public static boolean delete(ServerPersistence sp, long thingStuffId) {
+  public boolean delete(ServerPersistence sp, long thingStuffId) {
     if (thingStuffId == 0) {
       return false;
     }

@@ -34,7 +34,6 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
   private VerticalPanel pList = new VerticalPanel();
   private int[] widths = new int[5];
   
-  private PushButton bDefault = new PushButton("Add Defaults");
   private PushButton bAdd = new PushButton("Add");
   private PushButton bSave = new PushButton("Save");
   
@@ -53,7 +52,6 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
     
     drawMenu();
     
-    bDefault.addClickHandler(this);
     bAdd.addClickHandler(this);
     bSave.addClickHandler(this);
   }
@@ -69,8 +67,6 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
   public void drawMenu() {
     
     HorizontalPanel hp = new HorizontalPanel();
-    hp.add(bDefault);
-    hp.add(new HTML("&nbsp;"));
     hp.add(bAdd);
     hp.add(new HTML("&nbsp;"));
     hp.add(bSave);
@@ -178,23 +174,11 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
     saveThingTypesRpc(ThingStuffTypeData);
   }
   
-  private void setDefaults() {
-    rpc.setDefaults(cp.getAccessToken(), SetDefaultsData.DEFAULT_THING_STUFF_TYPES, new AsyncCallback<Boolean>() {
-      public void onSuccess(Boolean result) {
-        draw();
-      }
-      public void onFailure(Throwable caught) { 
-      }
-    });
-  }
-  
   public void onClick(ClickEvent event) {
     
     Widget sender = (Widget) event.getSource();
     
-    if (sender == bDefault) {
-      setDefaults();
-    } else if (sender == bAdd) {
+    if (sender == bAdd) {
       add();
     } else if (sender == bSave) {
       save();

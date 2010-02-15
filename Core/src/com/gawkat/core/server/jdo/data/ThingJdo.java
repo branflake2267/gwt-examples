@@ -140,6 +140,23 @@ public class ThingJdo {
     }
   }
   
+  public void insert() {
+    this.dateCreated = new Date();
+    
+    PersistenceManager pm = PMF.get().getPersistenceManager();
+    Transaction tx = pm.currentTransaction();
+    try {
+      tx.begin();
+      pm.makePersistent(this);
+      tx.commit();
+    } finally {
+      if (tx.isActive()) {
+          tx.rollback();
+      }
+      pm.close();
+    }
+  }
+  
   public boolean save(ThingData thingData) {
     setData(thingData);
 
@@ -325,7 +342,9 @@ public class ThingJdo {
     ThingData[] r = new ThingData[thingJdo.length];
     for (int i=0; i < thingJdo.length; i++) {
       r[i] = new ThingData();
-      r[i].setData(thingJdo[i].thingTypeId, thingJdo[i].thingId, thingJdo[i].key);
+      if (thingJdo[i].key != null) {
+      	r[i].setData(thingJdo[i].thingTypeId, thingJdo[i].thingId, thingJdo[i].key);
+      }
     }
     return r;
   }

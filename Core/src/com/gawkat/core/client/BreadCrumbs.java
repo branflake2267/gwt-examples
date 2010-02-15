@@ -1,6 +1,5 @@
-package com.gawkat.core.client.account;
+package com.gawkat.core.client;
 
-import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.global.QueryString;
 import com.gawkat.core.client.global.QueryStringData;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -45,7 +44,7 @@ public class BreadCrumbs extends Composite implements ValueChangeHandler<String>
     String link = "";
     if (qsd.getHistoryToken().matches("account_.*") == true) {
       name = "Account";
-      link = "account_Profile";
+      link = "account_Home";
     }
     
     if (name.length() == 0) {
@@ -63,8 +62,9 @@ public class BreadCrumbs extends Composite implements ValueChangeHandler<String>
     String name = "";
     if (qsd.getHistoryToken().matches("account_Create") == true) {
       name = "Create";
-    } else if (qsd.getHistoryToken().matches("account_Profile") == true) {
-      name = "Profile";
+      
+    } else if (qsd.getHistoryToken().matches("account_Home") == true) {
+      name = "Home";
       
     } else if (qsd.getHistoryToken().matches("account_Things") == true) {
       name = "Things";

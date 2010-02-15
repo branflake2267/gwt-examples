@@ -24,6 +24,7 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
   private TabPanel pWidget = new TabPanel();
   
   // tabed widgets
+  private AccountsHome wHome = null;
   private ThingTypes wTypes = null;
   private ThingStuffTypes wStuffTypes = null;
   private Things wThings = null;
@@ -31,10 +32,12 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
   public AccountTabs(ClientPersistence cp) {
     this.cp = cp;
     
+    wHome = new AccountsHome(cp);
     wTypes = new ThingTypes(cp);
     wStuffTypes = new ThingStuffTypes(cp);
     wThings = new Things(cp);
     
+    pWidget.add(wHome, "Home");
     pWidget.add(wTypes, "Thing Types");
     pWidget.add(wStuffTypes, "Stuff Types");
     pWidget.add(wThings, "Things");
@@ -53,21 +56,31 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
     History.addValueChangeHandler(this);
   }
   
+  /**
+   * draw tab
+   */
   public void draw() {
     
     QueryStringData qsd = QueryString.getQueryStringData();
     
     String ht = qsd.getHistoryToken();
-    if (ht.equals("account_Types") == true) {
+    if (ht.equals("account_Home") == true) {
       pWidget.selectTab(0);
       
-    } else if (ht.equals("account_StuffType") == true) {
+    } else if (ht.equals("account_Types") == true) {
       pWidget.selectTab(1);
       
-    } else if (ht.equals("account_Things") == true) {
+    } else if (ht.equals("account_StuffType") == true) {
       pWidget.selectTab(2);
+      
+    } else if (ht.equals("account_Things") == true) {
+      pWidget.selectTab(3);
     }
     
+  }
+  
+  private void drawHome() {
+  	wHome.draw();
   }
   
   private void drawTypes() {
@@ -87,12 +100,15 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
     int tab = event.getItem();
     
     if (tab == 0) {
-      drawTypes();
+      drawHome();
       
     } else if (tab == 1) {
-      drawStuffType();
+      drawTypes();
       
     } else if (tab == 2) {
+      drawStuffType();
+      
+    } else if (tab == 3) {
       drawThings();
       
     } 
@@ -102,16 +118,18 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
 
   public void onSelection(SelectionEvent<Integer> event) {
   
-    
     int tab = event.getSelectedItem();
     
     if (tab == 0) {
-      History.newItem("account_Types");
+      History.newItem("account_Home");
       
     } else if (tab == 1) {
-      History.newItem("account_StuffType");
+      History.newItem("account_Types");
       
     } else if (tab == 2) {
+      History.newItem("account_StuffType");
+      
+    } else if (tab == 3) {
       History.newItem("account_Things");
       
     } 

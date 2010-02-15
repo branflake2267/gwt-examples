@@ -113,6 +113,28 @@ public class ThingStuffTypeJdo {
   }
   
   /**
+   * insert new
+   */
+  public void insert() {
+    this.dateCreated = new Date();
+    
+    PersistenceManager pm = PMF.get().getPersistenceManager();
+    Transaction tx = pm.currentTransaction();
+    try {
+      tx.begin();
+      pm.makePersistent(this);
+      tx.commit();
+    } finally {
+      if (tx.isActive()) {
+          tx.rollback();
+      }
+      pm.close();
+    }
+    
+    System.out.println("saved: thingStuffTypeId:" + getId());
+  }
+  
+  /**
    * can only insert unique names
    * 
    * @param name

@@ -12,7 +12,7 @@ import com.gawkat.core.server.jdo.data.ThingStuffTypeJdo;
 import com.gawkat.core.server.jdo.data.ThingTypeJdo;
 
 public class SetDefaults {
-
+	
   private ServerPersistence sp = null;
  
   public SetDefaults(ServerPersistence sp) {
@@ -21,7 +21,13 @@ public class SetDefaults {
   
   public boolean setDefaults(int defaultType) {
     
-    if (defaultType == SetDefaultsData.DEFAULT_THING_TYPES) { // thing types
+  	if (defaultType == SetDefaultsData.DEFAULT_ALL) { // setup all defaults
+      setThingTypes();
+      createStuffTypes();
+      createApplication();
+      createUsers();
+    
+    } else if (defaultType == SetDefaultsData.DEFAULT_THING_TYPES) { // thing types
       setThingTypes();
     
     } else if (defaultType == SetDefaultsData.DEFAULT_THING_APPLICATIONS) { // thing
@@ -43,23 +49,43 @@ public class SetDefaults {
   
   private void createStuffTypes() {
   	
-  	// requried
-  	// can login to site
-  	ThingStuffTypeData a0 = new ThingStuffTypeData();
-  	a0.setData(0, "Can login to site", ThingStuffTypeData.VT_BOOLEAN);
-  	
-  	ThingStuffTypeJdo ja0 = new ThingStuffTypeJdo();
-  	ja0.setKey(1);
-  	ja0.setData(a0);
-  	ja0.insertUnique();
+  	// insert blanks to set key increment
+  	ThingStuffTypeJdo aa = new ThingStuffTypeJdo();
+  	aa.setData(new ThingStuffTypeData());
+  	aa.insert();
+  	aa.insert();
   	
   	// can be administrator
-  	ThingStuffTypeData a1 = new ThingStuffTypeData();
-  	a1.setData(0, "Is site Admin", ThingStuffTypeData.VT_BOOLEAN);
-  	ThingStuffTypeJdo ja1 = new ThingStuffTypeJdo();
-  	ja1.setKey(2);
-  	ja1.setData(a1);
-  	ja1.insertUnique();
+  	ThingStuffTypeData a = new ThingStuffTypeData();
+  	a.setData(0, "Is site Admin", ThingStuffTypeData.VT_BOOLEAN);
+  	
+  	ThingStuffTypeJdo jst1 = new ThingStuffTypeJdo();
+  	jst1.setKey(1);
+  	jst1.setData(a);
+  	jst1.insertUnique();
+  	
+  	// Thing Link
+  	ThingStuffTypeData b = new ThingStuffTypeData();
+  	b.setData(0, "Thing Link", ThingStuffTypeData.VT_LINK);
+  	
+  	ThingStuffTypeJdo jst2 = new ThingStuffTypeJdo();
+  	jst2.setKey(2);
+  	jst2.setData(b);
+  	jst2.insertUnique();
+  	
+  	// requried
+  	// can login to site
+  	/*
+  	ThingStuffTypeData a2 = new ThingStuffTypeData();
+  	a2.setData(0, "Can login to site", ThingStuffTypeData.VT_BOOLEAN);
+  	
+  	ThingStuffTypeJdo ja0 = new ThingStuffTypeJdo();
+  	ja2.setKey(1);
+  	ja2.setData(a0);
+  	ja2.insertUnique();
+  	*/
+  	
+
   	
 /*  	
   	ThingStuffTypeData a = new ThingStuffTypeData();
@@ -98,8 +124,7 @@ public class SetDefaults {
   	ThingStuffTypeData m = new ThingStuffTypeData();
   	m.setData(0, "Money", ThingStuffTypeData.VT_STRING);
   	
-  	ThingStuffTypeData n = new ThingStuffTypeData();
-  	n.setData(0, "Thing Link", ThingStuffTypeData.VT_LINK);
+  	
   	
   	ThingStuffTypeData o = new ThingStuffTypeData();
   	o.setData(0, "File", ThingStuffTypeData.VT_FILE);
@@ -152,9 +177,7 @@ public class SetDefaults {
   	j12.setData(m);
   	j12.insertUnique();
   	
-  	ThingStuffTypeJdo j13 = new ThingStuffTypeJdo();
-  	j13.setData(n);
-  	j13.insertUnique();
+
   	
   	ThingStuffTypeJdo j14 = new ThingStuffTypeJdo();
   	j14.setData(o);
@@ -167,6 +190,21 @@ public class SetDefaults {
    * set default things
    */
   private void setThingTypes() {
+  	
+  	// insert blanks to set key incremen
+  	ThingTypeJdo aa = new ThingTypeJdo();
+    aa.insert();
+    ThingTypeJdo bb = new ThingTypeJdo();
+    bb.insert();
+    ThingTypeJdo cc = new ThingTypeJdo();
+    cc.insert();
+    ThingTypeJdo dd = new ThingTypeJdo();
+    dd.insert();
+    ThingTypeJdo ee = new ThingTypeJdo();
+    ee.insert();
+    ThingTypeJdo ff = new ThingTypeJdo();
+    ff.insert();
+
     
     ServerPersistence sp = new ServerPersistence();
     
@@ -225,6 +263,12 @@ public class SetDefaults {
    * set default application
    */
   private void createApplication() {
+  	
+  	// insert blanks to set key increment 
+  	ThingJdo aa = new ThingJdo(sp);
+    aa.insert();
+    aa.insert();
+    //aa.insert();
     
     Sha1 sha = new Sha1();
     
@@ -233,14 +277,19 @@ public class SetDefaults {
     String secret = sha.hex_hmac_sha1("salt", "password");
     
     ThingJdo a = new ThingJdo(sp);
-    a.setThingId(1);
+    a.setThingId(SetDefaultsData.THING_APPLICATION);
     a.insertUnique(thingTypeId, key, secret);
     
   }
   
   private void createUsers() {
+  	
+  	// admin
   	createUser1();
+  	
+  	// demo user
   	createUser2();
+  	
   }
   
   /**
@@ -256,26 +305,20 @@ public class SetDefaults {
     //String secret = sha.hex_hmac_sha1("salt", "password"); // would need to do this on the client side too.
     
     ThingJdo a = new ThingJdo(sp);
-    a.setThingId(2);
+    a.setThingId(SetDefaultsData.THING_ADMINISTRATOR);
     a.insertUnique(thingTypeId, key, secret);
-    
-    // set can login
-    ThingStuffData ts = new ThingStuffData();
-    ts.setThingId(2);
-    ts.setThingStuffTypeId(1);
-    ts.setValue(true);
-    
-    ThingStuffJdo tsj = new ThingStuffJdo(sp);
-    tsj.save(ts);
     
     // set admin true
     ThingStuffData ts2 = new ThingStuffData();
-    ts2.setThingId(2);
-    ts2.setThingStuffTypeId(2);
+    ts2.setThingId(SetDefaultsData.THING_ADMINISTRATOR);
+    ts2.setThingStuffTypeId(SetDefaultsData.THINGSTUFFTYPE_ADMIN);
     ts2.setValue(true);
     
     ThingStuffJdo tsj2 = new ThingStuffJdo(sp);
     tsj2.save(ts2);
+    
+    // TODO add default stuff types
+
   }
   
   /**
@@ -291,17 +334,10 @@ public class SetDefaults {
     //String secret = sha.hex_hmac_sha1("salt", "password"); // would need to do this on the client side too.
     
     ThingJdo a = new ThingJdo(sp);
-    a.setThingId(3);
+    a.setThingId(SetDefaultsData.THING_DEMOUSER);
     a.insertUnique(thingTypeId, key, secret);
     
-    // set can login
-    ThingStuffData ts = new ThingStuffData();
-    ts.setThingId(3);
-    ts.setThingStuffTypeId(1);
-    ts.setValue(true);
-    
-    ThingStuffJdo tsj = new ThingStuffJdo(sp);
-    tsj.save(ts);
+    // TODO add default stuff types
   }
   
   
