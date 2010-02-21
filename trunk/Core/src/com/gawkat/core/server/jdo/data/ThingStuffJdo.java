@@ -29,14 +29,16 @@ public class ThingStuffJdo {
 	@NotPersistent
 	private ServerPersistence sp = null;
 	
+	// identity
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
   private Long thingStuffId;
   
+  // why kind of stuff, defined as type
   @Persistent
   private long thingStuffTypeId;
   
-  // owner
+  // who is the owner
   @Persistent
   private long thingId;
    
@@ -273,6 +275,7 @@ public class ThingStuffJdo {
           thingJdo[i].getDateUpdated(),
           thingJdo[i].getThingStuffsAbout());
     }
+    
     return r;
   }
   
