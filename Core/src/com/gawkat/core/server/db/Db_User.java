@@ -121,7 +121,8 @@ public class Db_User {
     // TODO - I think I need to run more checking later
 
     // get userId
-    ThingJdo[] users = ThingJdo.query((long)ThingTypeJdo.TYPE_USER, userData.consumerKey);
+    ThingJdo tj = new ThingJdo(sp);
+    ThingJdo[] users = tj.query((long)ThingTypeJdo.TYPE_USER, userData.consumerKey);
     long userId = 0;
     if (users != null && users.length > 0) {
       userId = users[0].getThingId();

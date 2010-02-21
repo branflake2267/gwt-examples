@@ -195,7 +195,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     }
     
     pAbout.clear();
-    wStuffAbout.setData(thingStuffTypesData, thingData, thingStuffData.getThingStuffIdsAbout());
+    wStuffAbout.setData(thingStuffTypesData, thingData, thingStuffData.getThingStuffsAbout());
     pAbout.add(wStuffAbout);
   }
   

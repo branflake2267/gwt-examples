@@ -18,7 +18,8 @@ public class Db_Thing {
   
   public ThingsData getThings(OAuthTokenData accessToken, ThingFilterData filter) {
     
-    ThingData[] td = ThingJdo.query(filter);
+  	ThingJdo tj = new ThingJdo(sp);
+    ThingData[] td = tj.query(filter);
     
     Db_ThingType dbt = new Db_ThingType(sp);
     ThingTypesData tdt = dbt.getThingTypes(null); // TODO filter later
@@ -37,7 +38,8 @@ public class Db_Thing {
   }
   
   public boolean deleteThing(OAuthTokenData accessToken, ThingData thingData) {
-    boolean b = ThingJdo.delete(sp, thingData);
+  	ThingJdo tj = new ThingJdo(sp);
+    boolean b = tj.delete(thingData);
     return b;
   }
   

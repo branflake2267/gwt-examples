@@ -21,7 +21,8 @@ public class Db_ThingStuff {
   
   public ThingStuffsData getThingStuffData(OAuthTokenData accessToken, ThingStuffFilterData filter) {
     
-    ThingStuffData[] thingStuffData = ThingStuffJdo.query(filter);
+  	ThingStuffJdo tsj = new ThingStuffJdo(sp);
+    ThingStuffData[] thingStuffData = tsj.query(filter);
     
     Db_ThingStuffType t = new Db_ThingStuffType(sp);
     ThingStuffTypesData thingStuffTypesData = t.getThingStuffTypes(accessToken, null); // TODO filter ?

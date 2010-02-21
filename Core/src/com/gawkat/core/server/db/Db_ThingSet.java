@@ -27,7 +27,8 @@ public class Db_ThingSet {
     
     ThingFilterData filter = null;
     
-    ThingData[] things = ThingJdo.query(filter);
+    ThingJdo tj = new ThingJdo(sp);
+    ThingData[] things = tj.query(filter);
     
     ThingSetOfData[] sets = new ThingSetOfData[things.length];
     for (int i=0; i < things.length; i++) {
@@ -38,7 +39,8 @@ public class Db_ThingSet {
       ThingStuffFilterData thingStuffFilter = new ThingStuffFilterData();
       thingStuffFilter.thingId = things[i].getThingId();
       
-      sets[i].thingStuffData = ThingStuffJdo.query(thingStuffFilter);
+      ThingStuffJdo tsj = new ThingStuffJdo(sp);
+      sets[i].thingStuffData = tsj.query(thingStuffFilter);
     }
     
     return sets;
