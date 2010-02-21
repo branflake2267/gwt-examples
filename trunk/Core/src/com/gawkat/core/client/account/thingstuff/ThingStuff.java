@@ -28,6 +28,7 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.server.rpc.RPC;
 
@@ -45,7 +46,11 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   
   private ListBox lbTypes = new ListBox();
   
+  // inputs container
   private FlowPanel pInput = new FlowPanel();
+  
+  // about stuff container
+  private FlowPanel pAbout = new FlowPanel();
   
   private TextBox tbValue = new TextBox();
   private CheckBox cbValue = new CheckBox();
@@ -60,14 +65,24 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
 
   private ThingStuffTypesData thingStuffTypesData = null;
 
+  /**
+   * constructor - setup the widget
+   * 
+   * @param cp
+   */
   public ThingStuff(ClientPersistence cp) {
     this.cp = cp;
+    
+    // inputs of stuff, and then add another group of stuffs
+    VerticalPanel vpInput = new VerticalPanel();
+    vpInput.add(pInput);
+    vpInput.add(pAbout);
     
     HorizontalPanel hpButtons = new HorizontalPanel();
     hpButtons.add(bDelete);
     
     pWidget.add(lbTypes);
-    pWidget.add(pInput);
+    pWidget.add(vpInput);
     pWidget.add(hpButtons);
     
     initWidget(pWidget);
@@ -78,16 +93,52 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     rpc = RpcCore.initRpc();
   }
   
-  public void setData(ThingData thingData, ThingStuffTypesData thingStuffTypesData, ThingStuffData thingStuffData) {
+  /**
+   * set up the stuff data
+   * 
+   * @param thingData - owner
+   * @param thingStuffTypesData - choices
+   * @param thingStuffData - fill in saved data
+   */
+  public void setData(
+  		ThingData thingData, 
+  		ThingStuffTypesData thingStuffTypesData, 
+  		ThingStuffData thingStuffData) {
+  	
     this.thingData = thingData;
     this.thingStuffData = thingStuffData;
     this.thingStuffTypesData = thingStuffTypesData;
+    
+    // draw choices
     drawListBoxTypes();
+    
+    // draw input type - textbox, checkbox...
     drawInput();
   }
   
-  public Row getRow() {
-    return pWidget;
+  /**
+   * draw choices of types
+   */
+  private void drawListBoxTypes() {
+    lbTypes.clear();
+    
+    if (thingStuffTypesData == null) {
+      return;
+    }
+    
+    lbTypes.addItem("Select", "0");
+    
+    for (int i=0; i < thingStuffTypesData.thingStuffTypeData.length; i++) {
+      String item = thingStuffTypesData.thingStuffTypeData[i].getName();
+      String value = Long.toString(thingStuffTypesData.thingStuffTypeData[i].getStuffTypeId());
+      lbTypes.addItem(item, value);
+      
+      //debug
+      System.out.println("item: " + item + " value: " + value);
+    }
+        
+    long sel = thingStuffData.getThingStuffTypeId();
+    Global_ListBox.setSelected(lbTypes, (int) sel);
   }
   
   private void drawInput() {
@@ -316,23 +367,6 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     tbValue.setText(Long.toString(valueInt));
   }
 
-  private void drawListBoxTypes() {
-    lbTypes.clear();
-    if (thingStuffTypesData == null) {
-      return;
-    }
-    lbTypes.addItem("Select", "0");
-    for (int i=0; i < thingStuffTypesData.thingStuffTypeData.length; i++) {
-      String item = thingStuffTypesData.thingStuffTypeData[i].getName();
-      String value = Long.toString(thingStuffTypesData.thingStuffTypeData[i].getStuffTypeId());
-      lbTypes.addItem(item, value);
-      System.out.println("item: " + item + " value: " + value);
-    }
-        
-    long sel = thingStuffData.getThingStuffTypeId();
-    Global_ListBox.setSelected(lbTypes, (int) sel);
-  }
-  
   private int getDataTypeId() {
     int thingStuffId = Global_ListBox.getSelectedValue(lbTypes);
     ThingStuffTypeData type = thingStuffTypesData.getStuffTypeData(thingStuffId);
@@ -350,6 +384,11 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     drawInput();
     resizeInput(dataTypeId);
     fireChange(EventManager.THINGSTUFF_TYPECHANGE);
+  }
+  
+
+  public Row getRow() {
+    return pWidget;
   }
   
   private void resizeInput(int dataTypeId) {

@@ -78,6 +78,11 @@ public class ThingStuffs extends Composite implements ClickHandler {
     this.thingData = thingData;
   }
   
+  public void setData(ThingData thingData, ThingStuffsData thingStuffsData) {
+  	this.thingData = thingData;
+  	process(thingStuffsData);
+  }
+  
   public void draw() {
     getThingStuffRpc();
   }
