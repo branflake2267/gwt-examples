@@ -12,8 +12,11 @@ public class Db_ThingStuff {
 
   private ServerPersistence sp = null;
   
+	private ThingStuffJdo dbThingJdo;
+  
   public Db_ThingStuff(ServerPersistence sp) {
     this.sp = sp;
+    dbThingJdo = new ThingStuffJdo(sp);
   }
   
   public ThingStuffsData getThingStuffData(OAuthTokenData accessToken, ThingStuffFilterData filter) {
@@ -42,13 +45,12 @@ public class Db_ThingStuff {
   }
   
   private void save(ThingStuffData thingStuffData) {
-    ThingStuffJdo db = new ThingStuffJdo(sp);
-    db.save(thingStuffData);
+    
+    dbThingJdo.save(thingStuffData);
   }
 
   public boolean deleteThingStuffData(OAuthTokenData accessToken, long thingStuffId) {
-    ThingStuffJdo db = new ThingStuffJdo(sp);
-    boolean b = db.delete(sp, thingStuffId);
+    boolean b = dbThingJdo.delete(sp, thingStuffId);
     return b;
   }
   

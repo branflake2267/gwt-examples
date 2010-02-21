@@ -112,6 +112,7 @@ public class ServerPersistence {
     return s;
   }
   
+  // TODO - add this later
   public long getThingId() {
   	return thingId;
   }

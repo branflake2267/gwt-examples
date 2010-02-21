@@ -79,7 +79,7 @@ public class ThingStuffJdo {
   
   // define the about - adds another demension to the data
   @Persistent
-  private ThingStuffsData thingStuffIds_About = null;
+  private ThingStuffData[] thingStuffIds_About = null;
   
   /**
    * constructor
@@ -99,16 +99,14 @@ public class ThingStuffJdo {
     this.valueBol = thingStuffData.getValueBol();
     this.valueDouble = thingStuffData.getValueDouble();
     this.valueInt = thingStuffData.getValueInt();
-    this.thingStuffIds_About = thingStuffData.getThingStuffIdsAbout();
+    this.thingStuffIds_About = thingStuffData.getThingStuffIdsAbout().thingStuffData;
     
     this.startOf = thingStuffData.getStartOf();
     this.endOf = thingStuffData.getEndOf();
     
     if (thingStuffId != null && thingStuffId > 0) {
-    	this.updatedByThingId = sp.getThingId();
       this.dateUpdated = new Date();
     } else {
-    	this.createdByThingId = sp.getThingId();
       this.dateCreated = new Date();
     }
   }
@@ -124,26 +122,26 @@ public class ThingStuffJdo {
     this.valueBol = thingStuffData.getValueBol();
     this.valueDouble = thingStuffData.getValueDouble();
     this.valueInt = thingStuffData.getValueInt();
-    this.thingStuffIds_About = thingStuffData.getThingStuffIdsAbout();
+    this.thingStuffIds_About = thingStuffData.getThingStuffIdsAbout().thingStuffData;
     
     this.startOf = thingStuffData.getStartOf();
     this.endOf = thingStuffData.getEndOf();
     
     if (thingStuffId != null && thingStuffId > 0) {
-    	this.updatedByThingId = sp.getThingId();
       this.dateUpdated = new Date();
     } else {
-    	this.createdByThingId = sp.getThingId();
       this.dateCreated = new Date();
     }
   }
 
 	public ThingStuffsData getThingStuffIdsAbout() {
-	  return thingStuffIds_About;
+		ThingStuffsData tsd = new ThingStuffsData();
+		tsd.thingStuffData = thingStuffIds_About;
+	  return tsd;
   }
   
   public void setThingStuffIdsAbout(ThingStuffsData thingStuffIds_About) {
-  	this.thingStuffIds_About = thingStuffIds_About;
+  	this.thingStuffIds_About = thingStuffIds_About.thingStuffData;
   }
 
 	private void setKey(long id) {
@@ -249,6 +247,10 @@ public class ThingStuffJdo {
   public static ThingStuffData[] convert(ThingStuffJdo[] thingJdo) {
     ThingStuffData[] r = new ThingStuffData[thingJdo.length];
     for (int i=0; i < thingJdo.length; i++) {
+    	
+    	ThingStuffsData tsd = new ThingStuffsData();
+    	tsd.thingStuffData = thingJdo[i].thingStuffIds_About;
+    	
     	r[i] = new ThingStuffData();
       r[i].setData(
           thingJdo[i].thingId,
@@ -258,7 +260,7 @@ public class ThingStuffJdo {
           thingJdo[i].valueBol, 
           thingJdo[i].valueDouble,
           thingJdo[i].valueInt, 
-          thingJdo[i].thingStuffIds_About,
+          tsd,
           thingJdo[i].startOf,
           thingJdo[i].endOf, 
           thingJdo[i].dateCreated,

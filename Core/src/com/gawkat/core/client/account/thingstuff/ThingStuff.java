@@ -67,6 +67,8 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   // types choices - what kind of types, questions, attributes to choose from and then give them a value
   private ThingStuffTypesData thingStuffTypesData = null;
 
+	private ThingStuffs wStuffAbout;
+
   /**
    * constructor - setup the widget
    * 
@@ -74,6 +76,9 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
    */
   public ThingStuff(ClientPersistence cp) {
     this.cp = cp;
+    
+    // draw the added demsion of stuff types, to add what its about. stuff can have stuff
+    wStuffAbout = new ThingStuffs(cp);
     
     // inputs of stuff, and then add another group of stuffs
     VerticalPanel vpInput = new VerticalPanel();
@@ -187,8 +192,9 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
       drawInputBlank();
     }
     
-    ThingStuffs wStuff = new ThingStuffs(cp);
-    wStuff.setData(thingData, thingStuffData.getThingStuffIdsAbout());
+    pAbout.clear();
+    wStuffAbout.setData(thingStuffTypesData, thingData, thingStuffData.getThingStuffIdsAbout());
+    pAbout.add(wStuffAbout);
   }
   
   private void drawInputBlank() {
@@ -324,6 +330,11 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     
     thingStuffData.setThingId(thingData.getThingId());
     
+    // multi dem format for stuff having stuff
+    ThingStuffsData tsd = new ThingStuffsData();
+    tsd.thingStuffData = wStuffAbout.getData();
+    thingStuffData.setThingStuffIdsAbout(tsd);
+    
     return thingStuffData;
   }
 
@@ -430,6 +441,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
       width = wt;
     } 
     
+    // adjust input sizes too
     if (width > 50) {
     	pInput.setWidth(width + "px");
     	tbValue.setWidth(width + "px");

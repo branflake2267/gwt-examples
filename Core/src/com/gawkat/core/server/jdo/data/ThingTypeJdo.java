@@ -94,10 +94,8 @@ public class ThingTypeJdo {
     this.endOf = thingTypeData.getEndOf();
     
     if (thingTypeId != null && thingTypeId > 0) {
-    	updatedByThingId = sp.getThingId();
     	dateUpdated = new Date();
     } else {
-    	createdByThingId = sp.getThingId();
     	dateCreated = new Date();
     }
   }
