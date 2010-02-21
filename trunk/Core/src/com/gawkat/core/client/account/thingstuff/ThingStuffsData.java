@@ -10,6 +10,6 @@ public class ThingStuffsData implements IsSerializable {
   // type choices
   public ThingStuffTypesData thingStuffTypesData = null;
   
-  public ThingStuffData[] thingStuffData = null;
+  public ThingStuffData[] thingStuffData = new ThingStuffData[0];
 
 }
