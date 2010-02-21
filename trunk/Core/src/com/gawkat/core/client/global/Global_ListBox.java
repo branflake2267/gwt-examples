@@ -11,6 +11,10 @@ public class Global_ListBox {
    * @return
    */
   public static int getSelectedValue(ListBox lb) {
+  	if (lb == null) {
+  		System.out.println("Global_Listbox().getSelectedValue() is null");
+  		return 0;
+  	}
     int sel = lb.getSelectedIndex();
     String value = lb.getValue(sel);
     int r = 0;
@@ -29,6 +33,10 @@ public class Global_ListBox {
    * @param value
    */
   public static void setSelected(ListBox lb, int value) {
+  	if (lb == null) {
+  		System.out.println("Global_Listbox().setSelected() is null");
+  		return;
+  	}
     int sel = 0;
     for (int i=0; i < lb.getItemCount(); i++) {
       int v = 0;

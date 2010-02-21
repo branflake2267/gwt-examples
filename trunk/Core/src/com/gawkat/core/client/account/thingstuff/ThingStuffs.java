@@ -78,7 +78,8 @@ public class ThingStuffs extends Composite implements ClickHandler {
     this.thingData = thingData;
   }
   
-  public void setData(ThingData thingData, ThingStuffsData thingStuffsData) {
+  public void setData(ThingStuffTypesData thingStuffTypesData, ThingData thingData, ThingStuffsData thingStuffsData) {
+  	this.thingStuffTypesData = thingStuffTypesData;
   	this.thingData = thingData;
   	process(thingStuffsData);
   }
@@ -197,8 +198,8 @@ public class ThingStuffs extends Composite implements ClickHandler {
     setWidths();
   }
   
-  public void save() {
-    
+  public ThingStuffData[] getData() {
+  	 
     int wc = pListStuff.getWidgetCount();
     ThingStuffData[] thingStuffData = new ThingStuffData[wc];
     
@@ -208,7 +209,15 @@ public class ThingStuffs extends Composite implements ClickHandler {
       thingStuffData[i] = td;
     }
     
+    return thingStuffData;
+  }
+  
+  public void save() {
+   
+  	ThingStuffData[] thingStuffData = getData();
+  	
     saveThingTypesRpc(thingStuffData);
+    
   }
   
   public void clear() {

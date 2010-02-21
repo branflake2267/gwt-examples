@@ -26,20 +26,20 @@ public class SetDefaults {
   	if (defaultType == SetDefaultsData.DEFAULT_ALL) { // setup all defaults
       setThingTypes();
       createStuffTypes();
-      createApplication();
+      createThing1();
       createUsers();
     
     } else if (defaultType == SetDefaultsData.DEFAULT_THING_TYPES) { // thing types
       setThingTypes();
     
     } else if (defaultType == SetDefaultsData.DEFAULT_THING_APPLICATIONS) { // thing
-      createApplication();
+      createThing1();
     
     } else if (defaultType == SetDefaultsData.DEFAULT_THING_USERS) { // thing
       createUsers();
       
     } else if (defaultType == SetDefaultsData.DEFAULT_THINGS) { // things
-    	 createApplication();
+    	 createThing1();
     	 createUsers();
     	 
     } else if (defaultType == SetDefaultsData.DEFAULT_THING_STUFF_TYPES) {
@@ -52,10 +52,10 @@ public class SetDefaults {
   private void createStuffTypes() {
   	
   	// insert blanks to set key increment
-  	ThingStuffTypeJdo aa = new ThingStuffTypeJdo(sp);
-  	aa.setData(new ThingStuffTypeData());
-  	aa.insert();
-  	aa.insert();
+  	//ThingStuffTypeJdo aa = new ThingStuffTypeJdo(sp);
+  	//aa.setData(new ThingStuffTypeData());
+  	//aa.insert();
+  	//aa.insert();
   	
   	// can be administrator
   	ThingStuffTypeData a = new ThingStuffTypeData();
@@ -194,6 +194,7 @@ public class SetDefaults {
   private void setThingTypes() {
   	
   	// insert blanks to set key incremen
+  	/*
   	ThingTypeJdo aa = new ThingTypeJdo(sp);
     aa.insert();
     ThingTypeJdo bb = new ThingTypeJdo(sp);
@@ -206,6 +207,7 @@ public class SetDefaults {
     ee.insert();
     ThingTypeJdo ff = new ThingTypeJdo(sp);
     ff.insert();
+    */
 
     
     ServerPersistence sp = new ServerPersistence();
@@ -214,57 +216,71 @@ public class SetDefaults {
     at.setKey(1);
     at.setName("Application");
     
-    ThingTypeData bt = new ThingTypeData();
-    bt.setKey(2);
-    bt.setName("Person");
-    
-    ThingTypeData ct = new ThingTypeData();
-    ct.setKey(3);
-    ct.setName("Group");
-    
-    ThingTypeData dt = new ThingTypeData();
-    dt.setKey(4);
-    dt.setName("Widget");
-    
-    ThingTypeData et = new ThingTypeData();
-    et.setKey(5);
-    et.setName("Permission");
-    
-    ThingTypeData ft = new ThingTypeData();
-    ft.setKey(6);
-    ft.setName("Thing Stuff Template");
-    
-    
     ThingTypeJdo a = new ThingTypeJdo(sp);
     a.setData(at);
     a.insertUnique();
+    
+    
+    ThingTypeData bt = new ThingTypeData();
+    bt.setKey(2);
+    bt.setName("Person");
     
     ThingTypeJdo b = new ThingTypeJdo(sp);
     b.setData(bt);
     b.insertUnique();
     
+    
+    ThingTypeData ct = new ThingTypeData();
+    ct.setKey(3);
+    ct.setName("Group");
+    
     ThingTypeJdo c = new ThingTypeJdo(sp);
     c.setData(ct);
     c.insertUnique();
+    
+    
+    ThingTypeData dt = new ThingTypeData();
+    dt.setKey(4);
+    dt.setName("Widget");
     
     ThingTypeJdo d = new ThingTypeJdo(sp);
     d.setData(dt);
     d.insertUnique();
     
+    
+    ThingTypeData et = new ThingTypeData();
+    et.setKey(5);
+    et.setName("Permission");
+    
     ThingTypeJdo e = new ThingTypeJdo(sp);
     e.setData(et);
     e.insertUnique();
     
+    
+    ThingTypeData ft = new ThingTypeData();
+    ft.setKey(6);
+    ft.setName("Thing Stuff Template");
+
     ThingTypeJdo f = new ThingTypeJdo(sp);
     f.setData(ft);
     f.insertUnique();
     
   }
   
+  private void createUsers() {
+  	
+  	// admin
+  	createThing2();
+  	
+  	// demo user
+  	createThing3();
+  	
+  }
+  
   /**
    * set default application
    */
-  private void createApplication() {
+  private void createThing1() {
   	
   	// insert blanks to set key increment 
   	ThingJdo aa = new ThingJdo(sp);
@@ -284,20 +300,10 @@ public class SetDefaults {
     
   }
   
-  private void createUsers() {
-  	
-  	// admin
-  	createUser1();
-  	
-  	// demo user
-  	createUser2();
-  	
-  }
-  
   /**
    * create administrator
    */
-  private void createUser1() {
+  private void createThing2() {
     Sha1 sha = new Sha1();
     
     long thingTypeId = ThingTypeData.TYPE_USER;
@@ -326,7 +332,7 @@ public class SetDefaults {
   /**
    * create demo user
    */
-  private void createUser2() {
+  private void createThing3() {
     Sha1 sha = new Sha1();
     
     long thingTypeId = ThingTypeData.TYPE_USER;
