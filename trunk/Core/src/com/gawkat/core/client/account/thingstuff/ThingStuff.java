@@ -68,6 +68,8 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   private ThingStuffTypesData thingStuffTypesData = null;
 
 	private ThingStuffs wStuffAbout;
+	
+	private boolean skipAbout = false;
 
   /**
    * constructor - setup the widget
