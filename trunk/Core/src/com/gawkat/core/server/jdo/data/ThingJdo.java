@@ -146,7 +146,7 @@ public class ThingJdo {
     this.dateCreated = new Date();
     
     // do not insert duplicate
-    ThingJdo[] tt = ThingJdo.query(thingTypeId, key);
+    ThingJdo[] tt = query(thingTypeId, key);
     if (tt != null && tt.length > 0) {
       return;
     }
@@ -238,7 +238,7 @@ public class ThingJdo {
     return b;
   }
     
-  public static ThingJdo query(long thingId) {
+  public ThingJdo query(long thingId) {
     ThingJdo thing = null;
     PersistenceManager pm = PMF.get().getPersistenceManager();
     Transaction tx = pm.currentTransaction();
@@ -261,7 +261,7 @@ public class ThingJdo {
    * @param key
    * @return
    */
-  public static ThingJdo[] query(long thingTypeId, String key) {
+  public ThingJdo[] query(long thingTypeId, String key) {
     
     ArrayList<ThingJdo> aT = new ArrayList<ThingJdo>();
 
@@ -300,7 +300,7 @@ public class ThingJdo {
     return r;
   }
 
-  public static ThingData[] query(ThingFilterData filter) {
+  public ThingData[] query(ThingFilterData filter) {
     
     long thingTypeId = filter.thingTypeId;
     
@@ -370,7 +370,7 @@ public class ThingJdo {
    * @param thingData
    * @return
    */
-  public static boolean delete(ServerPersistence sp, ThingData thingData) {
+  public boolean delete(ThingData thingData) {
     
     if (thingData == null) {
       return false;
@@ -416,9 +416,12 @@ public class ThingJdo {
    * 
    * @param thingData
    */
-  private static void deleteSub(ThingData thingData) {
+  private void deleteSub(ThingData thingData) {
+  	
+  	ThingStuffJdo tsj = new ThingStuffJdo(sp);
+  	
     // stuff data
-    ThingStuffJdo.delete(thingData);
+    tsj.delete(thingData);
     
     // TODO - delete other data that this thing owns
     

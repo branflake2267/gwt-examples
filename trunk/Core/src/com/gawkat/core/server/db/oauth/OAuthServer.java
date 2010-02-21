@@ -14,15 +14,17 @@ import com.gawkat.core.server.jdo.data.ThingTypeJdo;
 public class OAuthServer {
 
   private ServerPersistence sp = null;
-  
-  private static final int APPLICATION = 1;
-  private static final int USER = 2;
-  
-  /**
-   * constructor
-   */
+
+	private ThingJdo tj;
+
+	/**
+	 * constructor
+	 * 
+	 * @param sp
+	 */
   public OAuthServer(ServerPersistence sp) {
     this.sp = sp;
+    tj = new ThingJdo(sp);
   }
 
   /**
@@ -186,7 +188,7 @@ public class OAuthServer {
     String consumerKey = token.getConsumerKey();
 
     // get user (thing)
-    ThingJdo[] users = ThingJdo.query((long)ThingTypeJdo.TYPE_USER, consumerKey);
+    ThingJdo[] users = tj.query((long)ThingTypeJdo.TYPE_USER, consumerKey);
     
     UserData ud = null;
     if (users == null) {
@@ -216,7 +218,7 @@ public class OAuthServer {
     String ck = token.getConsumerKey();
     
     // get application (thing)
-    ThingJdo[] things = ThingJdo.query((long) ThingTypeJdo.TYPE_APPLICATION, ck);
+    ThingJdo[] things = tj.query((long) ThingTypeJdo.TYPE_APPLICATION, ck);
     if (things == null || things.length == 0) {
     	System.out.println("no applications set");
     	return null;
@@ -242,7 +244,7 @@ public class OAuthServer {
     String getConsumerKeyUser = accessToken.getConsumerKey();
     
     // get user (thing)
-    ThingJdo[] things = ThingJdo.query((long) ThingTypeJdo.TYPE_USER, getConsumerKeyUser);
+    ThingJdo[] things = tj.query((long) ThingTypeJdo.TYPE_USER, getConsumerKeyUser);
     long id = things[0].getThingId();
     String consumerKey = things[0].getKey();
     String consumerSecret = things[0].getSecret();

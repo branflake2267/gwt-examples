@@ -79,7 +79,7 @@ public class ThingStuffJdo {
   
   // define the about - adds another demension to the data
   @Persistent
-  private ThingStuffData[] thingStuffIds_About = null;
+  private ThingStuffJdo[] thingStuffJdo_About = null;
   
   /**
    * constructor
@@ -99,7 +99,7 @@ public class ThingStuffJdo {
     this.valueBol = thingStuffData.getValueBol();
     this.valueDouble = thingStuffData.getValueDouble();
     this.valueInt = thingStuffData.getValueInt();
-    this.thingStuffIds_About = thingStuffData.getThingStuffIdsAbout().thingStuffData;
+    this.thingStuffJdo_About = convertStuffsAboutToJdo(thingStuffData.getThingStuffsAbout());
     
     this.startOf = thingStuffData.getStartOf();
     this.endOf = thingStuffData.getEndOf();
@@ -122,7 +122,7 @@ public class ThingStuffJdo {
     this.valueBol = thingStuffData.getValueBol();
     this.valueDouble = thingStuffData.getValueDouble();
     this.valueInt = thingStuffData.getValueInt();
-    this.thingStuffIds_About = thingStuffData.getThingStuffIdsAbout().thingStuffData;
+    this.thingStuffJdo_About = convertStuffsAboutToJdo(thingStuffData.getThingStuffsAbout());
     
     this.startOf = thingStuffData.getStartOf();
     this.endOf = thingStuffData.getEndOf();
@@ -134,16 +134,23 @@ public class ThingStuffJdo {
     }
   }
 
-	public ThingStuffsData getThingStuffIdsAbout() {
-		ThingStuffsData tsd = new ThingStuffsData();
-		tsd.thingStuffData = thingStuffIds_About;
-	  return tsd;
+	/**
+	 * get thingstuffjdo about from this object
+	 * 
+	 * @return
+	 */
+	public ThingStuffsData getThingStuffsAbout() {
+		
+		// change into the data format
+		ThingStuffData[] tsd = convert(thingStuffJdo_About);
+		
+		// setup the object array
+		ThingStuffsData tsds = new ThingStuffsData();
+		tsds.thingStuffData = tsd;
+		
+	  return tsds;
   }
   
-  public void setThingStuffIdsAbout(ThingStuffsData thingStuffIds_About) {
-  	this.thingStuffIds_About = thingStuffIds_About.thingStuffData;
-  }
-
 	private void setKey(long id) {
 	  if (id > 0) {
 	  	thingStuffId = id;
@@ -161,6 +168,7 @@ public class ThingStuffJdo {
       if (thingStuffId != null && thingStuffId > 0) { // update
         ThingStuffJdo update = pm.getObjectById(ThingStuffJdo.class, thingStuffId);
         update.setData(thingStuffData);
+        
       } else { // insert    
         pm.makePersistent(this);
       }
@@ -180,7 +188,7 @@ public class ThingStuffJdo {
    * @param thingStuffId
    * @return
    */
-  public static ThingStuffJdo query(long thingStuffId) {
+  public ThingStuffJdo query(long thingStuffId) {
     ThingStuffJdo thingStuff = null;
     PersistenceManager pm = PMF.get().getPersistenceManager();
     Transaction tx = pm.currentTransaction();
@@ -197,7 +205,7 @@ public class ThingStuffJdo {
     return thingStuff;
   }
   
-  public static ThingStuffData[] query(ThingStuffFilterData filter) {
+  public ThingStuffData[] query(ThingStuffFilterData filter) {
     
     long thingId = filter.thingId;
     
@@ -245,28 +253,50 @@ public class ThingStuffJdo {
   }
   
   public static ThingStuffData[] convert(ThingStuffJdo[] thingJdo) {
+  	
     ThingStuffData[] r = new ThingStuffData[thingJdo.length];
+    
     for (int i=0; i < thingJdo.length; i++) {
-    	
-    	ThingStuffsData tsd = new ThingStuffsData();
-    	tsd.thingStuffData = thingJdo[i].thingStuffIds_About;
-    	
+    		
     	r[i] = new ThingStuffData();
       r[i].setData(
-          thingJdo[i].thingId,
-          thingJdo[i].thingStuffId, 
-          thingJdo[i].thingStuffTypeId, 
-          thingJdo[i].value, 
-          thingJdo[i].valueBol, 
-          thingJdo[i].valueDouble,
-          thingJdo[i].valueInt, 
-          tsd,
-          thingJdo[i].startOf,
-          thingJdo[i].endOf, 
-          thingJdo[i].dateCreated,
-          thingJdo[i].dateUpdated);
+          thingJdo[i].getThingId(),
+          thingJdo[i].getStuffId(), 
+          thingJdo[i].getStuffTypeId(), 
+          thingJdo[i].getValue(), 
+          thingJdo[i].getValueBol(), 
+          thingJdo[i].getValueDouble(),
+          thingJdo[i].getValueInt(), 
+          thingJdo[i].getStartOf(),
+          thingJdo[i].getEndOf(), 
+          thingJdo[i].getDateCreated(),
+          thingJdo[i].getDateUpdated(),
+          thingJdo[i].getThingStuffsAbout());
     }
     return r;
+  }
+  
+  public ThingStuffJdo[] convertStuffsAboutToJdo(ThingStuffsData thingStuffsData) {
+  	
+  	ThingStuffData[] tsd = thingStuffsData.thingStuffData;
+  	
+  	ThingStuffJdo[] r = new ThingStuffJdo[tsd.length];
+  	
+  	for (int i=0; i < tsd.length; i++) {
+  		r[i] = new ThingStuffJdo(sp);
+  		r[i].thingId = tsd[i].getThingId();
+  		r[i].thingStuffId = tsd[i].getId();
+  		r[i].thingStuffTypeId = tsd[i].getThingStuffTypeId();
+  		r[i].value = tsd[i].getValue();
+  		r[i].valueBol = tsd[i].getValueBol();
+  		r[i].valueDouble = tsd[i].getValueDouble();
+  		r[i].valueInt = tsd[i].getValueInt();
+  		r[i].startOf = tsd[i].getStartOf();
+  		r[i].endOf = tsd[i].getEndOf();
+  		r[i].thingStuffJdo_About = convertStuffsAboutToJdo(tsd[i].getThingStuffsAbout()); // recursive
+  	}
+  	
+  	return r;
   }
   
   public boolean delete(ServerPersistence sp, long thingStuffId) {
@@ -282,7 +312,7 @@ public class ThingStuffJdo {
     return b;
   }
   
-  public static boolean delete(ServerPersistence sp, ThingStuffData thingStuffData) {
+  public boolean delete(ServerPersistence sp, ThingStuffData thingStuffData) {
     
     ThingStuffJdo ttj = new ThingStuffJdo(sp);
     ttj.setData(thingStuffData);
@@ -312,7 +342,7 @@ public class ThingStuffJdo {
     return b;
   }
 
-  public static boolean delete(ThingData thingData) {
+  public boolean delete(ThingData thingData) {
     
     if (thingData == null) {
       return false;
@@ -406,6 +436,14 @@ public class ThingStuffJdo {
 	
   public Date getEndOf() {
 	  return endOf;
+  }
+  
+  public Date getDateCreated() {
+  	return dateCreated;
+  }
+  
+  public Date getDateUpdated() {
+  	return dateUpdated;
   }
   
   public long getCreatedBy() {
