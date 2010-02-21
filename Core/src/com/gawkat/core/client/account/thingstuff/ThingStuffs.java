@@ -44,6 +44,8 @@ public class ThingStuffs extends Composite implements ClickHandler {
   // what kind of types are available to choose from?
   private ThingStuffTypesData thingStuffTypesData = null;
   
+  private boolean skipAbout = false;
+  
   /**
    * constructor
    * @param cp
