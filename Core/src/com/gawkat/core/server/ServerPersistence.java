@@ -7,7 +7,16 @@ import javax.servlet.http.HttpServletRequest;
 
 public class ServerPersistence {
 
+	// keep track of the http request coming in
   private HttpServletRequest request = null;
+  
+  // whos controlling this session
+  private long thingId = 0;
+  
+  
+  
+  // TODO - set the ThingId after the login, so to tell the inserts and updates whos doing what
+  
   
   public ServerPersistence() {
   }
@@ -101,5 +110,9 @@ public class ServerPersistence {
       s += c;
     }
     return s;
+  }
+  
+  public long getThingId() {
+  	return thingId;
   }
 }

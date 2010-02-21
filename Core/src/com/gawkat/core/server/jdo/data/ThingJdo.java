@@ -28,6 +28,7 @@ public class ThingJdo {
 	@NotPersistent
 	private ServerPersistence sp = null;
 	
+	// identity
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
   private Long thingId;
@@ -36,21 +37,35 @@ public class ThingJdo {
   @Persistent
   private Long thingTypeId;
   
+  // username is represented here
   @Persistent
   private String key;
   
+  // password sha1 hash is represented here
   @Persistent
   private String secret;
-   
+  
+  // when did this start in time
+  @Persistent
+  private Date startOf = null;
+  
+  // when did this end in time
+  @Persistent
+  private Date endOf = null;
+  
+  // when this object was created
   @Persistent
   private Date dateCreated;
   
+  // when this object was updated last
   @Persistent
   private Date dateUpdated;
   
+  // who created this object
   @Persistent
   private long createdByThingId = 0;
   
+  // who last updated this object
   @Persistent
   private long updatedByThingId = 0;
   
@@ -61,6 +76,11 @@ public class ThingJdo {
   	this.sp = sp;
   }
   
+  /**
+   * set data
+   * 
+   * @param thingData
+   */
   public void setData(ThingData thingData) {
   	if (thingData == null) {
   		return;
@@ -72,9 +92,14 @@ public class ThingJdo {
     
     //this.secret = thingData.getSecret(); // TODO?
     
+    this.startOf = thingData.getStartOf();
+    this.endOf = thingData.getEndOf();
+    
     if (thingId != null && thingId > 0) {
+    	updatedByThingId = sp.getThingId();
       dateUpdated = new Date();
     } else {
+    	createdByThingId = sp.getThingId();
       dateCreated = new Date();
     }
   }
@@ -89,22 +114,26 @@ public class ThingJdo {
     this.thingId = thingData.getThingId();
     this.thingTypeId = thingData.getThingTypeId();
     this.key = thingData.getKey();
-    //this.secret = thingData.getSecret(); // TODO?
-    if (thingId > 0) {
+    
+    //this.secret = thingData.getSecret(); // TODO? do I do someting here, can't remember
+    
+    this.startOf = thingData.getStartOf();
+    this.endOf = thingData.getEndOf();
+    
+    if (thingId != null && thingId > 0) {
+    	updatedByThingId = sp.getThingId();
       dateUpdated = new Date();
     } else {
+    	createdByThingId = sp.getThingId();
       dateCreated = new Date();
     }
   }
   
-  public ThingData getThingData() {
+	public ThingData getThingData() {
     ThingData thingData = new ThingData();
-    thingData.setData(thingTypeId, thingId, key);
+    thingData.setData(thingTypeId, thingId, key, 
+    		startOf, endOf, dateCreated, dateUpdated);
     return thingData;
-  }
-  
-  public void setSecret(String secret) {
-    this.secret = secret;
   }
   
   /**
@@ -212,23 +241,7 @@ public class ThingJdo {
 
     return b;
   }
-  
-  public long getThingId() {
-    return this.thingId;
-  }
-  
-  public long getThingTypeId() {
-    return thingTypeId;
-  }
-  
-  public String getKey() {
-    return this.key;
-  }
-  
-  public String getSecret() {
-    return this.secret;
-  }
-  
+    
   public static ThingJdo query(long thingId) {
     ThingJdo thing = null;
     PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -343,13 +356,24 @@ public class ThingJdo {
     for (int i=0; i < thingJdo.length; i++) {
       r[i] = new ThingData();
       if (thingJdo[i].key != null) {
-      	r[i].setData(thingJdo[i].thingTypeId, thingJdo[i].thingId, thingJdo[i].key);
+      	r[i].setData(thingJdo[i].thingTypeId, thingJdo[i].thingId, thingJdo[i].key, 
+      			thingJdo[i].startOf, thingJdo[i].endOf, thingJdo[i].dateCreated, thingJdo[i].dateUpdated);
       }
     }
     return r;
   }
 
-  // TODO - delete child objects
+  /**
+   * delete thing
+   * 
+   * 
+   * TODO - delete child objects
+   * 
+   * 
+   * @param sp
+   * @param thingData
+   * @return
+   */
   public static boolean delete(ServerPersistence sp, ThingData thingData) {
     
     if (thingData == null) {
@@ -360,6 +384,7 @@ public class ThingJdo {
       return false;
     }
     
+    // delete child objects that the thing owns first
     deleteSub(thingData);
     
     ThingJdo ttj = new ThingJdo(sp);
@@ -398,10 +423,57 @@ public class ThingJdo {
   private static void deleteSub(ThingData thingData) {
     // stuff data
     ThingStuffJdo.delete(thingData);
+    
+    // TODO - delete other data that this thing owns
+    
   }
 
+  public void setSecret(String secret) {
+    this.secret = secret;
+  }
+  
+  public long getThingId() {
+    return this.thingId;
+  }
+  
+  public long getThingTypeId() {
+    return thingTypeId;
+  }
+  
+  public String getKey() {
+    return this.key;
+  }
+  
+  public String getSecret() {
+    return this.secret;
+  }
+  
 	public void setThingId(long thingId) {
 	  this.thingId = thingId;
   }
+	
+  public Date getEndOf() {
+	  return endOf;
+  }
+
+	public Date getStartOf() {
+	  return startOf;
+  }
+	
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+	
+	public Date getDateUpdated() {
+		return dateUpdated;
+	}
+	
+	public long getCreatedBy() {
+		return createdByThingId;
+	}
+	
+	public long getUpdatedBy() {
+		return updatedByThingId;
+	}
   
 }

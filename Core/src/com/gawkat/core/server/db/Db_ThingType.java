@@ -25,7 +25,10 @@ public class Db_ThingType {
    * @return
    */
   public ThingTypesData getThingTypes(ThingTypeFilterData filter) {
-    ThingTypeJdo[] thingTypeJdo = ThingTypeJdo.query(filter);
+  	
+  	ThingTypeJdo ttj = new ThingTypeJdo(sp);
+  	
+    ThingTypeJdo[] thingTypeJdo = ttj.query(filter);
     ThingTypeData[] t = ThingTypeJdo.convert(thingTypeJdo);
     
     ThingTypesData r = new ThingTypesData();
@@ -52,13 +55,18 @@ public class Db_ThingType {
   }
 
   private void save(ThingTypeData thingTypeData) {
-    ThingTypeJdo j = new ThingTypeJdo(thingTypeData);
+
+    ThingTypeJdo j = new ThingTypeJdo(sp);
+    j.setData(thingTypeData);
     j.insertUnique();
+    
   }
 
   public boolean delete(OAuthTokenData accessToken, ThingTypeData thingTypeData) {
-    
-    boolean b = ThingTypeJdo.deleteThingTypeDataJdo(thingTypeData);
+  	
+  	ThingTypeJdo ttj = new ThingTypeJdo(sp);
+  	
+    boolean b = ttj.deleteThingTypeDataJdo(thingTypeData);
     
     return b;
   }
