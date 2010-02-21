@@ -19,6 +19,7 @@ import javax.jdo.annotations.PrimaryKey;
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffFilterData;
+import com.gawkat.core.client.account.thingstuff.ThingStuffsData;
 import com.gawkat.core.server.ServerPersistence;
 import com.gawkat.core.server.jdo.PMF;
 
@@ -78,7 +79,7 @@ public class ThingStuffJdo {
   
   // define the about - adds another demension to the data
   @Persistent
-  private ThingStuffData[] thingStuffIds_About = null;
+  private ThingStuffsData thingStuffIds_About = null;
   
   /**
    * constructor
@@ -137,11 +138,11 @@ public class ThingStuffJdo {
     }
   }
 
-	public ThingStuffData[] getThingStuffIdsAbout() {
+	public ThingStuffsData getThingStuffIdsAbout() {
 	  return thingStuffIds_About;
   }
   
-  public void setThingStuffIdsAbout(ThingStuffData[] thingStuffIds_About) {
+  public void setThingStuffIdsAbout(ThingStuffsData thingStuffIds_About) {
   	this.thingStuffIds_About = thingStuffIds_About;
   }
 

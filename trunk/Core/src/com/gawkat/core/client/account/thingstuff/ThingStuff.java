@@ -61,8 +61,10 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   
   private ThingStuffData thingStuffData = null;
   
+  // delete button
   private PushButton bDelete = new PushButton("X");
 
+  // types choices - what kind of types, questions, attributes to choose from and then give them a value
   private ThingStuffTypesData thingStuffTypesData = null;
 
   /**
@@ -184,6 +186,9 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     } else {
       drawInputBlank();
     }
+    
+    ThingStuffs wStuff = new ThingStuffs(cp);
+    wStuff.setData(thingData, thingStuffData.getThingStuffIdsAbout());
   }
   
   private void drawInputBlank() {
@@ -232,7 +237,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     
     String value = null;
     boolean valueBol = false;
-    double valueDouble = 0;
+    double valueDouble = 0; 
     long valueInt = 0;
     
     long typeId = getDataTypeId();
