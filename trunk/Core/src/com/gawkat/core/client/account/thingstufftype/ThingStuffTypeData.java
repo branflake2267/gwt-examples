@@ -1,5 +1,7 @@
 package com.gawkat.core.client.account.thingstufftype;
 
+import java.util.Date;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ThingStuffTypeData implements IsSerializable {
@@ -30,20 +32,45 @@ public class ThingStuffTypeData implements IsSerializable {
 	 */
 	public static final int VT_FILE = 13;
 	
-  
+  // identity
   private long stuffTypeId;
   
+  // type of value storage format
   private int valueTypeId = VT_STRING;
   
+  // name of the stuff item
   private String name;
   
+  // when did this start in time
+  private Date startOf;
+  
+  // when this end in time
+  private Date endOf;
+  
+  // when this object was created
+  private Date dateCreated;
+  
+  // when this object was last updated
+  private Date dateUpdated;
+  
+  /**
+   * constructor
+   */
   public ThingStuffTypeData() {
   }
   
-  public void setData(long id, String name, int valueTypeId) {
-    stuffTypeId = id;
+  public void setData(long id, String name, int valueTypeId, 
+  		Date startOf, Date endOf, Date dateCreated, Date dateUpdated) {
+  	
+    this.stuffTypeId = id;
     this.name = name;
     this.valueTypeId = valueTypeId;
+    
+    this.startOf = startOf;
+    this.endOf = endOf;
+    this.dateCreated = dateCreated;
+    this.dateUpdated = dateUpdated;
+    
   }
   
   public long getStuffTypeId() {
@@ -69,5 +96,20 @@ public class ThingStuffTypeData implements IsSerializable {
 	public long getId() {
 	  return stuffTypeId;
   }
+
+	public Date getStartOf() {
+	  return startOf;
+  }
+
+	public Date getEndOf() {
+	  return endOf;
+  }
   
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+	
+	public Date getDateUpdated() {
+		return dateUpdated;
+	}
 }

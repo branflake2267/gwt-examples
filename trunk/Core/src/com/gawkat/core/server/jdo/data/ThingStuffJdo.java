@@ -52,19 +52,31 @@ public class ThingStuffJdo {
   @Persistent
   private long valueInt = 0;
   
+  // when did this start in time
+  @Persistent
+  private Date startOf = null;
+  
+  // when did this end in time
+  @Persistent
+  private Date endOf = null;
+  
+  // when this object was created
   @Persistent
   private Date dateCreated;
   
+  // when this object was updated
   @Persistent
   private Date dateUpdated;
   
+  // who created this object
   @Persistent
   private long createdByThingId = 0;
   
+  // who updated this object
   @Persistent
   private long updatedByThingId = 0;
   
-  // define the link types
+  // define the about - adds another demension to the data
   @Persistent
   private long[] thingStuffIds_About = null;
   
@@ -73,13 +85,6 @@ public class ThingStuffJdo {
    */
   public ThingStuffJdo(ServerPersistence sp) {
   	this.sp = sp;
-  }
-  
-  public ThingStuffJdo(ServerPersistence sp, ThingStuffData thingStuffData) {
-  	if (thingStuffData == null) {
-  		return;
-  	}
-    setData(thingStuffData);
   }
   
   public void setData(ThingStuffData thingStuffData) {
@@ -95,9 +100,14 @@ public class ThingStuffJdo {
     this.valueInt = thingStuffData.getValueInt();
     this.thingStuffIds_About = thingStuffData.getThingStuffIdsAbout();
     
+    this.startOf = thingStuffData.getStartOf();
+    this.endOf = thingStuffData.getEndOf();
+    
     if (thingStuffId != null && thingStuffId > 0) {
+    	this.updatedByThingId = sp.getThingId();
       this.dateUpdated = new Date();
     } else {
+    	this.createdByThingId = sp.getThingId();
       this.dateCreated = new Date();
     }
   }
@@ -115,14 +125,19 @@ public class ThingStuffJdo {
     this.valueInt = thingStuffData.getValueInt();
     this.thingStuffIds_About = thingStuffData.getThingStuffIdsAbout();
     
+    this.startOf = thingStuffData.getStartOf();
+    this.endOf = thingStuffData.getEndOf();
+    
     if (thingStuffId != null && thingStuffId > 0) {
+    	this.updatedByThingId = sp.getThingId();
       this.dateUpdated = new Date();
     } else {
+    	this.createdByThingId = sp.getThingId();
       this.dateCreated = new Date();
     }
   }
-	
-  public long[] getThingStuffIdsAbout() {
+
+	public long[] getThingStuffIdsAbout() {
 	  return thingStuffIds_About;
   }
   
@@ -136,54 +151,6 @@ public class ThingStuffJdo {
 	  }
   }
 
-  public long getStuffId() {
-    return thingStuffId;
-  }
-  
-  public long getStuffTypeId() {
-    return thingStuffTypeId;
-  }
-  
-  public long getThingId() {
-    return thingId;
-  }
-   
-  public long getId() {
-    return thingStuffId;
-  }
-  
-  public long getThingStuffTypeId() {
-    return thingStuffTypeId;
-  }
-  
-  public void setValue(String value) {
-    this.value = value;
-  }
-  
-  public void setValue(boolean value) {
-    this.valueBol = value;
-  }
-  
-  public void setValue(double value) {
-    this.valueDouble = value;
-  }
-  
-  public String getValue() {
-    return value;
-  }
-  
-  public boolean getValueBol() {
-    return valueBol;
-  }
-  
-  public double getValueDouble() {
-    return valueDouble;
-  }
- 
-  public long getValueInt() {
-    return valueInt;
-  }
-  
   public void save(ThingStuffData thingStuffData) {
     setData(thingStuffData);
     
@@ -281,7 +248,8 @@ public class ThingStuffJdo {
   public static ThingStuffData[] convert(ThingStuffJdo[] thingJdo) {
     ThingStuffData[] r = new ThingStuffData[thingJdo.length];
     for (int i=0; i < thingJdo.length; i++) {
-      r[i] = new ThingStuffData(
+    	r[i] = new ThingStuffData();
+      r[i].setData(
           thingJdo[i].thingId,
           thingJdo[i].thingStuffId, 
           thingJdo[i].thingStuffTypeId, 
@@ -289,7 +257,11 @@ public class ThingStuffJdo {
           thingJdo[i].valueBol, 
           thingJdo[i].valueDouble,
           thingJdo[i].valueInt, 
-          thingJdo[i].thingStuffIds_About);
+          thingJdo[i].thingStuffIds_About,
+          thingJdo[i].startOf,
+          thingJdo[i].endOf, 
+          thingJdo[i].dateCreated,
+          thingJdo[i].dateUpdated);
     }
     return r;
   }
@@ -376,5 +348,68 @@ public class ThingStuffJdo {
     
     return true;
   }
+
+  public long getStuffId() {
+    return thingStuffId;
+  }
   
+  public long getStuffTypeId() {
+    return thingStuffTypeId;
+  }
+  
+  public long getThingId() {
+    return thingId;
+  }
+   
+  public long getId() {
+    return thingStuffId;
+  }
+  
+  public long getThingStuffTypeId() {
+    return thingStuffTypeId;
+  }
+  
+  public void setValue(String value) {
+    this.value = value;
+  }
+  
+  public void setValue(boolean value) {
+    this.valueBol = value;
+  }
+  
+  public void setValue(double value) {
+    this.valueDouble = value;
+  }
+  
+  public String getValue() {
+    return value;
+  }
+  
+  public boolean getValueBol() {
+    return valueBol;
+  }
+  
+  public double getValueDouble() {
+    return valueDouble;
+  }
+ 
+  public long getValueInt() {
+    return valueInt;
+  }
+
+	public Date getStartOf() {
+	  return startOf;
+  }
+	
+  public Date getEndOf() {
+	  return endOf;
+  }
+  
+  public long getCreatedBy() {
+  	return createdByThingId;
+  }
+  
+  public long getUpdatedBy() {
+  	return updatedByThingId;
+  }
 }

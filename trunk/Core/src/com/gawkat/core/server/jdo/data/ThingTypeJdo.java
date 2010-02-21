@@ -11,12 +11,14 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.account.thingtype.ThingTypeFilterData;
+import com.gawkat.core.server.ServerPersistence;
 import com.gawkat.core.server.jdo.PMF;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -25,57 +27,77 @@ import com.google.appengine.api.datastore.KeyFactory;
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class ThingTypeJdo {
 
-  // required thing types
+	@NotPersistent
+	private ServerPersistence sp = null;
+	
+  // default required thing types - note these are in a couple other classes, probably should consolidate these
   public static final int TYPE_APPLICATION = 1;
   public static final int TYPE_USER = 2;
   public static final int TYPE_GROUP = 3;
   
+  // identity
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
   private Long thingTypeId;
   
+  // type name
   @Persistent
   private String name;
   
+  // when did this start in time
+  @Persistent
+  private Date startOf = null;
+  
+  // when did this end in time
+  @Persistent
+  private Date endOf = null;
+  
+  // when this object was created
   @Persistent
   private Date dateCreated;
   
+  // when this object was last updated
   @Persistent
   private Date dateUpdated;
   
+  // who created this object
   @Persistent
   private long createdByThingId = 0;
   
+  // who last updated this object
   @Persistent
   private long updatedByThingId = 0;
-  
+	
   /**
    * constructor
    */
-  public ThingTypeJdo() { 
+  public ThingTypeJdo(ServerPersistence sp) {
+  	this.sp = sp;
   }
-  
+
   /**
-   * constructor
+   * set data
    * 
    * @param thingTypeData
    */
-  public ThingTypeJdo(ThingTypeData thingTypeData) {
-  	setKey(thingTypeData.getId()); 
-  	
-    name = thingTypeData.getName();
-  }
-
   public void setData(ThingTypeData thingTypeData) {
+  	
   	if (thingTypeData == null) {
   		return;
   	}
+  	
   	setKey(thingTypeData.getId());
-    name = thingTypeData.getName();
+   
+  	this.name = thingTypeData.getName();
+   
+    this.startOf = thingTypeData.getStartOf();
+    this.endOf = thingTypeData.getEndOf();
     
     if (thingTypeId != null && thingTypeId > 0) {
+    	updatedByThingId = sp.getThingId();
     	dateUpdated = new Date();
     } else {
+    	createdByThingId = sp.getThingId();
     	dateCreated = new Date();
     }
   }
@@ -85,25 +107,7 @@ public class ThingTypeJdo {
   		thingTypeId = id;
   	}
   }
-  
-  /**
-   * get Identity
-   * 
-   * @return
-   */
-  public Long getId() {
-    return thingTypeId;
-  }
-  
-  /**
-   * get thingType name
-   * 
-   * @return
-   */
-  public String getName() {
-    return this.name;
-  }
-  
+    
   /**
    * can only insert unique names
    * 
@@ -162,7 +166,7 @@ public class ThingTypeJdo {
    * @param name
    * @return
    */
-  public static ThingTypeJdo[] query(String name) {
+  public ThingTypeJdo[] query(String name) {
     
     ArrayList<ThingTypeJdo> aT = new ArrayList<ThingTypeJdo>();
     
@@ -195,7 +199,6 @@ public class ThingTypeJdo {
       pm.close();
     }
     
-
     ThingTypeJdo[] r = null;
     if (aT.size() > 0) {
       r = new ThingTypeJdo[aT.size()];
@@ -211,7 +214,7 @@ public class ThingTypeJdo {
    * @param filter
    * @return
    */
-  public static ThingTypeJdo[] query(ThingTypeFilterData filter) {
+  public ThingTypeJdo[] query(ThingTypeFilterData filter) {
 
     // TODO configure drill to setup filters
 
@@ -254,9 +257,10 @@ public class ThingTypeJdo {
     return r;
   }
   
-  public static boolean deleteThingTypeDataJdo(ThingTypeData thingTypeData) {
+  public boolean deleteThingTypeDataJdo(ThingTypeData thingTypeData) {
     
-    ThingTypeJdo ttj = new ThingTypeJdo(thingTypeData);
+    ThingTypeJdo ttj = new ThingTypeJdo(sp);
+    ttj.setData(thingTypeData);
     
     PersistenceManager pm = PMF.get().getPersistenceManager();
     Transaction tx = pm.currentTransaction();
@@ -296,10 +300,46 @@ public class ThingTypeJdo {
     ThingTypeData[] r = new ThingTypeData[thingTypeJdo.length];
     for (int i=0; i < thingTypeJdo.length; i++) {
       r[i] = new ThingTypeData();
-      r[i].set(thingTypeJdo[i].getId(), thingTypeJdo[i].getName());
+      r[i].setData(
+      		thingTypeJdo[i].getId(), 
+      		thingTypeJdo[i].getName(),
+      		thingTypeJdo[i].getStartOf(),
+      		thingTypeJdo[i].getEndOf(),
+      		thingTypeJdo[i].getDateCreated(),
+      		thingTypeJdo[i].getDateUpdated());
     }
     return r;
   }
   
+  public Long getId() {
+    return thingTypeId;
+  }
   
+  public String getName() {
+    return this.name;
+  }
+  
+  public Date getEndOf() {
+	  return endOf;
+  }
+
+	public Date getStartOf() {
+	  return startOf;
+  }
+	
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+	
+	public Date getDateUpdated() {
+		return dateUpdated;
+	}
+	
+	public long getCreatedBy() {
+		return createdByThingId;
+	}
+	
+	public long getUpdatedBy() {
+		return updatedByThingId;
+	}
 }

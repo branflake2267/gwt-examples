@@ -1,5 +1,7 @@
 package com.gawkat.core.server.jdo;
 
+import java.util.Date;
+
 import com.gawkat.core.client.SetDefaultsData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffData;
 import com.gawkat.core.client.account.thingstufftype.ThingStuffTypeData;
@@ -50,25 +52,25 @@ public class SetDefaults {
   private void createStuffTypes() {
   	
   	// insert blanks to set key increment
-  	ThingStuffTypeJdo aa = new ThingStuffTypeJdo();
+  	ThingStuffTypeJdo aa = new ThingStuffTypeJdo(sp);
   	aa.setData(new ThingStuffTypeData());
   	aa.insert();
   	aa.insert();
   	
   	// can be administrator
   	ThingStuffTypeData a = new ThingStuffTypeData();
-  	a.setData(0, "Is site Admin", ThingStuffTypeData.VT_BOOLEAN);
+  	a.setData(0, "Is site Admin", ThingStuffTypeData.VT_BOOLEAN, new Date(), null, null, null);
   	
-  	ThingStuffTypeJdo jst1 = new ThingStuffTypeJdo();
+  	ThingStuffTypeJdo jst1 = new ThingStuffTypeJdo(sp);
   	jst1.setKey(1);
   	jst1.setData(a);
   	jst1.insertUnique();
   	
   	// Thing Link
   	ThingStuffTypeData b = new ThingStuffTypeData();
-  	b.setData(0, "Thing Link", ThingStuffTypeData.VT_LINK);
+  	b.setData(0, "Thing Link", ThingStuffTypeData.VT_LINK, new Date(), null, null, null);
   	
-  	ThingStuffTypeJdo jst2 = new ThingStuffTypeJdo();
+  	ThingStuffTypeJdo jst2 = new ThingStuffTypeJdo(sp);
   	jst2.setKey(2);
   	jst2.setData(b);
   	jst2.insertUnique();
@@ -192,17 +194,17 @@ public class SetDefaults {
   private void setThingTypes() {
   	
   	// insert blanks to set key incremen
-  	ThingTypeJdo aa = new ThingTypeJdo();
+  	ThingTypeJdo aa = new ThingTypeJdo(sp);
     aa.insert();
-    ThingTypeJdo bb = new ThingTypeJdo();
+    ThingTypeJdo bb = new ThingTypeJdo(sp);
     bb.insert();
-    ThingTypeJdo cc = new ThingTypeJdo();
+    ThingTypeJdo cc = new ThingTypeJdo(sp);
     cc.insert();
-    ThingTypeJdo dd = new ThingTypeJdo();
+    ThingTypeJdo dd = new ThingTypeJdo(sp);
     dd.insert();
-    ThingTypeJdo ee = new ThingTypeJdo();
+    ThingTypeJdo ee = new ThingTypeJdo(sp);
     ee.insert();
-    ThingTypeJdo ff = new ThingTypeJdo();
+    ThingTypeJdo ff = new ThingTypeJdo(sp);
     ff.insert();
 
     
@@ -233,27 +235,27 @@ public class SetDefaults {
     ft.setName("Thing Stuff Template");
     
     
-    ThingTypeJdo a = new ThingTypeJdo();
+    ThingTypeJdo a = new ThingTypeJdo(sp);
     a.setData(at);
     a.insertUnique();
     
-    ThingTypeJdo b = new ThingTypeJdo();
+    ThingTypeJdo b = new ThingTypeJdo(sp);
     b.setData(bt);
     b.insertUnique();
     
-    ThingTypeJdo c = new ThingTypeJdo();
+    ThingTypeJdo c = new ThingTypeJdo(sp);
     c.setData(ct);
     c.insertUnique();
     
-    ThingTypeJdo d = new ThingTypeJdo();
+    ThingTypeJdo d = new ThingTypeJdo(sp);
     d.setData(dt);
     d.insertUnique();
     
-    ThingTypeJdo e = new ThingTypeJdo();
+    ThingTypeJdo e = new ThingTypeJdo(sp);
     e.setData(et);
     e.insertUnique();
     
-    ThingTypeJdo f = new ThingTypeJdo();
+    ThingTypeJdo f = new ThingTypeJdo(sp);
     f.setData(ft);
     f.insertUnique();
     

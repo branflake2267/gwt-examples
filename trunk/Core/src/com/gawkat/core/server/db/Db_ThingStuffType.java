@@ -16,7 +16,8 @@ public class Db_ThingStuffType {
   }
   
   public ThingStuffTypesData getThingStuffTypes(OAuthTokenData accessToken, ThingStuffTypeFilterData filter) {
-    ThingStuffTypeJdo[] thingStuffTypeJdo = ThingStuffTypeJdo.query(filter);
+  	ThingStuffTypeJdo tstj = new ThingStuffTypeJdo(sp);
+    ThingStuffTypeJdo[] thingStuffTypeJdo = tstj.query(filter);
     ThingStuffTypeData[] t = ThingStuffTypeJdo.convert(thingStuffTypeJdo);
     
     ThingStuffTypesData r = new ThingStuffTypesData();
@@ -36,12 +37,13 @@ public class Db_ThingStuffType {
   }
 
   private void save(ThingStuffTypeData thingStuffTypeData) {
-    ThingStuffTypeJdo j = new ThingStuffTypeJdo();
+    ThingStuffTypeJdo j = new ThingStuffTypeJdo(sp);
     j.save(thingStuffTypeData);
   }
 
   public boolean delete(OAuthTokenData accessToken, ThingStuffTypeData thingStuffTypeData) {
-    boolean b = ThingStuffTypeJdo.delete(thingStuffTypeData);
+  	ThingStuffTypeJdo tstj = new ThingStuffTypeJdo(sp);
+    boolean b = tstj.delete(thingStuffTypeData);
     return b;
   }
   

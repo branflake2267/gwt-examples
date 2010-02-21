@@ -11,40 +11,64 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.gawkat.core.client.account.thingstufftype.ThingStuffTypeData;
 import com.gawkat.core.client.account.thingstufftype.ThingStuffTypeFilterData;
+import com.gawkat.core.server.ServerPersistence;
 import com.gawkat.core.server.jdo.PMF;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class ThingStuffTypeJdo {
 
+	@NotPersistent
+	private ServerPersistence sp;
+	
+	// identity
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
   private Long stuffTypeId = null;
   
+  // name of
   @Persistent
   private String name = null;
   
+  // type of value, like int, double, string, ...
   @Persistent
   private int valueTypeId = ThingStuffTypeData.VT_STRING;
   
+  // when did this start in time
+  @Persistent
+  private Date startOf = null;
+  
+  // when did this end in time
+  @Persistent
+  private Date endOf = null;
+  
+  // when this object was created
   @Persistent
   private Date dateCreated;
   
+  // when this object was updated
   @Persistent
   private Date dateUpdated;
   
+  // who created this object
   @Persistent
   private long createdByThingId = 0;
   
+  // who updated this object
   @Persistent
   private long updatedByThingId = 0;
-  
-  public ThingStuffTypeJdo() {
+
+  /**
+   * constructor
+   */
+  public ThingStuffTypeJdo(ServerPersistence sp) {
+  	this.sp = sp;
   }
   
   public void setData(ThingStuffTypeData thingStuffTypeData) {
@@ -52,12 +76,18 @@ public class ThingStuffTypeJdo {
   		return;
   	}
   	setKey(thingStuffTypeData.getId());
-    name = thingStuffTypeData.getName();
-    valueTypeId = thingStuffTypeData.getValueTypeId();
+    this.name = thingStuffTypeData.getName();
+    this.valueTypeId = thingStuffTypeData.getValueTypeId();
+    
+    this.startOf = thingStuffTypeData.getStartOf();
+    this.endOf = thingStuffTypeData.getEndOf();
     
     if (stuffTypeId != null && stuffTypeId > 0) {
+    	updatedByThingId = sp.getThingId();
       dateUpdated = new Date();
+      
     } else {
+    	createdByThingId = sp.getThingId();
       dateCreated = new Date();
     }
   }
@@ -164,7 +194,7 @@ public class ThingStuffTypeJdo {
     System.out.println("saved: Id:" + getId());
   }
   
-  public static ThingStuffTypeJdo[] query(String name) {
+  public ThingStuffTypeJdo[] query(String name) {
     
     ArrayList<ThingStuffTypeJdo> aT = new ArrayList<ThingStuffTypeJdo>();
     
@@ -207,7 +237,7 @@ public class ThingStuffTypeJdo {
     return r;
   }
   
-  public static ThingStuffTypeJdo[] query(ThingStuffTypeFilterData filter) {
+  public ThingStuffTypeJdo[] query(ThingStuffTypeFilterData filter) {
 
     // TODO configure drill to setup filters
 
@@ -250,9 +280,9 @@ public class ThingStuffTypeJdo {
     return r;
   }
   
-  public static boolean delete(ThingStuffTypeData thingStuffTypeData) {
+  public boolean delete(ThingStuffTypeData thingStuffTypeData) {
     
-    ThingStuffTypeJdo ttj = new ThingStuffTypeJdo();
+    ThingStuffTypeJdo ttj = new ThingStuffTypeJdo(sp);
     ttj.setData(thingStuffTypeData);
     
     PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -293,10 +323,33 @@ public class ThingStuffTypeJdo {
     ThingStuffTypeData[] r = new ThingStuffTypeData[thingStuffTypeJdo.length];
     for (int i=0; i < thingStuffTypeJdo.length; i++) {
       r[i] = new ThingStuffTypeData();
-      r[i].setData(thingStuffTypeJdo[i].getId(), thingStuffTypeJdo[i].getName(), thingStuffTypeJdo[i].getValueTypeId());
+      r[i].setData(
+      		thingStuffTypeJdo[i].stuffTypeId, 
+      		thingStuffTypeJdo[i].name, 
+      		thingStuffTypeJdo[i].valueTypeId,
+      		thingStuffTypeJdo[i].startOf,
+      		thingStuffTypeJdo[i].endOf,
+      		thingStuffTypeJdo[i].dateCreated,
+      		thingStuffTypeJdo[i].dateUpdated);
     }
     return r;
   }
   
+  
+	public Date getStartOf() {
+	  return startOf;
+  }
+	
+  public Date getEndOf() {
+	  return endOf;
+  }
+  
+  public long getCreatedBy() {
+  	return createdByThingId;
+  }
+  
+  public long getUpdatedBy() {
+  	return updatedByThingId;
+  }
   
 }

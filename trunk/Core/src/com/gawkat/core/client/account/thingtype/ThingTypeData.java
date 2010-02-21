@@ -1,5 +1,7 @@
 package com.gawkat.core.client.account.thingtype;
 
+import java.util.Date;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ThingTypeData implements IsSerializable {
@@ -12,13 +14,38 @@ public class ThingTypeData implements IsSerializable {
   // to set the defaults use this int
   public static final int DEFAULT_TYPE = 1;
   
+  // identity
   private long id;
   
+  // type's name
   private String name;
   
-  public void set(long id, String name) {
+  // when this started in time
+  private Date startOf;
+  
+  // when this ended in time
+  private Date endOf;
+  
+  // when this object was created
+  private Date dateCreated;
+  
+  // when dhtis object was updated
+  private Date dateUpdated;
+  
+  /**
+   * set data
+   * 
+   * @param id
+   * @param name
+   */
+  public void setData(long id, String name, 
+  		Date startOf, Date endOf, Date dateCreated, Date dateUpdated) {
     this.id = id;
     this.name = name;
+    this.startOf = startOf;
+    this.endOf = endOf;
+    this.dateCreated = dateCreated;
+    this.dateUpdated = dateUpdated;
   }
   
   public long getId() {
@@ -36,4 +63,22 @@ public class ThingTypeData implements IsSerializable {
 	public void setKey(int id) {
 	  this.id = id;
   }
+
+	public Date getStartOf() {
+	  return startOf;
+  }
+
+	public Date getEndOf() {
+	  return endOf;
+  }
+	
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+	
+	public Date getDateUpdated() {
+		return dateUpdated;
+	}
+	
+	
 }
