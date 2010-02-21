@@ -78,7 +78,7 @@ public class ThingStuffJdo {
   
   // define the about - adds another demension to the data
   @Persistent
-  private long[] thingStuffIds_About = null;
+  private ThingStuffData[] thingStuffIds_About = null;
   
   /**
    * constructor
@@ -137,11 +137,11 @@ public class ThingStuffJdo {
     }
   }
 
-	public long[] getThingStuffIdsAbout() {
+	public ThingStuffData[] getThingStuffIdsAbout() {
 	  return thingStuffIds_About;
   }
   
-  public void setThingStuffIdsAbout(long[] thingStuffIds_About) {
+  public void setThingStuffIdsAbout(ThingStuffData[] thingStuffIds_About) {
   	this.thingStuffIds_About = thingStuffIds_About;
   }
 

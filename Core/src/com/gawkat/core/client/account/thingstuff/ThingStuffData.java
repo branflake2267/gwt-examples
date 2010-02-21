@@ -30,7 +30,7 @@ public class ThingStuffData implements IsSerializable {
   public long valueInt = 0;
   
   // define the link type - adjetives of the relationship
-  private long[] thingStuffIdsAbout;
+  private ThingStuffData[] thingStuffIdsAbout;
   
   // when did this start in time
   private Date startOf;
@@ -58,7 +58,7 @@ public class ThingStuffData implements IsSerializable {
       boolean valueBol, 
       double valueDouble, 
       long valueInt,
-      long[] thingStuffTypeIdsAbout,
+      ThingStuffData[] thingStuffTypeIdsAbout,
       Date startOf,
       Date endOf,
       Date dateCreated,
@@ -135,11 +135,11 @@ public class ThingStuffData implements IsSerializable {
     return valueInt;
   }
 
-	public long[] getThingStuffIdsAbout() {
+	public ThingStuffData[] getThingStuffIdsAbout() {
 	  return thingStuffIdsAbout;
   }
   
-	public void setThingStuffIdsAbout(long[] thingStuffIdsAbout) {
+	public void setThingStuffIdsAbout(ThingStuffData[] thingStuffIdsAbout) {
 		this.thingStuffIdsAbout = thingStuffIdsAbout;
 	}
 
