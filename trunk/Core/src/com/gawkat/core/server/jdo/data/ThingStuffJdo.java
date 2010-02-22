@@ -281,7 +281,11 @@ public class ThingStuffJdo {
   
   public ThingStuffJdo[] convertStuffsAboutToJdo(ThingStuffsData thingStuffsData) {
   	
-  	ThingStuffData[] tsd = thingStuffsData.thingStuffData;
+  	if (thingStuffsData == null) {
+  		return null;
+  	}
+  	
+  	ThingStuffData[] tsd = thingStuffsData.getThingStuffData();
   	
   	ThingStuffJdo[] r = new ThingStuffJdo[tsd.length];
   	
