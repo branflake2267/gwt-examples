@@ -20,6 +20,8 @@ import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thing.ThingFilterData;
 import com.gawkat.core.server.ServerPersistence;
 import com.gawkat.core.server.jdo.PMF;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
@@ -31,7 +33,7 @@ public class ThingJdo {
 	// identity
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-  private Long thingId;
+  private Key thingIdKey;
   
   // what type of thing is this, user, group, object?
   @Persistent
@@ -86,7 +88,7 @@ public class ThingJdo {
   		return;
   	}
   	setKey(thingData.getThingId());
-  	thingId = thingData.getThingId();
+  	thingIdKey = KeyFactory.createKey(ThingJdo.class.getSimpleName(), thingData.getThingId());
     thingTypeId = thingData.getThingTypeId();
     key = thingData.getKey();
     
@@ -95,7 +97,7 @@ public class ThingJdo {
     this.startOf = thingData.getStartOf();
     this.endOf = thingData.getEndOf();
     
-    if (thingId != null && thingId > 0) {
+    if (thingIdKey != null && thingIdKey.getId() > 0) {
       dateUpdated = new Date();
     } else {
       dateCreated = new Date();
@@ -104,12 +106,12 @@ public class ThingJdo {
   
   private void setKey(long id) {
 	  if (id > 0) {
-	  	thingId = id;
+	  	thingIdKey = KeyFactory.createKey(ThingJdo.class.getSimpleName(), id);
 	  }
   }
 
 	public void setData(ThingJdo thingData) {
-    this.thingId = thingData.getThingId();
+    this.thingIdKey = KeyFactory.createKey(ThingJdo.class.getSimpleName(), thingData.getThingId());
     this.thingTypeId = thingData.getThingTypeId();
     this.key = thingData.getKey();
     
@@ -118,7 +120,7 @@ public class ThingJdo {
     this.startOf = thingData.getStartOf();
     this.endOf = thingData.getEndOf();
     
-    if (thingId != null && thingId > 0) {
+    if (thingIdKey != null && thingIdKey.getId() > 0) {
       dateUpdated = new Date();
     } else {
       dateCreated = new Date();
@@ -127,8 +129,7 @@ public class ThingJdo {
   
 	public ThingData getThingData() {
     ThingData thingData = new ThingData();
-    thingData.setData(thingTypeId, thingId, key, 
-    		startOf, endOf, dateCreated, dateUpdated);
+    thingData.setData(thingTypeId, thingIdKey.getId(), key, startOf, endOf, dateCreated, dateUpdated);
     return thingData;
   }
   
@@ -191,8 +192,8 @@ public class ThingJdo {
     try {
       tx.begin();
 
-      if (thingId > 0) { // update
-        ThingJdo update = pm.getObjectById(ThingJdo.class, thingId);
+      if (thingIdKey.getId() > 0) { // update
+        ThingJdo update = pm.getObjectById(ThingJdo.class, thingIdKey);
         update.setData(thingData);
       } else { // insert    
         pm.makePersistent(this);
@@ -219,8 +220,8 @@ public class ThingJdo {
     try {
       tx.begin();
 
-      if (thingId > 0) { // update
-        ThingJdo update = pm.getObjectById(ThingJdo.class, thingId);
+      if (thingIdKey.getId() > 0) { // update
+        ThingJdo update = pm.getObjectById(ThingJdo.class, thingIdKey);
         update.setSecret(secretHash);
       } else { // insert    
         pm.makePersistent(this);
@@ -352,7 +353,7 @@ public class ThingJdo {
     for (int i=0; i < thingJdo.length; i++) {
       r[i] = new ThingData();
       if (thingJdo[i].key != null) {
-      	r[i].setData(thingJdo[i].thingTypeId, thingJdo[i].thingId, thingJdo[i].key, 
+      	r[i].setData(thingJdo[i].thingTypeId, thingJdo[i].thingIdKey.getId(), thingJdo[i].key, 
       			thingJdo[i].startOf, thingJdo[i].endOf, thingJdo[i].dateCreated, thingJdo[i].dateUpdated);
       }
     }
@@ -432,7 +433,7 @@ public class ThingJdo {
   }
   
   public long getThingId() {
-    return this.thingId;
+    return thingIdKey.getId();
   }
   
   public long getThingTypeId() {
@@ -448,7 +449,7 @@ public class ThingJdo {
   }
   
 	public void setThingId(long thingId) {
-	  this.thingId = thingId;
+	  this.thingIdKey = KeyFactory.createKey(ThingJdo.class.getSimpleName(), thingId);
   }
 	
   public Date getEndOf() {

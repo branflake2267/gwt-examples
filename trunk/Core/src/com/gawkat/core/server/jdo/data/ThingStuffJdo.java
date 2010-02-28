@@ -1,9 +1,11 @@
 package com.gawkat.core.server.jdo.data;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
@@ -22,6 +24,8 @@ import com.gawkat.core.client.account.thingstuff.ThingStuffFilterData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffsData;
 import com.gawkat.core.server.ServerPersistence;
 import com.gawkat.core.server.jdo.PMF;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class ThingStuffJdo {
@@ -30,9 +34,13 @@ public class ThingStuffJdo {
 	private ServerPersistence sp = null;
 	
 	// identity
+  //@PrimaryKey
+  //@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+  //private Long thingStuffId;
+  
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-  private Long thingStuffId;
+  private Key thingStuffIdKey;
   
   // why kind of stuff, defined as type
   @Persistent
@@ -81,7 +89,7 @@ public class ThingStuffJdo {
   
   // define the about - adds another demension to the data
   @Persistent
-  private ThingStuffJdo[] thingStuffJdo_About = null;
+  private List<ThingStuffJdo> thingStuffJdo_About = null;
   
   /**
    * constructor
@@ -105,8 +113,8 @@ public class ThingStuffJdo {
     
     this.startOf = thingStuffData.getStartOf();
     this.endOf = thingStuffData.getEndOf();
-    
-    if (thingStuffId != null && thingStuffId > 0) {
+        
+    if (thingStuffIdKey != null && thingStuffIdKey.getId() > 0) {
       this.dateUpdated = new Date();
     } else {
       this.dateCreated = new Date();
@@ -129,7 +137,7 @@ public class ThingStuffJdo {
     this.startOf = thingStuffData.getStartOf();
     this.endOf = thingStuffData.getEndOf();
     
-    if (thingStuffId != null && thingStuffId > 0) {
+    if (thingStuffIdKey != null && thingStuffIdKey.getId() > 0) {
       this.dateUpdated = new Date();
     } else {
       this.dateCreated = new Date();
@@ -154,9 +162,11 @@ public class ThingStuffJdo {
   }
   
 	private void setKey(long id) {
+		
 	  if (id > 0) {
-	  	thingStuffId = id;
+	  	thingStuffIdKey = KeyFactory.createKey(ThingStuffJdo.class.getSimpleName(), id);
 	  }
+	 
   }
 
   public void save(ThingStuffData thingStuffData) {
@@ -167,8 +177,8 @@ public class ThingStuffJdo {
     try {
       tx.begin();
       
-      if (thingStuffId != null && thingStuffId > 0) { // update
-        ThingStuffJdo update = pm.getObjectById(ThingStuffJdo.class, thingStuffId);
+      if (thingStuffIdKey != null && thingStuffIdKey.getId() > 0) { // update
+        ThingStuffJdo update = pm.getObjectById(ThingStuffJdo.class, thingStuffIdKey);
         update.setData(thingStuffData);
         
       } else { // insert    
@@ -249,37 +259,47 @@ public class ThingStuffJdo {
       aT.toArray(tj);
     }
     
-    ThingStuffData[] td = convert(tj);
+    // TODO overkill here - can get the list up above
+    List<ThingStuffJdo> tjsa_list = Arrays.asList(tj);
+    
+    ThingStuffData[] td = convert(tjsa_list);
     
     return td;
   }
   
-  public static ThingStuffData[] convert(ThingStuffJdo[] thingJdo) {
+  public static ThingStuffData[] convert(List<ThingStuffJdo> thingStuffJdoAbout) {
   	
-    ThingStuffData[] r = new ThingStuffData[thingJdo.length];
+    Iterator<ThingStuffJdo> itr = thingStuffJdoAbout.iterator();
+
+    ThingStuffData[] r = new ThingStuffData[thingStuffJdoAbout.size()];
     
-    for (int i=0; i < thingJdo.length; i++) {
-    		
+    int i = 0;
+    while(itr.hasNext()) {
+    	
+    	ThingStuffJdo tsja = itr.next();
+    	
     	r[i] = new ThingStuffData();
       r[i].setData(
-          thingJdo[i].getThingId(),
-          thingJdo[i].getStuffId(), 
-          thingJdo[i].getStuffTypeId(), 
-          thingJdo[i].getValue(), 
-          thingJdo[i].getValueBol(), 
-          thingJdo[i].getValueDouble(),
-          thingJdo[i].getValueInt(), 
-          thingJdo[i].getStartOf(),
-          thingJdo[i].getEndOf(), 
-          thingJdo[i].getDateCreated(),
-          thingJdo[i].getDateUpdated(),
-          thingJdo[i].getThingStuffsAbout());
+          tsja.getThingId(),
+          tsja.getStuffId(), 
+          tsja.getStuffTypeId(), 
+          tsja.getValue(), 
+          tsja.getValueBol(), 
+          tsja.getValueDouble(),
+          tsja.getValueInt(), 
+          tsja.getStartOf(),
+          tsja.getEndOf(), 
+          tsja.getDateCreated(),
+          tsja.getDateUpdated(),
+          tsja.getThingStuffsAbout());
+    	
+      i++;
     }
     
     return r;
   }
   
-  public ThingStuffJdo[] convertStuffsAboutToJdo(ThingStuffsData thingStuffsData) {
+  public List<ThingStuffJdo> convertStuffsAboutToJdo(ThingStuffsData thingStuffsData) {
   	
   	if (thingStuffsData == null) {
   		return null;
@@ -292,7 +312,7 @@ public class ThingStuffJdo {
   	for (int i=0; i < tsd.length; i++) {
   		r[i] = new ThingStuffJdo(sp);
   		r[i].thingId = tsd[i].getThingId();
-  		r[i].thingStuffId = tsd[i].getId();
+  		r[i].thingStuffIdKey = KeyFactory.createKey(ThingStuffJdo.class.getSimpleName(), tsd[i].getId());
   		r[i].thingStuffTypeId = tsd[i].getThingStuffTypeId();
   		r[i].value = tsd[i].getValue();
   		r[i].valueBol = tsd[i].getValueBol();
@@ -303,7 +323,9 @@ public class ThingStuffJdo {
   		r[i].thingStuffJdo_About = convertStuffsAboutToJdo(tsd[i].getThingStuffsAbout()); // recursive
   	}
   	
-  	return r;
+  	List<ThingStuffJdo> l = Arrays.asList(r);
+  	
+  	return l;
   }
   
   public boolean delete(ServerPersistence sp, long thingStuffId) {
@@ -389,8 +411,16 @@ public class ThingStuffJdo {
     return true;
   }
 
+  public long getId() {
+    return thingStuffIdKey.getId();
+  }
+
+  /**
+   * get id (same as getId()
+   * @return
+   */
   public long getStuffId() {
-    return thingStuffId;
+    return thingStuffIdKey.getId();
   }
   
   public long getStuffTypeId() {
@@ -401,9 +431,7 @@ public class ThingStuffJdo {
     return thingId;
   }
    
-  public long getId() {
-    return thingStuffId;
-  }
+
   
   public long getThingStuffTypeId() {
     return thingStuffTypeId;
