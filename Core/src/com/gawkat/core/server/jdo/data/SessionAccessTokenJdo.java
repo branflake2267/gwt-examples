@@ -17,13 +17,14 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.server.jdo.PMF;
+import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class SessionAccessTokenJdo {
 
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-  private Long id;
+  private Key idKey;
   
   @Persistent
   private Long thingTypeId;
@@ -81,7 +82,7 @@ public class SessionAccessTokenJdo {
    * @return
    */
   public long getId() {
-    return this.id;
+    return idKey.getId();
   }
   
   /**

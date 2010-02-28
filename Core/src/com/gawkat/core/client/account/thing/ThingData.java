@@ -49,8 +49,7 @@ public class ThingData implements IsSerializable {
     this.thingId = thingId;
   }
   
-  public void setData(long thingTypeId, long thingId, String key, 
-  		Date startOf, Date endOf, Date dateCreated, Date dateUpdated) {
+  public void setData(long thingTypeId, long thingId, String key, Date startOf, Date endOf, Date dateCreated, Date dateUpdated) {
     this.thingTypeId = thingTypeId;
     this.thingId = thingId;
     this.key = key;

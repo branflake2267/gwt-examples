@@ -38,7 +38,7 @@ public class ThingTypeJdo {
   // identity
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-  private Long thingTypeId;
+  private Key thingTypeIdKey;
   
   // type name
   @Persistent
@@ -93,7 +93,7 @@ public class ThingTypeJdo {
     this.startOf = thingTypeData.getStartOf();
     this.endOf = thingTypeData.getEndOf();
     
-    if (thingTypeId != null && thingTypeId > 0) {
+    if (thingTypeIdKey != null && thingTypeIdKey.getId() > 0) {
     	dateUpdated = new Date();
     } else {
     	dateCreated = new Date();
@@ -102,7 +102,7 @@ public class ThingTypeJdo {
   
   private void setKey(long id) {
   	if (id > 0) {
-  		thingTypeId = id;
+  		thingTypeIdKey = KeyFactory.createKey(ThingTypeJdo.class.getSimpleName(), id);
   	}
   }
     
@@ -310,7 +310,7 @@ public class ThingTypeJdo {
   }
   
   public Long getId() {
-    return thingTypeId;
+    return thingTypeIdKey.getId();
   }
   
   public String getName() {

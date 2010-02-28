@@ -15,13 +15,14 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.gawkat.core.server.jdo.PMF;
+import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class SessionNonceJdo {
 
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-  private Long nonceId;
+  private Key nonceIdKey;
   
   @Persistent
   private String url;

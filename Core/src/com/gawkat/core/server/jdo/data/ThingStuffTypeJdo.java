@@ -20,6 +20,8 @@ import com.gawkat.core.client.account.thingstufftype.ThingStuffTypeData;
 import com.gawkat.core.client.account.thingstufftype.ThingStuffTypeFilterData;
 import com.gawkat.core.server.ServerPersistence;
 import com.gawkat.core.server.jdo.PMF;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class ThingStuffTypeJdo {
@@ -30,7 +32,7 @@ public class ThingStuffTypeJdo {
 	// identity
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-  private Long stuffTypeId = null;
+  private Key stuffTypeIdKey = null;
   
   // name of
   @Persistent
@@ -82,7 +84,7 @@ public class ThingStuffTypeJdo {
     this.startOf = thingStuffTypeData.getStartOf();
     this.endOf = thingStuffTypeData.getEndOf();
     
-    if (stuffTypeId != null && stuffTypeId > 0) {
+    if (stuffTypeIdKey != null && stuffTypeIdKey.getId() > 0) {
       dateUpdated = new Date();
       
     } else {
@@ -92,12 +94,12 @@ public class ThingStuffTypeJdo {
 
   public void setKey(long id) {
   	if (id > 0) {
-  		stuffTypeId = id;
+  		stuffTypeIdKey = KeyFactory.createKey(ThingStuffTypeJdo.class.getSimpleName(), id);
   	}
   }
   
   public long getId() {
-    return stuffTypeId;
+    return stuffTypeIdKey.getId();
   }
   
   public void setName(String name) {
@@ -174,8 +176,8 @@ public class ThingStuffTypeJdo {
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
-      if (stuffTypeId != null && stuffTypeId > 0) {
-        ThingStuffTypeJdo update = pm.getObjectById(ThingStuffTypeJdo.class, stuffTypeId);
+      if (stuffTypeIdKey != null && stuffTypeIdKey.getId() > 0) {
+        ThingStuffTypeJdo update = pm.getObjectById(ThingStuffTypeJdo.class, stuffTypeIdKey);
         update.setData(thingStuffTypeData);
       } else {
         pm.makePersistent(this);
@@ -322,7 +324,7 @@ public class ThingStuffTypeJdo {
     for (int i=0; i < thingStuffTypeJdo.length; i++) {
       r[i] = new ThingStuffTypeData();
       r[i].setData(
-      		thingStuffTypeJdo[i].stuffTypeId, 
+      		thingStuffTypeJdo[i].stuffTypeIdKey.getId(), 
       		thingStuffTypeJdo[i].name, 
       		thingStuffTypeJdo[i].valueTypeId,
       		thingStuffTypeJdo[i].startOf,
