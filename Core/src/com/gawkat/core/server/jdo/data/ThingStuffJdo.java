@@ -164,7 +164,7 @@ public class ThingStuffJdo {
 	private void setKey(long id) {
 		
 	  if (id > 0) {
-	  	thingStuffIdKey = KeyFactory.createKey(ThingStuffJdo.class.getSimpleName(), id);
+	  	thingStuffIdKey = getKey(id);
 	  }
 	 
   }
@@ -312,7 +312,7 @@ public class ThingStuffJdo {
   	for (int i=0; i < tsd.length; i++) {
   		r[i] = new ThingStuffJdo(sp);
   		r[i].thingId = tsd[i].getThingId();
-  		r[i].thingStuffIdKey = KeyFactory.createKey(ThingStuffJdo.class.getSimpleName(), tsd[i].getId());
+  		r[i].thingStuffIdKey = getKey(tsd[i].getId());
   		r[i].thingStuffTypeId = tsd[i].getThingStuffTypeId();
   		r[i].value = tsd[i].getValue();
   		r[i].valueBol = tsd[i].getValueBol();
@@ -328,7 +328,7 @@ public class ThingStuffJdo {
   	return l;
   }
   
-  public boolean delete(ServerPersistence sp, long thingStuffId) {
+	public boolean delete(ServerPersistence sp, long thingStuffId) {
     if (thingStuffId == 0) {
       return false;
     }
@@ -488,4 +488,13 @@ public class ThingStuffJdo {
   public long getUpdatedBy() {
   	return updatedByThingId;
   }
+  
+  private Key getKey(long id) {
+	  Key key = null;
+  	if (id == 0) {
+  		key = KeyFactory.createKey(ThingStuffJdo.class.getSimpleName(), id);
+	  }
+	  return key;
+  }
+
 }
