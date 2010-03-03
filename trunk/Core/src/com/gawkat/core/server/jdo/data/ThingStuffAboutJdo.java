@@ -28,14 +28,17 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
-public class ThingStuffJdo {
+public class ThingStuffAboutJdo {
 
 	@NotPersistent
 	private ServerPersistence sp = null;
 	
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-  private Key thingStuffIdKey;
+  private Key thingStuffAboutIdKey;
+  
+  // Owner of this object - TODO add this to set data
+  private long thingStuffJdoId;
   
   // why kind of stuff, defined as type
   @Persistent
@@ -81,19 +84,23 @@ public class ThingStuffJdo {
   // who updated this object
   @Persistent
   private long updatedByThingId = 0;
-  
+    
   /**
    * constructor
    */
-  public ThingStuffJdo(ServerPersistence sp) {
+  public ThingStuffAboutJdo(ServerPersistence sp) {
   	this.sp = sp;
   }
   
-  public void setData(ThingStuffData thingStuffData) {
+  public void setData(long thingStuffJdoId, ThingStuffData thingStuffData) {
   	if (thingStuffData == null) {
   		return;
   	}
+  	
   	setKey(thingStuffData.getId());
+  	
+  	this.thingStuffJdoId = thingStuffJdoId;
+  	
     this.thingStuffTypeId = thingStuffData.getThingStuffTypeId();
     this.thingId = thingStuffData.getThingId();
     this.value = thingStuffData.getValue();
@@ -104,54 +111,58 @@ public class ThingStuffJdo {
     this.startOf = thingStuffData.getStartOf();
     this.endOf = thingStuffData.getEndOf();
         
-    if (thingStuffIdKey != null && thingStuffIdKey.getId() > 0) {
+    if (thingStuffAboutIdKey != null && thingStuffAboutIdKey.getId() > 0) {
       this.dateUpdated = new Date();
     } else {
       this.dateCreated = new Date();
     }
   }
 
-	public void setData(ThingStuffJdo thingStuffData) {
+	public void setData(long thingStuffJdoId, ThingStuffAboutJdo thingStuffData) {
 		if (thingStuffData == null) {
 			return;
 		}
+		
 		setKey(thingStuffData.getId());
+		
+		this.thingStuffJdoId = thingStuffJdoId;
+		
     this.thingStuffTypeId = thingStuffData.getThingStuffTypeId();
     this.thingId = thingStuffData.getThingId();
     this.value = thingStuffData.getValue();
     this.valueBol = thingStuffData.getValueBol();
     this.valueDouble = thingStuffData.getValueDouble();
     this.valueInt = thingStuffData.getValueInt();
-    
+
     this.startOf = thingStuffData.getStartOf();
     this.endOf = thingStuffData.getEndOf();
     
-    if (thingStuffIdKey != null && thingStuffIdKey.getId() > 0) {
+    if (thingStuffAboutIdKey != null && thingStuffAboutIdKey.getId() > 0) {
       this.dateUpdated = new Date();
     } else {
       this.dateCreated = new Date();
     }
   }
-
+  
 	private void setKey(long id) {
 		
 	  if (id > 0) {
-	  	thingStuffIdKey = getKey(id);
+	  	thingStuffAboutIdKey = getKey(id);
 	  }
 	 
   }
 
-  public long save(ThingStuffData thingStuffData) {
-    setData(thingStuffData);
+  public void save(long thingStuffJdoId, ThingStuffData thingStuffData) {
+  	setData(thingStuffJdoId, thingStuffData);
     
     PersistenceManager pm = PMF.get().getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
       
-      if (thingStuffIdKey != null && thingStuffIdKey.getId() > 0) { // update
-        ThingStuffJdo update = pm.getObjectById(ThingStuffJdo.class, thingStuffIdKey);
-        update.setData(thingStuffData);
+      if (thingStuffAboutIdKey != null && thingStuffAboutIdKey.getId() > 0) { // update
+        ThingStuffAboutJdo update = pm.getObjectById(ThingStuffAboutJdo.class, thingStuffAboutIdKey);
+        update.setData(thingStuffJdoId, thingStuffData);
         
       } else { // insert    
         pm.makePersistent(this);
@@ -168,8 +179,6 @@ public class ThingStuffJdo {
       }
       pm.close();
     }
-    
-    return getId();
   }
   
   /**
@@ -178,13 +187,13 @@ public class ThingStuffJdo {
    * @param thingStuffId
    * @return
    */
-  public ThingStuffJdo query(long thingStuffId) {
-    ThingStuffJdo thingStuff = null;
+  public ThingStuffAboutJdo query(long thingStuffId) {
+    ThingStuffAboutJdo thingStuff = null;
     PersistenceManager pm = PMF.get().getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
-      thingStuff = pm.getObjectById(ThingStuffJdo.class, thingStuffId);
+      thingStuff = pm.getObjectById(ThingStuffAboutJdo.class, thingStuffId);
       tx.commit();
     } finally {
       if (tx.isActive()) {
@@ -198,12 +207,14 @@ public class ThingStuffJdo {
   public ThingStuffData[] query(ThingStuffFilterData filter) {
     
     long thingId = filter.thingId;
+    long thingStuffJdoId = filter.thingStuffJdoId;
     
-    ArrayList<ThingStuffJdo> aT = new ArrayList<ThingStuffJdo>();
+    ArrayList<ThingStuffAboutJdo> aT = new ArrayList<ThingStuffAboutJdo>();
 
+    // TODO filter by thing too
     String qfilter = null;
-    if (filter.thingId > 0) {
-      qfilter = "thingId==" + thingId + "";
+    if (filter.thingStuffJdoId > 0) {
+      qfilter = "thingStuffJdoId==" + thingStuffJdoId + "";
     }
     
     PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -211,14 +222,14 @@ public class ThingStuffJdo {
     try {
       tx.begin();
 
-      Extent<ThingStuffJdo> e = pm.getExtent(ThingStuffJdo.class, true);
+      Extent<ThingStuffAboutJdo> e = pm.getExtent(ThingStuffAboutJdo.class, true);
       Query q = pm.newQuery(e, qfilter);
       q.execute();
       
-      Collection<ThingStuffJdo> c = (Collection<ThingStuffJdo>) q.execute();
-      Iterator<ThingStuffJdo> iter = c.iterator();
+      Collection<ThingStuffAboutJdo> c = (Collection<ThingStuffAboutJdo>) q.execute();
+      Iterator<ThingStuffAboutJdo> iter = c.iterator();
       while (iter.hasNext()) {
-        ThingStuffJdo t = (ThingStuffJdo) iter.next();
+        ThingStuffAboutJdo t = (ThingStuffAboutJdo) iter.next();
         aT.add(t);
       }
 
@@ -231,30 +242,30 @@ public class ThingStuffJdo {
       pm.close();
     }
 
-    ThingStuffJdo[] tj = new ThingStuffJdo[aT.size()];
+    ThingStuffAboutJdo[] tj = new ThingStuffAboutJdo[aT.size()];
     if (aT.size() > 0) {
-      tj = new ThingStuffJdo[aT.size()];
+      tj = new ThingStuffAboutJdo[aT.size()];
       aT.toArray(tj);
     }
     
     // TODO overkill here - can get the list up above
-    List<ThingStuffJdo> tjsa_list = Arrays.asList(tj);
+    List<ThingStuffAboutJdo> tjsa_list = Arrays.asList(tj);
     
     ThingStuffData[] td = convert(tjsa_list);
     
     return td;
   }
   
-  public static ThingStuffData[] convert(List<ThingStuffJdo> thingStuffJdoAbout) {
+  public static ThingStuffData[] convert(List<ThingStuffAboutJdo> thingStuffJdoAbout) {
   	
-    Iterator<ThingStuffJdo> itr = thingStuffJdoAbout.iterator();
+    Iterator<ThingStuffAboutJdo> itr = thingStuffJdoAbout.iterator();
 
     ThingStuffData[] r = new ThingStuffData[thingStuffJdoAbout.size()];
     
     int i = 0;
     while(itr.hasNext()) {
     	
-    	ThingStuffJdo tsja = itr.next();
+    	ThingStuffAboutJdo tsja = itr.next();
     	
     	r[i] = new ThingStuffData();
       r[i].setData(
@@ -276,7 +287,7 @@ public class ThingStuffJdo {
     return r;
   }
   
-  public List<ThingStuffJdo> convertStuffsAboutToJdo(ThingStuffsData thingStuffsData) {
+  public List<ThingStuffAboutJdo> convertStuffsAboutToJdo(ThingStuffsData thingStuffsData) {
   	
   	if (thingStuffsData == null) {
   		return null;
@@ -284,12 +295,12 @@ public class ThingStuffJdo {
   	
   	ThingStuffData[] tsd = thingStuffsData.getThingStuffData();
   	
-  	ThingStuffJdo[] r = new ThingStuffJdo[tsd.length];
+  	ThingStuffAboutJdo[] r = new ThingStuffAboutJdo[tsd.length];
   	
   	for (int i=0; i < tsd.length; i++) {
-  		r[i] = new ThingStuffJdo(sp);
+  		r[i] = new ThingStuffAboutJdo(sp);
   		r[i].thingId = tsd[i].getThingId();
-  		r[i].thingStuffIdKey = getKey(tsd[i].getId());
+  		r[i].thingStuffAboutIdKey = getKey(tsd[i].getId());
   		r[i].thingStuffTypeId = tsd[i].getThingStuffTypeId();
   		r[i].value = tsd[i].getValue();
   		r[i].valueBol = tsd[i].getValueBol();
@@ -297,9 +308,10 @@ public class ThingStuffJdo {
   		r[i].valueInt = tsd[i].getValueInt();
   		r[i].startOf = tsd[i].getStartOf();
   		r[i].endOf = tsd[i].getEndOf();
+  		
   	}
   	
-  	List<ThingStuffJdo> l = Arrays.asList(r);
+  	List<ThingStuffAboutJdo> l = Arrays.asList(r);
   	
   	return l;
   }
@@ -317,10 +329,11 @@ public class ThingStuffJdo {
     return b;
   }
   
+	// TODO - verify this gets deleted - b/c of the thingStuffJdoId
   public boolean delete(ServerPersistence sp, ThingStuffData thingStuffData) {
     
-    ThingStuffJdo ttj = new ThingStuffJdo(sp);
-    ttj.setData(thingStuffData);
+    ThingStuffAboutJdo ttj = new ThingStuffAboutJdo(sp);
+    ttj.setData(thingStuffJdoId, thingStuffData);
     
     PersistenceManager pm = PMF.get().getPersistenceManager();
     Transaction tx = pm.currentTransaction();
@@ -328,7 +341,7 @@ public class ThingStuffJdo {
     try {
       tx.begin();
 
-      ThingStuffJdo ttj2 = (ThingStuffJdo) pm.getObjectById(ThingStuffJdo.class, ttj.getId());
+      ThingStuffAboutJdo ttj2 = (ThingStuffAboutJdo) pm.getObjectById(ThingStuffAboutJdo.class, ttj.getId());
       pm.deletePersistent(ttj2);
       
       tx.commit();
@@ -366,11 +379,11 @@ public class ThingStuffJdo {
     try {
       tx.begin();
 
-      Extent<ThingStuffJdo> e = pm.getExtent(ThingStuffJdo.class, true);
+      Extent<ThingStuffAboutJdo> e = pm.getExtent(ThingStuffAboutJdo.class, true);
       Query q = pm.newQuery(e, qfilter);
       q.execute();
       
-      Collection<ThingStuffJdo> c = (Collection<ThingStuffJdo>) q.execute();
+      Collection<ThingStuffAboutJdo> c = (Collection<ThingStuffAboutJdo>) q.execute();
 
       // delete all
       pm.deletePersistentAll(c);
@@ -388,10 +401,10 @@ public class ThingStuffJdo {
   }
 
   public long getId() {
-  	if (thingStuffIdKey == null) {
+  	if (thingStuffAboutIdKey == null) {
   		return -1;
   	}
-    return thingStuffIdKey.getId();
+    return thingStuffAboutIdKey.getId();
   }
 
   /**
@@ -399,7 +412,7 @@ public class ThingStuffJdo {
    * @return
    */
   public long getStuffId() {
-    return thingStuffIdKey.getId();
+    return thingStuffAboutIdKey.getId();
   }
   
   public long getStuffTypeId() {
@@ -471,7 +484,7 @@ public class ThingStuffJdo {
   private Key getKey(long id) {
 	  Key key = null;
   	if (id == 0) {
-  		key = KeyFactory.createKey(ThingStuffJdo.class.getSimpleName(), id);
+  		key = KeyFactory.createKey(ThingStuffAboutJdo.class.getSimpleName(), id);
 	  }
 	  return key;
   }

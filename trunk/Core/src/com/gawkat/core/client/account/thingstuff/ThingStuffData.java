@@ -61,8 +61,7 @@ public class ThingStuffData implements IsSerializable {
       Date startOf,
       Date endOf,
       Date dateCreated,
-      Date dateUpdated,
-      ThingStuffsData thingStuffTypeIdsAbout) {
+      Date dateUpdated) {
   	
     this.thingId = thingId;
     this.thingStuffId = thingStuffId;
@@ -71,7 +70,7 @@ public class ThingStuffData implements IsSerializable {
     this.valueBol = valueBol;
     this.valueDouble = valueDouble;
     this.valueInt = valueInt;
-    this.thingStuffsAbout = thingStuffTypeIdsAbout;
+   
     
     this.startOf = startOf;
     this.endOf = endOf;

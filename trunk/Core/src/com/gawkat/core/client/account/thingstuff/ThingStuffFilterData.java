@@ -9,6 +9,8 @@ public class ThingStuffFilterData implements IsSerializable {
   
   public long thingId = 0;
   
+  public long thingStuffJdoId = 0;
+  
   
 
 }
