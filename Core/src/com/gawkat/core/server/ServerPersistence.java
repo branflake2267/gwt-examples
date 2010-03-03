@@ -3,22 +3,29 @@ package com.gawkat.core.server;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.jdo.PersistenceManager;
 import javax.servlet.http.HttpServletRequest;
+
+import com.gawkat.core.server.jdo.PMF;
 
 public class ServerPersistence {
 
+	private PersistenceManager pm;
+	
 	// keep track of the http request coming in
   private HttpServletRequest request = null;
   
   // whos controlling this session
   private long thingId = 0;
+
+	
   
-  
-  
+
   // TODO - set the ThingId after the login, so to tell the inserts and updates whos doing what
   
   
   public ServerPersistence() {
+  	pm = PMF.get().getPersistenceManager();
   }
   
   public void start(HttpServletRequest request) {
@@ -26,7 +33,6 @@ public class ServerPersistence {
   }
   
   public void end() {
-     
   }
   
   public void getUrl() {
@@ -116,4 +122,10 @@ public class ServerPersistence {
   public long getThingId() {
   	return thingId;
   }
+  
+  public PersistenceManager getPmf() {
+  	return pm;
+  }
+  
+  
 }
