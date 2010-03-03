@@ -27,6 +27,16 @@ import com.gawkat.core.server.jdo.PMF;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
+/**
+ * 
+ * 
+ * ADD Date time start and end, to add the time demension
+ * 
+ * 
+ * @author branflake2267
+ *
+ */
+
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class ThingStuffJdo {
 
