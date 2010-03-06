@@ -152,7 +152,7 @@ public class ThingJdo {
       return;
     }
     
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
@@ -169,7 +169,7 @@ public class ThingJdo {
   public void insert() {
     this.dateCreated = new Date();
     
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
@@ -187,7 +187,7 @@ public class ThingJdo {
     setData(thingData);
 
     boolean b = false;
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
@@ -215,7 +215,7 @@ public class ThingJdo {
     setData(thingData);
 
     boolean b = false;
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
@@ -241,7 +241,7 @@ public class ThingJdo {
     
   public ThingJdo query(long thingId) {
     ThingJdo thing = null;
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
@@ -268,7 +268,7 @@ public class ThingJdo {
 
     String qfilter = "thingTypeId==" + thingTypeId + " && key==\"" + key + "\" ";
     
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
@@ -312,7 +312,7 @@ public class ThingJdo {
       qfilter = "thingTypeId==" + thingTypeId + "";
     }
     
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
@@ -387,7 +387,7 @@ public class ThingJdo {
     ThingJdo ttj = new ThingJdo(sp);
     ttj.setData(thingData);
     
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     boolean b = false;
     try {

@@ -155,7 +155,7 @@ public class ThingStuffAboutJdo {
   public void save(long thingStuffJdoId, ThingStuffData thingStuffData) {
   	setData(thingStuffJdoId, thingStuffData);
     
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
@@ -189,7 +189,7 @@ public class ThingStuffAboutJdo {
    */
   public ThingStuffAboutJdo query(long thingStuffId) {
     ThingStuffAboutJdo thingStuff = null;
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
@@ -217,7 +217,7 @@ public class ThingStuffAboutJdo {
       qfilter = "thingStuffJdoId==" + thingStuffJdoId + "";
     }
     
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
@@ -335,7 +335,7 @@ public class ThingStuffAboutJdo {
     ThingStuffAboutJdo ttj = new ThingStuffAboutJdo(sp);
     ttj.setData(thingStuffJdoId, thingStuffData);
     
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     boolean b = false;
     try {
@@ -374,7 +374,7 @@ public class ThingStuffAboutJdo {
     
     String qfilter = "thingId==" + thingId + "";
 
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();

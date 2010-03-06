@@ -11,17 +11,22 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.gawkat.core.client.account.thing.ThingData;
+import com.gawkat.core.server.ServerPersistence;
 import com.gawkat.core.server.jdo.PMF;
 import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class SessionAccessTokenJdo {
 
+	@NotPersistent
+	private ServerPersistence sp;
+	
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
   private Key idKey;
@@ -43,6 +48,10 @@ public class SessionAccessTokenJdo {
   
   @Persistent
   private Date dateUpdated;
+
+  public SessionAccessTokenJdo(ServerPersistence sp) {
+  	this.sp = sp;
+  }
   
   /**
    * insert access token
@@ -60,7 +69,7 @@ public class SessionAccessTokenJdo {
     this.dateCreated = new Date();
     
     boolean success = false;
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
@@ -112,13 +121,13 @@ public class SessionAccessTokenJdo {
    * @param accessTokenSecret
    * @return
    */
-  public static SessionAccessTokenJdo[] query(String accessToken, String accessTokenSecret) {
+  public SessionAccessTokenJdo[] query(String accessToken, String accessTokenSecret) {
 
     String qfilter = "accessToken==\"" + accessToken + "\" && accessTokenSecret==\"" + accessTokenSecret + "\" ";
 
     ArrayList<SessionAccessTokenJdo> aT = new ArrayList<SessionAccessTokenJdo>();
 
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
@@ -173,11 +182,11 @@ public class SessionAccessTokenJdo {
    * @param userId
    * @return
    */
-  public static boolean updateAccessToken(long id, long userId) {
+  public boolean updateAccessToken(long id, long userId) {
     
     boolean success = false;
     
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
