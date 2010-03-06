@@ -279,7 +279,8 @@ public class OAuthServer {
     
     String nonce = token.getNonce();
 
-    boolean found = SessionNonceJdo.doesNonceExist(thingTypeId, thingId, nonce);
+    SessionNonceJdo snj = new SessionNonceJdo(sp);
+    boolean found = snj.doesNonceExist(thingTypeId, thingId, nonce);
  
     return found;
   }
@@ -293,7 +294,7 @@ public class OAuthServer {
    * @param thingId
    */
   private void setNonce(OAuthTokenData token, String url, Long thingTypeId, Long thingId) {
-    SessionNonceJdo n = new SessionNonceJdo();
+    SessionNonceJdo n = new SessionNonceJdo(sp);
     n.insert(url, thingTypeId, thingId, token.getNonce());
   }
 
@@ -308,7 +309,7 @@ public class OAuthServer {
     String accessKey = getAccessKey();
     String accessSecret = getAccessSecret();
 
-    SessionAccessTokenJdo sa = new SessionAccessTokenJdo();
+    SessionAccessTokenJdo sa = new SessionAccessTokenJdo(sp);
     boolean success = sa.insert((long)ThingTypeJdo.TYPE_APPLICATION, applicationId, accessKey, accessSecret);
     
     AccessTokenData at = new AccessTokenData();
@@ -333,7 +334,8 @@ public class OAuthServer {
     String appConsumerKey = appAccessToken.getAccessToken_key();
     String appConsumerSecret = appAccessToken.getAccessToken_secret();
 
-    SessionAccessTokenJdo[] sas = SessionAccessTokenJdo.query(appConsumerKey, appConsumerSecret);
+    SessionAccessTokenJdo satj = new SessionAccessTokenJdo(sp);
+    SessionAccessTokenJdo[] sas = satj.query(appConsumerKey, appConsumerSecret);
     SessionAccessTokenJdo sa = null;
     if (sas != null) {
       sa = sas[0];
@@ -353,7 +355,8 @@ public class OAuthServer {
    * @return
    */
   private boolean setAccessToken_user(Long id, Long userId) {
-    return SessionAccessTokenJdo.updateAccessToken(id, userId);
+  	SessionAccessTokenJdo satj = new SessionAccessTokenJdo(sp);
+    return satj.updateAccessToken(id, userId);
   }
 
   /**

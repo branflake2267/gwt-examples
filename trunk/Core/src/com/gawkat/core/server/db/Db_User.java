@@ -190,7 +190,7 @@ public class Db_User {
     String ct = accessToken.getAccessToken_key(); // at this point its a consumer token, and not the hash
     String cs = accessToken.getAccessToken_secret();
     
-    SessionAccessTokenJdo s = new SessionAccessTokenJdo();
+    SessionAccessTokenJdo s = new SessionAccessTokenJdo(sp);
     ThingData t = s.getThingData(ct, cs);
     
     // the id has to be a user

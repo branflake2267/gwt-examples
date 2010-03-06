@@ -10,16 +10,21 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.gawkat.core.server.ServerPersistence;
 import com.gawkat.core.server.jdo.PMF;
 import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class SessionNonceJdo {
 
+	@NotPersistent
+	private ServerPersistence sp;
+	
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
   private Key nonceIdKey;
@@ -41,6 +46,10 @@ public class SessionNonceJdo {
  
   @Persistent
   private Date dateUpdated;
+
+  public SessionNonceJdo(ServerPersistence sp) {
+  	this.sp = sp;
+  }
   
   /**
    * insert nonce
@@ -57,7 +66,7 @@ public class SessionNonceJdo {
     this.nonce = nonce;
     this.dateCreated = new Date();
     
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
@@ -79,13 +88,13 @@ public class SessionNonceJdo {
    * @param nonce
    * @return
    */
-  public static boolean doesNonceExist(Long thingTypeId, Long thingId, String nonce) {
+  public boolean doesNonceExist(Long thingTypeId, Long thingId, String nonce) {
 
     String qfilter = "thingTypeId==" + thingTypeId + " && thingId==" + thingId + " && nonce==\"" + nonce + "\" ";
     
     boolean found = false;
 
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();

@@ -126,7 +126,7 @@ public class ThingStuffTypeJdo {
       return;
     }
     
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
@@ -148,7 +148,7 @@ public class ThingStuffTypeJdo {
   public void insert() {
     this.dateCreated = new Date();
     
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
@@ -172,7 +172,7 @@ public class ThingStuffTypeJdo {
   public void save(ThingStuffTypeData thingStuffTypeData) {
     setData(thingStuffTypeData);
     
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
@@ -200,7 +200,7 @@ public class ThingStuffTypeJdo {
     
     String qfilter = "name==\"" + name + "\"";
     
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
@@ -243,7 +243,7 @@ public class ThingStuffTypeJdo {
 
     ArrayList<ThingStuffTypeJdo> aT = new ArrayList<ThingStuffTypeJdo>();
 
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
@@ -285,7 +285,7 @@ public class ThingStuffTypeJdo {
     ThingStuffTypeJdo ttj = new ThingStuffTypeJdo(sp);
     ttj.setData(thingStuffTypeData);
     
-    PersistenceManager pm = PMF.get().getPersistenceManager();
+    PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     boolean b = false;
     try {

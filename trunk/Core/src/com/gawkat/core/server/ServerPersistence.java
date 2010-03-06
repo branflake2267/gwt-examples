@@ -127,5 +127,9 @@ public class ServerPersistence {
   	return pm;
   }
   
+  public PersistenceManager getPersistenceManager() {
+  	return pm;
+  }
+  
   
 }
