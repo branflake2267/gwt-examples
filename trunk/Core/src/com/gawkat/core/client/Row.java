@@ -130,4 +130,13 @@ public class Row extends Composite implements MouseOverHandler, MouseOutHandler 
   public HandlerRegistration addChangeHandler(ChangeHandler handler) {
     return addDomHandler(handler, ChangeEvent.getType());
   }
+  
+  public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
+  	return addDomHandler(handler, MouseOverEvent.getType());
+  }
+  
+  public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
+  	return addDomHandler(handler, MouseOutEvent.getType());
+  }
+  
 }

@@ -16,6 +16,10 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -32,7 +36,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.server.rpc.RPC;
 
-public class ThingStuff extends Composite implements ClickHandler, ChangeHandler {
+public class ThingStuff extends Composite implements ClickHandler, ChangeHandler, MouseOverHandler, MouseOutHandler {
   
   private ClientPersistence cp = null;
   
@@ -49,9 +53,6 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   // inputs container
   private FlowPanel pInput = new FlowPanel();
   
-  // about stuff container
-  private FlowPanel pAbout = new FlowPanel();
-  
   private TextBox tbValue = new TextBox();
   private CheckBox cbValue = new CheckBox();
   private TextArea taValue = new TextArea();
@@ -67,10 +68,6 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   // types choices - what kind of types, questions, attributes to choose from and then give them a value
   private ThingStuffTypesData thingStuffTypesData = null;
 
-	private ThingStuffs wStuffAbout;
-	
-	private boolean skipAbout = false;
-
   /**
    * constructor - setup the widget
    * 
@@ -79,13 +76,9 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   public ThingStuff(ClientPersistence cp) {
     this.cp = cp;
     
-    // draw the added demsion of stuff types, to add what its about. stuff can have stuff
-    wStuffAbout = new ThingStuffs(cp);
-    
     // inputs of stuff, and then add another group of stuffs
     VerticalPanel vpInput = new VerticalPanel();
     vpInput.add(pInput);
-    vpInput.add(pAbout);
     
     HorizontalPanel hpButtons = new HorizontalPanel();
     hpButtons.add(bDelete);
@@ -96,10 +89,14 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     
     initWidget(pWidget);
     
+    pWidget.addMouseOverHandler(this);
+    pWidget.addMouseOutHandler(this);
     bDelete.addClickHandler(this);
     lbTypes.addChangeHandler(this);
     
     rpc = RpcCore.initRpc();
+    
+    pWidget.addStyleName("test2");
   }
   
   /**
@@ -194,9 +191,6 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
       drawInputBlank();
     }
     
-    pAbout.clear();
-    wStuffAbout.setData(thingStuffTypesData, thingData, thingStuffData.getThingStuffsAbout());
-    pAbout.add(wStuffAbout);
   }
   
   private void drawInputBlank() {
@@ -334,7 +328,6 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     
     // multi dem format for stuff having stuff
     ThingStuffsData tsd = new ThingStuffsData();
-    tsd.thingStuffData = wStuffAbout.getData();
     thingStuffData.setThingStuffIdsAbout(tsd);
     
     return thingStuffData;
@@ -386,7 +379,13 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   }
 
   private int getDataTypeId() {
+  	if (lbTypes == null) {
+  		return -1;
+  	}
     int thingStuffId = Global_ListBox.getSelectedValue(lbTypes);
+    if (thingStuffId == -1) {
+    	return -1;
+    }
     ThingStuffTypeData type = thingStuffTypesData.getStuffTypeData(thingStuffId);
     int typeId = 0;
     if (type == null) {
@@ -504,6 +503,22 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
       changeType();
     }
   }
+
+  public void onMouseOver(MouseOverEvent event) {
+  	Widget sender = (Widget) event.getSource();
+  	
+  	if (sender == pWidget) {
+  		fireChange(EventManager.LOAD_ABOUTTHINGSTUFF);
+  	}
+  }
+
+  public void onMouseOut(MouseOutEvent event) {
+  	Widget sender = (Widget) event.getSource();
+	  
+  	if (sender == pWidget) {
+  		fireChange(EventManager.HIDE_ABOUTTHINGSTUFF);
+  	}
+  }
   
   private void deleteRpc(long thingStuffId) {
     
@@ -516,5 +531,11 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
       }
     });
   }
+
+	public ThingStuffData getThingStuffData() {
+	  return thingStuffData;
+  }
+
+
  
 }

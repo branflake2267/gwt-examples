@@ -25,7 +25,6 @@ public class ServerPersistence {
   
   
   public ServerPersistence() {
-  	pm = PMF.get().getPersistenceManager();
   }
   
   public void start(HttpServletRequest request) {
@@ -123,12 +122,17 @@ public class ServerPersistence {
   	return thingId;
   }
   
+  /**
+   * get persistence manager - TODO wondering if there is a different way to speed recurring connections?
+   * 
+   * @return
+   */
   public PersistenceManager getPmf() {
-  	return pm;
+  	return PMF.get().getPersistenceManager();
   }
   
   public PersistenceManager getPersistenceManager() {
-  	return pm;
+  	return PMF.get().getPersistenceManager();
   }
   
   

@@ -64,7 +64,7 @@ public class Core implements EntryPoint, ChangeHandler {
     String historyToken = History.getToken();
     
     if (historyToken.length() == 0) {
-      History.newItem("account_Home");
+      History.newItem("account_Things");
     }
     
   }

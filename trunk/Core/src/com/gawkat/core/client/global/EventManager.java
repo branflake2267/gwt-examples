@@ -9,6 +9,16 @@ package com.gawkat.core.client.global;
  *
  */
 public class EventManager {
+	
+	/**
+	 * loading started
+	 */
+	public static final int LOADING_STARTED = 10;
+	
+	/**
+	 * loading finished
+	 */
+	public static final int LOADING_FINISHED = 11;
 
   // clicked on login
   final public static int LOGIN = 1;
@@ -44,6 +54,16 @@ public class EventManager {
   
   public static final int ROW_OVER = 50;
   public static final int ROW_OUT = 51;
+
+  /**
+   * Load about thing stuff
+   */
+	public static final int LOAD_ABOUTTHINGSTUFF = 60;
+
+	/**
+	 * hide about thing stuff - TODO not sure if I need this yet
+	 */
+	public static final int HIDE_ABOUTTHINGSTUFF = 61;
   
  
 }
