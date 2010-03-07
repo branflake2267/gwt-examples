@@ -13,8 +13,12 @@ public class Global_ListBox {
   public static int getSelectedValue(ListBox lb) {
   	if (lb == null) {
   		System.out.println("Global_Listbox().getSelectedValue() is null");
-  		return 0;
+  		return -1;
   	}
+  	if (lb.getItemCount() == 0) {
+  		return -1;
+  	}
+  	
     int sel = lb.getSelectedIndex();
     String value = lb.getValue(sel);
     int r = 0;

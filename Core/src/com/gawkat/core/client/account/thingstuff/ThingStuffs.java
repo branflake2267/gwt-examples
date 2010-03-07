@@ -9,10 +9,13 @@ import com.gawkat.core.client.global.LoadingWidget;
 import com.gawkat.core.client.global.Style;
 import com.gawkat.core.client.rpc.RpcCore;
 import com.gawkat.core.client.rpc.RpcCoreServiceAsync;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
@@ -25,7 +28,6 @@ public class ThingStuffs extends Composite implements ClickHandler {
 
   private ClientPersistence cp = null;
   private RpcCoreServiceAsync rpc = null;
-  private LoadingWidget wLoading = new LoadingWidget();
   
   private VerticalPanel pWidget = new VerticalPanel();
   
@@ -44,8 +46,10 @@ public class ThingStuffs extends Composite implements ClickHandler {
   // what kind of types are available to choose from?
   private ThingStuffTypesData thingStuffTypesData = null;
   
-  private boolean skipAbout = false;
+	private int changeEvent = 0;
   
+	private ThingStuffData loadAboutThingStuffData = null;
+	
   /**
    * constructor
    * @param cp
@@ -70,34 +74,22 @@ public class ThingStuffs extends Composite implements ClickHandler {
     bSave.setVisible(false);
     
     pWidget.setStyleName("core-Account-ThingStuffs");
+    
+    pWidget.addStyleName("test1");
   }
   
-  /**
-   * stuff owner
-   * @param thingData
-   */
-  public void setData(ThingData thingData) {
-    this.thingData = thingData;
-  }
-  
-  public void setData(ThingStuffTypesData thingStuffTypesData, ThingData thingData, ThingStuffsData thingStuffsData) {
-  	this.thingStuffTypesData = thingStuffTypesData;
+  public void draw(ThingData thingData, ThingStuffsData thingStuffsData) {
   	this.thingData = thingData;
+  	this.thingStuffTypesData = thingStuffsData.thingStuffTypesData;
   	process(thingStuffsData);
-  }
-  
-  public void draw() {
-    getThingStuffRpc();
-  }
-  
+  }  
+
   private void drawMenu() {
     
     HorizontalPanel hp = new HorizontalPanel();
     hp.add(bAdd);
     hp.add(new HTML("&nbsp;"));
     hp.add(bSave);
-    hp.add(new HTML("&nbsp;"));
-    hp.add(wLoading);
     
     pMenu.add(hp);
   }
@@ -127,7 +119,6 @@ public class ThingStuffs extends Composite implements ClickHandler {
     if (thingStuffsData == null) {
       return;
     }
-    this.thingStuffTypesData = thingStuffsData.thingStuffTypesData;
     
     if (thingStuffsData.thingStuffData == null) {
       return;
@@ -174,12 +165,19 @@ public class ThingStuffs extends Composite implements ClickHandler {
     ThingStuff t = new ThingStuff(cp);
     t.setData(thingData, thingStuffTypesData, thingStuffData);
     pListStuff.add(t);
+    
+    t.setStyleName("test4");
+    
     widths = Row.getMaxWidths(widths, t.getRow().getWidths());
+    
     t.addChangeHandler(new ChangeHandler() {
       public void onChange(ChangeEvent event) {
         ThingStuff tt = (ThingStuff) event.getSource();
         if (tt.getChangeEvent() == EventManager.THINGSTUFF_TYPECHANGE) {
           setWidths();
+        } else if (tt.getChangeEvent() == EventManager.LOAD_ABOUTTHINGSTUFF) {
+        	fireChange(tt.getChangeEvent());
+        	loadAboutThingStuffData = tt.getThingStuffData();
         }
       }
     });
@@ -222,8 +220,22 @@ public class ThingStuffs extends Composite implements ClickHandler {
     
   }
   
-  public void clear() {
-    pListStuff.clear();
+  public ThingStuffData getAboutThingStuffData() {
+  	return loadAboutThingStuffData;
+  }
+  
+  public int getChangeEvent() {
+    return changeEvent;
+  }
+  
+  private void fireChange(int changeEvent) {
+    this.changeEvent = changeEvent;
+    NativeEvent nativeEvent = Document.get().createChangeEvent();
+    ChangeEvent.fireNativeEvent(nativeEvent, this);
+  }
+  
+  public HandlerRegistration addChangeHandler(ChangeHandler handler) {
+    return addDomHandler(handler, ChangeEvent.getType());
   }
   
   public void onClick(ClickEvent event) {
@@ -237,31 +249,12 @@ public class ThingStuffs extends Composite implements ClickHandler {
     }
   }
   
-  private void getThingStuffRpc() {
-    
-    wLoading.show();
-    
-    // TODO use this later
-    ThingStuffFilterData filter = new ThingStuffFilterData();
-    filter.thingId = thingData.getThingId();
-    
-    rpc.getThingStuffData(cp.getAccessToken(), filter, new AsyncCallback<ThingStuffsData>() {
-      public void onSuccess(ThingStuffsData thingStuffsData) {
-        process(thingStuffsData);
-        wLoading.hide();
-      }
-      public void onFailure(Throwable caught) {
-      }
-    });
-    
-  }
-
   public void onChange(ChangeEvent event) {
   }
 
   private void saveThingTypesRpc(ThingStuffData[] thingStuffData) {
     
-    wLoading.show();
+    //wLoading.show();
   
     // TODO
     ThingStuffFilterData filter = new ThingStuffFilterData();
@@ -270,11 +263,13 @@ public class ThingStuffs extends Composite implements ClickHandler {
     rpc.saveThingStuffData(cp.getAccessToken(), filter, thingStuffData, new AsyncCallback<ThingStuffsData>() {
       public void onSuccess(ThingStuffsData thingStuffsData) {
         process(thingStuffsData);
-        wLoading.hide();
+        //wLoading.hide();
       }
       public void onFailure(Throwable caught) {
       }
     });
     
   }
+
+	
 }
