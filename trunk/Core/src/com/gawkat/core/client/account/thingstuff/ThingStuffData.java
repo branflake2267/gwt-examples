@@ -137,8 +137,8 @@ public class ThingStuffData implements IsSerializable {
 	public ThingStuffsData getThingStuffsAbout() {
 	  return thingStuffsAbout;
   }
-  
-	public void setThingStuffIdsAbout(ThingStuffsData thingStuffIdsAbout) {
+	
+	public void setThingStuffsAbout(ThingStuffsData thingStuffIdsAbout) {
 		this.thingStuffsAbout = thingStuffIdsAbout;
 	}
 

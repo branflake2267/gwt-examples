@@ -36,7 +36,7 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
   private VerticalPanel pWidget = new VerticalPanel();
   
   private ThingStuffs wStuff = null;
-  private ThingStuffs wAboutStuff = null;
+  private ThingStuffs wStuffAbout = null;
   
   private ThingData thingData = null;
 
@@ -53,12 +53,14 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
   private LoadingWidget wLoading = new LoadingWidget();
 
 	private ThingStuffsData thingsStuffData;
+	
+	private int editingIndex = 0;
   
   public ThingEdit(ClientPersistence cp) {
     this.cp = cp;
     
     wStuff = new ThingStuffs(cp);
-    wAboutStuff = new ThingStuffs(cp);
+    wStuffAbout = new ThingStuffs(cp);
     
     HorizontalPanel hp = new HorizontalPanel();
     hp.add(pStuff);
@@ -76,6 +78,7 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
     wStuff.addStyleName("test3");
     
     wStuff.addChangeHandler(this);
+    wStuffAbout.addChangeHandler(this);
   }
   
   public void setData(ThingData thingData, ThingTypesData thingTypesData) {
@@ -115,18 +118,25 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
    * @param thingStuffsData
    */
   private void processAbout(ThingStuffData thingStuffData) {
-
-  	ThingStuffsData thingStuffsData = null;
+  	
+  	ThingStuffsData thingStuffsData_About = null;
   	if (thingStuffData != null) {
-  		thingStuffsData = thingStuffData.getThingStuffsAbout();
+  		thingStuffsData_About = thingStuffData.getThingStuffsAbout();
+  		
   	} else {
-  		thingStuffsData = new ThingStuffsData();
+  		thingStuffsData_About = new ThingStuffsData();
   	}
-  	thingStuffsData.thingStuffTypesData = this.thingsStuffData.thingStuffTypesData;
+  	
+  	// if the about is new we need to create it to store in the types
+  	if (thingStuffsData_About == null) {
+  		thingStuffsData_About = new ThingStuffsData();
+  	}
+  	
+  	thingStuffsData_About.thingStuffTypesData = this.thingsStuffData.thingStuffTypesData;
   	
   	pAboutStuff.clear();
-  	pAboutStuff.add(wAboutStuff);
-    wAboutStuff.draw(thingData, thingStuffsData);
+  	pAboutStuff.add(wStuffAbout);
+    wStuffAbout.draw(thingData, thingStuffsData_About);
     
   }
   
@@ -166,11 +176,20 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
   }
   
   public void save() {
-    wStuff.save();
+    ThingStuffData[] thingStuffData = wStuff.getData();
+    saveThingStuffsData(thingStuffData);
+  }
+  
+  private void updateAboutStuff() {
+  	
+  	// get aboutstuff
+  	ThingStuffData[] aboutStuff = wStuffAbout.getData();
+  	
+  	// update the about stuff in the thingstuff
+  	
   }
   
   public void clear() {
-    //wStuff.clear();
   }
   
   public void onClick(ClickEvent event) {
@@ -187,15 +206,20 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
   	Widget sender = (Widget) event.getSource();
   	
   	if (sender == wStuff) {
+  		
   		int changeEvent = wStuff.getChangeEvent();
   		if (changeEvent == EventManager.LOAD_ABOUTTHINGSTUFF) {
+  			editingIndex = wStuff.getEditingIndex();
   			processAbout(wStuff.getAboutThingStuffData());
   		}
+  		
+  	} else if (sender == wStuffAbout) {
+  		updateAboutStuff();
   	}
   	
   }
   
- private void getThingStuffRpc(ThingStuffFilterData filter) {
+  private void getThingStuffRpc(ThingStuffFilterData filter) {
     
     wLoading.show();
     
@@ -210,6 +234,24 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
     });
     
   }
+ 
+ private void saveThingStuffsData(ThingStuffData[] thingStuffData) {
+   
+   wLoading.show();
+ 
+   ThingStuffFilterData filter = new ThingStuffFilterData();
+   filter.thingId = thingData.getThingId();
+
+   rpc.saveThingStuffData(cp.getAccessToken(), filter, thingStuffData, new AsyncCallback<ThingStuffsData>() {
+     public void onSuccess(ThingStuffsData thingStuffsData) {
+       process(thingStuffsData);
+       wLoading.hide();
+     }
+     public void onFailure(Throwable caught) {
+     }
+   });
+   
+ }
 
 
 

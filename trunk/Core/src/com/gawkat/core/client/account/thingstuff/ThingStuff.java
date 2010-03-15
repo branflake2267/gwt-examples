@@ -68,6 +68,9 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   // types choices - what kind of types, questions, attributes to choose from and then give them a value
   private ThingStuffTypesData thingStuffTypesData = null;
 
+  // what is the rank/order/index of this widget in comparison to the to the others in the list
+	private int index = 0;
+
   /**
    * constructor - setup the widget
    * 
@@ -107,10 +110,11 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
    * @param thingStuffData - fill in saved data
    */
   public void setData(
+  		int index,
   		ThingData thingData, 
   		ThingStuffTypesData thingStuffTypesData, 
   		ThingStuffData thingStuffData) {
-  	
+  	this.index = index;
     this.thingData = thingData;
     this.thingStuffData = thingStuffData;
     this.thingStuffTypesData = thingStuffTypesData;
@@ -328,7 +332,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     
     // multi dem format for stuff having stuff
     ThingStuffsData tsd = new ThingStuffsData();
-    thingStuffData.setThingStuffIdsAbout(tsd);
+    thingStuffData.setThingStuffsAbout(tsd);
     
     return thingStuffData;
   }
@@ -536,6 +540,17 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
 	  return thingStuffData;
   }
 
+	public int getIndex() {
+		return index;
+	}
+
+	public void setAboutStuff(ThingStuffData[] tsd) {
+		
+		ThingStuffsData tssd = new ThingStuffsData();
+		tssd.thingStuffData = tsd;
+		
+		thingStuffData.setThingStuffsAbout(tssd);
+  }
 
  
 }
