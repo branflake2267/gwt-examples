@@ -37,7 +37,7 @@ public class Db_ThingStuff {
     	ThingStuffsData tss = new ThingStuffsData();
     	tss.total = tsds.length;
     	tss.thingStuffData = tsds;
-    	thingStuffData[i].setThingStuffIdsAbout(tss);
+    	thingStuffData[i].setThingStuffsAbout(tss);
     }
     
     Db_ThingStuffType t = new Db_ThingStuffType(sp);
@@ -65,6 +65,8 @@ public class Db_ThingStuff {
     
     long id = dbThingJdo.save(thingStuffData);
     
+    // ***** below this will save the multi dem About
+    
     // TODO - save about the thingStuffs
     ThingStuffsData thingStuffsData = thingStuffData.getThingStuffsAbout();
     ThingStuffData[] tsds = thingStuffsData.getThingStuffData();
@@ -73,6 +75,8 @@ public class Db_ThingStuff {
     	return;
     }
     
+    
+    // save thingstuff About
     for (int i=0; i < tsds.length; i++) {
     	dbThingAboutJdo.save(id, thingStuffData);
     }

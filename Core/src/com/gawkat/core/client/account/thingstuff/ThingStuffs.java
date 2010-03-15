@@ -38,7 +38,6 @@ public class ThingStuffs extends Composite implements ClickHandler {
   private int[] widths = new int[3];
   
   private PushButton bAdd = new PushButton("Add");
-  private PushButton bSave = new PushButton("Save");
   
   // stuff owner
   private ThingData thingData = null;
@@ -49,6 +48,7 @@ public class ThingStuffs extends Composite implements ClickHandler {
 	private int changeEvent = 0;
   
 	private ThingStuffData loadAboutThingStuffData = null;
+	private int editingIndex;
 	
   /**
    * constructor
@@ -68,10 +68,6 @@ public class ThingStuffs extends Composite implements ClickHandler {
     drawMenu();
     
     bAdd.addClickHandler(this);
-    bSave.addClickHandler(this);
-    
-    // defaults
-    bSave.setVisible(false);
     
     pWidget.setStyleName("core-Account-ThingStuffs");
     
@@ -88,8 +84,6 @@ public class ThingStuffs extends Composite implements ClickHandler {
     
     HorizontalPanel hp = new HorizontalPanel();
     hp.add(bAdd);
-    hp.add(new HTML("&nbsp;"));
-    hp.add(bSave);
     
     pMenu.add(hp);
   }
@@ -161,39 +155,44 @@ public class ThingStuffs extends Composite implements ClickHandler {
     th.setWidths(widths);
   }
   
-  private ThingStuff addStuff(int i, ThingStuffData thingStuffData) {
+  private ThingStuff addStuff(int index, ThingStuffData thingStuffData) {
     ThingStuff t = new ThingStuff(cp);
-    t.setData(thingData, thingStuffTypesData, thingStuffData);
+    t.setData(index, thingData, thingStuffTypesData, thingStuffData);
     pListStuff.add(t);
     
+    // DEBUG
     t.setStyleName("test4");
     
     widths = Row.getMaxWidths(widths, t.getRow().getWidths());
     
     t.addChangeHandler(new ChangeHandler() {
       public void onChange(ChangeEvent event) {
+      	
         ThingStuff tt = (ThingStuff) event.getSource();
         if (tt.getChangeEvent() == EventManager.THINGSTUFF_TYPECHANGE) {
           setWidths();
+          
         } else if (tt.getChangeEvent() == EventManager.LOAD_ABOUTTHINGSTUFF) {
-        	fireChange(tt.getChangeEvent());
+          editingIndex = tt.getIndex();
         	loadAboutThingStuffData = tt.getThingStuffData();
+        	fireChange(tt.getChangeEvent());
         }
+        
       }
     });
-    String style = Style.getRowStyle(i);
+    String style = Style.getRowStyle(index);
     t.addStyleName(style);
     
     return t;
   }
   
   private void add() {
-    int i = pListStuff.getWidgetCount();
-    if (i==0) {
+    int index = pListStuff.getWidgetCount();
+    if (index == 0) {
       drawTopRow();
     }
     ThingStuffData thingStuffData = new ThingStuffData();
-    ThingStuff t = addStuff(i, thingStuffData);
+    ThingStuff t = addStuff(index, thingStuffData);
     t.getRow().setWidths(widths);
     setWidths();
   }
@@ -212,16 +211,13 @@ public class ThingStuffs extends Composite implements ClickHandler {
     return thingStuffData;
   }
   
-  public void save() {
-   
-  	ThingStuffData[] thingStuffData = getData();
-  	
-    saveThingTypesRpc(thingStuffData);
-    
-  }
-  
   public ThingStuffData getAboutThingStuffData() {
   	return loadAboutThingStuffData;
+  }
+  
+  public void setAboutThingStuffData(int index, ThingStuffData[] tsd) {
+  	ThingStuff td = (ThingStuff) pListStuff.getWidget(index);
+  	td.setAboutStuff(tsd);
   }
   
   public int getChangeEvent() {
@@ -244,32 +240,17 @@ public class ThingStuffs extends Composite implements ClickHandler {
     
     if (sender == bAdd) {
       add();
-    } else if (sender == bSave) {
-      save();
-    }
+    } 
   }
   
   public void onChange(ChangeEvent event) {
   }
 
-  private void saveThingTypesRpc(ThingStuffData[] thingStuffData) {
-    
-    //wLoading.show();
-  
-    // TODO
-    ThingStuffFilterData filter = new ThingStuffFilterData();
-    filter.thingId = thingData.getThingId();
-
-    rpc.saveThingStuffData(cp.getAccessToken(), filter, thingStuffData, new AsyncCallback<ThingStuffsData>() {
-      public void onSuccess(ThingStuffsData thingStuffsData) {
-        process(thingStuffsData);
-        //wLoading.hide();
-      }
-      public void onFailure(Throwable caught) {
-      }
-    });
-    
+	public int getEditingIndex() {
+	  return editingIndex;
   }
+
+  
 
 	
 }
