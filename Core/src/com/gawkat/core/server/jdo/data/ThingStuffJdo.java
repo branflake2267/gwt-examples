@@ -57,16 +57,16 @@ public class ThingStuffJdo {
    
   // values that can be stored
   @Persistent
-  private String value = null;
+  private String value;
   
   @Persistent
-  private boolean valueBol = false;
+  private Boolean valueBol;
   
   @Persistent
-  private double valueDouble = 0.0;
+  private Double valueDouble;
   
   @Persistent
-  private long valueInt = 0;
+  private Long valueInt;
   
   // when did this start in time
   @Persistent
@@ -86,11 +86,11 @@ public class ThingStuffJdo {
   
   // who created this object
   @Persistent
-  private long createdByThingId = 0;
+  private long createdByThingId;
   
   // who updated this object
   @Persistent
-  private long updatedByThingId = 0;
+  private long updatedByThingId;
   
   /**
    * constructor
@@ -108,7 +108,7 @@ public class ThingStuffJdo {
     this.value = thingStuffData.getValue();
     this.valueBol = thingStuffData.getValueBol();
     this.valueDouble = thingStuffData.getValueDouble();
-    this.valueInt = thingStuffData.getValueInt();
+    this.valueInt = thingStuffData.getValueLong();
     
     this.startOf = thingStuffData.getStartOf();
     this.endOf = thingStuffData.getEndOf();
@@ -304,7 +304,7 @@ public class ThingStuffJdo {
   		r[i].value = tsd[i].getValue();
   		r[i].valueBol = tsd[i].getValueBol();
   		r[i].valueDouble = tsd[i].getValueDouble();
-  		r[i].valueInt = tsd[i].getValueInt();
+  		r[i].valueInt = tsd[i].getValueLong();
   		r[i].startOf = tsd[i].getStartOf();
   		r[i].endOf = tsd[i].getEndOf();
   	}

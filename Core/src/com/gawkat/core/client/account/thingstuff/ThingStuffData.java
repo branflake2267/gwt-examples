@@ -20,14 +20,14 @@ public class ThingStuffData implements IsSerializable {
   private String value;
   
   // store in boolean format
-  private boolean valueBol;
+  private Boolean valueBol;
   
   // store in double format - remember this is unsigned
   // recommendation to store decimal values into string, and use BigDecimal on the server side to process them
-  public double valueDouble = 0.0;
+  private Double valueDouble;
   
-  // store in integer format (long), Im calling everything int for the sake of easy recongition
-  public long valueInt = 0;
+  // store in integer format (long), can represent null for nothing
+  private Long valueLong;
   
   // define the link type - adjetives of the relationship
   private ThingStuffsData thingStuffsAbout;
@@ -69,7 +69,7 @@ public class ThingStuffData implements IsSerializable {
     this.value = value;
     this.valueBol = valueBol;
     this.valueDouble = valueDouble;
-    this.valueInt = valueInt;
+    this.valueLong = valueInt;
    
     
     this.startOf = startOf;
@@ -106,32 +106,32 @@ public class ThingStuffData implements IsSerializable {
     this.value = value;
   }
   
-  public void setValue(boolean value) {
+  public void setValue(Boolean value) {
     this.valueBol = value;
   }
   
-  public void setValue(double value) {
+  public void setValue(Double value) {
     this.valueDouble = value;
+  }
+  
+  public void setValue(Long value) {
+  	this.valueLong = value;
   }
   
   public String getValue() {
     return value;
   }
   
-  public boolean getValueBol() {
+  public Boolean getValueBol() {
     return valueBol;
   }
   
-  public double getValueDouble() {
+  public Double getValueDouble() {
     return valueDouble;
   }
   
-  public void setValueInt(long valueInt) {
-    this.valueInt = valueInt;
-  }
-  
-  public long getValueInt() {
-    return valueInt;
+  public Long getValueLong() {
+    return valueLong;
   }
 
 	public ThingStuffsData getThingStuffsAbout() {

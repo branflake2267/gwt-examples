@@ -60,11 +60,11 @@ public class ThingStuffTypeJdo {
   
   // who created this object
   @Persistent
-  private long createdByThingId = 0;
+  private long createdByThingId;
   
   // who updated this object
   @Persistent
-  private long updatedByThingId = 0;
+  private long updatedByThingId;
 
   /**
    * constructor

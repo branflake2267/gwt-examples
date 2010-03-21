@@ -54,15 +54,20 @@ public class Db_ThingStuff {
   public ThingStuffsData saveThingStuffData(OAuthTokenData accessToken, ThingStuffFilterData filter, ThingStuffData[] thingStuffData) {
     
     for (int i=0; i < thingStuffData.length; i++) {
-      boolean b = save(thingStuffData[i]);
+      save(thingStuffData[i]);
     }
     
+    // load stuff and return it agian
     ThingStuffsData r = getThingStuffData(accessToken, filter);
     return r;
   }
   
   private boolean save(ThingStuffData thingStuffData) {
-    
+  
+  	if (thingStuffData == null) {
+  		return true;
+  	}
+  	
     long id = dbThingJdo.save(thingStuffData);
     
     // ***** below this will save the multi dem About
@@ -74,7 +79,6 @@ public class Db_ThingStuff {
     if (thingStuffsData.getThingStuffData() == null) {
     	return true;
     }
-    
     
     // save thingstuff About
     for (int i=0; i < tsds.length; i++) {
