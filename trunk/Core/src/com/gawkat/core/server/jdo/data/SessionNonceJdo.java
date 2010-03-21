@@ -33,10 +33,10 @@ public class SessionNonceJdo {
   private String url;
   
   @Persistent
-  private Long thingTypeId;
+  private long thingTypeId;
   
   @Persistent
-  private Long thingId;
+  private long thingId;
   
   @Persistent
   private String nonce;

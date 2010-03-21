@@ -32,10 +32,10 @@ public class SessionAccessTokenJdo {
   private Key idKey;
   
   @Persistent
-  private Long thingTypeId;
+  private long thingTypeId;
   
   @Persistent
-  private Long thingId;
+  private long thingId;
   
   @Persistent
   private String accessToken;

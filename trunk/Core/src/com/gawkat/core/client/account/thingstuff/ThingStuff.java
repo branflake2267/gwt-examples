@@ -165,7 +165,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
       drawInput(thingStuffData.getValueDouble());
       
     } else if (typeId == ThingStuffTypeData.VT_INT) {
-      drawInput(thingStuffData.getValueInt());
+      drawInput(thingStuffData.getValueLong());
       
     } else if (typeId == ThingStuffTypeData.VT_STRING_LARGE) {
       drawInput(typeId, thingStuffData.getValue());
@@ -189,7 +189,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
       drawInput(typeId, thingStuffData.getValue());
       
     } else if (typeId == ThingStuffTypeData.VT_LINK) {
-    	drawInput(thingStuffData.getValueInt());
+    	drawInput(thingStuffData.getValueLong());
       
     } else {
       drawInputBlank();
@@ -325,8 +325,8 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     // not able to use the setters for this b/c it won't carry the variables values through the cast 2/7/2010
     //thingStuffData.setValue(valueDouble);
     //thingStuffData.setValue(valueInt);
-    thingStuffData.valueDouble = getTextBox_Double();
-    thingStuffData.valueInt = getTextBox_Long();
+    thingStuffData.setValue(getTextBox_Double());
+    thingStuffData.setValue(getTextBox_Long());
     
     thingStuffData.setThingId(thingData.getThingId());
     
@@ -345,24 +345,24 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     return taValue.getText().trim();
   }
   
-  private long getTextBox_Long() {
+  private Long getTextBox_Long() {
     String s = tbValue.getText().trim();
-    long l = 0;
+    Long l = null;
     try {
       l = Long.parseLong(s);
     } catch (NumberFormatException e) {
-      l = 0;
+      l = null;
     }
     return l;
   }
   
-  private double getTextBox_Double() {
+  private Double getTextBox_Double() {
     String s = tbValue.getText().trim();
-    double d = 0.0;
+    Double d = null;
     try {
       d = Double.parseDouble(s);
     } catch (NumberFormatException e) {
-      d = 0;
+      d = null;
     }
     return d;
   }

@@ -37,7 +37,7 @@ public class ThingJdo {
   
   // what type of thing is this, user, group, object?
   @Persistent
-  private Long thingTypeId;
+  private long thingTypeId;
   
   // username is represented here
   @Persistent
@@ -348,14 +348,27 @@ public class ThingJdo {
     return td;
   }
   
+  /**
+   * convert to data object for rpc transport
+   * 
+   * @param thingJdo
+   * @return
+   */
   public static ThingData[] convert(ThingJdo[] thingJdo) {
+  	
     ThingData[] r = new ThingData[thingJdo.length];
+    
     for (int i=0; i < thingJdo.length; i++) {
       r[i] = new ThingData();
-      if (thingJdo[i].key != null) {
-      	r[i].setData(thingJdo[i].thingTypeId, thingJdo[i].thingIdKey.getId(), thingJdo[i].key, 
-      			thingJdo[i].startOf, thingJdo[i].endOf, thingJdo[i].dateCreated, thingJdo[i].dateUpdated);
-      }
+
+    	r[i].setData(
+    			thingJdo[i].getThingTypeId(), 
+    			thingJdo[i].getThingId(), 
+    			thingJdo[i].getKey(), 
+    			thingJdo[i].getStartOf(), 
+    			thingJdo[i].getEndOf(), 
+    			thingJdo[i].getDateCreated(), 
+    			thingJdo[i].getDateUpdated());
     }
     return r;
   }
@@ -433,7 +446,8 @@ public class ThingJdo {
   }
   
   public long getThingId() {
-    return thingIdKey.getId();
+  	long id = thingIdKey.getId();
+    return id;
   }
   
   public long getThingTypeId() {
