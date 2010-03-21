@@ -152,7 +152,7 @@ public class ThingStuffAboutJdo {
 	 
   }
 
-  public void save(long thingStuffJdoId, ThingStuffData thingStuffData) {
+  public long save(long thingStuffJdoId, ThingStuffData thingStuffData) {
   	setData(thingStuffJdoId, thingStuffData);
     
     PersistenceManager pm = sp.getPersistenceManager();
@@ -163,6 +163,7 @@ public class ThingStuffAboutJdo {
       if (thingStuffAboutIdKey != null && thingStuffAboutIdKey.getId() > 0) { // update
         ThingStuffAboutJdo update = pm.getObjectById(ThingStuffAboutJdo.class, thingStuffAboutIdKey);
         update.setData(thingStuffJdoId, thingStuffData);
+        this.thingStuffAboutIdKey = update.thingStuffAboutIdKey;
         
       } else { // insert    
         pm.makePersistent(this);
@@ -171,7 +172,7 @@ public class ThingStuffAboutJdo {
       tx.commit();
       
       // Debug - TODO - get it to save with List object
-      System.out.println("ThingJdo: id: " + getId());
+      System.out.println("ThingStuffAboutJdo.save(): id: " + getId());
       
     } finally {
       if (tx.isActive()) {
@@ -179,6 +180,8 @@ public class ThingStuffAboutJdo {
       }
       pm.close();
     }
+    
+    return getId();
   }
   
   /**

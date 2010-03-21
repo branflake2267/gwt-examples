@@ -175,7 +175,7 @@ public class ThingTypes extends Composite implements ClickHandler, ChangeHandler
   
   private void getThingTypesRpc() {
     
-    wLoading.show();
+  	cp.showLoading(true);
     
     // TODO use this later
     ThingTypeFilterData filter = new ThingTypeFilterData();
@@ -183,7 +183,7 @@ public class ThingTypes extends Composite implements ClickHandler, ChangeHandler
     rpc.getThingTypes(cp.getAccessToken(), filter, new AsyncCallback<ThingTypesData>() {
       public void onSuccess(ThingTypesData thingTypesData) {
         process(thingTypesData);
-        wLoading.hide();
+        cp.showLoading(false);
       }
       public void onFailure(Throwable caught) {
       }
@@ -198,7 +198,7 @@ public class ThingTypes extends Composite implements ClickHandler, ChangeHandler
 
   private void saveThingTypesRpc(ThingTypeData[] thingTypeData) {
     
-    wLoading.show();
+  	cp.showLoading(true);
     
     // TODO
     ThingTypeFilterData filter = new ThingTypeFilterData();
@@ -206,7 +206,7 @@ public class ThingTypes extends Composite implements ClickHandler, ChangeHandler
     rpc.saveThingTypes(cp.getAccessToken(), filter, thingTypeData, new AsyncCallback<ThingTypesData>() {
       public void onSuccess(ThingTypesData thingTypesData) {
         process(thingTypesData);
-        wLoading.hide();
+        cp.showLoading(false);
       }
       public void onFailure(Throwable caught) {
       }

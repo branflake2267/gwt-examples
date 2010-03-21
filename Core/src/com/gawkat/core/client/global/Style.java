@@ -20,4 +20,8 @@ public class Style {
     return "core-row-hover";
   }
   
+  public static String getRowStyleSelected() {
+  	return "core-row-selected";
+  }
+  
 }

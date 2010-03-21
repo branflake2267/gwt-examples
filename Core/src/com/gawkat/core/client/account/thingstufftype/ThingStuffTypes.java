@@ -24,7 +24,6 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
 
   private ClientPersistence cp = null;
   private RpcCoreServiceAsync rpc = null;
-  private LoadingWidget wLoading = new LoadingWidget();
   
   private VerticalPanel pWidget = new VerticalPanel();
   
@@ -70,8 +69,6 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
     hp.add(bAdd);
     hp.add(new HTML("&nbsp;"));
     hp.add(bSave);
-    hp.add(new HTML("&nbsp;"));
-    hp.add(wLoading);
     
     pMenu.add(hp);
   }
@@ -187,7 +184,7 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
   
   private void getThingTypesRpc() {
     
-    wLoading.show();
+  	cp.showLoading(true);
     
     // TODO use this later
     ThingStuffTypeFilterData filter = new ThingStuffTypeFilterData();
@@ -195,7 +192,7 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
     rpc.getThingStuffTypes(cp.getAccessToken(), filter, new AsyncCallback<ThingStuffTypesData>() {
       public void onSuccess(ThingStuffTypesData ThingStuffTypesData) {
         process(ThingStuffTypesData);
-        wLoading.hide();
+        cp.showLoading(false);
       }
       public void onFailure(Throwable caught) {
       }
@@ -210,7 +207,7 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
 
   private void saveThingTypesRpc(ThingStuffTypeData[] ThingStuffTypeData) {
     
-    wLoading.show();
+  	cp.showLoading(true);
     
     // TODO
     ThingStuffTypeFilterData filter = new ThingStuffTypeFilterData();
@@ -218,7 +215,7 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
     rpc.saveThingStuffTypes(cp.getAccessToken(), filter, ThingStuffTypeData, new AsyncCallback<ThingStuffTypesData>() {
       public void onSuccess(ThingStuffTypesData ThingStuffTypesData) {
         process(ThingStuffTypesData);
-        wLoading.hide();
+        cp.showLoading(false);
       }
       public void onFailure(Throwable caught) {
       }

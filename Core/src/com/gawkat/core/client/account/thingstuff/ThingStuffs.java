@@ -42,13 +42,26 @@ public class ThingStuffs extends Composite implements ClickHandler {
   // stuff owner
   private ThingData thingData = null;
   
-  // what kind of types are available to choose from?
+  /**
+   * this is the types that can be selected
+   */
   private ThingStuffTypesData thingStuffTypesData = null;
   
 	private int changeEvent = 0;
   
-	private ThingStuffData loadAboutThingStuffData = null;
-	private int editingIndex;
+	/**
+	 * ThingStuff array Index
+	 *  keep track of what index is being moused over 
+	 *  init with -1 in the beginning so we know nothing selected yet
+	 */
+	private int editingIndex = -1;
+	
+	/**
+	 * when editing Index - This is for that index
+	 *   tell thing edit this is the about we want to edit on the right
+	 */
+	private ThingStuffData editingIndexThis_AboutThingStuffData = null;
+	private boolean ignoreMouseOver;
 	
   /**
    * constructor
@@ -165,27 +178,72 @@ public class ThingStuffs extends Composite implements ClickHandler {
     
     widths = Row.getMaxWidths(widths, t.getRow().getWidths());
     
+    // observe the thing stuff
     t.addChangeHandler(new ChangeHandler() {
       public void onChange(ChangeEvent event) {
-      	
+
         ThingStuff tt = (ThingStuff) event.getSource();
-        if (tt.getChangeEvent() == EventManager.THINGSTUFF_TYPECHANGE) {
+        if (tt.getChangeEvent() == EventManager.THINGSTUFF_TYPECHANGE && ignoreMouseOver == false) {
           setWidths();
           
-        } else if (tt.getChangeEvent() == EventManager.LOAD_ABOUTTHINGSTUFF) {
-          editingIndex = tt.getIndex();
-        	loadAboutThingStuffData = tt.getThingStuffData();
-        	fireChange(tt.getChangeEvent());
+        } else if (tt.getChangeEvent() == EventManager.ABOUTTHINGSTUFF_MOUSEOVER && ignoreMouseOver == false) { // tell thingedit to do something
+        	
+        	// save the previous modifications
+        	setPreMouseOver(); 
+        	
+        	// load new stuff to modify
+        	editingIndex = tt.getIndex(); 
+        	editingIndexThis_AboutThingStuffData = tt.getThingStuffData();
+        	setMouseOver(tt.getChangeEvent());
+     
         }
-        
       }
     });
+    
     String style = Style.getRowStyle(index);
     t.addStyleName(style);
     
     return t;
   }
   
+  private void setPreMouseOver() {
+  	 	
+  	setStyleDefault(editingIndex);
+  	
+  	// tell thingedit to update the about stuff
+  	// NOTE editingIndex contains the last modified
+  	fireChange(EventManager.ABOUTTHINGSTUFF_PREMOUSEOVER);
+  	
+  }
+  
+	private void setMouseOver(int event) {
+  		
+  	setStyleSelected(editingIndex);
+  	
+  	fireChange(event);
+  	
+  }
+  
+  private void setStyleDefault(int thingStuffIndex) {
+  	if (thingStuffIndex < 0 || pListStuff == null || pListStuff.getWidgetCount() == 0) {
+  		return;
+  	}
+  	
+  	ThingStuff tt = (ThingStuff) pListStuff.getWidget(thingStuffIndex);
+    tt.removeStyleName(Style.getRowStyleSelected());
+  }
+  
+
+  private void setStyleSelected(int thingStuffIndex) {
+  	if (thingStuffIndex < 0) {
+  		return;
+  	}
+  	
+  	ThingStuff tt = (ThingStuff) pListStuff.getWidget(thingStuffIndex);
+	  String style = Style.getRowStyleSelected();
+    tt.addStyleName(style);
+  }
+
   private void add() {
     int index = pListStuff.getWidgetCount();
     if (index == 0) {
@@ -200,6 +258,11 @@ public class ThingStuffs extends Composite implements ClickHandler {
   public ThingStuffData[] getData() {
   	 
     int wc = pListStuff.getWidgetCount();
+    
+    if (wc == 0) {
+    	return null;
+    }
+    
     ThingStuffData[] thingStuffData = new ThingStuffData[wc];
     
     for (int i=0; i < thingStuffData.length; i++) {
@@ -212,12 +275,17 @@ public class ThingStuffs extends Composite implements ClickHandler {
   }
   
   public ThingStuffData getAboutThingStuffData() {
-  	return loadAboutThingStuffData;
+  	return editingIndexThis_AboutThingStuffData;
   }
   
   public void setAboutThingStuffData(int index, ThingStuffData[] tsd) {
+  	if (tsd == null || index < 0 || index > pListStuff.getWidgetCount()) {
+  		return;
+  	}
+  	
   	ThingStuff td = (ThingStuff) pListStuff.getWidget(index);
   	td.setAboutStuff(tsd);
+  	
   }
   
   public int getChangeEvent() {
@@ -248,6 +316,10 @@ public class ThingStuffs extends Composite implements ClickHandler {
 
 	public int getEditingIndex() {
 	  return editingIndex;
+  }
+
+	public void ignoreMouseOver(boolean b) {
+	  this.ignoreMouseOver = b;
   }
 
   

@@ -144,7 +144,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
       lbTypes.addItem(item, value);
       
       //debug
-      System.out.println("item: " + item + " value: " + value);
+      //System.out.println("item: " + item + " value: " + value);
     }
         
     long sel = thingStuffData.getThingStuffTypeId();
@@ -314,7 +314,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
       valueInt = 0;
     }
     
-    System.out.println(valueInt);
+    //System.out.println(valueInt);
     
     int stuffTypeId = Global_ListBox.getSelectedValue(lbTypes);
     thingStuffData.setThingStuffTypeId(stuffTypeId);
@@ -330,9 +330,9 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     
     thingStuffData.setThingId(thingData.getThingId());
     
+    // TODO no need, already sets on mousing
     // multi dem format for stuff having stuff
-    ThingStuffsData tsd = new ThingStuffsData();
-    thingStuffData.setThingStuffsAbout(tsd);
+    //thingStuffData.setThingStuffsAbout(thingStuffData.getThingStuffsAbout());
     
     return thingStuffData;
   }
@@ -453,7 +453,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     	taValue.setWidth(width + "px");
     }
     
-    System.out.println("resize: " + width);
+    //System.out.println("resize: " + width);
   }
   
   private void delete() {
@@ -512,7 +512,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   	Widget sender = (Widget) event.getSource();
   	
   	if (sender == pWidget) {
-  		fireChange(EventManager.LOAD_ABOUTTHINGSTUFF);
+  		fireChange(EventManager.ABOUTTHINGSTUFF_MOUSEOVER);
   	}
   }
 
@@ -520,7 +520,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   	Widget sender = (Widget) event.getSource();
 	  
   	if (sender == pWidget) {
-  		fireChange(EventManager.HIDE_ABOUTTHINGSTUFF);
+  		fireChange(EventManager.ABOUTTHINGSTUFF_HIDE);
   	}
   }
   

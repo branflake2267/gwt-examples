@@ -161,6 +161,7 @@ public class ThingStuffJdo {
       if (thingStuffData != null && thingStuffData.getId() > 0) { // update
         ThingStuffJdo update = pm.getObjectById(ThingStuffJdo.class, thingStuffData.getId());
         update.setData(thingStuffData);
+        this.thingStuffIdKey = update.thingStuffIdKey;
         
       } else { // insert    
         pm.makePersistent(this);
@@ -396,6 +397,10 @@ public class ThingStuffJdo {
     return true;
   }
 
+  /**
+   * get key long identity number
+   * @return
+   */
   public long getId() {
   	if (thingStuffIdKey == null) {
   		return -1;

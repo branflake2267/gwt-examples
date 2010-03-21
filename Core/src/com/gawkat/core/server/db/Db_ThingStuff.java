@@ -54,14 +54,14 @@ public class Db_ThingStuff {
   public ThingStuffsData saveThingStuffData(OAuthTokenData accessToken, ThingStuffFilterData filter, ThingStuffData[] thingStuffData) {
     
     for (int i=0; i < thingStuffData.length; i++) {
-      save(thingStuffData[i]);
+      boolean b = save(thingStuffData[i]);
     }
     
     ThingStuffsData r = getThingStuffData(accessToken, filter);
     return r;
   }
   
-  private void save(ThingStuffData thingStuffData) {
+  private boolean save(ThingStuffData thingStuffData) {
     
     long id = dbThingJdo.save(thingStuffData);
     
@@ -72,7 +72,7 @@ public class Db_ThingStuff {
     ThingStuffData[] tsds = thingStuffsData.getThingStuffData();
     
     if (thingStuffsData.getThingStuffData() == null) {
-    	return;
+    	return true;
     }
     
     
@@ -81,6 +81,7 @@ public class Db_ThingStuff {
     	dbThingAboutJdo.save(id, thingStuffData);
     }
     
+    return true;
   }
 
   public boolean deleteThingStuffData(OAuthTokenData accessToken, long thingStuffId) {

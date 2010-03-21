@@ -138,8 +138,8 @@ public class ThingStuffData implements IsSerializable {
 	  return thingStuffsAbout;
   }
 	
-	public void setThingStuffsAbout(ThingStuffsData thingStuffIdsAbout) {
-		this.thingStuffsAbout = thingStuffIdsAbout;
+	public void setThingStuffsAbout(ThingStuffsData thingStuffAbout) {
+		this.thingStuffsAbout = thingStuffAbout;
 	}
 
 	public Date getStartOf() {

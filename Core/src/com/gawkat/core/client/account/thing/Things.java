@@ -27,7 +27,6 @@ public class Things extends Composite implements ClickHandler {
   
   private ClientPersistence cp = null;
   private RpcCoreServiceAsync rpc = null;
-  private LoadingWidget wLoading = new LoadingWidget();
   
   private VerticalPanel pWidget = new VerticalPanel();
   
@@ -86,8 +85,6 @@ public class Things extends Composite implements ClickHandler {
     hp.add(bAdd);
     hp.add(new HTML("&nbsp;"));
     hp.add(bSave);
-    hp.add(new HTML("&nbsp;"));
-    hp.add(wLoading);
     
     pMenu.add(hp);
   }
@@ -218,8 +215,8 @@ public class Things extends Composite implements ClickHandler {
       bBack.setVisible(true);
       bAdd.setVisible(false);
       bSave.setVisible(true);
+      
     } else if (b == false ) {
-      wEdit.clear();
       pListTop.setVisible(true);
       pList.setVisible(true);
       wEdit.setVisible(false);
@@ -248,7 +245,7 @@ public class Things extends Composite implements ClickHandler {
   
   private void getThingsRpc() {
     
-    wLoading.show();
+  	cp.showLoading(true);
     
     // TODO use this later
     ThingFilterData filter = new ThingFilterData();
@@ -256,7 +253,7 @@ public class Things extends Composite implements ClickHandler {
     rpc.getThings(cp.getAccessToken(), filter, new AsyncCallback<ThingsData>() {
       public void onSuccess(ThingsData thingsData) {
         process(thingsData);
-        wLoading.hide();
+        cp.showLoading(false);
       }
       public void onFailure(Throwable caught) {
       }
@@ -271,13 +268,14 @@ public class Things extends Composite implements ClickHandler {
 
   private void saveThingsRpc(ThingData[] thingData) {
     
-    wLoading.show();
+  	cp.showLoading(true);
     
     ThingFilterData filter = new ThingFilterData();
 
     rpc.saveThings(cp.getAccessToken(), filter, thingData, new AsyncCallback<ThingsData>() {
 			public void onSuccess(ThingsData thingData) {
 				process(thingData);
+				cp.showLoading(false);
 			}
 			public void onFailure(Throwable caught) {
 			}
