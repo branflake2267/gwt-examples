@@ -1,5 +1,6 @@
 package com.gawkat.core.client;
 
+import com.gawkat.core.client.global.LoadingWidget;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
@@ -28,10 +29,16 @@ public class ClientPersistence extends Composite  {
   // make a blank slate
   private OAuthTokenData accessToken = null;
   
+  private LoadingWidget wLoading = new LoadingWidget();
+  
   /**
    * constructor
    */
   public ClientPersistence() {
+  }
+  
+  public LoadingWidget getLoadingWidget() {
+  	return wLoading;
   }
   
   public OAuthTokenData getAccessToken() {
@@ -72,5 +79,12 @@ public class ClientPersistence extends Composite  {
     return addDomHandler(handler, ChangeEvent.getType());
   }
 
+  public void showLoading(boolean b) {
+  	if (b == true) {
+  		wLoading.show();
+  	} else {
+  		wLoading.hide();
+  	}
+  }
   
 }

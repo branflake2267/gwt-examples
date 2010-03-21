@@ -1,11 +1,13 @@
 package com.gawkat.core.client;
 
+import com.gawkat.core.client.global.LoadingWidget;
 import com.gawkat.core.client.global.QueryString;
 import com.gawkat.core.client.global.QueryStringData;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 
 public class BreadCrumbs extends Composite implements ValueChangeHandler<String> {
@@ -17,11 +19,17 @@ public class BreadCrumbs extends Composite implements ValueChangeHandler<String>
   public BreadCrumbs(ClientPersistence cp) {
     this.cp = cp;
     
-    initWidget(pWidget);
+    HorizontalPanel hp = new HorizontalPanel();
+    hp.add(pWidget);
+    hp.add(new HTML("&nbsp;"));
+    hp.add(cp.getLoadingWidget());
+    
+    initWidget(hp);
     
     pWidget.addStyleName("core-Account-Breadcrumbs");
     
     initHistory();
+    
   }
   
   private void initHistory() {
@@ -86,5 +94,7 @@ public class BreadCrumbs extends Composite implements ValueChangeHandler<String>
   public void onValueChange(ValueChangeEvent<String> event) {
     draw(); 
   }
+  
+  
   
 }

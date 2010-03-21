@@ -43,14 +43,10 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
   private ThingTypesData thingTypesData = null;
   
   private VerticalPanel pTop = new VerticalPanel();
-  private VerticalPanel pStuff = new VerticalPanel();
-  private VerticalPanel pAboutStuff = new VerticalPanel();
   
   private TextBox tbKey = new TextBox();
   
   private PushButton bChangePassword = new PushButton("Change Password");
-  
-  private LoadingWidget wLoading = new LoadingWidget();
 
 	private ThingStuffsData thingsStuffData;
 	
@@ -63,8 +59,8 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
     wStuffAbout = new ThingStuffs(cp);
     
     HorizontalPanel hp = new HorizontalPanel();
-    hp.add(pStuff);
-    hp.add(pAboutStuff);
+    hp.add(wStuff);
+    hp.add(wStuffAbout);
     
     pWidget.add(pTop);
     pWidget.add(hp);
@@ -79,6 +75,9 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
     
     wStuff.addChangeHandler(this);
     wStuffAbout.addChangeHandler(this);
+    
+    // don't observe thing stuff mouse overs when in about
+    wStuffAbout.ignoreMouseOver(true);
   }
   
   public void setData(ThingData thingData, ThingTypesData thingTypesData) {
@@ -106,18 +105,17 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
   private void process(ThingStuffsData thingStuffsData) {
   	this.thingsStuffData = thingStuffsData;
   	
-  	pStuff.clear();
-    pStuff.add(wStuff);
     wStuff.draw(thingData, thingStuffsData);
     
   }
   
   /**
-   * draw about stuff
+   * draw about stuff on the right
+   *   mouse over in thing stuff will cause this
    * 
    * @param thingStuffsData
    */
-  private void processAbout(ThingStuffData thingStuffData) {
+  private void drawAbout(ThingStuffData thingStuffData) {
   	
   	ThingStuffsData thingStuffsData_About = null;
   	if (thingStuffData != null) {
@@ -134,8 +132,6 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
   	
   	thingStuffsData_About.thingStuffTypesData = this.thingsStuffData.thingStuffTypesData;
   	
-  	pAboutStuff.clear();
-  	pAboutStuff.add(wStuffAbout);
     wStuffAbout.draw(thingData, thingStuffsData_About);
     
   }
@@ -175,21 +171,35 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
     p.center();
   }
   
+  /**
+   * save the data to server
+   */
   public void save() {
     ThingStuffData[] thingStuffData = wStuff.getData();
     saveThingStuffsData(thingStuffData);
   }
   
-  private void updateAboutStuff() {
+  /**
+   * before a new moused over lets 
+   * 
+   * @param index - editing index, caused by mouse event in thing stuff
+   */
+  private void updateAboutStuff(int index) {
   	
-  	// get aboutstuff
-  	ThingStuffData[] aboutStuff = wStuffAbout.getData();
+  	// < -1 nothing selected yet
+  	if (index < 0) { 
+  		return;
+  	}
   	
-  	// update the about stuff in the thingstuff
+  	// get about stuff that was modified
+  	ThingStuffData[] tsd = wStuffAbout.getData();
   	
-  }
-  
-  public void clear() {
+  	if (tsd == null || tsd.length == 0) {
+  		return;
+  	}
+  	
+  	// update the thingstuff array 
+  	wStuff.setAboutThingStuffData(index, tsd);
   }
   
   public void onClick(ClickEvent event) {
@@ -208,27 +218,30 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
   	if (sender == wStuff) {
   		
   		int changeEvent = wStuff.getChangeEvent();
-  		if (changeEvent == EventManager.LOAD_ABOUTTHINGSTUFF) {
+ 
+  		if (changeEvent == EventManager.ABOUTTHINGSTUFF_PREMOUSEOVER) { // thing stuff moused over, lets update before we change the data
   			editingIndex = wStuff.getEditingIndex();
-  			processAbout(wStuff.getAboutThingStuffData());
+  			updateAboutStuff(editingIndex);
+  			
+  		} else if (changeEvent == EventManager.ABOUTTHINGSTUFF_MOUSEOVER) { // this comes from mouse over int thing stuff
+  			editingIndex = wStuff.getEditingIndex(); // what index was moused over
+  			drawAbout(wStuff.getAboutThingStuffData());// update thing about stuff for editing
   		}
   		
-  	} else if (sender == wStuffAbout) {
-  		updateAboutStuff();
-  	}
+  	} 
   	
   }
   
   private void getThingStuffRpc(ThingStuffFilterData filter) {
-    
-    wLoading.show();
+ 
+  	cp.showLoading(true);
     
     rpc.getThingStuffData(cp.getAccessToken(), filter, new AsyncCallback<ThingStuffsData>() {
       public void onSuccess(ThingStuffsData thingStuffsData) {
         process(thingStuffsData);
-        wLoading.hide();
+        cp.showLoading(false);
       }
-      
+
 			public void onFailure(Throwable caught) {
       }
     });
@@ -236,8 +249,8 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
   }
  
  private void saveThingStuffsData(ThingStuffData[] thingStuffData) {
-   
-   wLoading.show();
+ 
+	 cp.showLoading(true);
  
    ThingStuffFilterData filter = new ThingStuffFilterData();
    filter.thingId = thingData.getThingId();
@@ -245,7 +258,7 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
    rpc.saveThingStuffData(cp.getAccessToken(), filter, thingStuffData, new AsyncCallback<ThingStuffsData>() {
      public void onSuccess(ThingStuffsData thingStuffsData) {
        process(thingStuffsData);
-       wLoading.hide();
+       cp.showLoading(false);
      }
      public void onFailure(Throwable caught) {
      }

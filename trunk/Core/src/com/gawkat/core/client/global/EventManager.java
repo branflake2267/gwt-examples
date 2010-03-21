@@ -56,14 +56,18 @@ public class EventManager {
   public static final int ROW_OUT = 51;
 
   /**
-   * Load about thing stuff
+   * moused over - put about thing stuff in right to edit
    */
-	public static final int LOAD_ABOUTTHINGSTUFF = 60;
+	public static final int ABOUTTHINGSTUFF_MOUSEOVER = 60;
 
 	/**
 	 * hide about thing stuff - TODO not sure if I need this yet
 	 */
-	public static final int HIDE_ABOUTTHINGSTUFF = 61;
+	public static final int ABOUTTHINGSTUFF_HIDE = 61;
   
- 
+	/**
+	 * when changing to a different about thing stuff
+	 *   On mouse over before we move to different index, get the data that could be changed
+	 */
+	public static final int ABOUTTHINGSTUFF_PREMOUSEOVER = 62;
 }
