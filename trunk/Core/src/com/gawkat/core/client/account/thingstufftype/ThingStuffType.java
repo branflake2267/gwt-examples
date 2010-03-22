@@ -224,6 +224,7 @@ public class ThingStuffType extends Composite implements ChangeHandler, ClickHan
         deleteIt(b);
       }
       public void onFailure(Throwable caught) { 
+      	cp.setRpcFailure(caught);
       }
     });
     

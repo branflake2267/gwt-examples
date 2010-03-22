@@ -183,6 +183,7 @@ public class Thing extends Composite implements ChangeHandler, ClickHandler {
         deleteIt(b);
       }
       public void onFailure(Throwable caught) {
+      	cp.setRpcFailure(caught);
       }
     });
   }

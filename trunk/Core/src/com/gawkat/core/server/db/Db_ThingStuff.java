@@ -28,16 +28,18 @@ public class Db_ThingStuff {
   	ThingStuffJdo tsj = new ThingStuffJdo(sp);
     ThingStuffData[] thingStuffData = tsj.query(filter);
     
-    for (int i=0; i < thingStuffData.length; i++) {
-    	long id = thingStuffData[i].getId();
-    	ThingStuffFilterData f = new ThingStuffFilterData();
-    	f.thingId = thingStuffData[i].getThingId();
-    	f.thingStuffJdoId = id;
-    	ThingStuffData[] tsds = dbThingAboutJdo.query(f);
-    	ThingStuffsData tss = new ThingStuffsData();
-    	tss.total = tsds.length;
-    	tss.thingStuffData = tsds;
-    	thingStuffData[i].setThingStuffsAbout(tss);
+    if (thingStuffData != null) {
+      for (int i=0; i < thingStuffData.length; i++) {
+      	long id = thingStuffData[i].getId();
+      	ThingStuffFilterData f = new ThingStuffFilterData();
+      	f.thingId = thingStuffData[i].getThingId();
+      	f.thingStuffJdoId = id;
+      	ThingStuffData[] tsds = dbThingAboutJdo.query(f);
+      	ThingStuffsData tss = new ThingStuffsData();
+      	tss.total = tsds.length;
+      	tss.thingStuffData = tsds;
+      	thingStuffData[i].setThingStuffsAbout(tss);
+      }
     }
     
     Db_ThingStuffType t = new Db_ThingStuffType(sp);
@@ -63,6 +65,7 @@ public class Db_ThingStuff {
     
     // load stuff and return it agian
     ThingStuffsData r = getThingStuffData(accessToken, filter);
+    
     return r;
   }
   
@@ -76,13 +79,14 @@ public class Db_ThingStuff {
     
     // ***** below this will save the multi dem About
     
-    // TODO - save about the thingStuffs
+    // save about the thingStuffs
     ThingStuffsData thingStuffsData = thingStuffData.getThingStuffsAbout();
-    ThingStuffData[] tsds = thingStuffsData.getThingStuffData();
-    
-    if (thingStuffsData.getThingStuffData() == null) {
+
+    if (thingStuffsData == null || thingStuffsData.getThingStuffData() == null) {
     	return true;
     }
+    
+    ThingStuffData[] tsds = thingStuffsData.getThingStuffData();
     
     // save thingstuff About
     for (int i=0; i < tsds.length; i++) {

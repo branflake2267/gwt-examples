@@ -121,7 +121,7 @@ public class ChangePassword extends DialogBox implements ClickHandler {
         processChange(b);
       }
       public void onFailure(Throwable caught) {
-        // TODO
+      	cp.setRpcFailure(caught);
       }
     });
 

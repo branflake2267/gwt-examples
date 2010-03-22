@@ -534,8 +534,8 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
   private void doesUserExistRpc(UserData userData) {
     
     AsyncCallback<UserData> callback = new AsyncCallback<UserData>() {
-      public void onFailure(Throwable ex) {
-        RootPanel.get().add(new HTML(ex.toString()));
+      public void onFailure(Throwable caught) {
+      	cp.setRpcFailure(caught);
       }
       public void onSuccess(UserData userData) {
         processKeyExist(userData);
@@ -552,8 +552,8 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
   private void createAccountRpc(UserData userData) {
     
     AsyncCallback<UserData> callback = new AsyncCallback<UserData>() {
-      public void onFailure(Throwable ex) {
-        RootPanel.get().add(new HTML(ex.toString()));
+      public void onFailure(Throwable caught) {
+      	cp.setRpcFailure(caught);
       }
       public void onSuccess(UserData userData) {
         processAccountCreation(userData);

@@ -256,6 +256,7 @@ public class Things extends Composite implements ClickHandler {
         cp.showLoading(false);
       }
       public void onFailure(Throwable caught) {
+      	cp.setRpcFailure(caught);
       }
     });
     
@@ -278,6 +279,7 @@ public class Things extends Composite implements ClickHandler {
 				cp.showLoading(false);
 			}
 			public void onFailure(Throwable caught) {
+				cp.setRpcFailure(caught);
 			}
 		});
     

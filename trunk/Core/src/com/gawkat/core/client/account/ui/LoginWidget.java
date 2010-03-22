@@ -329,8 +329,8 @@ public class LoginWidget extends Composite implements ChangeHandler {
   private void getUserAccessToken(OAuthTokenData tokenData) {
 
     AsyncCallback<OAuthTokenData> callback = new AsyncCallback<OAuthTokenData>() {
-      public void onFailure(Throwable ex) {
-        RootPanel.get().add(new HTML(ex.toString()));
+      public void onFailure(Throwable caught) {
+      	cp.setRpcFailure(caught);
       }
       public void onSuccess(OAuthTokenData token) {
         request_User_Access_Token_Response(token);

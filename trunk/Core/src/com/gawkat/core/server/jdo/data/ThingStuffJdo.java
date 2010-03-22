@@ -207,6 +207,11 @@ public class ThingStuffJdo {
   
   public ThingStuffData[] query(ThingStuffFilterData filter) {
     
+  	if (filter == null) {
+  		System.out.println("ERROR: ThingStuffJdo.query() Set a filter");
+  		return null;
+  	}
+  	
     long thingId = filter.thingId;
     
     ArrayList<ThingStuffJdo> aT = new ArrayList<ThingStuffJdo>();

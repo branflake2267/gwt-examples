@@ -65,6 +65,7 @@ public class AccountsHome extends Composite implements ClickHandler {
         Window.alert("Created Defaults");
       }
       public void onFailure(Throwable caught) { 
+      	cp.setRpcFailure(caught);
       }
     });
   }
