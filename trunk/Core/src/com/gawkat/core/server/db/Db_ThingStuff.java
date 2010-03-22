@@ -53,6 +53,10 @@ public class Db_ThingStuff {
   
   public ThingStuffsData saveThingStuffData(OAuthTokenData accessToken, ThingStuffFilterData filter, ThingStuffData[] thingStuffData) {
     
+  	if (thingStuffData == null) {
+  		return null;
+  	}
+  	
     for (int i=0; i < thingStuffData.length; i++) {
       save(thingStuffData[i]);
     }

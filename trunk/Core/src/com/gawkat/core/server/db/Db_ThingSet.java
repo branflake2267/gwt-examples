@@ -20,9 +20,12 @@ public class Db_ThingSet {
   /**
    * get things and there stuff
    * 
+   *   Moved the data into one group
+   * 
    * @param thingSetOfFilterData
    * @return
    */
+  @Deprecated
   public ThingSetOfData[] getThingSet(ThingSetOfFilterData thingSetOfFilterData) {
     
     ThingFilterData filter = null;

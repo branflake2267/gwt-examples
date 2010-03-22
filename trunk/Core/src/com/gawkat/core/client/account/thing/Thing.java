@@ -110,7 +110,6 @@ public class Thing extends Composite implements ChangeHandler, ClickHandler {
     return pWidget;
   }
   
-
   public ThingData getData() {
     return thingData;
   }

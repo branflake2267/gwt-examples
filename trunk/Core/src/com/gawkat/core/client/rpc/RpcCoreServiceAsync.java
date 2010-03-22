@@ -43,6 +43,7 @@ public interface RpcCoreServiceAsync {
   
 
   public void getThings(OAuthTokenData accessToken, ThingFilterData filter, AsyncCallback<ThingsData> callback);
+  public void saveThing(OAuthTokenData accessToken, ThingFilterData filter, ThingData thingData, AsyncCallback<ThingData> callback);
   public void saveThings(OAuthTokenData accessToken, ThingFilterData filter, ThingData[] thingData, AsyncCallback<ThingsData> callback);
   public void deleteThing(OAuthTokenData accessToken, ThingData thingData, AsyncCallback<Boolean> callback);
   
