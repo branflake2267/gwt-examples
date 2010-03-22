@@ -426,8 +426,6 @@ public class ThingStuffAboutJdo {
     return thingId;
   }
    
-
-  
   public long getThingStuffTypeId() {
     return thingStuffTypeId;
   }
@@ -436,11 +434,11 @@ public class ThingStuffAboutJdo {
     this.value = value;
   }
   
-  public void setValue(boolean value) {
+  public void setValue(Boolean value) {
     this.valueBol = value;
   }
   
-  public void setValue(double value) {
+  public void setValue(Double value) {
     this.valueDouble = value;
   }
   
@@ -448,15 +446,15 @@ public class ThingStuffAboutJdo {
     return value;
   }
   
-  public boolean getValueBol() {
+  public Boolean getValueBol() {
     return valueBol;
   }
   
-  public double getValueDouble() {
+  public Double getValueDouble() {
     return valueDouble;
   }
  
-  public long getValueInt() {
+  public Long getValueInt() {
     return valueLong;
   }
 

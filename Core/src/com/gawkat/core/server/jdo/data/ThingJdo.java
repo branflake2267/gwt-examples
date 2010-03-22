@@ -49,11 +49,11 @@ public class ThingJdo {
   
   // when did this start in time
   @Persistent
-  private Date startOf = null;
+  private Date startOf;
   
   // when did this end in time
   @Persistent
-  private Date endOf = null;
+  private Date endOf;
   
   // when this object was created
   @Persistent
@@ -65,11 +65,11 @@ public class ThingJdo {
   
   // who created this object
   @Persistent
-  private long createdByThingId = 0;
+  private long createdByThingId;
   
   // who last updated this object
   @Persistent
-  private long updatedByThingId = 0;
+  private long updatedByThingId;
   
   /**
    * constructor
@@ -87,11 +87,12 @@ public class ThingJdo {
   	if (thingData == null) {
   		return;
   	}
-  	setKey(thingData.getThingId());
-  	thingIdKey = KeyFactory.createKey(ThingJdo.class.getSimpleName(), thingData.getThingId());
+  	setThingId(thingData.getThingId());
+  	
     thingTypeId = thingData.getThingTypeId();
     key = thingData.getKey();
     
+    // TODO be able to update secret (password hash)
     //this.secret = thingData.getSecret(); // TODO?
     
     this.startOf = thingData.getStartOf();
@@ -104,14 +105,12 @@ public class ThingJdo {
     }
   }
   
-  private void setKey(long id) {
-	  if (id > 0) {
-	  	thingIdKey = KeyFactory.createKey(ThingJdo.class.getSimpleName(), id);
-	  }
-  }
-
 	public void setData(ThingJdo thingData) {
-    this.thingIdKey = KeyFactory.createKey(ThingJdo.class.getSimpleName(), thingData.getThingId());
+		if (thingData == null) {
+  		return;
+  	}
+		setThingId(thingData.getThingId());
+		
     this.thingTypeId = thingData.getThingTypeId();
     this.key = thingData.getKey();
     
@@ -134,7 +133,7 @@ public class ThingJdo {
   }
   
   /**
-   * insert thing
+   * insert thing, only if its unique
    * 
    * @param thingTypeId
    * @param key
@@ -183,32 +182,40 @@ public class ThingJdo {
     }
   }
   
-  public boolean save(ThingData thingData) {
+  public void save(ThingData[] thingData) {
+  	
+  	for (int i=0; i < thingData.length; i++) {
+  		save(thingData[i]);
+  	}
+  	
+  }
+  
+  public long save(ThingData thingData) {
     setData(thingData);
 
-    boolean b = false;
     PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
 
-      if (thingIdKey.getId() > 0) { // update
+      if (thingIdKey != null && thingIdKey.getId() > 0) { // update
         ThingJdo update = pm.getObjectById(ThingJdo.class, thingIdKey);
         update.setData(thingData);
+        this.thingIdKey = update.thingIdKey;
+        
       } else { // insert    
         pm.makePersistent(this);
       }
       tx.commit();
-      b = true;
+
     } finally {
       if (tx.isActive()) {
         tx.rollback();
-        b = false;
       }
       pm.close();
     }
 
-    return b;
+    return getThingId();
   }
   
   public boolean savePassword(ThingData thingData, String secretHash) {
@@ -239,13 +246,18 @@ public class ThingJdo {
     return b;
   }
     
-  public ThingJdo query(long thingId) {
-    ThingJdo thing = null;
+  public ThingData query(long thingId) {
+  	if (thingId == 0) {
+  		return null;
+  	}
+    
+  	ThingJdo thingJdo = null;
+    
     PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
       tx.begin();
-      thing = pm.getObjectById(ThingJdo.class, thingId);
+      thingJdo = pm.getObjectById(ThingJdo.class, thingId);
       tx.commit();
     } finally {
       if (tx.isActive()) {
@@ -253,7 +265,10 @@ public class ThingJdo {
       }
       pm.close();
     }
-    return thing;
+    
+    ThingData td = convert(thingJdo);
+    
+    return td;
   }
   
   /**
@@ -373,6 +388,21 @@ public class ThingJdo {
     return r;
   }
 
+  public static ThingData convert(ThingJdo thingJdo) {
+  	
+    ThingData r = new ThingData();
+  	r.setData(
+  			thingJdo.getThingTypeId(), 
+  			thingJdo.getThingId(), 
+  			thingJdo.getKey(), 
+  			thingJdo.getStartOf(), 
+  			thingJdo.getEndOf(), 
+  			thingJdo.getDateCreated(), 
+  			thingJdo.getDateUpdated());
+    
+    return r;
+  }
+
   /**
    * delete thing
    * 
@@ -463,7 +493,11 @@ public class ThingJdo {
   }
   
 	public void setThingId(long thingId) {
-	  this.thingIdKey = KeyFactory.createKey(ThingJdo.class.getSimpleName(), thingId);
+		if (thingId > 0) {
+			thingIdKey = KeyFactory.createKey(ThingJdo.class.getSimpleName(), thingId);
+		} else {
+			thingIdKey = null;
+		}
   }
 	
   public Date getEndOf() {

@@ -145,6 +145,14 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
     return r;
   }
   
+  public ThingData saveThing(OAuthTokenData accessToken, ThingFilterData filter, ThingData thingData) {
+    sp.start(getThreadLocalRequest());
+    Db_Thing t = new Db_Thing(sp);
+    ThingData r = t.saveThing(accessToken, filter, thingData);
+    sp.end();
+    return r;
+  }
+  
   public ThingsData saveThings(OAuthTokenData accessToken, ThingFilterData filter, ThingData[] thingData) {
     sp.start(getThreadLocalRequest());
     Db_Thing t = new Db_Thing(sp);

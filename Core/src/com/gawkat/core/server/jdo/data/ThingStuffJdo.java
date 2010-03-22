@@ -27,16 +27,6 @@ import com.gawkat.core.server.jdo.PMF;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
-/**
- * 
- * 
- * ADD Date time start and end, to add the time demension
- * 
- * 
- * @author branflake2267
- *
- */
-
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class ThingStuffJdo {
 
@@ -70,11 +60,11 @@ public class ThingStuffJdo {
   
   // when did this start in time
   @Persistent
-  private Date startOf = null;
+  private Date startOf;
   
   // when did this end in time
   @Persistent
-  private Date endOf = null;
+  private Date endOf;
   
   // when this object was created
   @Persistent
@@ -125,6 +115,7 @@ public class ThingStuffJdo {
 			return;
 		}
 		setKey(thingStuffData.getId());
+		
     this.thingStuffTypeId = thingStuffData.getThingStuffTypeId();
     this.thingId = thingStuffData.getThingId();
     this.value = thingStuffData.getValue();
@@ -143,11 +134,9 @@ public class ThingStuffJdo {
   }
 
 	private void setKey(long id) {
-		
 	  if (id > 0) {
 	  	thingStuffIdKey = getKey(id);
 	  }
-	 
   }
 
   public long save(ThingStuffData thingStuffData) {
@@ -169,7 +158,7 @@ public class ThingStuffJdo {
       
       tx.commit();
       
-      // Debug - TODO - get it to save with List object
+      // debug
       System.out.println("ThingJdo: id: " + getId());
       
     } finally {
@@ -203,6 +192,17 @@ public class ThingStuffJdo {
       pm.close();
     }
     return thingStuff;
+  }
+  
+  public ThingStuffsData queryStuffs(ThingStuffFilterData filter) {
+  	
+  	ThingStuffData[] tsd = query(filter);
+  	
+  	ThingStuffsData tsds = new ThingStuffsData();
+  	tsds.total = 0; // TODO later
+  	tsds.thingStuffData = tsd;
+  	
+  	return tsds;
   }
   
   public ThingStuffData[] query(ThingStuffFilterData filter) {
@@ -424,8 +424,6 @@ public class ThingStuffJdo {
     return thingId;
   }
    
-
-  
   public long getThingStuffTypeId() {
     return thingStuffTypeId;
   }
@@ -434,11 +432,11 @@ public class ThingStuffJdo {
     this.value = value;
   }
   
-  public void setValue(boolean value) {
+  public void setValue(Boolean value) {
     this.valueBol = value;
   }
   
-  public void setValue(double value) {
+  public void setValue(Double value) {
     this.valueDouble = value;
   }
   
@@ -446,15 +444,15 @@ public class ThingStuffJdo {
     return value;
   }
   
-  public boolean getValueBol() {
+  public Boolean getValueBol() {
     return valueBol;
   }
   
-  public double getValueDouble() {
+  public Double getValueDouble() {
     return valueDouble;
   }
  
-  public long getValueInt() {
+  public Long getValueInt() {
     return valueInt;
   }
 

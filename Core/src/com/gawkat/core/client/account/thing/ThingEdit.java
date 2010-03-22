@@ -110,6 +110,17 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
   }
   
   /**
+   * after save this is the return
+   * 
+   * @param thingData
+   */
+  private void process(ThingData thingData) {
+  	this.thingsStuffData = thingData.getThingStuffsData();
+  	
+  	wStuff.draw(thingData, thingData.getThingStuffsData());
+  }
+  
+  /**
    * draw about stuff on the right
    *   mouse over in thing stuff will cause this
    * 
@@ -171,15 +182,33 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
     p.center();
   }
   
+  private String getKey() {
+  	String s = null;
+  	s = tbKey.getText().trim();
+  	return s;
+  }
+  
   /**
    * save the data to server
    */
   public void save() {
-    ThingStuffData[] thingStuffData = wStuff.getData();
-    saveThingStuffsData(thingStuffData);
+    
+  	//thing
+  	ThingData td = thingData;
+  	td.setKey(getKey());
+  	
+  	//thing stuff
+  	ThingStuffData[] thingStuffData = wStuff.getData();
+  	ThingStuffsData thingStuffsData = new ThingStuffsData();
+  	thingStuffsData.thingStuffData = thingStuffData;
+  	
+  	td.setThingStuffsData(thingStuffsData);
+  	
+    //saveThingStuffsData(thingStuffData);
+  	saveThingRpc(td);
   }
-  
-  /**
+
+	/**
    * before a new moused over lets 
    * 
    * @param index - editing index, caused by mouse event in thing stuff
@@ -248,7 +277,7 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
     
   }
  
- private void saveThingStuffsData(ThingStuffData[] thingStuffData) {
+  private void saveThingStuffsData(ThingStuffData[] thingStuffData) {
  
 	 cp.showLoading(true);
  
@@ -266,6 +295,22 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
    
  }
 
-
+  private void saveThingRpc(ThingData td) {
+	  
+  	cp.showLoading(true);
+  	
+  	ThingFilterData filter = new ThingFilterData();
+  	
+		rpc.saveThing(cp.getAccessToken(), filter , td, new AsyncCallback<ThingData>() {
+			public void onSuccess(ThingData td) {
+				process(td);
+				cp.showLoading(true);
+			}
+			public void onFailure(Throwable caught) {
+				
+			}
+		});
+	  
+  }
 
 }

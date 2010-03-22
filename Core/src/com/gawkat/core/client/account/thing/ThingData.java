@@ -2,6 +2,8 @@ package com.gawkat.core.client.account.thing;
 
 import java.util.Date;
 
+import com.gawkat.core.client.account.thingstuff.ThingStuffData;
+import com.gawkat.core.client.account.thingstuff.ThingStuffsData;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ThingData implements IsSerializable {
@@ -27,6 +29,9 @@ public class ThingData implements IsSerializable {
 	// when database updated object
 	private Date dateUpdated;
   
+	// multi dem of the thingstuff
+	private ThingStuffsData thingStuffsData;
+	
 	/**
 	 * constructor
 	 */
@@ -67,8 +72,21 @@ public class ThingData implements IsSerializable {
     return thingId;
   }
   
+  /**
+   * get username
+   * @return
+   */
   public String getKey() {
     return key;
+  }
+  
+  /**
+   * set username
+   * 
+   * @param key
+   */
+  public void setKey(String key) {
+  	this.key = key;
   }
 
 	public Date getStartOf() {
@@ -85,6 +103,14 @@ public class ThingData implements IsSerializable {
 	
 	public Date getDateUpdated() {
 		return dateUpdated;
+	}
+
+	public ThingStuffsData getThingStuffsData() {
+	  return thingStuffsData;
+  }
+	
+	public void setThingStuffsData(ThingStuffsData thingStuffsData) {
+		this.thingStuffsData = thingStuffsData;
 	}
 
 
