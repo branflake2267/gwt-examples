@@ -199,6 +199,7 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
   	
   	//thing stuff
   	ThingStuffData[] thingStuffData = wStuff.getData();
+  	
   	ThingStuffsData thingStuffsData = new ThingStuffsData();
   	thingStuffsData.thingStuffData = thingStuffData;
   	
@@ -270,13 +271,14 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
         process(thingStuffsData);
         cp.showLoading(false);
       }
-
 			public void onFailure(Throwable caught) {
+				cp.setRpcFailure(caught);
       }
     });
     
   }
  
+  @Deprecated
   private void saveThingStuffsData(ThingStuffData[] thingStuffData) {
  
 	 cp.showLoading(true);
@@ -290,6 +292,7 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
        cp.showLoading(false);
      }
      public void onFailure(Throwable caught) {
+    	 cp.setRpcFailure(caught);
      }
    });
    
@@ -304,10 +307,10 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
 		rpc.saveThing(cp.getAccessToken(), filter , td, new AsyncCallback<ThingData>() {
 			public void onSuccess(ThingData td) {
 				process(td);
-				cp.showLoading(true);
+				cp.showLoading(false);
 			}
 			public void onFailure(Throwable caught) {
-				
+				cp.setRpcFailure(caught);
 			}
 		});
 	  

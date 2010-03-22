@@ -85,14 +85,15 @@ public class Db_Thing {
   
   public ThingData getThing(OAuthTokenData accessToken, ThingFilterData filter, long thingId) {
   	
+  	// get thing
   	ThingJdo tj = new ThingJdo(sp);
   	ThingData td = tj.query(thingId);
   	
+  	// get thing stuffs
+  	Db_ThingStuff dbTs = new Db_ThingStuff(sp);
   	ThingStuffFilterData f = new ThingStuffFilterData();
   	f.thingId = thingId;
-  	
-  	ThingStuffJdo tsj = new ThingStuffJdo(sp);
-  	ThingStuffsData tsd = tsj.queryStuffs(f);
+  	ThingStuffsData tsd = dbTs.getThingStuffData(accessToken, f);
   	td.setThingStuffsData(tsd);
   	
   	return td;
@@ -110,19 +111,26 @@ public class Db_Thing {
 		long thingId = tj.save(thingData);
 		
 		
-		// save stuff
+		// save thing stuff
 		ThingStuffsData tsd = thingData.getThingStuffsData();
 		
-		if (tsd != null) {
+		if (tsd != null &&  tsd.thingStuffData != null) {
 			
 			for (int i=0; i < tsd.thingStuffData.length; i++) {
 				tsd.thingStuffData[i].setThingId(thingId);
 			}
 
-			Db_ThingStuff dbTs = new Db_ThingStuff(sp);
-			dbTs.saveThingStuffData(accessToken, null, tsd.thingStuffData);
 		}
 		
+		// filter by thingId
+		ThingStuffFilterData f = new ThingStuffFilterData();
+		f.thingId = thingId;
+		
+		// get thing stuff
+		Db_ThingStuff dbTs = new Db_ThingStuff(sp);
+		dbTs.saveThingStuffData(accessToken, f, tsd.thingStuffData);
+		
+		// get thing
 		ThingData r = getThing(accessToken, filter, thingId);
 	  return r;
   }

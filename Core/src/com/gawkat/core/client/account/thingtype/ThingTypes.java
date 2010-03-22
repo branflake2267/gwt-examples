@@ -209,6 +209,7 @@ public class ThingTypes extends Composite implements ClickHandler, ChangeHandler
         cp.showLoading(false);
       }
       public void onFailure(Throwable caught) {
+      	cp.setRpcFailure(caught);
       }
     });
     

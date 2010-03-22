@@ -195,6 +195,7 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
         cp.showLoading(false);
       }
       public void onFailure(Throwable caught) {
+      	cp.setRpcFailure(caught);
       }
     });
     
@@ -218,6 +219,7 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
         cp.showLoading(false);
       }
       public void onFailure(Throwable caught) {
+      	cp.setRpcFailure(caught);
       }
     });
     

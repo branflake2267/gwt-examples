@@ -119,6 +119,11 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     this.thingStuffData = thingStuffData;
     this.thingStuffTypesData = thingStuffTypesData;
     
+    // use an empty object to store data in - TODO - maybe not do this
+    if (thingStuffData == null) {
+    	thingStuffData = new ThingStuffData();
+    }
+    
     // draw choices
     drawListBoxTypes();
     
@@ -242,79 +247,77 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   public ThingStuffData getData() {
     
     String value = null;
-    boolean valueBol = false;
-    double valueDouble = 0; 
-    long valueInt = 0;
+    Boolean valueBol = false;
+    Double valueDouble = null; 
+    Long valueLong = null;
     
     long typeId = getDataTypeId();
     if (typeId == ThingStuffTypeData.VT_STRING) {
       value = getTextBox_String();
       valueBol = false;
-      valueDouble = 0;
-      valueInt = 0;
+      valueDouble = null;
+      valueLong = null;
     } else if (typeId == ThingStuffTypeData.VT_BOOLEAN) {
       value = null;
       valueBol = cbValue.getValue();
-      valueDouble = 0;
-      valueInt = 0;
+      valueDouble = null;
+      valueLong = null;
     } else if (typeId == ThingStuffTypeData.VT_DOUBLE) {
       value = null;
       valueBol = false;
       valueDouble = getTextBox_Double();
-      valueInt = 0;
+      valueLong = null;
     } else if (typeId == ThingStuffTypeData.VT_INT) {
       value = null;
       valueBol = false;
-      valueDouble = 0;
-      valueInt = getTextBox_Long();
+      valueDouble = null;
+      valueLong = getTextBox_Long();
     } else if (typeId == ThingStuffTypeData.VT_STRING_LARGE) {
       value = getTextArea_String();
       valueBol = false;
-      valueDouble = 0;
-      valueInt = 0;
+      valueDouble = null;
+      valueLong = null;
     } else if (typeId == ThingStuffTypeData.VT_STRING_CASE) {
       value = getTextBox_String();
       valueBol = false;
-      valueDouble = 0;
-      valueInt = 0;
+      valueDouble = null;
+      valueLong = null;
     } else if (typeId == ThingStuffTypeData.VT_STRING_LARGE_CASE) {
       value = getTextArea_String();
       valueBol = false;
-      valueDouble = 0;
-      valueInt = 0;
+      valueDouble = null;
+      valueLong = null;
     } else if (typeId == ThingStuffTypeData.VT_HTML) {
       value = getTextArea_String();
       valueBol = false;
-      valueDouble = 0;
-      valueInt = 0;
+      valueDouble = null;
+      valueLong = null;
     } else if (typeId == ThingStuffTypeData.VT_URL) {
       value = getTextBox_String();
       valueBol = false;
-      valueDouble = 0;
-      valueInt = 0;
+      valueDouble = null;
+      valueLong = null;
     } else if (typeId == ThingStuffTypeData.VT_EMAIL) {
       value = getTextBox_String();
       valueBol = false;
-      valueDouble = 0;
-      valueInt = 0;
+      valueDouble = null;
+      valueLong = null;
     } else if (typeId == ThingStuffTypeData.VT_PHONE) {
       value = getTextBox_String();
       valueBol = false;
-      valueDouble = 0;
-      valueInt = 0;
+      valueDouble = null;
+      valueLong = null;
     } else if (typeId == ThingStuffTypeData.VT_LINK) {
       value = null;
       valueBol = false;
-      valueDouble = 0;
-      valueInt = getTextBox_Long();
+      valueDouble = null;
+      valueLong = getTextBox_Long();
     } else {
       value = getTextBox_String();
       valueBol = false;
-      valueDouble = 0;
-      valueInt = 0;
+      valueDouble = null;
+      valueLong = null;
     }
-    
-    //System.out.println(valueInt);
     
     int stuffTypeId = Global_ListBox.getSelectedValue(lbTypes);
     thingStuffData.setThingStuffTypeId(stuffTypeId);
@@ -338,11 +341,19 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   }
 
   private String getTextBox_String() {
-    return tbValue.getText().trim();
+  	String s = null;
+  	if (tbValue.getText().trim().length() > 0) {
+  		s = tbValue.getText().trim();
+  	}
+    return s;
   }
   
   private String getTextArea_String() {
-    return taValue.getText().trim();
+  	String s = null;
+  	if (tbValue.getText().trim().length() > 0) {
+  		s = tbValue.getText().trim();
+  	}
+    return s;
   }
   
   private Long getTextBox_Long() {
@@ -367,19 +378,28 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     return d;
   }
 
-  private void drawInput(boolean valueBol) {
+  private void drawInput(Boolean valueBol) {
+  	if (valueBol == null) {
+  		valueBol = new Boolean(false);
+  	}
     pInput.add(cbValue);
     cbValue.setValue(valueBol);
   }
 
-  private void drawInput(double valueDouble) {
+  private void drawInput(Double valueDouble) {
+  	if (valueDouble == null) {
+  		valueDouble = new Double(0.0);
+  	}
     pInput.add(tbValue);
     tbValue.setText(Double.toString(valueDouble));
   }
 
-  private void drawInput(long valueInt) {
+  private void drawInput(Long valueLong) {
+  	if (valueLong == null) {
+  		valueLong = new Long(0);
+  	}
     pInput.add(tbValue);
-    tbValue.setText(Long.toString(valueInt));
+    tbValue.setText(Long.toString(valueLong));
   }
 
   private int getDataTypeId() {
@@ -407,7 +427,6 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     fireChange(EventManager.THINGSTUFF_TYPECHANGE);
   }
   
-
   public Row getRow() {
     return pWidget;
   }
@@ -524,18 +543,6 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   	}
   }
   
-  private void deleteRpc(long thingStuffId) {
-    
-    rpc.deleteThingStuffData(cp.getAccessToken(), thingStuffId, new AsyncCallback<Boolean>() {
-      public void onSuccess(Boolean b) {
-        deleteIt(b);
-      }
-      public void onFailure(Throwable caught) {
-        // TODO
-      }
-    });
-  }
-
 	public ThingStuffData getThingStuffData() {
 	  return thingStuffData;
   }
@@ -552,5 +559,16 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
 		thingStuffData.setThingStuffsAbout(tssd);
   }
 
- 
+  private void deleteRpc(long thingStuffId) {
+    
+    rpc.deleteThingStuffData(cp.getAccessToken(), thingStuffId, new AsyncCallback<Boolean>() {
+      public void onSuccess(Boolean b) {
+        deleteIt(b);
+      }
+      public void onFailure(Throwable caught) {
+      	cp.setRpcFailure(caught);
+      }
+    });
+  }
+  
 }

@@ -120,6 +120,7 @@ public class ThingStuffs extends Composite implements ClickHandler {
   }
   
   private void process(ThingStuffsData thingStuffsData) {
+    editingIndex = -1;
     
     pListStuff.clear();
     
@@ -221,7 +222,6 @@ public class ThingStuffs extends Composite implements ClickHandler {
   	setStyleSelected(editingIndex);
   	
   	fireChange(event);
-  	
   }
   
   private void setStyleDefault(int thingStuffIndex) {
@@ -233,7 +233,6 @@ public class ThingStuffs extends Composite implements ClickHandler {
     tt.removeStyleName(Style.getRowStyleSelected());
   }
   
-
   private void setStyleSelected(int thingStuffIndex) {
   	if (thingStuffIndex < 0) {
   		return;
@@ -283,9 +282,10 @@ public class ThingStuffs extends Composite implements ClickHandler {
   		return;
   	}
   	
-  	ThingStuff td = (ThingStuff) pListStuff.getWidget(index);
-  	td.setAboutStuff(tsd);
+  	System.out.println("ThingStuffs.setAboutThingStuffData in index (left) " + index);
   	
+  	ThingStuff td = (ThingStuff) pListStuff.getWidget(index);
+  	td.setAboutStuff(tsd);	
   }
   
   public int getChangeEvent() {
