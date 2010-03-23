@@ -37,17 +37,17 @@ public class ThingStuffAboutJdo {
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
   private Key thingStuffAboutIdKey;
   
+  // who is the owner
+  @Persistent
+  private long thingId;
+  
   // Owner of this object - TODO add this to set data
-  private long thingStuffJdoId;
+  private long thingStuffId;
   
   // why kind of stuff, defined as type
   @Persistent
   private long thingStuffTypeId;
   
-  // who is the owner
-  @Persistent
-  private long thingId;
-   
   // values that can be stored
   @Persistent
   private String value;
@@ -79,11 +79,11 @@ public class ThingStuffAboutJdo {
   
   // who created this object
   @Persistent
-  private long createdByThingId = 0;
+  private long createdByThingId;
   
   // who updated this object
   @Persistent
-  private long updatedByThingId = 0;
+  private long updatedByThingId;
     
   /**
    * constructor
@@ -92,14 +92,14 @@ public class ThingStuffAboutJdo {
   	this.sp = sp;
   }
   
-  public void setData(long thingStuffJdoId, ThingStuffData thingStuffData) {
+  public void setData(ThingStuffData thingStuffData) {
   	if (thingStuffData == null) {
   		return;
   	}
+  	setKey(thingStuffData.getStuffAboutId());
   	
-  	setKey(thingStuffData.getId());
-  	
-  	this.thingStuffJdoId = thingStuffJdoId;
+  	// parent id
+  	this.thingStuffId = thingStuffData.getStuffId();
   	
     this.thingStuffTypeId = thingStuffData.getThingStuffTypeId();
     this.thingId = thingStuffData.getThingId();
@@ -118,15 +118,15 @@ public class ThingStuffAboutJdo {
     }
   }
 
-	public void setData(long thingStuffJdoId, ThingStuffAboutJdo thingStuffData) {
+	public void setData(ThingStuffAboutJdo thingStuffData) {
 		if (thingStuffData == null) {
 			return;
 		}
+		setKey(thingStuffData.getStuffId());
 		
-		setKey(thingStuffData.getId());
-		
-		this.thingStuffJdoId = thingStuffJdoId;
-		
+		// parent id
+  	this.thingStuffId = thingStuffData.getStuffId();
+
     this.thingStuffTypeId = thingStuffData.getThingStuffTypeId();
     this.thingId = thingStuffData.getThingId();
     this.value = thingStuffData.getValue();
@@ -152,8 +152,8 @@ public class ThingStuffAboutJdo {
 	 
   }
 
-  public long save(long thingStuffJdoId, ThingStuffData thingStuffData) {
-  	setData(thingStuffJdoId, thingStuffData);
+  public long save(ThingStuffData thingStuffData) {
+  	setData(thingStuffData);
     
     PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
@@ -162,7 +162,7 @@ public class ThingStuffAboutJdo {
       
       if (thingStuffAboutIdKey != null && thingStuffAboutIdKey.getId() > 0) { // update
         ThingStuffAboutJdo update = pm.getObjectById(ThingStuffAboutJdo.class, thingStuffAboutIdKey);
-        update.setData(thingStuffJdoId, thingStuffData);
+        update.setData(thingStuffData);
         this.thingStuffAboutIdKey = update.thingStuffAboutIdKey;
         
       } else { // insert    
@@ -172,7 +172,7 @@ public class ThingStuffAboutJdo {
       tx.commit();
       
       // Debug - TODO - get it to save with List object
-      System.out.println("ThingStuffAboutJdo.save(): id: " + getId());
+      System.out.println("ThingStuffAboutJdo.save(): id: " + getStuffAboutId());
       
     } finally {
       if (tx.isActive()) {
@@ -181,7 +181,7 @@ public class ThingStuffAboutJdo {
       pm.close();
     }
     
-    return getId();
+    return getStuffAboutId();
   }
   
   /**
@@ -191,6 +191,7 @@ public class ThingStuffAboutJdo {
    * @return
    */
   public ThingStuffAboutJdo query(long thingStuffId) {
+  	
     ThingStuffAboutJdo thingStuff = null;
     PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
@@ -204,20 +205,22 @@ public class ThingStuffAboutJdo {
       }
       pm.close();
     }
+    
     return thingStuff;
   }
   
   public ThingStuffData[] query(ThingStuffFilterData filter) {
     
+  	// TODO - add this to where
     long thingId = filter.thingId;
-    long thingStuffJdoId = filter.thingStuffJdoId;
+    
+    long thingStuffAboutId = filter.thingStuffAboutId;
     
     ArrayList<ThingStuffAboutJdo> aT = new ArrayList<ThingStuffAboutJdo>();
 
-    // TODO filter by thing too
     String qfilter = null;
-    if (filter.thingStuffJdoId > 0) {
-      qfilter = "thingStuffJdoId==" + thingStuffJdoId + "";
+    if (filter.thingStuffAboutId > 0) {
+      qfilter = "thingStuffAboutId==" + thingStuffAboutId + "";
     }
     
     PersistenceManager pm = sp.getPersistenceManager();
@@ -273,7 +276,8 @@ public class ThingStuffAboutJdo {
     	r[i] = new ThingStuffData();
       r[i].setData(
           tsja.getThingId(),
-          tsja.getStuffId(), 
+          tsja.getStuffId(),
+          tsja.getStuffAboutId(),
           tsja.getStuffTypeId(), 
           tsja.getValue(), 
           tsja.getValueBol(), 
@@ -302,9 +306,12 @@ public class ThingStuffAboutJdo {
   	
   	for (int i=0; i < tsd.length; i++) {
   		r[i] = new ThingStuffAboutJdo(sp);
+  	
   		r[i].thingId = tsd[i].getThingId();
-  		r[i].thingStuffAboutIdKey = getKey(tsd[i].getId());
+  		r[i].thingStuffId = tsd[i].getStuffId();
+  		r[i].thingStuffAboutIdKey = getKey(tsd[i].getStuffId());
   		r[i].thingStuffTypeId = tsd[i].getThingStuffTypeId();
+  		
   		r[i].value = tsd[i].getValue();
   		r[i].valueBol = tsd[i].getValueBol();
   		r[i].valueDouble = tsd[i].getValueDouble();
@@ -318,25 +325,14 @@ public class ThingStuffAboutJdo {
   	
   	return l;
   }
-  
-	public boolean delete(ServerPersistence sp, long thingStuffId) {
-    if (thingStuffId == 0) {
-      return false;
-    }
-    
-    ThingStuffData thingStuffData = new ThingStuffData();
-    thingStuffData.setId(thingStuffId);
-    
-    boolean b = delete(sp, thingStuffData);
-    
-    return b;
-  }
-  
-	// TODO - verify this gets deleted - b/c of the thingStuffJdoId
-  public boolean delete(ServerPersistence sp, ThingStuffData thingStuffData) {
-    
-    ThingStuffAboutJdo ttj = new ThingStuffAboutJdo(sp);
-    ttj.setData(thingStuffJdoId, thingStuffData);
+ 
+  /**
+   * delete thing about the about id
+   * 
+   * @param thingStuffAboutId
+   * @return
+   */
+  public boolean delete(long thingStuffAboutId) {
     
     PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
@@ -344,7 +340,7 @@ public class ThingStuffAboutJdo {
     try {
       tx.begin();
 
-      ThingStuffAboutJdo ttj2 = (ThingStuffAboutJdo) pm.getObjectById(ThingStuffAboutJdo.class, ttj.getId());
+      ThingStuffAboutJdo ttj2 = (ThingStuffAboutJdo) pm.getObjectById(ThingStuffAboutJdo.class, thingStuffAboutId);
       pm.deletePersistent(ttj2);
       
       tx.commit();
@@ -403,7 +399,7 @@ public class ThingStuffAboutJdo {
     return true;
   }
 
-  public long getId() {
+  public long getStuffAboutId() {
   	if (thingStuffAboutIdKey == null) {
   		return -1;
   	}
@@ -411,11 +407,12 @@ public class ThingStuffAboutJdo {
   }
 
   /**
-   * get id (same as getId()
+   * parent of this object (owner of this object)
+   * 
    * @return
    */
   public long getStuffId() {
-    return thingStuffAboutIdKey.getId();
+    return thingStuffId;
   }
   
   public long getStuffTypeId() {

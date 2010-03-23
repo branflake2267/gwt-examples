@@ -232,4 +232,13 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
     sp.end();
     return r;
   }
+
+  public boolean deleteThingStuffAboutData(OAuthTokenData accessToken, long thingStuffAboutId) {
+  	sp.start(getThreadLocalRequest());
+  	Db_ThingStuff db = new Db_ThingStuff(sp);
+  	boolean r = db.deleteThingStuffAboutData(accessToken, thingStuffAboutId);
+  	sp.end();
+	  return r;
+  }
+
 }

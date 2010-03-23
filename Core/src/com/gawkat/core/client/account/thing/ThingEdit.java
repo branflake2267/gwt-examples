@@ -56,7 +56,9 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
     this.cp = cp;
     
     wStuff = new ThingStuffs(cp);
+    wStuff.setWidgetType(ThingStuffs.WIDGETTYPE_THINGSTUFF);
     wStuffAbout = new ThingStuffs(cp);
+    wStuffAbout.setWidgetType(ThingStuffs.WIDGETTYPE_THINGSTUFFABOUT);
     
     HorizontalPanel hp = new HorizontalPanel();
     hp.add(wStuff);
@@ -106,7 +108,6 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
   	this.thingsStuffData = thingStuffsData;
   	
     wStuff.draw(thingData, thingStuffsData);
-    
   }
   
   /**

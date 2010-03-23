@@ -53,6 +53,8 @@ public interface RpcCoreService extends RemoteService {
   public ThingStuffTypesData getThingStuffTypes(OAuthTokenData accessToken, ThingStuffTypeFilterData filter);
   public ThingStuffTypesData saveThingStuffTypes(OAuthTokenData accessToken, ThingStuffTypeFilterData filter, ThingStuffTypeData[] thingStuffTypeData);
   public boolean deleteThingStuffType(OAuthTokenData accessToken, ThingStuffTypeData thingStuffTypeData);
+  public boolean deleteThingStuffAboutData(OAuthTokenData accessToken, long thingStuffAboutId);
+ 
   
   public ThingStuffsData getThingStuffData(OAuthTokenData accessToken, ThingStuffFilterData filter);
   public ThingStuffsData saveThingStuffData(OAuthTokenData accessToken, ThingStuffFilterData filter, ThingStuffData[] thingStuffData);
