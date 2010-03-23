@@ -26,6 +26,9 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ThingStuffs extends Composite implements ClickHandler {
 
+	public static final int WIDGETTYPE_THINGSTUFF = 1;
+	public static final int WIDGETTYPE_THINGSTUFFABOUT = 2;
+	
   private ClientPersistence cp = null;
   private RpcCoreServiceAsync rpc = null;
   
@@ -41,6 +44,8 @@ public class ThingStuffs extends Composite implements ClickHandler {
   
   // stuff owner
   private ThingData thingData = null;
+  
+  private int widgetType = WIDGETTYPE_THINGSTUFF;
   
   /**
    * this is the types that can be selected
@@ -61,6 +66,7 @@ public class ThingStuffs extends Composite implements ClickHandler {
 	 *   tell thing edit this is the about we want to edit on the right
 	 */
 	private ThingStuffData editingIndexThis_AboutThingStuffData = null;
+	
 	private boolean ignoreMouseOver;
 	
   /**
@@ -322,7 +328,9 @@ public class ThingStuffs extends Composite implements ClickHandler {
 	  this.ignoreMouseOver = b;
   }
 
-  
+  public void setWidgetType(int widgetType) {
+  	this.widgetType = widgetType;
+  }
 
 	
 }

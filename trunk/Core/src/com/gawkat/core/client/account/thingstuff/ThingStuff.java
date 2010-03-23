@@ -38,6 +38,9 @@ import com.google.gwt.user.server.rpc.RPC;
 
 public class ThingStuff extends Composite implements ClickHandler, ChangeHandler, MouseOverHandler, MouseOutHandler {
   
+	public static final int WIDGETTYPE_THINGSTUFF = 1;
+	public static final int WIDGETTYPE_THINGSTUFFABOUT = 2;
+	
   private ClientPersistence cp = null;
   
   private RpcCoreServiceAsync rpc;
@@ -70,6 +73,8 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
 
   // what is the rank/order/index of this widget in comparison to the to the others in the list
 	private int index = 0;
+	
+	private int widgetType = WIDGETTYPE_THINGSTUFF;
 
   /**
    * constructor - setup the widget
@@ -479,10 +484,20 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     wdelete.center();
     wdelete.addChangeHandler(new ChangeHandler() {
       public void onChange(ChangeEvent event) {
-        DeleteDialog dd = (DeleteDialog) event.getSource();
+        
+      	DeleteDialog dd = (DeleteDialog) event.getSource();
+        
         int changeEvent = dd.getChangeEvent();
-        if (changeEvent == EventManager.DELETE_YES && thingStuffData.getId() > 0) {
-          deleteRpc(thingStuffData.getId());
+        
+        if (changeEvent == EventManager.DELETE_YES && thingStuffData.getStuffId() > 0) {
+        	
+        	if (widgetType == WIDGETTYPE_THINGSTUFF) {
+        		deleteRpcThingStuff(thingStuffData.getStuffId());
+        		
+        	} else if (widgetType == WIDGETTYPE_THINGSTUFFABOUT) {
+        		deleteRpcThingStuffAbout(thingStuffData.getStuffId());
+        	}
+          
         } else {
           deleteIt(true);
         }
@@ -558,8 +573,12 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
 		
 		thingStuffData.setThingStuffsAbout(tssd);
   }
+	
+  public void setWidgetType(int widgetType) {
+  	this.widgetType = widgetType;
+  }
 
-  private void deleteRpc(long thingStuffId) {
+  private void deleteRpcThingStuff(long thingStuffId) {
     
     rpc.deleteThingStuffData(cp.getAccessToken(), thingStuffId, new AsyncCallback<Boolean>() {
       public void onSuccess(Boolean b) {
@@ -570,5 +589,19 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
       }
     });
   }
+  
+  private void deleteRpcThingStuffAbout(long thingStuffAboutId) {
+    
+  	rpc.deleteThingStuffAboutData(cp.getAccessToken(), thingStuffAboutId, new AsyncCallback<Boolean>() {
+			public void onSuccess(Boolean result) {
+				deleteIt(result);
+			}
+			public void onFailure(Throwable caught) {
+				cp.setRpcFailure(caught);
+			}
+		});
+  }
+  
+
   
 }

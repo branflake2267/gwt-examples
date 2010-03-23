@@ -30,10 +30,10 @@ public class Db_ThingStuff {
     
     if (thingStuffData != null) {
       for (int i=0; i < thingStuffData.length; i++) {
-      	long id = thingStuffData[i].getId();
+      	long id = thingStuffData[i].getStuffId();
       	ThingStuffFilterData f = new ThingStuffFilterData();
       	f.thingId = thingStuffData[i].getThingId();
-      	f.thingStuffJdoId = id;
+      	f.thingStuffAboutId = id;
       	ThingStuffData[] tsds = dbThingAboutJdo.query(f);
       	ThingStuffsData tss = new ThingStuffsData();
       	tss.total = tsds.length;
@@ -90,15 +90,40 @@ public class Db_ThingStuff {
     
     // save thingstuff About
     for (int i=0; i < tsds.length; i++) {
-    	dbThingAboutJdo.save(id, thingStuffData);
+    	
+    	tsds[i].setStuffAboutId(id);
+    	
+    	dbThingAboutJdo.save(tsds[i]);
+    	
     }
     
     return true;
   }
 
+  /**
+   * delete stuff
+   * 
+   * @param accessToken
+   * @param thingStuffId
+   * @return
+   */
   public boolean deleteThingStuffData(OAuthTokenData accessToken, long thingStuffId) {
     boolean b = dbThingJdo.delete(sp, thingStuffId);
     return b;
   }
   
+  /**
+   * delete stuff about
+   * 
+   * @param accessToken
+   * @param thingStuffAboutId
+   * @return
+   */
+  public boolean deleteThingStuffAboutData(OAuthTokenData accessToken, long thingStuffAboutId) {
+  	ThingStuffAboutJdo tsaj = new ThingStuffAboutJdo(sp);
+  	boolean b = tsaj.delete(thingStuffAboutId);
+    return b;
+  }
+  
+
 }

@@ -147,8 +147,8 @@ public class ThingStuffJdo {
     try {
       tx.begin();
       
-      if (thingStuffData != null && thingStuffData.getId() > 0) { // update
-        ThingStuffJdo update = pm.getObjectById(ThingStuffJdo.class, thingStuffData.getId());
+      if (thingStuffData != null && thingStuffData.getStuffId() > 0) { // update
+        ThingStuffJdo update = pm.getObjectById(ThingStuffJdo.class, thingStuffData.getStuffId());
         update.setData(thingStuffData);
         this.thingStuffIdKey = update.thingStuffIdKey;
         
@@ -304,7 +304,7 @@ public class ThingStuffJdo {
   	for (int i=0; i < tsd.length; i++) {
   		r[i] = new ThingStuffJdo(sp);
   		r[i].thingId = tsd[i].getThingId();
-  		r[i].thingStuffIdKey = getKey(tsd[i].getId());
+  		r[i].thingStuffIdKey = getKey(tsd[i].getStuffId());
   		r[i].thingStuffTypeId = tsd[i].getThingStuffTypeId();
   		r[i].value = tsd[i].getValue();
   		r[i].valueBol = tsd[i].getValueBol();
@@ -325,7 +325,7 @@ public class ThingStuffJdo {
     }
     
     ThingStuffData thingStuffData = new ThingStuffData();
-    thingStuffData.setId(thingStuffId);
+    thingStuffData.setStuffId(thingStuffId);
     
     boolean b = delete(sp, thingStuffData);
     
@@ -335,7 +335,7 @@ public class ThingStuffJdo {
   public boolean delete(ServerPersistence sp, ThingStuffData thingStuffData) {
     setData(thingStuffData);
     
-    System.out.println("deleting thingstuffjdo: " + thingStuffData.getId());
+    System.out.println("deleting thingstuffjdo: " + thingStuffData.getStuffId());
     
     PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
@@ -343,7 +343,7 @@ public class ThingStuffJdo {
     try {
       tx.begin();
 
-      ThingStuffJdo ttj2 = (ThingStuffJdo) pm.getObjectById(ThingStuffJdo.class, thingStuffData.getId());
+      ThingStuffJdo ttj2 = (ThingStuffJdo) pm.getObjectById(ThingStuffJdo.class, thingStuffData.getStuffId());
       pm.deletePersistent(ttj2);
       
       tx.commit();

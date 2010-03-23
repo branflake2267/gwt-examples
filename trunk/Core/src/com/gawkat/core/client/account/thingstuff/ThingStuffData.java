@@ -7,8 +7,11 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ThingStuffData implements IsSerializable {
   
-	// identity
+	// identity for just stuff
   private long thingStuffId;
+  
+  // identity for about stuff
+  private long thingStuffAboutId;
 
   // what type of data is it?
   private long thingStuffTypeId;
@@ -71,20 +74,56 @@ public class ThingStuffData implements IsSerializable {
     this.valueDouble = valueDouble;
     this.valueLong = valueInt;
    
-    
     this.startOf = startOf;
     this.endOf = endOf;
     this.dateCreated = dateCreated;
     this.dateUpdated = dateUpdated;
   }
   
-  public long getId() {
+  public void setData(
+  		long thingId, 
+  		long thingStuffId, 
+  		long thingStuffAboutId,
+      long thingStuffTypeId, 
+      String value, 
+      Boolean valueBol, 
+      Double valueDouble, 
+      Long valueInt,
+      Date startOf,
+      Date endOf,
+      Date dateCreated,
+      Date dateUpdated) {
+  	
+    this.thingId = thingId;
+    this.thingStuffId = thingStuffId;
+    this.thingStuffAboutId = thingStuffAboutId;
+    this.thingStuffTypeId = thingStuffTypeId;
+    this.value = value;
+    this.valueBol = valueBol;
+    this.valueDouble = valueDouble;
+    this.valueLong = valueInt;
+   
+    this.startOf = startOf;
+    this.endOf = endOf;
+    this.dateCreated = dateCreated;
+    this.dateUpdated = dateUpdated;
+  }
+  
+  public long getStuffId() {
     return thingStuffId;
   }
   
-  public void setId(long thingStuffId) {
+  public void setStuffId(long thingStuffId) {
     this.thingStuffId = thingStuffId;
   }
+  
+	public void setStuffAboutId(long thingStuffAboutId) {
+		this.thingStuffAboutId = thingStuffAboutId;
+  }
+	
+	public long getStuffAboutId() {
+		return thingStuffAboutId;
+	}
   
   public long getThingId() {
     return thingId;
@@ -157,4 +196,6 @@ public class ThingStuffData implements IsSerializable {
 	public Date getDateUpdated() {
 		return dateUpdated;
 	}
+
+
 }
