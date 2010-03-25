@@ -60,7 +60,7 @@ public class Db_ThingStuff {
     ThingStuffTypesData thingStuffTypesData = t.getThingStuffTypes(accessToken, null); // TODO filter ?
     
     ThingStuffsData r = new ThingStuffsData();
-    r.total = 0;
+    r.total = 0; // TODO later
     r.thingStuffData = thingStuffData;
     r.thingStuffTypesData = thingStuffTypesData;
     
