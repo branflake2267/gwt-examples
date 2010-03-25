@@ -93,8 +93,11 @@ public class ThingStuffJdo {
   	if (thingStuffData == null) {
   		return;
   	}
+  	setKey(thingStuffData.getStuffId());
+  	
+  	this.thingId = thingStuffData.getThingId();
     this.thingStuffTypeId = thingStuffData.getThingStuffTypeId();
-    this.thingId = thingStuffData.getThingId();
+    
     this.value = thingStuffData.getValue();
     this.valueBol = thingStuffData.getValueBol();
     this.valueDouble = thingStuffData.getValueDouble();
@@ -110,21 +113,22 @@ public class ThingStuffJdo {
     }
   }
 
-	public void setData(ThingStuffJdo thingStuffData) {
-		if (thingStuffData == null) {
+	public void setData(ThingStuffJdo thingStuffJdo) {
+		if (thingStuffJdo == null) {
 			return;
 		}
-		setKey(thingStuffData.getId());
+		setKey(thingStuffJdo.getId());
 		
-    this.thingStuffTypeId = thingStuffData.getThingStuffTypeId();
-    this.thingId = thingStuffData.getThingId();
-    this.value = thingStuffData.getValue();
-    this.valueBol = thingStuffData.getValueBol();
-    this.valueDouble = thingStuffData.getValueDouble();
-    this.valueInt = thingStuffData.getValueInt();
+		this.thingId = thingStuffJdo.getThingId();
+    this.thingStuffTypeId = thingStuffJdo.getThingStuffTypeId();
     
-    this.startOf = thingStuffData.getStartOf();
-    this.endOf = thingStuffData.getEndOf();
+    this.value = thingStuffJdo.getValue();
+    this.valueBol = thingStuffJdo.getValueBol();
+    this.valueDouble = thingStuffJdo.getValueDouble();
+    this.valueInt = thingStuffJdo.getValueInt();
+    
+    this.startOf = thingStuffJdo.getStartOf();
+    this.endOf = thingStuffJdo.getEndOf();
     
     if (thingStuffIdKey != null && thingStuffIdKey.getId() > 0) {
       this.dateUpdated = new Date();
@@ -178,6 +182,7 @@ public class ThingStuffJdo {
    * @return
    */
   public ThingStuffJdo query(long thingStuffId) {
+  	
     ThingStuffJdo thingStuff = null;
     PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
@@ -191,6 +196,7 @@ public class ThingStuffJdo {
       }
       pm.close();
     }
+    
     return thingStuff;
   }
   
@@ -276,12 +282,14 @@ public class ThingStuffJdo {
           tsja.getThingId(),
           tsja.getStuffId(), 
           tsja.getStuffTypeId(), 
+          
           tsja.getValue(), 
           tsja.getValueBol(), 
           tsja.getValueDouble(),
           tsja.getValueInt(), 
           tsja.getStartOf(),
           tsja.getEndOf(), 
+          
           tsja.getDateCreated(),
           tsja.getDateUpdated());
     	
@@ -306,10 +314,12 @@ public class ThingStuffJdo {
   		r[i].thingId = tsd[i].getThingId();
   		r[i].thingStuffIdKey = getKey(tsd[i].getStuffId());
   		r[i].thingStuffTypeId = tsd[i].getThingStuffTypeId();
+  		
   		r[i].value = tsd[i].getValue();
   		r[i].valueBol = tsd[i].getValueBol();
   		r[i].valueDouble = tsd[i].getValueDouble();
   		r[i].valueInt = tsd[i].getValueLong();
+  		
   		r[i].startOf = tsd[i].getStartOf();
   		r[i].endOf = tsd[i].getEndOf();
   	}
@@ -319,7 +329,7 @@ public class ThingStuffJdo {
   	return l;
   }
   
-	public boolean delete(ServerPersistence sp, long thingStuffId) {
+	public boolean delete(long thingStuffId) {
     if (thingStuffId == 0) {
       return false;
     }
@@ -327,12 +337,12 @@ public class ThingStuffJdo {
     ThingStuffData thingStuffData = new ThingStuffData();
     thingStuffData.setStuffId(thingStuffId);
     
-    boolean b = delete(sp, thingStuffData);
+    boolean b = delete(thingStuffData);
     
     return b;
   }
   
-  public boolean delete(ServerPersistence sp, ThingStuffData thingStuffData) {
+  public boolean delete(ThingStuffData thingStuffData) {
     setData(thingStuffData);
     
     System.out.println("deleting thingstuffjdo: " + thingStuffData.getStuffId());

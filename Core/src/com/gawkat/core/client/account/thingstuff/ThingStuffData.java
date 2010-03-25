@@ -53,6 +53,21 @@ public class ThingStuffData implements IsSerializable {
   public ThingStuffData() {
   }
   
+  /**
+   * set stuff
+   * 
+   * @param thingId
+   * @param thingStuffId
+   * @param thingStuffTypeId
+   * @param value
+   * @param valueBol
+   * @param valueDouble
+   * @param valueInt
+   * @param startOf
+   * @param endOf
+   * @param dateCreated
+   * @param dateUpdated
+   */
   public void setData(
   		long thingId, 
   		long thingStuffId, 
@@ -69,6 +84,7 @@ public class ThingStuffData implements IsSerializable {
     this.thingId = thingId;
     this.thingStuffId = thingStuffId;
     this.thingStuffTypeId = thingStuffTypeId;
+    
     this.value = value;
     this.valueBol = valueBol;
     this.valueDouble = valueDouble;
@@ -76,10 +92,28 @@ public class ThingStuffData implements IsSerializable {
    
     this.startOf = startOf;
     this.endOf = endOf;
+    
     this.dateCreated = dateCreated;
     this.dateUpdated = dateUpdated;
   }
   
+  /**
+   * set stuff "about"
+   *   Note: this one has ThingStuffAboutId
+   * 
+   * @param thingId
+   * @param thingStuffId
+   * @param thingStuffAboutId
+   * @param thingStuffTypeId
+   * @param value
+   * @param valueBol
+   * @param valueDouble
+   * @param valueInt
+   * @param startOf
+   * @param endOf
+   * @param dateCreated
+   * @param dateUpdated
+   */
   public void setData(
   		long thingId, 
   		long thingStuffId, 
@@ -98,6 +132,7 @@ public class ThingStuffData implements IsSerializable {
     this.thingStuffId = thingStuffId;
     this.thingStuffAboutId = thingStuffAboutId;
     this.thingStuffTypeId = thingStuffTypeId;
+    
     this.value = value;
     this.valueBol = valueBol;
     this.valueDouble = valueDouble;
@@ -105,6 +140,7 @@ public class ThingStuffData implements IsSerializable {
    
     this.startOf = startOf;
     this.endOf = endOf;
+    
     this.dateCreated = dateCreated;
     this.dateUpdated = dateUpdated;
   }

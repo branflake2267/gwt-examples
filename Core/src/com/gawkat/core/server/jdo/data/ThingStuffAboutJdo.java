@@ -41,7 +41,7 @@ public class ThingStuffAboutJdo {
   @Persistent
   private long thingId;
   
-  // Owner of this object - TODO add this to set data
+  // parent
   private long thingStuffId;
   
   // why kind of stuff, defined as type
@@ -100,9 +100,10 @@ public class ThingStuffAboutJdo {
   	
   	// parent id
   	this.thingStuffId = thingStuffData.getStuffId();
-  	
+ 
     this.thingStuffTypeId = thingStuffData.getThingStuffTypeId();
     this.thingId = thingStuffData.getThingId();
+    
     this.value = thingStuffData.getValue();
     this.valueBol = thingStuffData.getValueBol();
     this.valueDouble = thingStuffData.getValueDouble();
@@ -118,24 +119,25 @@ public class ThingStuffAboutJdo {
     }
   }
 
-	public void setData(ThingStuffAboutJdo thingStuffData) {
-		if (thingStuffData == null) {
+	public void setData(ThingStuffAboutJdo thingStuffJdo) {
+		if (thingStuffJdo == null) {
 			return;
 		}
-		setKey(thingStuffData.getStuffId());
+		setKey(thingStuffJdo.getStuffId());
 		
 		// parent id
-  	this.thingStuffId = thingStuffData.getStuffId();
+  	this.thingStuffId = thingStuffJdo.getStuffId();
+  	
+    this.thingStuffTypeId = thingStuffJdo.getThingStuffTypeId();
+    this.thingId = thingStuffJdo.getThingId();
+    
+    this.value = thingStuffJdo.getValue();
+    this.valueBol = thingStuffJdo.getValueBol();
+    this.valueDouble = thingStuffJdo.getValueDouble();
+    this.valueLong = thingStuffJdo.getValueInt();
 
-    this.thingStuffTypeId = thingStuffData.getThingStuffTypeId();
-    this.thingId = thingStuffData.getThingId();
-    this.value = thingStuffData.getValue();
-    this.valueBol = thingStuffData.getValueBol();
-    this.valueDouble = thingStuffData.getValueDouble();
-    this.valueLong = thingStuffData.getValueInt();
-
-    this.startOf = thingStuffData.getStartOf();
-    this.endOf = thingStuffData.getEndOf();
+    this.startOf = thingStuffJdo.getStartOf();
+    this.endOf = thingStuffJdo.getEndOf();
     
     if (thingStuffAboutIdKey != null && thingStuffAboutIdKey.getId() > 0) {
       this.dateUpdated = new Date();
@@ -145,11 +147,9 @@ public class ThingStuffAboutJdo {
   }
   
 	private void setKey(long id) {
-		
 	  if (id > 0) {
 	  	thingStuffAboutIdKey = getKey(id);
 	  }
-	 
   }
 
   public long save(ThingStuffData thingStuffData) {
@@ -161,7 +161,7 @@ public class ThingStuffAboutJdo {
       tx.begin();
       
       if (thingStuffAboutIdKey != null && thingStuffAboutIdKey.getId() > 0) { // update
-        ThingStuffAboutJdo update = pm.getObjectById(ThingStuffAboutJdo.class, thingStuffAboutIdKey);
+        ThingStuffAboutJdo update = pm.getObjectById(ThingStuffAboutJdo.class, thingStuffAboutIdKey.getId());
         update.setData(thingStuffData);
         this.thingStuffAboutIdKey = update.thingStuffAboutIdKey;
         
@@ -209,18 +209,24 @@ public class ThingStuffAboutJdo {
     return thingStuff;
   }
   
+  /**
+   * get stuff about - by stuffId(parent)
+   * @param filter
+   * @return
+   */
   public ThingStuffData[] query(ThingStuffFilterData filter) {
     
   	// TODO - add this to where
     long thingId = filter.thingId;
     
-    long thingStuffAboutId = filter.thingStuffAboutId;
+    // parent id
+    long thingStuffId = filter.thingStuffId;
     
     ArrayList<ThingStuffAboutJdo> aT = new ArrayList<ThingStuffAboutJdo>();
 
     String qfilter = null;
-    if (filter.thingStuffAboutId > 0) {
-      qfilter = "thingStuffAboutId==" + thingStuffAboutId + "";
+    if (filter.thingStuffId > 0) {
+      qfilter = "thingStufId==" + thingStuffId + "";
     }
     
     PersistenceManager pm = sp.getPersistenceManager();
@@ -279,12 +285,15 @@ public class ThingStuffAboutJdo {
           tsja.getStuffId(),
           tsja.getStuffAboutId(),
           tsja.getStuffTypeId(), 
+          
           tsja.getValue(), 
           tsja.getValueBol(), 
           tsja.getValueDouble(),
           tsja.getValueInt(), 
+          
           tsja.getStartOf(),
           tsja.getEndOf(), 
+          
           tsja.getDateCreated(),
           tsja.getDateUpdated());
     	
@@ -316,6 +325,7 @@ public class ThingStuffAboutJdo {
   		r[i].valueBol = tsd[i].getValueBol();
   		r[i].valueDouble = tsd[i].getValueDouble();
   		r[i].valueLong = tsd[i].getValueLong();
+  		
   		r[i].startOf = tsd[i].getStartOf();
   		r[i].endOf = tsd[i].getEndOf();
   		

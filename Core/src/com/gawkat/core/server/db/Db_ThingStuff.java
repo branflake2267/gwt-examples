@@ -13,35 +13,49 @@ public class Db_ThingStuff {
 
   private ServerPersistence sp = null;
   
-	private ThingStuffJdo dbThingJdo;
+	private ThingStuffJdo dbThingStuffJdo;
 
-	private ThingStuffAboutJdo dbThingAboutJdo;
+	private ThingStuffAboutJdo dbThingStuffAboutJdo;
   
   public Db_ThingStuff(ServerPersistence sp) {
     this.sp = sp;
-    dbThingJdo = new ThingStuffJdo(sp);
-    dbThingAboutJdo = new ThingStuffAboutJdo(sp);
+    dbThingStuffJdo = new ThingStuffJdo(sp);
+    dbThingStuffAboutJdo = new ThingStuffAboutJdo(sp);
   }
   
   public ThingStuffsData getThingStuffData(OAuthTokenData accessToken, ThingStuffFilterData filter) {
     
+  	// get stuff
   	ThingStuffJdo tsj = new ThingStuffJdo(sp);
     ThingStuffData[] thingStuffData = tsj.query(filter);
     
+    // get stuff about
     if (thingStuffData != null) {
-      for (int i=0; i < thingStuffData.length; i++) {
-      	long id = thingStuffData[i].getStuffId();
-      	ThingStuffFilterData f = new ThingStuffFilterData();
-      	f.thingId = thingStuffData[i].getThingId();
-      	f.thingStuffAboutId = id;
-      	ThingStuffData[] tsds = dbThingAboutJdo.query(f);
-      	ThingStuffsData tss = new ThingStuffsData();
-      	tss.total = tsds.length;
-      	tss.thingStuffData = tsds;
-      	thingStuffData[i].setThingStuffsAbout(tss);
+      
+    	for (int i=0; i < thingStuffData.length; i++) {
+      	
+    		// parent id
+      	long stuffId = thingStuffData[i].getStuffId();
+      	
+      	// setup filter (of parent id)
+      	ThingStuffFilterData filterParent = new ThingStuffFilterData();
+      	filterParent.thingId = thingStuffData[i].getThingId();
+      	filterParent.thingStuffId = stuffId;
+      	
+      	// get the about stuff (by parentId StuffId)
+      	ThingStuffData[] thingStuffDataAbout = dbThingStuffAboutJdo.query(filterParent);
+      	
+      	// setup thing About Stuffs and set it in stuff
+      	ThingStuffsData thingStuffsDataAbout = new ThingStuffsData();
+      	thingStuffsDataAbout.total = thingStuffDataAbout.length;
+      	thingStuffsDataAbout.thingStuffData = thingStuffDataAbout;
+      
+      	thingStuffData[i].setThingStuffsAbout(thingStuffsDataAbout);
       }
+    	
     }
     
+    // get the thing types to choose from
     Db_ThingStuffType t = new Db_ThingStuffType(sp);
     ThingStuffTypesData thingStuffTypesData = t.getThingStuffTypes(accessToken, null); // TODO filter ?
     
@@ -75,25 +89,27 @@ public class Db_ThingStuff {
   		return true;
   	}
   	
-    long id = dbThingJdo.save(thingStuffData);
+    long stuffId = dbThingStuffJdo.save(thingStuffData);
     
     // ***** below this will save the multi dem About
     
     // save about the thingStuffs
-    ThingStuffsData thingStuffsData = thingStuffData.getThingStuffsAbout();
+    ThingStuffsData thingStuffsAboutData = thingStuffData.getThingStuffsAbout();
 
-    if (thingStuffsData == null || thingStuffsData.getThingStuffData() == null) {
+    if (thingStuffsAboutData == null || thingStuffsAboutData.getThingStuffData() == null) {
     	return true;
     }
     
-    ThingStuffData[] tsds = thingStuffsData.getThingStuffData();
+    ThingStuffData[] thingStuffDataAbout = thingStuffsAboutData.getThingStuffData();
     
     // save thingstuff About
-    for (int i=0; i < tsds.length; i++) {
+    for (int i=0; i < thingStuffDataAbout.length; i++) {
     	
-    	tsds[i].setStuffAboutId(id);
+    	// set the parent id
+    	thingStuffDataAbout[i].setStuffId(stuffId);
     	
-    	dbThingAboutJdo.save(tsds[i]);
+    	// save
+    	dbThingStuffAboutJdo.save(thingStuffDataAbout[i]);
     	
     }
     
@@ -108,7 +124,7 @@ public class Db_ThingStuff {
    * @return
    */
   public boolean deleteThingStuffData(OAuthTokenData accessToken, long thingStuffId) {
-    boolean b = dbThingJdo.delete(sp, thingStuffId);
+    boolean b = dbThingStuffJdo.delete(thingStuffId);
     return b;
   }
   
