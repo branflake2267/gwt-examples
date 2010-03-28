@@ -38,12 +38,12 @@ public class Db_ThingStuff {
       	long stuffId = thingStuffData[i].getStuffId();
       	
       	// setup filter (of parent id)
-      	ThingStuffFilterData filterParent = new ThingStuffFilterData();
-      	filterParent.thingId = thingStuffData[i].getThingId();
-      	filterParent.thingStuffId = stuffId;
+      	ThingStuffFilterData filterByParent = new ThingStuffFilterData();
+      	filterByParent.thingId = thingStuffData[i].getThingId();
+      	filterByParent.thingStuffId = stuffId;
       	
       	// get the about stuff (by parentId StuffId)
-      	ThingStuffData[] thingStuffDataAbout = dbThingStuffAboutJdo.query(filterParent);
+      	ThingStuffData[] thingStuffDataAbout = dbThingStuffAboutJdo.query(filterByParent);
       	
       	// setup thing About Stuffs and set it in stuff
       	ThingStuffsData thingStuffsDataAbout = new ThingStuffsData();
