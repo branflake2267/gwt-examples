@@ -25,7 +25,7 @@ public class Db_ThingStuff {
   
   public ThingStuffsData getThingStuffData(OAuthTokenData accessToken, ThingStuffFilterData filter) {
     
-  	// get stuff
+  	// get stuff - set filter up
   	ThingStuffJdo tsj = new ThingStuffJdo(sp);
     ThingStuffData[] thingStuffData = tsj.query(filter);
     
