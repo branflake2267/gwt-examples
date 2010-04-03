@@ -26,6 +26,13 @@ Stuff I like to do to get the job done
  * use Integer instead of int so -1,0,1 and NULL
  * use long for ids not Long 
 
+== Panel Names ==
+ * main widget pWidget - this is my favorite, makes it easy when hitting control space
+ * other panels pPanel, fpList, pList, hpList
+
+== Button names ==
+ * bMyButton easy for control space in eclipse
+
 == Clear Namespace ==
  * use self descriptive namespace on packages, classes, methods, and parameters/fields etc.
  * use gives longterm ability to reverse engineer own code
