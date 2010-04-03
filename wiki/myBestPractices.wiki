@@ -6,15 +6,14 @@
 = About My Best Practices =
 Stuff I like to do to get the job done
 
-
-=== Data Transport ===
+== Data Transport ==
  * Listing data in rows - for instance employee
  - employees main object - contains
   * employee types[] objects
   * employee[] objects
 
-=== Widget States ===
+== Widget States ==
  * containing widget states in methods
 
-=== Use Null ===
+== Use Null ==
  * use null instead of empty
