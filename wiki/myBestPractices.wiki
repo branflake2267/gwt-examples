@@ -30,6 +30,7 @@ Stuff I like to do to get the job done
  * use self descriptive namespace on packages, classes, methods, and parameters/fields etc.
  * use gives longterm ability to reverse engineer own code
  * use gives short timespan to digest pattern when beginning on code
+ * exception to that in the method after the defined object, short abbreviations are nice, as long as its clear.
 
 == Comment Everything!!!!!!! ==
  * This is best for short stents in weekend program due to the digestion of the pattern
