@@ -33,3 +33,4 @@ Stuff I like to do to get the job done
 
 == Comment Everything!!!!!!! ==
  * This is best for short stents in weekend program due to the digestion of the pattern
+ * exception to the namespace of self descriptive methods...
