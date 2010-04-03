@@ -15,3 +15,6 @@ Stuff I like to do to get the job done
 
 === Widget States ===
  * containing widget states in methods
+
+=== Use Null ===
+ * use null instead of empty
