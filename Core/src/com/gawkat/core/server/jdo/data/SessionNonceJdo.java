@@ -106,7 +106,7 @@ public class SessionNonceJdo {
       Collection<SessionNonceJdo> c = (Collection<SessionNonceJdo>) q.execute();
       Iterator<SessionNonceJdo> iter = c.iterator();
       while (iter.hasNext()) {
-        found = true;
+      	found = true;
       }
 
       tx.commit();

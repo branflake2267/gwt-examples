@@ -29,314 +29,314 @@ public class ThingTypeJdo {
 
 	@NotPersistent
 	private ServerPersistence sp = null;
-	
-  // default required thing types - note these are in a couple other classes, probably should consolidate these
-  public static final int TYPE_APPLICATION = 1;
-  public static final int TYPE_USER = 2;
-  public static final int TYPE_GROUP = 3;
-  
-  // identity
-  @PrimaryKey
-  @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-  private Key thingTypeIdKey;
-  
-  // type name
-  @Persistent
-  private String name;
-  
-  // when did this start in time
-  @Persistent
-  private Date startOf = null;
-  
-  // when did this end in time
-  @Persistent
-  private Date endOf = null;
-  
-  // when this object was created
-  @Persistent
-  private Date dateCreated;
-  
-  // when this object was last updated
-  @Persistent
-  private Date dateUpdated;
-  
-  // who created this object
-  @Persistent
-  private long createdByThingId;
-  
-  // who last updated this object
-  @Persistent
-  private long updatedByThingId;
-	
-  /**
-   * constructor
-   */
-  public ThingTypeJdo(ServerPersistence sp) {
-  	this.sp = sp;
-  }
 
-  /**
-   * set data
-   * 
-   * @param thingTypeData
-   */
-  public void setData(ThingTypeData thingTypeData) {
-  	
-  	if (thingTypeData == null) {
-  		return;
-  	}
-  	
-  	setKey(thingTypeData.getId());
-   
-  	this.name = thingTypeData.getName();
-   
-    this.startOf = thingTypeData.getStartOf();
-    this.endOf = thingTypeData.getEndOf();
-    
-    if (thingTypeIdKey != null && thingTypeIdKey.getId() > 0) {
-    	dateUpdated = new Date();
-    } else {
-    	dateCreated = new Date();
-    }
-  }
-  
-  private void setKey(long id) {
-  	if (id > 0) {
-  		thingTypeIdKey = KeyFactory.createKey(ThingTypeJdo.class.getSimpleName(), id);
-  	}
-  }
-    
-  /**
-   * can only insert unique names
-   * 
-   * @param name
-   */
-  public void insertUnique() {
-    this.dateCreated = new Date();
-    
-    // don't insert if name already exists
-    ThingTypeJdo[] tt = query(name);
-    if (tt != null && tt.length > 0) {
-      return;
-    }
-    
-    PersistenceManager pm = sp.getPersistenceManager();
-    Transaction tx = pm.currentTransaction();
-    try {
-      tx.begin();
-      pm.makePersistent(this);
-      tx.commit();
-    } finally {
-      if (tx.isActive()) {
-          tx.rollback();
-      }
-      pm.close();
-    }
-    
-    System.out.println("saved: thingTypeId:" + getId());
-  }
-  
-  /**
-   * insert new 
-   */
-  public void insert() {
-    this.dateCreated = new Date();
-     
-    PersistenceManager pm = sp.getPersistenceManager();
-    Transaction tx = pm.currentTransaction();
-    try {
-      tx.begin();
-      pm.makePersistent(this);
-      tx.commit();
-    } finally {
-      if (tx.isActive()) {
-          tx.rollback();
-      }
-      pm.close();
-    }
-    
-    System.out.println("saved: thingTypeId:" + getId());
-  }
-  
-  /**
-   * query thingType
-   * 
-   * @param name
-   * @return
-   */
-  public ThingTypeJdo[] query(String name) {
-    
-    ArrayList<ThingTypeJdo> aT = new ArrayList<ThingTypeJdo>();
-    
-    String qfilter = "name==\"" + name + "\"";
-    
-    PersistenceManager pm = sp.getPersistenceManager();
-    Transaction tx = pm.currentTransaction();
-    try {
-      tx.begin();
+	// default required thing types - note these are in a couple other classes, probably should consolidate these
+	public static final int TYPE_APPLICATION = 1;
+	public static final int TYPE_USER = 2;
+	public static final int TYPE_GROUP = 3;
 
-      Extent<ThingTypeJdo> e = pm.getExtent(ThingTypeJdo.class, true);
-      Query q = pm.newQuery(e, qfilter);
-      q.execute();
+	// identity
+	@PrimaryKey
+	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+	private Key thingTypeIdKey;
 
-      Collection<ThingTypeJdo> c = (Collection<ThingTypeJdo>) q.execute();
-      Iterator<ThingTypeJdo> iter = c.iterator();
-      while (iter.hasNext()) {
-        ThingTypeJdo t = (ThingTypeJdo) iter.next();
-        aT.add(t);
-      }
+	// type name
+	@Persistent
+	private String name;
 
-      tx.commit();
-      q.closeAll();
-    } catch (Exception e) {
-      e.printStackTrace();
-    } finally {
-      if (tx.isActive()) {
-        tx.rollback();
-      }
-      pm.close();
-    }
-    
-    ThingTypeJdo[] r = null;
-    if (aT.size() > 0) {
-      r = new ThingTypeJdo[aT.size()];
-      aT.toArray(r);
-    }
-    
-    return r;
-  }
-  
-  /**
-   * query thingType by filter
-   * 
-   * @param filter
-   * @return
-   */
-  public ThingTypeJdo[] query(ThingTypeFilterData filter) {
+	// when did this start in time
+	@Persistent
+	private Date startOf = null;
 
-    // TODO configure drill to setup filters
+	// when did this end in time
+	@Persistent
+	private Date endOf = null;
 
-    ArrayList<ThingTypeJdo> aT = new ArrayList<ThingTypeJdo>();
+	// when this object was created
+	@Persistent
+	private Date dateCreated;
 
-    PersistenceManager pm = sp.getPersistenceManager();
-    Transaction tx = pm.currentTransaction();
-    try {
-      tx.begin();
+	// when this object was last updated
+	@Persistent
+	private Date dateUpdated;
 
-      // TODO build filter
-      Extent<ThingTypeJdo> e = pm.getExtent(ThingTypeJdo.class, true);
-      Query q = pm.newQuery(e);
-      //q.setRange(0, 10); // TODO - finish range
-      q.execute();
-      
-      Collection<ThingTypeJdo> c = (Collection<ThingTypeJdo>) q.execute();
-      Iterator<ThingTypeJdo> iter = c.iterator();
-      while (iter.hasNext()) {
-        ThingTypeJdo t = (ThingTypeJdo) iter.next();
-        aT.add(t);
-      }
+	// who created this object
+	@Persistent
+	private long createdByThingId;
 
-      tx.commit();
-      q.closeAll();
-    } catch (Exception e) {
-      e.printStackTrace();
-    } finally {
-      if (tx.isActive()) {
-        tx.rollback();
-      }
-      pm.close();
-    }
+	// who last updated this object
+	@Persistent
+	private long updatedByThingId;
 
-    ThingTypeJdo[] r = null;
-    if (aT.size() > 0) {
-      r = new ThingTypeJdo[aT.size()];
-      aT.toArray(r);
-    }
-    return r;
-  }
-  
-  public boolean deleteThingTypeDataJdo(ThingTypeData thingTypeData) {
-    
-    ThingTypeJdo ttj = new ThingTypeJdo(sp);
-    ttj.setData(thingTypeData);
-    
-    PersistenceManager pm = sp.getPersistenceManager();
-    Transaction tx = pm.currentTransaction();
-    boolean b = false;
-    try {
-      tx.begin();
+	/**
+	 * constructor
+	 */
+	public ThingTypeJdo(ServerPersistence sp) {
+		this.sp = sp;
+	}
 
-      ThingTypeJdo ttj2 = (ThingTypeJdo) pm.getObjectById(ThingTypeJdo.class, ttj.getId());
-      pm.deletePersistent(ttj2);
-      
-      tx.commit();
-      b = true;
-    } catch (Exception e) {
-      e.printStackTrace();
-      b = false;
-    } finally {
-      if (tx.isActive()) {
-        tx.rollback();
-        b = false;
-      }
-      pm.close();
-    }
-    
-    return b;
-  }
-  
-  /**
-   * convert from jdo to data object type for rpc transit
-   * 
-   * @param thingTypeJdo
-   * @return
-   */
-  public static ThingTypeData[] convert(ThingTypeJdo[] thingTypeJdo) {
-  	if (thingTypeJdo == null) {
-  		return null;
-  	}
-    ThingTypeData[] r = new ThingTypeData[thingTypeJdo.length];
-    for (int i=0; i < thingTypeJdo.length; i++) {
-      r[i] = new ThingTypeData();
-      r[i].setData(
-      		thingTypeJdo[i].getId(), 
-      		thingTypeJdo[i].getName(),
-      		thingTypeJdo[i].getStartOf(),
-      		thingTypeJdo[i].getEndOf(),
-      		thingTypeJdo[i].getDateCreated(),
-      		thingTypeJdo[i].getDateUpdated());
-    }
-    return r;
-  }
-  
-  public Long getId() {
-    return thingTypeIdKey.getId();
-  }
-  
-  public String getName() {
-    return this.name;
-  }
-  
-  public Date getEndOf() {
-	  return endOf;
-  }
+	/**
+	 * set data
+	 * 
+	 * @param thingTypeData
+	 */
+	public void setData(ThingTypeData thingTypeData) {
+
+		if (thingTypeData == null) {
+			return;
+		}
+
+		setKey(thingTypeData.getId());
+
+		this.name = thingTypeData.getName();
+
+		this.startOf = thingTypeData.getStartOf();
+		this.endOf = thingTypeData.getEndOf();
+
+		if (thingTypeIdKey != null && thingTypeIdKey.getId() > 0) {
+			dateUpdated = new Date();
+		} else {
+			dateCreated = new Date();
+		}
+	}
+
+	private void setKey(long id) {
+		if (id > 0) {
+			thingTypeIdKey = KeyFactory.createKey(ThingTypeJdo.class.getSimpleName(), id);
+		}
+	}
+
+	/**
+	 * can only insert unique names
+	 * 
+	 * @param name
+	 */
+	public void insertUnique() {
+		this.dateCreated = new Date();
+
+		// don't insert if name already exists
+		ThingTypeJdo[] tt = query(name);
+		if (tt != null && tt.length > 0) {
+			return;
+		}
+
+		PersistenceManager pm = sp.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+			pm.makePersistent(this);
+			tx.commit();
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+
+		System.out.println("saved: thingTypeId:" + getId());
+	}
+
+	/**
+	 * insert new 
+	 */
+	public void insert() {
+		this.dateCreated = new Date();
+
+		PersistenceManager pm = sp.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+			pm.makePersistent(this);
+			tx.commit();
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+
+		System.out.println("saved: thingTypeId:" + getId());
+	}
+
+	/**
+	 * query thingType
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public ThingTypeJdo[] query(String name) {
+
+		ArrayList<ThingTypeJdo> aT = new ArrayList<ThingTypeJdo>();
+
+		String qfilter = "name==\"" + name + "\"";
+
+		PersistenceManager pm = sp.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+
+			Extent<ThingTypeJdo> e = pm.getExtent(ThingTypeJdo.class, true);
+			Query q = pm.newQuery(e, qfilter);
+			q.execute();
+
+			Collection<ThingTypeJdo> c = (Collection<ThingTypeJdo>) q.execute();
+			Iterator<ThingTypeJdo> iter = c.iterator();
+			while (iter.hasNext()) {
+				ThingTypeJdo t = (ThingTypeJdo) iter.next();
+				aT.add(t);
+			}
+
+			tx.commit();
+			q.closeAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+
+		ThingTypeJdo[] r = null;
+		if (aT.size() > 0) {
+			r = new ThingTypeJdo[aT.size()];
+			aT.toArray(r);
+		}
+
+		return r;
+	}
+
+	/**
+	 * query thingType by filter
+	 * 
+	 * @param filter
+	 * @return
+	 */
+	public ThingTypeJdo[] query(ThingTypeFilterData filter) {
+
+		// TODO configure drill to setup filters
+
+		ArrayList<ThingTypeJdo> aT = new ArrayList<ThingTypeJdo>();
+
+		PersistenceManager pm = sp.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+
+			// TODO build filter
+			Extent<ThingTypeJdo> e = pm.getExtent(ThingTypeJdo.class, true);
+			Query q = pm.newQuery(e);
+			//q.setRange(0, 10); // TODO - finish range
+			q.execute();
+
+			Collection<ThingTypeJdo> c = (Collection<ThingTypeJdo>) q.execute();
+			Iterator<ThingTypeJdo> iter = c.iterator();
+			while (iter.hasNext()) {
+				ThingTypeJdo t = (ThingTypeJdo) iter.next();
+				aT.add(t);
+			}
+
+			tx.commit();
+			q.closeAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+
+		ThingTypeJdo[] r = null;
+		if (aT.size() > 0) {
+			r = new ThingTypeJdo[aT.size()];
+			aT.toArray(r);
+		}
+		return r;
+	}
+
+	public boolean deleteThingTypeDataJdo(ThingTypeData thingTypeData) {
+
+		ThingTypeJdo ttj = new ThingTypeJdo(sp);
+		ttj.setData(thingTypeData);
+
+		PersistenceManager pm = sp.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		boolean b = false;
+		try {
+			tx.begin();
+
+			ThingTypeJdo ttj2 = (ThingTypeJdo) pm.getObjectById(ThingTypeJdo.class, ttj.getId());
+			pm.deletePersistent(ttj2);
+
+			tx.commit();
+			b = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			b = false;
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+				b = false;
+			}
+			pm.close();
+		}
+
+		return b;
+	}
+
+	/**
+	 * convert from jdo to data object type for rpc transit
+	 * 
+	 * @param thingTypeJdo
+	 * @return
+	 */
+	public static ThingTypeData[] convert(ThingTypeJdo[] thingTypeJdo) {
+		if (thingTypeJdo == null) {
+			return null;
+		}
+		ThingTypeData[] r = new ThingTypeData[thingTypeJdo.length];
+		for (int i=0; i < thingTypeJdo.length; i++) {
+			r[i] = new ThingTypeData();
+			r[i].setData(
+					thingTypeJdo[i].getId(), 
+					thingTypeJdo[i].getName(),
+					thingTypeJdo[i].getStartOf(),
+					thingTypeJdo[i].getEndOf(),
+					thingTypeJdo[i].getDateCreated(),
+					thingTypeJdo[i].getDateUpdated());
+		}
+		return r;
+	}
+
+	public Long getId() {
+		return thingTypeIdKey.getId();
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public Date getEndOf() {
+		return endOf;
+	}
 
 	public Date getStartOf() {
-	  return startOf;
-  }
-	
+		return startOf;
+	}
+
 	public Date getDateCreated() {
 		return dateCreated;
 	}
-	
+
 	public Date getDateUpdated() {
 		return dateUpdated;
 	}
-	
+
 	public long getCreatedBy() {
 		return createdByThingId;
 	}
-	
+
 	public long getUpdatedBy() {
 		return updatedByThingId;
 	}

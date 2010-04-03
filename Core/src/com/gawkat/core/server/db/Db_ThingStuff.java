@@ -17,6 +17,11 @@ public class Db_ThingStuff {
 
 	private ThingStuffAboutJdo dbThingStuffAboutJdo;
   
+	/**
+	 * construtor
+	 * 
+	 * @param sp - session server persitence 
+	 */
   public Db_ThingStuff(ServerPersistence sp) {
     this.sp = sp;
     dbThingStuffJdo = new ThingStuffJdo(sp);
@@ -25,6 +30,8 @@ public class Db_ThingStuff {
   
   public ThingStuffsData getThingStuffData(OAuthTokenData accessToken, ThingStuffFilterData filter) {
     
+  	// TODO authorization
+  	
   	// get stuff - set filter up
   	ThingStuffJdo tsj = new ThingStuffJdo(sp);
     ThingStuffData[] thingStuffData = tsj.query(filter);
@@ -69,6 +76,8 @@ public class Db_ThingStuff {
   
   public ThingStuffsData saveThingStuffData(OAuthTokenData accessToken, ThingStuffFilterData filter, ThingStuffData[] thingStuffData) {
     
+  	// TODO authorization
+  	
   	if (thingStuffData == null) {
   		return null;
   	}
@@ -90,6 +99,7 @@ public class Db_ThingStuff {
   	}
   	
     long stuffId = dbThingStuffJdo.save(thingStuffData);
+    
     
     // ***** below this will save the multi dem About
     
@@ -124,7 +134,15 @@ public class Db_ThingStuff {
    * @return
    */
   public boolean deleteThingStuffData(OAuthTokenData accessToken, long thingStuffId) {
+  	
+  	// TODO authorization
+  	
+  	// delete stuff
     boolean b = dbThingStuffJdo.delete(thingStuffId);
+    
+    // delete stuff children
+    b = dbThingStuffAboutJdo.deleteByParent(thingStuffId);
+    
     return b;
   }
   
@@ -136,6 +154,9 @@ public class Db_ThingStuff {
    * @return
    */
   public boolean deleteThingStuffAboutData(OAuthTokenData accessToken, long thingStuffAboutId) {
+  	
+  	// TODO authorization
+  	
   	ThingStuffAboutJdo tsaj = new ThingStuffAboutJdo(sp);
   	boolean b = tsaj.delete(thingStuffAboutId);
     return b;
