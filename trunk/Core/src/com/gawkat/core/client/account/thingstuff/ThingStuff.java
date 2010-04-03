@@ -37,10 +37,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.server.rpc.RPC;
 
 public class ThingStuff extends Composite implements ClickHandler, ChangeHandler, MouseOverHandler, MouseOutHandler {
-  
-	public static final int WIDGETTYPE_THINGSTUFF = 1;
-	public static final int WIDGETTYPE_THINGSTUFFABOUT = 2;
-	
+  	
   private ClientPersistence cp = null;
   
   private RpcCoreServiceAsync rpc;
@@ -50,6 +47,8 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   private Row pWidget = new Row();
 
   private DeleteDialog wdelete = new DeleteDialog();
+  
+  private FlowPanel pId = new FlowPanel();
   
   private ListBox lbTypes = new ListBox();
   
@@ -74,15 +73,17 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   // what is the rank/order/index of this widget in comparison to the to the others in the list
 	private int index = 0;
 	
-	private int widgetType = WIDGETTYPE_THINGSTUFF;
+	private int widgetType = 0;
 
-  /**
-   * constructor - setup the widget
-   * 
-   * @param cp
-   */
-  public ThingStuff(ClientPersistence cp) {
+	/**
+	 * consturctor - init widget
+	 * 
+	 * @param cp
+	 * @param widgetType - what type of widget, thingstuff or thingabout stuff
+	 */
+  public ThingStuff(ClientPersistence cp, int widgetType) {
     this.cp = cp;
+    this.widgetType = widgetType;
     
     // inputs of stuff, and then add another group of stuffs
     VerticalPanel vpInput = new VerticalPanel();
@@ -91,6 +92,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     HorizontalPanel hpButtons = new HorizontalPanel();
     hpButtons.add(bDelete);
     
+    pWidget.add(pId);
     pWidget.add(lbTypes);
     pWidget.add(vpInput);
     pWidget.add(hpButtons);
@@ -104,7 +106,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     
     rpc = RpcCore.initRpc();
     
-    pWidget.addStyleName("test2");
+    //pWidget.addStyleName("test2");
   }
   
   /**
@@ -129,6 +131,8 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     	thingStuffData = new ThingStuffData();
     }
     
+    drawId();
+    
     // draw choices
     drawListBoxTypes();
     
@@ -136,7 +140,27 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     drawInput();
   }
   
-  /**
+  private void drawId() {
+  	pId.clear();
+  	long id = 0;
+  	if (thingStuffData.getStuffId() > 0 && widgetType == ThingStuffs.WIDGETTYPE_THINGSTUFF) {
+  		id = thingStuffData.getStuffId();
+  	} else if (thingStuffData.getStuffAboutId() > 0 && widgetType == ThingStuffs.WIDGETTYPE_THINGSTUFFABOUT) {
+  		id = thingStuffData.getStuffAboutId();
+  	}
+  	
+  	String s = "";
+  	if (id != 0) {
+  		s = Long.toString(id);
+  	} else {
+  		s = "&nbsp;&nbsp;";
+  	}
+  	
+  	HTML h = new HTML(s);
+  	pId.add(h);
+  }
+
+	/**
    * draw choices of types
    */
   private void drawListBoxTypes() {
@@ -489,15 +513,18 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
         
         int changeEvent = dd.getChangeEvent();
         
-        if (changeEvent == EventManager.DELETE_YES && thingStuffData.getStuffId() > 0) {
-        	
-        	if (widgetType == WIDGETTYPE_THINGSTUFF) {
-        		deleteRpcThingStuff(thingStuffData.getStuffId());
+        if (changeEvent == EventManager.DELETE_YES && 
+        		thingStuffData.getStuffId() > 0 && 
+        		widgetType == ThingStuffs.WIDGETTYPE_THINGSTUFF) {
+        
+        	deleteRpcThingStuff(thingStuffData.getStuffId());
         		
-        	} else if (widgetType == WIDGETTYPE_THINGSTUFFABOUT) {
-        		deleteRpcThingStuffAbout(thingStuffData.getStuffId());
-        	}
-          
+        } else if (changeEvent == EventManager.DELETE_YES && 
+        		thingStuffData.getStuffAboutId() > 0 && 
+        		widgetType == ThingStuffs.WIDGETTYPE_THINGSTUFFABOUT) {
+        	
+        	deleteRpcThingStuffAbout(thingStuffData.getStuffAboutId());
+        	
         } else {
           deleteIt(true);
         }

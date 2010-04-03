@@ -17,6 +17,10 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Grid;
@@ -27,7 +31,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ThingEdit extends Composite implements ClickHandler, ChangeHandler {
+public class ThingEdit extends Composite implements ClickHandler, ChangeHandler, MouseOverHandler, MouseOutHandler {
   
   private ClientPersistence cp = null;
   
@@ -57,6 +61,7 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
     
     wStuff = new ThingStuffs(cp);
     wStuff.setWidgetType(ThingStuffs.WIDGETTYPE_THINGSTUFF);
+    
     wStuffAbout = new ThingStuffs(cp);
     wStuffAbout.setWidgetType(ThingStuffs.WIDGETTYPE_THINGSTUFFABOUT);
     
@@ -77,9 +82,12 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
     
     wStuff.addChangeHandler(this);
     wStuffAbout.addChangeHandler(this);
+    wStuffAbout.addMouseOutHandler(this);
     
     // don't observe thing stuff mouse overs when in about
     wStuffAbout.ignoreMouseOver(true);
+    
+    
   }
   
   public void setData(ThingData thingData, ThingTypesData thingTypesData) {
@@ -88,9 +96,13 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
   }
   
   /**
-   * inital draw
+   * inital draw - get stuff from rpc
    */
   public void draw() {
+  	
+  	wStuff.clear();
+  	wStuffAbout.clear();
+  	
     drawTop();
     
     ThingStuffFilterData filter = new ThingStuffFilterData();
@@ -119,6 +131,11 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
   	this.thingsStuffData = thingData.getThingStuffsData();
   	
   	wStuff.draw(thingData, thingData.getThingStuffsData());
+  	
+  	// TODO - redraw the index we are on in for waboutstuff after save
+  	// clear for now
+  	wStuffAbout.clear();
+  	
   }
   
   /**
@@ -233,6 +250,14 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
   	wStuff.setAboutThingStuffData(index, tsd);
   }
   
+  private void setUpdateAboutStuff() {
+  	
+  	System.out.println("ThingEdit.setUpdateAboutStuff(): updating about stuff");
+  	
+  	editingIndex = wStuff.getEditingIndex();
+		updateAboutStuff(editingIndex);
+  }
+  
   public void onClick(ClickEvent event) {
     
     Widget sender = (Widget) event.getSource();
@@ -251,8 +276,7 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
   		int changeEvent = wStuff.getChangeEvent();
  
   		if (changeEvent == EventManager.ABOUTTHINGSTUFF_PREMOUSEOVER) { // thing stuff moused over, lets update before we change the data
-  			editingIndex = wStuff.getEditingIndex();
-  			updateAboutStuff(editingIndex);
+  			setUpdateAboutStuff();
   			
   		} else if (changeEvent == EventManager.ABOUTTHINGSTUFF_MOUSEOVER) { // this comes from mouse over int thing stuff
   			editingIndex = wStuff.getEditingIndex(); // what index was moused over
@@ -261,6 +285,28 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
   		
   	} 
   	
+  }
+ 
+	public void onMouseOver(MouseOverEvent event) {
+	  
+  	Widget sender = (Widget) event.getSource();
+  	
+  	if (sender == wStuffAbout) {
+  		
+  	}
+	  
+  }
+	
+  public void onMouseOut(MouseOutEvent event) {
+  	
+  	Widget sender = (Widget) event.getSource();
+  	
+  	if (sender == wStuffAbout) {
+  		
+  		System.out.println("ThingEdit.onMouseOut(): mouse out on wAboutStuff");
+  		
+  		setUpdateAboutStuff();
+  	}
   }
   
   private void getThingStuffRpc(ThingStuffFilterData filter) {
@@ -316,5 +362,10 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler 
 		});
 	  
   }
+
+
+
+
+
 
 }

@@ -15,6 +15,10 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
@@ -38,7 +42,7 @@ public class ThingStuffs extends Composite implements ClickHandler {
   
   private VerticalPanel pListTop = new VerticalPanel();
   private VerticalPanel pListStuff = new VerticalPanel();
-  private int[] widths = new int[3];
+  private int[] widths = new int[4];
   
   private PushButton bAdd = new PushButton("Add");
   
@@ -90,7 +94,7 @@ public class ThingStuffs extends Composite implements ClickHandler {
     
     pWidget.setStyleName("core-Account-ThingStuffs");
     
-    pWidget.addStyleName("test1");
+    //pWidget.addStyleName("test1");
   }
   
   public void draw(ThingData thingData, ThingStuffsData thingStuffsData) {
@@ -109,15 +113,19 @@ public class ThingStuffs extends Composite implements ClickHandler {
   
   private void drawTopRow() {
     pListTop.clear();
+    
+    HTML l0 = new HTML("Id");
     HTML l1 = new HTML("Name"); // drop down type
     HTML l2 = new HTML("Value"); // input box
     HTML l3 = new HTML("&nbsp;");
 
+    l0.setStyleName("core-row-top");
     l1.setStyleName("core-row-top");
     l2.setStyleName("core-row-top");
     l3.setStyleName("core-row-top");
 
     Row th = new Row();
+    th.add(l0, HorizontalPanel.ALIGN_CENTER);
     th.add(l1, HorizontalPanel.ALIGN_CENTER);
     th.add(l2, HorizontalPanel.ALIGN_CENTER);
     th.add(l3, HorizontalPanel.ALIGN_CENTER);
@@ -176,12 +184,12 @@ public class ThingStuffs extends Composite implements ClickHandler {
   }
   
   private ThingStuff addStuff(int index, ThingStuffData thingStuffData) {
-    ThingStuff t = new ThingStuff(cp);
+    ThingStuff t = new ThingStuff(cp, widgetType);
     t.setData(index, thingData, thingStuffTypesData, thingStuffData);
     pListStuff.add(t);
     
     // DEBUG
-    t.setStyleName("test4");
+    //t.setStyleName("test4");
     
     widths = Row.getMaxWidths(widths, t.getRow().getWidths());
     
@@ -190,6 +198,7 @@ public class ThingStuffs extends Composite implements ClickHandler {
       public void onChange(ChangeEvent event) {
 
         ThingStuff tt = (ThingStuff) event.getSource();
+        
         if (tt.getChangeEvent() == EventManager.THINGSTUFF_TYPECHANGE && ignoreMouseOver == false) {
           setWidths();
           
@@ -213,6 +222,9 @@ public class ThingStuffs extends Composite implements ClickHandler {
     return t;
   }
   
+  /**
+   * do some stuff beforehand
+   */
   private void setPreMouseOver() {
   	 	
   	setStyleDefault(editingIndex);
@@ -288,7 +300,7 @@ public class ThingStuffs extends Composite implements ClickHandler {
   		return;
   	}
   	
-  	System.out.println("ThingStuffs.setAboutThingStuffData in index (left) " + index);
+  	//System.out.println("ThingStuffs.setAboutThingStuffData in index (left) " + index);
   	
   	ThingStuff td = (ThingStuff) pListStuff.getWidget(index);
   	td.setAboutStuff(tsd);	
@@ -332,5 +344,16 @@ public class ThingStuffs extends Composite implements ClickHandler {
   	this.widgetType = widgetType;
   }
 
-	
+  public void clear() {
+  	pListStuff.clear();
+  }
+
+  public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
+  	return addDomHandler(handler, MouseOverEvent.getType());
+  }
+  
+  public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
+  	return addDomHandler(handler, MouseOutEvent.getType());
+  }
+  
 }

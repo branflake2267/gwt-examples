@@ -74,6 +74,7 @@ public class Things extends Composite implements ClickHandler {
   }
   
   public void draw() {
+  	drawEdit(false);
     getThingsRpc();
   }
   
@@ -184,8 +185,10 @@ public class Things extends Composite implements ClickHandler {
   
   private void save() {
     
+  	// when edit mode is on, skip the saving of the rest of the things
     if (wEdit.isVisible() == true) {
       wEdit.save();
+      return;
     }
 
     int wc = pList.getWidgetCount();
@@ -236,8 +239,10 @@ public class Things extends Composite implements ClickHandler {
     Widget sender = (Widget) event.getSource();
     if (sender == bAdd) {
       add();
+      
     } else if (sender == bSave) {
       save();
+      
     } else if (sender == bBack) {
       drawEdit(false);
     }

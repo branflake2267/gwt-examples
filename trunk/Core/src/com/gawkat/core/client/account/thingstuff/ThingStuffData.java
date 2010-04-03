@@ -32,6 +32,10 @@ public class ThingStuffData implements IsSerializable {
   // store in integer format (long), can represent null for nothing
   private Long valueLong;
   
+  //TODO - could stick this in valueLong, but wondering how to deal with timezone
+  // store in date formate (milliseconds)
+  private Date valueDate;
+  
   // define the link type - adjetives of the relationship
   private ThingStuffsData thingStuffsAbout;
   
