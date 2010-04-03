@@ -202,7 +202,7 @@ public class ThingStuffs extends Composite implements ClickHandler {
         if (tt.getChangeEvent() == EventManager.THINGSTUFF_TYPECHANGE && ignoreMouseOver == false) {
           setWidths();
           
-        } else if (tt.getChangeEvent() == EventManager.ABOUTTHINGSTUFF_MOUSEOVER && ignoreMouseOver == false) { // tell thingedit to do something
+        } else if (tt.getChangeEvent() == EventManager.THINGSTUFFABOUT_MOUSEOVER && ignoreMouseOver == false) { // tell thingedit to do something
         	
         	// save the previous modifications
         	setPreMouseOver(); 
@@ -212,6 +212,8 @@ public class ThingStuffs extends Composite implements ClickHandler {
         	editingIndexThis_AboutThingStuffData = tt.getThingStuffData();
         	setMouseOver(tt.getChangeEvent());
      
+        } else if (tt.getChangeEvent() == EventManager.THINGSTUFF_REDRAW) { // after delete
+        	redraw();
         }
       }
     });
@@ -220,6 +222,16 @@ public class ThingStuffs extends Composite implements ClickHandler {
     t.addStyleName(style);
     
     return t;
+  }
+  
+  private void redraw() {
+  	ThingStuffData[] td = getData();
+  	
+  	ThingStuffsData tsd = new ThingStuffsData();
+  	tsd.thingStuffData = td;
+  	tsd.thingStuffTypesData = thingStuffTypesData;
+  	
+		process(tsd);
   }
   
   /**
@@ -231,7 +243,7 @@ public class ThingStuffs extends Composite implements ClickHandler {
   	
   	// tell thingedit to update the about stuff
   	// NOTE editingIndex contains the last modified
-  	fireChange(EventManager.ABOUTTHINGSTUFF_PREMOUSEOVER);
+  	fireChange(EventManager.THINGSTUFFABOUT_PREMOUSEOVER);
   	
   }
   

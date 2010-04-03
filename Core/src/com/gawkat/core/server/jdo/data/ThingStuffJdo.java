@@ -111,7 +111,7 @@ public class ThingStuffJdo {
 		this.startOf = thingStuffData.getStartOf();
 		this.endOf = thingStuffData.getEndOf();
 
-		if (thingStuffIdKey != null && thingStuffIdKey.getId() > 0) {
+		if (thingStuffData != null && thingStuffData.getStuffId() > 0) {
 			this.dateUpdated = new Date();
 		} else {
 			this.dateCreated = new Date();
@@ -168,16 +168,16 @@ public class ThingStuffJdo {
 
 			tx.commit();
 
-			// debug
-			System.out.println("ThingJdo: thingStuffId: " + getId() + " thingStuffTypeId: " + thingStuffTypeId + " " +
-					"value: " + getString(value) + " valueBol: " + getString(valueBol) + " valueLong: " + getString(valueLong) + " valueDate: " + getString(valueDate));
-
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
 			}
 			pm.close();
 		}
+		
+		// debug
+		System.out.println("ThingJdo: thingStuffId: " + getId() + " thingStuffTypeId: " + thingStuffTypeId + " " +
+				"value: " + getString(value) + " valueBol: " + getString(valueBol) + " valueLong: " + getString(valueLong) + " valueDate: " + getString(valueDate));
 
 		return getId();
 	}

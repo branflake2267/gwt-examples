@@ -118,7 +118,7 @@ public class ThingStuffAboutJdo {
 		this.startOf = thingStuffData.getStartOf();
 		this.endOf = thingStuffData.getEndOf();
 
-		if (thingStuffAboutIdKey != null && thingStuffAboutIdKey.getId() > 0) {
+		if (thingStuffData != null && thingStuffData.getStuffAboutId() > 0) {
 			this.dateUpdated = new Date();
 		} else {
 			this.dateCreated = new Date();
@@ -166,8 +166,8 @@ public class ThingStuffAboutJdo {
 		try {
 			tx.begin();
 
-			if (thingStuffAboutIdKey != null && thingStuffAboutIdKey.getId() > 0) { // update
-				ThingStuffAboutJdo update = pm.getObjectById(ThingStuffAboutJdo.class, thingStuffAboutIdKey.getId());
+			if (thingStuffData != null && thingStuffData.getStuffAboutId() > 0) { // update
+				ThingStuffAboutJdo update = pm.getObjectById(ThingStuffAboutJdo.class, thingStuffData.getStuffAboutId());
 				update.setData(thingStuffData);
 				this.thingStuffAboutIdKey = update.thingStuffAboutIdKey;
 
@@ -178,12 +178,6 @@ public class ThingStuffAboutJdo {
 
 			tx.commit();
 
-
-			// debug
-			System.out.println("ThingStuffAboutJdo.save(): thingStuffAboutId: " + getStuffAboutId() + " thingStuffId(Parent): " + thingStuffId + " thingStuffTypeId: " + thingStuffTypeId + " " +
-					"value: " + getString(value) + " valueBol: " + getString(valueBol) + " valueLong: " + getString(valueLong) + " valueDate: " + getString(valueDate));
-
-
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
@@ -191,6 +185,10 @@ public class ThingStuffAboutJdo {
 			pm.close();
 		}
 
+		// debug
+		System.out.println("ThingStuffAboutJdo.save(): thingStuffAboutId: " + getStuffAboutId() + " thingStuffId(Parent): " + thingStuffId + " thingStuffTypeId: " + thingStuffTypeId + " " +
+				"value: " + getString(value) + " valueBol: " + getString(valueBol) + " valueLong: " + getString(valueLong) + " valueDate: " + getString(valueDate));
+		
 		return getStuffAboutId();
 	}
 
@@ -428,10 +426,6 @@ public class ThingStuffAboutJdo {
 	 * @return
 	 */
 	public boolean deleteByParent(long thingStuffId) {
-
-		if (thingId == 0) {
-			return false;
-		}
 
 		String qfilter = "thingStuffId==" + thingStuffId + "";
 

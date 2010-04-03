@@ -275,10 +275,10 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler,
   		
   		int changeEvent = wStuff.getChangeEvent();
  
-  		if (changeEvent == EventManager.ABOUTTHINGSTUFF_PREMOUSEOVER) { // thing stuff moused over, lets update before we change the data
+  		if (changeEvent == EventManager.THINGSTUFFABOUT_PREMOUSEOVER) { // thing stuff moused over, lets update before we change the data
   			setUpdateAboutStuff();
   			
-  		} else if (changeEvent == EventManager.ABOUTTHINGSTUFF_MOUSEOVER) { // this comes from mouse over int thing stuff
+  		} else if (changeEvent == EventManager.THINGSTUFFABOUT_MOUSEOVER) { // this comes from mouse over int thing stuff
   			editingIndex = wStuff.getEditingIndex(); // what index was moused over
   			drawAbout(wStuff.getAboutThingStuffData());// update thing about stuff for editing
   		}

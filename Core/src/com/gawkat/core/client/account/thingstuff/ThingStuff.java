@@ -538,6 +538,9 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     } else {
       Window.alert("Wasn't able to delete it. Please try again?");
     }
+    
+    // redraw so the array is correct in list
+    fireChange(EventManager.THINGSTUFF_REDRAW);
   }
   
   public int getChangeEvent() {
@@ -573,7 +576,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   	Widget sender = (Widget) event.getSource();
   	
   	if (sender == pWidget) {
-  		fireChange(EventManager.ABOUTTHINGSTUFF_MOUSEOVER);
+  		fireChange(EventManager.THINGSTUFFABOUT_MOUSEOVER);
   	}
   }
 
@@ -581,7 +584,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   	Widget sender = (Widget) event.getSource();
 	  
   	if (sender == pWidget) {
-  		fireChange(EventManager.ABOUTTHINGSTUFF_HIDE);
+  		fireChange(EventManager.THINGSTUFFABOUT_HIDE);
   	}
   }
   

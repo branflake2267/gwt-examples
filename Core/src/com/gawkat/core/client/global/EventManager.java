@@ -54,20 +54,26 @@ public class EventManager {
   
   public static final int ROW_OVER = 50;
   public static final int ROW_OUT = 51;
+  
+  
+  /**
+   * redraw thingstuff in thingedit
+   */
+  public static final int THINGSTUFF_REDRAW = 60;
 
   /**
    * moused over - put about thing stuff in right to edit
    */
-	public static final int ABOUTTHINGSTUFF_MOUSEOVER = 60;
+	public static final int THINGSTUFFABOUT_MOUSEOVER = 61;
 
 	/**
 	 * hide about thing stuff - TODO not sure if I need this yet
 	 */
-	public static final int ABOUTTHINGSTUFF_HIDE = 61;
+	public static final int THINGSTUFFABOUT_HIDE = 62;
   
 	/**
 	 * when changing to a different about thing stuff
 	 *   On mouse over before we move to different index, get the data that could be changed
 	 */
-	public static final int ABOUTTHINGSTUFF_PREMOUSEOVER = 62;
+	public static final int THINGSTUFFABOUT_PREMOUSEOVER = 63;
 }
