@@ -94,8 +94,8 @@ public class Things extends Composite implements ClickHandler {
     pListTop.clear();
     HTML l1 = new HTML("#");
     HTML l2 = new HTML("Id");
-    HTML l3 = new HTML("Type");
-    HTML l4 = new HTML("Name");
+    HTML l3 = new HTML("ThingType");
+    HTML l4 = new HTML("UserName");
     HTML l5 = new HTML("&nbsp;");
 
     l1.setStyleName("core-row-top");

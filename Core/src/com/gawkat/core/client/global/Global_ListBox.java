@@ -56,5 +56,10 @@ public class Global_ListBox {
     }
     lb.setSelectedIndex(sel);
   }
+
+	public static void setSelected(ListBox lb, long id) {
+		int i = (int) id;
+		setSelected(lb, i); 
+  }
   
 }

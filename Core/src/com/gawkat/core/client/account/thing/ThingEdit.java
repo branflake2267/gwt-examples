@@ -10,6 +10,7 @@ import com.gawkat.core.client.account.thingstufftype.ThingStuffTypesData;
 import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.account.thingtype.ThingTypesData;
 import com.gawkat.core.client.global.EventManager;
+import com.gawkat.core.client.global.Global_ListBox;
 import com.gawkat.core.client.global.LoadingWidget;
 import com.gawkat.core.client.rpc.RpcCore;
 import com.gawkat.core.client.rpc.RpcCoreServiceAsync;
@@ -26,6 +27,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -39,20 +41,24 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler,
   
   private VerticalPanel pWidget = new VerticalPanel();
   
-  private ThingStuffs wStuff = null;
-  private ThingStuffs wStuffAbout = null;
-  
-  private ThingData thingData = null;
-
-  private ThingTypesData thingTypesData = null;
-  
   private VerticalPanel pTop = new VerticalPanel();
+  
+  private VerticalPanel pThingTypes = new VerticalPanel();
+  
+  private ListBox lbThingTypes = new ListBox();
+  
+  private ThingStuffs wStuff;
+  private ThingStuffs wStuffAbout;
   
   private TextBox tbKey = new TextBox();
   
   private PushButton bChangePassword = new PushButton("Change Password");
 
-	private ThingStuffsData thingsStuffData;
+  private ThingData thingData;
+
+  private ThingTypesData thingTypesData;
+  
+  private ThingStuffsData thingsStuffData;
 	
 	private int editingIndex = 0;
   
@@ -65,11 +71,17 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler,
     wStuffAbout = new ThingStuffs(cp);
     wStuffAbout.setWidgetType(ThingStuffs.WIDGETTYPE_THINGSTUFFABOUT);
     
+    pThingTypes.add(lbThingTypes);
+    
     HorizontalPanel hp = new HorizontalPanel();
     hp.add(wStuff);
     hp.add(wStuffAbout);
     
+    // layout
+    pWidget.add(new HTML("&nbsp;"));
     pWidget.add(pTop);
+    pWidget.add(new HTML("&nbsp;"));
+    pWidget.add(pThingTypes);
     pWidget.add(hp);
     
     initWidget(pWidget);
@@ -78,7 +90,6 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler,
     
     rpc = RpcCore.initRpc();
     
-    wStuff.addStyleName("test3");
     
     wStuff.addChangeHandler(this);
     wStuffAbout.addChangeHandler(this);
@@ -87,7 +98,7 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler,
     // don't observe thing stuff mouse overs when in about
     wStuffAbout.ignoreMouseOver(true);
     
-    
+    //wStuff.addStyleName("test3");
   }
   
   public void setData(ThingData thingData, ThingTypesData thingTypesData) {
@@ -105,13 +116,29 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler,
   	
     drawTop();
     
+    drawThingTypes();
+    
     ThingStuffFilterData filter = new ThingStuffFilterData();
     filter.thingId = thingData.getThingId();
     
     getThingStuffRpc(filter);
   }
   
-  /**
+  private void drawThingTypes() {
+	  lbThingTypes.clear();
+  	for (int i=0; i < thingTypesData.thingTypeData.length; i++) {
+  		String item = thingTypesData.thingTypeData[i].getName();
+  		String value = Long.toString(thingTypesData.thingTypeData[i].getId());
+  		lbThingTypes.addItem(item, value);
+  	}
+  	
+  	if (thingData.getThingTypeId() > 0) {
+  		Global_ListBox.setSelected(lbThingTypes, thingData.getThingTypeId());
+  	}
+	  
+  }
+
+	/**
    * draw the thing stuffs
    * 
    * @param thingStuffsData
@@ -173,8 +200,6 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler,
     HorizontalPanel hp = new HorizontalPanel();
     pTop.add(hp);
     
-    //hp.add(new HTML("Type: " + thingTypeData.getName())); // TODO enable
-    hp.add(new HTML("&nbsp;&nbsp;&nbsp;"));
     hp.add(new HTML("Id: " + thingData.getThingId()));
 
     Grid grid = new Grid(2, 2);
@@ -214,6 +239,7 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler,
   	//thing
   	ThingData td = thingData;
   	td.setKey(getKey());
+  	td.setThingTypeId(getThingTypeId());
   	
   	//thing stuff
   	ThingStuffData[] thingStuffData = wStuff.getData();
@@ -225,6 +251,11 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler,
   	
     //saveThingStuffsData(thingStuffData);
   	saveThingRpc(td);
+  }
+
+	private long getThingTypeId() {
+	  long l = Global_ListBox.getSelectedValue(lbThingTypes);
+	  return l;
   }
 
 	/**

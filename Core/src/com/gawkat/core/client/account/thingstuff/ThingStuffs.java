@@ -42,7 +42,7 @@ public class ThingStuffs extends Composite implements ClickHandler {
   
   private VerticalPanel pListTop = new VerticalPanel();
   private VerticalPanel pListStuff = new VerticalPanel();
-  private int[] widths = new int[4];
+  private int[] widths = new int[5];
   
   private PushButton bAdd = new PushButton("Add");
   
@@ -72,6 +72,7 @@ public class ThingStuffs extends Composite implements ClickHandler {
 	private ThingStuffData editingIndexThis_AboutThingStuffData = null;
 	
 	private boolean ignoreMouseOver;
+	private HTML l4;
 	
   /**
    * constructor
@@ -118,6 +119,7 @@ public class ThingStuffs extends Composite implements ClickHandler {
     HTML l1 = new HTML("Name"); // drop down type
     HTML l2 = new HTML("Value"); // input box
     HTML l3 = new HTML("&nbsp;");
+    l4 = new HTML("&nbsp;");
 
     l0.setStyleName("core-row-top");
     l1.setStyleName("core-row-top");
@@ -129,6 +131,7 @@ public class ThingStuffs extends Composite implements ClickHandler {
     th.add(l1, HorizontalPanel.ALIGN_CENTER);
     th.add(l2, HorizontalPanel.ALIGN_CENTER);
     th.add(l3, HorizontalPanel.ALIGN_CENTER);
+    th.add(l4, HorizontalPanel.ALIGN_CENTER);
 
     pListTop.add(th);
   }

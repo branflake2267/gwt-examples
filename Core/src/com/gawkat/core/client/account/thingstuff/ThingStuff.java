@@ -55,6 +55,8 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   // inputs container
   private FlowPanel pInput = new FlowPanel();
   
+  private FlowPanel pThingStuffCount = new FlowPanel();
+  
   private TextBox tbValue = new TextBox();
   private CheckBox cbValue = new CheckBox();
   private TextArea taValue = new TextArea();
@@ -96,6 +98,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     pWidget.add(lbTypes);
     pWidget.add(vpInput);
     pWidget.add(hpButtons);
+    pWidget.add(pThingStuffCount);
     
     initWidget(pWidget);
     
@@ -138,9 +141,22 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     
     // draw input type - textbox, checkbox...
     drawInput();
+    
+    drawStuffCount();
   }
   
-  private void drawId() {
+  private void drawStuffCount() {
+  	pThingStuffCount.clear();
+  	String s = "&nbsp;";
+    if (widgetType == ThingStuffs.WIDGETTYPE_THINGSTUFF) {
+    	if (thingStuffData.getThingStuffsAbout() != null && 	thingStuffData.getThingStuffsAbout().getThingStuffData() != null) {
+    		s = Long.toString(thingStuffData.getThingStuffsAbout().getThingStuffData().length);
+    	}
+    }
+    pThingStuffCount.add(new HTML(s));
+  }
+
+	private void drawId() {
   	pId.clear();
   	long id = 0;
   	if (thingStuffData.getStuffId() > 0 && widgetType == ThingStuffs.WIDGETTYPE_THINGSTUFF) {

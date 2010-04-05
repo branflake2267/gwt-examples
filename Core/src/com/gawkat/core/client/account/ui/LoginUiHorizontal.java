@@ -8,10 +8,16 @@ import com.gawkat.core.client.global.LoadingWidget;
 import com.gawkat.core.client.global.QueryString;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.FocusEvent;
+import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -34,9 +40,17 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-
-public class LoginUiHorizontal extends Composite implements KeyboardListener, FocusListener, 
-MouseOverHandler, MouseOutHandler, ClickHandler {
+/**
+ * 
+ * TODO - add forgot username
+ * TODO - setup forgot password emailing new password
+ * TODO - setup email verification on new account
+ * 
+ * @author branflake2267
+ *
+ */
+public class LoginUiHorizontal extends Composite implements 
+MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 
   private ClientPersistence cp = null;
   
@@ -59,7 +73,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler {
 	private CheckBox cbRemberMe = new CheckBox();
 	
 	// TODO - move this to a floating overlay below the input boxes
-	private VerticalPanel pError = new VerticalPanel();
+	private VerticalPanel pError = new VerticalPanel(); 
 	
 	// loading Notification
 	private LoadingWidget wLoading = new LoadingWidget();
@@ -114,36 +128,38 @@ MouseOverHandler, MouseOutHandler, ClickHandler {
 
 		pWidget.addMouseOverHandler(this);
 		pWidget.addMouseOutHandler(this);
+		
 		tbConsumerKey.addMouseOverHandler(this);
 		tbConsumerKey.addMouseOutHandler(this);
+		
 		tbConsumerSecret.addMouseOverHandler(this);
 		tbConsumerSecret.addMouseOutHandler(this);
+		
 		tbConsumerSecretPass.addMouseOverHandler(this);
 		tbConsumerSecretPass.addMouseOutHandler(this);
 		
-		// observers
-		bLogin.addClickHandler(this);
-		bForgot.addClickHandler(this);
+		
+		
 		hAccountCreate.addClickHandler(this);
 		hAccountLogout.addClickHandler(this);
 		hAccountProfile.addClickHandler(this);
 		
+		
 		tbConsumerKey.addClickHandler(this);
-		tbConsumerKey.addClickHandler(this);
-		tbConsumerKey.addKeyboardListener(this);
-		tbConsumerKey.addFocusListener(this);
+		tbConsumerKey.addFocusHandler(this);
+		tbConsumerKey.addBlurHandler(this);
 		
 		tbConsumerSecret.addClickHandler(this);
-		tbConsumerSecret.addClickHandler(this);
-		tbConsumerSecret.addKeyboardListener(this);
-		tbConsumerSecret.addFocusListener(this);
+		tbConsumerSecret.addFocusHandler(this);
+		tbConsumerSecret.addBlurHandler(this);
 
 		tbConsumerSecretPass.addClickHandler(this);
-		tbConsumerSecretPass.addClickHandler(this);
-		tbConsumerSecretPass.addKeyboardListener(this);
-		tbConsumerSecretPass.addFocusListener(this);
+		tbConsumerSecretPass.addFocusHandler(this);
+		tbConsumerSecretPass.addBlurHandler(this);
+
 		
-		cbRemberMe.addKeyboardListener(this);
+		bLogin.addClickHandler(this);
+		bForgot.addClickHandler(this);		
 		cbRemberMe.addClickHandler(this);
 		
 		hAccountLogin.addClickHandler(this);
@@ -269,13 +285,16 @@ MouseOverHandler, MouseOutHandler, ClickHandler {
 	  int width = pWidget.getOffsetWidth();
 	  pOptions.setWidth(""+width+"px");
 	  RootPanel.get().setWidgetPosition(pOptions, left, top);
+	  
 	  if (b == true) {
 	    hoverOnOff = true;
 	    pOptions.setVisible(true);
 	  } else if (b == false) {
 	   hoverOnOff = false;
 	  }
+	  
 	  hideOptionsSlowly();
+	  
 	}
 	
 	private void hideOptionsSlowly() {
@@ -289,7 +308,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler {
         }
       }
     };
-    t.schedule(4000);
+    t.schedule(5000);
 	}
 	
 	private void drawForgotPassword() {
@@ -318,9 +337,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler {
 	private void drawLoggedIn() {
 		hideLoading();
     clear();
-		
-
-		
+				
 		HorizontalPanel hp = new HorizontalPanel();
 		hp.add(hAccountProfile);
 		hp.add(new HTML("&nbsp;&nbsp;"));
@@ -368,7 +385,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler {
 	
 	private void resetInputSecret() {
 	  tbConsumerSecretPass.setText("");
-	  changePasswordInput();
+	  changePasswordInput_Focus();
 	}
 	
 	private void drawInputLabel_key() {
@@ -407,9 +424,21 @@ MouseOverHandler, MouseOutHandler, ClickHandler {
 		tbConsumerSecretPass.setEnabled(false);
 	}
 	
-	private void checkInputLabel_key(boolean click) {
+	public boolean getRememberMe() {
+	  return cbRemberMe.getValue();
+	}
+	
+	
+	
+	
+	/**
+	 * change input label "Email"
+	 * 
+	 * @param focus
+	 */
+	private void changeUsernameInput(boolean focus) {
 		
-		if (getConsumerKey().length() == 0 && click == false) {
+		if (getConsumerKey().length() == 0 && focus == false) {
 			tbConsumerKey.setText(inputLabel_ConsumerKey);
 			tbConsumerKey.addStyleName("core-login-ui-inputlabel");
 			
@@ -419,23 +448,34 @@ MouseOverHandler, MouseOutHandler, ClickHandler {
 		}
 	}
 	
-	private void changePasswordInput() {
-	  tbConsumerSecretPass.setEnabled(true);
+	/**
+	 * change password to the intput mode *******
+	 */
+	private void changePasswordInput_Focus() {
+		
 		tbConsumerSecret.setVisible(false);
+		
+	  tbConsumerSecretPass.setEnabled(true);
 		tbConsumerSecretPass.setVisible(true);
+		
 		tbConsumerSecretPass.setFocus(true);
 	}
 	
-	private void checkInputLabel_secret() {
+	/**
+	 * change password to ready mode "Password"
+	 */
+	private void changePasswordInput_Blur() {
 		if (getConsumerSecret().length() == 0 ) {
 			tbConsumerSecret.setVisible(true);
 			tbConsumerSecretPass.setVisible(false);
 		} 
 	}
 	
-	public boolean getRememberMe() {
-	  return cbRemberMe.getValue();
-	}
+
+	
+	
+	
+	
 	
   public int getChangeEvent() {
     return changeEvent;
@@ -451,11 +491,11 @@ MouseOverHandler, MouseOutHandler, ClickHandler {
     return addDomHandler(handler, ChangeEvent.getType());
   }
   
+  
+  
+  
 	public void onClick(ClickEvent event) {
-	  
-	  // hide the options on event
-	  pOptions.setVisible(false);
-	  
+	    
 	  Widget sender = (Widget) event.getSource();
     if (sender == bLogin) {
       drawLoading();
@@ -466,10 +506,10 @@ MouseOverHandler, MouseOutHandler, ClickHandler {
       fireChange(EventManager.FORGOT_PASSWORD);
     
     } else if (sender == tbConsumerKey) {
-      checkInputLabel_key(true);
+      changeUsernameInput(true);
     
     } else if (sender == tbConsumerSecret) {
-      changePasswordInput();
+      changePasswordInput_Focus();
     
     } else if (sender == cbRemberMe) {
       // TODO - save a cookie
@@ -494,64 +534,33 @@ MouseOverHandler, MouseOutHandler, ClickHandler {
     
   }
 
-	public void onKeyDown(Widget sender, char keyCode, int modifiers) {
-		if (sender == tbConsumerKey) {
-		  // TODO
-		} else if (sender == tbConsumerSecret) {
-		  // TODO
-		} else if (sender == cbRemberMe) {
-		  // TODO
-		} else {
-		  // TODO
-		}
-	}
-
-	public void onKeyPress(Widget sender, char keyCode, int modifiers) {
-		if (sender == tbConsumerKey) {
-		} else if (sender == tbConsumerSecret) {
-		} else if (sender == cbRemberMe) {
-		} else {
-		}
-	}
-
-	public void onKeyUp(Widget sender, char keyCode, int modifiers) {
-		if (sender == tbConsumerKey) {
-		} else if (sender == tbConsumerSecret) {	
-		} else if (sender == cbRemberMe) {
-		} else {
-		}
-	}
-
 	public void onChange(Widget sender) {
+		
 		if (sender == tbConsumerKey) {
-			checkInputLabel_key(false);
+			changeUsernameInput(false);
+			
 		} else if (sender == tbConsumerSecret) {
 		  // TODO
+			
 		} else if (sender == tbConsumerSecretPass) {
-			checkInputLabel_secret();
+			changePasswordInput_Blur();
+			
 		} else if (sender == cbRemberMe) {
 		  // TODO
 		}
+		
 	}
 	
 	
 
-	public void onFocus(Widget sender) {
-	}
 
-	public void onLostFocus(Widget sender) {
-		if (sender == tbConsumerKey) {
-			checkInputLabel_key(false);
-		} else if (sender == tbConsumerSecret) {
-		}  else if (sender == tbConsumerSecretPass) {
-			checkInputLabel_secret();
-		} else if (sender == cbRemberMe) {
-		}
-	}
+
+
 
   public void onMouseOver(MouseOverEvent event) {
     
     Widget sender = (Widget) event.getSource();
+    
     if (sender == pWidget) {
       displayOptions(true);
     }
@@ -561,11 +570,52 @@ MouseOverHandler, MouseOutHandler, ClickHandler {
   public void onMouseOut(MouseOutEvent event) {
     
     Widget sender = (Widget) event.getSource();
+    
     if (sender == pWidget) {
       displayOptions(false);
     }
     
   }
+
+  public void onFocus(FocusEvent event) {
+	  
+  	Widget sender = (Widget) event.getSource();
+  	
+  	if (sender == tbConsumerKey) {
+			
+			
+		} else if (sender == tbConsumerSecret) {
+			changePasswordInput_Focus(); // change to input mode
+			
+		} else if (sender == tbConsumerSecretPass) {
+			
+			
+		}
+	  
+  }
+
+	
+  public void onBlur(BlurEvent event) {
+	  
+  	Widget sender = (Widget) event.getSource();
+	  
+  	if (sender == tbConsumerKey) {
+			changeUsernameInput(false);
+			
+		} else if (sender == tbConsumerSecret) {
+			
+		}  else if (sender == tbConsumerSecretPass) {
+			changePasswordInput_Blur();
+			
+		} else if (sender == cbRemberMe) {
+			
+		}
+
+  }
+
+
+
+
 
   
 
