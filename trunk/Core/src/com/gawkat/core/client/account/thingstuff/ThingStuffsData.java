@@ -5,9 +5,10 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ThingStuffsData implements IsSerializable {
   
+	// TODO - used for later with offset,limit...
   public long total = 0;
 
-  // type choices
+  // thing stuff type choices
   public ThingStuffTypesData thingStuffTypesData = null;
   
   public ThingStuffData[] thingStuffData = null;

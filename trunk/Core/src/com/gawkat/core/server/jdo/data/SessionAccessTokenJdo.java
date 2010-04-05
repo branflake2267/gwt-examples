@@ -190,12 +190,16 @@ public class SessionAccessTokenJdo {
 		Transaction tx = pm.currentTransaction();
 		try {
 			tx.begin();
+			
 			SessionAccessTokenJdo sa = null;
 			sa = pm.getObjectById(SessionAccessTokenJdo.class, id);
 			sa.setThingId(userId);
 			sa.setThingTypeId(ThingTypeJdo.TYPE_USER); // switch session var to the user and not the application
+			
 			pm.makePersistent(sa);
+			
 			success = true;
+			
 			tx.commit();
 		} finally {
 			if (tx.isActive()) {

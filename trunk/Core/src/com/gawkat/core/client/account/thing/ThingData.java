@@ -113,5 +113,9 @@ public class ThingData implements IsSerializable {
 		this.thingStuffsData = thingStuffsData;
 	}
 
+	public void setThingTypeId(long thingTypeId) {
+	  this.thingTypeId = thingTypeId;
+  }
+
 
 }

@@ -230,9 +230,9 @@ public class ThingStuffJdo {
 		ArrayList<ThingStuffJdo> aT = new ArrayList<ThingStuffJdo>();
 
 		String qfilter = null;
-		if (filter.thingId > 0) {
-			qfilter = "thingId==" + thingId + "";
-		}
+		
+		qfilter = "thingId==" + thingId + "";
+		
 
 		PersistenceManager pm = sp.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
