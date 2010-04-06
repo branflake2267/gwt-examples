@@ -38,7 +38,7 @@ private static native void track(String s) /*-{
 	// so far this works - cool - include the urchin.js in the xml file
 	$wnd._uacct = "UA-2862268-12";
 	$wnd._uanchor = 1;
-	$wnd.urchinTracker("/UrchinTracker/"); // I had to have pages after the first request
+	$wnd.urchinTracker("/UrchinTracker/" + s); // I had to have pages after the first request
 }-*/;
 }}}
 
