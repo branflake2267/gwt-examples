@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<module rename-to='demogoogleanalytics'>
+
+  <inherits name='com.google.gwt.user.User'/>
+  
+  <inherits name='com.google.gwt.user.theme.standard.Standard'/>
+  
+
+  <!-- Google analytics js built into build so we can call immediately on load -->
+  <script src="../ga.js"/>
+  
+  <entry-point class='org.gonevertical.demo.client.DemoGoogleAnalytics'/>
+
+  <source path='client'/>
+  <source path='shared'/>
+
+</module>
