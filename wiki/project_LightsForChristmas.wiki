@@ -19,6 +19,9 @@
  * [http://www.youtube.com/watch?v=UlAEHfS9gmY]
  * [http://www.youtube.com/watch?v=vkjibkF0WOM]
 
+== Library Reference ==
+ * [http://rxtx.org/ rxtx] - Used for dmx communication
+ * [http://www.enttec.com/index.php?main_menu=Products&prod=70304&show=links Entec Usb] - Controller to talk dmx
 
 == Source Code ==
  Coming soon, as my eclipse opens the project.
