@@ -6,6 +6,37 @@
  * Reference Configuration Data - http://www.google.com/analytics/InstallingGATrackingCode.pdf
  * Track anchor tag - notice var below
 
+= New - GWT 2.03 + GAE =
+ Integrated GWT and Google Analytics example
+ * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGoogleAnalytics/src/org/gonevertical/demo/client/Track.java Source] - Project source
+ * [http://demogwtanalytics.appspot.com/ Demo] - Demo of the application on the Google App Engine
+
+{{{
+public static native void trackGoogleAnalytics(String historyToken) /*-{
+      
+  try {
+  	
+  	// setup tracking object with account
+  	var pageTracker = $wnd._gat._getTracker("UA-2862268-12"); // change account please!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  	
+  	pageTracker._setRemoteServerMode();
+  	
+  	// turn on anchor observing
+  	pageTracker._setAllowAnchor(true)
+  	
+  	// send event to google server
+  	pageTracker._trackPageview(historyToken);
+  	    
+  } catch(err) {
+    
+    // debug
+    alert('FAILURE: to send in event to google analytics: ' + err);
+  }
+
+}-*/;
+}}}
+
+= Older Example =
  In UrchinTracker.gwt.xml file you want to include urchin.js file
 {{{
 #UrchinTracker.gwt.xml file
