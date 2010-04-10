@@ -1,7 +1,12 @@
 #summary One-sentence summary of this page.
 
 = Game for Warm Beach Camp =
- I built a game using GWT for the game logic and DMX to control the lighting. Here's some of the story.
+ I built this large scale outdoor game using GWT for the game logic and DMX to control the lighting. Here's some of the story.
+
+== Pictures ==
+ Some of the pictures of the game
+ * [http://picasaweb.google.com/branflake2267/LightsOfChristmasGame# Picasa Photo Album]
+
 
 == Videos ==
  Some movies of the project
