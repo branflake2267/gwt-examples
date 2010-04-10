@@ -24,4 +24,4 @@
  * [http://www.enttec.com/index.php?main_menu=Products&prod=70304&show=links Entec Usb] - Controller to talk dmx
 
 == Source Code ==
- Coming soon, as my eclipse opens the project.
+ Coming soon, as my eclipse opens the project. I have to dig up the computer and sync the code.
