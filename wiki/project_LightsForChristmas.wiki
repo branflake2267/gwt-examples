@@ -1,3 +1,12 @@
 #summary One-sentence summary of this page.
 
 = Game for Warm Beach Camp =
+ I built a game using GWT for the game logic and DMX to control the lighting. Here's some of the story.
+
+== Videos ==
+ Some movies of the project
+ * [http://www.youtube.com/watch?v=17yz6DNXE8s]
+ * [http://www.youtube.com/watch?v=oYNCwijvV2Q]
+ * [http://www.youtube.com/watch?v=M3tfw8oKhmM]
+ * [http://www.youtube.com/watch?v=UlAEHfS9gmY]
+ * [http://www.youtube.com/watch?v=vkjibkF0WOM]
