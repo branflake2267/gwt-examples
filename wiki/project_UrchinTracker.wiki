@@ -1,10 +1,7 @@
 #summary application tracking with Google Analytics
 
 = Google Analytics Urchin Tracker Examples =
- I found that using JSNI, accessing the native javascript from the java methods was the best way to set off get request to Google Analytics. I also found that you can specifically track anchor tags, which is the main staple for my ajax applications. In that, I also use domain.tld#myAnchor?param1=a&parm2=b&param3=c for sending in parameters with out page refresh. You can find in the source the entire example.
- * See Entire Project is in source
- * Reference Configuration Data - http://www.google.com/analytics/InstallingGATrackingCode.pdf
- * Track anchor tag - notice var below
+ Integrating google analytics ga.js into the GWT application is very easy and shown in my new example. I also have an example of it working on Google app engine. 
 
 = New - GWT 2.03 + GAE =
  Integrated GWT and Google Analytics example
@@ -37,6 +34,11 @@ public static native void trackGoogleAnalytics(String historyToken) /*-{
 }}}
 
 = Older Example =
+ I found that using JSNI, accessing the native javascript from the java methods was the best way to set off get request to Google Analytics. I also found that you can specifically track anchor tags, which is the main staple for my ajax applications. In that, I also use domain.tld#myAnchor?param1=a&parm2=b&param3=c for sending in parameters with out page refresh. You can find in the source the entire example.
+ * See Entire Project is in source
+ * Reference Configuration Data - http://www.google.com/analytics/InstallingGATrackingCode.pdf
+ * Track anchor tag - notice var below
+
  In UrchinTracker.gwt.xml file you want to include urchin.js file
 {{{
 #UrchinTracker.gwt.xml file
