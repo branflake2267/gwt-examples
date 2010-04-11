@@ -4,7 +4,7 @@
  I built this large scale outdoor game using GWT for the game logic and DMX to control the lighting. Here's some of the story.
 
 == Why ==
- I wanted to donate some fun to Warm Beach Camp [http://warmbeach.com/index.php/lights-of-christmas WarmBeach.com] and in the process learn more.
+ I wanted to donate some fun to Warm Beach Camp [http://warmbeach.com/index.php/lights-of-christmas WarmBeach.com] and in the process learn more. I still need to do some work so it runs in a standalone mode, but I got by this last year quite well using chrome to run the game.
 
 == Pictures ==
  Some of the pictures of the game
@@ -22,6 +22,7 @@
 == Library Reference ==
  * [http://rxtx.org/ rxtx] - Used for dmx communication
  * [http://www.enttec.com/index.php?main_menu=Products&prod=70304&show=links Entec Usb] - Controller to talk dmx
+ * I built it to run only on Ubuntu b/c its so fast to setup and use
 
 == Source Code ==
  Coming soon, as my eclipse opens the project. I have to dig up the computer and sync the code.
