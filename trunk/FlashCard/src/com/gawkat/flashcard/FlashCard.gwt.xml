@@ -13,15 +13,11 @@
 	<!-- <stylesheet src="FlashCard.css" /> TODO maybe use this here?? -->
 
 	<!-- Other module inherits                                      -->
-	<inherits name='com.google.gwt.gadgets.Gadgets' />
+	<!-- <inherits name='com.google.gwt.gadgets.Gadgets' /> -->
 
 
 	<!-- Specify the app entry point class.                         -->
 	<entry-point class='com.gawkat.flashcard.client.FlashCard' />
 	
-	
-	<!-- TODO - This is needed to compile with appengine plugin, and nonhosted compile -->
-	<!-- this has to be here, but won't load the gadget, need onload I think -->
-	<entry-point class='com.gawkat.flashcard.client.gadget.FlashCard_Gadget' />
 	
 </module>
