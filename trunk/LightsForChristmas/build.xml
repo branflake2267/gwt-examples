@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project name="LightsForChristmas" default="build" basedir=".">
   <!-- Configure path to GWT SDK -->
-  <property name="gwt.sdk" location="/opt/google/gwt/gwt-linux-1.7.1" />
+  <property name="gwt.sdk" location="/opt/google/gwt/gwt-2.0.3" />
 
   <path id="project.class.path">
     <pathelement location="war/WEB-INF/classes"/>
