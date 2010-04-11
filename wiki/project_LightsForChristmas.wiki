@@ -30,5 +30,6 @@
  * [http://www.enttec.com/index.php?main_menu=Products&prod=70304&show=links Entec Usb] - Controller to talk dmx
  * I built it to run only on Ubuntu b/c its so fast to setup and use
 
-== Source Code ==
- Coming soon, as my eclipse opens the project. I have to dig up the computer and sync the code.
+== Java DMX Control ==
+ 512 DMX universe control using Java, RXTX.org lib on Ubuntu. 
+ * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/LightsForChristmas/dmx/org/gonevertical/loc/server/dmx Java DMX Source] - See the classes that control the lights
