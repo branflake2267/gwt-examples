@@ -22,6 +22,7 @@ public class Track {
   	historyToken = "/DemoGoogleAnalytics/" + historyToken;
   	
   	trackGoogleAnalytics(historyToken);
+  
   }
     
   /**
@@ -37,7 +38,7 @@ public class Track {
     try {
     	
     	// setup tracking object with account
-    	var pageTracker = $wnd._gat._getTracker("UA-2862268-12"); // change account please!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    	var pageTracker = $wnd._gat._getTracker("UA-2862268-9"); // change account please!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     	
     	pageTracker._setRemoteServerMode();
     	
@@ -46,9 +47,6 @@ public class Track {
     	
     	// send event to google server
     	pageTracker._trackPageview(historyToken);
-    	    
-    	// debug
-    	alert('SUCCESS: sent event into google - historyToken: ' + historyToken);
     	    
     } catch(err) {
       
