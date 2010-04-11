@@ -3,10 +3,9 @@
 =Table of Contents= 
 <wiki:toc max_depth="2" />
 
-
 = Demo =
  Sample an application using MySql on Apache Tomcat server. 
- * [http://gonevertical.org/DemoMySqlConn/ MySql Conn Application] - Demo
+ * [http://gonevertical.org/DemoMySqlConn/ MySql Conn Application] - New Demo using GWT 2.03+ 
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoMySqlConn/src/org/gonevertical/demo/client Source] - See the code
 
 = JDBC Connector =
