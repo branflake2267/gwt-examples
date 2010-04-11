@@ -30,6 +30,8 @@ public class Core implements EntryPoint, ChangeHandler, ValueChangeHandler<Strin
    * load on entry
    */
   public void onModuleLoad() {
+  	
+  	History.addValueChangeHandler(this);
      	
     wLogin.initSession();
     wLogin.setUi(LoginUi.LOGIN_HORIZONTAL);
@@ -68,7 +70,7 @@ public class Core implements EntryPoint, ChangeHandler, ValueChangeHandler<Strin
       History.newItem("account_Things");
     }
    
-    History.addValueChangeHandler(this);
+    
   }
 
   /**
