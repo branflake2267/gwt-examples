@@ -1,11 +1,9 @@
 package com.gawkat.flashcard.client.gadget;
 
 import com.gawkat.flashcard.client.Navigation;
-import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.gadgets.client.Gadget;
 import com.google.gwt.gadgets.client.UserPreferences;
 import com.google.gwt.gadgets.client.Gadget.ModulePrefs;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
