@@ -16,14 +16,14 @@ public class SnowBallColumn extends Composite {
   private AbsolutePanel pWidget = null;
 
   //private Image ball1 = new Image("/images/ball.png");
-  private Image ball1 = new Image("../images/ball.png");
-  private Image ball2 = new Image("../images/ball.png");
-  private Image ball3 = new Image("../images/ball.png");
-  private Image ball4 = new Image("../images/ball.png");
-  private Image ball5 = new Image("../images/ball.png");
-  private Image ball6 = new Image("../images/ball.png");
-  private Image ball7 = new Image("../images/ball.png");
-  private Image ball8 = new Image("../images/ball.png");
+  private Image ball1 = new Image("images/ball.png");
+  private Image ball2 = new Image("images/ball.png");
+  private Image ball3 = new Image("images/ball.png");
+  private Image ball4 = new Image("images/ball.png");
+  private Image ball5 = new Image("images/ball.png");
+  private Image ball6 = new Image("images/ball.png");
+  private Image ball7 = new Image("images/ball.png");
+  private Image ball8 = new Image("images/ball.png");
 
   private int index = 0;
 
