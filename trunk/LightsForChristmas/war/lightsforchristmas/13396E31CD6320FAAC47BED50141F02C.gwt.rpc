@@ -1,0 +1,10 @@
+com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException, true
+java.lang.Exception, false
+java.lang.Integer, true
+[Ljava.lang.Integer;, true
+java.lang.Number, false
+java.lang.RuntimeException, false
+java.lang.String, true
+java.lang.Throwable, false
+org.gonevertical.loc.client.ChannelData, true
+org.gonevertical.loc.client.TrackData, true

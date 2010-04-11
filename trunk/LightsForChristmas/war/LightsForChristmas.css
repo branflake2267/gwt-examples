@@ -1,0 +1,130 @@
+
+.test1 {
+  border: 1px solid #FFB3FF;
+}
+.test2 {
+  border: 1px solid #FF00FF;
+}
+.test3 {
+  border: 1px solid #FF0000;
+}
+.test4 {
+  border: 1px solid #FB00AA;
+}
+.test5 {
+  border: 1px solid #66FF33;
+}
+.test5 {
+  border: 1px solid #0000FF;
+}
+.test6 {
+  border: 1px solid #FF0000;
+}
+
+
+.Frame {
+  border: 1px solid #0000FF;
+}
+
+.SnowBallColumns {
+  border: 1px solid #AFAF00; 
+}
+
+.SnowBallColumn {
+  border: 1px solid #FB00AA; 
+}
+
+.Padels {
+  border: 1px solid #66FF33;
+}
+
+.Padel {
+  border: 1px solid #FF0000;
+}
+
+.Padel-Cell {
+  border: 1px solid #FF0000;
+}
+
+.Padel-Cell-On-A {
+  background: green;
+}
+
+.Padel-Cell-On-B {
+  background: red;
+}
+
+.Padel-Cell-Score {
+ /*border: 1px solid #00FF00*/
+}
+
+.Padel-Cell-Off {
+  background: transparent;
+}
+
+.Score-Grid {
+  border: 1px solid #A200FF; 
+}
+.Score-Low {
+  background: #FF0000;
+}
+
+.Score-Mid {
+  background: #FF9100;
+}
+
+.Score-High {
+  background: #2FFF00;
+}
+
+.TimerSystem {
+}
+
+.Digits {
+}
+
+.Digit {
+  font-size: 115%;
+  padding: 1px;
+}
+
+
+/* general */
+.PlayerA {
+  color: green;
+}
+
+.PlayerB {
+  color: red;
+}
+
+.PlayerA td {
+  color: green;
+}
+
+.PlayerB td {
+  color: red;
+}
+
+.Buttons {
+  padding: 4px;
+  border: 1px solid #000000;
+}
+
+.Buttons_PA_On {
+  background: green; 
+}
+
+.Buttons_GC_On {
+  background: yellow;
+}
+
+.Buttons_PB_On {
+  background: red;
+}
+
+
+
+
+
+
