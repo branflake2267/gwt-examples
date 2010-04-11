@@ -1,8 +1,13 @@
 package org.gonevertical.loc.client;
 
+import org.gonevertical.demo.client.Track;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -34,17 +39,19 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class LightsForChristmas implements EntryPoint, NativePreviewHandler {
+public class LightsForChristmas implements EntryPoint, NativePreviewHandler, ValueChangeHandler<String> {
 
   private VerticalPanel pWidget = new VerticalPanel();
   
   private SnowBallGameFrame wframe = new SnowBallGameFrame();
 
   public void onModuleLoad() {
+  	
+  	initHistoryObservation();
     
     pWidget.add(wframe);
 
-    RootPanel.get().add(pWidget);
+    RootPanel.get("content").add(pWidget);
 
     pWidget.setWidth("100%");
     pWidget.setCellHorizontalAlignment(wframe, HorizontalPanel.ALIGN_CENTER);
@@ -72,7 +79,19 @@ public class LightsForChristmas implements EntryPoint, NativePreviewHandler {
   }
 
 
+  private void initHistoryObservation() {
+  	History.addValueChangeHandler(this);
+  }
 
+  public void onValueChange(ValueChangeEvent<String> event) {
+	 
+  	// get the querystring token
+  	String historyToken = History.getToken();
+  	
+  	// send to static method that will send the __utm.gif to google's server fro tracking
+  	Track.track(historyToken);
+	  
+  }
 
   
 }
