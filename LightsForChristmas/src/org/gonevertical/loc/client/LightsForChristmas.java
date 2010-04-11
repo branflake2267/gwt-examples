@@ -1,7 +1,5 @@
 package org.gonevertical.loc.client;
 
-import org.gonevertical.demo.client.Track;
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
