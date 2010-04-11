@@ -102,7 +102,7 @@ public class Combine extends Composite implements ClickHandler, ChangeHandler {
     
     var pageTracker = $wnd._gat._getTracker("UA-2862268-9");
     //pageTracker._trackPageview();
-    pageTracker._trackPageview("/GWTExample/Combine/" + event);
+    pageTracker._trackPageview("/DemoGWTHandler/" + event);
     
     //alert("track");
   }-*/;
