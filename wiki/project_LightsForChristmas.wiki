@@ -2,7 +2,8 @@
 
 = Game for Warm Beach Camp =
  I built this large scale outdoor game using GWT for the game logic and DMX to control the lighting. Here's some of the story.
- * [http://lightsforchristmas.appspot.com/ Earlier Game Version] - I built a GAE version, this version still has some UI errors, I had to split b/c of the dmx drivers.
+ * [http://lightsforchristmas.appspot.com/ Demo Earlier Game Version] - I built a GAE version, this version still has some UI errors, I had to split b/c of the dmx drivers.
+ * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/LightsForChristmas/src/org/gonevertical/loc/client Source]
 
 == Why ==
  I wanted to donate some fun to Warm Beach Camp [http://warmbeach.com/index.php/lights-of-christmas WarmBeach.com] and in the process learn more. 
