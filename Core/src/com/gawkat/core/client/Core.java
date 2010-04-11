@@ -7,6 +7,8 @@ import com.gawkat.core.client.account.ui.LoginWidget;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -16,7 +18,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class Core implements EntryPoint, ChangeHandler {
+public class Core implements EntryPoint, ChangeHandler, ValueChangeHandler<String> {
 
   private ClientPersistence cp = new ClientPersistence();
   
@@ -29,6 +31,8 @@ public class Core implements EntryPoint, ChangeHandler {
    */
   public void onModuleLoad() {
     
+  	initHistoryObservation();
+  	
     wLogin.initSession();
     wLogin.setUi(LoginUi.LOGIN_HORIZONTAL);
     
@@ -38,12 +42,7 @@ public class Core implements EntryPoint, ChangeHandler {
     
     pWidget.setWidth("800px");
     pWidget.setCellHorizontalAlignment(wLogin, HorizontalPanel.ALIGN_RIGHT);
-    
-    // Debug
-    //pWidget.setStyleName("test1"); 
-    //wLogin.addStyleName("test2");
-    //wAccount.addStyleName("test3");
-    
+        
     VerticalPanel pcenter = new VerticalPanel();
     pcenter.add(pWidget);
     pcenter.setWidth("100%");
@@ -57,6 +56,10 @@ public class Core implements EntryPoint, ChangeHandler {
     
     initHistory();
     
+    // Debug
+    //pWidget.setStyleName("test1"); 
+    //wLogin.addStyleName("test2");
+    //wAccount.addStyleName("test3");
   }
   
   private void initHistory() {
@@ -69,7 +72,10 @@ public class Core implements EntryPoint, ChangeHandler {
     
   }
   
- 
+  private void initHistoryObservation() {
+  	Track.track("home");
+  	History.addValueChangeHandler(this);
+  }
 
   /**
    * for setup
@@ -81,9 +87,14 @@ public class Core implements EntryPoint, ChangeHandler {
   }
 
   public void onChange(ChangeEvent event) {
-    
-  
-    
+     
+  }
+
+  public void onValueChange(ValueChangeEvent<String> event) {
+  	
+  	String historyToken = History.getToken();
+  	Track.track(historyToken);
+  	
   }
 
 }
