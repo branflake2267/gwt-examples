@@ -38,6 +38,7 @@ public class Db_Thing {
     ThingsData r = new ThingsData();
     r.thingData = td;
     r.thingTypesData = tdt;
+    r.total = tj.queryTotal();
     
     return r;
   }

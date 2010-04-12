@@ -33,7 +33,7 @@ public class Db_ThingType {
     
     ThingTypesData r = new ThingTypesData();
     r.thingTypeData = t;
-    r.total = 0; //TODO - how to ???
+    r.total = ttj.queryTotal();
     
     return r;
   }

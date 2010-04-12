@@ -76,4 +76,14 @@ public class EventManager {
 	 *   On mouse over before we move to different index, get the data that could be changed
 	 */
 	public static final int THINGSTUFFABOUT_PREMOUSEOVER = 63;
+
+	/**
+	 * paging 
+	 */
+	public static final int PAGE_CHANGESTART = 10;
+
+	/**
+	 * paging
+	 */
+	public static final int PAGE_CHANGELIMIT = 11;
 }

@@ -12,5 +12,18 @@ public class ThingFilterData implements IsSerializable {
    * filter by type
    */
   public long thingTypeId = 0;
+
+  /**
+   * get start of range
+   * @return
+   */
+	public long getRangeFinish() {
+	  return start;
+  }
+
+	public long getRangeStart() {
+		long finish = start + limit;
+	  return finish;
+  }
   
 }

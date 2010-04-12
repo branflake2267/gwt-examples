@@ -285,6 +285,46 @@ public class ThingTypeJdo {
 		return b;
 	}
 
+	public long queryTotal() {
+		
+		/* future spec I think
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		
+		com.google.appengine.api.datastore.Query query = new com.google.appengine.api.datastore.Query("__Stat_Kind__");
+		query.addFilter("kind_name", FilterOperator.EQUAL, TThingStuffAboutJdo.class);
+		
+    Entity globalStat = datastore.prepare(query).asSingleEntity();
+    Long totalBytes = (Long) globalStat.getProperty("bytes");
+    Long totalEntities = (Long) globalStat.getProperty("count");
+		*/
+		
+		// TODO - work around, have to wait for the api/gae to make it to hosted mode
+		long total = 0;
+		
+		PersistenceManager pm = sp.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+
+			Extent<ThingStuffJdo> e = pm.getExtent(ThingStuffJdo.class, true);
+			Query q = pm.newQuery(e);
+			q.execute();
+
+			Collection<ThingTypeJdo> c = (Collection<ThingTypeJdo>) q.execute();
+			total = c.size();
+
+			tx.commit();
+			q.closeAll();
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+		
+		return total;
+	}
+	
 	/**
 	 * convert from jdo to data object type for rpc transit
 	 * 
