@@ -46,8 +46,12 @@ public class AccountsHome extends Composite implements ClickHandler {
 		
     HorizontalPanel hp = new HorizontalPanel();
     hp.add(bDefault);
+    hp.add(new HTML("&nbsp; Set up defaults"));
     
     pMenu.add(hp);
+    
+    pMenu.add(new HTML("&nbsp;"));
+    pMenu.add(new HTML("<a href=\"http://gwt-examples.googlecode.com\">gwt-examples.googlecode.com</a> Find my code here for this."));
   }
 	
   public void onClick(ClickEvent event) {

@@ -341,14 +341,31 @@ public class ThingJdo {
 
 			Extent<ThingJdo> e = pm.getExtent(ThingJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
-			q.setRange(filter.getRangeStart(), filter.getRangeFinish());
+			
+			// TODO - this wont work, stink. This is not as easy as SQL.
+			// TODO - range will not work. I saw some fetching api, but can't find it again, postpone to another day
+			//q.setRange(filter.getRangeStart(), filter.getRangeFinish());
+			
 			q.execute();
 
 			Collection<ThingJdo> c = (Collection<ThingJdo>) q.execute();
 			Iterator<ThingJdo> iter = c.iterator();
+			
+			// TODO - making my own pagination for now, fix this later
+			int i=0;
 			while (iter.hasNext()) {
+				
 				ThingJdo t = (ThingJdo) iter.next();
-				aT.add(t);
+				
+				// TODO work around, this sucks - change it later to something better - ran out of time today.
+				if (i >= filter.getRangeStart() && i <= filter.getRangeFinish()) {
+
+  				aT.add(t);
+  				 
+  				System.out.println("adding thing: " + i + " s: " + filter.getRangeStart() + " f: " + filter.getRangeFinish());
+				}
+				
+				i++;
 			}
 
 			tx.commit();

@@ -4,6 +4,7 @@ import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.Row;
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thingstufftype.ThingStuffTypesData;
+import com.gawkat.core.client.account.ui.Paging;
 import com.gawkat.core.client.global.EventManager;
 import com.gawkat.core.client.global.LoadingWidget;
 import com.gawkat.core.client.global.Style;
@@ -28,7 +29,7 @@ import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ThingStuffs extends Composite implements ClickHandler {
+public class ThingStuffs extends Composite implements ClickHandler, ChangeHandler {
 
 	public static final int WIDGETTYPE_THINGSTUFF = 1;
 	public static final int WIDGETTYPE_THINGSTUFFABOUT = 2;
@@ -50,6 +51,8 @@ public class ThingStuffs extends Composite implements ClickHandler {
   private ThingData thingData = null;
   
   private int widgetType = WIDGETTYPE_THINGSTUFF;
+  
+  private Paging wPage = new Paging();
   
   /**
    * this is the types that can be selected
@@ -84,6 +87,7 @@ public class ThingStuffs extends Composite implements ClickHandler {
     pWidget.add(pMenu);
     pWidget.add(pListTop);
     pWidget.add(pListStuff);
+    pWidget.add(wPage);
     
     initWidget(pWidget);
     
@@ -96,6 +100,8 @@ public class ThingStuffs extends Composite implements ClickHandler {
     pWidget.setStyleName("core-Account-ThingStuffs");
     
     //pWidget.addStyleName("test1");
+    
+    wPage.addChangeHandler(this);
   }
   
   public void draw(ThingData thingData, ThingStuffsData thingStuffsData) {
@@ -345,6 +351,13 @@ public class ThingStuffs extends Composite implements ClickHandler {
   }
   
   public void onChange(ChangeEvent event) {
+  	
+  	Widget sender = (Widget) event.getSource();
+  	
+  	if (sender == wPage) {
+  		
+  	}
+  	
   }
 
 	public int getEditingIndex() {
