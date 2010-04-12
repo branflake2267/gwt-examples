@@ -19,9 +19,13 @@ import javax.jdo.annotations.PrimaryKey;
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thing.ThingFilterData;
 import com.gawkat.core.server.ServerPersistence;
-import com.gawkat.core.server.jdo.PMF;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query.FilterOperator;
 
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
@@ -337,6 +341,7 @@ public class ThingJdo {
 
 			Extent<ThingJdo> e = pm.getExtent(ThingJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
+			q.setRange(filter.getRangeStart(), filter.getRangeFinish());
 			q.execute();
 
 			Collection<ThingJdo> c = (Collection<ThingJdo>) q.execute();
@@ -364,6 +369,53 @@ public class ThingJdo {
 		ThingData[] td = convert(tj);
 
 		return td;
+	}
+	
+	/**
+	 * query total
+	 * 
+	 *  TODO API not ready to do this effectively in hosted mode yet
+	 * 
+	 * @return
+	 */
+	public long queryTotal() {
+		
+		/* future spec I think
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		
+		com.google.appengine.api.datastore.Query query = new com.google.appengine.api.datastore.Query("__Stat_Kind__");
+		query.addFilter("kind_name", FilterOperator.EQUAL, ThingJdo.class);
+		
+    Entity globalStat = datastore.prepare(query).asSingleEntity();
+    Long totalBytes = (Long) globalStat.getProperty("bytes");
+    Long totalEntities = (Long) globalStat.getProperty("count");
+		*/
+		
+		// TODO - work around, have to wait for the api/gae to make it to hosted mode
+		long total = 0;
+		
+		PersistenceManager pm = sp.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+
+			Extent<ThingJdo> e = pm.getExtent(ThingJdo.class, true);
+			Query q = pm.newQuery(e);
+			q.execute();
+
+			Collection<ThingJdo> c = (Collection<ThingJdo>) q.execute();
+			total = c.size();
+
+			tx.commit();
+			q.closeAll();
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+		
+		return total;
 	}
 
 	/**

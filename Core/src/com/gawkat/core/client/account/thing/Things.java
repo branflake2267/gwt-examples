@@ -6,6 +6,7 @@ import com.gawkat.core.client.SetDefaultsData;
 import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.account.thingtype.ThingTypeFilterData;
 import com.gawkat.core.client.account.thingtype.ThingTypesData;
+import com.gawkat.core.client.account.ui.Paging;
 import com.gawkat.core.client.global.EventManager;
 import com.gawkat.core.client.global.LoadingWidget;
 import com.gawkat.core.client.rpc.RpcCore;
@@ -45,6 +46,8 @@ public class Things extends Composite implements ClickHandler {
   // use for edit
   private ThingTypesData thingTypesData = null;
   
+  private Paging wPage = new Paging();
+  
   public Things(ClientPersistence cp) {
     this.cp = cp;
     
@@ -54,6 +57,7 @@ public class Things extends Composite implements ClickHandler {
     pWidget.add(pListTop);
     pWidget.add(pList);
     pWidget.add(wEdit);
+    pWidget.add(wPage);
     
     initWidget(pWidget);
     
@@ -71,6 +75,11 @@ public class Things extends Composite implements ClickHandler {
     //pList.addStyleName("test1");
     //wEdit.addStyleName("test2");
     //pWidget.addStyleName("test3");
+    
+    wPage.setVisible(false);
+    
+    // no need for now
+    //pWidget.setCellHorizontalAlignment(wPage, HorizontalPanel.ALIGN_CENTER);
   }
   
   public void draw() {
@@ -139,6 +148,8 @@ public class Things extends Composite implements ClickHandler {
     }
     
     setWidths();
+    
+    wPage.setCounts(thingsData.total);
   }
   
   private void setWidths() {
@@ -249,16 +260,22 @@ public class Things extends Composite implements ClickHandler {
   }
   
   private void getThingsRpc() {
-    
+  	
+  	wPage.setVisible(false);
   	cp.showLoading(true);
     
-    // TODO use this later
     ThingFilterData filter = new ThingFilterData();
+    filter.start = wPage.getStart();
+    filter.limit = wPage.getLimit();
     
     rpc.getThings(cp.getAccessToken(), filter, new AsyncCallback<ThingsData>() {
       public void onSuccess(ThingsData thingsData) {
-        process(thingsData);
+        
+      	process(thingsData);
+        
         cp.showLoading(false);
+        wPage.setVisible(true);
+        
       }
       public void onFailure(Throwable caught) {
       	cp.setRpcFailure(caught);
@@ -277,6 +294,8 @@ public class Things extends Composite implements ClickHandler {
   	cp.showLoading(true);
     
     ThingFilterData filter = new ThingFilterData();
+    filter.start = wPage.getStart();
+    filter.limit = wPage.getLimit();
 
     rpc.saveThings(cp.getAccessToken(), filter, thingData, new AsyncCallback<ThingsData>() {
 			public void onSuccess(ThingsData thingData) {
