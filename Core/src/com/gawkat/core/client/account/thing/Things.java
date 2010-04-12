@@ -24,7 +24,7 @@ import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class Things extends Composite implements ClickHandler {
+public class Things extends Composite implements ClickHandler, ChangeHandler {
   
   private ClientPersistence cp = null;
   private RpcCoreServiceAsync rpc = null;
@@ -71,6 +71,7 @@ public class Things extends Composite implements ClickHandler {
     bAdd.addClickHandler(this);
     bSave.addClickHandler(this);
     bBack.addClickHandler(this);
+    wPage.addChangeHandler(this);
     
     //pList.addStyleName("test1");
     //wEdit.addStyleName("test2");
@@ -229,6 +230,7 @@ public class Things extends Composite implements ClickHandler {
       bBack.setVisible(true);
       bAdd.setVisible(false);
       bSave.setVisible(true);
+      //wPage.setVisible(false);
       
     } else if (b == false ) {
       pListTop.setVisible(true);
@@ -237,6 +239,7 @@ public class Things extends Composite implements ClickHandler {
       bBack.setVisible(false);
       bAdd.setVisible(true);
       bSave.setVisible(true);
+      //wPage.setVisible(true);
     }
   }
   
@@ -257,6 +260,15 @@ public class Things extends Composite implements ClickHandler {
     } else if (sender == bBack) {
       drawEdit(false);
     }
+  }
+  
+  public void onChange(ChangeEvent event) {
+    Widget sender = (Widget) event.getSource();
+    
+    if (sender == wPage) {
+    	getThingsRpc();
+    }
+    
   }
   
   private void getThingsRpc() {
@@ -281,11 +293,6 @@ public class Things extends Composite implements ClickHandler {
       	cp.setRpcFailure(caught);
       }
     });
-    
-  }
-
-  public void onChange(ChangeEvent event) {
-    Widget sender = (Widget) event.getSource();
     
   }
 

@@ -17,11 +17,11 @@ public class ThingFilterData implements IsSerializable {
    * get start of range
    * @return
    */
-	public long getRangeFinish() {
+	public long getRangeStart() {
 	  return start;
   }
 
-	public long getRangeStart() {
+	public long getRangeFinish() {
 		long finish = start + limit;
 	  return finish;
   }
