@@ -4,6 +4,4 @@
  Testing GWT JSNI
 
  * [http://demogwtjsni.appspot.com Demo]
- * [ Source]
-
-
+ * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoJSNI/src/org/gonevertical/demo/client Source]
