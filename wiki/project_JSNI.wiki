@@ -5,3 +5,18 @@
 
  * [http://demogwtjsni.appspot.com Demo]
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoJSNI/src/org/gonevertical/demo/client Source]
+
+
+{{{
+public static native void registerJsni(ToolTipWidget ttw) /*-{
+        
+        $wnd.showTooltip = function(elementId, html) {
+                ttw.@org.gonevertical.demo.client.ToolTipWidget::showTooltip(Ljava/lang/String;Ljava/lang/String;)(elementId, html);
+        }
+        
+        $wnd.hideTooltip = function() {
+                ttw.@org.gonevertical.demo.client.ToolTipWidget::hideTooltip()();
+        }
+        
+}-*/;
+}}}
