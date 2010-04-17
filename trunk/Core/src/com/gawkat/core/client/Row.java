@@ -22,7 +22,7 @@ public class Row extends Composite implements MouseOverHandler, MouseOutHandler 
   
   private HorizontalPanelEvent hp = new HorizontalPanelEvent();
   
-  private int row = 0;
+  private long row = 0;
   
   private int changeEvent = 0;
   
@@ -36,7 +36,7 @@ public class Row extends Composite implements MouseOverHandler, MouseOutHandler 
     hp.setSpacing(3);
   }
   
-  public void setRow(int row) {
+  public void setRow(long row) {
     this.row = row;
     setStyle();
   }
