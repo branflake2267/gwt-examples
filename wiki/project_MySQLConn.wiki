@@ -282,21 +282,20 @@ The feedback widget in the repository gathers up the inputs and sends them to th
 
  My Feedback Table
 {{{
-CREATE TABLE `gv_feedback` (
-  `ID` int(11) NOT NULL auto_increment,
-  `UserID` int(11) default NULL,
-  `FromEmail` varchar(150) default NULL,
-  `FromName` varchar(150) default NULL,
-  `Subject` varchar(250) default NULL,
+CREATE TABLE `gwt_feedback` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(11) DEFAULT '0',
+  `FromEmail` varchar(150) DEFAULT NULL,
+  `FromName` varchar(150) DEFAULT NULL,
+  `Subject` varchar(250) DEFAULT NULL,
   `Message` text,
-  `Suggestion` tinyint(1) default '0',
-  `Comment` tinyint(1) default '0',
-  `Problem` tinyint(1) default '0',
-  `Other` tinyint(1) default '0',
-  `Post` tinyint(1) default NULL,
-  `DateCreated` int(11) NOT NULL default '0',
-  `LastUpdated` int(11) default NULL,
-  PRIMARY KEY  (`ID`),
-  KEY `UserID` (`UserID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1
+  `Suggestion` tinyint(1) DEFAULT '0',
+  `Comment` tinyint(1) DEFAULT '0',
+  `Problem` tinyint(1) DEFAULT '0',
+  `Other` tinyint(1) DEFAULT '0',
+  `Post` tinyint(1) DEFAULT NULL,
+  `DateCreated` datetime DEFAULT NULL,
+  `LastUpdated` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM 
 }}}
