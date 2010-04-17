@@ -37,17 +37,25 @@ public class Core implements EntryPoint, ChangeHandler, ValueChangeHandler<Strin
     wLogin.initSession();
     wLogin.setUi(LoginUi.LOGIN_HORIZONTAL);
     
+    Footer wFooter = new Footer();
+    wFooter.draw();
+    
     VerticalPanel pWidget = new VerticalPanel();
     pWidget.add(wLogin);
     pWidget.add(wAccount);
+    pWidget.add(wFooter);
     
     pWidget.setWidth("800px");
     pWidget.setCellHorizontalAlignment(wLogin, HorizontalPanel.ALIGN_RIGHT);
-        
+    
+    
+    // align content center
     VerticalPanel pcenter = new VerticalPanel();
     pcenter.add(pWidget);
     pcenter.setWidth("100%");
     pcenter.setCellHorizontalAlignment(pWidget, HorizontalPanel.ALIGN_CENTER);
+    
+    
     
     RootPanel.get().add(pcenter);
 

@@ -17,6 +17,7 @@ import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.account.thingtype.ThingTypeFilterData;
 import com.gawkat.core.client.account.thingtype.ThingTypesData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
+import com.gawkat.core.client.ui.feedback.FeedbackData;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -61,4 +62,6 @@ public interface RpcCoreService extends RemoteService {
   public boolean deleteThingStuffData(OAuthTokenData accessToken, long thingStuffId);
   
   public ThingLinksData getHierarchy(OAuthTokenData accessToken, ThingLinkFilterData filter);
+  
+  public boolean saveFeedBack(FeedbackData feedbackData);
 }
