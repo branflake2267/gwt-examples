@@ -286,10 +286,7 @@ public class ThingJdo {
 		String qfilter = "thingTypeId==" + thingTypeId + " && key==\"" + key + "\" ";
 
 		PersistenceManager pm = sp.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
 		try {
-			tx.begin();
-
 			Extent<ThingJdo> e = pm.getExtent(ThingJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
 			q.execute();
@@ -301,12 +298,8 @@ public class ThingJdo {
 				aT.add(t);
 			}
 
-			tx.commit();
 			q.closeAll();
 		} finally {
-			if (tx.isActive()) {
-				tx.rollback();
-			}
 			pm.close();
 		}
 
@@ -330,10 +323,7 @@ public class ThingJdo {
 		}
 
 		PersistenceManager pm = sp.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
 		try {
-			tx.begin();
-
 			Extent<ThingJdo> e = pm.getExtent(ThingJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
 			
@@ -363,12 +353,8 @@ public class ThingJdo {
 				i++;
 			}
 
-			tx.commit();
 			q.closeAll();
 		} finally {
-			if (tx.isActive()) {
-				tx.rollback();
-			}
 			pm.close();
 		}
 
@@ -407,10 +393,7 @@ public class ThingJdo {
 		long total = 0;
 		
 		PersistenceManager pm = sp.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
 		try {
-			tx.begin();
-
 			Extent<ThingJdo> e = pm.getExtent(ThingJdo.class, true);
 			Query q = pm.newQuery(e);
 			q.execute();
@@ -418,12 +401,8 @@ public class ThingJdo {
 			Collection<ThingJdo> c = (Collection<ThingJdo>) q.execute();
 			total = c.size();
 
-			tx.commit();
 			q.closeAll();
 		} finally {
-			if (tx.isActive()) {
-				tx.rollback();
-			}
 			pm.close();
 		}
 		

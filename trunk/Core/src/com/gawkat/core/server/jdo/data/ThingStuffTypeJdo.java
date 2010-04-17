@@ -201,10 +201,7 @@ public class ThingStuffTypeJdo {
 		 String qfilter = "name==\"" + name + "\"";
 
 		 PersistenceManager pm = sp.getPersistenceManager();
-		 Transaction tx = pm.currentTransaction();
 		 try {
-			 tx.begin();
-
 			 Extent<ThingStuffTypeJdo> e = pm.getExtent(ThingStuffTypeJdo.class, true);
 			 Query q = pm.newQuery(e, qfilter);
 			 q.execute();
@@ -216,14 +213,10 @@ public class ThingStuffTypeJdo {
 				 aT.add(t);
 			 }
 
-			 tx.commit();
 			 q.closeAll();
 		 } catch (Exception e) {
 			 e.printStackTrace();
 		 } finally {
-			 if (tx.isActive()) {
-				 tx.rollback();
-			 }
 			 pm.close();
 		 }
 
@@ -244,10 +237,7 @@ public class ThingStuffTypeJdo {
 		 ArrayList<ThingStuffTypeJdo> aT = new ArrayList<ThingStuffTypeJdo>();
 
 		 PersistenceManager pm = sp.getPersistenceManager();
-		 Transaction tx = pm.currentTransaction();
 		 try {
-			 tx.begin();
-
 			 // TODO build filter
 			 Extent<ThingStuffTypeJdo> e = pm.getExtent(ThingStuffTypeJdo.class, true);
 			 Query q = pm.newQuery(e);
@@ -261,14 +251,10 @@ public class ThingStuffTypeJdo {
 				 aT.add(t);
 			 }
 
-			 tx.commit();
 			 q.closeAll();
 		 } catch (Exception e) {
 			 e.printStackTrace();
 		 } finally {
-			 if (tx.isActive()) {
-				 tx.rollback();
-			 }
 			 pm.close();
 		 }
 
@@ -327,10 +313,7 @@ public class ThingStuffTypeJdo {
 			long total = 0;
 			
 			PersistenceManager pm = sp.getPersistenceManager();
-			Transaction tx = pm.currentTransaction();
 			try {
-				tx.begin();
-
 				Extent<ThingStuffTypeJdo> e = pm.getExtent(ThingStuffTypeJdo.class, true);
 				Query q = pm.newQuery(e);
 				q.execute();
@@ -338,12 +321,8 @@ public class ThingStuffTypeJdo {
 				Collection<ThingJdo> c = (Collection<ThingJdo>) q.execute();
 				total = c.size();
 
-				tx.commit();
 				q.closeAll();
 			} finally {
-				if (tx.isActive()) {
-					tx.rollback();
-				}
 				pm.close();
 			}
 			
