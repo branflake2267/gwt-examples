@@ -318,7 +318,7 @@ public class ThingStuffTypeJdo {
 				Query q = pm.newQuery(e);
 				q.execute();
 
-				Collection<ThingJdo> c = (Collection<ThingJdo>) q.execute();
+				Collection<ThingStuffTypeJdo> c = (Collection<ThingStuffTypeJdo>) q.execute();
 				total = c.size();
 
 				q.closeAll();

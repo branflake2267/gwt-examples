@@ -289,7 +289,7 @@ public class ThingTypeJdo {
 		
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
-			Extent<ThingStuffJdo> e = pm.getExtent(ThingStuffJdo.class, true);
+			Extent<ThingTypeJdo> e = pm.getExtent(ThingTypeJdo.class, true);
 			Query q = pm.newQuery(e);
 			q.execute();
 

@@ -25,6 +25,8 @@ public class Core implements EntryPoint, ChangeHandler, ValueChangeHandler<Strin
   
   private AccountWidget wAccount = new AccountWidget(cp);
   
+  public static final String LINK_HOME = "account_Home";
+  
   /**
    * load on entry
    */
