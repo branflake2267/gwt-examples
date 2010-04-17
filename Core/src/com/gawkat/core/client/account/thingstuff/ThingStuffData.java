@@ -2,7 +2,6 @@ package com.gawkat.core.client.account.thingstuff;
 
 import java.util.Date;
 
-import com.gawkat.core.client.account.thingstufftype.ThingStuffTypeData;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ThingStuffData implements IsSerializable {

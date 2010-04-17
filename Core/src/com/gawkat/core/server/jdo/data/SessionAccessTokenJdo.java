@@ -18,7 +18,6 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.server.ServerPersistence;
-import com.gawkat.core.server.jdo.PMF;
 import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")

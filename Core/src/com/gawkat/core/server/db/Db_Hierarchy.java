@@ -1,7 +1,7 @@
 package com.gawkat.core.server.db;
 
-import com.gawkat.core.client.account.thing.ownership.ThingLinksData;
 import com.gawkat.core.client.account.thing.ownership.ThingLinkFilterData;
+import com.gawkat.core.client.account.thing.ownership.ThingLinksData;
 import com.gawkat.core.client.account.thingset.ThingSetOfData;
 import com.gawkat.core.client.account.thingset.ThingSetOfFilterData;
 import com.gawkat.core.client.oauth.OAuthTokenData;

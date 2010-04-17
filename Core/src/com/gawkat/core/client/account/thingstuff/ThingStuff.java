@@ -34,7 +34,6 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.server.rpc.RPC;
 
 public class ThingStuff extends Composite implements ClickHandler, ChangeHandler, MouseOverHandler, MouseOutHandler {
   	
