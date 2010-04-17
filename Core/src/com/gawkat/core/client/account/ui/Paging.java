@@ -1,6 +1,7 @@
 package com.gawkat.core.client.account.ui;
 
 import com.gawkat.core.client.global.EventManager;
+import com.gawkat.core.client.global.LoadingWidget;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -31,6 +32,7 @@ public class Paging extends Composite implements ClickHandler, ChangeHandler {
 	private HorizontalPanel pNextPages = new HorizontalPanel();
 	private FlowPanel pOnPage = new FlowPanel();
 	private FlowPanel pTotalPages = new FlowPanel();
+	private LoadingWidget wLoading = new LoadingWidget();
 
 	// buttons
 	private PushButton bPrev = new PushButton("<");
@@ -80,6 +82,8 @@ public class Paging extends Composite implements ClickHandler, ChangeHandler {
 		hp.add(pTotalPages);
 		hp.add(new HTML("&nbsp;"));
 		hp.add(lbLimit);
+		hp.add(new HTML("&nbsp;"));
+		hp.add(wLoading);
 
 		pWidget.add(hp);
 
@@ -106,6 +110,8 @@ public class Paging extends Composite implements ClickHandler, ChangeHandler {
 		drawLimitChoices();
 		
 		hp.setCellVerticalAlignment(lbLimit, VerticalPanel.ALIGN_MIDDLE);
+		
+		pWidget.setVisible(false);
 	}
 
 	public int getStart() {
@@ -114,6 +120,11 @@ public class Paging extends Composite implements ClickHandler, ChangeHandler {
 
 	public int getLimit() {
 		return limit;
+	}
+	
+	public long getCountOffset() {
+		long l = onPage * limit;
+	  return l;
 	}
 	
 	/**
@@ -125,6 +136,8 @@ public class Paging extends Composite implements ClickHandler, ChangeHandler {
 		this.total = total;
 		
 		draw();
+		
+		wLoading.hide();
   }
 
 	/**
@@ -146,8 +159,16 @@ public class Paging extends Composite implements ClickHandler, ChangeHandler {
 	 * run page calculations
 	 */
 	private void draw() {
-		setOnPage();
+		
 		setTotalPages();
+		
+		if (totalPages > 0) {
+			pWidget.setVisible(true);
+		} else {
+			pWidget.setVisible(false);
+		}
+		
+		setOnPage();
 		setFirstPage();
 		setLastPage();
 
@@ -330,6 +351,9 @@ public class Paging extends Composite implements ClickHandler, ChangeHandler {
 		} else if (sender == bEnd) {
 			setEnd();
 		}
+		
+		wLoading.show();
+		
 		fire(CHANGE_START);
 	}
 
@@ -340,6 +364,13 @@ public class Paging extends Composite implements ClickHandler, ChangeHandler {
 		}
 	}
 
+	@Override
+	public void setVisible(boolean b) {
+		if (totalPages == 0 && b == true) {
+			b = false;
+		}
+		super.setVisible(b);
+	}
 
 
 

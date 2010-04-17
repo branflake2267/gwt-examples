@@ -77,8 +77,6 @@ public class Things extends Composite implements ClickHandler, ChangeHandler {
     //wEdit.addStyleName("test2");
     //pWidget.addStyleName("test3");
     
-    wPage.setVisible(false);
-    
     // no need for now
     //pWidget.setCellHorizontalAlignment(wPage, HorizontalPanel.ALIGN_CENTER);
   }
@@ -142,15 +140,19 @@ public class Things extends Composite implements ClickHandler, ChangeHandler {
     thingTypesData = thingsData.thingTypesData;
     
     drawTopRow();
-
+    
+    wPage.setCounts(thingsData.total);
+    
+    long count = wPage.getCountOffset();
     for (int i=0; i < t.length; i++){
       ThingTypeData thingTypeData = thingsData.thingTypesData.getThingType(t[i].getThingTypeId());
-      addThing(i, t[i], thingTypeData);
+      addThing(count, t[i], thingTypeData);
+      count++;
     }
     
     setWidths();
     
-    wPage.setCounts(thingsData.total);
+    
   }
   
   private void setWidths() {
@@ -168,9 +170,9 @@ public class Things extends Composite implements ClickHandler, ChangeHandler {
     th.setWidths(widths);
   }
   
-  private Thing addThing(int i, ThingData thingData, ThingTypeData thingTypeData) {
+  private Thing addThing(long count, ThingData thingData, ThingTypeData thingTypeData) {
     Thing t = new Thing(cp);
-    t.setData(i, thingData, thingTypeData);
+    t.setData(count, thingData, thingTypeData);
     pList.add(t);
     widths = Row.getMaxWidths(widths, t.getRow().getWidths());
     t.addChangeHandler(new ChangeHandler() {
@@ -230,7 +232,7 @@ public class Things extends Composite implements ClickHandler, ChangeHandler {
       bBack.setVisible(true);
       bAdd.setVisible(false);
       bSave.setVisible(true);
-      //wPage.setVisible(false);
+      wPage.setVisible(false);
       
     } else if (b == false ) {
       pListTop.setVisible(true);
@@ -239,7 +241,7 @@ public class Things extends Composite implements ClickHandler, ChangeHandler {
       bBack.setVisible(false);
       bAdd.setVisible(true);
       bSave.setVisible(true);
-      //wPage.setVisible(true);
+      wPage.setVisible(true);
     }
   }
   
@@ -273,7 +275,6 @@ public class Things extends Composite implements ClickHandler, ChangeHandler {
   
   private void getThingsRpc() {
   	
-  	wPage.setVisible(false);
   	cp.showLoading(true);
     
     ThingFilterData filter = new ThingFilterData();
@@ -286,7 +287,6 @@ public class Things extends Composite implements ClickHandler, ChangeHandler {
       	process(thingsData);
         
         cp.showLoading(false);
-        wPage.setVisible(true);
         
       }
       public void onFailure(Throwable caught) {

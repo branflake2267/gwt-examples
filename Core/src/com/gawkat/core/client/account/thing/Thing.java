@@ -44,7 +44,7 @@ public class Thing extends Composite implements ChangeHandler, ClickHandler {
    
   private ThingData thingData = null;
 
-  private int row = 0;
+  private long row = 0;
   
   private int changeEvent = 0;
   
@@ -67,7 +67,7 @@ public class Thing extends Composite implements ChangeHandler, ClickHandler {
     rpc = RpcCore.initRpc();
   }
 
-  public void setData(int row, ThingData thingData, ThingTypeData thingTypeData) {
+  public void setData(long row, ThingData thingData, ThingTypeData thingTypeData) {
   	//if (thingData == null || thingTypeData == null) {
   		//return;
   	//}
@@ -84,7 +84,7 @@ public class Thing extends Composite implements ChangeHandler, ClickHandler {
     pName.clear();
     
     // C0: count
-    pCount.add(new HTML(Integer.toString(row)));
+    pCount.add(new HTML(Long.toString(row)));
    
     // C1: Id
     HTML pId = new HTML(Long.toString(thingData.getThingId()));
