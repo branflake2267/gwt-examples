@@ -20,9 +20,6 @@ public class DemoFeedback implements EntryPoint, ClickHandler {
 	// something to activate the feedback popup widget
 	private PushButton bFeedback = new PushButton("Send Feedback");
 	
-	// feedback widget
-	private FeedbackWidget fb = new FeedbackWidget();
-
 	/**
 	 * This is the entry point method.
 	 */
@@ -49,7 +46,8 @@ public class DemoFeedback implements EntryPoint, ClickHandler {
 	  if (sender == bFeedback) {
 	  	Track.track("Feedback_click");
 	  
-			fb.center();
+	  	FeedbackWidget fb = new FeedbackWidget();
+	  	fb.center();
 		}
 	  
   }
