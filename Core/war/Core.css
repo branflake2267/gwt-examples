@@ -158,3 +158,14 @@
 .core-row-hover {
   background-color: #fdf2cb;
 }
+
+
+
+.core-feedback-field {
+	width: 80px;
+	font-weight: bold;
+}
+
+.core-feedback-padlr {
+	padding: 7px;
+}
