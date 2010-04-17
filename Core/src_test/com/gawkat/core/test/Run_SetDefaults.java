@@ -2,7 +2,7 @@ package com.gawkat.core.test;
 
 import com.gawkat.core.client.SetDefaultsData;
 import com.gawkat.core.server.ServerPersistence;
-import com.gawkat.core.server.jdo.SetDefaults;
+import com.gawkat.core.server.db.SetDefaults;
 
 public class Run_SetDefaults {
 
