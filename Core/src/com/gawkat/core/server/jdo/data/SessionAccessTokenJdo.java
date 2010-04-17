@@ -127,10 +127,7 @@ public class SessionAccessTokenJdo {
 		ArrayList<SessionAccessTokenJdo> aT = new ArrayList<SessionAccessTokenJdo>();
 
 		PersistenceManager pm = sp.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
 		try {
-			tx.begin();
-
 			Extent<SessionAccessTokenJdo> e = pm.getExtent(SessionAccessTokenJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
 			q.execute();
@@ -142,14 +139,10 @@ public class SessionAccessTokenJdo {
 				aT.add(t);
 			}
 
-			tx.commit();
 			q.closeAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (tx.isActive()) {
-				tx.rollback();
-			}
 			pm.close();
 		}
 

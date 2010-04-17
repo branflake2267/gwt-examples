@@ -94,10 +94,7 @@ public class SessionNonceJdo {
     boolean found = false;
 
     PersistenceManager pm = sp.getPersistenceManager();
-    Transaction tx = pm.currentTransaction();
     try {
-      tx.begin();
-
       Extent<SessionNonceJdo> e = pm.getExtent(SessionNonceJdo.class, true);
       Query q = pm.newQuery(e, qfilter);
       q.execute();
@@ -108,14 +105,10 @@ public class SessionNonceJdo {
       	found = true;
       }
 
-      tx.commit();
       q.closeAll();
     } catch (Exception e) {
       e.printStackTrace();
     } finally {
-      if (tx.isActive()) {
-        tx.rollback();
-      }
       pm.close();
     }
 
