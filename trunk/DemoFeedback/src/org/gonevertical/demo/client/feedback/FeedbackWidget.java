@@ -127,12 +127,12 @@ public class FeedbackWidget extends DialogBox implements ClickHandler {
 		cbComment.addClickHandler(this);
 		cbSuggestion.addClickHandler(this);
 
-		html.setStyleName("field");
-		html1.setStyleName("field");
-		html2.setStyleName("field");
-		htmlA.setStyleName("field");
-		htmlN.setStyleName("field");
-		pWidget.addStyleName("padLR");
+		html.setStyleName("feedback-field");
+		html1.setStyleName("feedback-field");
+		html2.setStyleName("feedback-field");
+		htmlA.setStyleName("feedback-field");
+		htmlN.setStyleName("feedback-field");
+		pWidget.addStyleName("feedback-padlr");
 		pWidget.setWidth("400px");
 		tbFromEmail.setWidth("300px");
 		tbFromName.setWidth("300px");
@@ -283,6 +283,7 @@ public class FeedbackWidget extends DialogBox implements ClickHandler {
 
 		rpc.saveFeedBack(feedbackData, new AsyncCallback<Boolean>() {
 			public void onSuccess(Boolean result) {
+				close = true;
 				drawNotificaton("Thanks for sending feedback.");
 			}
 			
