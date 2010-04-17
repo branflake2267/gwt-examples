@@ -11,7 +11,7 @@ import com.gawkat.core.client.global.EventManager;
 import com.gawkat.core.client.global.LoadingWidget;
 import com.gawkat.core.client.rpc.RpcCore;
 import com.gawkat.core.client.rpc.RpcCoreServiceAsync;
-import com.gawkat.core.server.db.SetDefaults;
+import com.gawkat.core.server.jdo.data.SetDefaults;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
