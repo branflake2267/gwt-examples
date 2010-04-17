@@ -17,6 +17,7 @@ import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.account.thingtype.ThingTypeFilterData;
 import com.gawkat.core.client.account.thingtype.ThingTypesData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
+import com.gawkat.core.client.ui.feedback.FeedbackData;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface RpcCoreServiceAsync {
@@ -58,5 +59,7 @@ public interface RpcCoreServiceAsync {
   public void saveThingStuffData(OAuthTokenData accessToken, ThingStuffFilterData filter, ThingStuffData[] thingStuffData, AsyncCallback<ThingStuffsData> callback);
   public void deleteThingStuffData(OAuthTokenData accessToken, long thingStuffId, AsyncCallback<Boolean> callback);
   
+  
   public void getHierarchy(OAuthTokenData accessToken, ThingLinkFilterData filter, AsyncCallback<ThingLinksData> callback);
+  public void saveFeedBack(FeedbackData feedbackData, AsyncCallback<Boolean> callback);
 }

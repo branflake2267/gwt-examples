@@ -18,6 +18,7 @@ import com.gawkat.core.client.account.thingtype.ThingTypeFilterData;
 import com.gawkat.core.client.account.thingtype.ThingTypesData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.client.rpc.RpcCoreService;
+import com.gawkat.core.client.ui.feedback.FeedbackData;
 import com.gawkat.core.server.db.Db_Hierarchy;
 import com.gawkat.core.server.db.Db_Thing;
 import com.gawkat.core.server.db.Db_ThingStuff;
@@ -239,6 +240,11 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   	boolean r = db.deleteThingStuffAboutData(accessToken, thingStuffAboutId);
   	sp.end();
 	  return r;
+  }
+
+  public boolean saveFeedBack(FeedbackData feedbackData) {
+	  
+	  return false;
   }
 
 }
