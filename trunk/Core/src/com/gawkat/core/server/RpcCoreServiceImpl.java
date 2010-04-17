@@ -24,8 +24,8 @@ import com.gawkat.core.server.db.Db_ThingStuff;
 import com.gawkat.core.server.db.Db_ThingStuffType;
 import com.gawkat.core.server.db.Db_ThingType;
 import com.gawkat.core.server.db.Db_User;
+import com.gawkat.core.server.db.SetDefaults;
 import com.gawkat.core.server.db.oauth.OAuthServer;
-import com.gawkat.core.server.jdo.SetDefaults;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 @SuppressWarnings("serial")

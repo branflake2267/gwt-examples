@@ -124,6 +124,7 @@ public class Paging extends Composite implements ClickHandler, ChangeHandler {
 	
 	public long getCountOffset() {
 		long l = onPage * limit;
+		l++; // offset from zero ordinal, start at 1;
 	  return l;
 	}
 	

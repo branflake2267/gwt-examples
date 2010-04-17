@@ -20,26 +20,46 @@ public class EventManager {
 	 */
 	public static final int LOADING_FINISHED = 11;
 
-  // clicked on login
-  final public static int LOGIN = 1;
+  /**
+   * clicked on login
+   */
+	public static final int LOGIN = 1;
   
-  // clicked on logged out
-  final public static int LOGOUT = 2;
+  /**
+   * clicked on logged out
+   */
+  public static final int LOGOUT = 2;
   
-  // clicked on forgot pass
-  final public static int FORGOT_PASSWORD = 3;
+  /**
+   * clicked on forgot pass
+   */
+  public static final int FORGOT_PASSWORD = 3;
   
-  // rpc logged in succesfully
-  final public static int LOGGEDIN = 4;
+  /**
+   * rpc logged in succesfully
+   */
+  public static final int LOGGEDIN = 4;
   
-  // log out was pushed
-  final public static int LOGGEDOUT = 5;
+  /**
+   * log out was pushed
+   */
+  public static final int LOGGEDOUT = 5;
   
-  // a new user was created
-  final public static int NEW_USER_CREATED = 6;
+  /**
+   * a new user was created
+   */
+  public static final int NEW_USER_CREATED = 6;
   
-  // show account profile
-  final public static int PROFILE = 7;
+  /**
+   * show account profile
+   */
+  public static final int PROFILE = 7;
+  
+  /**
+   * trigger a demo login
+   */
+  public static final int LOGIN_DEMO = 8;
+  
  
   public static final int DELETE_YES = 20;
   public static final int DELETE_NO = 21;
@@ -86,4 +106,6 @@ public class EventManager {
 	 * paging
 	 */
 	public static final int PAGE_CHANGELIMIT = 11;
+
+	
 }
