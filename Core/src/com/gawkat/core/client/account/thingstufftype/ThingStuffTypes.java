@@ -4,10 +4,11 @@ import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.Row;
 import com.gawkat.core.client.SetDefaultsData;
 import com.gawkat.core.client.account.thing.ThingData;
+import com.gawkat.core.client.account.ui.Paging;
 import com.gawkat.core.client.global.LoadingWidget;
 import com.gawkat.core.client.rpc.RpcCore;
 import com.gawkat.core.client.rpc.RpcCoreServiceAsync;
-import com.gawkat.core.server.jdo.SetDefaults;
+import com.gawkat.core.server.db.SetDefaults;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -38,12 +39,15 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
   
   private ThingData thingData = null;
   
+  private Paging wPage = new Paging();
+  
   public ThingStuffTypes(ClientPersistence cp) {
     this.cp = cp;
     
     pWidget.add(pMenu);
     pWidget.add(pListTop);
     pWidget.add(pList);
+    pWidget.add(wPage);
     
     initWidget(pWidget);
     
@@ -108,12 +112,18 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
     if (thingStuffTypesData.thingStuffTypeData == null) {
       return;
     }
-    ThingStuffTypeData[] ThingStuffTypeData = thingStuffTypesData.thingStuffTypeData;
+    ThingStuffTypeData[] thingStuffTypeData = thingStuffTypesData.thingStuffTypeData;
+    
+    if (thingStuffTypeData.length == 0) {
+    	return;
+    }
     
     drawTopRow();
+    
+    wPage.setCounts(thingStuffTypeData.length);
 
-    for (int i=0; i < ThingStuffTypeData.length; i++){
-      addStuffType(i, ThingStuffTypeData[i]);
+    for (int i=0; i < thingStuffTypeData.length; i++){
+      addStuffType(i, thingStuffTypeData[i]);
     }
     
     setWidths();

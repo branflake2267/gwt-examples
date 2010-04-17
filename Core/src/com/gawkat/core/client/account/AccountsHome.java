@@ -2,6 +2,7 @@ package com.gawkat.core.client.account;
 
 import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.SetDefaultsData;
+import com.gawkat.core.client.global.EventManager;
 import com.gawkat.core.client.rpc.RpcCore;
 import com.gawkat.core.client.rpc.RpcCoreServiceAsync;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -24,6 +25,7 @@ public class AccountsHome extends Composite implements ClickHandler {
 	private VerticalPanel pMenu = new VerticalPanel();
 	
 	private PushButton bDefault = new PushButton("Add Account Defaults");
+	private PushButton bLogin = new PushButton("Demo SignIn");
 	
 	public AccountsHome(ClientPersistence cp) {
 		this.cp = cp;
@@ -33,6 +35,7 @@ public class AccountsHome extends Composite implements ClickHandler {
 		initWidget(pWidget);
 		
 		bDefault.addClickHandler(this);
+		bLogin.addClickHandler(this);
 		
 		rpc = RpcCore.initRpc();
 	}
@@ -48,8 +51,13 @@ public class AccountsHome extends Composite implements ClickHandler {
     hp.add(bDefault);
     hp.add(new HTML("&nbsp; Set up defaults"));
     
-    pMenu.add(hp);
+    HorizontalPanel hp2 = new HorizontalPanel();
+    hp2.add(bLogin);
+    hp2.add(new HTML("&nbsp; Try the demo_user SignIn"));
     
+    pMenu.add(hp);
+    pMenu.add(new HTML("&nbsp;"));
+    pMenu.add(hp2);
     pMenu.add(new HTML("&nbsp;"));
     pMenu.add(new HTML("<a href=\"http://gwt-examples.googlecode.com\">gwt-examples.googlecode.com</a> Find my code here for this."));
   }
@@ -59,6 +67,9 @@ public class AccountsHome extends Composite implements ClickHandler {
   	
   	if (sender == bDefault) {
       setDefaults();
+      
+    } else if (sender == bLogin) {
+    	cp.fireChange(EventManager.LOGIN_DEMO);
     }
 	  
   }

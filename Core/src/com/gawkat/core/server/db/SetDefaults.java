@@ -1,4 +1,4 @@
-package com.gawkat.core.server.jdo;
+package com.gawkat.core.server.db;
 
 import java.util.Date;
 

@@ -3,10 +3,11 @@ package com.gawkat.core.client.account.thingtype;
 import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.Row;
 import com.gawkat.core.client.SetDefaultsData;
+import com.gawkat.core.client.account.ui.Paging;
 import com.gawkat.core.client.global.LoadingWidget;
 import com.gawkat.core.client.rpc.RpcCore;
 import com.gawkat.core.client.rpc.RpcCoreServiceAsync;
-import com.gawkat.core.server.jdo.SetDefaults;
+import com.gawkat.core.server.db.SetDefaults;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -36,12 +37,15 @@ public class ThingTypes extends Composite implements ClickHandler, ChangeHandler
   private PushButton bAdd = new PushButton("Add");
   private PushButton bSave = new PushButton("Save");
   
+  private Paging wPage = new Paging();
+  
   public ThingTypes(ClientPersistence cp) {
     this.cp = cp;
     
     pWidget.add(pMenu);
     pWidget.add(pListTop);
     pWidget.add(pList);
+    pWidget.add(wPage);
     
     initWidget(pWidget);
     
@@ -102,12 +106,21 @@ public class ThingTypes extends Composite implements ClickHandler, ChangeHandler
     if (thingTypesData.thingTypeData == null) {
       return;
     }
+    
     ThingTypeData[] thingTypeData = thingTypesData.thingTypeData;
     
+    if (thingTypeData.length == 0) {
+    	return;
+    }
+    
     drawTopRow();
+    
+    wPage.setCounts(thingTypesData.total);
 
+    int count = (int) wPage.getCountOffset();
     for (int i=0; i < thingTypeData.length; i++){
-      addThingType(i, thingTypeData[i]);
+      addThingType(count, thingTypeData[i]);
+      count++;
     }
     
     setWidths();

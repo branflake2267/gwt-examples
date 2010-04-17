@@ -1,6 +1,5 @@
 package com.gawkat.core.client.account.ui;
 
-
 import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.global.EventManager;
 import com.gawkat.core.client.global.Global_String;
@@ -23,6 +22,7 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
@@ -176,6 +176,15 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 		
 		// debug
 		//pWidget.addStyleName("test2");
+		
+		cp.addChangeHandler(new ChangeHandler() {
+			public void onChange(ChangeEvent event) {
+				ClientPersistence wcp = (ClientPersistence) event.getSource();
+				if (wcp.getChangeEvent() == EventManager.LOGIN_DEMO) {
+					setDemoLogin();
+				}
+			}
+		});
 	}
 	
 	public void draw() {
@@ -193,6 +202,18 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 	public void setLoginStatus(boolean bol) {
 		this.loginStatus = bol;
 		draw();
+	}
+	
+	private void setDemoLogin() {
+		tbConsumerKey.setText("demo_user");
+		tbConsumerSecret.setFocus(true);
+		tbConsumerSecretPass.setText("password");
+		Timer t = new Timer() {
+			public void run() {
+				startLogin();
+			}
+		};
+		t.schedule(1500);
 	}
 	
 	private void drawLoginInputs() {
@@ -432,7 +453,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 	
 	
 	/**
-	 * change input label "Email"
+	 * change input label "Email" username
 	 * 
 	 * @param focus
 	 */
@@ -443,7 +464,9 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 			tbConsumerKey.addStyleName("core-login-ui-inputlabel");
 			
 		} else if (getConsumerKey().equals(inputLabel_ConsumerKey) == true) {
-			tbConsumerKey.setText("");
+			if (getConsumerKey().length() == 0 || getConsumerKey().equals(inputLabel_ConsumerKey) == true) {
+				tbConsumerKey.setText("");
+			}
 			tbConsumerKey.removeStyleName("core-login-ui-inputlabel");
 		}
 	}
@@ -471,7 +494,10 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 		} 
 	}
 	
-
+	private void startLogin() {
+		 drawLoading();
+     fireChange(EventManager.LOGIN);
+	}
 	
 	
 	
@@ -498,8 +524,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 	    
 	  Widget sender = (Widget) event.getSource();
     if (sender == bLogin) {
-      drawLoading();
-      fireChange(EventManager.LOGIN);
+      startLogin();
     
     } else if (sender == bForgot) {
       drawLoading();

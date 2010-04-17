@@ -11,7 +11,7 @@ import com.gawkat.core.client.global.EventManager;
 import com.gawkat.core.client.global.LoadingWidget;
 import com.gawkat.core.client.rpc.RpcCore;
 import com.gawkat.core.client.rpc.RpcCoreServiceAsync;
-import com.gawkat.core.server.jdo.SetDefaults;
+import com.gawkat.core.server.db.SetDefaults;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -135,16 +135,22 @@ public class Things extends Composite implements ClickHandler, ChangeHandler {
     if (thingsData.thingData == null) {
       return;
     }
+    
+    // set choices
+    thingTypesData = thingsData.thingTypesData;
+    
     ThingData[] t = thingsData.thingData;
     
-    thingTypesData = thingsData.thingTypesData;
+    if (t.length == 0) {
+    	return;
+    }
     
     drawTopRow();
     
     wPage.setCounts(thingsData.total);
     
     long count = wPage.getCountOffset();
-    for (int i=0; i < t.length; i++){
+    for (int i=0; i < t.length; i++) {
       ThingTypeData thingTypeData = thingsData.thingTypesData.getThingType(t[i].getThingTypeId());
       addThing(count, t[i], thingTypeData);
       count++;

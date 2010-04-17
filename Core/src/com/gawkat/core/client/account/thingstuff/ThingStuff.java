@@ -123,7 +123,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   		int index,
   		ThingData thingData, 
   		ThingStuffTypesData thingStuffTypesData, 
-  		ThingStuffData thingStuffData) {
+  		ThingStuffData thingStuffData, int count) {
   	this.index = index;
     this.thingData = thingData;
     this.thingStuffData = thingStuffData;

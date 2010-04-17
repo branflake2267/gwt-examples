@@ -154,14 +154,20 @@ public class ThingStuffs extends Composite implements ClickHandler, ChangeHandle
     if (thingStuffsData.thingStuffData == null) {
       return;
     }
-    ThingStuffData[] ThingStuffData = thingStuffsData.thingStuffData;
+    ThingStuffData[] thingStuffData = thingStuffsData.thingStuffData;
     
-    if (ThingStuffData.length > 0) {
-      drawTopRow();
+    if (thingStuffData.length == 0) {
+      return;
     }
+    
+    drawTopRow();
+    
+    wPage.setCounts(thingStuffData.length);
 
-    for (int i=0; i < ThingStuffData.length; i++){
-      addStuff(i, ThingStuffData[i]);
+    int count = (int) wPage.getCountOffset();
+    for (int i=0; i < thingStuffData.length; i++){
+      addStuff(i, thingStuffData[i], count);
+      count++;
     }
     
     setWidths();
@@ -192,9 +198,9 @@ public class ThingStuffs extends Composite implements ClickHandler, ChangeHandle
     th.setWidths(widths);
   }
   
-  private ThingStuff addStuff(int index, ThingStuffData thingStuffData) {
+  private ThingStuff addStuff(int index, ThingStuffData thingStuffData, int count) {
     ThingStuff t = new ThingStuff(cp, widgetType);
-    t.setData(index, thingData, thingStuffTypesData, thingStuffData);
+    t.setData(index, thingData, thingStuffTypesData, thingStuffData, count);
     pListStuff.add(t);
     
     // DEBUG
@@ -287,8 +293,9 @@ public class ThingStuffs extends Composite implements ClickHandler, ChangeHandle
     if (index == 0) {
       drawTopRow();
     }
+    int count = index;
     ThingStuffData thingStuffData = new ThingStuffData();
-    ThingStuff t = addStuff(index, thingStuffData);
+    ThingStuff t = addStuff(index, thingStuffData, count);
     t.getRow().setWidths(widths);
     setWidths();
   }
