@@ -2,7 +2,6 @@ package com.gawkat.core.client.account;
 
 import com.gawkat.core.client.ClientPersistence;
 import com.gawkat.core.client.account.thing.Things;
-import com.gawkat.core.client.account.thing.ownership.ThingLink;
 import com.gawkat.core.client.account.thingstufftype.ThingStuffTypes;
 import com.gawkat.core.client.account.thingtype.ThingTypes;
 import com.gawkat.core.client.global.QueryString;

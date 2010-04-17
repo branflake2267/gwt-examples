@@ -1,6 +1,5 @@
 package com.gawkat.core.client;
 
-import com.gawkat.core.client.global.LoadingWidget;
 import com.gawkat.core.client.global.QueryString;
 import com.gawkat.core.client.global.QueryStringData;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;

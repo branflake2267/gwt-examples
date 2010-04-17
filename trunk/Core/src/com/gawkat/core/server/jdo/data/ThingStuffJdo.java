@@ -23,7 +23,6 @@ import com.gawkat.core.client.account.thingstuff.ThingStuffData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffFilterData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffsData;
 import com.gawkat.core.server.ServerPersistence;
-import com.gawkat.core.server.jdo.PMF;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 

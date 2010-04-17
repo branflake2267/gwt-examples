@@ -5,8 +5,8 @@ import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thing.ThingFilterData;
 import com.gawkat.core.client.account.thing.ThingsData;
-import com.gawkat.core.client.account.thing.ownership.ThingLinksData;
 import com.gawkat.core.client.account.thing.ownership.ThingLinkFilterData;
+import com.gawkat.core.client.account.thing.ownership.ThingLinksData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffFilterData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffsData;
@@ -24,8 +24,8 @@ import com.gawkat.core.server.db.Db_ThingStuff;
 import com.gawkat.core.server.db.Db_ThingStuffType;
 import com.gawkat.core.server.db.Db_ThingType;
 import com.gawkat.core.server.db.Db_User;
+import com.gawkat.core.server.db.SetDefaults;
 import com.gawkat.core.server.db.oauth.OAuthServer;
-import com.gawkat.core.server.jdo.data.SetDefaults;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 @SuppressWarnings("serial")

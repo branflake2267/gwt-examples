@@ -19,7 +19,6 @@ import javax.jdo.annotations.PrimaryKey;
 import com.gawkat.core.client.account.thingtype.ThingTypeData;
 import com.gawkat.core.client.account.thingtype.ThingTypeFilterData;
 import com.gawkat.core.server.ServerPersistence;
-import com.gawkat.core.server.jdo.PMF;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 

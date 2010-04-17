@@ -3,14 +3,12 @@ package com.gawkat.core.server.db;
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thing.ThingFilterData;
 import com.gawkat.core.client.account.thing.ThingsData;
-import com.gawkat.core.client.account.thingstuff.ThingStuffData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffFilterData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffsData;
 import com.gawkat.core.client.account.thingtype.ThingTypesData;
 import com.gawkat.core.client.oauth.OAuthTokenData;
 import com.gawkat.core.server.ServerPersistence;
 import com.gawkat.core.server.jdo.data.ThingJdo;
-import com.gawkat.core.server.jdo.data.ThingStuffJdo;
 
 public class Db_Thing {
 
