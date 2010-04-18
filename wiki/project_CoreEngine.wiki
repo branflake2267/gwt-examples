@@ -13,8 +13,20 @@
  I include this project in my other main projects. There are several steps that have to be completed for it to work.
 
  # Eclipse BuildPath configuration: Include source folder as src_core 
- # Eclipse BuildPath configuration: Include Project
+ # Eclipse BuildPath configuration: Include Project 
  # In Module configuration in *.gwt.xml: {{{<inherits name='org.gonevertical.core.Core'/>}}}
  # In Module configuration in *.gwt.xml: Comment already loaded modules that will load in core.
  # trans? for core?
- # In web.xml: Add servlet path for rpc connection for core
+ # In web.xml: Add servlet path for rpc connection for core, sorta like this below
+ {{{
+ <!-- core -->
+   <servlet>
+    <servlet-name>rpcCoreServlet</servlet-name>
+    <servlet-class>org.gonevertical.core.server.RpcCoreServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>rpcCoreServlet</servlet-name>
+    <url-pattern>/gonevertical/rpccore</url-pattern>
+  </servlet-mapping>
+ }}}
