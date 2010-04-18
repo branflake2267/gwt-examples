@@ -4,7 +4,7 @@
  I'm tired of writing the same code over and over and wanted to deploy my apps faster with an established code base of all the things in the kitchen. This is the beginning of my core module that I will include into my other projects. 
 
  * [http://core-engine.appspot.com/#account_Things Demo]
- * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/Core/src Source]
+ * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/Core/src Core-Engine Source]
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoCoreEngine/src Source] - Source Demo of inclusion
 
 = Alpha Version =
