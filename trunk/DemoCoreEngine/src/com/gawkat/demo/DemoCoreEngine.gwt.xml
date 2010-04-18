@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='democoreengine'>
+
+  <inherits name='org.gonevertical.core.Core'/>
+
+
+  <!-- Other module inherits                                      -->
+
+
+  <entry-point class='com.gawkat.demo.client.DemoCoreEngine'/>
+
+
+  <!-- Specify the paths for translatable code                    -->
+  <source path='client'/>
+  <source path='shared'/>
+
+</module>
