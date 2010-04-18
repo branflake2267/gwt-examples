@@ -5,6 +5,7 @@
 
  * [http://core-engine.appspot.com/#account_Things Demo]
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/Core/src Source]
+ * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoCoreEngine/src Demo] - Demo of inclusion
 
 = Alpha Version =
  This is still alpha. I'm am vigorously working on this every weekend and its my intention to make this a mature module, so I can use it in my GoneVertical.com and host it on GAE.
@@ -17,9 +18,9 @@
  # In Module configuration in *.gwt.xml: {{{<inherits name='org.gonevertical.core.Core'/>}}}
  # In Module configuration in *.gwt.xml: Comment already loaded modules that will load in core.
  # trans? for core?
- # In web.xml: Add servlet path for rpc connection for core, sorta like this below
+ # In web.xml: Add servlet path for rpc connection for core, like my demo project
  {{{
- <!-- core -->
+  <!-- core include -->
    <servlet>
     <servlet-name>rpcCoreServlet</servlet-name>
     <servlet-class>org.gonevertical.core.server.RpcCoreServiceImpl</servlet-class>
@@ -27,6 +28,7 @@
   
   <servlet-mapping>
     <servlet-name>rpcCoreServlet</servlet-name>
-    <url-pattern>/gonevertical/rpccore</url-pattern>
+    <url-pattern>/democoreengine/rpccore</url-pattern>
   </servlet-mapping>
  }}}
+ # 
