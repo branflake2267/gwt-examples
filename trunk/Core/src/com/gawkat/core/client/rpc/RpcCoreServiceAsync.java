@@ -5,8 +5,6 @@ import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thing.ThingFilterData;
 import com.gawkat.core.client.account.thing.ThingsData;
-import com.gawkat.core.client.account.thing.ownership.ThingLinkFilterData;
-import com.gawkat.core.client.account.thing.ownership.ThingLinksData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffFilterData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffsData;
@@ -60,6 +58,6 @@ public interface RpcCoreServiceAsync {
   public void deleteThingStuffData(OAuthTokenData accessToken, long thingStuffId, AsyncCallback<Boolean> callback);
   
   
-  public void getHierarchy(OAuthTokenData accessToken, ThingLinkFilterData filter, AsyncCallback<ThingLinksData> callback);
+  //public void getHierarchy(OAuthTokenData accessToken, ThingLinkFilterData filter, AsyncCallback<ThingLinksData> callback);
   public void saveFeedBack(FeedbackData feedbackData, AsyncCallback<Boolean> callback);
 }

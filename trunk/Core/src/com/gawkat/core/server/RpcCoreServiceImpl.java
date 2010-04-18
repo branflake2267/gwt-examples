@@ -5,8 +5,6 @@ import com.gawkat.core.client.account.UserData;
 import com.gawkat.core.client.account.thing.ThingData;
 import com.gawkat.core.client.account.thing.ThingFilterData;
 import com.gawkat.core.client.account.thing.ThingsData;
-import com.gawkat.core.client.account.thing.ownership.ThingLinkFilterData;
-import com.gawkat.core.client.account.thing.ownership.ThingLinksData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffFilterData;
 import com.gawkat.core.client.account.thingstuff.ThingStuffsData;
@@ -218,14 +216,6 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
     return r;
   }
   
-  public ThingLinksData getHierarchy(OAuthTokenData accessToken, ThingLinkFilterData filter) {
-    sp.start(getThreadLocalRequest());
-    Db_Hierarchy db = new Db_Hierarchy(sp);
-    ThingLinksData r = db.getHierarchy(accessToken, filter);
-    sp.end();
-    return r;
-  }
-
   public boolean changePassword(OAuthTokenData accessToken, ChangePasswordData changePassswordData) {
     sp.start(getThreadLocalRequest());
     Db_User db = new Db_User(sp);
