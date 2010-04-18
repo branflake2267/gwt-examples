@@ -11,7 +11,7 @@
  This is still alpha. I'm am vigorously working on this every weekend and its my intention to make this a mature module, so I can use it in my GoneVertical.com and host it on GAE.
 
 = Documents =
- * [http://docs.google.com/drawings/pub?id=1QRIaj8pAuFaM0fhNpHbr06Kk-GexJgtdkxMLAeU4vIs&w=960&h=720 My Spec] - My Spec and Design Notes
+ * [http://docs.google.com/drawings/pub?id=1QRIaj8pAuFaM0fhNpHbr06Kk-GexJgtdkxMLAeU4vIs&w=960&h=720 App Overview] - Looking at the Application
 
 == Inclusion Notes == 
  I include this project in my other main projects. There are several steps that have to be completed for it to work.
