@@ -6,7 +6,7 @@ import org.gonevertical.core.client.ui.feedback.FeedbackData;
 import org.gonevertical.core.server.ServerPersistence;
 
 public class DB_Feedback {
-
+ 
 	private ServerPersistence sp;
 	
 	public DB_Feedback(ServerPersistence sp) {
