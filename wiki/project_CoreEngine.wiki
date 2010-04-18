@@ -11,8 +11,8 @@
  This is still alpha. I'm am vigorously working on this every weekend and its my intention to make this a mature module, so I can use it in my GoneVertical.com and host it on GAE.
 
 = Documents =
- * [http://docs.google.com/drawings/pub?id=1QRIaj8pAuFaM0fhNpHbr06Kk-GexJgtdkxMLAeU4vIs&w=960&h=720 App Overview] - Looking at the Application
- * [http://docs.google.com/drawings/pub?id=1AUhnP7LWUUCOuCFciJryo3yYYH-Z7CAc-YURtuzdZPA&w=960&h=720 People Overview] - How I see people
+ * [http://docs.google.com/drawings/pub?id=1QRIaj8pAuFaM0fhNpHbr06Kk-GexJgtdkxMLAeU4vIs&w=960&h=720 App Overview] - Looking at the Application. Google docs drawing.
+ * [http://docs.google.com/drawings/pub?id=1AUhnP7LWUUCOuCFciJryo3yYYH-Z7CAc-YURtuzdZPA&w=960&h=720 People Overview] - How people relate to the app. Google docs drawing.
 
 == Inclusion Notes == 
  I include this project in my other main projects. There are several steps that have to be completed for it to work.
