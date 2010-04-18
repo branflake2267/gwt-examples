@@ -1,0 +1,14 @@
+#summary One-sentence summary of this page.
+
+= Project Core Engine =
+ I'm tired of writing the same code over and over and wanted to deploy my apps faster with an established code base of all the things in the kitchen. This is the beginning of my core module that I will include into my other projects. 
+
+ * [http://core-engine.appspot.com/#account_Things Demo]
+ * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/Core/src Source]
+
+
+= Inclusion Notes= 
+ I include this project in my other main projects. There are several steps that have to be completed for it to work.
+
+ # Eclipse BuildPath configuration: Include source folder as src_core 
+ # Eclipse BuildPath configuration: Include Project
