@@ -12,6 +12,7 @@
 
 = Documents =
  * [http://docs.google.com/drawings/pub?id=1QRIaj8pAuFaM0fhNpHbr06Kk-GexJgtdkxMLAeU4vIs&w=960&h=720 App Overview] - Looking at the Application
+ * [http://docs.google.com/drawings/pub?id=1AUhnP7LWUUCOuCFciJryo3yYYH-Z7CAc-YURtuzdZPA&w=960&h=720 People Overview] - How I see people
 
 == Inclusion Notes == 
  I include this project in my other main projects. There are several steps that have to be completed for it to work.
