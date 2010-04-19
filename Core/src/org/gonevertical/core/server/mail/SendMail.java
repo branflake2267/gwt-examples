@@ -14,7 +14,7 @@ import javax.mail.internet.MimeMessage;
 import org.gonevertical.core.server.ServerPersistence;
 
 public class SendMail {
-
+ 
 	private ServerPersistence sp;
 
 	public SendMail(ServerPersistence sp) {
@@ -34,7 +34,7 @@ public class SendMail {
 			msg.setSubject(subject);
 			msg.setText(msgBody);
 			Transport.send(msg);
-
+			b = true;
 		} catch (AddressException e) {
 			// TODO 
 			e.printStackTrace();

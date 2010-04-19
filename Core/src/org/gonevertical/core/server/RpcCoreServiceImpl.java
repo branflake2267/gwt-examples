@@ -17,6 +17,7 @@ import org.gonevertical.core.client.account.thingtype.ThingTypesData;
 import org.gonevertical.core.client.oauth.OAuthTokenData;
 import org.gonevertical.core.client.rpc.RpcCoreService;
 import org.gonevertical.core.client.ui.feedback.FeedbackData;
+import org.gonevertical.core.server.db.Db_Feedback;
 import org.gonevertical.core.server.db.Db_Thing;
 import org.gonevertical.core.server.db.Db_ThingStuff;
 import org.gonevertical.core.server.db.Db_ThingStuffType;
@@ -233,8 +234,11 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   }
 
   public boolean saveFeedBack(FeedbackData feedbackData) {
-	  
-	  return false;
+  	sp.start(getThreadLocalRequest());
+	  Db_Feedback db = new Db_Feedback(sp);
+	  boolean r = db.sendFeedback(feedbackData);
+	  sp.end();
+	  return r;
   }
 
 }

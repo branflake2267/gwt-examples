@@ -37,7 +37,7 @@ public class BreadCrumbs extends Composite implements ValueChangeHandler<String>
   }
   
   private void setHome() {
-    BreadCrumb b = new BreadCrumb("Home", Core.LINK_HOME);
+    BreadCrumb b = new BreadCrumb("Home", "home");
     pWidget.add(b);
   }
   

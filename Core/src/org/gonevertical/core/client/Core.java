@@ -20,87 +20,24 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class Core implements EntryPoint, ChangeHandler, ValueChangeHandler<String> {
 
-  private ClientPersistence cp = new ClientPersistence();
-  
-  private LoginWidget wLogin = new LoginWidget(cp);
-  
-  private AccountWidget wAccount = new AccountWidget(cp);
-  
-  public static final String LINK_HOME = "account_Home";
-  
-  /**
-   * load on entry
-   */
+	@Override
   public void onModuleLoad() {
-  	
-  	History.addValueChangeHandler(this);
-     	
-    wLogin.initSession();
-    wLogin.setUi(LoginUi.LOGIN_HORIZONTAL);
-    
-    Footer wFooter = new Footer();
-    wFooter.draw();
-    
-    VerticalPanel pWidget = new VerticalPanel();
-    pWidget.add(wLogin);
-    pWidget.add(wAccount);
-    pWidget.add(wFooter);
-    
-    pWidget.setWidth("800px");
-    pWidget.setCellHorizontalAlignment(wLogin, HorizontalPanel.ALIGN_RIGHT);
-    
-    
-    // align content center
-    VerticalPanel pcenter = new VerticalPanel();
-    pcenter.add(pWidget);
-    pcenter.setWidth("100%");
-    pcenter.setCellHorizontalAlignment(pWidget, HorizontalPanel.ALIGN_CENTER);
-    
-    
-    
-    RootPanel.get().add(pcenter);
-
-    wLogin.addChangeHandler(this);
-    
-    wAccount.draw();
-    
-    initHistory();
-    
-    // Debug
-    //pWidget.setStyleName("test1"); 
-    //wLogin.addStyleName("test2");
-    //wAccount.addStyleName("test3");
-  }
-  
-  private void initHistory() {
-    
-    String historyToken = History.getToken();
-    
-    if (historyToken.length() == 0) {
-      History.newItem("account_Things");
-    }
-   
-    
+	  // TODO Auto-generated method stub
+	  
   }
 
-  /**
-   * for setup
-   */
-  private void testThingTypes() {
-    ThingTypes w = new ThingTypes(cp);
-    w.draw();
-    RootPanel.get().add(w);
-  }
-
+	@Override
   public void onChange(ChangeEvent event) {
-     
+	  // TODO Auto-generated method stub
+	  
   }
 
+	@Override
   public void onValueChange(ValueChangeEvent<String> event) {
-  	
-  	String historyToken = History.getToken();
-  	Track.track(historyToken);
-  	
+	  // TODO Auto-generated method stub
+	  
   }
+
+  
 
 }
