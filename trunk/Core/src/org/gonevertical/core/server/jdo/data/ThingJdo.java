@@ -27,7 +27,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class ThingJdo {
 
-	@NotPersistent
+	@NotPersistent 
 	private ServerPersistence sp = null;
 
 	// identity

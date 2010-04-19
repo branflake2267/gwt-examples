@@ -2,7 +2,9 @@
 
 <module rename-to='core'>
 
+
   <inherits name='com.google.gwt.user.User'/>
+
 
   <inherits name='com.google.gwt.user.theme.standard.Standard'/>
 
@@ -10,7 +12,9 @@
   <!-- Other module inherits                                      -->
   <script src="../ga.js"/>
 
-  <entry-point class='org.gonevertical.core.client.Core'/>
+
+  <entry-point class='org.gonevertical.core.client.Core'/> 
+
 
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>
