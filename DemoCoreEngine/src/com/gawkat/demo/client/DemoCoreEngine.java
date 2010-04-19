@@ -23,7 +23,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class DemoCoreEngine implements EntryPoint, ValueChangeHandler<String>, ChangeHandler {
 
-private ClientPersistence cp = new ClientPersistence();
+  private ClientPersistence cp = new ClientPersistence();
   
   private LoginWidget wLogin = new LoginWidget(cp);
   
