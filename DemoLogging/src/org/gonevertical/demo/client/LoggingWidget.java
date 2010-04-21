@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.PushButton;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -21,6 +22,8 @@ public class LoggingWidget extends Composite implements ClickHandler {
 	
 	private PushButton bSendCallFail = new PushButton("Send Forced Failure");
 	
+	private TextArea taInput = new TextArea();
+	
 	/**
 	 * init widget
 	 */
@@ -30,8 +33,11 @@ public class LoggingWidget extends Composite implements ClickHandler {
 		hp.add(bSendCall);
 		hp.add(new HTML("&nbsp;"));
 		hp.add(bSendCallFail);
+	
 		
 		pWidget.add(hp);
+		pWidget.add(new HTML("&nbsp;"));
+		pWidget.add(taInput);
 		
 		initWidget(pWidget);
 		
@@ -39,6 +45,9 @@ public class LoggingWidget extends Composite implements ClickHandler {
 		
 		bSendCall.addClickHandler(this);
 		bSendCallFail.addClickHandler(this);
+		
+		taInput.setWidth("750px");
+		taInput.setHeight("250px");
 	}
 	
   public void onClick(ClickEvent event) {
@@ -69,20 +78,50 @@ public class LoggingWidget extends Composite implements ClickHandler {
 		callServer(callData);
   }
 	
-	public void callServer(CallData callData) {
+	private void callServer_getData() {
+		
+		CallData callData = new CallData();
+		callData.type = 10;
+		
+		callServer_ForNote(callData);
+	}
+	
+	private void callServer(CallData callData) {
 		
 		rpc.callServer(callData, new AsyncCallback<CallData>() {
 			
 			public void onSuccess(CallData callData) {
 				
-				Window.alert("worked " + callData.note);
-				
+				callServer_getData();
 			}
 			
 			public void onFailure(Throwable caught) {
 				
 				System.out.println("Failure: " + caught.toString());
 				
+				callServer_getData();
+			}
+		});
+		
+	}
+	
+	private void drawNote(CallData callData) {
+		taInput.setFocus(true);
+		taInput.setText(callData.note);
+		int len = callData.note.length();
+		taInput.setCursorPos(len);
+		
+  }
+	
+	private void callServer_ForNote(CallData callData) {
+		
+		rpc.callServer(callData, new AsyncCallback<CallData>() {
+			
+			public void onSuccess(CallData callData) {
+				drawNote(callData);
+			}
+			
+			public void onFailure(Throwable caught) {
 			}
 		});
 		
