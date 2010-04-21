@@ -45,11 +45,27 @@ public class ToolTipWidget implements MouseOverHandler, MouseOutHandler {
   		ttw.@org.gonevertical.demo.client.ToolTipWidget::showTooltip(Ljava/lang/String;Ljava/lang/String;)(elementId, html);
   	}
   	
+  	$wnd.showTooltip_xy = function(x, y, html) {
+  		ttw.@org.gonevertical.demo.client.ToolTipWidget::showTooltip(IILjava/lang/String;)(x, y, html);
+  	}
+  	
   	$wnd.hideTooltip = function() {
   		ttw.@org.gonevertical.demo.client.ToolTipWidget::hideTooltip()();
   	}
   	
   }-*/;
+	
+	public void showTooltip(int x, int y, String html) {
+		
+		stayOn = false;
+		
+		pWidget.add(new HTML(html));
+		
+		RootPanel.get().setWidgetPosition(pWidget, x, y);
+		
+		pWidget.setVisible(true);
+		
+	}
 	
 	public void showTooltip(String elementId, String html) {
 		
