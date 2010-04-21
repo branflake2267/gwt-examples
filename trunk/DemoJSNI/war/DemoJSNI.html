@@ -8,8 +8,44 @@
     
     <script type="text/javascript" language="javascript" src="demojsni/demojsni.nocache.js"></script>
   </head>
-
   <body>
+  
+   <script>
+
+	// Detect if the browser is IE or not.
+	// If it is not IE, we assume that the browser is NS.
+	var IE = document.all?true:false
+	
+	// If NS -- that is, !IE -- then set up for mouse capture
+	// TODO Deprecated, change to new dom2
+	if (!IE) document.captureEvents(Event.MOUSEMOVE)
+	
+	//Set-up to use getMouseXY function onMouseMove
+	document.onmousemove = getMouseXY;
+	
+	//Temporary variables to hold mouse x-y pos.s
+	var tempX = 0
+	var tempY = 0
+	
+	function getMouseXY(e) {
+	 if (IE) { // grab the x-y pos.s if browser is IE
+	   tempX = event.clientX + document.body.scrollLeft
+	   tempY = event.clientY + document.body.scrollTop
+	 } else {  // grab the x-y pos.s if browser is NS
+	   tempX = e.pageX
+	   tempY = e.pageY
+	 }
+
+	 return true
+	}
+ 
+  	function test() {
+  		x = tempX;
+  		y = tempY;
+  		
+  		showTooltip_xy(x, y, 'You Moused Over Me.');
+  	}
+  </script>
   
   <style>
     
@@ -38,6 +74,12 @@
     }
     
     #id5 {
+    	background: grey;
+    	width: 300px;
+    	border: 1px solid #000000;
+    }
+    
+    #id6 {
     	background: grey;
     	width: 300px;
     	border: 1px solid #000000;
@@ -89,6 +131,11 @@
 				</td>
 			</tr>
 		</table>
+		
+		<br/>
+		<br/>
+		
+		<div id="id6" onmouseover="test();" onmouseout="hideTooltip();">Last Cell, Using X & Y</div>
 
     </div>
     
