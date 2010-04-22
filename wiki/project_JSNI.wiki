@@ -112,3 +112,11 @@ public class ToolTipPanel extends AbsolutePanel implements HasMouseOverHandlers,
 
 }
 }}}
+
+== Includeding GWT Module Into WebSite ==
+ You can incude this code in any website, by copying the ./war/demojsni/* directory into another websites root directory. 
+
+ Then all you need to do is include the javascript.
+{{{
+<script type="text/javascript" language="javascript" src="demojsni/demojsni.nocache.js"></script>
+}}}
