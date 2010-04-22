@@ -17,7 +17,7 @@ public class FlashCard implements EntryPoint {
 
     VerticalPanel vp = new VerticalPanel();
     vp.setWidth("100%");
-    RootPanel.get().add(vp);
+    RootPanel.get("content").add(vp);
     
     Navigation nav = new Navigation();
     vp.add(nav);
