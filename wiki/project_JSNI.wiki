@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary GWT Javascript Native Format, calling from html
 
 <wiki:toc max_depth="2" />
 
