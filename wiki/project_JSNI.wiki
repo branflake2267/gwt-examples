@@ -1,5 +1,7 @@
 #summary One-sentence summary of this page.
 
+<wiki:toc max_depth="2" />
+
 = GWT JSNI =
  Testing GWT JSNI
 
