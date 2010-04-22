@@ -90,3 +90,25 @@ private void registerMouse() {
 	});
 }
 }}}
+
+== Absolute Event Panel ==
+ I also create an absolute panel that I can observe mouse over and out on.
+
+{{{
+public class ToolTipPanel extends AbsolutePanel implements HasMouseOverHandlers, HasMouseOutHandlers {
+
+	public ToolTipPanel() {
+
+		sinkEvents(Event.MOUSEEVENTS);
+	}
+
+	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
+		return addHandler(handler, MouseOutEvent.getType());
+	}
+
+	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
+		return addHandler(handler, MouseOverEvent.getType());
+	}
+
+}
+}}}
