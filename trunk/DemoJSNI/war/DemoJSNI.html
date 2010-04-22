@@ -9,44 +9,7 @@
     <script type="text/javascript" language="javascript" src="demojsni/demojsni.nocache.js"></script>
   </head>
   <body>
-  
-   <script>
-
-	// Detect if the browser is IE or not.
-	// If it is not IE, we assume that the browser is NS.
-	var IE = document.all?true:false
-	
-	// If NS -- that is, !IE -- then set up for mouse capture
-	// TODO Deprecated, change to new dom2
-	if (!IE) document.captureEvents(Event.MOUSEMOVE)
-	
-	//Set-up to use getMouseXY function onMouseMove
-	document.onmousemove = getMouseXY;
-	
-	//Temporary variables to hold mouse x-y pos.s
-	var tempX = 0
-	var tempY = 0
-	
-	function getMouseXY(e) {
-	 if (IE) { // grab the x-y pos.s if browser is IE
-	   tempX = event.clientX + document.body.scrollLeft
-	   tempY = event.clientY + document.body.scrollTop
-	 } else {  // grab the x-y pos.s if browser is NS
-	   tempX = e.pageX
-	   tempY = e.pageY
-	 }
-
-	 return true
-	}
- 
-  	function test() {
-  		x = tempX;
-  		y = tempY;
-  		
-  		showTooltip_xy(x, y, 'You Moused Over Me.');
-  	}
-  </script>
-  
+   
   <style>
     
     #id1 {
@@ -98,7 +61,8 @@
 	
 		<h2>Demo JSNI and GWT Tooltip</h2>
 		
-		<a href="http://gwt-examples.googlecode.com/">Back to gwtexamples.googlecode.com - get the source here</a>
+		<a href="http://gwt-examples.googlecode.com/">Back to gwtexamples.googlecode.com</a><br/>
+		<a href="http://code.google.com/p/gwt-examples/wiki/project_JSNI">More Information on Wiki</a>
 		
 		<br/>
 		<br/>
@@ -106,17 +70,17 @@
 		<br/>
 		<br/>
 		
-		<div id="id1" onmouseover="showTooltip('id1','This is the tooltip for id1');" onmouseout="hideTooltip();">Element One</div>
+		<div id="id1" onmouseover="showTooltip('This triggers a GWT JSNI. It uses showTooltip(\'html\')');" onmouseout="hideTooltip();">Element One</div>
 		
 		<br/>
 		<br/>
 		
-		<div id="id2" onmouseover="showTooltip('id2','This is the tooltip for id2. This is using a GWT widget. I used JSNI to call the widget.');" onmouseout="hideTooltip();">Element Two</div>
+		<div id="id2" onmouseover="showTooltip('This is the tooltip for id2. I used JSNI to call the widget., It uses showTooltip(\'html\')');" onmouseout="hideTooltip();">Element Two</div>
 		
 		<br/>
 		<br/>
 		
-		<div id="id3" onmouseover="showTooltip('id3','This is the tooltip for id3');" onmouseout="hideTooltip();">Element Three</div>
+		<div id="id3" onmouseover="showTooltip_id('id3','This is the tooltip for id3. It uses showTooltip_id(\'elementId\',\'html\')');" onmouseout="hideTooltip();">Element Three</div>
 	
 		<br/>
 		<br/>
@@ -124,22 +88,17 @@
 		<table border="1">
 			<tr>
 				<td>
-					<div id="id4" onmouseover="showTooltip('id4','Left Cell');" onmouseout="hideTooltip();">Left Cell</div>
+					<div id="id4" onmouseover="showTooltip_id('id4','id4, Left Cell, It uses showTooltip_id(\'elementId\',\'html\')');" onmouseout="hideTooltip();">Left Cell (will center on this)</div>
 				</td>
 				<td>
-					<div id="id5" onmouseover="showTooltip('id5','Right Cell');" onmouseout="hideTooltip();">Right Cell</div>
+					<div id="id5" onmouseover="showTooltip('Right Cell, It uses showTooltip(\'html\')');" onmouseout="hideTooltip();">Right Cell</div>
 				</td>
 			</tr>
 		</table>
 		
-		<br/>
-		<br/>
-		
-		<div id="id6" onmouseover="test();" onmouseout="hideTooltip();">Last Cell, Using X & Y</div>
-
     </div>
     
-    <br/>
+	<br/>
     
     <div align="center">
     
