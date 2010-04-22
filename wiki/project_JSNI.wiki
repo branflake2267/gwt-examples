@@ -30,3 +30,63 @@ public static native void registerJsni(ToolTipWidget ttw) /*-{
 	
 }-*/;
 }}}
+
+== Mouse Tracking For Tooltip ==
+ Keeping track of the mouse x and y, and scroll top and left, is something used in this project. I keep track of the DOM events preview, and use that to store a mouseX and a mouseY. This is like the GWT <1.5 Browser events. 
+
+{{{
+/**
+ * register mouse and scroll events
+ */
+private void registerMouse() {
+	
+	/* deprecated
+	DOM.addEventPreview(new EventPreview() {
+		public boolean onEventPreview(Event event) {
+			mouseX = event.getClientX();
+			mouseY = event.getClientY();
+			return false;
+		}
+	});
+	*/
+	
+	/* deprecated
+	Event.addEventPreview(new EventPreview() {
+		public boolean onEventPreview(Event event) {
+			mouseX = event.getClientX();
+			mouseY = event.getClientY();
+			return false;
+		}
+	});
+	*/
+	
+	// observe mouse x and y 
+	Event.addNativePreviewHandler(new NativePreviewHandler() {
+		public void onPreviewNativeEvent(NativePreviewEvent event) {
+			NativeEvent e = event.getNativeEvent();
+			
+			type = e.getType();
+			mouseX = e.getClientX();
+			mouseY = e.getClientY();
+			
+			// test
+			int wheel = e.getMouseWheelVelocityY();
+			
+			// debug
+			System.out.println("x: " + mouseX + " y: " + mouseY + " wheel: " + wheel + " type: " + type);
+		}
+	});
+	
+	// observe scroll event, so we can offset x and y for tooltip
+	Window.addWindowScrollHandler(new ScrollHandler() {
+		public void onWindowScroll(ScrollEvent event) {
+			
+			scrollLeft = event.getScrollLeft();
+			scrollTop = event.getScrollTop();
+			
+			// debug
+			System.out.println("scrollLeft: " + scrollLeft + " scrollTop: " + scrollTop);
+		}
+	});
+}
+}}}
