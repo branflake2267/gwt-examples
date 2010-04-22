@@ -94,7 +94,7 @@ private void registerMouse() {
 }}}
 
 == Absolute Event Panel ==
- I also create an absolute panel that I can observe mouse over and out on.
+ I also create an absolute event panel that I can observe and listen to mouse over and out on.
 
 {{{
 public class ToolTipPanel extends AbsolutePanel implements HasMouseOverHandlers, HasMouseOutHandlers {
