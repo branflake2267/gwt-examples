@@ -20,7 +20,7 @@ public static native void registerJsni(ToolTipWidget ttw) /*-{
 		ttw.@org.gonevertical.demo.client.ToolTipWidget::showTooltip(IILjava/lang/String;)(x, y, html);
 	}
 	
-  $wnd.showTooltip = function(html) {
+        $wnd.showTooltip = function(html) {
 		ttw.@org.gonevertical.demo.client.ToolTipWidget::showTooltip(Ljava/lang/String;)(html);
 	}
 	
