@@ -122,3 +122,5 @@ public class ToolTipPanel extends AbsolutePanel implements HasMouseOverHandlers,
 {{{
 <script type="text/javascript" language="javascript" src="demojsni/demojsni.nocache.js"></script>
 }}}
+
+http://demogwtjsni.appspot.com/images/files.png
