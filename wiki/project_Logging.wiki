@@ -1,0 +1,11 @@
+#summary One-sentence summary of this page.
+
+<wiki:toc max_depth="2" />
+
+= GWT Logging & Log4J Server =
+ Using Log4J to log server side events
+
+ * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoLogging/src/org/gonevertical/demo/server%3Fstate%3Dclosed Source]
+ * [http://gonevertical.org/DemoLogging/ Demo]
+
+= In the Works =
