@@ -7,16 +7,26 @@
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoJSNI/src/org/gonevertical/demo/client Source]
 
 
+== Code Example JSNI ==
+ I send in a reference to the widget.  
 {{{
 public static native void registerJsni(ToolTipWidget ttw) /*-{
-        
-        $wnd.showTooltip = function(elementId, html) {
-                ttw.@org.gonevertical.demo.client.ToolTipWidget::showTooltip(Ljava/lang/String;Ljava/lang/String;)(elementId, html);
-        }
-        
-        $wnd.hideTooltip = function() {
-                ttw.@org.gonevertical.demo.client.ToolTipWidget::hideTooltip()();
-        }
-        
+
+	$wnd.showTooltip_id = function(elementId, html) {
+		ttw.@org.gonevertical.demo.client.ToolTipWidget::showTooltip(Ljava/lang/String;Ljava/lang/String;)(elementId, html);
+	}
+	
+	$wnd.showTooltip_xy = function(x, y, html) {
+		ttw.@org.gonevertical.demo.client.ToolTipWidget::showTooltip(IILjava/lang/String;)(x, y, html);
+	}
+	
+  $wnd.showTooltip = function(html) {
+		ttw.@org.gonevertical.demo.client.ToolTipWidget::showTooltip(Ljava/lang/String;)(html);
+	}
+	
+	$wnd.hideTooltip = function() {
+		ttw.@org.gonevertical.demo.client.ToolTipWidget::hideTooltip()();
+	}
+	
 }-*/;
 }}}
