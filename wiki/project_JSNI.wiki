@@ -43,16 +43,6 @@ public static native void registerJsni(ToolTipWidget ttw) /*-{
 private void registerMouse() {
 	
 	/* deprecated
-	DOM.addEventPreview(new EventPreview() {
-		public boolean onEventPreview(Event event) {
-			mouseX = event.getClientX();
-			mouseY = event.getClientY();
-			return false;
-		}
-	});
-	*/
-	
-	/* deprecated
 	Event.addEventPreview(new EventPreview() {
 		public boolean onEventPreview(Event event) {
 			mouseX = event.getClientX();
