@@ -11,14 +11,19 @@
     
        <script type="text/javascript" language="javascript">
 		   function init() {
-		    alert('test');
-		    document.write('<' + 'script');
-		    document.write(' language="javascript"');
-		    document.write(' type="text/javascript"');
-		    document.write(' src="http://mathflashcard.appspot.com/flashcard/flashcard.nocache.js">');
-		    document.write('</' + 'script' + '>');
+		        
+		        alert('test');
+		        
+		        var html_doc = document.getElementsByTagName('head').item(0);
+			    var js = document.createElement('script');
+			    js.setAttribute('language', 'javascript');
+			    js.setAttribute('type', 'text/javascript');
+			    js.setAttribute('src', 'http://mathflashcard.appspot.com/flashcard/flashcard.nocache.js');
+			    html_doc.appendChild(js);
+			    
 		   }
 	       gadgets.util.registerOnLoadHandler(init);
+	       
        </script>
            
        <!-- app will land here -->
