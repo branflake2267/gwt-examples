@@ -24,6 +24,8 @@ public class LoggingWidget extends Composite implements ClickHandler {
 	
 	private TextArea taInput = new TextArea();
 	
+	private LoadingWidget wLoading = new LoadingWidget();
+	
 	/**
 	 * init widget
 	 */
@@ -33,11 +35,13 @@ public class LoggingWidget extends Composite implements ClickHandler {
 		hp.add(bSendCall);
 		hp.add(new HTML("&nbsp;"));
 		hp.add(bSendCallFail);
-	
+		hp.add(new HTML("&nbsp;"));
+		hp.add(wLoading);
 		
 		pWidget.add(hp);
 		pWidget.add(new HTML("&nbsp;"));
 		pWidget.add(taInput);
+		
 		
 		initWidget(pWidget);
 		
@@ -87,19 +91,22 @@ public class LoggingWidget extends Composite implements ClickHandler {
 	}
 	
 	private void callServer(CallData callData) {
+		wLoading.show();
 		
 		rpc.callServer(callData, new AsyncCallback<CallData>() {
 			
 			public void onSuccess(CallData callData) {
-				
+				wLoading.hide();
 				callServer_getData();
 			}
 			
 			public void onFailure(Throwable caught) {
+				wLoading.hide();
 				
 				System.out.println("Failure: " + caught.toString());
 				
 				callServer_getData();
+				
 			}
 		});
 		
@@ -114,14 +121,18 @@ public class LoggingWidget extends Composite implements ClickHandler {
   }
 	
 	private void callServer_ForNote(CallData callData) {
+		wLoading.show();
 		
 		rpc.callServer(callData, new AsyncCallback<CallData>() {
 			
 			public void onSuccess(CallData callData) {
+				wLoading.hide();
 				drawNote(callData);
 			}
 			
 			public void onFailure(Throwable caught) {
+				wLoading.hide();
+				Window.alert("failure - oops");
 			}
 		});
 		
