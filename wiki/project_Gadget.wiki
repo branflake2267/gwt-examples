@@ -11,8 +11,7 @@
  There is some serious develop going on in the source code. Not sure when the next release is.
  * [http://code.google.com/p/gwt-google-apis/wiki/GadgetsGettingStarted Google GWT Gadget Reference] - GWT Gadgets Api
 
-== links ==
- * http://thezukunft.com/2010/02/08/a-wave-gadget-robot-using-gwt-2-0-and-google-app-engine-part-1/
+= Examples / Demos =
 
 == Example of Advertising Gadget For My Wiki ==
  This is my first gadget using the xml editor and uploading it to the GAE in one of my demos.
@@ -23,6 +22,10 @@
 }}}
  <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads.xml" height="85" width="480" border="0" />
 
+= GWT Gadget =
+
+
+<wiki:gadget url="http://demogwtgadget.appspot.com/demogwtgadget/org.gonevertical.demo.client.DemoGwtGadget.gadget.xml" height="100" width="400" border="1" />
 
 == Try 1 Example of Math Flash Cards Appication (not working yet) ==
 {{{
