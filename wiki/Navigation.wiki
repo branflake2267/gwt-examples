@@ -1,5 +1,7 @@
 #summary GWT Application Navigation c
 
+<wiki:gadget url="http://demogwtjsni.appspot.com/gwt-examples.xml" height="80px" width="475px" border="0" />
+
 = Application Navigation Visualization =
  This is me trying to find a consistent strategy for application navigation and interaction.
 
