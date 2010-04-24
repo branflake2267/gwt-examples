@@ -4,4 +4,5 @@
  This is in developement. I am working on google gadget testing. I should have a demo sometime soon.
 
 == Test Wiki ==
+ this is my first gadget using the xml editor and uploading it to the GAE in one of my demos.
 <wiki:gadget url="http://demogwtjsni.appspot.com/gwt-examples.xml" height="72" width="100%" border="0" />
