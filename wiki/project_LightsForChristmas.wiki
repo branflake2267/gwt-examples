@@ -1,6 +1,6 @@
 #summary One-sentence summary of this page.
 
-<wiki:gadget url="http://demogwtjsni.appspot.com/gwt-examples.xml" height="80px" width="470px" border="0" />
+<wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads.xml" height="85" width="480" border="0" />
 
 = Game for Warm Beach Camp =
  I built this large scale outdoor game using GWT for the game logic and DMX to control the lighting. Here's some of the story.
