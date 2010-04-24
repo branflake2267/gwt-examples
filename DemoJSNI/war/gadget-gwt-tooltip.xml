@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Module>
-  <ModulePrefs title="Math Flash Cards" 
+  <ModulePrefs title="Tooltip" 
   	author="Brandon Donnelson" 
   	author_email="branflake2267@gmail.com" 
   	title_url="http://gwt-examples.googlecode.com"
-  	thumbnail="http://demogadgetxml.appspot.com/images/FlashCard_lg.png"
-    screenshot="http://demogadgetxml.appspot.com/images/FlashCard_sm.png" />
+  	description="Show a tooltip over a element" />
   <Content type="html">
     <![CDATA[
     
-       <script type="text/javascript" language="javascript" src="http://demogwtjsni.appspot.com/demojsni/demojsni.nocache.js"></script>
+       <!--<script type="text/javascript" language="javascript" src="http://demogwtjsni.appspot.com/demojsni/demojsni.nocache.js"></script>-->
            
+       <script type="text/javascript" language="javascript">
+		   function init() {
+		        var html_doc = document.getElementsByTagName('head').item(0);
+			    var js = document.createElement('script');
+			    js.setAttribute('language', 'javascript');
+			    js.setAttribute('type', 'text/javascript');
+			    js.setAttribute('src', 'http://demogwtjsni.appspot.com/demojsni/demojsni.nocache.js');
+			    html_doc.appendChild(js);	
+		   }
+	       gadgets.util.registerOnLoadHandler(init);
+       </script>
+          
        <!-- app will land here -->
        <div id="content" align="center"></div>
        
