@@ -7,8 +7,7 @@
   <Content type="html">
     <![CDATA[
        <div align="center">
-			
-			<a href="http://gwt-examples.googlecode.com"><font size="-1">GWT Example Ads Gadget</font></a><br/>
+            <a href="http://gwt-examples.googlecode.com"><font size="-1">GWT Example Ads Gadget</font></a><br/>
 
 		    <!-- gwt-example home ads -->
 			<script type="text/javascript"><!--
