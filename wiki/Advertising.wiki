@@ -1,5 +1,4 @@
 #summary advertising in your GWT Application
-#labels Featured
 
 <wiki:gadget url="http://demogwtjsni.appspot.com/gwt-examples.xml" height="80px" width="475px" border="0" />
 
