@@ -1,5 +1,7 @@
 #summary GWT Javascript Native Format, calling from html
 
+<wiki:gadget url="http://demogwtjsni.appspot.com/gwt-examples.xml" height="80px" width="470px" border="0" />
+
 <wiki:toc max_depth="2" />
 
 = GWT JSNI =
