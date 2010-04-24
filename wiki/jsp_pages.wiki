@@ -1,5 +1,7 @@
 #summary hosting jsp pages in your gwt application
 
+<wiki:gadget url="http://demogwtjsni.appspot.com/gwt-examples.xml" height="80px" width="475px" border="0" />
+
 = JSP Page Hosting =
 
  == References ==
