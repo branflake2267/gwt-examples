@@ -4,6 +4,7 @@
   	author="Brandon Donnelson" 
   	author_email="branflake2267@gmail.com" 
   	title_url="http://mathflashcard.appspot.com"
+  	description="Practice your times tables" 
   	thumbnail="http://mathflashcard.appspot.com/images/FlashCard_lg.png"
     screenshot="http://mathflashcard.appspot.com/images/FlashCard_sm.png" />
   <Content type="html">
