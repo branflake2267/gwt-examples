@@ -1,6 +1,6 @@
 #summary Microsoft SQL Server 2000/2005 JDBC connection
 
-<wiki:gadget url="http://demogwtjsni.appspot.com/gwt-examples.xml" height="80px" width="475px" border="0" />]
+<wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads.xml" height="85" width="480" border="0" />
 
 == note about Microsoft JDBC Connector ==
  I have found working with the Microsoft JDBC connector a bit lacking. I wouldn't recommend using MS SQL database, but rather MySQL which is much more flexible and powerful in my opinion. But if you have to connect to a MS SQL database here is how I have done it.  
