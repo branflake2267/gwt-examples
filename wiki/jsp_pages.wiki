@@ -18,6 +18,8 @@
 
 }}}
 
+== Before 1.6 Set Jsp ==
+
  Add the mime type to the. This will allow jsp files to be used.
  * project > tomcat/conf/gwt/web.xml > add mime type
 {{{
