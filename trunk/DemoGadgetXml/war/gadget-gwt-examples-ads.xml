@@ -7,8 +7,6 @@
   <Content type="html">
     <![CDATA[
        <div align="center">
-            <a href="http://gwt-examples.googlecode.com"><font size="-1">GWT Example Ads Gadget</font></a><br/>
-
 		    <!-- gwt-example home ads -->
 			<script type="text/javascript"><!--
 			    google_ad_client = "pub-0032065764310410";
@@ -21,6 +19,10 @@
 			<script type="text/javascript"
 			src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 			</script>
+			
+			<br/>
+		
+			<a href="http://code.google.com/p/gwt-examples/wiki/project_Gadget?ts=1272136922&updated=project_Gadget"><font size="-1">GWT Example Ads Gadget</font></a><br/>
 
 	  </div>
     ]]>
