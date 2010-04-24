@@ -1,7 +1,6 @@
 #summary GWT Tools
+#labels Deprecated
 
 = GWT Tools =
 
 [http://code.google.com/p/gwt-tooling/] - looked nice
-
-
