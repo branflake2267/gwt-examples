@@ -1,5 +1,7 @@
 #summary testing google gadgets
 
+<wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads.xml" height="85" width="480" border="0" />
+
 =  Project GWT Gadget =
  This project is in developement. I am working on google gadget testing. I should have a demo sometime soon.
 
