@@ -15,11 +15,12 @@
        <!-- app will land here -->
        <div id="content" align="center"></div>
        
-	   function init() {
-	     alert('test');
-	   }
-       gadgets.util.registerOnLoadHandler(init);
-      
+       <script type="text/javascript" language="javascript">
+		   function init() {
+		     alert('test');
+		   }
+	       gadgets.util.registerOnLoadHandler(init);
+       </script>
     ]]>
   </Content>
 </Module>
