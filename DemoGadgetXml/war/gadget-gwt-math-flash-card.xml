@@ -8,6 +8,13 @@
     screenshot="http://demogadgetxml.appspot.com/images/FlashCard_sm.png" />
   <Content type="html">
     <![CDATA[
+    
+       <script type="text/javascript" language="javascript">
+		   function init() {
+		     alert('test');
+		   }
+	       gadgets.util.registerOnLoadHandler(init);
+       </script>
            
        <!-- include gwt js - which isn't the most effecient, but can get the job done quickly -->
        <script type="text/javascript" language="javascript" src="http://mathflashcard.appspot.com/flashcard/flashcard.nocache.js"></script>
@@ -15,12 +22,7 @@
        <!-- app will land here -->
        <div id="content" align="center"></div>
        
-       <script type="text/javascript" language="javascript">
-		   function init() {
-		     alert('test');
-		   }
-	       gadgets.util.registerOnLoadHandler(init);
-       </script>
+       
     ]]>
   </Content>
 </Module>
