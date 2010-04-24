@@ -1,5 +1,6 @@
 #summary Google Code Wants
 
+<wiki:gadget url="http://demogwtjsni.appspot.com/gwt-examples.xml" height="80px" width="475px" border="0" />
 
 = Reference =
   [http://code.google.com/p/support/issues/list Google Code]
