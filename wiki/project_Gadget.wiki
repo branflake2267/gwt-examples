@@ -25,7 +25,7 @@
 == Example GWT Gadget ==
  This is my first gwt gadget, compiled using GWT. This is a fantastic way to get the widget built.
 
- * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoGwtGadget/src/org/gonevertical/demo/client Source]
+ * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoGwtGadget/src/org/gonevertical/demo/client Source] - this is a very basic simple example to make sure it works, and it does.
 {{{
 wiki:gadget url="http://demogwtgadget.appspot.com/demogwtgadget/org.gonevertical.demo.client.DemoGwtGadget.gadget.xml" height="100" width="400" border="1" />
 }}}
