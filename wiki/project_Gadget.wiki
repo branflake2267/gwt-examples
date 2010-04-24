@@ -22,10 +22,14 @@
 }}}
  <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads.xml" height="85" width="480" border="0" />
 
-= GWT Gadget =
+= Example GWT Gadget =
+ This is my first gwt gadget, compiled using GWT. This is a fantastic way to get the widget built.
 
-
-<wiki:gadget url="http://demogwtgadget.appspot.com/demogwtgadget/org.gonevertical.demo.client.DemoGwtGadget.gadget.xml" height="100" width="400" border="1" />
+ * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoGwtGadget/src/org/gonevertical/demo/client Source]
+{{{
+wiki:gadget url="http://demogwtgadget.appspot.com/demogwtgadget/org.gonevertical.demo.client.DemoGwtGadget.gadget.xml" height="100" width="400" border="1" />
+}}}
+ <wiki:gadget url="http://demogwtgadget.appspot.com/demogwtgadget/org.gonevertical.demo.client.DemoGwtGadget.gadget.xml" height="100" width="400" border="1" />
 
 == Try 1 Example of Math Flash Cards Appication (not working yet) ==
 {{{
