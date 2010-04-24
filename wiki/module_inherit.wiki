@@ -1,5 +1,7 @@
 #summary including other eclipse source modules, inheriting other eclipse source modules
 
+<wiki:gadget url="http://demogwtjsni.appspot.com/gwt-examples.xml" height="80px" width="475px" border="0" />
+
 = Eclipse Setup to Inherit Other Source modules =
 
  #. Right click project > select properties > Libraries tab > Add other projects ./src folder
