@@ -1,6 +1,6 @@
 #summary About building your gwt 1.6+ projects
 
-<wiki:gadget url="http://demogwtjsni.appspot.com/gwt-examples.xml" height="80px" width="475px" border="0" />
+<wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads.xml" height="85" width="480" border="0" />
 
 = Project Building in GWT 1.6+ =
  You can quickly build your application for your production server with Ant.
