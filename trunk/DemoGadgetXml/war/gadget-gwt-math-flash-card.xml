@@ -11,14 +11,16 @@
     
        <script type="text/javascript" language="javascript">
 		   function init() {
-		     alert('test');
+		    alert('test');
+		    document.write('<' + 'script');
+		    document.write(' language="javascript"');
+		    document.write(' type="text/javascript"');
+		    document.write(' src="http://mathflashcard.appspot.com/flashcard/flashcard.nocache.js">');
+		    document.write('</' + 'script' + '>');
 		   }
 	       gadgets.util.registerOnLoadHandler(init);
        </script>
            
-       <!-- include gwt js - which isn't the most effecient, but can get the job done quickly -->
-       <script type="text/javascript" language="javascript" src="http://mathflashcard.appspot.com/flashcard/flashcard.nocache.js"></script>
-      
        <!-- app will land here -->
        <div id="content" align="center"></div>
        
