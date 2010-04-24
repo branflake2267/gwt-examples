@@ -26,4 +26,6 @@ public class FlashCard implements EntryPoint {
     vp.setCellHorizontalAlignment(nav, HorizontalPanel.ALIGN_CENTER);
     
   }
+  
+  
 }
