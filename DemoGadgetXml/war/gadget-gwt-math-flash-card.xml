@@ -21,6 +21,7 @@
 			    js.setAttribute('src', 'http://mathflashcard.appspot.com/flashcard/flashcard.nocache.js');
 			    html_doc.appendChild(js);
 			    
+			    setTimeout("flashcard();", 100);
 		   }
 	       gadgets.util.registerOnLoadHandler(init);
 	       
