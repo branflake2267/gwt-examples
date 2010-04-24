@@ -18,4 +18,4 @@
 
 
 == Example of Math Flash Cards Appication ==
- <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-tooltip.xml" height="400" width="400" border="1" />
+ <wiki:gadget url="http://mathflashcard.appspot.com/gadget-gwt-math-flash-card.xml" height="400" width="400" border="1" />
