@@ -1,5 +1,7 @@
 #summary Using a comparator to sort and search Object Array
 
+<wiki:gadget url="http://demogwtjsni.appspot.com/gwt-examples.xml" height="80px" width="475px" border="0" />
+
 = Object Array Search =
 
 = Comparator =
