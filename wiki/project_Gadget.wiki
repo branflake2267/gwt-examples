@@ -1,0 +1,7 @@
+#summary testing google gadgets
+
+=  Project Google Gadgets =
+ This is in developement. I am working on google gadget testing. I should have a demo sometime soon.
+
+== Test Wiki ==
+<wiki:gadget url="http://demogwtjsni.appspot.com/gwt-examples.xml" height="200" border="0" />
