@@ -1,20 +1,18 @@
 #summary advertising in your GWT Application
 #labels Featured
 
-====Advertising from Linkshare====
-[http://click.linksynergy.com/fs-bin/click?id=QCdCuKxPYyY&offerid=135505.10000397&type=4&subid=0 http://cdn.netflix.com/us/affiliates/banners/0804/120090A_599.gif][http://ad.linksynergy.com/fs-bin/show?id=QCdCuKxPYyY&bids=135505.10000397&type=4&subid=0&fromGoogleCode.png]   [http://click.linksynergy.com/fs-bin/click?id=QCdCuKxPYyY&offerid=146261.10003722&type=4&subid=0 http://images.apple.com/itunesaffiliates/US/2008/10/04/AsteroidsGalaxy_120x90.jpg][http://ad.linksynergy.com/fs-bin/show?id=QCdCuKxPYyY&bids=146261.10003722&type=4&subid=0&fromGoogleCode.png]     [http://click.linksynergy.com/fs-bin/click?id=QCdCuKxPYyY&offerid=164496.10000003&type=4&subid=0 http://www.popcornopolis.com/landingpages/2008/banners/fall_08/120x90_tin.gif][http://ad.linksynergy.com/fs-bin/show?id=QCdCuKxPYyY&bids=164496.10000003&type=4&subid=0&fromGoogleCode.png]    [http://click.linksynergy.com/fs-bin/click?id=QCdCuKxPYyY&offerid=137601.10000059&type=4&subid=0 http://marketing.vistaprint.com/us/imgs/bannerads/FALL_120x90.gif][http://ad.linksynergy.com/fs-bin/show?id=QCdCuKxPYyY&bids=137601.10000059&type=4&subid=0&fromGoogleCode.png]    [http://click.linksynergy.com/fs-bin/click?id=QCdCuKxPYyY&offerid=129871.10000065&type=4&subid=0 http://www.acronym.com/sirius/SIRIUS%20Banners/NFL/120x90_nfl.gif][http://ad.linksynergy.com/fs-bin/show?id=QCdCuKxPYyY&bids=129871.10000065&type=4&subid=0&fromGoogleCode.png]
+<wiki:gadget url="http://demogwtjsni.appspot.com/gwt-examples.xml" height="80px" width="475px" border="0" />
 
 =Table of Contents= 
 <wiki:toc max_depth="2" />
 
 = About Advertising In GWT =
- I wanted other people to know that they have other options if you can't advertise with Google's AdSense. 
-
-== Try These Companies For a Spin ==
- Try these companies for a spin. Make money with your application, blog, and/or website.
+ Adsense is one of the easiest ways to advertise. 
 
  == AdSense ==
-  [https://www.google.com/adsense/login/en_US/ AdSense] - This probably won't work if lots of your site requires login, as what happened to me on my [http://GoneVertical.com]
+  Is one of the best ways to advertise.
+
+= Others =
 
  == AdBrite ==
   [http://www.adbrite.com/mb/landing_both.php?spid=96893&afb=468x60-2 AdBrite] -This is a fantastic way to advertise. It was easier to setup than Google's AdSense. After being denied use of AdSense, I starting using AdBrite. You can also use the referral program in your Google Project for monetization, which is a fantastic option since Google has none.
