@@ -5,4 +5,4 @@
 
 == Test Wiki ==
  This is my first gadget using the xml editor and uploading it to the GAE in one of my demos. [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoJSNI/war/gwt-examples.xml Source]
-<wiki:gadget url="http://demogwtjsni.appspot.com/gwt-examples.xml" height="72px" width="480px" border="0" />
+<wiki:gadget url="http://demogwtjsni.appspot.com/gwt-examples.xml" height="85" width="480" border="0" />
