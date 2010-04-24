@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+  <ModulePrefs title="Math Flash Cards" 
+  	author="Brandon Donnelson" 
+  	author_email="branflake2267@gmail.com" 
+  	title_url="http://gwt-examples.googlecode.com"
+  	thumbnail="http://demogadgetxml.appspot.com/images/FlashCard_lg.png"
+    screenshot="http://demogadgetxml.appspot.com/images/FlashCard_sm.png" />
+  <Content type="html">
+    <![CDATA[
+    
+       <script type="text/javascript" language="javascript" src="http://demogwtjsni.appspot.com/demojsni/demojsni.nocache.js"></script>
+           
+       <!-- app will land here -->
+       <div id="content" align="center"></div>
+       
+       <div onmouseover="showTooltip('It uses GWT JSNI showTooltip(\'html\')');" onmouseout="hideTooltip();">Mouse Over Me</div>
+       
+    ]]>
+  </Content>
+</Module>
+
+
+
+
