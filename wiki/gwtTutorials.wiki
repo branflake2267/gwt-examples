@@ -1,4 +1,5 @@
 #summary GWT Tutorial Links
+#labels Deprecated
 
 = Links To Tutorials =
 
