@@ -1,5 +1,7 @@
 #summary eclipse docs v2
 
+<wiki:gadget url="http://demogwtjsni.appspot.com/gwt-examples.xml" height="80px" width="475px" border="0" />
+
 = Table of Contents = 
 <wiki:toc max_depth="2"/>
 
