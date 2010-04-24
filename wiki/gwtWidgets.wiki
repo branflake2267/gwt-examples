@@ -1,4 +1,5 @@
 #summary GWT wiget links
+#labels Deprecated
 
 = Google's GWT Incubator =
  [http://code.google.com/p/google-web-toolkit-incubator/ google-web-toolkit-incubator] -  Likely additions to Google Web Toolkit 
