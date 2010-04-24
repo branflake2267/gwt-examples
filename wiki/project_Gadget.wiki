@@ -11,7 +11,7 @@
  There is some serious develop going on in the source code. Not sure when the next release is.
  * [http://code.google.com/p/gwt-google-apis/wiki/GadgetsGettingStarted Google GWT Gadget Reference] - GWT Gadgets Api
 
-== Example of Google Gadget ==
+== Example of Advertising Gadget For My Wiki ==
  This is my first gadget using the xml editor and uploading it to the GAE in one of my demos.
 
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads.xml" height="85" width="480" border="0" />
