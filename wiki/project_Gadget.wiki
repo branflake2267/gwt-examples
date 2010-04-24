@@ -22,7 +22,7 @@
 }}}
  <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads.xml" height="85" width="480" border="0" />
 
-= Example GWT Gadget =
+== Example GWT Gadget ==
  This is my first gwt gadget, compiled using GWT. This is a fantastic way to get the widget built.
 
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoGwtGadget/src/org/gonevertical/demo/client Source]
