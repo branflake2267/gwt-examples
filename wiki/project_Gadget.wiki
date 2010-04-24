@@ -31,6 +31,10 @@ wiki:gadget url="http://demogwtgadget.appspot.com/demogwtgadget/org.gonevertical
 }}}
  <wiki:gadget url="http://demogwtgadget.appspot.com/demogwtgadget/org.gonevertical.demo.client.DemoGwtGadget.gadget.xml" height="100" width="400" border="1" />
 
+
+= Trying Other Ways =
+ These ways below haven't worked. 
+
 == Try 1 Example of Math Flash Cards Appication (not working yet) ==
 {{{
  <wiki:gadget url="http://mathflashcard.appspot.com/gadget-gwt-math-flash-card.xml" height="400" width="400" border="1" />
