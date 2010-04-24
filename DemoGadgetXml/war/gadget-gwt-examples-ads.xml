@@ -3,7 +3,8 @@
   <ModulePrefs title="GWT Examples Gadget Ads" 
   	author="Brandon Donnelson" 
   	author_email="branflake2267@gmail.com" 
-  	title_url="http://gwt-examples.googlecode.com"/>
+  	title_url="http://gwt-examples.googlecode.com"
+  	description="Putting advertising on my google code wiki - gwt-examples.googlecode.com"/>
   <Content type="html">
     <![CDATA[
        <div align="center">
