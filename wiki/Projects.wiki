@@ -1,4 +1,5 @@
 #summary Eclipse projects listed in trunk
+#labels Deprecated
 
 = GWT Example Projects =
 
