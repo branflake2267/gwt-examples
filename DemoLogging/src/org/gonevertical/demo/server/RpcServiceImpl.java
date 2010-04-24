@@ -54,6 +54,7 @@ public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
     String execPath = executionlocation.getParent();
     
     execPath = execPath.replaceAll("/WEB-INF", "");
+    execPath = execPath.replaceAll("/classes/org/gonevertical/demo/server", ""); // for server side
     
     String path = execPath + "/logging.log";  
 		
@@ -87,10 +88,18 @@ public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
 		return r;
 	}
 
+	/**
+	 * throw exception
+	 *   
+	 */
 	private void testMethod() {
 
+		String s = null;
 		try {
-			throw new EmptyStackException();
+			
+			// This will throw - s is null
+			int c = s.length();
+			
 		} catch (Exception e) {
 			logger.warn("Exception Thrown", e);
 		}
