@@ -1,5 +1,10 @@
 #summary More info on login manager project.
 
+<wiki:gadget url="http://demogwtjsni.appspot.com/gwt-examples.xml" height="80px" width="475px" border="0" />
+
+= Coming Soon =
+ I am building Core-Engine, which is in the source, and follows the oAuth spec for login.
+
 = Login Manger =
  I setup this example to test login manager, to control User access by Username and Password and SessionID. There are many ways you can do this. I followed Google's incubator. You can import my eclipse project or get it via svn. Hope it helps. 
  
