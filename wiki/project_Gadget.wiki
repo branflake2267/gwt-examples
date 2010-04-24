@@ -2,6 +2,8 @@
 
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads.xml" height="85" width="480" border="0" />
 
+<wiki:toc max_depth="2" />
+
 =  Project GWT Gadget =
  There are two ways you can get a GWT gadget to IGoogle, one through the GWT gadgets API, which is better. The second is to include a standalone module. 
 
