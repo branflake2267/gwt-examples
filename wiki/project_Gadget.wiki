@@ -3,7 +3,7 @@
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads.xml" height="85" width="480" border="0" />
 
 =  Project GWT Gadget =
- This project is in developement. I am working on google gadget testing. I should have a demo sometime soon.
+ There are two ways you can get a GWT gadget to IGoogle, one through the GWT gadgets API, which is better. The second is to include a standalone module. 
 
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads.xml Source] - Advertising source, stored in the subversion source repository
 
