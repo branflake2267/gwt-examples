@@ -1,8 +1,12 @@
 #summary testing google gadgets
 
 =  Project Google Gadgets =
- This is in developement. I am working on google gadget testing. I should have a demo sometime soon.
+ This project is in developement. I am working on google gadget testing. I should have a demo sometime soon.
 
-== Test Wiki ==
+= GWT Gadgets =
+ There is some serious develop going on in the source code. Not sure when the next release is.
+ * [http://code.google.com/p/gwt-google-apis/wiki/GadgetsGettingStarted Google GWT Gadget Reference] - GWT Gadgets Api
+
+= Example of Google Gadget =
  This is my first gadget using the xml editor and uploading it to the GAE in one of my demos. [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoJSNI/war/gwt-examples.xml Source]
 <wiki:gadget url="http://demogwtjsni.appspot.com/gwt-examples.xml" height="85" width="480" border="0" />
