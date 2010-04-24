@@ -5,6 +5,8 @@
 =  Project GWT Gadget =
  This project is in developement. I am working on google gadget testing. I should have a demo sometime soon.
 
+ * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads.xml Source] - Advertising source, stored in the subversion source repository
+
 = GWT Gadgets =
  There is some serious develop going on in the source code. Not sure when the next release is.
  * [http://code.google.com/p/gwt-google-apis/wiki/GadgetsGettingStarted Google GWT Gadget Reference] - GWT Gadgets Api
