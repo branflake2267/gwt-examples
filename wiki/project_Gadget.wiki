@@ -21,10 +21,12 @@
  <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads.xml" height="85" width="480" border="0" />
 
 
-== Example of Math Flash Cards Appication (not working yet) ==
+== Try 1 Example of Math Flash Cards Appication (not working yet) ==
 {{{
  <wiki:gadget url="http://mathflashcard.appspot.com/gadget-gwt-math-flash-card.xml" height="400" width="400" border="1" />
 }}}
 
 == Try 2 ==
+{{{
 <wiki:gadget url="http://demogwtjsni.appspot.com/gadget-gwt-tooltip.xml" height="100" width="400" border="1" />
+}}}
