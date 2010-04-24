@@ -1,5 +1,7 @@
 #summary application tracking with Google Analytics
 
+<wiki:gadget url="http://demogwtjsni.appspot.com/gwt-examples.xml" height="80px" width="470px" border="0" />
+
 = Google Analytics Urchin Tracker Examples =
  Integrating google analytics ga.js into the GWT application is very easy and shown in my new example. I also have an example of it working on Google app engine. 
 
