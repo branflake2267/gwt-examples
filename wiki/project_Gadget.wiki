@@ -36,6 +36,10 @@ wiki:gadget url="http://demogwtgadget.appspot.com/demogwtgadget/org.gonevertical
 == Match Flash Card Application ==
  I'm trying to use my mathflashcard
  <wiki:gadget url="http://demogadgetmathflashcard.appspot.com/demogadgetmathflashcard/org.gonevertical.demo.client.DemoGadgetMathFlashCard.gadget.xml" height="400" width="400" border="1" />
+{{{
+url="http://demogadgetmathflashcard.appspot.com/demogadgetmathflashcard/org.gonevertical.demo.client.DemoGadgetMathFlashCard.gadget.xml" height="400" width="400" border="1" />
+}}}
+
 
 = Trying Other Ways =
  These ways below haven't worked. 
