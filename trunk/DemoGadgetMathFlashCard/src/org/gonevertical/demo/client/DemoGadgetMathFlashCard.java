@@ -11,11 +11,13 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 @ModulePrefs(//
     title = "Math Flash Cards", //
-    directory_title = "Practice your times tables", //
+    directory_title = "Math Flash Cards", //
     author = "Brandon Donnelson", //
     author_email = "branflake2267@gmail.com", //
     author_affiliation = "GoneVerical.org", //
+    description = "Practice your times tables", //
     thumbnail = "/images/FlashCard_sm.png", //
+    height = 210, //
     screenshot = "/images/FlashCard_lg.png")
 public class DemoGadgetMathFlashCard extends Gadget<FlashCardPreferences> {
 
@@ -31,6 +33,7 @@ public class DemoGadgetMathFlashCard extends Gadget<FlashCardPreferences> {
      Navigation nav = new Navigation();
      vp.add(nav);
      nav.start();
+     //vp.setHeight("210px"); // TODO take this away???
      
      vp.setCellHorizontalAlignment(nav, HorizontalPanel.ALIGN_CENTER);
 	  
