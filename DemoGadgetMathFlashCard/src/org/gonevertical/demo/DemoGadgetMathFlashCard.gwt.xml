@@ -11,7 +11,7 @@
   <!-- Other module inherits                                      -->
   <inherits name='com.gawkat.flashcard.FlashCard'/>
   <inherits name='com.google.gwt.gadgets.Gadgets' />
-  <script src="../ga.js" />
+  <!--  <script src="../ga.js" />-->
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='org.gonevertical.demo.client.DemoGadgetMathFlashCard'/>
