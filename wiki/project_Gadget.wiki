@@ -40,9 +40,6 @@ url="http://demogadgetmathflashcard.appspot.com/demogadgetmathflashcard/org.gone
 }}}
  <wiki:gadget url="http://demogadgetmathflashcard.appspot.com/demogadgetmathflashcard/org.gonevertical.demo.client.DemoGadgetMathFlashCard.gadget.xml" height="400" width="400" border="1" />
 
- try again
-<wiki:gadget url="http://11.latest.mathflashcard.appspot.com/flashcard/com.gawkat.flashcard.client.FlashCard.gadget.xml" height="400" width="400" border="1" />
-
 = Trying Other Ways =
  These ways below haven't worked. 
 
