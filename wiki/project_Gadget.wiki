@@ -34,8 +34,8 @@ wiki:gadget url="http://demogwtgadget.appspot.com/demogwtgadget/org.gonevertical
  <wiki:gadget url="http://demogwtgadget.appspot.com/demogwtgadget/org.gonevertical.demo.client.DemoGwtGadget.gadget.xml" height="100" width="400" border="1" />
 
 == Match Flash Card Application ==
-
-<wiki:gadget url="http://demogadgetmathflashcard.appspot.com/demogadgetmathflashcard/org.gonevertical.demo.client.DemoGadgetMathFlashCard.gadget.xml" height="400" width="400" border="1" />
+ I'm trying to use my mathflashcard
+ <wiki:gadget url="http://demogadgetmathflashcard.appspot.com/demogadgetmathflashcard/org.gonevertical.demo.client.DemoGadgetMathFlashCard.gadget.xml" height="400" width="400" border="1" />
 
 = Trying Other Ways =
  These ways below haven't worked. 
