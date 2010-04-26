@@ -13,7 +13,7 @@ public class Track {
    */
   private static native void trackNative(String historyToken) /*-{
     var pageTracker = $wnd._gat._getTracker("UA-2862268-9");
-    pageTracker._trackPageview("/DemoMathFlashCard/" + historyToken);
+    pageTracker._trackPageview("/DemoGadgetMathFlashCard/" + historyToken);
   }-*/;
 
 }
