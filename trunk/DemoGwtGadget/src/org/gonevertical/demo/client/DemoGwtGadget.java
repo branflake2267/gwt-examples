@@ -17,7 +17,7 @@ public class DemoGwtGadget extends Gadget<DemoGadgetPreferences> {
 
   protected void init(DemoGadgetPreferences preferences) {
 	  
-  	HTML html = new HTML("Demo Gadget has loaded");
+  	HTML html = new HTML("Demo GWT Gadget has loaded.");
   	
   	VerticalPanel pWidget = new VerticalPanel();
 	  pWidget.add(html);
