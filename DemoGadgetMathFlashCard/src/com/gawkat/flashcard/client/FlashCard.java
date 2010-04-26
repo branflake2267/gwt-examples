@@ -28,13 +28,16 @@ public class FlashCard extends Gadget<FlashCardPreferences> {
   	
     VerticalPanel vp = new VerticalPanel();
     vp.setWidth("100%");
+    
+    
+    Layout layout = new Layout();
+    
+    layout.start();
+    
+    vp.setCellHorizontalAlignment(layout, HorizontalPanel.ALIGN_CENTER);
+    
+    vp.add(layout);
     RootPanel.get().add(vp);
-    
-    Layout nav = new Layout();
-    vp.add(nav);
-    nav.start();
-    
-    vp.setCellHorizontalAlignment(nav, HorizontalPanel.ALIGN_CENTER);
     
     RootPanel.get().add(new HTML("debug: gadget end draws"));
   }

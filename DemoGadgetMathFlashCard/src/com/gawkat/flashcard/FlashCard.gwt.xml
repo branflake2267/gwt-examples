@@ -12,6 +12,7 @@
 	<inherits name='com.google.gwt.user.theme.standard.Standard' />
 
 	<!-- Other module inherits                                      -->
+	<script src="../ga.js"/>
 	<inherits name='com.google.gwt.gadgets.Gadgets' />
 
 
