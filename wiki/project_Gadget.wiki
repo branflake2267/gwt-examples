@@ -48,9 +48,9 @@ wiki:gadget url="http://demogwtgadget.appspot.com/demogwtgadget/org.gonevertical
 == Match Flash Card Application ==
  I'm trying to use my mathflashcard
 {{{
-<wiki:gadget url="http://demogadgetmathflashcard.appspot.com/flashcard/com.gawkat.flashcard.client.FlashCard.gadget.xml" height="400" width="400" border="1" />
+<wiki:gadget url="http://demogadgetmathflashcard.appspot.com/flashcard/com.gawkat.flashcard.client.FlashCard.gadget.xml" height="200" width="200" border="1" />
 }}}
- <wiki:gadget url="http://demogadgetmathflashcard.appspot.com/flashcard/com.gawkat.flashcard.client.FlashCard.gadget.xml" height="400" width="400" border="1" />
+ <wiki:gadget url="http://demogadgetmathflashcard.appspot.com/flashcard/com.gawkat.flashcard.client.FlashCard.gadget.xml" height="200" width="200" border="1" />
 
 
 
