@@ -14,6 +14,7 @@
  * [http://code.google.com/p/gwt-google-apis/wiki/GadgetsGettingStarted Google GWT Gadget Reference] - GWT Gadgets Api
  * [http://code.google.com/apis/wave/extensions/gadgets/guide.html Docs For Native Javascript] - Native Google Gadget JS Docs
  * [http://code.google.com/apis/gadgets/docs/reference.html Module Preference] - Documentation
+ * [http://www.opensocial.org/] - The specs start here
 
 == Build Notes ==
  Few things I learned along the way.
