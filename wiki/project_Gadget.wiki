@@ -47,7 +47,7 @@ wiki:gadget url="http://demogwtgadget.appspot.com/demogwtgadget/org.gonevertical
 
 == Match Flash Card Application ==
  I'm trying to use my mathflashcard. I built a separate project because I couldn't get the RPC to work. I haven't figured out what was failing, but Google App Engine logs where saying that access was restricted and was vague. So I decided to divide and conquer the issue and try only client side code first. Here is my first attempt to bring a bigger gadget onboard.
- * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoGadgetMathFlashCard/src/com/gawkat/flashcard/client Source]
+ * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoGadgetMathFlashCard/src/com/gawkat/flashcard/client Source] - Rpc and JDO have been taken out in this source to try client side stuff only.
 {{{
 <wiki:gadget url="http://demogadgetmathflashcard.appspot.com/flashcard/com.gawkat.flashcard.client.FlashCard.gadget.xml" height="200" width="200" border="1" />
 }}}
