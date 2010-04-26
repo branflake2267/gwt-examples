@@ -14,6 +14,13 @@
  * [http://code.google.com/p/gwt-google-apis/wiki/GadgetsGettingStarted Google GWT Gadget Reference] - GWT Gadgets Api
  * [http://code.google.com/apis/wave/extensions/gadgets/guide.html Docs For Native Javascript] - Native Google Gadget JS Docs
 
+== Build Notes ==
+ Few things I learned along the way.
+# RootPanel.get().add(widget); - don't use a elementId to place content
+# Try a basic gadget first. 
+# I combined my bigger project with my gadget project, instead of writing an entire gadget.
+# Test it out in the hosted debugger before merging into gadget init()
+
 = Examples / Demos =
 
 == Example of Advertising Gadget For My Wiki ==
