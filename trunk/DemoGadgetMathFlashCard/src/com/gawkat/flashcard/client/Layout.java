@@ -41,7 +41,7 @@ public class Layout extends Composite {
     pWidget.setCellHorizontalAlignment(wMenu, HorizontalPanel.ALIGN_RIGHT);
     pWidget.setCellHorizontalAlignment(wCard, HorizontalPanel.ALIGN_CENTER);
     pWidget.setCellHorizontalAlignment(wAnswer, HorizontalPanel.ALIGN_CENTER);
-    pWidget.setStyleName("flashcard-navigation");
+    pWidget.setStyleName("flashcard-layout");
     wNotify.setWidth("100%");
     wCard.setWidth("100%");
      
