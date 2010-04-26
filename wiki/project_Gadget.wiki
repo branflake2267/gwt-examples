@@ -8,10 +8,11 @@
  There are two ways you can get a GWT gadget to IGoogle, one through the GWT gadgets API, which is better. The second is to include a standalone module. 
 
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads.xml Source of the example on this page] - Advertising source, stored in the subversion source repository
- * [http://code.google.com/apis/wave/extensions/gadgets/guide.html Docs For Native Javascript] - Native JS Docs
+ 
 == GWT Gadgets ==
  There is some serious develop going on in the source code. Not sure when the next release is.
  * [http://code.google.com/p/gwt-google-apis/wiki/GadgetsGettingStarted Google GWT Gadget Reference] - GWT Gadgets Api
+ * [http://code.google.com/apis/wave/extensions/gadgets/guide.html Docs For Native Javascript] - Native Google Gadget JS Docs
 
 = Examples / Demos =
 
