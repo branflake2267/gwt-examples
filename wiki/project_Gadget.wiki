@@ -16,10 +16,11 @@
 
 == Build Notes ==
  Few things I learned along the way.
- # RootPanel.get().add(widget); - don't use a elementId to place content
- # Try a basic gadget first. 
+ # RootPanel.get().add(widget); - don't use a elementId to place content/app on page
+ # Try a basic gadget first before you do a big one.
  # I combined my bigger project with my gadget project, instead of writing an entire gadget.
  # Test it out in the hosted debugger before merging into gadget init()
+ # Javascript native calls, don't forget to include those modules as well.
 
 = Examples / Demos =
 
