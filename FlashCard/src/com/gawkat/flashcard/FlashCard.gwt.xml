@@ -2,9 +2,6 @@
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.6.4//EN" "http://google-web-toolkit.googlecode.com/svn/tags/1.6.4/distro-source/core/src/gwt-module.dtd">
 <module rename-to='flashcard'>
 
-	<!-- Google Analytics -->
-	<script src="/ga.js" />
-
 	<!-- Inherit the core Web Toolkit stuff.                        -->
 	<inherits name='com.google.gwt.user.User' />
 
@@ -14,6 +11,7 @@
 
 	<!-- Other module inherits                                      -->
 	<!-- <inherits name='com.google.gwt.gadgets.Gadgets' /> -->
+	<script src="../ga.js" />
 
 
 	<!-- Specify the app entry point class.                         -->
