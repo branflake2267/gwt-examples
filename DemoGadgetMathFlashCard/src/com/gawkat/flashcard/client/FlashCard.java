@@ -2,7 +2,6 @@ package com.gawkat.flashcard.client;
 
 import com.google.gwt.gadgets.client.Gadget;
 import com.google.gwt.gadgets.client.Gadget.ModulePrefs;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -24,22 +23,19 @@ public class FlashCard extends Gadget<FlashCardPreferences> {
    */
   public void init(FlashCardPreferences preferences) {
   	
-  	RootPanel.get().add(new HTML("debug: gadget start draw"));
+  	//RootPanel.get().add(new HTML("debug: gadget start draw"));
   	
     VerticalPanel vp = new VerticalPanel();
     vp.setWidth("100%");
-    
+    RootPanel.get().add(vp);
     
     Layout layout = new Layout();
-    
+    vp.add(layout);
     layout.start();
     
     vp.setCellHorizontalAlignment(layout, HorizontalPanel.ALIGN_CENTER);
     
-    vp.add(layout);
-    RootPanel.get().add(vp);
-    
-    RootPanel.get().add(new HTML("debug: gadget end draws"));
+    //RootPanel.get().add(new HTML("debug: gadget draw end"));
   }
   
 }
