@@ -23,6 +23,7 @@
  # Javascript native calls, don't forget to include those modules as well.
  # Try the compile first before uploading it to Google App Engine
  # Include Style in the project.gadget.xml module (build reference)
+ # Testing gadgets in this wiki get cached, so expect some time before the new gadget that you upload may not change at first.
 
 = Examples / Demos =
 
