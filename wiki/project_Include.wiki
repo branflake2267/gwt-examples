@@ -6,7 +6,7 @@
 == What To Do ==
  This is how I do it.
  # Build two projects independently, be sure the stand on there own and run.
- # Be sure both projects have different servlet context for there rpc calls, in RpcService.java
+ # Be sure both projects have different servlet context for there rpc calls, in RpcService.java and ./war/WEB-INF/web.xml
  # In the project.xml file, inherit the other project, then go to build path and add the project to the build path. Another way is to link the source to its path. 
  
 == Example ==
