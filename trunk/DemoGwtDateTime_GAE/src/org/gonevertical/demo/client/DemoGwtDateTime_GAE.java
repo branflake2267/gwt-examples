@@ -16,6 +16,7 @@ public class DemoGwtDateTime_GAE implements EntryPoint {
   	
 	  RootPanel.get().add(w);
 	  
+	  Track.track("home");
   }
 	
 }
