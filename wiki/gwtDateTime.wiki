@@ -39,143 +39,6 @@ private long getTimeStampMilli() {
 }
 }}}
 
-= TimeStamp - Start and End Of Day =
- Get the beginning/start of the day in seconds - using Calendar (calendar works on server side only)
- * MySql: SELECT UNIX_TIMESTAMP(MAKEDATE( EXTRACT(YEAR FROM CURDATE()), DAYOFYEAR(CURDATE()))); 
-{{{
-/**
- * get Start of Day Time Stamp in seconds
- * 
- * @param int TimeStamp - unix time stamp
- * @return unix time stamp (seconds)
- */
-protected static String getDateStart_TimeStamp(int TimeStamp) {
-
-	long ltime = (long) (TimeStamp / .001); //my unix time stamp in seconds
-
-	Date date = new Date(ltime);
-	TimeZone tzGMT = TimeZone.getTimeZone("GMT");
-	Calendar cal = Calendar.getInstance();
-	cal.setTimeZone(tzGMT);
-	cal.setTime(date);
-	cal.set(Calendar.HOUR_OF_DAY, 0);
-	cal.set(Calendar.MINUTE, 0);
-	cal.set(Calendar.SECOND, 0);
-	
-	
-	//proof
-	//int h = cal.get(Calendar.HOUR_OF_DAY);
-	//int m = cal.get(Calendar.MINUTE);
-	//int d = cal.get(Calendar.DATE);
-	//System.out.println("time: day:" + d +" " + h + ":" + m);
-	
-	//change to seconds
-	long ltimeM = cal.getTimeInMillis();
-	int iTimeStamp = (int) (ltimeM * .001);
-
-	return Integer.toString(iTimeStamp);
-}
-}}}
-
- Get the end of the day in seconds
-{{{
-/**
- * Get End of Day Time Stamp in seconds
- * 
- * @param int TimeStamp - unix time stamp
- * @return unix time stamp (seconds)
- */
-protected static String getDateEnd_TimeStamp(int TimeStamp) {
-
-	long ltime = (long) (TimeStamp / .001); //my unix time stamp in seconds
-
-	Date date = new Date(ltime);
-	TimeZone tzGMT = TimeZone.getTimeZone("GMT");
-	Calendar cal = Calendar.getInstance();
-	cal.setTimeZone(tzGMT);
-	cal.setTime(date);
-	cal.set(Calendar.HOUR_OF_DAY, 23);
-	cal.set(Calendar.MINUTE, 59);
-	cal.set(Calendar.SECOND, 59);
-	
-	//proof
-	//int h = cal.get(Calendar.HOUR_OF_DAY);
-	//int m = cal.get(Calendar.MINUTE);
-	//int d = cal.get(Calendar.DATE);
-	//System.out.println("time: day:" + d +" " + h + ":" + m);
-	
-	//change to seconds
-	long ltimeM = cal.getTimeInMillis();
-	int iTimeStamp = (int) (ltimeM * .001);
-
-	return Integer.toString(iTimeStamp);
-}
-
-}}}
-
- Get the start of the day 0:00:00 am in seconds
-{{{
-/**
- * get Start of Day Time Stamp
- * @return unix time stamp (seconds)
- */
-private String getDateStart_TimeStamp() {
-	
-	long ltime = (long) (this.TimeStamp / .001); //my unix time stamp in seconds
-	
-	//Figure out Unix time stamps for the start of the day and the end of the day
-	Date DC = new Date(ltime); //get current Year, Month
-	int year = DC.getYear(); //current Year
-	int month = DC.getMonth(); //current Month
-	int day = DC.getDate();// current Day
-	
-	Date dateStart = new Date(); //Today @ 0:00:00 am to unix time stamp 
-	dateStart.setYear(year); //set year current Year
-	dateStart.setMonth(month); //set month current Month
-	dateStart.setDate(day); //set current day of month
-	dateStart.setMinutes(0); // minute 0
-	dateStart.setHours(0);	 // hour 0
-	dateStart.setSeconds(0); // second 0
-	int iTimeStamp = (int) (dateStart.getTime() * .001);
-	String sStart_TimeStamp = Integer.toString(iTimeStamp);
-	
-	//helps debugging
-	System.out.println("this.Time::: " + this.TimeStamp);
-	System.out.println("Start Time::: " + sStart_TimeStamp);
-	
-	return sStart_TimeStamp;
-}
-}}}
-
- Get the end of the day 23:59:59 in seconds
-{{{
-/**
- * Get End of Day Time Stamp
- * @return unix time stamp (seconds)
- */
-private String getDateEnd_TimeStamp() {
-	
-	long ltime = (long) (this.TimeStamp / .001); //my unix time stamp in seconds
-	
-	//Figure out Unix time stamps for the start of the day and the end of the day
-	Date DC = new Date(ltime); //get current Year, Month
-	int year = DC.getYear(); //current Year
-	int month = DC.getMonth(); //current Month
-	int day = DC.getDate();// current Day
-	
-	Date dateEnd = new Date(); //Today @ 23:59:59 to unix time stamp 
-	dateEnd.setYear(year); //set year current Year
-	dateEnd.setMonth(month); //set month current Month
-	dateEnd.setDate(day); //set current day of month
-	dateEnd.setHours(23);	// hour 23
-	dateEnd.setMinutes(59); // minute 59
-	dateEnd.setSeconds(59); // second 59
-	int iTimeStamp = (int) (dateEnd.getTime() * .001);
-	String sEnd_TimeStamp = Integer.toString(iTimeStamp);
-	
-	return sEnd_TimeStamp;
-}
-}}}
 
 = Get Client's Time Zone =
  This is how I get the client's time zone. 
@@ -405,4 +268,142 @@ private long getMinus12Months(int month, int year) {
 	return date.getTime();
 }
 
+}}}
+
+= Server Side - TimeStamp - Start and End Of Day =
+ Get the beginning/start of the day in seconds - using Calendar (calendar works on server side only)
+ * MySql: SELECT UNIX_TIMESTAMP(MAKEDATE( EXTRACT(YEAR FROM CURDATE()), DAYOFYEAR(CURDATE()))); 
+{{{
+/**
+ * get Start of Day Time Stamp in seconds
+ * 
+ * @param int TimeStamp - unix time stamp
+ * @return unix time stamp (seconds)
+ */
+protected static String getDateStart_TimeStamp(int TimeStamp) {
+
+	long ltime = (long) (TimeStamp / .001); //my unix time stamp in seconds
+
+	Date date = new Date(ltime);
+	TimeZone tzGMT = TimeZone.getTimeZone("GMT");
+	Calendar cal = Calendar.getInstance();
+	cal.setTimeZone(tzGMT);
+	cal.setTime(date);
+	cal.set(Calendar.HOUR_OF_DAY, 0);
+	cal.set(Calendar.MINUTE, 0);
+	cal.set(Calendar.SECOND, 0);
+	
+	
+	//proof
+	//int h = cal.get(Calendar.HOUR_OF_DAY);
+	//int m = cal.get(Calendar.MINUTE);
+	//int d = cal.get(Calendar.DATE);
+	//System.out.println("time: day:" + d +" " + h + ":" + m);
+	
+	//change to seconds
+	long ltimeM = cal.getTimeInMillis();
+	int iTimeStamp = (int) (ltimeM * .001);
+
+	return Integer.toString(iTimeStamp);
+}
+}}}
+
+ Get the end of the day in seconds
+{{{
+/**
+ * Get End of Day Time Stamp in seconds
+ * 
+ * @param int TimeStamp - unix time stamp
+ * @return unix time stamp (seconds)
+ */
+protected static String getDateEnd_TimeStamp(int TimeStamp) {
+
+	long ltime = (long) (TimeStamp / .001); //my unix time stamp in seconds
+
+	Date date = new Date(ltime);
+	TimeZone tzGMT = TimeZone.getTimeZone("GMT");
+	Calendar cal = Calendar.getInstance();
+	cal.setTimeZone(tzGMT);
+	cal.setTime(date);
+	cal.set(Calendar.HOUR_OF_DAY, 23);
+	cal.set(Calendar.MINUTE, 59);
+	cal.set(Calendar.SECOND, 59);
+	
+	//proof
+	//int h = cal.get(Calendar.HOUR_OF_DAY);
+	//int m = cal.get(Calendar.MINUTE);
+	//int d = cal.get(Calendar.DATE);
+	//System.out.println("time: day:" + d +" " + h + ":" + m);
+	
+	//change to seconds
+	long ltimeM = cal.getTimeInMillis();
+	int iTimeStamp = (int) (ltimeM * .001);
+
+	return Integer.toString(iTimeStamp);
+}
+
+}}}
+
+ Get the start of the day 0:00:00 am in seconds
+{{{
+/**
+ * get Start of Day Time Stamp
+ * @return unix time stamp (seconds)
+ */
+private String getDateStart_TimeStamp() {
+	
+	long ltime = (long) (this.TimeStamp / .001); //my unix time stamp in seconds
+	
+	//Figure out Unix time stamps for the start of the day and the end of the day
+	Date DC = new Date(ltime); //get current Year, Month
+	int year = DC.getYear(); //current Year
+	int month = DC.getMonth(); //current Month
+	int day = DC.getDate();// current Day
+	
+	Date dateStart = new Date(); //Today @ 0:00:00 am to unix time stamp 
+	dateStart.setYear(year); //set year current Year
+	dateStart.setMonth(month); //set month current Month
+	dateStart.setDate(day); //set current day of month
+	dateStart.setMinutes(0); // minute 0
+	dateStart.setHours(0);	 // hour 0
+	dateStart.setSeconds(0); // second 0
+	int iTimeStamp = (int) (dateStart.getTime() * .001);
+	String sStart_TimeStamp = Integer.toString(iTimeStamp);
+	
+	//helps debugging
+	System.out.println("this.Time::: " + this.TimeStamp);
+	System.out.println("Start Time::: " + sStart_TimeStamp);
+	
+	return sStart_TimeStamp;
+}
+}}}
+
+ Get the end of the day 23:59:59 in seconds
+{{{
+/**
+ * Get End of Day Time Stamp
+ * @return unix time stamp (seconds)
+ */
+private String getDateEnd_TimeStamp() {
+	
+	long ltime = (long) (this.TimeStamp / .001); //my unix time stamp in seconds
+	
+	//Figure out Unix time stamps for the start of the day and the end of the day
+	Date DC = new Date(ltime); //get current Year, Month
+	int year = DC.getYear(); //current Year
+	int month = DC.getMonth(); //current Month
+	int day = DC.getDate();// current Day
+	
+	Date dateEnd = new Date(); //Today @ 23:59:59 to unix time stamp 
+	dateEnd.setYear(year); //set year current Year
+	dateEnd.setMonth(month); //set month current Month
+	dateEnd.setDate(day); //set current day of month
+	dateEnd.setHours(23);	// hour 23
+	dateEnd.setMinutes(59); // minute 59
+	dateEnd.setSeconds(59); // second 59
+	int iTimeStamp = (int) (dateEnd.getTime() * .001);
+	String sEnd_TimeStamp = Integer.toString(iTimeStamp);
+	
+	return sEnd_TimeStamp;
+}
 }}}
