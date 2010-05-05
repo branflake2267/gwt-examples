@@ -2,10 +2,10 @@
 <module rename-to='demogwtdatetime_gae'>
 
   <!-- Inherit the core Web Toolkit stuff.                        -->
-  <inherits name='com.google.gwt.user.User'/>
+  <!--  <inherits name='com.google.gwt.user.User'/> -->
 
   <!-- Inherit the default GWT style sheet.  You can change       -->
-  <inherits name='com.google.gwt.user.theme.standard.Standard'/>
+  <!--  <inherits name='com.google.gwt.user.theme.standard.Standard'/> -->
   
 
   <!-- Other module inherits                                      -->
