@@ -179,7 +179,7 @@ protected static String getDoubleDigit(int i) {
 
 }}}
 
-= Linux Timezone =
+= Server - Linux Timezone =
  The timezone ID matches a file in /usr/share/zoneinfo. 
 
  For Instance if you get use PDT (not a correct timezone name(ID)) for Timezone ID, it will cause an error to be thrown. 
@@ -194,7 +194,7 @@ df1.setTimeZone(TimeZone.getTimeZone("PDT"));
 df1.setTimeZone(TimeZone.getTimeZone("America/Vancouver"));
 }}}
 
-= Example Date TimeZone Parser = 
+= Server - Example Date TimeZone Parser = 
  I would use getID instead of this. But I wanted to add this incase it was useful to anybody.
 {{{
 /**
