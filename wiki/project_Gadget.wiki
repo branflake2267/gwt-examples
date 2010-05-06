@@ -27,6 +27,17 @@
  # Include Style in the project.gadget.xml module (build reference)
  # Testing gadgets in this wiki get cached, so expect some time before the new gadget that you upload may not change at first.
 
+== Module Prefs ==
+ * title
+ * description
+ * author
+ * author_email
+ * screenshot  (suggested)
+ * author_location  (suggested)
+ * author_affiliation  (suggested)
+ * title_url  (suggested)
+ * directory_title   (required if title contains user prefs)
+
 = Examples / Demos =
 
 == Example of Advertising Gadget For My Wiki ==
