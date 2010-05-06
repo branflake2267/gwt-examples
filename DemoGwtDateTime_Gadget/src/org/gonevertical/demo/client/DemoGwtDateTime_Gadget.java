@@ -1,9 +1,14 @@
 package org.gonevertical.demo.client;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.gadgets.client.DynamicHeightFeature;
 import com.google.gwt.gadgets.client.Gadget;
+import com.google.gwt.gadgets.client.NeedsDynamicHeight;
 import com.google.gwt.gadgets.client.Gadget.ModulePrefs;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 @ModulePrefs(//
     title = "Timestamp Converter", //
@@ -16,19 +21,35 @@ import com.google.gwt.user.client.ui.RootPanel;
     author_location = "Arlington, WA, 98223", //
     thumbnail = "/images/thumb.png", //
     screenshot = "/images/screen.png")
-public class DemoGwtDateTime_Gadget extends Gadget<DemoGadgetPreferences> {
+public class DemoGwtDateTime_Gadget extends Gadget<DemoGadgetPreferences> implements NeedsDynamicHeight, ChangeHandler {
+
+	private DynamicHeightFeature featureHeight;
 
 	/**
 	 * entry point for gadget
 	 */
   protected void init(DemoGadgetPreferences preferences) {
 	  
-  	DateTimeWidget w = new DateTimeWidget();
+  	DateTimeWidget wdt = new DateTimeWidget();
   	
-	  RootPanel.get().add(w);
+	  RootPanel.get().add(wdt);
+	  
+	  wdt.addChangeHandler(this);
   	
 	  Track.track("gadgetHome");
 	  
+  }
+
+  public void initializeFeature(DynamicHeightFeature feature) {
+  	this.featureHeight = feature;
+  }
+
+  public void onChange(ChangeEvent event) {
+  	Widget sender = (Widget) event.getSource();
+  	
+  	// adjust height
+  	featureHeight.adjustHeight();
+  	
   }
 	
 }
