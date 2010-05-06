@@ -59,10 +59,9 @@ wiki:gadget url="http://demogwtgadget.appspot.com/demogwtgadget/org.gonevertical
 
 = Time Stamp Test And Convert =
  Test or convert your Javascript or Unix timestamp.
-
 {{{
 <wiki:gadget url="http://demogwtdatetimegadget.appspot.com/demogwtdatetime_gadget/org.gonevertical.demo.client.DemoGwtDateTime_Gadget.gadget.xml" height="400" width="400" border="1" />
-]}}
+}}}
 <wiki:gadget url="http://demogwtdatetimegadget.appspot.com/demogwtdatetime_gadget/org.gonevertical.demo.client.DemoGwtDateTime_Gadget.gadget.xml" height="400" width="400" border="1" />
 
 = Trying Other Ways =
