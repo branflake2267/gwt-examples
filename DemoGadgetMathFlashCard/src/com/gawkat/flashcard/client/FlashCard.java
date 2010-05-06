@@ -15,7 +15,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
     description = "Practice your times tables. " +
     		"(See how this was built using GWT http://code.google.com/p/gwt-examples/wiki/project_Gadget)", //
     thumbnail = "/images/FlashCard_sm.png", //
-    height = 210, //
+    title_url = "http://gwt-examples.googlecode.com", //
+    author_location = "Arlington, WA, 98223", //
     screenshot = "/images/FlashCard_lg.png")
 public class FlashCard extends Gadget<FlashCardPreferences> {
 
