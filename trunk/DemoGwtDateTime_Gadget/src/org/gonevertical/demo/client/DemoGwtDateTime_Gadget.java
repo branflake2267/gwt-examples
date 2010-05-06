@@ -42,6 +42,7 @@ public class DemoGwtDateTime_Gadget extends Gadget<DemoGadgetPreferences> implem
 
   public void initializeFeature(DynamicHeightFeature feature) {
   	this.featureHeight = feature;
+  	feature.adjustHeight();
   }
 
   public void onChange(ChangeEvent event) {
