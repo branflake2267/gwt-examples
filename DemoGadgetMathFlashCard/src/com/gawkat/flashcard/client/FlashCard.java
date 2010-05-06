@@ -12,8 +12,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
     author = "Brandon Donnelson", //
     author_email = "branflake2267@gmail.com", //
     author_affiliation = "GoneVerical.org", //
-    description = "Practice your times tables. " +
-    		"(See how this was built using GWT http://code.google.com/p/gwt-examples/wiki/project_Gadget)", //
+    description = "Practice your times tables. See more on gwt-examples.googlecode.com", //
     thumbnail = "/images/FlashCard_sm.png", //
     title_url = "http://gwt-examples.googlecode.com", //
     author_location = "Arlington, WA, 98223", //
