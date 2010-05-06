@@ -3,4 +3,4 @@
 = Test Gadgets Here =
  I can test my gadgets here.
 
-<wiki:gadget url="http://demogadgetmathflashcard.appspot.com/flashcard/com.gawkat.flashcard.client.FlashCard.gadget.xml" height="400" width="400" border="1" />
+<wiki:gadget url="http://demogwtdatetimegadget.appspot.com/demogwtdatetime_gadget/org.gonevertical.demo.client.DemoGwtDateTime_Gadget.gadget.xml" height="400" width="400" border="1" />
