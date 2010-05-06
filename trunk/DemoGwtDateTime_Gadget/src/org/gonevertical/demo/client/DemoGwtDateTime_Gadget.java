@@ -11,7 +11,9 @@ import com.google.gwt.user.client.ui.RootPanel;
     author = "Brandon Donnelson", //
     author_email = "branflake2267@gmail.com", //
     author_affiliation = "GoneVerical.org", //
-    description = "Test or convert your Javascript or Unix timestamp. See more on http://gwt-examples.googlecode.com", //
+    description = "Test or convert your Javascript or Unix epoch timestamp. See more on http://gwt-examples.googlecode.com", //
+    title_url = "http://gwt-examples.googlecode.com", //
+    author_location = "Arlington, WA, 98223", //
     thumbnail = "/images/thumb.png", //
     screenshot = "/images/screen.png")
 public class DemoGwtDateTime_Gadget extends Gadget<DemoGadgetPreferences> {
@@ -30,3 +32,4 @@ public class DemoGwtDateTime_Gadget extends Gadget<DemoGadgetPreferences> {
   }
 	
 }
+
