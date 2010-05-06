@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='demogwtdatetime_gadget'>
+
+  <!-- Inherit the core Web Toolkit stuff.                        -->
+  <inherits name='com.google.gwt.user.User'/>
+
+  <inherits name='com.google.gwt.user.theme.standard.Standard'/>
+
+
+  <!-- Other module inherits                                      -->
+  <inherits name="com.google.gwt.gadgets.Gadgets" />
+  <inherits name='org.gonevertical.demo.DemoGwtDateTime_Source'/> 
+
+  
+
+  <!-- Specify the app entry point class.                         -->
+  <entry-point class='org.gonevertical.demo.client.DemoGwtDateTime_Gadget'/>
+
+  <!-- Specify the paths for translatable code                    -->
+  <source path='client'/>
+  <source path='shared'/>
+
+</module>
