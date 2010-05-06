@@ -11,7 +11,7 @@ import com.google.gwt.user.client.ui.RootPanel;
     author = "Brandon Donnelson", //
     author_email = "branflake2267@gmail.com", //
     author_affiliation = "GoneVerical.org", //
-    description = "Test or convert your Javascript or Unix timestamps.", //
+    description = "Test or convert your Javascript or Unix timestamp. See more on http://gwt-examples.googlecode.com", //
     thumbnail = "/images/thumb.png", //
     screenshot = "/images/screen.png")
 public class DemoGwtDateTime_Gadget extends Gadget<DemoGadgetPreferences> {
