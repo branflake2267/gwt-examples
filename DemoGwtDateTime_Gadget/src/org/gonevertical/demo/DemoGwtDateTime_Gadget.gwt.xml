@@ -8,6 +8,7 @@
 
 
   <!-- Other module inherits                                      -->
+  <stylesheet src="../DemoGwtDateTime_Gadget.css" />
   <inherits name="com.google.gwt.gadgets.Gadgets" />
   <inherits name='org.gonevertical.demo.DemoGwtDateTime_Source'/> 
 
