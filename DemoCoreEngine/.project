@@ -38,6 +38,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>src_cor</name>
+			<type>2</type>
+			<location>/Users/branflake2267/Documents/workspace/Core/src</location>
+		</link>
+		<link>
 			<name>src_core</name>
 			<type>2</type>
 			<location>/Users/branflake2267/Documents/workspace/Core/src</location>
