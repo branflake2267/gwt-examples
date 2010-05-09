@@ -191,7 +191,7 @@ public class OAuthServer {
     ThingJdo[] users = tj.query((long)ThingTypeJdo.TYPE_USER, consumerKey);
     
     UserData ud = null;
-    if (users == null) {
+    if (users == null || token == null || users == null || users.length == 0) {
       // skip
     } else {
       ud = new UserData();

@@ -50,20 +50,26 @@ public class LoginWidget extends Composite implements ChangeHandler {
   private String consumerSecret = null;
 
   /**
-   * login widget
+   * init login widget
    * 
    * @param cp
    */
   public LoginWidget(ClientPersistence cp) {
     this.cp  = cp;
   
+    if (cp == null) {
+    	System.err.println("LoginWidget.LoginWidget() Error, you didn't set the clientpersistence object into Login Widget. This need to be done.");
+    }
+    
     wloginUi = new LoginUi(cp);
     
     pWidget.add(wloginUi);
     
     initWidget(pWidget);
-
     
+    // so any other widget can call a refernce to use, so to tell someone to login
+    cp.setLoginWidgetReference(this);
+
     // init rpc
     rpc = RpcCore.initRpc();
 
@@ -72,7 +78,19 @@ public class LoginWidget extends Composite implements ChangeHandler {
    
     cp.addChangeHandler(this);
   }
-
+  
+  public static LoginWidget getWidgetStandAlone(ClientPersistence cp, int uiType) {
+  	if (uiType == 0) {
+  		uiType = LoginUi.LOGIN_HORIZONTAL;
+  	}
+  	
+  	LoginWidget wLogin = new LoginWidget(cp);
+  	wLogin.setUi(uiType);
+  	wLogin.drawUi();
+  	
+  	return wLogin;
+  }
+  
   /**
    * start the session, by having the application get token
    */
@@ -177,7 +195,8 @@ public class LoginWidget extends Composite implements ChangeHandler {
     cp.setAccessToken(token);
 
     // show logged in
-    wloginUi.setLoginStatus(true);
+    wloginUi.setLoginStatus(true); // TODO - change to cp to hold this
+    cp.setLoginStatus(true);
 
     // Notify change logged in
     fireChange(EventManager.LOGGEDIN);
@@ -339,6 +358,8 @@ public class LoginWidget extends Composite implements ChangeHandler {
     };
     rpc.getUserAccessToken(tokenData, callback);
   }
+
+
 
  
 
