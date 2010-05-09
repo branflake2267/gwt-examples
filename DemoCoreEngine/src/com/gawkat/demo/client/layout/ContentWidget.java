@@ -6,6 +6,7 @@ import org.gonevertical.core.client.global.QueryString;
 import org.gonevertical.core.client.global.QueryStringData;
 
 import com.gawkat.demo.client.layout.widgets.Home;
+import com.gawkat.demo.client.layout.widgets.TestWidget;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
@@ -13,7 +14,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class MiddleWidget extends Composite implements ValueChangeHandler<String> {
+public class ContentWidget extends Composite implements ValueChangeHandler<String> {
 
 	private ClientPersistence cp;
 	
@@ -23,7 +24,7 @@ public class MiddleWidget extends Composite implements ValueChangeHandler<String
 	
 	private AccountWidget wAccount = null;
 	
-	public MiddleWidget(ClientPersistence cp) {
+	public ContentWidget(ClientPersistence cp) {
 		this.cp = cp;
 		
 		wAccount = new AccountWidget(cp);
@@ -33,9 +34,9 @@ public class MiddleWidget extends Composite implements ValueChangeHandler<String
 		
 		initWidget(pWidget);
 		
+		pWidget.setWidth("100%");
 		pWidget.addStyleName("gv_layout_middle");
 		
-		// init history observation
 		History.addValueChangeHandler(this);
 		
 		changeState(History.getToken());
@@ -64,15 +65,17 @@ public class MiddleWidget extends Composite implements ValueChangeHandler<String
 		
 		QueryStringData qsd = QueryString.getQueryStringData();
 		
-		if (qsd.getHistoryToken().equals("dce_home") == true) {
+		if (qsd == null || qsd.getHistoryToken() == null) {
+			// TODO - does this happen?
+			System.err.println("ContentWidget.drawState_Dce(): historyToken Null");
+			
+		} else if (qsd.getHistoryToken().equals("dce_home") == true) {
 			drawState_HomePage();
 			
+		} else if (qsd.getHistoryToken().equals("dce_test") == true) {
+			drawState_Test();
 		}
-  }
-
-	private void drawState_Account() {
-		pContent.setVisible(false);
-		wAccount.draw();
+		
   }
 	
 	public void drawState_HomePage() {
@@ -80,6 +83,17 @@ public class MiddleWidget extends Composite implements ValueChangeHandler<String
 		pContent.add(home);
 		home.draw();
 	}
+	
+	private void drawState_Test() {
+		TestWidget wTest = new TestWidget(cp);
+		pContent.add(wTest);
+		wTest.draw();
+  }
+
+	private void drawState_Account() {
+		pContent.setVisible(false);
+		wAccount.draw();
+  }
 
   public void onValueChange(ValueChangeEvent<String> event) {
     String historyToken = event.getValue();

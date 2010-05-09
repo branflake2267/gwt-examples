@@ -12,7 +12,7 @@ import org.gonevertical.core.client.account.ui.LoginWidget;
 import com.gawkat.demo.client.layout.FooterWidget;
 import com.gawkat.demo.client.layout.LinksWidget;
 import com.gawkat.demo.client.layout.LogoWidget;
-import com.gawkat.demo.client.layout.MiddleWidget;
+import com.gawkat.demo.client.layout.ContentWidget;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -64,7 +64,7 @@ public class DemoCoreEngine implements EntryPoint, ValueChangeHandler<String> {
 		LogoWidget wLogo = new LogoWidget(cp);
 		LinksWidget wLinks = new LinksWidget(cp);
 		BreadCrumbs wBreadCrumbs = new BreadCrumbs(cp);
-		MiddleWidget wMiddle = new MiddleWidget(cp);
+		ContentWidget wMiddle = new ContentWidget(cp);
 		FooterWidget wFooter = new FooterWidget(cp);
 
 		VerticalPanel pLayout = new VerticalPanel();
@@ -82,11 +82,12 @@ public class DemoCoreEngine implements EntryPoint, ValueChangeHandler<String> {
 		pLayout.addStyleName("dce_layout");
 	  pLayout.setCellHorizontalAlignment(wLogin, HorizontalPanel.ALIGN_RIGHT);
 	  
-	  wBreadCrumbs.addBreadCrumbHome("Home", "dce_home");
-	  wBreadCrumbs.addBreadCrumb("Test", "dce_test");
+	  wBreadCrumbs.setBreadCrumbHome("Home", "dce_home");
+	  wBreadCrumbs.setBreadCrumb("Test", "dce_test");
 	  
 	  // middle domain.tld?[historyToken]_.*
-	  wBreadCrumbs.addBreadCrumbCategory("Category", "dce");
+	  wBreadCrumbs.setBreadCrumbCategory("Content", "dce");
+	  
 	  wBreadCrumbs.draw();
 	  
 	  wBreadCrumbs.addStyleName("dce_layout_breadcrumbs");
