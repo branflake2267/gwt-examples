@@ -15,11 +15,28 @@ public class QueryStringData {
   }
   
   /**
-   * get historyToken domain.tld#historyToken?param1=a&param2=b
+   * get historyToken domain.tld#[historyToken]?param1=a&param2=b
    * @return
    */
   public String getHistoryToken() {
     return this.historyToken;
+  }
+  
+  /**
+   * get the first part of the historyToken until the underscore
+   * like domain.tld#[historyToken]_home?param1=a
+   * @return
+   */
+  public String getHistoryToken_ToUnderScore() {
+  	if (historyToken.matches("^.*?_.*") == false) {
+  		return null;
+  	}
+  	String[] split = historyToken.split("_");
+  	String s = null;
+  	if (split !=null) {
+  		s = split[0];
+  	}
+    return s;
   }
   
   public HashMap<String, String> getParameters() {

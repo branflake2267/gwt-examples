@@ -2,10 +2,13 @@ package org.gonevertical.core.client;
 
 public class Track {
 
-	/**
-	 * constructor - nothing to do
-	 */
+	private String accountGoogleAnalytics;
+
   public Track() {
+  }
+  
+	public void setGoogleAnalyticsAccount(String googleAnalyticsAccount) {
+		this.accountGoogleAnalytics = googleAnalyticsAccount;
   }
   
   /**
@@ -13,16 +16,33 @@ public class Track {
    * 
    * @param historyToken
    */
-  public static void track(String historyToken) {
+  public void setTrack(String historyToken) {
+  	if (accountGoogleAnalytics == null) {
+  		System.out.println("Track.setTrack(): Error: Did you forget to set the google analytics account?");
+  		return;
+  	}
   	
   	if (historyToken == null) {
   		historyToken = "historyToken_null";
   	}
   	
-  	historyToken = "/DemoCoreEngine/" + historyToken;
+  	historyToken = "/" + historyToken;
   	
-  	trackGoogleAnalytics(historyToken);
+  	trackGoogleAnalytics(accountGoogleAnalytics, historyToken);
+  }
   
+  public void setTrack(String category, String historyToken) {
+  	if (accountGoogleAnalytics == null) {
+  		return;
+  	}
+  	
+  	if (historyToken == null) {
+  		historyToken = "historyToken_null";
+  	}
+  	
+  	historyToken = "/" + category + "/" + historyToken;
+  	
+  	trackGoogleAnalytics(accountGoogleAnalytics, historyToken);
   }
     
   /**
@@ -33,12 +53,12 @@ public class Track {
    * 
    * @param historyToken
    */
-  public static native void trackGoogleAnalytics(String historyToken) /*-{
+  public native void trackGoogleAnalytics(String account, String historyToken) /*-{
         
     try {
     	
     	// setup tracking object with account
-    	var pageTracker = $wnd._gat._getTracker("UA-2862268-9"); // change account please!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    	var pageTracker = $wnd._gat._getTracker(account); // change account please!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     	
     	pageTracker._setRemoteServerMode();
     	
@@ -55,6 +75,8 @@ public class Track {
     }
 
 	}-*/;
+
+
   
   
   

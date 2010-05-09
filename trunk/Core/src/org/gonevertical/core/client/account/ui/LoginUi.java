@@ -34,8 +34,7 @@ public class LoginUi extends Composite implements ChangeHandler {
 	private FlowPanel pWidget = new FlowPanel();
 	
 	// possible ui types (widget)
-	private LoginUiHorizontal loginUiH = null;
-	private LoginUiVertical loginUiV = null;
+	private LoginUiInputs loginUi = null;
 	
   /**
    * constructor - init composite widget
@@ -53,62 +52,37 @@ public class LoginUi extends Composite implements ChangeHandler {
 	 * 
 	 * @param uiType
 	 */
-	public void setUi(int uiType) {
+	protected void setUi(int uiType) {
 		this.uiType = uiType;
 		
-		if (uiType == LOGIN_HORIZONTAL) {
-			loginUiH = new LoginUiHorizontal(cp);
-			pWidget.add(loginUiH);
-		} else if (uiType == LOGIN_VERTICAL) {
-			loginUiV = new LoginUiVertical(cp);
-			pWidget.add(loginUiV);
-		}
-		
+		loginUi = new LoginUiInputs(cp, uiType);
+		pWidget.add(loginUi);
+
 		// observe the accounts/session ui for changes
 		setObserver();
 	}
 	
-	public boolean getRememberMe() {
-	  boolean b = false;
-	  if (uiType == LOGIN_HORIZONTAL) {
-	    b = loginUiH.getRememberMe();
-    } else if (uiType == LOGIN_VERTICAL) {
-      // TODO
-    }
+	protected boolean getRememberMe() {
+	  boolean b = loginUi.getRememberMe();
 	  return b;
 	}
 	
 	/**
 	 * observe login ui that was choose
 	 */
-	public void setObserver() {
-		if (uiType == LOGIN_HORIZONTAL) {
-			loginUiH.addChangeHandler(this);
-		} else if (uiType == LOGIN_VERTICAL) {
-		  //loginUiV.addChangeHandler(this);
-		  // TODO
-		}
+	protected void setObserver() {
+		loginUi.addChangeHandler(this);
 	}
 	
 	/**
 	 * draw widget
 	 */
-	public void draw() {
-	  
-		if (uiType == LOGIN_HORIZONTAL) {
-			loginUiH.draw();
-		} else if (uiType == LOGIN_VERTICAL) {
-		  loginUiV.draw();
-		}
+	protected void draw() {
+		loginUi.draw();
 	}
 	
-	public void drawError(String error) {
-	  if (uiType == LOGIN_HORIZONTAL) {
-	    loginUiH.drawError(error);
-	  } else if (uiType == LOGIN_VERTICAL) {
-	    // TODO
-	  }
-
+	protected void drawError(String error) {
+	  loginUi.drawError(error);
 	}
 	
 	/**
@@ -118,31 +92,17 @@ public class LoginUi extends Composite implements ChangeHandler {
 	 * 
 	 * @param bol
 	 */
-	public void setLoginStatus(boolean bol) {
-		if (uiType == LOGIN_HORIZONTAL) {
-			loginUiH.setLoginStatus(bol);
-		} else if (uiType == LOGIN_VERTICAL) {
-		  // TODO
-		}
+	protected void setLoginStatus(boolean bol) {
+		loginUi.setLoginStatus(bol);
 	}
 	
-	public String getConsumerKey() {
-		String s = null;
-		if (uiType == LOGIN_HORIZONTAL) {
-			s = loginUiH.getConsumerKey();
-		} else if (uiType == LOGIN_VERTICAL) {
-		  // TODO
-		}	
+	protected String getConsumerKey() {
+		String s = loginUi.getConsumerKey();
 		return s;
 	}
 	
-	public String getConsumerSecret() {
-		String s = null;
-		if (uiType == LOGIN_HORIZONTAL) {
-			s = loginUiH.getConsumerSecret();
-		} else if (uiType == LOGIN_VERTICAL) {
-		  // TODO
-		}
+	protected String getConsumerSecret() {
+		String s = loginUi.getConsumerSecret();
 		
 		// create digest of password, before sending it to the server
 		Sha1 sha = new Sha1();
@@ -154,20 +114,11 @@ public class LoginUi extends Composite implements ChangeHandler {
   public void onChange(ChangeEvent event) {
     Widget sender = (Widget) event.getSource();
     int changeEvent = 0;
-    if (uiType == LOGIN_HORIZONTAL) {
-      
-      if (sender == loginUiH) {
-        changeEvent = loginUiH.getChangeEvent();
-      }
-      
-    } else if (uiType == LOGIN_VERTICAL) {
-      
-      if (sender == loginUiV) {
-        changeEvent = loginUiV.getChangeEvent();
-      }
-      
-    }
     
+    if (sender == loginUi) {
+      changeEvent = loginUi.getChangeEvent();
+    }
+      
     // this is just the middle man to the user interfaces
     if (changeEvent > 0) {
       fireChange(changeEvent);
@@ -175,7 +126,7 @@ public class LoginUi extends Composite implements ChangeHandler {
     
   }
 	
-  public int getChangeEvent() {
+  protected int getChangeEvent() {
     return changeEvent;
   }
   

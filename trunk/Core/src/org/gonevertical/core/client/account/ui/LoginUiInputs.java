@@ -45,7 +45,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author branflake2267
  *
  */
-public class LoginUiHorizontal extends Composite implements 
+public class LoginUiInputs extends Composite implements 
 MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 
   private ClientPersistence cp = null;
@@ -78,7 +78,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 	private	FlowPanel pUi = new FlowPanel();
 	
 	// login button
-	private PushButton bLogin = new PushButton("SignIn");
+	private PushButton bLogin = new PushButton("Sign in");
 	
 	// forgot password, ask for it
 	private PushButton bForgot = new PushButton("Get Password");
@@ -102,11 +102,15 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 	
 	private boolean hoverOnOff = false;
 
+	// horizontal or vertical
+	private int uiType = LoginUi.LOGIN_HORIZONTAL;
+
 	/**
 	 * constructor
 	 */
-	public LoginUiHorizontal(ClientPersistence cp) {
+	public LoginUiInputs(ClientPersistence cp, int uiType) {
 	  this.cp = cp;
+	  this.uiType = uiType;
 	  
 	  inputLabel_ConsumerKey = cp.getInputLabel_ConsumerKey();
 	  
@@ -135,7 +139,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 		tbConsumerSecretPass.addMouseOutHandler(this);
 		
 		
-		
+		// TODO
 		hAccountCreate.addClickHandler(this);
 		hAccountLogout.addClickHandler(this);
 		hAccountProfile.addClickHandler(this);
@@ -182,13 +186,13 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 			}
 		});
 	}
-	
+		
 	public void draw() {
 		
 		if (loginStatus == false) {
 		  tbConsumerKey.setText("");
 		  tbConsumerSecretPass.setText("");
-			drawLoginInputs();
+			drawInputs();
 		} else if (loginStatus == true) {
 		  drawLoggedIn();
 		}
@@ -212,7 +216,16 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 		t.schedule(1500);
 	}
 	
-	private void drawLoginInputs() {
+	private void drawInputs() {
+		if (uiType == LoginUi.LOGIN_HORIZONTAL) {
+			drawInputs_Horizontal();
+			
+		} else if (uiType == LoginUi.LOGIN_VERTICAL) {
+			drawInputs_Vertical();
+		}
+	}
+	
+	private void drawInputs_Horizontal() {
 		
 		//default
 		tbConsumerSecret.setVisible(true);
@@ -265,6 +278,67 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 		
 		//vp.addStyleName("test1");
 		//pOptions.addStyleName("test2");
+	}
+	
+	private void drawInputs_Vertical() {
+
+		//default
+		tbConsumerSecret.setVisible(true);
+		tbConsumerSecretPass.setVisible(false);
+		
+		// reset ui
+		clear();
+		
+		cbRemberMe.setText("Remember Me");
+		
+		tbConsumerKey.setTitle(inputLabel_ConsumerKey);
+		tbConsumerSecret.setTitle(inputLabel_consumerSecret);
+		tbConsumerSecretPass.setTitle(inputLabel_consumerSecret);
+		
+		// hide loading by default
+		hideLoading();
+		
+		HorizontalPanel hp = new HorizontalPanel();
+		hp.add(bLogin);
+	
+		// main login inputs
+		VerticalPanel ploginItems = new VerticalPanel();
+		ploginItems.setWidth("100%");
+		ploginItems.add(tbConsumerKey);
+		ploginItems.add(tbConsumerSecret);
+		ploginItems.add(tbConsumerSecretPass);
+		ploginItems.add(hp);
+		ploginItems.add(cbRemberMe);
+		ploginItems.add(hForgotPassword);
+		ploginItems.add(hAccountCreate);
+
+		
+		tbConsumerKey.setWidth("200px");
+		tbConsumerSecret.setWidth("200px");
+		tbConsumerSecretPass.setWidth("200px");
+		
+		VerticalPanel vp = new VerticalPanel();
+		vp.setWidth("100%");
+		vp.add(ploginItems);
+
+		pUi.add(vp);
+		
+		drawInputLabel_key();
+		drawInputLabel_secret();
+		
+		tbConsumerKey.addStyleName("core-login-ui-inputconsumerkey");
+		tbConsumerSecret.addStyleName("core-login-ui-inputconsumersecret");
+		tbConsumerSecretPass.addStyleName("core-login-ui-inputconsumersecret");
+		pOptions.setCellHorizontalAlignment(hForgotPassword, HorizontalPanel.ALIGN_RIGHT);
+		pOptions.setCellHorizontalAlignment(hAccountCreate, HorizontalPanel.ALIGN_RIGHT);
+		pOptions.setCellVerticalAlignment(hForgotPassword, VerticalPanel.ALIGN_BOTTOM);
+		pOptions.setCellVerticalAlignment(hAccountCreate, VerticalPanel.ALIGN_BOTTOM);
+		pOptions.addStyleName("core-login-ui-inputoptions");
+		pOptions.setWidth("100%");
+
+    // login options
+    drawError();
+    
 	}
 	
 	private void drawOptions() {
@@ -325,7 +399,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
         }
       }
     };
-    t.schedule(5000);
+    t.schedule(3000);
 	}
 	
 	private void drawForgotPassword() {
@@ -361,6 +435,8 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 		hp.add(hAccountLogout);
 		
 		pUi.add(hp);
+		
+		pOptions.setVisible(false);
 	}
 	
 	private void clear() {
@@ -539,7 +615,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
       drawForgotPassword();
     
     } else if (sender == hAccountLogin) {
-      drawLoginInputs();
+      drawInputs();
     
     } else if (sender == hAccountCreate) {
       if (QueryString.getQueryStringData().getHistoryToken().equals("account_Create")) {

@@ -29,8 +29,6 @@ public class AccountWidget extends Composite implements ValueChangeHandler<Strin
 
   private VerticalPanel pMenu = new VerticalPanel();
   
-  private BreadCrumbs wBreadCrumbs = null;
-  
   // stick the stuff in here
   private VerticalPanel pContent = new VerticalPanel();
   
@@ -40,7 +38,7 @@ public class AccountWidget extends Composite implements ValueChangeHandler<Strin
   private CreateUserAccount wCreate = null;
   
   /**
-   * constructor - init
+   * init Widget
    * 
    * @param cp
    */
@@ -48,14 +46,15 @@ public class AccountWidget extends Composite implements ValueChangeHandler<Strin
     this.cp = cp;
   
     wTabs = new AccountTabs(cp);
-    wBreadCrumbs = new BreadCrumbs(cp);
     
     //pWidget.add(pMenu);
-    pWidget.add(wBreadCrumbs);
     pWidget.add(pContent);
     pWidget.add(wTabs);
     
     initWidget(pWidget);
+    
+    // set defaults
+    this.setVisible(false);
     
     initHistory();
     
@@ -69,6 +68,24 @@ public class AccountWidget extends Composite implements ValueChangeHandler<Strin
     drawMenu();
     
     //pWidget.addStyleName("test1");
+    
+    
+    cp.setBreadCrumbCategory("Account", "account");
+    
+    cp.setBreadCrumb("Create", "account_Create");
+    cp.setBreadCrumb("Admin", "account_Home");
+    cp.setBreadCrumb("Things", "account_Things");
+    cp.setBreadCrumb("Thing Stuff Types", "account_StuffType");
+    cp.setBreadCrumb("Thing Types", "account_Types");
+  }
+  
+	public boolean getMatchHistoryToken() {
+	  boolean b = false;
+	  String historyToken = History.getToken();
+	  if (historyToken.matches("^account_.*?$") == true) {
+	  	b = true;
+	  }
+	  return b;
   }
   
   private void initHistory() {
@@ -117,8 +134,7 @@ public class AccountWidget extends Composite implements ValueChangeHandler<Strin
       wTabs.setVisible(true);
       wTabs.draw();
     }
-    
-    wBreadCrumbs.draw();
+
   }
   
   private void drawCreateAccount() {
@@ -154,5 +170,7 @@ public class AccountWidget extends Composite implements ValueChangeHandler<Strin
       draw();
     }
   }
+
+
 
 }
