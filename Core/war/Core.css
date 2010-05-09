@@ -1,23 +1,27 @@
 
 .test1 {
-	border:1px solid #FF0000;
-	
+  border:1px solid #FF0000;
 }
 .test2 {
-	border:1px solid #FFFF00;
+  border:1px solid #FFFF00;
 }
 .test3 {
-	border:1px solid #00FF00;	
+  border:1px solid #00FF00;	
 }
 .test4 {
-	border:1px solid #000000;
+  border:1px solid #000000;
 }
 .test5 {
-	border:1px solid grey;
+  border:1px solid grey;
 }
 .test6 {
-	border:1px solid #0000FF;
+  border:1px solid #0000FF;
 }
+
+.test6 {
+  border:1px solid #EFEFEF;
+}
+
 
 
 .gwt-TextBox {
@@ -42,6 +46,7 @@
 
 
 .core-loadingimage {
+  height: 10px;
 }
 
 .core-Notification {
@@ -128,7 +133,6 @@
   padding: 4px;
 }
 .core-Account-Breadcrumbs {
-  padding: 4px;
 }
 
 .core-Account-ThingStuffs {
