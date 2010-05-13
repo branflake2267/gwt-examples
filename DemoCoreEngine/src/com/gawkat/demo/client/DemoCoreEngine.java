@@ -40,11 +40,11 @@ public class DemoCoreEngine implements EntryPoint, ValueChangeHandler<String> {
   	String appConsumerKey = "demo_application";
   	String appConsumerSecret = "c1d0e06998305903ac76f589bbd6d4b61a670ba6"; //salt:password  
   	
-  	// set with GV web site
-  	cp = new ClientPersistence("UA-2862268-9", appConsumerKey, appConsumerSecret);
-  	cp.setTrackingCategory("DemoCoreEngine");
-  	
-  	// set up login
+  	// setup the client persistence, something that flows throughout the site
+  	cp = new ClientPersistence();
+  	cp.init("UA-2862268-9","DemoCoreEngine", appConsumerKey, appConsumerSecret);
+  
+  	// set up login inputs top right
   	wLogin = new LoginWidget(cp);
     wLogin.initSession();
     wLogin.setUi(LoginUi.LOGIN_HORIZONTAL);
@@ -77,6 +77,7 @@ public class DemoCoreEngine implements EntryPoint, ValueChangeHandler<String> {
 		
 		pLayout.addStyleName("dce_layout");
 		
+		// add the entire layout to html div
 	  RootPanel.get("content").add(pLayout);
 	  
 		pLayout.addStyleName("dce_layout");
