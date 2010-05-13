@@ -48,7 +48,7 @@ public class TestWidget extends Composite {
 	}
 
 	private void drawLogin() {
-		LoginWidget wLogin = LoginWidget.getWidgetStandAlone(cp, LoginUi.LOGIN_VERTICAL);
+		LoginWidget wLogin = LoginWidget.getInstance(cp, LoginUi.LOGIN_VERTICAL);
 		pWidget.add(wLogin);
 	}
 	

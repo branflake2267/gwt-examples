@@ -42,7 +42,7 @@ public class DemoCoreEngine implements EntryPoint, ValueChangeHandler<String> {
   	
   	// setup the client persistence, something that flows throughout the site
   	cp = new ClientPersistence();
-  	cp.init("UA-2862268-9","DemoCoreEngine", appConsumerKey, appConsumerSecret);
+  	cp.init("UA-2862268-9", "DemoCoreEngine", appConsumerKey, appConsumerSecret);
   
   	// set up login inputs top right
   	wLogin = new LoginWidget(cp);
