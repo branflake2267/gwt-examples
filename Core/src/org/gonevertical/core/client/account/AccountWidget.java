@@ -152,12 +152,6 @@ public class AccountWidget extends Composite implements ValueChangeHandler<Strin
     return changeEvent;
   }
   
-  private void fireChange(int changeEvent) {
-    this.changeEvent = changeEvent;
-    NativeEvent nativeEvent = Document.get().createChangeEvent();
-    ChangeEvent.fireNativeEvent(nativeEvent, this);
-  }
-  
   public HandlerRegistration addChangeHandler(ChangeHandler handler) {
     return addDomHandler(handler, ChangeEvent.getType());
   }

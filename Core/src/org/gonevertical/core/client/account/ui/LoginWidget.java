@@ -42,7 +42,7 @@ public class LoginWidget extends Composite implements ChangeHandler {
 
 	// errors
 	private String errApKey = "No consumer key was set " +
-	"(for application/web site). debug: setAppConsumerKey()";
+		"(for application/web site). debug: setAppConsumerKey()";
 
 	// use this to verify signature
 	private String consumerSecret = null;
@@ -64,9 +64,6 @@ public class LoginWidget extends Composite implements ChangeHandler {
 
 		initWidget(wloginUi);
 
-		// so any other widget can call a refernce to use, so to tell someone to login
-		cp.setLoginWidgetReference(this);
-
 		// init rpc
 		rpc = RpcCore.initRpc();
 
@@ -76,6 +73,17 @@ public class LoginWidget extends Composite implements ChangeHandler {
 		//pWidget.addStyleName("test1");
 	}
 
+	/**
+	 * control access to a widget
+	 *   
+	 *   If using this, it sets observation on clientpersistence, 
+	 *   	so don't clear it, or you'll get mulitple handlers
+	 * 
+	 * @param cp
+	 * @param uiType
+	 * @param w
+	 * @return
+	 */
 	public static LoginWidget getInstance(ClientPersistence cp, int uiType) {
 		if (uiType == 0) {
 			uiType = LoginUi.LOGIN_HORIZONTAL;
@@ -92,6 +100,10 @@ public class LoginWidget extends Composite implements ChangeHandler {
 	 * start the session, by having the application get token
 	 */
 	public void initSession() {
+		
+		// so any other widget can call a refernce to use, so to tell someone to login
+		cp.setLoginWidgetReference(this);
+		
 		setAppConsumerKey();
 	}
 
@@ -154,7 +166,7 @@ public class LoginWidget extends Composite implements ChangeHandler {
 		int result = token.getResult();
 		switch (result) {
 		case OAuthTokenData.SUCCESS:
-			draw();
+			draw(); // this means the application is loaded, so lets draw the login inputs
 			break;
 		case OAuthTokenData.ERROR:
 			// TODO - make better notification
@@ -208,6 +220,12 @@ public class LoginWidget extends Composite implements ChangeHandler {
 		// get credentials from LoginUi
 		String consumerKey = wloginUi.getConsumerKey();
 		consumerSecret = wloginUi.getConsumerSecret();
+		
+		// just in case, if this happens agian - was setting to many handlers on cp
+		if (consumerKey.equals(cp.getInputLabel_ConsumerKey()) == true) {
+			// has to do when the login widget is redraw, the cp observation is reset multiple times 
+			return;
+		}
 
 		if (consumerKey.trim().length() == 0 && consumerSecret.trim().length() == 0) {
 			wloginUi.drawError("Please enter a username and password");
@@ -296,21 +314,22 @@ public class LoginWidget extends Composite implements ChangeHandler {
 			
 			changeEvent = cp.getChangeEvent();
 
-			if (changeEvent == EventManager.NEW_USER_CREATED) {
-				cp.fireChange(EventManager.LOGIN);
-
+			if (cp.getChangeEvent() == EventManager.NEW_USER_CREATED || // when new user is created auto login
+					cp.getChangeEvent() == EventManager.LOGINBUTTONCLICKED) { // when the login button is clicked try logging in
+				login();
+				
 			} else if (changeEvent == EventManager.LOGOUT) {
 				logout();
 
-			} else if (changeEvent == EventManager.LOGIN) {
-				login();
-
-			}  else if (changeEvent == EventManager.FORGOT_PASSWORD) {
+			} else if (changeEvent == EventManager.FORGOT_PASSWORD) {
 				forgotPassword();
 
 			} else if (changeEvent == EventManager.PROFILE) {
 				displayProfile();
-			} 
+				
+			} else if (changeEvent == EventManager.LOGGEDIN) {
+				// nothing to do
+			}
 
 		} 
 		

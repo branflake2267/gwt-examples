@@ -44,24 +44,6 @@ public class LoginUi extends Composite implements ChangeHandler {
 		this.cp = cp;
 
 		initWidget(pWidget);
-
-		// change login status
-		cp.addChangeHandler(new  ChangeHandler() {
-			public void onChange(ChangeEvent event) {
-				ClientPersistence wcp = (ClientPersistence) event.getSource();
-
-				if (wcp.getChangeEvent() == EventManager.LOGGEDIN) {
-					setLoginStatus(true);
-
-				} else if (wcp.getChangeEvent() == EventManager.LOGGEDOUT) {
-					setLoginStatus(false);
-				}
-
-			}
-		});
-
-		//pWidget.addStyleName("test1");
-
 	}
 
 	/**
@@ -105,17 +87,6 @@ public class LoginUi extends Composite implements ChangeHandler {
 			return;
 		}
 		loginUi.drawError(error);
-	}
-
-	/**
-	 * set login status
-	 * 
-	 * TODO - do something like this, - also send along alias
-	 * 
-	 * @param bol
-	 */
-	protected void setLoginStatus(boolean bol) {
-		loginUi.setLoginStatus(bol);
 	}
 
 	protected String getConsumerKey() {
