@@ -26,15 +26,20 @@ public class TestWidget extends Composite {
 		// observe login events
 		cp.addChangeHandler(new ChangeHandler() {
 			public void onChange(ChangeEvent event) {
+				
 				ClientPersistence wcp = (ClientPersistence) event.getSource();
+				
 				if (wcp.getChangeEvent() == EventManager.LOGGEDIN) {
 					drawWidget();
+					
 				} else if (wcp.getChangeEvent() == EventManager.LOGGEDOUT) {
 					pWidget.clear();
 					drawLogin();
 				}
+				
 			}				
-		});	
+		});
+		
 	}
 	
 	public void draw() {

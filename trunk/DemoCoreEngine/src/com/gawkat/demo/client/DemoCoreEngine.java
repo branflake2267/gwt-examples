@@ -75,12 +75,13 @@ public class DemoCoreEngine implements EntryPoint, ValueChangeHandler<String> {
 		pLayout.add(wMiddle);
 		pLayout.add(wFooter);
 		
-		pLayout.addStyleName("dce_layout");
-		
 		// add the entire layout to html div
 	  RootPanel.get("content").add(pLayout);
 	  
+	  // style
 		pLayout.addStyleName("dce_layout");
+		wBreadCrumbs.addStyleName("dce_layout_breadcrumbs");
+		
 	  pLayout.setCellHorizontalAlignment(wLogin, HorizontalPanel.ALIGN_RIGHT);
 	  
 	  wBreadCrumbs.setBreadCrumbHome("Home", "dce_home");
@@ -91,7 +92,6 @@ public class DemoCoreEngine implements EntryPoint, ValueChangeHandler<String> {
 	  
 	  wBreadCrumbs.draw();
 	  
-	  wBreadCrumbs.addStyleName("dce_layout_breadcrumbs");
   }
 
 	/**
