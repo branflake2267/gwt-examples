@@ -23,98 +23,90 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class LoginUi extends Composite implements ChangeHandler {
 
-  private ClientPersistence cp = null;
-  
-  // ui types
-  public static final int LOGIN_HORIZONTAL = 1;
-  public static final int LOGIN_VERTICAL = 2;
-  
-  // which ui type was choosen to display
-  private int uiType = LOGIN_HORIZONTAL;
-  
-	private int changeEvent = 0; 
-	
+	private ClientPersistence cp = null;
+
+	// ui types
+	public static final int LOGIN_HORIZONTAL = 1;
+	public static final int LOGIN_VERTICAL = 2;
+
+	// which ui type was choosen to display
+	private int uiType = LOGIN_HORIZONTAL;
+
 	private VerticalPanel pWidget = new VerticalPanel();
-	
+
 	// possible ui types (widget)
 	private LoginUiInputs loginUi = null;
-	
-  /**
-   * constructor - init composite widget
-   */
+
+	/**
+	 * constructor - init composite widget
+	 */
 	public LoginUi(ClientPersistence cp) {
-	  this.cp = cp;
-		
+		this.cp = cp;
+
 		initWidget(pWidget);
-		
+
 		// change login status
 		cp.addChangeHandler(new  ChangeHandler() {
 			public void onChange(ChangeEvent event) {
 				ClientPersistence wcp = (ClientPersistence) event.getSource();
-				
+
 				if (wcp.getChangeEvent() == EventManager.LOGGEDIN) {
 					setLoginStatus(true);
-					
+
 				} else if (wcp.getChangeEvent() == EventManager.LOGGEDOUT) {
 					setLoginStatus(false);
 				}
-				
+
 			}
 		});
-		
+
 		//pWidget.addStyleName("test1");
-		
+
 	}
-	
+
 	/**
 	 * what type of ui are we going to use?
-	 * [LOGIN_HORIZONTAL, LOGIN_VERTICAL]
+	 * uiType = [LOGIN_HORIZONTAL | LOGIN_VERTICAL]
 	 * 
 	 * @param uiType
 	 */
 	protected void setUi(int uiType) {
 		this.uiType = uiType;
-		
+
 		loginUi = new LoginUiInputs(cp, uiType);
 		pWidget.add(loginUi);
 
-		// observe the accounts/session ui for changes
-		setObserver();
-		
 		if (uiType == LOGIN_HORIZONTAL) {
 			pWidget.setCellHorizontalAlignment(loginUi, HorizontalPanel.ALIGN_RIGHT);
+			
 		} else if (uiType == LOGIN_VERTICAL) {
 			pWidget.setCellHorizontalAlignment(loginUi, HorizontalPanel.ALIGN_CENTER);
 		}
 	}
-	
+
 	/**
 	 * get if the cookie should be set
 	 * @return
 	 */
 	protected boolean getRememberMe() {
-	  boolean b = loginUi.getRememberMe();
-	  return b;
+		boolean b = loginUi.getRememberMe();
+		return b;
 	}
-	
-	/**
-	 * observe login ui that was choose
-	 */
-	protected void setObserver() {
-		loginUi.addChangeHandler(this);
-	}
-	
+
 	/**
 	 * draw widget
 	 */
 	protected void draw() {
 		loginUi.draw();
 	}
-	
+
 	protected void drawError(String error) {
-	  loginUi.drawError(error);
+		if (error == null) {
+			return;
+		}
+		loginUi.drawError(error);
 	}
-	
+
 	/**
 	 * set login status
 	 * 
@@ -125,51 +117,25 @@ public class LoginUi extends Composite implements ChangeHandler {
 	protected void setLoginStatus(boolean bol) {
 		loginUi.setLoginStatus(bol);
 	}
-	
+
 	protected String getConsumerKey() {
 		String s = loginUi.getConsumerKey();
 		return s;
 	}
-	
+
 	protected String getConsumerSecret() {
 		String s = loginUi.getConsumerSecret();
-		
+
 		// create digest of password, before sending it to the server
 		Sha1 sha = new Sha1();
 		String hash = sha.b64_sha1(s);
-		
-    return hash;
+
+		return hash;
 	}
 
-  public void onChange(ChangeEvent event) {
-    Widget sender = (Widget) event.getSource();
-    int changeEvent = 0;
-    
-    if (sender == loginUi) {
-      changeEvent = loginUi.getChangeEvent();
-    }
-      
-    // this is just the middle man to the user interfaces
-    if (changeEvent > 0) {
-      fireChange(changeEvent);
-    }
-    
-  }
-	
-  protected int getChangeEvent() {
-    return changeEvent;
-  }
-  
-  private void fireChange(int changeEvent) {
-    this.changeEvent = changeEvent;
-    NativeEvent nativeEvent = Document.get().createChangeEvent();
-    ChangeEvent.fireNativeEvent(nativeEvent, this);
-  }
-  
-  public HandlerRegistration addChangeHandler(ChangeHandler handler) {
-    return addDomHandler(handler, ChangeEvent.getType());
-  }
+	public void onChange(ChangeEvent event) {
+		Widget sender = (Widget) event.getSource();
 
+	}
 
-	
 }

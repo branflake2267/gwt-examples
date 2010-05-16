@@ -1,5 +1,7 @@
 package org.gonevertical.core.server;
 
+import java.util.logging.Logger;
+
 import org.gonevertical.core.client.account.ChangePasswordData;
 import org.gonevertical.core.client.account.UserData;
 import org.gonevertical.core.client.account.thing.ThingData;
@@ -31,6 +33,8 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 @SuppressWarnings("serial")
 public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreService {
 
+	private static final Logger log = Logger.getLogger(RpcCoreServiceImpl.class.getName());
+	
 	/**
 	 * clear a eclipse notification with this
 	 */

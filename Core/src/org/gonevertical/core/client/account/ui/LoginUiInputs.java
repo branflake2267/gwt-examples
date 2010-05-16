@@ -50,8 +50,6 @@ public class LoginUiInputs extends Composite implements
 MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 
   private ClientPersistence cp = null;
-  
-	private int changeEvent; 
 	
 	// main widget div
 	private FocusPanel pWidget = new FocusPanel();
@@ -411,7 +409,8 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 		// reset ui
 		clear();
 		
-		bForgot.setTitle("This will reset your password, and send you a email of the new password to login.");
+		bForgot.setTitle("This will reset your password, " +
+				"and send you a email of the new password to login.");
 
 		// tells the options not to show this way
 		bForgot.setVisible(true);
@@ -448,7 +447,6 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 		
 		pOptions.setVisible(false);
 		
-		
 	}
 	
 	private void clear() {
@@ -458,7 +456,9 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 	}
 	
 	public void drawError(String error) {
-	  
+	  if (error == null) {
+	  	return;
+	  }
 	  int left = pWidget.getAbsoluteLeft();
     int top = pWidget.getAbsoluteTop() + pWidget.getOffsetHeight();
     int width = pWidget.getOffsetWidth();
@@ -577,23 +577,9 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 	
 	private void startLogin() {
 		 drawLoading();
-     fireChange(EventManager.LOGIN);
+     cp.fireChange(EventManager.LOGIN);
 	}
-	
-  public int getChangeEvent() {
-    return changeEvent;
-  }
-  
-  private void fireChange(int changeEvent) {
-    this.changeEvent = changeEvent;
-    NativeEvent nativeEvent = Document.get().createChangeEvent();
-    ChangeEvent.fireNativeEvent(nativeEvent, this);
-  }
-  
-  public HandlerRegistration addChangeHandler(ChangeHandler handler) {
-    return addDomHandler(handler, ChangeEvent.getType());
-  }
-  
+	 
 	public void onClick(ClickEvent event) {
 	    
 	  Widget sender = (Widget) event.getSource();
@@ -602,10 +588,10 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
     
     } else if (sender == bForgot) {
       drawLoading();
-      fireChange(EventManager.FORGOT_PASSWORD);
+      cp.fireChange(EventManager.FORGOT_PASSWORD);
     
     } else if (sender == tbConsumerKey) {
-      changeUsernameInput(true);
+       changeUsernameInput(true);
     
     } else if (sender == tbConsumerSecret) {
       changePasswordInput_Focus();
@@ -685,7 +671,6 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 			changePasswordInput_Focus(); // change to input mode
 			
 		} else if (sender == tbConsumerSecretPass) {
-			
 			
 		}
 	  

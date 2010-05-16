@@ -32,347 +32,327 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class LoginWidget extends Composite implements ChangeHandler {
 
-  private ClientPersistence cp = null;
-  
-  // rpc system
-  public RpcCoreServiceAsync rpc;
+	private ClientPersistence cp = null;
 
-  //private VerticalPanel pWidget = new VerticalPanel();
-  
-  private int changeEvent = 0;
-  
-  // login inputs
-  private LoginUi wloginUi = null;
+	// rpc system
+	public RpcCoreServiceAsync rpc;
 
-  // errors
-  private String errApKey = "No consumer key was set " +
-  		"(for application/web site). debug: setAppConsumerKey()";
+	// login inputs
+	private LoginUi wloginUi = null;
 
-  // use this to verify signature
-  private String consumerSecret = null;
+	// errors
+	private String errApKey = "No consumer key was set " +
+	"(for application/web site). debug: setAppConsumerKey()";
 
-  /**
-   * init login widget
-   * 
-   * @param cp
-   */
-  public LoginWidget(ClientPersistence cp) {
-    this.cp  = cp;
-  
-    if (cp == null) {
-    	System.err.println("LoginWidget.LoginWidget() " +
-    			"Error, you didn't set the clientpersistence object into Login Widget. This need to be done.");
-    }
-    
-    wloginUi = new LoginUi(cp);
-    
-    //pWidget.add(wloginUi);
-    
-    initWidget(wloginUi);
-    
-    // so any other widget can call a refernce to use, so to tell someone to login
-    cp.setLoginWidgetReference(this);
+	// use this to verify signature
+	private String consumerSecret = null;
 
-    // init rpc
-    rpc = RpcCore.initRpc();
+	/**
+	 * init login widget
+	 * 
+	 * @param cp
+	 */
+	public LoginWidget(ClientPersistence cp) {
+		this.cp  = cp;
 
-    // observe
-    wloginUi.addChangeHandler(this);
-    cp.addChangeHandler(this);
-    
-    //pWidget.addStyleName("test1");
-  }
-  
-  public static LoginWidget getInstance(ClientPersistence cp, int uiType) {
-  	if (uiType == 0) {
-  		uiType = LoginUi.LOGIN_HORIZONTAL;
-  	}
-  	
-  	LoginWidget wLogin = new LoginWidget(cp);
-  	wLogin.setUi(uiType);
-  	wLogin.draw();
-  	
-  	return wLogin;
-  }
-  
-  /**
-   * start the session, by having the application get token
-   */
-  public void initSession() {
-    setAppConsumerKey();
-  }
-  
-  /**
-   * set User Interface style - this must be done second
-   * 
-   * @param uiType
-   */
-  public void setUi(int uiType) {
-    wloginUi.setUi(uiType);
-  }
+		if (cp == null) {
+			System.err.println("LoginWidget.LoginWidget() " +
+			"Error, you didn't set the clientpersistence object into Login Widget. This need to be done.");
+		}
 
-  private void draw() {
-    wloginUi.draw();
-  }
+		wloginUi = new LoginUi(cp);
 
-  /**
-   * A. the start of application getting access:
-   * set web site/application consumer key - determined by service provider A.
-   * used to request request token -> grant access token?
-   * 
-   * @param consumerKey
-   */
-  public void setAppConsumerKey() {
+		initWidget(wloginUi);
 
-    String consumerKey = cp.getAppConsumerKey();
-    String consumerSecret = cp.getAppConsumerSecret();
-    
-    String url = getUrl();
-    OAuthTokenData token = new OAuthTokenData();
-    token.setConsumerKey(consumerKey);
-    token.sign(url, consumerSecret);
-    token.setRequest(OAuthTokenData.REQUEST_REQUEST_TOKEN);
+		// so any other widget can call a refernce to use, so to tell someone to login
+		cp.setLoginWidgetReference(this);
 
-    // ask the server now
-    request_Request_Token(token);
-  }
-  
-  /**
-   * A. request request token ask for request token, grant access, or report
-   * findings (error,other)
-   * 
-   * @param token
-   */
-  private void request_Request_Token(OAuthTokenData token) {
-    requestToken(token);
-  }
+		// init rpc
+		rpc = RpcCore.initRpc();
 
-  /**
-   * B. server replies back with
-   */
-  private void request_Request_Token_Response(OAuthTokenData token) {
+		// observe global events
+		cp.addChangeHandler(this);
 
-  	if (token == null) {
-  		return;
-  	}
-  	
-    cp.setAccessToken(token);
+		//pWidget.addStyleName("test1");
+	}
 
-    int result = token.getResult();
-    switch (result) {
-    case OAuthTokenData.SUCCESS:
-      draw();
-      break;
-    case OAuthTokenData.ERROR:
-      // TODO - make better notification
-      Window.alert("ERROR: This application's access token " +
-      		"did not match up.\n This application has not been granted access.");
-      break;
+	public static LoginWidget getInstance(ClientPersistence cp, int uiType) {
+		if (uiType == 0) {
+			uiType = LoginUi.LOGIN_HORIZONTAL;
+		}
 
-    }
-  }
+		LoginWidget wLogin = new LoginWidget(cp);
+		wLogin.setUi(uiType);
+		wLogin.draw();
 
-  /**
-   * TODO needs testing and finishing
-   * 
-   * this is after rpc and after login button
-   * 
-   * @param token
-   */
-  private void request_User_Access_Token_Response(OAuthTokenData token) {
+		return wLogin;
+	}
 
-    String url = getUrl();
-    
-    // verify signature
-    boolean verify = token.verify(url, consumerSecret);
-    if (verify == false) {
-      wloginUi.drawError("Signature did not match. Transit Error.");
-    }
-    
-    // deal with the errors
-    int result = token.getResult();
-    if (result > OAuthTokenData.SUCCESS) { // all greater than success to be shown
-      wloginUi.drawError(token.getResultMessage());
-      return;
-    } 
+	/**
+	 * start the session, by having the application get token
+	 */
+	public void initSession() {
+		setAppConsumerKey();
+	}
 
-    cp.setAccessToken(token);
+	/**
+	 * set User Interface style - this must be done second
+	 * 
+	 * @param uiType
+	 */
+	public void setUi(int uiType) {
+		wloginUi.setUi(uiType);
+	}
 
-    // show logged in
-    cp.fireChange(EventManager.LOGGEDIN);
-    
-    setSessionCookie();
-  }
+	private void draw() {
+		wloginUi.draw();
+	}
 
-  /**
-   * C. if B. passes, get users authorization
-   */
-  private void login() {
+	/**
+	 * A. the start of application getting access:
+	 * set web site/application consumer key - determined by service provider A.
+	 * used to request request token -> grant access token?
+	 * 
+	 * @param consumerKey
+	 */
+	public void setAppConsumerKey() {
 
-    // get url application is loaded on
-    String url = getUrl();
+		String consumerKey = cp.getAppConsumerKey();
+		String consumerSecret = cp.getAppConsumerSecret();
 
-    // get credentials from LoginUi
-    String consumerKey = wloginUi.getConsumerKey();
-    consumerSecret = wloginUi.getConsumerSecret();
+		String url = getUrl();
+		OAuthTokenData token = new OAuthTokenData();
+		token.setConsumerKey(consumerKey);
+		token.sign(url, consumerSecret);
+		token.setRequest(OAuthTokenData.REQUEST_REQUEST_TOKEN);
 
-    if (consumerKey.trim().length() == 0 && consumerSecret.trim().length() == 0) {
-      wloginUi.drawError("Please enter a username and password");
-      return;
-    }
-    
-    if (consumerKey.trim().length() == 0) {
-      wloginUi.drawError("Please enter a username");
-      return;
-    }
-    
-    if (consumerSecret.trim().length() == 0) {
-      wloginUi.drawError("Please enter a password");
-      return;
-    }
-    
-    // take appAccessToken, and ask for a user access token
-    // setup a request token for user
-    OAuthTokenData tokenData = cp.getAccessToken();
-    if (tokenData == null) {
-    	System.err.println("LoginWidget.login(): Error getting access Token.");
-    	return;
-    }
-    tokenData.setConsumerKey(consumerKey);
-    tokenData.sign(url, consumerSecret);
+		// ask the server now
+		request_Request_Token(token);
+	}
 
-    // rpc
-    getUserAccessToken(tokenData);
-  }
+	/**
+	 * A. request request token ask for request token, grant access, or report
+	 * findings (error,other)
+	 * 
+	 * @param token
+	 */
+	private void request_Request_Token(OAuthTokenData token) {
+		requestToken(token);
+	}
 
-  private void logout() {
-    cp.setAccessToken(null);
-    consumerSecret = null;
-    initSession();
-    cp.fireChange(EventManager.LOGGEDOUT);
-  }
+	/**
+	 * B. server replies back with
+	 */
+	private void request_Request_Token_Response(OAuthTokenData token) {
 
-  private void forgotPassword() {
-    Window.alert("forgot password in session manager");
-  }
-  
-  private void displayProfile() {
-    Window.alert("display profile in session manager");
-  }
-  
-  private void setSessionCookie() {
-    String at = "";
-    String as = "";
-    if (wloginUi.getRememberMe() == true) {
-     at = cp.getAccessToken().getAccessToken_key();
-     as = cp.getAccessToken().getAccessToken_secret();
-    } 
-    
-    Date expires = new Date();
-    long nowLong = expires.getTime();
-    nowLong = nowLong + (1000 * 60 * 60 * 24 * 7); //seven days
-    expires.setTime(nowLong);
-    
-    String name = "accessToken";
-    String value = at;
-    Cookies.setCookie(name, value, expires);
-    
-    name = "AccessSecret";
-    value = as;
-    Cookies.setCookie(name, value, expires);
-  }
+		if (token == null) {
+			return;
+		}
 
-  /**
-   * get client's url - doesn't use port
-   * @return
-   */
-  private String getUrl() {
-    String url = GWT.getModuleBaseURL();
-    url = url.replaceFirst(":[0-9]+", "");
-    return url;
-  }
+		cp.setAccessToken(token);
 
-  public int getChangeEvent() {
-    return changeEvent;
-  }
-  
-  private void fireChange(int changeEvent) {
-    this.changeEvent = changeEvent;
-    NativeEvent nativeEvent = Document.get().createChangeEvent();
-    ChangeEvent.fireNativeEvent(nativeEvent, this);
-  }
-  
-  public HandlerRegistration addChangeHandler(ChangeHandler handler) {
-    return addDomHandler(handler, ChangeEvent.getType());
-  }
+		int result = token.getResult();
+		switch (result) {
+		case OAuthTokenData.SUCCESS:
+			draw();
+			break;
+		case OAuthTokenData.ERROR:
+			// TODO - make better notification
+			Window.alert("ERROR: This application's access token " +
+			"did not match up.\n This application has not been granted access.");
+			break;
 
-  public void onChange(ChangeEvent event) {
-    Widget sender = (Widget) event.getSource();
-    int changeEvent = 0;
-    
-    if (sender == cp) {
-      changeEvent = cp.getChangeEvent();
-      
-      if (changeEvent == EventManager.NEW_USER_CREATED) {
-        cp.fireChange(EventManager.LOGIN);
+		}
+	}
 
-      } else if (changeEvent == EventManager.LOGOUT) {
-        logout();
-      }
-      
-    } else if (sender == wloginUi) {
-    	
-      changeEvent = wloginUi.getChangeEvent();
-      if (changeEvent == EventManager.LOGIN) {
-        login();
-        
-      }  else if (changeEvent == EventManager.FORGOT_PASSWORD) {
-        forgotPassword();
-        
-      } else if (changeEvent == EventManager.PROFILE) {
-        displayProfile();
-      } 
-      
-    }
-  }
+	/**
+	 * TODO needs testing and finishing
+	 * 
+	 * this is after rpc and after login button
+	 * 
+	 * @param token
+	 */
+	private void request_User_Access_Token_Response(OAuthTokenData token) {
 
-  /**
-   * A. Request request token (get consumer(web app) access)
-   * get application token
-   */
-  private void requestToken(OAuthTokenData tokenData) {
+		String url = getUrl();
 
-    AsyncCallback<OAuthTokenData> callback = new AsyncCallback<OAuthTokenData>() {
-      public void onFailure(Throwable ex) {
-        RootPanel.get().add(new HTML(ex.toString()));
-      }
-      public void onSuccess(OAuthTokenData token) {
-        request_Request_Token_Response(token);
-      }
-    };
-    rpc.requestToken(tokenData, callback);
-  }
+		// verify signature
+		boolean verify = token.verify(url, consumerSecret);
+		if (verify == false) {
+			wloginUi.drawError("Signature did not match. Transit Error.");
+		}
 
-  /**
-   * get user access
-   * 
-   * @param tokenData
-   */
-  private void getUserAccessToken(OAuthTokenData tokenData) {
+		// deal with the errors
+		int result = token.getResult();
+		if (result > OAuthTokenData.SUCCESS) { // all greater than success to be shown
+			wloginUi.drawError(token.getResultMessage());
+			return;
+		} 
 
-    AsyncCallback<OAuthTokenData> callback = new AsyncCallback<OAuthTokenData>() {
-      public void onFailure(Throwable caught) {
-      	cp.setRpcFailure(caught);
-      }
-      public void onSuccess(OAuthTokenData token) {
-        request_User_Access_Token_Response(token);
-      }
-    };
-    rpc.getUserAccessToken(tokenData, callback);
-  }
+		cp.setAccessToken(token);
+
+		// show logged in
+		cp.fireChange(EventManager.LOGGEDIN);
+
+		setSessionCookie();
+	}
+
+	/**
+	 * C. if B. passes, get users authorization
+	 */
+	private void login() {
+
+		// get url application is loaded on
+		String url = getUrl();
+
+		// get credentials from LoginUi
+		String consumerKey = wloginUi.getConsumerKey();
+		consumerSecret = wloginUi.getConsumerSecret();
+
+		if (consumerKey.trim().length() == 0 && consumerSecret.trim().length() == 0) {
+			wloginUi.drawError("Please enter a username and password");
+			return;
+		}
+
+		if (consumerKey.trim().length() == 0) {
+			wloginUi.drawError("Please enter a username");
+			return;
+		}
+
+		if (consumerSecret.trim().length() == 0) {
+			wloginUi.drawError("Please enter a password");
+			return;
+		}
+
+		// take appAccessToken, and ask for a user access token
+		// setup a request token for user
+		OAuthTokenData tokenData = cp.getAccessToken();
+		if (tokenData == null) {
+			System.err.println("LoginWidget.login(): Error getting access Token.");
+			return;
+		}
+		tokenData.setConsumerKey(consumerKey);
+		tokenData.sign(url, consumerSecret);
+
+		// rpc
+		getUserAccessToken(tokenData);
+	}
+
+	private void logout() {
+		cp.setAccessToken(null);
+		consumerSecret = null;
+		initSession();
+		cp.fireChange(EventManager.LOGGEDOUT);
+		
+		// reset the event
+		cp.fireChange(0);
+	}
+
+	private void forgotPassword() {
+		Window.alert("forgot password in session manager");
+	}
+
+	private void displayProfile() {
+		Window.alert("display profile in session manager");
+	}
+
+	private void setSessionCookie() {
+		String at = "";
+		String as = "";
+		if (wloginUi.getRememberMe() == true) {
+			at = cp.getAccessToken().getAccessToken_key();
+			as = cp.getAccessToken().getAccessToken_secret();
+		} 
+
+		Date expires = new Date();
+		long nowLong = expires.getTime();
+		nowLong = nowLong + (1000 * 60 * 60 * 24 * 7); //seven days
+		expires.setTime(nowLong);
+
+		String name = "accessToken";
+		String value = at;
+		Cookies.setCookie(name, value, expires);
+
+		name = "AccessSecret";
+		value = as;
+		Cookies.setCookie(name, value, expires);
+	}
+
+	/**
+	 * get client's url - doesn't use port
+	 * @return
+	 */
+	private String getUrl() {
+		String url = GWT.getModuleBaseURL();
+		url = url.replaceFirst(":[0-9]+", "");
+		return url;
+	}
+
+	public void onChange(ChangeEvent event) {
+		Widget sender = (Widget) event.getSource();
+		int changeEvent = 0;
+
+		if (sender == cp) {
+			
+			changeEvent = cp.getChangeEvent();
+
+			if (changeEvent == EventManager.NEW_USER_CREATED) {
+				cp.fireChange(EventManager.LOGIN);
+
+			} else if (changeEvent == EventManager.LOGOUT) {
+				logout();
+
+			} else if (changeEvent == EventManager.LOGIN) {
+				login();
+
+			}  else if (changeEvent == EventManager.FORGOT_PASSWORD) {
+				forgotPassword();
+
+			} else if (changeEvent == EventManager.PROFILE) {
+				displayProfile();
+			} 
+
+		} 
+		
+	}
+
+	/**
+	 * A. Request request token (get consumer(web app) access)
+	 * get application token
+	 */
+	private void requestToken(OAuthTokenData tokenData) {
+
+		AsyncCallback<OAuthTokenData> callback = new AsyncCallback<OAuthTokenData>() {
+			public void onFailure(Throwable ex) {
+				RootPanel.get().add(new HTML(ex.toString()));
+			}
+			public void onSuccess(OAuthTokenData token) {
+				request_Request_Token_Response(token);
+			}
+		};
+		rpc.requestToken(tokenData, callback);
+	}
+
+	/**
+	 * get user access
+	 * 
+	 * @param tokenData
+	 */
+	private void getUserAccessToken(OAuthTokenData tokenData) {
+
+		AsyncCallback<OAuthTokenData> callback = new AsyncCallback<OAuthTokenData>() {
+			public void onFailure(Throwable caught) {
+				cp.setRpcFailure(caught);
+			}
+			public void onSuccess(OAuthTokenData token) {
+				request_User_Access_Token_Response(token);
+			}
+		};
+		rpc.getUserAccessToken(tokenData, callback);
+	}
 
 
 
- 
+
 
 }
