@@ -18,7 +18,8 @@ public class TestWidget extends Composite {
 	
 	private LoginWidget wLogin = null;
 	
-	private VerticalPanel pContent = new VerticalPanel();
+	private VerticalPanel pContentLoggedIn = new VerticalPanel();
+	private VerticalPanel pContentLoggedOut = new VerticalPanel();
 	
 	public TestWidget(ClientPersistence cp) {
 		this.cp = cp;
@@ -26,8 +27,10 @@ public class TestWidget extends Composite {
 		wLogin = LoginWidget.getInstance(cp, LoginUi.LOGIN_VERTICAL);
 		
 		VerticalPanel pWidget = new VerticalPanel();
+		pWidget.add(pContentLoggedOut);
 		pWidget.add(wLogin);
-		pWidget.add(pContent);
+		pWidget.add(pContentLoggedIn);
+		
 		
 		initWidget(pWidget);
 		
@@ -61,18 +64,21 @@ public class TestWidget extends Composite {
 
 	private void drawLoggedOut() {
 		wLogin.setVisible(true);
-		pContent.setVisible(false);
+		pContentLoggedIn.setVisible(false);
+		pContentLoggedOut.setVisible(true);
 		
-		pContent.clear();
-		pContent.add(new HTML("Try the demo login: username: demo_user and password: password"));
+		pContentLoggedOut.clear();
+		pContentLoggedOut.add(new HTML("Try the demo login: username: demo_user and password: password"));
+		pContentLoggedOut.add(new HTML("&nbsp;"));
 	}
 	
 	private void drawLoggedIn() {
 		wLogin.setVisible(false);
-		pContent.setVisible(true);
+		pContentLoggedIn.setVisible(true);
+		pContentLoggedOut.setVisible(false);
 		
-		pContent.clear();
-		pContent.add(new HTML("Good Job! You have successfully logged in."));
+		pContentLoggedIn.clear();
+		pContentLoggedIn.add(new HTML("Good Job! You have successfully logged in."));
   }
 	
 }
