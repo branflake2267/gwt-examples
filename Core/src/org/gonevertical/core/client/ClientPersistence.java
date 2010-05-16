@@ -1,6 +1,7 @@
 package org.gonevertical.core.client;
 
 import org.gonevertical.core.client.account.ui.LoginWidget;
+import org.gonevertical.core.client.global.EventManager;
 import org.gonevertical.core.client.global.LoadingWidget;
 import org.gonevertical.core.client.oauth.OAuthTokenData;
 
@@ -8,6 +9,7 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.DomEvent.Type;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
@@ -19,7 +21,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author branflake2267
  *
  */
-public class ClientPersistence extends Composite  {
+public class ClientPersistence extends Composite implements ChangeHandler  {
   
   //application credentials
   private String appConsumerKey = null; // demo_application
@@ -44,14 +46,23 @@ public class ClientPersistence extends Composite  {
 	
 	private boolean loginStatus = false;
 	
-  
+	/**
+	 * constructor - init persitence widget
+	 */
+	public ClientPersistence() {
+		
+		// add overall observations to listen for events that we want to act on globally in the app
+		this.addChangeHandler(this);
+	}
+
   /**
    * init client persisentce across the application
    * set google analytics account
    */
-  public ClientPersistence(String googleAnalyticsAccount, String appConsumerKey, String appConsumerSecret) {
+  public void init(String googleAnalyticsAccount, String trackingCategory, String appConsumerKey, String appConsumerSecret) {
   	this.appConsumerKey = appConsumerKey;
   	this.appConsumerSecret = appConsumerSecret;
+  	this.trackingCategory = trackingCategory;
   	track.setGoogleAnalyticsAccount(googleAnalyticsAccount);
   }
   
@@ -76,7 +87,9 @@ public class ClientPersistence extends Composite  {
   }
   
   public int getChangeEvent() {
-    return changeEvent;
+  	final int event = changeEvent;
+  	//changeEvent = 0;
+    return event;
   }
   
   public String getInputLabel_ConsumerKey() {
@@ -130,11 +143,7 @@ public class ClientPersistence extends Composite  {
   	}
   	track.setTrack(event);
   }
-  
-  public void setTrackingCategory(String category) {
-  	this.trackingCategory = category;
-  }
-  
+   
   /**
    * track an event with category
    * 
@@ -145,12 +154,18 @@ public class ClientPersistence extends Composite  {
   	track.setTrack(category,event);
   }
   
-	/**
-	 * successfull login sets this
-	 * @param b
-	 */
-	public void setLoginStatus(boolean b) {
-		this.loginStatus = b;
+  public void showLoading(boolean b) {
+  	if (b == true) {
+  		wLoading.show();
+  	} else {
+  		wLoading.hide();
+  	}
+  }
+
+	public void setRpcFailure(Throwable caught) {
+		// TODO - fixup later
+		Window.alert("ClientPersistence.setRpcFailure: " + caught.toString());
+		System.out.println(caught);
   }
 	
   /**
@@ -175,24 +190,15 @@ public class ClientPersistence extends Composite  {
     return addDomHandler(handler, ChangeEvent.getType());
   }
 
-  public void showLoading(boolean b) {
-  	if (b == true) {
-  		wLoading.show();
-  	} else {
-  		wLoading.hide();
+  public void onChange(ChangeEvent event) {
+  	//Type<ChangeHandler> t = event.getType();
+  	
+  	if (changeEvent == EventManager.LOGGEDIN) {
+  		loginStatus = true;
   	}
-  }
-
-	public void setRpcFailure(Throwable caught) {
-		// TODO - fixup later
-		Window.alert("ClientPersistence.setRpcFailure: " + caught.toString());
-		System.out.println(caught);
+  	
   }
 
 
-
-
-
-  
   
 }

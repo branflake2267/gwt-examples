@@ -19,6 +19,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -36,7 +37,7 @@ public class LoginWidget extends Composite implements ChangeHandler {
   // rpc system
   public RpcCoreServiceAsync rpc;
 
-  private VerticalPanel pWidget = new VerticalPanel();
+  //private VerticalPanel pWidget = new VerticalPanel();
   
   private int changeEvent = 0;
   
@@ -44,7 +45,8 @@ public class LoginWidget extends Composite implements ChangeHandler {
   private LoginUi wloginUi = null;
 
   // errors
-  private String errApKey = "No consumer key was set (for application/web site). debug: setAppConsumerKey()";
+  private String errApKey = "No consumer key was set " +
+  		"(for application/web site). debug: setAppConsumerKey()";
 
   // use this to verify signature
   private String consumerSecret = null;
@@ -58,14 +60,15 @@ public class LoginWidget extends Composite implements ChangeHandler {
     this.cp  = cp;
   
     if (cp == null) {
-    	System.err.println("LoginWidget.LoginWidget() Error, you didn't set the clientpersistence object into Login Widget. This need to be done.");
+    	System.err.println("LoginWidget.LoginWidget() " +
+    			"Error, you didn't set the clientpersistence object into Login Widget. This need to be done.");
     }
     
     wloginUi = new LoginUi(cp);
     
-    pWidget.add(wloginUi);
+    //pWidget.add(wloginUi);
     
-    initWidget(pWidget);
+    initWidget(wloginUi);
     
     // so any other widget can call a refernce to use, so to tell someone to login
     cp.setLoginWidgetReference(this);
@@ -75,18 +78,19 @@ public class LoginWidget extends Composite implements ChangeHandler {
 
     // observe
     wloginUi.addChangeHandler(this);
-   
     cp.addChangeHandler(this);
+    
+    //pWidget.addStyleName("test1");
   }
   
-  public static LoginWidget getWidgetStandAlone(ClientPersistence cp, int uiType) {
+  public static LoginWidget getInstance(ClientPersistence cp, int uiType) {
   	if (uiType == 0) {
   		uiType = LoginUi.LOGIN_HORIZONTAL;
   	}
   	
   	LoginWidget wLogin = new LoginWidget(cp);
   	wLogin.setUi(uiType);
-  	wLogin.drawUi();
+  	wLogin.draw();
   	
   	return wLogin;
   }
@@ -107,8 +111,7 @@ public class LoginWidget extends Composite implements ChangeHandler {
     wloginUi.setUi(uiType);
   }
 
-  private void drawUi() {
-    pWidget.add(wloginUi);
+  private void draw() {
     wloginUi.draw();
   }
 
@@ -158,11 +161,12 @@ public class LoginWidget extends Composite implements ChangeHandler {
     int result = token.getResult();
     switch (result) {
     case OAuthTokenData.SUCCESS:
-      drawUi();
+      draw();
       break;
     case OAuthTokenData.ERROR:
       // TODO - make better notification
-      Window.alert("ERROR: This application's access token did not match up.\n This application has not been granted access.");
+      Window.alert("ERROR: This application's access token " +
+      		"did not match up.\n This application has not been granted access.");
       break;
 
     }
@@ -195,11 +199,7 @@ public class LoginWidget extends Composite implements ChangeHandler {
     cp.setAccessToken(token);
 
     // show logged in
-    wloginUi.setLoginStatus(true); // TODO - change to cp to hold this
-    cp.setLoginStatus(true);
-
-    // Notify change logged in
-    fireChange(EventManager.LOGGEDIN);
+    cp.fireChange(EventManager.LOGGEDIN);
     
     setSessionCookie();
   }
@@ -234,6 +234,10 @@ public class LoginWidget extends Composite implements ChangeHandler {
     // take appAccessToken, and ask for a user access token
     // setup a request token for user
     OAuthTokenData tokenData = cp.getAccessToken();
+    if (tokenData == null) {
+    	System.err.println("LoginWidget.login(): Error getting access Token.");
+    	return;
+    }
     tokenData.setConsumerKey(consumerKey);
     tokenData.sign(url, consumerSecret);
 
@@ -242,10 +246,10 @@ public class LoginWidget extends Composite implements ChangeHandler {
   }
 
   private void logout() {
-    wloginUi.setLoginStatus(false);
     cp.setAccessToken(null);
     consumerSecret = null;
-    fireChange(EventManager.LOGGEDOUT);
+    initSession();
+    cp.fireChange(EventManager.LOGGEDOUT);
   }
 
   private void forgotPassword() {
@@ -305,22 +309,30 @@ public class LoginWidget extends Composite implements ChangeHandler {
   public void onChange(ChangeEvent event) {
     Widget sender = (Widget) event.getSource();
     int changeEvent = 0;
+    
     if (sender == cp) {
       changeEvent = cp.getChangeEvent();
+      
       if (changeEvent == EventManager.NEW_USER_CREATED) {
-        wloginUi.setLoginStatus(true);
-      } 
+        cp.fireChange(EventManager.LOGIN);
+
+      } else if (changeEvent == EventManager.LOGOUT) {
+        logout();
+      }
+      
     } else if (sender == wloginUi) {
+    	
       changeEvent = wloginUi.getChangeEvent();
       if (changeEvent == EventManager.LOGIN) {
         login();
-      } else if (changeEvent == EventManager.LOGOUT) {
-        logout();
-      } else if (changeEvent == EventManager.FORGOT_PASSWORD) {
+        
+      }  else if (changeEvent == EventManager.FORGOT_PASSWORD) {
         forgotPassword();
+        
       } else if (changeEvent == EventManager.PROFILE) {
         displayProfile();
       } 
+      
     }
   }
 
