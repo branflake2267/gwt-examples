@@ -33,7 +33,7 @@ public class DemoCoreEngine implements EntryPoint, ValueChangeHandler<String> {
   private LoginWidget wLogin = null;
      
   /**
-   * load on entry
+   * entry point
    */
   public void onModuleLoad() {
   	
