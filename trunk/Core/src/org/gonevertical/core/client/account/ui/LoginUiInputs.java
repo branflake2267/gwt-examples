@@ -22,6 +22,7 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -78,18 +79,18 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 	private	FlowPanel pUi = new FlowPanel();
 	
 	// login button
-	private PushButton bLogin = new PushButton("Sign in");
+	private PushButton bLogin = new PushButton("Signin");
 	
 	// forgot password, ask for it
 	private PushButton bForgot = new PushButton("Get Password");
 	
 	private Hyperlink hAccountProfile = new Hyperlink("My Account", "account_Profile");
 	private Hyperlink hAccountCreate = new Hyperlink("Create Account", "account_Create");
-	private Hyperlink hAccountLogout = new Hyperlink("SignOut", "account_Logout");
 	
   // lets not change the url for these
-	private HTML hForgotPassword = new HTML("<a>Forgot Password</a>");
-	private HTML hAccountLogin = new HTML("<a>SignIn</a>");
+	private Anchor aForgot = new Anchor("Forgot Password");
+	private Anchor aLogin = new Anchor("SignIn");
+	private Anchor aLogout = new Anchor("SignOut");
 	
 	
 	// true, when logged in, false, when not
@@ -98,11 +99,11 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 	
 	// input box labels
 	private String inputLabel_ConsumerKey = "";
-	private String inputLabel_consumerSecret = "Password";
+	private String inputLabel_ConsumerSecret = "Password";
 	
 	private boolean hoverOnOff = false;
 
-	// horizontal or vertical
+	// set the inputs to horizontal or vertical
 	private int uiType = LoginUi.LOGIN_HORIZONTAL;
 
 	/**
@@ -141,7 +142,6 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 		
 		// TODO
 		hAccountCreate.addClickHandler(this);
-		hAccountLogout.addClickHandler(this);
 		hAccountProfile.addClickHandler(this);
 		
 		
@@ -157,13 +157,14 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 		tbConsumerSecretPass.addFocusHandler(this);
 		tbConsumerSecretPass.addBlurHandler(this);
 
-		
+		aLogout.addClickHandler(this);
 		bLogin.addClickHandler(this);
 		bForgot.addClickHandler(this);		
 		cbRemberMe.addClickHandler(this);
 		
-		hAccountLogin.addClickHandler(this);
-		hForgotPassword.addClickHandler(this);
+		aLogin.addClickHandler(this);
+		aForgot.addClickHandler(this);
+		aLogout.addClickHandler(this);
 		
 		// style
 		pWidget.setStyleName("core-login-ui");
@@ -174,17 +175,18 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 		
 		hp.setCellVerticalAlignment(wLoading, VerticalPanel.ALIGN_MIDDLE);
 		
-		// debug
-		//pWidget.addStyleName("test2");
-		
+		// observe global login events, and change state accordingly
 		cp.addChangeHandler(new ChangeHandler() {
 			public void onChange(ChangeEvent event) {
 				ClientPersistence wcp = (ClientPersistence) event.getSource();
+				
 				if (wcp.getChangeEvent() == EventManager.LOGIN_DEMO) {
 					setDemoLogin();
 				}
+				
 			}
 		});
+		
 	}
 		
 	public void draw() {
@@ -204,6 +206,9 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 		draw();
 	}
 	
+	/**
+	 * for testing loggin
+	 */
 	private void setDemoLogin() {
 		tbConsumerKey.setText("demo_user");
 		tbConsumerSecret.setFocus(true);
@@ -237,8 +242,8 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 		cbRemberMe.setText("Remember Me");
 		
 		tbConsumerKey.setTitle(inputLabel_ConsumerKey);
-		tbConsumerSecret.setTitle(inputLabel_consumerSecret);
-		tbConsumerSecretPass.setTitle(inputLabel_consumerSecret);
+		tbConsumerSecret.setTitle(inputLabel_ConsumerSecret);
+		tbConsumerSecretPass.setTitle(inputLabel_ConsumerSecret);
 		
 		// hide loading by default
 		hideLoading();
@@ -255,7 +260,6 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 		vp.setWidth("100%");
 		vp.add(ploginItems);
 
-		
 		pUi.add(vp);
 		
 		drawInputLabel_key();
@@ -264,18 +268,18 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 		tbConsumerKey.addStyleName("core-login-ui-inputconsumerkey");
 		tbConsumerSecret.addStyleName("core-login-ui-inputconsumersecret");
 		tbConsumerSecretPass.addStyleName("core-login-ui-inputconsumersecret");
-		pOptions.setCellHorizontalAlignment(hForgotPassword, HorizontalPanel.ALIGN_RIGHT);
+		pOptions.setCellHorizontalAlignment(aForgot, HorizontalPanel.ALIGN_RIGHT);
 		pOptions.setCellHorizontalAlignment(hAccountCreate, HorizontalPanel.ALIGN_RIGHT);
-		pOptions.setCellVerticalAlignment(hForgotPassword, VerticalPanel.ALIGN_BOTTOM);
+		pOptions.setCellVerticalAlignment(aForgot, VerticalPanel.ALIGN_BOTTOM);
 		pOptions.setCellVerticalAlignment(hAccountCreate, VerticalPanel.ALIGN_BOTTOM);
 		pOptions.addStyleName("core-login-ui-inputoptions");
 		pOptions.setWidth("100%");
 
     // login options
-    drawOptions();
-    drawError();
+    initOptionsPanel();
+    initErrorPanel();
 		
-		
+	
 		//vp.addStyleName("test1");
 		//pOptions.addStyleName("test2");
 	}
@@ -292,8 +296,8 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 		cbRemberMe.setText("Remember Me");
 		
 		tbConsumerKey.setTitle(inputLabel_ConsumerKey);
-		tbConsumerSecret.setTitle(inputLabel_consumerSecret);
-		tbConsumerSecretPass.setTitle(inputLabel_consumerSecret);
+		tbConsumerSecret.setTitle(inputLabel_ConsumerSecret);
+		tbConsumerSecretPass.setTitle(inputLabel_ConsumerSecret);
 		
 		// hide loading by default
 		hideLoading();
@@ -309,7 +313,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 		ploginItems.add(tbConsumerSecretPass);
 		ploginItems.add(hp);
 		ploginItems.add(cbRemberMe);
-		ploginItems.add(hForgotPassword);
+		ploginItems.add(aForgot);
 		ploginItems.add(hAccountCreate);
 
 		
@@ -329,22 +333,22 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 		tbConsumerKey.addStyleName("core-login-ui-inputconsumerkey");
 		tbConsumerSecret.addStyleName("core-login-ui-inputconsumersecret");
 		tbConsumerSecretPass.addStyleName("core-login-ui-inputconsumersecret");
-		pOptions.setCellHorizontalAlignment(hForgotPassword, HorizontalPanel.ALIGN_RIGHT);
+		pOptions.setCellHorizontalAlignment(aForgot, HorizontalPanel.ALIGN_RIGHT);
 		pOptions.setCellHorizontalAlignment(hAccountCreate, HorizontalPanel.ALIGN_RIGHT);
-		pOptions.setCellVerticalAlignment(hForgotPassword, VerticalPanel.ALIGN_BOTTOM);
+		pOptions.setCellVerticalAlignment(aForgot, VerticalPanel.ALIGN_BOTTOM);
 		pOptions.setCellVerticalAlignment(hAccountCreate, VerticalPanel.ALIGN_BOTTOM);
 		pOptions.addStyleName("core-login-ui-inputoptions");
 		pOptions.setWidth("100%");
 
     // login options
-    drawError();
+    initErrorPanel();
     
 	}
 	
-	private void drawOptions() {
+	private void initOptionsPanel() {
 	  pOptions.clear();
     pOptions.add(cbRemberMe);
-    pOptions.add(hForgotPassword);
+    pOptions.add(aForgot);
     pOptions.add(hAccountCreate);
     pOptions.setVisible(false);
     RootPanel.get().add(pOptions);
@@ -352,7 +356,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
     pOptions.addStyleName("core-login-ui-options");
 	}
 	
-	private void drawError() {
+	private void initErrorPanel() {
 	  pError.setVisible(false);
 	  RootPanel.get().add(pError);
 	}
@@ -416,27 +420,35 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 		hp.setSpacing(4);
 		hp.add(tbConsumerKey);
 		hp.add(bForgot);
-		hp.add(hAccountLogin);
+		hp.add(aLogin);
 		
 		pUi.add(hp);
 		
 		// style
-		hForgotPassword.addStyleName("core-login-ui-inputoptions");
-		hp.setCellVerticalAlignment(hAccountLogin, VerticalPanel.ALIGN_BOTTOM);
+		aForgot.addStyleName("core-login-ui-inputoptions");
+		hp.setCellVerticalAlignment(aLogin, VerticalPanel.ALIGN_BOTTOM);
 	}
 	
 	private void drawLoggedIn() {
 		hideLoading();
+		
+		if (uiType == LoginUi.LOGIN_VERTICAL) {
+			this.setVisible(false);
+    	return;
+    }
+		
     clear();
-				
+    		
 		HorizontalPanel hp = new HorizontalPanel();
 		hp.add(hAccountProfile);
 		hp.add(new HTML("&nbsp;&nbsp;"));
-		hp.add(hAccountLogout);
+		hp.add(aLogout);
 		
 		pUi.add(hp);
 		
 		pOptions.setVisible(false);
+		
+		
 	}
 	
 	private void clear() {
@@ -487,7 +499,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 	}
 	
 	private void drawInputLabel_secret() {
-		tbConsumerSecret.setText(inputLabel_consumerSecret);
+		tbConsumerSecret.setText(inputLabel_ConsumerSecret);
 		tbConsumerSecret.addStyleName("core-login-ui-inputlabel");
 	}
 	
@@ -520,9 +532,6 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 	public boolean getRememberMe() {
 	  return cbRemberMe.getValue();
 	}
-	
-	
-	
 	
 	/**
 	 * change input label "Email" username
@@ -571,10 +580,6 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
      fireChange(EventManager.LOGIN);
 	}
 	
-	
-	
-	
-	
   public int getChangeEvent() {
     return changeEvent;
   }
@@ -588,9 +593,6 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
   public HandlerRegistration addChangeHandler(ChangeHandler handler) {
     return addDomHandler(handler, ChangeEvent.getType());
   }
-  
-  
-  
   
 	public void onClick(ClickEvent event) {
 	    
@@ -611,26 +613,29 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
     } else if (sender == cbRemberMe) {
       // TODO - save a cookie
     
-    } else if (sender == hForgotPassword) {
+    } else if (sender == aForgot) {
       drawForgotPassword();
     
-    } else if (sender == hAccountLogin) {
+    } else if (sender == aLogin) {
       drawInputs();
     
     } else if (sender == hAccountCreate) {
       if (QueryString.getQueryStringData().getHistoryToken().equals("account_Create")) {
         cp.fireChange(EventManager.ACCOUNT_CREATE);
       }
+      
     } else if (sender == hAccountProfile) {
       if (QueryString.getQueryStringData().getHistoryToken().equals("account_Profile")) {
         cp.fireChange(EventManager.ACCOUNT_PROFILE);
       }
-    } else if (sender == hAccountLogout) {
-      fireChange(EventManager.LOGOUT);
-    }
+      
+    } else if (sender == aLogout) {
+      cp.fireChange(EventManager.LOGOUT);
+    } 
     
   }
 
+	@Deprecated
 	public void onChange(Widget sender) {
 		
 		if (sender == tbConsumerKey) {
@@ -644,16 +649,11 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 			
 		} else if (sender == cbRemberMe) {
 		  // TODO
-		}
+			
+		} 
 		
 	}
 	
-	
-
-
-
-
-
   public void onMouseOver(MouseOverEvent event) {
     
     Widget sender = (Widget) event.getSource();
@@ -691,7 +691,6 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 	  
   }
 
-	
   public void onBlur(BlurEvent event) {
 	  
   	Widget sender = (Widget) event.getSource();
@@ -710,12 +709,4 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler {
 
   }
 
-
-
-
-
-  
-
-
-	
 }

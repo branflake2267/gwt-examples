@@ -67,9 +67,8 @@ public class AccountWidget extends Composite implements ValueChangeHandler<Strin
     
     drawMenu();
     
-    //pWidget.addStyleName("test1");
-    
-    
+
+    // register bread crumbs that are used in this widget
     cp.setBreadCrumbCategory("Account", "account");
     
     cp.setBreadCrumb("Create", "account_Create");
@@ -77,6 +76,10 @@ public class AccountWidget extends Composite implements ValueChangeHandler<Strin
     cp.setBreadCrumb("Things", "account_Things");
     cp.setBreadCrumb("Thing Stuff Types", "account_StuffType");
     cp.setBreadCrumb("Thing Types", "account_Types");
+    
+    
+    //pWidget.addStyleName("test1");
+    
   }
   
 	public boolean getMatchHistoryToken() {

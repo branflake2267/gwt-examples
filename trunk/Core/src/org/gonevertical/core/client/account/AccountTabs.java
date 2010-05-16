@@ -113,7 +113,6 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
       
     } 
     
-    
   }
 
   public void onSelection(SelectionEvent<Integer> event) {

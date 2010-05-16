@@ -1,6 +1,7 @@
 package org.gonevertical.core.client.account.ui;
 
 import org.gonevertical.core.client.ClientPersistence;
+import org.gonevertical.core.client.global.EventManager;
 import org.gonevertical.core.client.oauth.Sha1;
 
 import com.google.gwt.dom.client.Document;
@@ -10,6 +11,8 @@ import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -31,7 +34,7 @@ public class LoginUi extends Composite implements ChangeHandler {
   
 	private int changeEvent = 0; 
 	
-	private FlowPanel pWidget = new FlowPanel();
+	private VerticalPanel pWidget = new VerticalPanel();
 	
 	// possible ui types (widget)
 	private LoginUiInputs loginUi = null;
@@ -43,8 +46,25 @@ public class LoginUi extends Composite implements ChangeHandler {
 	  this.cp = cp;
 		
 		initWidget(pWidget);
+		
+		// change login status
+		cp.addChangeHandler(new  ChangeHandler() {
+			public void onChange(ChangeEvent event) {
+				ClientPersistence wcp = (ClientPersistence) event.getSource();
+				
+				if (wcp.getChangeEvent() == EventManager.LOGGEDIN) {
+					setLoginStatus(true);
+					
+				} else if (wcp.getChangeEvent() == EventManager.LOGGEDOUT) {
+					setLoginStatus(false);
+				}
+				
+			}
+		});
+		
+		//pWidget.addStyleName("test1");
+		
 	}
-	
 	
 	/**
 	 * what type of ui are we going to use?
@@ -60,8 +80,18 @@ public class LoginUi extends Composite implements ChangeHandler {
 
 		// observe the accounts/session ui for changes
 		setObserver();
+		
+		if (uiType == LOGIN_HORIZONTAL) {
+			pWidget.setCellHorizontalAlignment(loginUi, HorizontalPanel.ALIGN_RIGHT);
+		} else if (uiType == LOGIN_VERTICAL) {
+			pWidget.setCellHorizontalAlignment(loginUi, HorizontalPanel.ALIGN_CENTER);
+		}
 	}
 	
+	/**
+	 * get if the cookie should be set
+	 * @return
+	 */
 	protected boolean getRememberMe() {
 	  boolean b = loginUi.getRememberMe();
 	  return b;
