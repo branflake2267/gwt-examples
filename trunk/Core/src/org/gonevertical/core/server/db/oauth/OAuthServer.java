@@ -2,6 +2,7 @@ package org.gonevertical.core.server.db.oauth;
 
 
 import java.util.UUID;
+import java.util.logging.Level;
 
 import org.gonevertical.core.client.account.UserData;
 import org.gonevertical.core.client.oauth.OAuthTokenData;
@@ -32,8 +33,10 @@ public class OAuthServer {
    * 
    * @param debug
    */
+  @Deprecated
   private void debug(String debug) {
     System.out.println(debug);
+    sp.getLogger().warning(debug);
   }
   
   /**
@@ -49,7 +52,7 @@ public class OAuthServer {
 
     String url = sp.getRequestUrlOAuth();
     
-    debug("requestToken:  url: " + url);
+    sp.getLogger().info("requestToken:  url: " + url);
 
     // get the application data according to the consumerKey Given, then lets
     // see if it matches up
@@ -70,7 +73,7 @@ public class OAuthServer {
     OAuthTokenData returnToken = new OAuthTokenData();
 
     // examine if we can go to the next step
-    if (appData.applicationId == 0 | doesSignatureMatch == false | nonceAlreadyUsed == true) {
+    if (appData.applicationId == 0 || doesSignatureMatch == false || nonceAlreadyUsed == true) {
       returnToken.setResult(OAuthTokenData.ERROR);
     } else {
       returnToken.setResult(OAuthTokenData.SUCCESS);
@@ -86,12 +89,12 @@ public class OAuthServer {
     // set nonce, so it can't be used again
     setNonce(token, url, (long) ThingTypeJdo.TYPE_APPLICATION, appData.applicationId);
 
-    debug("requestToken: url: " + url + " secret: " + at.accessTokenSecret);
+    sp.getLogger().info("requestToken: url: " + url + " secret: " + at.accessTokenSecret);
 
     try {
       returnToken.sign(url, at.accessTokenSecret);
     } catch (Exception e) {
-      debug("requestToken: ****** ERROR SIGNING");
+    	sp.getLogger().log(Level.SEVERE, "requestToken: ****** ERROR SIGNING", e);
       e.printStackTrace();
     }
 

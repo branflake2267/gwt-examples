@@ -10,6 +10,8 @@ package org.gonevertical.core.client.global;
  */
 public class EventManager {
 	
+	public static final int ZERO = 0;
+	
 	/**
 	 * loading started
 	 */

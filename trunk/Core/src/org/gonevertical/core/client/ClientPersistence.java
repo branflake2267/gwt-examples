@@ -9,11 +9,9 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
-import com.google.gwt.event.dom.client.DomEvent.Type;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Widget;
 
 /**
  * keep track of persistent objects through out the entire application
@@ -30,7 +28,7 @@ public class ClientPersistence extends Composite implements ChangeHandler  {
   private String inputLabel_ConsumerKey = "Email";
   
   // reference EventManager for event type
-  private int changeEvent = 0;
+  private int changeEvent = EventManager.ZERO;
   
   // make a blank slate
   private OAuthTokenData accessToken = null;
@@ -88,7 +86,6 @@ public class ClientPersistence extends Composite implements ChangeHandler  {
   
   public int getChangeEvent() {
   	final int event = changeEvent;
-  	//changeEvent = 0;
     return event;
   }
   
@@ -195,6 +192,9 @@ public class ClientPersistence extends Composite implements ChangeHandler  {
   	
   	if (changeEvent == EventManager.LOGGEDIN) {
   		loginStatus = true;
+  		
+  	} else if (changeEvent == EventManager.LOGGEDOUT) {
+  		loginStatus = false;
   	}
   	
   }

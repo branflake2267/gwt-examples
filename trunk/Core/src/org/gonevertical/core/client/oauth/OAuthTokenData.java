@@ -94,11 +94,12 @@ public class OAuthTokenData implements IsSerializable {
 	private int requesting = REQUEST_REQUEST_TOKEN;
 	
 	// result of request
+	public static final int ZERO = 0;
 	public static final int SUCCESS = 1;
 	public static final int ERROR = 2;
 	public static final int ERROR_NOUSERMATCH = 3; // user can't get logged in
 	public static final int ERROR_USERNOTFOUND = 4;
-	private int resultOfRequest = 0;
+	private int resultOfRequest = ZERO;
 	
 	// when need of console output, turn this on
 	boolean debug = true;
@@ -391,21 +392,22 @@ public class OAuthTokenData implements IsSerializable {
    * @return
    */
   public String getResultMessage() {
-    String s = "";
+    String s = null;
     switch (resultOfRequest) {
     case SUCCESS:
       // no need to show success
       break;
     case ERROR:
-      s = "Error";
+      s = "I can't find you. Try agian.";
       break;
     case ERROR_NOUSERMATCH:
       s = "I can't find you. Try agian.";
       break;
     case ERROR_USERNOTFOUND:
-      s = "I can't find you. Try agian. ";
+      s = "I can't find you. Try agian.";
       break;
     }
+    resultOfRequest = ZERO;
     return s;
   }
   
