@@ -59,7 +59,7 @@ public class OAuthServer {
     ApplicationData appData = getApplicationId(token);
 
     if (appData == null) {
-    	System.out.println("No applications are set yet.");
+    	sp.getLogger().severe("No applications are set yet.");
     	return null;
     }
     
@@ -94,7 +94,7 @@ public class OAuthServer {
     try {
       returnToken.sign(url, at.accessTokenSecret);
     } catch (Exception e) {
-    	sp.getLogger().log(Level.SEVERE, "requestToken: ****** ERROR SIGNING", e);
+    	sp.getLogger().log(Level.SEVERE, "requestToken: ****** ERROR SIGNING ******", e);
       e.printStackTrace();
     }
 
@@ -119,7 +119,7 @@ public class OAuthServer {
     String url = sp.getRequestUrlOAuth();
     
     // debug
-    debug("getAccessToken: token: " + appAccessToken.toString() + " url: " + url);
+    sp.getLogger().info("getAccessToken: token: " + appAccessToken.toString() + " url: " + url);
 
     // find the user? - return null if none
     UserData userData = getUserData(appAccessToken);
@@ -167,7 +167,7 @@ public class OAuthServer {
     try {
       appAccessToken.sign(url, userData.consumerSecret);
     } catch (Exception e) {
-      debug("requestToken: ****** ERROR SIGNING");
+    	sp.getLogger().log(Level.SEVERE, "requestToken: ****** ERROR SIGNING", e);
       e.printStackTrace();
     }
 

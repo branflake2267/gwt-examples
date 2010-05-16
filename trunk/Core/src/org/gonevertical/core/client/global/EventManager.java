@@ -22,11 +22,11 @@ public class EventManager {
 	 */
 	public static final int LOADING_FINISHED = 11;
 
-  /**
-   * clicked on login
-   */
-	public static final int LOGIN = 1;
-  
+	/**
+	 * login buttun clicked, try logging in
+	 */
+	public static final int LOGINBUTTONCLICKED = 1;
+	
   /**
    * clicked on logged out
    */
