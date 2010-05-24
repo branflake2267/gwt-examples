@@ -93,19 +93,10 @@ public class SessionAccessTokenJdo {
 		return success;
 	}
 
-	/**
-	 * get identity
-	 * 
-	 * @return
-	 */
 	public long getId() {
 		return idKey.getId();
 	}
 
-	/**
-	 * get thing id
-	 * @param thingId
-	 */
 	public void setThingId(long thingId) {
 		this.thingId = thingId;
 	}
@@ -215,37 +206,17 @@ public class SessionAccessTokenJdo {
 		return success;
 	}
 
-	/**
-	 * get the user that is associated with the session
-	 * 
-	 * @param accessToken
-	 * @return
-	 */
-	public long getThingIdFromSession(OAuthTokenData accessToken) {
-		
-		// TODO check signature of token
-		
-		String key = accessToken.getAccessToken_key();
-		String secret = accessToken.getAccessToken_secret();
-		SessionAccessTokenJdo[] r = query(key, secret);
-		
-		// none found
-		if (r == null || r.length == 0) {
-			return 0;
-		}
-		
-		// TODO show error??
-		if (r.length > 0) {
-			return 0;
-		}
-	
-		long thingId = r[0].getThingId(); 
-		
-		return thingId;
+	public String toString() {
+		String s = "";
+		s += "idKey=" + idKey + " ";
+		s += "thingTypeId=" + thingTypeId + " ";
+		s += "thingId=" + thingId + " ";
+		s += "accessToken=" + accessToken + " ";
+		s += "accessTokenSecret=" + accessTokenSecret + " ";
+		s += "dateCreated=" + dateCreated + " ";
+		s += "dateUpdated" + dateUpdated + " ";
+		return s;
 	}
-
-
-
 
 
 

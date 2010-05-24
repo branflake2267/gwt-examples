@@ -108,15 +108,15 @@ public class SetDefaults {
 		// admin is admin
 		createThingStuff(2, 3, true);
 
-		// open 
-		createThingStuff(4, 7, false); // open can view
-		createThingStuff(4, 8, false); // open can edit
-		createThingStuff(4, 9, false); // open can add
+		// open by default
+		createThingStuff(4, 7, false); // open can't view
+		createThingStuff(4, 8, false); // open can't edit
+		createThingStuff(4, 9, false); // open can't add
 
 		// closed
-		createThingStuff(5, 4, false); // closed can't view
-		createThingStuff(5, 5, false); // closed can't edit
-		createThingStuff(5, 6, false); // closed can't add
+		createThingStuff(5, 4, false); // closed can view
+		createThingStuff(5, 5, false); // closed can edit
+		createThingStuff(5, 6, false); // closed can add
 
 		// widgets are closed - restricted
 		createThingStuff(6, 2, 5); // 6 ThingTypes closed

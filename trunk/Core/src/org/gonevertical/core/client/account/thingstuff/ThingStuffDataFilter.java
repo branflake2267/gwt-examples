@@ -12,6 +12,9 @@ public class ThingStuffDataFilter implements IsSerializable {
   // primary key(id) (when saved)
   private long thingStuffId = 0;
   
+  // when dealing with about 
+  private long thingStuffAboutId = 0;
+  
   // parent
   private long thingId = 0;
     
@@ -49,6 +52,10 @@ public class ThingStuffDataFilter implements IsSerializable {
   	return thingStuffId;
   }
   
+  public void setThingStuffAboutId(long thingStuffAboutId) {
+  	this.thingStuffAboutId = thingStuffAboutId;
+  }
+  
   public void setThingId(long thingId) {
   	this.thingId = thingId;
   }
@@ -66,7 +73,7 @@ public class ThingStuffDataFilter implements IsSerializable {
   	this.thingStuffTypeId = thingStuffTypeId;
   }
   
-  public long[] getthingStuffTypeId() {
+  public long[] getThingStuffTypeId() {
   	return thingStuffTypeId;
   }
   
@@ -120,9 +127,14 @@ public class ThingStuffDataFilter implements IsSerializable {
   	
   	s = "thingId==" + thingId + " ";
   	
-  	if (thingStuffId > 0) { // this is for the about thing stuff data
+  	if (thingStuffId > 0) { // parent owner
   		s += " && thingStuffId==" + thingStuffId + " ";
   	}
+  	
+  	// I don't want to do this here, I can get it by object id
+  	//if (thingStuffAboutId > 0) { // this is for the about thing stuff data
+  		//s += " && thingStuffAboutId==" + thingStuffAboutId + " ";
+  	//}
 		
   	// filter by multiple stuffTypeIds
 		if (thingStuffTypeId != null && thingStuffTypeId.length > 0) {

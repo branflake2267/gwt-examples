@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.logging.Logger;
 
 import org.gonevertical.core.client.SetDefaultsData;
+import org.gonevertical.core.client.account.thing.ThingData;
 import org.gonevertical.core.client.account.thingstuff.ThingStuffData;
 import org.gonevertical.core.client.account.thingstuff.ThingStuffDataFilter;
 import org.gonevertical.core.client.account.thingstuff.ThingStuffsData;
@@ -22,8 +23,14 @@ public class Db_WidgetAttr {
 
 	private ServerPersistence sp = null;
 
+	private ThingStuffJdo tsj;
+
+	private ThingStuffAboutJdo tsJa;
+
   public Db_WidgetAttr(ServerPersistence sp) {
     this.sp  = sp;
+    tsj = new ThingStuffJdo(sp);
+    tsJa = new ThingStuffAboutJdo(sp);
   }
   
   public WidgetAttrData getWidgetAttributes(OAuthTokenData accessToken, WidgetAttrDataFilter widgetAttrDataFilter) {
@@ -35,10 +42,16 @@ public class Db_WidgetAttr {
   	boolean canView = false;
   	boolean canEdit = false;
   	boolean canAdd = false;
-  	if (accessToken == null) {
+  	boolean canAdmin = false;
+  	if (accessToken != null) {
   	
     	// process access token, was it signed, did it 
-    	long thingId_Person = new SessionAccessTokenJdo(sp).getThingIdFromSession(accessToken);
+  		// TODO - work out the token nonce too
+    	ThingData userThingData = new Db_User(sp).getUser(accessToken);
+    	long thingId_Person = 0;
+    	if (userThingData != null) {
+    		thingId_Person = userThingData.getThingId();
+    	}
     	
     	// is the widget open, otherwise its closed by default
     	boolean isOpen = getOpenPermission(thingId_Widget);
@@ -52,6 +65,8 @@ public class Db_WidgetAttr {
     	// get if the user can Edit
     	canEdit = getCanEdit(isOpen, thingId_Person, thingId_Widget);
     	
+    	// is administrator
+    	canAdmin = getCanAdmin();
   	}
   	
   	// get widget parameters
@@ -59,6 +74,7 @@ public class Db_WidgetAttr {
   	
   	WidgetAttrData wad = new WidgetAttrData();
   	wad.setData(canView, canAdd, canEdit);
+  	wad.setCanAdmin(canAdmin);
   	wad.setParameters(params);
   	return wad;	
   }
@@ -93,48 +109,123 @@ public class Db_WidgetAttr {
 	  
 	  return isOpen;
   }
+  
+  
+  
+  
+  // TODO ***********************
+  private boolean getCanAdmin() {
+  	// TODO - get this
+  	return false;
+  }
+  
+  
+  
+  
 
 	private boolean getCanView(boolean isOpen, long thingId_Person, long thingId_Widget) {
 	  
-		long thingStuffTypeId = SetDefaultsData.THINGSTUFFTYPE_LINK;
+		int stuffTypeId_open = SetDefaultsData.THINGSTUFFTYPE_CANTVIEW;
+		int stuffTypeId_closed = SetDefaultsData.THINGSTUFFTYPE_CANVIEW;
+		boolean can = getCan(isOpen, thingId_Person, thingId_Widget, stuffTypeId_open, stuffTypeId_closed);
 		
-		// find if the widget contains open
-  	ThingStuffDataFilter filter = new ThingStuffDataFilter();
-  	filter.setThingId(thingId_Person); // filter by person
-  	filter.setThingStuffTypeId(thingStuffTypeId); // filter by the linking
-  	filter.setValueLong(thingId_Widget);
-  	
-		ThingStuffAboutJdo tsj = new ThingStuffAboutJdo(sp);
-		ThingStuffData[] tsds = tsj.query(filter);
-		
-		boolean b = false;
-		if (tsds == null || tsds.length == 0) {
-			b = tsds[0].getValueBol();
-		}
-		
-	  return b;
+	  return can;
   }
 
 	private boolean getCanEdit(boolean isOpen, long thingId_Person, long thingId_Widget) {
 
-		if (isOpen == true) { // find if user can't edit
-	  	
-	  } else {
-	  	
-	  }
+		int stuffTypeId_open = SetDefaultsData.THINGSTUFFTYPE_CANTEDIT;
+		int stuffTypeId_closed = SetDefaultsData.THINGSTUFFTYPE_CANEDIT;
+		boolean can = getCan(isOpen, thingId_Person, thingId_Widget, stuffTypeId_open, stuffTypeId_closed);
 		
-	  return false;
+	  return can;
   }
 	
 	private boolean getCanAdd(boolean isOpen, long thingId_Person, long thingId_Widget) {
 	  
-		if (isOpen == true) { // find if users can't add
-	  	
-	  } else {
-	  	
-	  }
+		int stuffTypeId_open = SetDefaultsData.THINGSTUFFTYPE_CANTADD;
+		int stuffTypeId_closed = SetDefaultsData.THINGSTUFFTYPE_CANADD;
+		boolean can = getCan(isOpen, thingId_Person, thingId_Widget, stuffTypeId_open, stuffTypeId_closed);
 		
-	  return false;
+	  return can;
   }
+	
+	/**
+	 * 
+	 *  TODO - take into account recursion of group permissions
+	 *  TODO - build unit testing for all types
+	 *  TODO - determine what happens when both can and can't are there?
+	 * 
+	 * 
+	 * @param isOpen
+	 * @param thingId_Person
+	 * @param thingId_Widget
+	 * @param stuffTypeId_open
+	 * @param stuffTypeId_closed
+	 * @return
+	 */
+	private boolean getCan(boolean isOpen, long thingId_Person, long thingId_Widget, int stuffTypeId_open, int stuffTypeId_closed) {
+	  
+		boolean canView = false;
+		
+		if (isOpen == false) {
+  		long thingStuffTypeId = SetDefaultsData.THINGSTUFFTYPE_LINK;
+  		
+  		// find if the widget contains open
+    	ThingStuffDataFilter filter = new ThingStuffDataFilter();
+    	filter.setThingId(thingId_Person); // filter by person
+    	filter.setThingStuffTypeId(thingStuffTypeId); // filter by the linking
+    	filter.setValueLong(thingId_Widget);
+    	
+  		ThingStuffData[] tsds = tsj.query(filter);
+  		
+  		if (tsds != null && tsds.length > 0) {
+  			long thingStuffId = tsds[0].getStuffId();
+  			
+  			ThingStuffDataFilter filter2 = new ThingStuffDataFilter();
+  			filter2.setThingStuffId(thingStuffId); // parent owner
+  	  	filter2.setThingId(thingId_Person);
+  	  	filter2.setThingStuffTypeId(stuffTypeId_closed);
+  	  	ThingStuffData[] tsdsa = tsJa.query(filter2);
+  	  	if (tsdsa != null && tsdsa.length > 0) {
+  	  		Boolean bb = tsdsa[0].getValueBol();
+  	  		if (bb != null) {
+  	  			canView = bb.booleanValue();
+  	  		}
+  	  	}
+  		}
+  		
+		} else {
+			
+			long thingStuffTypeId = SetDefaultsData.THINGSTUFFTYPE_LINK;
+  		
+  		// find if the widget contains open
+    	ThingStuffDataFilter filter = new ThingStuffDataFilter();
+    	filter.setThingId(thingId_Person); // filter by person
+    	filter.setThingStuffTypeId(thingStuffTypeId); // filter by the linking
+    	filter.setValueLong(thingId_Widget);
+    	
+  		ThingStuffData[] tsds = tsj.query(filter);
+  		
+  		if (tsds != null && tsds.length > 0) {
+  			long thingStuffId = tsds[0].getStuffId();
+  			
+  			ThingStuffDataFilter filter2 = new ThingStuffDataFilter();
+  			filter2.setThingStuffId(thingStuffId); // parent owner
+  	  	filter2.setThingId(thingId_Person);
+  	  	filter2.setThingStuffTypeId(stuffTypeId_open);
+  	  	ThingStuffData[] tsdsa = tsJa.query(filter2);
+  	  	if (tsdsa != null && tsdsa.length > 0) {
+  	  		Boolean bb = tsdsa[0].getValueBol();
+  	  		if (bb != null) {
+  	  			canView = bb.booleanValue();
+  	  		}
+  	  	}
+  		}
+		}
+		
+	  return canView;
+  }
+
 	
 }
