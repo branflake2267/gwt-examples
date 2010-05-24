@@ -20,21 +20,21 @@ public class SetDefaultsData implements IsSerializable {
 	public static final int THINGSTUFFTYPE_NAME = 1;
 	public static final int THINGSTUFFTYPE_LINK = 2;
 	public static final int THINGSTUFFTYPE_ADMIN = 3;
-	// can view
-	// can edit
-	// can add
-	// can't view
-	// can't edit
-	// can't add
-	// alias
-	// nick name
-	// first name
-	// middle name
-	// last name
-	// email
-	// mobile
-	// phone
-	// description
+	public static final int THINGSTUFFTYPE_CANVIEW = 4; // can view
+	public static final int THINGSTUFFTYPE_CANEDIT = 5;// can edit
+	public static final int THINGSTUFFTYPE_CANADD = 6; // can add
+	public static final int THINGSTUFFTYPE_CANTVIEW = 7; // can't view
+	public static final int THINGSTUFFTYPE_CANTEDIT = 8; // can't edit
+	public static final int THINGSTUFFTYPE_CANTADD = 9; // can't add
+	public static final int THINGSTUFFTYPE_ALIAS = 10; // alias
+	public static final int THINGSTUFFTYPE_NAMENICK = 11; // nick name
+	public static final int THINGSTUFFTYPE_NAMEFIRST = 12; // first name
+	public static final int THINGSTUFFTYPE_NAMEMIDDLE = 13; // middle name
+	public static final int THINGSTUFFTYPE_NAMELAST = 14; // last name
+	public static final int THINGSTUFFTYPE_EMAIL = 15; // email
+	public static final int THINGSTUFFTYPE_MOBILE = 16; // mobile
+	public static final int THINGSTUFFTYPE_PHONE = 17; // phone
+	public static final int THINGSTUFFTYPE_DESCRIPTION = 18; // description
 	
 	/**
 	 * default things

@@ -22,6 +22,11 @@ public class WidgetAttrData implements IsSerializable {
 	private boolean canEdit;
 	
 	/**
+	 * for those who can admin all 
+	 */
+	private boolean canAdmin;
+	
+	/**
 	 * generic widget parameters
 	 */
 	private HashMap<String,String> params = null;
@@ -53,5 +58,9 @@ public class WidgetAttrData implements IsSerializable {
 	public void setParameters(HashMap<String,String> params) {
 		this.params = params;
 	}
+
+	public void setCanAdmin(boolean canAdmin) {
+	  this.canAdmin = canAdmin;
+  }
 	
 }

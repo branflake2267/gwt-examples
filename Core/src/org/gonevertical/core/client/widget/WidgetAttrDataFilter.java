@@ -4,13 +4,13 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class WidgetAttrDataFilter implements IsSerializable {
 
-	private int thingId_Widget;
+	private long thingId_Widget;
 
 	public WidgetAttrDataFilter() {
 	}
 	
-	public void setData(int thingId_Widget) {
-		this.thingId_Widget = thingId_Widget;
+	public void setData(long thingIdWidget) {
+		this.thingId_Widget = thingIdWidget;
 	}
 	
 	public long getThingId_Widget() {
