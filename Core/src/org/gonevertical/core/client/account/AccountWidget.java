@@ -1,12 +1,9 @@
 package org.gonevertical.core.client.account;
 
-import org.gonevertical.core.client.BreadCrumbs;
 import org.gonevertical.core.client.ClientPersistence;
 import org.gonevertical.core.client.global.QueryString;
 import org.gonevertical.core.client.global.QueryStringData;
 
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -71,11 +68,11 @@ public class AccountWidget extends Composite implements ValueChangeHandler<Strin
     // register bread crumbs that are used in this widget
     cp.setBreadCrumbCategory("Account", "account");
     
-    cp.setBreadCrumb("Create", "account_Create");
-    cp.setBreadCrumb("Admin", "account_Home");
-    cp.setBreadCrumb("Things", "account_Things");
-    cp.setBreadCrumb("Thing Stuff Types", "account_StuffType");
-    cp.setBreadCrumb("Thing Types", "account_Types");
+    cp.setBreadCrumb("Create", "core_create");
+    cp.setBreadCrumb("Admin", "core_home");
+    cp.setBreadCrumb("Things", "core_things");
+    cp.setBreadCrumb("Thing Stuff Types", "core_stufftype");
+    cp.setBreadCrumb("Thing Types", "core_types");
     
     
     //pWidget.addStyleName("test1");
@@ -85,7 +82,7 @@ public class AccountWidget extends Composite implements ValueChangeHandler<Strin
 	public boolean getMatchHistoryToken() {
 	  boolean b = false;
 	  String historyToken = History.getToken();
-	  if (historyToken.matches("^account_.*?$") == true) {
+	  if (historyToken.matches("^core_.*?$") == true) {
 	  	b = true;
 	  }
 	  return b;
@@ -96,7 +93,7 @@ public class AccountWidget extends Composite implements ValueChangeHandler<Strin
   }
   
   private void drawMenu() {
-    Hyperlink hprofile = new Hyperlink("My Profile", "account_Profile");
+    Hyperlink hprofile = new Hyperlink("My Profile", "core_profile");
     
     HorizontalPanel hp = new HorizontalPanel();
     hp.add(hprofile);
@@ -119,14 +116,14 @@ public class AccountWidget extends Composite implements ValueChangeHandler<Strin
     QueryStringData qsd = QueryString.getQueryStringData();
     
     String historyToken = qsd.getHistoryToken();
-    if (historyToken.matches("account_.*") != true) {
+    if (historyToken.matches("core_.*") != true) {
       this.setVisible(false);
       return;
     }
     
     this.setVisible(true);
     
-    if (qsd.getHistoryToken().equals("account_Create")) { // create account
+    if (qsd.getHistoryToken().equals("core_create")) { // create account
       pContent.setVisible(true);
       wTabs.setVisible(false);
       

@@ -1,8 +1,11 @@
 package org.gonevertical.core.server.db;
 
+import java.util.logging.Logger;
+
 import org.gonevertical.core.client.account.thingstuff.ThingStuffData;
-import org.gonevertical.core.client.account.thingstuff.ThingStuffFilterData;
+import org.gonevertical.core.client.account.thingstuff.ThingStuffDataFilter;
 import org.gonevertical.core.client.account.thingstuff.ThingStuffsData;
+import org.gonevertical.core.client.account.thingstufftype.ThingStuffTypeDataFilter;
 import org.gonevertical.core.client.account.thingstufftype.ThingStuffTypesData;
 import org.gonevertical.core.client.oauth.OAuthTokenData;
 import org.gonevertical.core.server.ServerPersistence;
@@ -11,6 +14,8 @@ import org.gonevertical.core.server.jdo.data.ThingStuffJdo;
 
 public class Db_ThingStuff {
 
+	private static final Logger log = Logger.getLogger(Db_ThingStuff.class.getName());
+	
   private ServerPersistence sp = null;
   
 	private ThingStuffJdo dbThingStuffJdo;
@@ -28,7 +33,7 @@ public class Db_ThingStuff {
     dbThingStuffAboutJdo = new ThingStuffAboutJdo(sp);
   }
   
-  public ThingStuffsData getThingStuffData(OAuthTokenData accessToken, ThingStuffFilterData filter) {
+  public ThingStuffsData getThingStuffsData(OAuthTokenData accessToken, ThingStuffDataFilter filter) {
     
   	// TODO authorization
   	
@@ -45,36 +50,54 @@ public class Db_ThingStuff {
       	long stuffId = thingStuffData[i].getStuffId();
       	
       	// setup filter (of parent id)
-      	ThingStuffFilterData filterByParent = new ThingStuffFilterData();
-      	filterByParent.thingId = thingStuffData[i].getThingId();
-      	filterByParent.thingStuffId = stuffId;
+      	ThingStuffDataFilter filterByParent = new ThingStuffDataFilter();
+      	filterByParent.setThingId(thingStuffData[i].getThingId());
+      	filterByParent.setThingStuffId(stuffId);
       	
       	// get the about stuff (by parentId StuffId)
       	ThingStuffData[] thingStuffDataAbout = dbThingStuffAboutJdo.query(filterByParent);
       	
       	// setup thing About Stuffs and set it in stuff
       	ThingStuffsData thingStuffsDataAbout = new ThingStuffsData();
-      	thingStuffsDataAbout.total = thingStuffDataAbout.length;
-      	thingStuffsDataAbout.thingStuffData = thingStuffDataAbout;
+      	thingStuffsDataAbout.setTotal(thingStuffDataAbout.length);
+      	thingStuffsDataAbout.setThingStuffData(thingStuffDataAbout);
       
       	thingStuffData[i].setThingStuffsAbout(thingStuffsDataAbout);
       }
     	
     }
     
+    
+    // TODO move filter upline, not sure what I am aiming for yet
+    // TODO This will get up to a 100 items for the drop down choice
+    ThingStuffTypeDataFilter stuffTypeDataFilter = new ThingStuffTypeDataFilter();
+    stuffTypeDataFilter.setLimit(0, 100); 
+    
+    
     // get the thing types to choose from
     Db_ThingStuffType t = new Db_ThingStuffType(sp);
-    ThingStuffTypesData thingStuffTypesData = t.getThingStuffTypes(accessToken, null); // TODO filter ?
+    ThingStuffTypesData thingStuffTypesData = t.getThingStuffTypes(accessToken, stuffTypeDataFilter);
     
     ThingStuffsData r = new ThingStuffsData();
-    r.total = tsj.queryTotal();
-    r.thingStuffData = thingStuffData;
-    r.thingStuffTypesData = thingStuffTypesData;
+    r.setTotal(tsj.queryTotal());
+    r.setThingStuffData(thingStuffData);
+    r.setThingStuffTypesData(thingStuffTypesData);
     
     return r;
   }
   
-  public ThingStuffsData saveThingStuffData(OAuthTokenData accessToken, ThingStuffFilterData filter, ThingStuffData[] thingStuffData) {
+  public ThingStuffData[] getThingStuffData(OAuthTokenData accessToken, ThingStuffDataFilter filter) {
+    
+  	// TODO authorization
+  	
+  	// get stuff - set filter up
+  	ThingStuffJdo tsj = new ThingStuffJdo(sp);
+    ThingStuffData[] thingStuffData = tsj.query(filter);
+    
+    return thingStuffData;
+  }
+  
+  public ThingStuffsData saveThingStuffData(OAuthTokenData accessToken, ThingStuffDataFilter filter, ThingStuffData[] thingStuffData) {
     
   	// TODO authorization
   	
@@ -87,7 +110,7 @@ public class Db_ThingStuff {
     }
     
     // load stuff and return it agian
-    ThingStuffsData r = getThingStuffData(accessToken, filter);
+    ThingStuffsData r = getThingStuffsData(accessToken, filter);
     
     return r;
   }

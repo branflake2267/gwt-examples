@@ -6,8 +6,6 @@ import org.gonevertical.core.client.global.Global_String;
 import org.gonevertical.core.client.global.LoadingWidget;
 import org.gonevertical.core.client.global.QueryString;
 
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -20,7 +18,6 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -82,8 +79,8 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 	// forgot password, ask for it
 	private PushButton bForgot = new PushButton("Get Password");
 
-	private Hyperlink hAccountProfile = new Hyperlink("My Account", "account_Profile");
-	private Hyperlink hAccountCreate = new Hyperlink("Create Account", "account_Create");
+	private Hyperlink hAccountProfile = new Hyperlink("My Account", "core_profile");
+	private Hyperlink hAccountCreate = new Hyperlink("Create Account", "core_create");
 
 	// lets not change the url for these
 	private Anchor aForgotLink = new Anchor("Forgot Password");
@@ -603,12 +600,12 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 			drawInputs();
 
 		} else if (sender == hAccountCreate) {
-			if (QueryString.getQueryStringData().getHistoryToken().equals("account_Create")) {
+			if (QueryString.getQueryStringData().getHistoryToken().equals("core_create")) {
 				cp.fireChange(EventManager.ACCOUNT_CREATE);
 			}
 
 		} else if (sender == hAccountProfile) {
-			if (QueryString.getQueryStringData().getHistoryToken().equals("account_Profile")) {
+			if (QueryString.getQueryStringData().getHistoryToken().equals("core_profile")) {
 				cp.fireChange(EventManager.ACCOUNT_PROFILE);
 			}
 

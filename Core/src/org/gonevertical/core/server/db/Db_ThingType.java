@@ -1,7 +1,9 @@
 package org.gonevertical.core.server.db;
 
+import java.util.logging.Logger;
+
 import org.gonevertical.core.client.account.thingtype.ThingTypeData;
-import org.gonevertical.core.client.account.thingtype.ThingTypeFilterData;
+import org.gonevertical.core.client.account.thingtype.ThingTypeDataFilter;
 import org.gonevertical.core.client.account.thingtype.ThingTypesData;
 import org.gonevertical.core.client.oauth.OAuthTokenData;
 import org.gonevertical.core.server.ServerPersistence;
@@ -9,6 +11,8 @@ import org.gonevertical.core.server.jdo.data.ThingTypeJdo;
 
 public class Db_ThingType {
   
+	private static final Logger log = Logger.getLogger(Db_ThingType.class.getName());
+	
   private ServerPersistence sp = null;
   
   /**
@@ -24,7 +28,7 @@ public class Db_ThingType {
    * @param filter
    * @return
    */
-  public ThingTypesData getThingTypes(ThingTypeFilterData filter) {
+  public ThingTypesData getThingTypes(ThingTypeDataFilter filter) {
   	
   	ThingTypeJdo ttj = new ThingTypeJdo(sp);
   	
@@ -45,7 +49,7 @@ public class Db_ThingType {
    * @param thingTypeData
    * @return
    */
-  public ThingTypesData saveThingTypes(ThingTypeFilterData filter, ThingTypeData[] thingTypeData) {
+  public ThingTypesData saveThingTypes(ThingTypeDataFilter filter, ThingTypeData[] thingTypeData) {
     for (int i=0; i < thingTypeData.length; i++) {
       save(thingTypeData[i]);
     }

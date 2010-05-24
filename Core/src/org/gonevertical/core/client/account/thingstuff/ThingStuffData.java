@@ -65,7 +65,7 @@ public class ThingStuffData implements IsSerializable {
    * @param value
    * @param valueBol
    * @param valueDouble
-   * @param valueInt
+   * @param valueLong
    * @param startOf
    * @param endOf
    * @param dateCreated
@@ -78,7 +78,8 @@ public class ThingStuffData implements IsSerializable {
       String value, 
       Boolean valueBol, 
       Double valueDouble, 
-      Long valueInt,
+      Long valueLong,
+      Date valueDate,
       Date startOf,
       Date endOf,
       Date dateCreated,
@@ -91,7 +92,8 @@ public class ThingStuffData implements IsSerializable {
     this.value = value;
     this.valueBol = valueBol;
     this.valueDouble = valueDouble;
-    this.valueLong = valueInt;
+    this.valueLong = valueLong;
+    this.valueDate = valueDate;
    
     this.startOf = startOf;
     this.endOf = endOf;
@@ -111,7 +113,7 @@ public class ThingStuffData implements IsSerializable {
    * @param value
    * @param valueBol
    * @param valueDouble
-   * @param valueInt
+   * @param valueLong
    * @param startOf
    * @param endOf
    * @param dateCreated
@@ -125,7 +127,8 @@ public class ThingStuffData implements IsSerializable {
       String value, 
       Boolean valueBol, 
       Double valueDouble, 
-      Long valueInt,
+      Long valueLong,
+      Date valueDate,
       Date startOf,
       Date endOf,
       Date dateCreated,
@@ -139,7 +142,8 @@ public class ThingStuffData implements IsSerializable {
     this.value = value;
     this.valueBol = valueBol;
     this.valueDouble = valueDouble;
-    this.valueLong = valueInt;
+    this.valueLong = valueLong;
+    this.valueDate = valueDate;
    
     this.startOf = startOf;
     this.endOf = endOf;
@@ -196,6 +200,10 @@ public class ThingStuffData implements IsSerializable {
   	this.valueLong = value;
   }
   
+  public void setValue(Date value) {
+  	this.valueDate = value;
+  }
+  
   public String getValue() {
     return value;
   }
@@ -210,6 +218,10 @@ public class ThingStuffData implements IsSerializable {
   
   public Long getValueLong() {
     return valueLong;
+  }
+  
+  public Date getValueDate() {
+  	return valueDate;
   }
 
 	public ThingStuffsData getThingStuffsAbout() {
@@ -236,5 +248,19 @@ public class ThingStuffData implements IsSerializable {
 		return dateUpdated;
 	}
 
-
+	public String toString() {
+		String s = "";
+		s += "thingId=" + thingId + " ";
+		s += "thingStuffId=" + thingStuffId + " ";
+		s += "thingStuffAboutId=" + thingStuffAboutId + " ";
+		s += "thingStuffTypeId=" + thingStuffTypeId + " ";
+		s += "value=" + value + " ";
+		s += "valueBol=" + valueBol + " ";
+		s += "valueDouble=" + valueDouble + " ";
+		s += "valueLong=" + valueLong + " ";
+		s += "valueDate=" + valueDate + " ";
+		s += "startOf=" + startOf + " "; 
+		s += "endOf=" + endOf + " ";
+		return s;
+	}
 }

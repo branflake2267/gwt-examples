@@ -5,27 +5,29 @@ import java.util.logging.Logger;
 import org.gonevertical.core.client.account.ChangePasswordData;
 import org.gonevertical.core.client.account.UserData;
 import org.gonevertical.core.client.account.thing.ThingData;
-import org.gonevertical.core.client.account.thing.ThingFilterData;
+import org.gonevertical.core.client.account.thing.ThingDataFilter;
 import org.gonevertical.core.client.account.thing.ThingsData;
 import org.gonevertical.core.client.account.thingstuff.ThingStuffData;
-import org.gonevertical.core.client.account.thingstuff.ThingStuffFilterData;
+import org.gonevertical.core.client.account.thingstuff.ThingStuffDataFilter;
 import org.gonevertical.core.client.account.thingstuff.ThingStuffsData;
 import org.gonevertical.core.client.account.thingstufftype.ThingStuffTypeData;
-import org.gonevertical.core.client.account.thingstufftype.ThingStuffTypeFilterData;
+import org.gonevertical.core.client.account.thingstufftype.ThingStuffTypeDataFilter;
 import org.gonevertical.core.client.account.thingstufftype.ThingStuffTypesData;
 import org.gonevertical.core.client.account.thingtype.ThingTypeData;
-import org.gonevertical.core.client.account.thingtype.ThingTypeFilterData;
+import org.gonevertical.core.client.account.thingtype.ThingTypeDataFilter;
 import org.gonevertical.core.client.account.thingtype.ThingTypesData;
 import org.gonevertical.core.client.oauth.OAuthTokenData;
 import org.gonevertical.core.client.rpc.RpcCoreService;
 import org.gonevertical.core.client.ui.feedback.FeedbackData;
+import org.gonevertical.core.client.widget.WidgetAttrData;
+import org.gonevertical.core.client.widget.WidgetAttrDataFilter;
 import org.gonevertical.core.server.db.Db_Feedback;
 import org.gonevertical.core.server.db.Db_Thing;
 import org.gonevertical.core.server.db.Db_ThingStuff;
 import org.gonevertical.core.server.db.Db_ThingStuffType;
 import org.gonevertical.core.server.db.Db_ThingType;
 import org.gonevertical.core.server.db.Db_User;
-import org.gonevertical.core.server.db.SetDefaults;
+import org.gonevertical.core.server.db.Db_WidgetAttr;
 import org.gonevertical.core.server.db.oauth.OAuthServer;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -106,7 +108,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
    * @param filter
    * @return
    */
-  public ThingTypesData getThingTypes(OAuthTokenData accessToken, ThingTypeFilterData filter) {
+  public ThingTypesData getThingTypes(OAuthTokenData accessToken, ThingTypeDataFilter filter) {
     sp.start(getThreadLocalRequest());
     Db_ThingType thingType = new Db_ThingType(sp);
     ThingTypesData r = thingType.getThingTypes(filter);
@@ -125,7 +127,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
     return r;
   }
   
-  public ThingTypesData saveThingTypes(OAuthTokenData accessToken, ThingTypeFilterData filter, ThingTypeData[] thingTypeData) {
+  public ThingTypesData saveThingTypes(OAuthTokenData accessToken, ThingTypeDataFilter filter, ThingTypeData[] thingTypeData) {
     sp.start(getThreadLocalRequest());
     Db_ThingType t = new Db_ThingType(sp);
     ThingTypesData r = t.saveThingTypes(filter, thingTypeData);
@@ -141,7 +143,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
     return r;
   }
   
-  public ThingsData getThings(OAuthTokenData accessToken, ThingFilterData filter) {
+  public ThingsData getThings(OAuthTokenData accessToken, ThingDataFilter filter) {
     sp.start(getThreadLocalRequest());
     Db_Thing t = new Db_Thing(sp);
     ThingsData r = t.getThings(accessToken, filter);
@@ -149,7 +151,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
     return r;
   }
   
-  public ThingData saveThing(OAuthTokenData accessToken, ThingFilterData filter, ThingData thingData) {
+  public ThingData saveThing(OAuthTokenData accessToken, ThingDataFilter filter, ThingData thingData) {
     sp.start(getThreadLocalRequest());
     Db_Thing t = new Db_Thing(sp);
     ThingData r = t.saveThing(accessToken, filter, thingData);
@@ -157,7 +159,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
     return r;
   }
   
-  public ThingsData saveThings(OAuthTokenData accessToken, ThingFilterData filter, ThingData[] thingData) {
+  public ThingsData saveThings(OAuthTokenData accessToken, ThingDataFilter filter, ThingData[] thingData) {
     sp.start(getThreadLocalRequest());
     Db_Thing t = new Db_Thing(sp);
     ThingsData r = t.saveThings(accessToken, filter, thingData);
@@ -181,7 +183,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
     return r;
   }
 
-  public ThingStuffTypesData getThingStuffTypes(OAuthTokenData accessToken, ThingStuffTypeFilterData filter) {
+  public ThingStuffTypesData getThingStuffTypes(OAuthTokenData accessToken, ThingStuffTypeDataFilter filter) {
     sp.start(getThreadLocalRequest());
     Db_ThingStuffType t = new Db_ThingStuffType(sp);
     ThingStuffTypesData r = t.getThingStuffTypes(accessToken, filter);
@@ -189,7 +191,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
     return r;
   }
 
-  public ThingStuffTypesData saveThingStuffTypes(OAuthTokenData accessToken, ThingStuffTypeFilterData filter, ThingStuffTypeData[] thingStuffTypeData) {
+  public ThingStuffTypesData saveThingStuffTypes(OAuthTokenData accessToken, ThingStuffTypeDataFilter filter, ThingStuffTypeData[] thingStuffTypeData) {
     sp.start(getThreadLocalRequest());
     Db_ThingStuffType t = new Db_ThingStuffType(sp);
     ThingStuffTypesData r = t.saveThingStuffTypes(accessToken, filter, thingStuffTypeData);
@@ -197,15 +199,15 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
     return r;
   }
   
-  public ThingStuffsData getThingStuffData(OAuthTokenData accessToken, ThingStuffFilterData filter) {
+  public ThingStuffsData getThingStuffData(OAuthTokenData accessToken, ThingStuffDataFilter filter) {
     sp.start(getThreadLocalRequest());
     Db_ThingStuff db = new Db_ThingStuff(sp);
-    ThingStuffsData r = db.getThingStuffData(accessToken, filter);
+    ThingStuffsData r = db.getThingStuffsData(accessToken, filter);
     sp.end();
     return r;
   }
   
-  public ThingStuffsData saveThingStuffData(OAuthTokenData accessToken, ThingStuffFilterData filter, ThingStuffData[] thingStuffData) {
+  public ThingStuffsData saveThingStuffData(OAuthTokenData accessToken, ThingStuffDataFilter filter, ThingStuffData[] thingStuffData) {
     sp.start(getThreadLocalRequest());
     Db_ThingStuff db = new Db_ThingStuff(sp);
     ThingStuffsData r = db.saveThingStuffData(accessToken, filter, thingStuffData);
@@ -242,6 +244,13 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
 	  Db_Feedback db = new Db_Feedback(sp);
 	  boolean r = db.sendFeedback(feedbackData);
 	  sp.end();
+	  return r;
+  }
+
+  public WidgetAttrData getWidgetAttributes(OAuthTokenData accessToken, WidgetAttrDataFilter widgetAttrDataFilter) {
+  	sp.start(getThreadLocalRequest());
+  	WidgetAttrData r = new Db_WidgetAttr(sp).getWidgetAttributes(accessToken, widgetAttrDataFilter);
+  	sp.end();
 	  return r;
   }
 

@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
@@ -20,7 +22,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 import org.gonevertical.core.client.account.thing.ThingData;
 import org.gonevertical.core.client.account.thingstuff.ThingStuffData;
-import org.gonevertical.core.client.account.thingstuff.ThingStuffFilterData;
+import org.gonevertical.core.client.account.thingstuff.ThingStuffDataFilter;
 import org.gonevertical.core.client.account.thingstuff.ThingStuffsData;
 import org.gonevertical.core.server.ServerPersistence;
 
@@ -30,6 +32,8 @@ import com.google.appengine.api.datastore.KeyFactory;
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class ThingStuffJdo {
 
+	private static final Logger log = Logger.getLogger(ThingStuffJdo.class.getName());
+	
 	@NotPersistent
 	private ServerPersistence sp = null;
 
@@ -107,6 +111,7 @@ public class ThingStuffJdo {
 		this.valueBol = thingStuffData.getValueBol();
 		this.valueDouble = thingStuffData.getValueDouble();
 		this.valueLong = thingStuffData.getValueLong();
+		this.valueDate = thingStuffData.getValueDate();
 
 		this.startOf = thingStuffData.getStartOf();
 		this.endOf = thingStuffData.getEndOf();
@@ -130,7 +135,8 @@ public class ThingStuffJdo {
 		this.value = thingStuffJdo.getValue();
 		this.valueBol = thingStuffJdo.getValueBol();
 		this.valueDouble = thingStuffJdo.getValueDouble();
-		this.valueLong = thingStuffJdo.getValueInt();
+		this.valueLong = thingStuffJdo.getValueLong();
+		this.valueDate = thingStuffJdo.getValueDate();
 
 		this.startOf = thingStuffJdo.getStartOf();
 		this.endOf = thingStuffJdo.getEndOf();
@@ -168,16 +174,83 @@ public class ThingStuffJdo {
 
 			tx.commit();
 
+		} catch (Exception e) { 
+			e.printStackTrace();
+			log.log(Level.SEVERE, "save(): ", e);
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
 			}
 			pm.close();
 		}
-		
+
 		// debug
-		System.out.println("ThingJdo: thingStuffId: " + getId() + " thingStuffTypeId: " + thingStuffTypeId + " " +
-				"value: " + getString(value) + " valueBol: " + getString(valueBol) + " valueLong: " + getString(valueLong) + " valueDate: " + getString(valueDate));
+		//System.out.println("ThingJdo: thingStuffId: " + getId() + " thingStuffTypeId: " + thingStuffTypeId + " " +
+		//"value: " + getString(value) + " valueBol: " + getString(valueBol) + " valueLong: " + getString(valueLong) + " valueDate: " + getString(valueDate));
+
+		return getId();
+	}
+
+	public long saveUnique(ThingStuffData thingStuffData) {
+		setData(thingStuffData);
+
+		// setup filter so that I only create unique by identities [thingId, thingStuffTypeId)
+		ThingStuffDataFilter filter = new ThingStuffDataFilter();
+		filter.setThingId(thingStuffData.getThingId());
+		filter.setThingStuffTypeId(thingStuffData.getThingStuffTypeId());
+		
+		if (thingStuffData.getValue() != null) {
+			filter.setValueString(thingStuffData.getValue());
+		}
+		
+		if (thingStuffData.getValueBol() != null) {
+			filter.setValueBoolean(thingStuffData.getValueBol());
+		}
+		
+		if (thingStuffData.getValueDouble() != null) {
+			filter.setValueDouble(thingStuffData.getValueDouble());
+		}
+		
+		if (thingStuffData.getValueLong() != null) {
+			filter.setValueLong(thingStuffData.getValueLong());
+		}
+
+		ThingStuffData[] tsds = query(filter);
+		if (tsds != null && tsds.length > 0) {
+			ThingStuffData tsd = tsds[0];
+			tsds[0].setValue(thingStuffData.getValue());
+			tsds[0].setValue(thingStuffData.getValueBol());
+			tsds[0].setValue(thingStuffData.getValueDouble());
+			tsds[0].setValue(thingStuffData.getValueLong());
+			tsds[0].setValue(thingStuffData.getValueDate());
+			
+			save(tsd);
+			return thingStuffData.getStuffId();
+		}
+
+		PersistenceManager pm = sp.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+
+			thingStuffIdKey = null;
+			pm.makePersistent(this);
+			
+			tx.commit();
+
+		} catch (Exception e) { 
+			e.printStackTrace();
+			log.log(Level.SEVERE, "saveUnique()", e);
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+
+		// debug
+		//System.out.println("ThingJdo: thingStuffId: " + getId() + " thingStuffTypeId: " + thingStuffTypeId + " " +
+		//"value: " + getString(value) + " valueBol: " + getString(valueBol) + " valueLong: " + getString(valueLong) + " valueDate: " + getString(valueDate));
 
 		return getId();
 	}
@@ -194,6 +267,9 @@ public class ThingStuffJdo {
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
 			thingStuff = pm.getObjectById(ThingStuffJdo.class, thingStuffId);
+		} catch (Exception e) { 
+			e.printStackTrace();
+			log.log(Level.SEVERE, "", e);
 		} finally {
 			pm.close();
 		}
@@ -201,33 +277,27 @@ public class ThingStuffJdo {
 		return thingStuff;
 	}
 
-	public ThingStuffsData queryStuffs(ThingStuffFilterData filter) {
+	public ThingStuffsData queryStuffs(ThingStuffDataFilter filter) {
 
 		ThingStuffData[] tsd = query(filter);
 
 		ThingStuffsData tsds = new ThingStuffsData();
-		tsds.total = 0; // TODO later
-		tsds.thingStuffData = tsd;
+		tsds.setTotal(queryTotal());
+		tsds.setThingStuffData(tsd);
 
 		return tsds;
 	}
 
-	public ThingStuffData[] query(ThingStuffFilterData filter) {
+	public ThingStuffData[] query(ThingStuffDataFilter filter) {
 
 		if (filter == null) {
-			System.out.println("ERROR: ThingStuffJdo.query() Set a filter");
+			log.severe("ERROR: ThingStuffJdo.query() Set a filter");
 			return null;
 		}
 
-		long thingId = filter.thingId;
-
+		String qfilter = filter.getAndFilter();
+		
 		ArrayList<ThingStuffJdo> aT = new ArrayList<ThingStuffJdo>();
-
-		String qfilter = null;
-		
-		qfilter = "thingId==" + thingId + "";
-		
-
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
 			Extent<ThingStuffJdo> e = pm.getExtent(ThingStuffJdo.class, true);
@@ -236,12 +306,25 @@ public class ThingStuffJdo {
 
 			Collection<ThingStuffJdo> c = (Collection<ThingStuffJdo>) q.execute();
 			Iterator<ThingStuffJdo> iter = c.iterator();
+			
+			// TODO - making my own pagination for now, fix this later
+			int i=0;
 			while (iter.hasNext()) {
+				
 				ThingStuffJdo t = (ThingStuffJdo) iter.next();
-				aT.add(t);
+				
+				// TODO work around, this sucks - change it later to something better - ran out of time today.
+				if (i >= filter.getRangeStart() && i <= filter.getRangeFinish()) {
+					aT.add(t);
+				}
+				
+				i++;
 			}
 
 			q.closeAll();
+		} catch (Exception e) { 
+			e.printStackTrace();
+			log.log(Level.SEVERE, "", e);
 		} finally {
 			pm.close();
 		}
@@ -259,23 +342,23 @@ public class ThingStuffJdo {
 
 		return td;
 	}
-	
+
 	public long queryTotal() {
-		
+
 		/* future spec I think
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		
+
 		com.google.appengine.api.datastore.Query query = new com.google.appengine.api.datastore.Query("__Stat_Kind__");
 		query.addFilter("kind_name", FilterOperator.EQUAL, TThingStuffAboutJdo.class);
-		
+
     Entity globalStat = datastore.prepare(query).asSingleEntity();
     Long totalBytes = (Long) globalStat.getProperty("bytes");
     Long totalEntities = (Long) globalStat.getProperty("count");
-		*/
-		
+		 */
+
 		// TODO - work around, have to wait for the api/gae to make it to hosted mode
 		long total = 0;
-		
+
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
 			Extent<ThingStuffJdo> e = pm.getExtent(ThingStuffJdo.class, true);
@@ -286,10 +369,13 @@ public class ThingStuffJdo {
 			total = c.size();
 
 			q.closeAll();
+		} catch (Exception e) { 
+			e.printStackTrace();
+			log.log(Level.SEVERE, "", e);
 		} finally {
 			pm.close();
 		}
-		
+
 		return total;
 	}
 
@@ -313,7 +399,9 @@ public class ThingStuffJdo {
 					tsja.getValue(), 
 					tsja.getValueBol(), 
 					tsja.getValueDouble(),
-					tsja.getValueInt(), 
+					tsja.getValueLong(), 
+					tsja.getValueDate(),
+					
 					tsja.getStartOf(),
 					tsja.getEndOf(), 
 
@@ -415,6 +503,9 @@ public class ThingStuffJdo {
 
 			tx.commit();
 			q.closeAll();
+		} catch (Exception e) { 
+			e.printStackTrace();
+			log.log(Level.SEVERE, "", e);
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
@@ -480,9 +571,13 @@ public class ThingStuffJdo {
 		return valueDouble;
 	}
 
-	public Long getValueInt() {
+	public Long getValueLong() {
 		return valueLong;
 	}
+	
+	private Date getValueDate() {
+	  return valueDate;
+  }
 
 	public Date getStartOf() {
 		return startOf;
@@ -515,8 +610,6 @@ public class ThingStuffJdo {
 		}
 		return key;
 	}
-
-
 
 	private String getString(Boolean value) {
 		String s = "";

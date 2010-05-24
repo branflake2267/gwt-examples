@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
@@ -20,7 +22,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 import org.gonevertical.core.client.account.thing.ThingData;
 import org.gonevertical.core.client.account.thingstuff.ThingStuffData;
-import org.gonevertical.core.client.account.thingstuff.ThingStuffFilterData;
+import org.gonevertical.core.client.account.thingstuff.ThingStuffDataFilter;
 import org.gonevertical.core.client.account.thingstuff.ThingStuffsData;
 import org.gonevertical.core.server.ServerPersistence;
 
@@ -30,6 +32,8 @@ import com.google.appengine.api.datastore.KeyFactory;
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class ThingStuffAboutJdo {
 
+	private static final Logger log = Logger.getLogger(ThingStuffAboutJdo.class.getName());
+	
 	@NotPersistent
 	private ServerPersistence sp = null;
 
@@ -114,7 +118,8 @@ public class ThingStuffAboutJdo {
 		this.valueBol = thingStuffData.getValueBol();
 		this.valueDouble = thingStuffData.getValueDouble();
 		this.valueLong = thingStuffData.getValueLong();
-
+		this.valueDate = thingStuffData.getValueDate(); 
+			
 		this.startOf = thingStuffData.getStartOf();
 		this.endOf = thingStuffData.getEndOf();
 
@@ -140,7 +145,8 @@ public class ThingStuffAboutJdo {
 		this.value = thingStuffJdo.getValue();
 		this.valueBol = thingStuffJdo.getValueBol();
 		this.valueDouble = thingStuffJdo.getValueDouble();
-		this.valueLong = thingStuffJdo.getValueInt();
+		this.valueLong = thingStuffJdo.getValueLong();
+		this.valueDate = thingStuffJdo.getValueDate();
 
 		this.startOf = thingStuffJdo.getStartOf();
 		this.endOf = thingStuffJdo.getEndOf();
@@ -186,9 +192,74 @@ public class ThingStuffAboutJdo {
 		}
 
 		// debug
-		System.out.println("ThingStuffAboutJdo.save(): thingStuffAboutId: " + getStuffAboutId() + " thingStuffId(Parent): " + thingStuffId + " thingStuffTypeId: " + thingStuffTypeId + " " +
-				"value: " + getString(value) + " valueBol: " + getString(valueBol) + " valueLong: " + getString(valueLong) + " valueDate: " + getString(valueDate));
+		//System.out.println("ThingStuffAboutJdo.save(): thingStuffAboutId: " + getStuffAboutId() + " thingStuffId(Parent): " + thingStuffId + " thingStuffTypeId: " + thingStuffTypeId + " " +
+		//"value: " + getString(value) + " valueBol: " + getString(valueBol) + " valueLong: " + getString(valueLong) + " valueDate: " + getString(valueDate));
 		
+		return getStuffAboutId();
+	}
+	
+	public long saveUnique(ThingStuffData thingStuffData) {
+		setData(thingStuffData);
+
+		// setup filter so that I only create unique by identities [thingId, thingStuffTypeId)
+		ThingStuffDataFilter filter = new ThingStuffDataFilter();
+		filter.setThingId(thingStuffData.getThingId());
+		filter.setThingStuffTypeId(thingStuffData.getThingStuffTypeId());
+		filter.setThingStuffId(thingStuffData.getStuffId());
+		
+		if (thingStuffData.getValue() != null) {
+			filter.setValueString(thingStuffData.getValue());
+		}
+		
+		if (thingStuffData.getValueBol() != null) {
+			filter.setValueBoolean(thingStuffData.getValueBol());
+		}
+		
+		if (thingStuffData.getValueDouble() != null) {
+			filter.setValueDouble(thingStuffData.getValueDouble());
+		}
+		
+		if (thingStuffData.getValueLong() != null) {
+			filter.setValueLong(thingStuffData.getValueLong());
+		}
+
+		ThingStuffData[] tsds = query(filter);
+		if (tsds != null && tsds.length > 0) {
+			ThingStuffData tsd = tsds[0];
+			tsds[0].setValue(thingStuffData.getValue());
+			tsds[0].setValue(thingStuffData.getValueBol());
+			tsds[0].setValue(thingStuffData.getValueDouble());
+			tsds[0].setValue(thingStuffData.getValueLong());
+			tsds[0].setValue(thingStuffData.getValueDate());
+		
+			save(tsd);
+			return thingStuffData.getStuffId();
+		}
+
+		PersistenceManager pm = sp.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+
+			thingStuffAboutIdKey = null;
+			pm.makePersistent(this);
+			
+			tx.commit();
+
+		} catch (Exception e) { 
+			e.printStackTrace();
+			log.log(Level.SEVERE, "saveUnique()", e);
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+
+		// debug
+		//System.out.println("ThingJdo: thingStuffId: " + getId() + " thingStuffTypeId: " + thingStuffTypeId + " " +
+		//"value: " + getString(value) + " valueBol: " + getString(valueBol) + " valueLong: " + getString(valueLong) + " valueDate: " + getString(valueDate));
+
 		return getStuffAboutId();
 	}
 
@@ -216,20 +287,11 @@ public class ThingStuffAboutJdo {
 	 * @param filter
 	 * @return
 	 */
-	public ThingStuffData[] query(ThingStuffFilterData filter) {
-
-		// TODO - add this to where
-		long thingId = filter.thingId;
-
-		// parent id
-		long thingStuffId = filter.thingStuffId;
+	public ThingStuffData[] query(ThingStuffDataFilter filter) {
 
 		ArrayList<ThingStuffAboutJdo> aT = new ArrayList<ThingStuffAboutJdo>();
 
-		String qfilter = null;
-		if (filter.thingStuffId > 0) {
-			qfilter = "thingStuffId==" + thingStuffId + "";
-		}
+		String qfilter = filter.getAndFilter();
 
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
@@ -324,8 +386,9 @@ public class ThingStuffAboutJdo {
 					tsja.getValue(), 
 					tsja.getValueBol(), 
 					tsja.getValueDouble(),
-					tsja.getValueInt(), 
-
+					tsja.getValueLong(), 
+					tsja.getValueDate(),
+					
 					tsja.getStartOf(),
 					tsja.getEndOf(), 
 
@@ -534,9 +597,13 @@ public class ThingStuffAboutJdo {
 		return valueDouble;
 	}
 
-	public Long getValueInt() {
+	public Long getValueLong() {
 		return valueLong;
 	}
+	
+	private Date getValueDate() {
+	  return valueDate;
+  }
 
 	public Date getStartOf() {
 		return startOf;

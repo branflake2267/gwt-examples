@@ -3,6 +3,7 @@ package org.gonevertical.core.server.db.oauth;
 
 import java.util.UUID;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.gonevertical.core.client.account.UserData;
 import org.gonevertical.core.client.oauth.OAuthTokenData;
@@ -13,6 +14,8 @@ import org.gonevertical.core.server.jdo.data.ThingJdo;
 import org.gonevertical.core.server.jdo.data.ThingTypeJdo;
 
 public class OAuthServer {
+	
+	private static final Logger log = Logger.getLogger(OAuthServer.class.getName());
 
   private ServerPersistence sp = null;
 
@@ -27,7 +30,7 @@ public class OAuthServer {
     this.sp = sp;
     tj = new ThingJdo(sp);
   }
-
+  
   /**
    * use this to debug
    * 
@@ -238,7 +241,8 @@ public class OAuthServer {
     return r;
   }
   
-  private UserData getUserId(OAuthTokenData accessToken) {
+  @Deprecated
+  public UserData getThingId(OAuthTokenData accessToken) {
 
     if (accessToken == null) {
       System.out.println("No tokenData exists. ERROR: User.getUserId()");

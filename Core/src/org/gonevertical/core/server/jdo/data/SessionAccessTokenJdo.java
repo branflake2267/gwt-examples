@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
@@ -17,6 +19,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import org.gonevertical.core.client.account.thing.ThingData;
+import org.gonevertical.core.client.oauth.OAuthTokenData;
 import org.gonevertical.core.server.ServerPersistence;
 
 import com.google.appengine.api.datastore.Key;
@@ -24,6 +27,8 @@ import com.google.appengine.api.datastore.Key;
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class SessionAccessTokenJdo {
 
+	private static final Logger log = Logger.getLogger(SessionAccessTokenJdo.class.getName());
+	
 	@NotPersistent
 	private ServerPersistence sp;
 
@@ -76,6 +81,9 @@ public class SessionAccessTokenJdo {
 			pm.makePersistent(this);
 			tx.commit();
 			success = true;
+		} catch (Exception e) { 
+			e.printStackTrace();
+			log.log(Level.SEVERE, "", e);
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
@@ -194,6 +202,9 @@ public class SessionAccessTokenJdo {
 			success = true;
 			
 			tx.commit();
+		} catch (Exception e) { 
+			e.printStackTrace();
+			log.log(Level.SEVERE, "", e);
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
@@ -204,8 +215,34 @@ public class SessionAccessTokenJdo {
 		return success;
 	}
 
-
-
+	/**
+	 * get the user that is associated with the session
+	 * 
+	 * @param accessToken
+	 * @return
+	 */
+	public long getThingIdFromSession(OAuthTokenData accessToken) {
+		
+		// TODO check signature of token
+		
+		String key = accessToken.getAccessToken_key();
+		String secret = accessToken.getAccessToken_secret();
+		SessionAccessTokenJdo[] r = query(key, secret);
+		
+		// none found
+		if (r == null || r.length == 0) {
+			return 0;
+		}
+		
+		// TODO show error??
+		if (r.length > 0) {
+			return 0;
+		}
+	
+		long thingId = r[0].getThingId(); 
+		
+		return thingId;
+	}
 
 
 

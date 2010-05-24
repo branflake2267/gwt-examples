@@ -6,13 +6,32 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ThingStuffsData implements IsSerializable {
   
-	// TODO - used for later with offset,limit...
-  public long total = 0;
+  private long total = 0;
 
   // thing stuff type choices
-  public ThingStuffTypesData thingStuffTypesData = null;
+  private ThingStuffTypesData thingStuffTypesData = null;
   
-  public ThingStuffData[] thingStuffData = null;
+  private ThingStuffData[] thingStuffData = null;
+  
+  public void setTotal(long total) {
+  	this.total = total;
+  }
+  
+  public long getTotal() {
+  	return total;
+  }
+  
+  public void setThingStuffTypesData(ThingStuffTypesData thingSTuffTypesData) {
+  	this.thingStuffTypesData = thingSTuffTypesData;
+  }
+  
+  public ThingStuffTypesData getThingStuffTypesData() {
+  	return thingStuffTypesData;
+  }
+  
+  public void setThingStuffData(ThingStuffData[] thingStuffData) {
+  	this.thingStuffData = thingStuffData;
+  }
   
   public ThingStuffData[] getThingStuffData() {
   	if (thingStuffData == null) {

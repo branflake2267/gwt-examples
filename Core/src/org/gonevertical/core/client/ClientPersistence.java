@@ -21,6 +21,11 @@ import com.google.gwt.user.client.ui.Composite;
  */
 public class ClientPersistence extends Composite implements ChangeHandler  {
   
+	/**
+	 * encrypt and hash the password with some salt
+	 */
+	public static final String PASSWORD_SALT = "salt";
+	
   //application credentials
   private String appConsumerKey = null; // demo_application
   private String appConsumerSecret = null; // salt:password - c1d0e06998305903ac76f589bbd6d4b61a670ba6

@@ -10,6 +10,9 @@ public class ThingTypeData implements IsSerializable {
   public static final int TYPE_APPLICATION = 1;
   public static final int TYPE_USER = 2;
   public static final int TYPE_GROUP = 3;
+  public static final int TYPE_WIDGET = 4;
+  public static final int TYPE_PERMISSION = 5;
+  public static final int TYPE_STUFFTYPETEMPLATE = 6;
   
   // to set the defaults use this int
   public static final int DEFAULT_TYPE = 1;

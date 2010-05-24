@@ -1,16 +1,11 @@
 package org.gonevertical.core.client.account.ui;
 
 import org.gonevertical.core.client.ClientPersistence;
-import org.gonevertical.core.client.global.EventManager;
 import org.gonevertical.core.client.oauth.Sha1;
 
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -99,8 +94,10 @@ public class LoginUi extends Composite implements ChangeHandler {
 
 		// create digest of password, before sending it to the server
 		Sha1 sha = new Sha1();
-		String hash = sha.b64_sha1(s);
-
+		
+		//String hash = sha.b64_sha1(s); // simpler version
+		String hash = sha.hex_hmac_sha1(ClientPersistence.PASSWORD_SALT, s);
+		
 		return hash;
 	}
 

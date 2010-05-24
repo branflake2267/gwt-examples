@@ -2,6 +2,7 @@ package org.gonevertical.core.server.mail;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -14,6 +15,8 @@ import javax.mail.internet.MimeMessage;
 import org.gonevertical.core.server.ServerPersistence;
 
 public class SendMail {
+	
+	private static final Logger log = Logger.getLogger(SendMail.class.getName());
  
 	private ServerPersistence sp;
 
