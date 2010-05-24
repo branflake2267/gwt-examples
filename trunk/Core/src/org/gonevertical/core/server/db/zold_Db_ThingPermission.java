@@ -2,11 +2,11 @@ package org.gonevertical.core.server.db;
 
 import org.gonevertical.core.server.ServerPersistence;
 
-public class Db_ThingPermission {
+public class zold_Db_ThingPermission {
 
   private ServerPersistence sp = new ServerPersistence();
   
-  public Db_ThingPermission(ServerPersistence sp) {
+  public zold_Db_ThingPermission(ServerPersistence sp) {
     this.sp = sp;
   }
  

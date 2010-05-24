@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
@@ -17,7 +18,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import org.gonevertical.core.client.account.thingtype.ThingTypeData;
-import org.gonevertical.core.client.account.thingtype.ThingTypeFilterData;
+import org.gonevertical.core.client.account.thingtype.ThingTypeDataFilter;
 import org.gonevertical.core.server.ServerPersistence;
 
 import com.google.appengine.api.datastore.Key;
@@ -27,6 +28,8 @@ import com.google.appengine.api.datastore.KeyFactory;
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class ThingTypeJdo {
 
+	private static final Logger log = Logger.getLogger(ThingTypeJdo.class.getName());
+	
 	@NotPersistent
 	private ServerPersistence sp = null;
 
@@ -205,7 +208,7 @@ public class ThingTypeJdo {
 	 * @param filter
 	 * @return
 	 */
-	public ThingTypeJdo[] query(ThingTypeFilterData filter) {
+	public ThingTypeJdo[] query(ThingTypeDataFilter filter) {
 
 		// TODO configure drill to setup filters
 

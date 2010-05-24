@@ -105,7 +105,7 @@ public class ThingStuffs extends Composite implements ClickHandler, ChangeHandle
   
   public void draw(ThingData thingData, ThingStuffsData thingStuffsData) {
   	this.thingData = thingData;
-  	this.thingStuffTypesData = thingStuffsData.thingStuffTypesData;
+  	this.thingStuffTypesData = thingStuffsData.getThingStuffTypesData();
   	process(thingStuffsData);
   }  
 
@@ -150,10 +150,10 @@ public class ThingStuffs extends Composite implements ClickHandler, ChangeHandle
       return;
     }
     
-    if (thingStuffsData.thingStuffData == null) {
+    if (thingStuffsData.getThingStuffData() == null) {
       return;
     }
-    ThingStuffData[] thingStuffData = thingStuffsData.thingStuffData;
+    ThingStuffData[] thingStuffData = thingStuffsData.getThingStuffData();
     
     if (thingStuffData.length == 0) {
       return;
@@ -242,8 +242,8 @@ public class ThingStuffs extends Composite implements ClickHandler, ChangeHandle
   	ThingStuffData[] td = getData();
   	
   	ThingStuffsData tsd = new ThingStuffsData();
-  	tsd.thingStuffData = td;
-  	tsd.thingStuffTypesData = thingStuffTypesData;
+  	tsd.setThingStuffData(td);
+  	tsd.setThingStuffTypesData(thingStuffTypesData);
   	
 		process(tsd);
   }

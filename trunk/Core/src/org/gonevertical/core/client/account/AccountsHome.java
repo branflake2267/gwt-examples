@@ -52,13 +52,7 @@ public class AccountsHome extends Composite implements ClickHandler {
     hp.add(bDefault);
     hp.add(new HTML("&nbsp; Set up defaults"));
     
-    HorizontalPanel hp2 = new HorizontalPanel();
-    hp2.add(bLogin);
-    hp2.add(new HTML("&nbsp; Try the demo_user SignIn"));
-    
     pMenu.add(hp);
-    pMenu.add(new HTML("&nbsp;"));
-    pMenu.add(hp2);
     pMenu.add(new HTML("&nbsp;"));
     pMenu.add(new HTML("<a href=\"http://gwt-examples.googlecode.com\">gwt-examples.googlecode.com</a> Find my code here for this."));
   }

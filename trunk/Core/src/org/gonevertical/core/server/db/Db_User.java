@@ -1,5 +1,7 @@
 package org.gonevertical.core.server.db;
 
+import java.util.logging.Logger;
+
 import org.gonevertical.core.client.account.ChangePasswordData;
 import org.gonevertical.core.client.account.UserData;
 import org.gonevertical.core.client.account.thing.ThingData;
@@ -18,6 +20,8 @@ import org.gonevertical.core.server.jdo.data.ThingTypeJdo;
  */
 public class Db_User {
 
+	private static final Logger log = Logger.getLogger(Db_User.class.getName());
+	
   private ServerPersistence sp = null;
   
   /**

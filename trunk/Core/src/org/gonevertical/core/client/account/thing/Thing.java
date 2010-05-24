@@ -2,6 +2,7 @@ package org.gonevertical.core.client.account.thing;
 
 import org.gonevertical.core.client.ClientPersistence;
 import org.gonevertical.core.client.Row;
+import org.gonevertical.core.client.account.thingstuff.ThingStuffsData;
 import org.gonevertical.core.client.account.thingtype.ThingTypeData;
 import org.gonevertical.core.client.global.DeleteDialog;
 import org.gonevertical.core.client.global.EventManager;
@@ -36,6 +37,7 @@ public class Thing extends Composite implements ChangeHandler, ClickHandler {
   
   private FlowPanel pCount = new FlowPanel();
   private FlowPanel pType = new FlowPanel();
+  private FlowPanel pUserName = new FlowPanel();
   private FlowPanel pName = new FlowPanel();
   private HorizontalPanel pModify = new HorizontalPanel();
   
@@ -82,32 +84,57 @@ public class Thing extends Composite implements ChangeHandler, ClickHandler {
   private void draw() {
     
     pWidget.clear();
+    pUserName.clear();
     pName.clear();
     
-    // C0: count
+    // C1: count
     pCount.add(new HTML(Long.toString(row)));
    
-    // C1: Id
+    // C2: Id
     HTML pId = new HTML(Long.toString(thingData.getThingId()));
    
-    // C2: thing type - app, user, group...
+    // C3: thing type - app, user, group...
     if (thingTypeData != null) {
     	pType.add(new HTML(thingTypeData.getName())); 
     }
     
-    // C2: name
-    pName.add(new HTML(thingData.getKey()));
+    // C4: username
+    pUserName.add(new HTML(thingData.getKey()));
     
-    // C3: buttons
+    // c5: name
+    pName.add(getName());
+    
+    // C6: buttons
     
     pWidget.add(pCount);
     pWidget.add(pId);
     pWidget.add(pType);
+    pWidget.add(pUserName);
     pWidget.add(pName);
     pWidget.add(pModify);
   }
   
-  public Row getRow() {
+  private Widget getName() {
+  	ThingStuffsData tsds = thingData.getThingStuffsData();
+  	if (tsds == null || tsds.getThingStuffData() == null || tsds.getThingStuffData().length == 0) {
+  		return new HTML("&nbsp;");
+  	}
+  	
+  	String n = null;
+  	for (int i=0; i < tsds.getThingStuffData().length; i++) {
+  		if (tsds.getThingStuffData()[i].getThingStuffTypeId() == 1) {
+  			n = tsds.getThingStuffData()[i].getValue();
+  		}
+  	}
+	  
+  	if (n == null) {
+  		n = "&nbsp;";
+  	}
+  	
+  	return new HTML(n);
+  }
+
+	public Row getRow() {
     return pWidget;
   }
   

@@ -3,7 +3,7 @@ package org.gonevertical.core.client.account.thing;
 import org.gonevertical.core.client.ClientPersistence;
 import org.gonevertical.core.client.account.ChangePassword;
 import org.gonevertical.core.client.account.thingstuff.ThingStuffData;
-import org.gonevertical.core.client.account.thingstuff.ThingStuffFilterData;
+import org.gonevertical.core.client.account.thingstuff.ThingStuffDataFilter;
 import org.gonevertical.core.client.account.thingstuff.ThingStuffs;
 import org.gonevertical.core.client.account.thingstuff.ThingStuffsData;
 import org.gonevertical.core.client.account.thingtype.ThingTypesData;
@@ -116,8 +116,11 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler,
     
     drawThingTypes();
     
-    ThingStuffFilterData filter = new ThingStuffFilterData();
-    filter.thingId = thingData.getThingId();
+    ThingStuffDataFilter filter = new ThingStuffDataFilter();
+    filter.setThingId(thingData.getThingId());
+    
+    // TODO - will need to interact with wStuff and wStuff About
+    filter.setLimit(0, 100);
     
     getThingStuffRpc(filter);
   }
@@ -184,7 +187,7 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler,
   		thingStuffsData_About = new ThingStuffsData();
   	}
   	
-  	thingStuffsData_About.thingStuffTypesData = this.thingsStuffData.thingStuffTypesData;
+  	thingStuffsData_About.setThingStuffTypesData(this.thingsStuffData.getThingStuffTypesData());
   	
     wStuffAbout.draw(thingData, thingStuffsData_About);
     
@@ -243,7 +246,7 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler,
   	ThingStuffData[] thingStuffData = wStuff.getData();
   	
   	ThingStuffsData thingStuffsData = new ThingStuffsData();
-  	thingStuffsData.thingStuffData = thingStuffData;
+  	thingStuffsData.setThingStuffData(thingStuffData);
   	
   	td.setThingStuffsData(thingStuffsData);
   	
@@ -338,7 +341,7 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler,
   	}
   }
   
-  private void getThingStuffRpc(ThingStuffFilterData filter) {
+  private void getThingStuffRpc(ThingStuffDataFilter filter) {
  
   	cp.showLoading(true);
     
@@ -359,8 +362,8 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler,
  
 	 cp.showLoading(true);
  
-   ThingStuffFilterData filter = new ThingStuffFilterData();
-   filter.thingId = thingData.getThingId();
+   ThingStuffDataFilter filter = new ThingStuffDataFilter();
+   filter.setThingId(thingData.getThingId());
 
    rpc.saveThingStuffData(cp.getAccessToken(), filter, thingStuffData, new AsyncCallback<ThingStuffsData>() {
      public void onSuccess(ThingStuffsData thingStuffsData) {
@@ -378,7 +381,7 @@ public class ThingEdit extends Composite implements ClickHandler, ChangeHandler,
 	  
   	cp.showLoading(true);
   	
-  	ThingFilterData filter = new ThingFilterData();
+  	ThingDataFilter filter = new ThingDataFilter();
   	
 		rpc.saveThing(cp.getAccessToken(), filter , td, new AsyncCallback<ThingData>() {
 			public void onSuccess(ThingData td) {

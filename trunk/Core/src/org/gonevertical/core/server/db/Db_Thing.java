@@ -1,9 +1,12 @@
 package org.gonevertical.core.server.db;
 
+import java.util.logging.Logger;
+
 import org.gonevertical.core.client.account.thing.ThingData;
-import org.gonevertical.core.client.account.thing.ThingFilterData;
+import org.gonevertical.core.client.account.thing.ThingDataFilter;
 import org.gonevertical.core.client.account.thing.ThingsData;
-import org.gonevertical.core.client.account.thingstuff.ThingStuffFilterData;
+import org.gonevertical.core.client.account.thingstuff.ThingStuffData;
+import org.gonevertical.core.client.account.thingstuff.ThingStuffDataFilter;
 import org.gonevertical.core.client.account.thingstuff.ThingStuffsData;
 import org.gonevertical.core.client.account.thingtype.ThingTypesData;
 import org.gonevertical.core.client.oauth.OAuthTokenData;
@@ -11,11 +14,15 @@ import org.gonevertical.core.server.ServerPersistence;
 import org.gonevertical.core.server.jdo.data.ThingJdo;
 
 public class Db_Thing {
+	
+	private static final Logger log = Logger.getLogger(Db_Thing.class.getName());
 
   private ServerPersistence sp = null;
+	private Db_ThingStuff dbTs;
 
   public Db_Thing(ServerPersistence sp) {
     this.sp  = sp;
+    dbTs = new Db_ThingStuff(sp);
   }
   
   /**
@@ -25,7 +32,7 @@ public class Db_Thing {
    * @param filter
    * @return
    */
-  public ThingsData getThings(OAuthTokenData accessToken, ThingFilterData filter) {
+  public ThingsData getThings(OAuthTokenData accessToken, ThingDataFilter filter) {
     
   	ThingJdo tj = new ThingJdo(sp);
     ThingData[] td = tj.query(filter);
@@ -38,10 +45,39 @@ public class Db_Thing {
     r.thingTypesData = tdt;
     r.total = tj.queryTotal();
     
+    // get names for the things
+    td = getNamesForThings(accessToken, td);
+    
     return r;
   }
   
-  /**
+  private ThingData[] getNamesForThings(OAuthTokenData accessToken, ThingData[] td) {
+	  
+  	if (td == null || td.length == 0) {
+  		return td;
+  	}
+  	
+  	// get name for things
+  	for (int i=0; i < td.length; i++) {
+  		
+  		ThingStuffDataFilter f = new ThingStuffDataFilter();
+    	f.setThingId(td[i].getThingId());
+    	f.setThingStuffTypeId(1); // only get name
+    	
+    	ThingStuffData[] tsd = dbTs.getThingStuffData(accessToken, f);
+    	if (tsd != null && tsd.length > 0) {
+      	ThingStuffsData tsds= new ThingStuffsData();
+      	tsds.setThingStuffData(tsd);
+      	td[i].setThingStuffsData(tsds);
+    	}
+    	
+  	}
+  
+  	
+	  return td;
+  }
+
+	/**
    * save things
    * 
    * @param accessToken
@@ -49,7 +85,7 @@ public class Db_Thing {
    * @param thingData
    * @return
    */
-  public ThingsData saveThings(OAuthTokenData accessToken, ThingFilterData filter, ThingData[] thingData) {
+  public ThingsData saveThings(OAuthTokenData accessToken, ThingDataFilter filter, ThingData[] thingData) {
     
   	if (thingData == null) {
   		return null;
@@ -82,23 +118,23 @@ public class Db_Thing {
     return b;
   }
   
-  public ThingData getThing(OAuthTokenData accessToken, ThingFilterData filter, long thingId) {
+  public ThingData getThing(OAuthTokenData accessToken, ThingDataFilter filter, long thingId) {
   	
   	// get thing
   	ThingJdo tj = new ThingJdo(sp);
   	ThingData td = tj.query(thingId);
   	
   	// get thing stuffs
-  	Db_ThingStuff dbTs = new Db_ThingStuff(sp);
-  	ThingStuffFilterData f = new ThingStuffFilterData();
-  	f.thingId = thingId;
-  	ThingStuffsData tsd = dbTs.getThingStuffData(accessToken, f);
+  	
+  	ThingStuffDataFilter f = new ThingStuffDataFilter();
+  	f.setThingId(thingId);
+  	ThingStuffsData tsd = dbTs.getThingStuffsData(accessToken, f);
   	td.setThingStuffsData(tsd);
   	
   	return td;
   }
 
-	public ThingData saveThing(OAuthTokenData accessToken, ThingFilterData filter, ThingData thingData) {
+	public ThingData saveThing(OAuthTokenData accessToken, ThingDataFilter filter, ThingData thingData) {
 		
 		if (thingData == null) {
 			return null;
@@ -113,21 +149,21 @@ public class Db_Thing {
 		// save thing stuff
 		ThingStuffsData tsd = thingData.getThingStuffsData();
 		
-		if (tsd != null &&  tsd.thingStuffData != null) {
+		if (tsd != null &&  tsd.getThingStuffData() != null) {
 			
-			for (int i=0; i < tsd.thingStuffData.length; i++) {
-				tsd.thingStuffData[i].setThingId(thingId);
+			for (int i=0; i < tsd.getThingStuffData().length; i++) {
+				tsd.getThingStuffData()[i].setThingId(thingId);
 			}
 
 		}
 		
 		// filter by thingId
-		ThingStuffFilterData f = new ThingStuffFilterData();
-		f.thingId = thingId;
+		ThingStuffDataFilter f = new ThingStuffDataFilter();
+		f.setThingId(thingId);
 		
 		// get thing stuff
 		Db_ThingStuff dbTs = new Db_ThingStuff(sp);
-		dbTs.saveThingStuffData(accessToken, f, tsd.thingStuffData);
+		dbTs.saveThingStuffData(accessToken, f, tsd.getThingStuffData());
 		
 		// get thing
 		ThingData r = getThing(accessToken, filter, thingId);

@@ -34,7 +34,7 @@ public class Things extends Composite implements ClickHandler, ChangeHandler {
   
   private VerticalPanel pListTop = new VerticalPanel();
   private VerticalPanel pList = new VerticalPanel();
-  private int[] widths = new int[5];
+  private int[] widths = new int[6];
   
   private PushButton bAdd = new PushButton("Add");
   private PushButton bSave = new PushButton("Save");
@@ -101,13 +101,15 @@ public class Things extends Composite implements ClickHandler, ChangeHandler {
     HTML l2 = new HTML("Id");
     HTML l3 = new HTML("ThingType");
     HTML l4 = new HTML("UserName");
-    HTML l5 = new HTML("&nbsp;");
+    HTML l5 = new HTML("Name");
+    HTML l6 = new HTML("&nbsp;");
 
     l1.setStyleName("core-row-top");
     l2.setStyleName("core-row-top");
     l3.setStyleName("core-row-top");
     l4.setStyleName("core-row-top");
     l5.setStyleName("core-row-top");
+    l6.setStyleName("core-row-top");
     
     Row th = new Row();
     th.add(l1, HorizontalPanel.ALIGN_CENTER);
@@ -115,6 +117,7 @@ public class Things extends Composite implements ClickHandler, ChangeHandler {
     th.add(l3, HorizontalPanel.ALIGN_CENTER);
     th.add(l4, HorizontalPanel.ALIGN_CENTER);
     th.add(l5, HorizontalPanel.ALIGN_CENTER);
+    th.add(l6, HorizontalPanel.ALIGN_CENTER);
     
     pListTop.add(th);
     
@@ -154,8 +157,6 @@ public class Things extends Composite implements ClickHandler, ChangeHandler {
     }
     
     setWidths();
-    
-    
   }
   
   private void setWidths() {
@@ -280,9 +281,8 @@ public class Things extends Composite implements ClickHandler, ChangeHandler {
   	
   	cp.showLoading(true);
     
-    ThingFilterData filter = new ThingFilterData();
-    filter.start = wPage.getStart();
-    filter.limit = wPage.getLimit();
+    ThingDataFilter filter = new ThingDataFilter();
+    filter.setLimit(wPage.getStart(), wPage.getLimit());
     
     rpc.getThings(cp.getAccessToken(), filter, new AsyncCallback<ThingsData>() {
       public void onSuccess(ThingsData thingsData) {
@@ -303,9 +303,8 @@ public class Things extends Composite implements ClickHandler, ChangeHandler {
     
   	cp.showLoading(true);
     
-    ThingFilterData filter = new ThingFilterData();
-    filter.start = wPage.getStart();
-    filter.limit = wPage.getLimit();
+    ThingDataFilter filter = new ThingDataFilter();
+    filter.setLimit(wPage.getStart(), wPage.getLimit());
 
     rpc.saveThings(cp.getAccessToken(), filter, thingData, new AsyncCallback<ThingsData>() {
 			public void onSuccess(ThingsData thingData) {

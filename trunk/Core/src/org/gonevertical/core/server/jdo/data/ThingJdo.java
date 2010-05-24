@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
@@ -17,7 +18,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import org.gonevertical.core.client.account.thing.ThingData;
-import org.gonevertical.core.client.account.thing.ThingFilterData;
+import org.gonevertical.core.client.account.thing.ThingDataFilter;
 import org.gonevertical.core.server.ServerPersistence;
 
 import com.google.appengine.api.datastore.Key;
@@ -27,6 +28,8 @@ import com.google.appengine.api.datastore.KeyFactory;
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class ThingJdo {
 
+	private static final Logger log = Logger.getLogger(ThingJdo.class.getName());
+	
 	@NotPersistent 
 	private ServerPersistence sp = null;
 
@@ -312,17 +315,11 @@ public class ThingJdo {
 		return r;
 	}
 
-	public ThingData[] query(ThingFilterData filter) {
+	public ThingData[] query(ThingDataFilter filter) {
 
-		long thingTypeId = filter.thingTypeId;
-
+		String qfilter = filter.getFilter();
+		
 		ArrayList<ThingJdo> aT = new ArrayList<ThingJdo>();
-
-		String qfilter = null;
-		if (filter.thingTypeId > 0) {
-			qfilter = "thingTypeId==" + thingTypeId + "";
-		}
-
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
 			Extent<ThingJdo> e = pm.getExtent(ThingJdo.class, true);
@@ -348,7 +345,7 @@ public class ThingJdo {
 
   				aT.add(t);
   				 
-  				System.out.println("adding thing: " + i + " s: " + filter.getRangeStart() + " f: " + filter.getRangeFinish());
+  				//System.out.println("adding thing: " + i + " s: " + filter.getRangeStart() + " f: " + filter.getRangeFinish());
 				}
 				
 				i++;

@@ -64,16 +64,16 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
     QueryStringData qsd = QueryString.getQueryStringData();
     
     String ht = qsd.getHistoryToken();
-    if (ht.equals("account_Home") == true) {
+    if (ht.equals("core_home") == true) {
       pWidget.selectTab(0);
       
-    } else if (ht.equals("account_Types") == true) {
+    } else if (ht.equals("core_types") == true) {
       pWidget.selectTab(1);
       
-    } else if (ht.equals("account_StuffType") == true) {
+    } else if (ht.equals("core_stufftype") == true) {
       pWidget.selectTab(2);
       
-    } else if (ht.equals("account_Things") == true) {
+    } else if (ht.equals("core_things") == true) {
       pWidget.selectTab(3);
     }
     
@@ -120,16 +120,16 @@ public class AccountTabs extends Composite implements BeforeSelectionHandler<Int
     int tab = event.getSelectedItem();
     
     if (tab == 0) {
-      History.newItem("account_Home");
+      History.newItem("core_home");
       
     } else if (tab == 1) {
-      History.newItem("account_Types");
+      History.newItem("core_types");
       
     } else if (tab == 2) {
-      History.newItem("account_StuffType");
+      History.newItem("core_stufftype");
       
     } else if (tab == 3) {
-      History.newItem("account_Things");
+      History.newItem("core_things");
       
     } 
     

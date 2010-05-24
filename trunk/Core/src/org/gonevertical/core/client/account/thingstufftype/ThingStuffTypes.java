@@ -55,6 +55,7 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
     
     bAdd.addClickHandler(this);
     bSave.addClickHandler(this);
+    wPage.addChangeHandler(this);
   }
   
   public void setData(ThingData thingData) {
@@ -107,10 +108,10 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
       return;
     }
     
-    if (thingStuffTypesData.thingStuffTypeData == null) {
+    if (thingStuffTypesData.getThingStuffTypeData() == null) {
       return;
     }
-    ThingStuffTypeData[] thingStuffTypeData = thingStuffTypesData.thingStuffTypeData;
+    ThingStuffTypeData[] thingStuffTypeData = thingStuffTypesData.getThingStuffTypeData();
     
     if (thingStuffTypeData.length == 0) {
     	return;
@@ -190,12 +191,22 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
     }
   }
   
-  private void getThingTypesRpc() {
+  public void onChange(ChangeEvent event) {
+  
+  	Widget sender = (Widget) event.getSource();
+  	
+  	if (sender == wPage) {
+  		getThingTypesRpc();
+  	}
+  
+  }
+  
+ private void getThingTypesRpc() {
     
   	cp.showLoading(true);
     
-    // TODO use this later
-    ThingStuffTypeFilterData filter = new ThingStuffTypeFilterData();
+    ThingStuffTypeDataFilter filter = new ThingStuffTypeDataFilter();
+    filter.setLimit(wPage.getStart(), wPage.getLimit());
     
     rpc.getThingStuffTypes(cp.getAccessToken(), filter, new AsyncCallback<ThingStuffTypesData>() {
       public void onSuccess(ThingStuffTypesData ThingStuffTypesData) {
@@ -203,23 +214,19 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
         cp.showLoading(false);
       }
       public void onFailure(Throwable caught) {
+      	cp.showLoading(false);
       	cp.setRpcFailure(caught);
       }
     });
     
   }
 
-  public void onChange(ChangeEvent event) {
-    
-    //setWidths();
-  }
-
   private void saveThingTypesRpc(ThingStuffTypeData[] ThingStuffTypeData) {
     
   	cp.showLoading(true);
     
-    // TODO
-    ThingStuffTypeFilterData filter = new ThingStuffTypeFilterData();
+    ThingStuffTypeDataFilter filter = new ThingStuffTypeDataFilter();
+    filter.setLimit(wPage.getStart(), wPage.getLimit());
 
     rpc.saveThingStuffTypes(cp.getAccessToken(), filter, ThingStuffTypeData, new AsyncCallback<ThingStuffTypesData>() {
       public void onSuccess(ThingStuffTypesData ThingStuffTypesData) {
@@ -227,13 +234,12 @@ public class ThingStuffTypes extends Composite implements ClickHandler, ChangeHa
         cp.showLoading(false);
       }
       public void onFailure(Throwable caught) {
+      	cp.showLoading(false);
       	cp.setRpcFailure(caught);
       }
     });
     
   }
-
- 
 
   
 }

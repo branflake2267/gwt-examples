@@ -7,7 +7,9 @@ import java.util.regex.Pattern;
 import javax.jdo.PersistenceManager;
 import javax.servlet.http.HttpServletRequest;
 
+import org.gonevertical.core.client.oauth.OAuthTokenData;
 import org.gonevertical.core.server.jdo.PMF;
+import org.gonevertical.core.server.jdo.data.SessionAccessTokenJdo;
 
 /**
  * 
@@ -122,8 +124,9 @@ public class ServerPersistence {
 		return s;
 	}
 
-	// TODO - add this later
-	public long getThingId() {
+	public long getThingId(OAuthTokenData accessToken) {
+		SessionAccessTokenJdo satj = new SessionAccessTokenJdo(this);
+		satj.getThingId();
 		return thingId;
 	}
 

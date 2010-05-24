@@ -188,9 +188,14 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     
     lbTypes.addItem("Select", "0");
     
-    for (int i=0; i < thingStuffTypesData.thingStuffTypeData.length; i++) {
-      String item = thingStuffTypesData.thingStuffTypeData[i].getName();
-      String value = Long.toString(thingStuffTypesData.thingStuffTypeData[i].getStuffTypeId());
+    ThingStuffTypeData[] tstds = thingStuffTypesData.getThingStuffTypeData();
+    if (tstds == null || tstds.length == 0) {
+    	return;
+    }
+    
+    for (int i=0; i < tstds.length; i++) {
+      String item = tstds[i].getName();
+      String value = Long.toString(tstds[i].getStuffTypeId());
       lbTypes.addItem(item, value);
       
       //debug
@@ -615,7 +620,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
 	public void setAboutStuff(ThingStuffData[] tsd) {
 		
 		ThingStuffsData tssd = new ThingStuffsData();
-		tssd.thingStuffData = tsd;
+		tssd.setThingStuffData(tsd);
 		
 		thingStuffData.setThingStuffsAbout(tssd);
   }

@@ -1,12 +1,15 @@
 package org.gonevertical.core.server.db;
 
 import java.util.Date;
+import java.util.logging.Logger;
 
 import org.gonevertical.core.client.ui.feedback.FeedbackData;
 import org.gonevertical.core.server.ServerPersistence;
 import org.gonevertical.core.server.mail.SendMail;
 
 public class Db_Feedback {
+	
+	private static final Logger log = Logger.getLogger(Db_Feedback.class.getName());
  
 	private ServerPersistence sp;
 	

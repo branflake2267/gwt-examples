@@ -44,8 +44,8 @@ public class Paging extends Composite implements ClickHandler, ChangeHandler {
 	private ListBox lbLimit = new ListBox();
 
 	private long total = 0;
-	private int start = 0;
-	private int limit = 15; 
+	private long start = 0;
+	private long limit = 15; 
 
 	private int firstPage = 0;
 	private int onPage = 0;
@@ -115,11 +115,11 @@ public class Paging extends Composite implements ClickHandler, ChangeHandler {
 		pWidget.setVisible(false);
 	}
 
-	public int getStart() {
+	public long getStart() {
 		return start;
 	}
 
-	public int getLimit() {
+	public long getLimit() {
 		return limit;
 	}
 	
@@ -149,7 +149,7 @@ public class Paging extends Composite implements ClickHandler, ChangeHandler {
 	 * @param start
 	 * @param limit
 	 */
-	public void setCounts(long total, int start, int limit) {
+	public void setCounts(long total, long start, long limit) {
 		this.total = total;
 		this.start = start;
 		this.limit = limit;
@@ -164,7 +164,7 @@ public class Paging extends Composite implements ClickHandler, ChangeHandler {
 		
 		setTotalPages();
 		
-		if (totalPages > 0) {
+		if (totalPages > 0 || start > 0) {
 			pWidget.setVisible(true);
 		} else {
 			pWidget.setVisible(false);
@@ -316,7 +316,7 @@ public class Paging extends Composite implements ClickHandler, ChangeHandler {
 	private void setLimitAt() {
 		int sel = 0;
 		for (int i=0; i < lbLimit.getItemCount(); i++) {
-			String slimit = Integer.toString(limit);
+			String slimit = Long.toString(limit);
 			String value = lbLimit.getItemText(i); 
 			if (value.equals(slimit)) {
 				sel = i;

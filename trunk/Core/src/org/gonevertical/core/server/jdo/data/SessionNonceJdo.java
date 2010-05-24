@@ -3,6 +3,7 @@ package org.gonevertical.core.server.jdo.data;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
@@ -22,6 +23,8 @@ import com.google.appengine.api.datastore.Key;
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class SessionNonceJdo {
 
+	private static final Logger log = Logger.getLogger(SessionNonceJdo.class.getName());
+	
 	@NotPersistent
 	private ServerPersistence sp;
 	
