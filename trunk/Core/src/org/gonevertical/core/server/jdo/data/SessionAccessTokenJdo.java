@@ -18,8 +18,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import org.gonevertical.core.client.account.thing.ThingData;
-import org.gonevertical.core.client.oauth.OAuthTokenData;
+import org.gonevertical.core.client.admin.thing.ThingData;
 import org.gonevertical.core.server.ServerPersistence;
 
 import com.google.appengine.api.datastore.Key;

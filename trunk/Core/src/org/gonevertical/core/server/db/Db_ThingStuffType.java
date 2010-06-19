@@ -2,9 +2,9 @@ package org.gonevertical.core.server.db;
 
 import java.util.logging.Logger;
 
-import org.gonevertical.core.client.account.thingstufftype.ThingStuffTypeData;
-import org.gonevertical.core.client.account.thingstufftype.ThingStuffTypeDataFilter;
-import org.gonevertical.core.client.account.thingstufftype.ThingStuffTypesData;
+import org.gonevertical.core.client.admin.thingstufftype.ThingStuffTypeData;
+import org.gonevertical.core.client.admin.thingstufftype.ThingStuffTypeDataFilter;
+import org.gonevertical.core.client.admin.thingstufftype.ThingStuffTypesData;
 import org.gonevertical.core.client.oauth.OAuthTokenData;
 import org.gonevertical.core.server.ServerPersistence;
 import org.gonevertical.core.server.jdo.data.ThingStuffTypeJdo;
