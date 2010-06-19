@@ -5,10 +5,10 @@ import java.util.logging.Logger;
 
 import org.gonevertical.core.client.ClientPersistence;
 import org.gonevertical.core.client.SetDefaultsData;
-import org.gonevertical.core.client.account.thingstuff.ThingStuffData;
-import org.gonevertical.core.client.account.thingstuff.ThingStuffDataFilter;
-import org.gonevertical.core.client.account.thingstufftype.ThingStuffTypeData;
-import org.gonevertical.core.client.account.thingtype.ThingTypeData;
+import org.gonevertical.core.client.admin.thingstuff.ThingStuffData;
+import org.gonevertical.core.client.admin.thingstuff.ThingStuffDataFilter;
+import org.gonevertical.core.client.admin.thingstufftype.ThingStuffTypeData;
+import org.gonevertical.core.client.admin.thingtype.ThingTypeData;
 import org.gonevertical.core.client.oauth.Sha1;
 import org.gonevertical.core.server.jdo.data.ThingJdo;
 import org.gonevertical.core.server.jdo.data.ThingStuffAboutJdo;
@@ -70,12 +70,16 @@ public class SetDefaults {
 
 	private void setThingTypes() {
 
-		createThingType(SetDefaultsData.THINGTYPE_APPLICATION, "Application"); 
-		createThingType(SetDefaultsData.THINGTYPE_PERSON, "Person");
-		createThingType(SetDefaultsData.THINGTYPE_GROUP, "Group");
-		createThingType(SetDefaultsData.THINGTYPE_WIDGET, "Widget");
-		createThingType(SetDefaultsData.THINGTYPE_PERMISSION, "Permission");
-		createThingType(SetDefaultsData.THINGTYPE_STUFFTEMPLATE, "Thing Stuff Template");
+		createThingType(ThingTypeData.TYPE_APPLICATION, "Application"); 
+		createThingType(ThingTypeData.TYPE_USER, "Person");
+		createThingType(ThingTypeData.TYPE_GROUP, "Group");
+		createThingType(ThingTypeData.TYPE_WIDGET, "Widget");
+		createThingType(ThingTypeData.TYPE_PERMISSION, "Permission");
+		createThingType(ThingTypeData.TYPE_STUFFTYPETEMPLATE, "Thing Stuff Template");
+		createThingType(ThingTypeData.TYPE_TASK, "Task");
+		createThingType(ThingTypeData.TYPE_REMINDER, "Reminder");
+		createThingType(ThingTypeData.TYPE_LOCATION, "Location");
+		createThingType(ThingTypeData.TYPE_DEVICE, "Device");
 
 	}
 
@@ -138,7 +142,7 @@ public class SetDefaults {
 		createThingStuffMulti(3, 2, 9, 4, new Boolean(true));
 	}
 
-	private void createThingStuffMulti(
+	public void createThingStuffMulti(
 			long thingId, long parentThingTypeId, long parentLinkThingId, long thingStuffTypeId, Boolean valueBol) {
 		
 		String value = null;
@@ -170,7 +174,7 @@ public class SetDefaults {
 		tsaj.saveUnique(tsd);
 	}
 
-	private void createThingStuff(int thingId, int thingStuffTypeId, long value) {
+	public void createThingStuff(int thingId, int thingStuffTypeId, long value) {
 
 		ThingStuffData ts2 = new ThingStuffData();
 		ts2.setThingId(thingId);
@@ -182,7 +186,7 @@ public class SetDefaults {
 
 	}
 
-	private void createThingStuff(int thingId, int thingStuffTypeId, String value) {
+	public void createThingStuff(int thingId, int thingStuffTypeId, String value) {
 
 		ThingStuffData ts2 = new ThingStuffData();
 		ts2.setThingId(thingId);
@@ -194,7 +198,7 @@ public class SetDefaults {
 
 	}
 
-	private void createThingStuff(int thingId, int thingStuffTypeId, boolean value) {
+	public void createThingStuff(int thingId, int thingStuffTypeId, boolean value) {
 
 		ThingStuffData ts2 = new ThingStuffData();
 		ts2.setThingId(thingId);
@@ -206,7 +210,7 @@ public class SetDefaults {
 
 	}
 
-	private void createThing(int id, int thingTypeId, String key, String password) {
+	public void createThing(int id, int thingTypeId, String key, String password) {
 		Sha1 sha = new Sha1();
 
 		String secret = null;
@@ -226,7 +230,7 @@ public class SetDefaults {
 	 * @param name
 	 * @param valueTypeId
 	 */
-	private void createStuffType(int id, String name, int valueTypeId) {
+	public void createStuffType(int id, String name, int valueTypeId) {
 		ThingStuffTypeData tstd = new ThingStuffTypeData();
 		tstd.setData(id, name, valueTypeId, new Date(), null, null, null);
 
@@ -241,7 +245,7 @@ public class SetDefaults {
 	 * @param id
 	 * @param name
 	 */
-	private void createThingType(int id, String name) {
+	public void createThingType(int id, String name) {
 		ThingTypeData at = new ThingTypeData();
 		at.setKey(id);
 		at.setName(name);

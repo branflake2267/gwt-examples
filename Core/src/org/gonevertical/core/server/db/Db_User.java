@@ -2,9 +2,9 @@ package org.gonevertical.core.server.db;
 
 import java.util.logging.Logger;
 
-import org.gonevertical.core.client.account.ChangePasswordData;
-import org.gonevertical.core.client.account.UserData;
-import org.gonevertical.core.client.account.thing.ThingData;
+import org.gonevertical.core.client.admin.ChangePasswordData;
+import org.gonevertical.core.client.admin.UserData;
+import org.gonevertical.core.client.admin.thing.ThingData;
 import org.gonevertical.core.client.oauth.OAuthTokenData;
 import org.gonevertical.core.server.ServerPersistence;
 import org.gonevertical.core.server.db.oauth.OAuthServer;

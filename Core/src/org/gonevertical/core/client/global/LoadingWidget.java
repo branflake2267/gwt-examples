@@ -68,5 +68,10 @@ public class LoadingWidget extends Composite {
     hideTimed();
   }
 
+	public void setHTML(String s) {
+	 System.out.println("add SetHTML to loading.... " + s);
+	  
+  }
+
 
 }

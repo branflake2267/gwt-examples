@@ -1,6 +1,6 @@
 package org.gonevertical.core.server.db;
 
-import org.gonevertical.core.client.account.PermissionData;
+import org.gonevertical.core.client.admin.PermissionData;
 import org.gonevertical.core.client.oauth.OAuthTokenData;
 
 public class zold_Db_Permission {

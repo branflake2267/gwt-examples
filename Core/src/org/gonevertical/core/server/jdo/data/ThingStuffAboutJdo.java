@@ -20,10 +20,10 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import org.gonevertical.core.client.account.thing.ThingData;
-import org.gonevertical.core.client.account.thingstuff.ThingStuffData;
-import org.gonevertical.core.client.account.thingstuff.ThingStuffDataFilter;
-import org.gonevertical.core.client.account.thingstuff.ThingStuffsData;
+import org.gonevertical.core.client.admin.thing.ThingData;
+import org.gonevertical.core.client.admin.thingstuff.ThingStuffData;
+import org.gonevertical.core.client.admin.thingstuff.ThingStuffDataFilter;
+import org.gonevertical.core.client.admin.thingstuff.ThingStuffsData;
 import org.gonevertical.core.server.ServerPersistence;
 
 import com.google.appengine.api.datastore.Key;
