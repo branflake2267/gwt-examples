@@ -1,4 +1,4 @@
-package org.gonevertical.core.client.account.ui;
+package org.gonevertical.core.client.account.ui.profile;
 
 import org.gonevertical.core.client.ClientPersistence;
 
