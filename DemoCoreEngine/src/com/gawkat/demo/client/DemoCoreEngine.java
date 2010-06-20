@@ -2,20 +2,14 @@ package com.gawkat.demo.client;
 
 import org.gonevertical.core.client.BreadCrumbs;
 import org.gonevertical.core.client.ClientPersistence;
-import org.gonevertical.core.client.Footer;
-import org.gonevertical.core.client.Track;
-import org.gonevertical.core.client.account.AccountWidget;
-import org.gonevertical.core.client.account.thingtype.ThingTypes;
 import org.gonevertical.core.client.account.ui.LoginUi;
 import org.gonevertical.core.client.account.ui.LoginWidget;
 
+import com.gawkat.demo.client.layout.ContentWidget;
 import com.gawkat.demo.client.layout.FooterWidget;
 import com.gawkat.demo.client.layout.LinksWidget;
 import com.gawkat.demo.client.layout.LogoWidget;
-import com.gawkat.demo.client.layout.ContentWidget;
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;

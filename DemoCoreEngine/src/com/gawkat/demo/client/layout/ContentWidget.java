@@ -1,7 +1,7 @@
 package com.gawkat.demo.client.layout;
 
 import org.gonevertical.core.client.ClientPersistence;
-import org.gonevertical.core.client.account.AccountWidget;
+import org.gonevertical.core.client.admin.AdminWidget;
 import org.gonevertical.core.client.global.QueryString;
 import org.gonevertical.core.client.global.QueryStringData;
 
@@ -22,12 +22,12 @@ public class ContentWidget extends Composite implements ValueChangeHandler<Strin
 	
 	private FlowPanel pContent = new FlowPanel();
 	
-	private AccountWidget wAccount = null;
+	private AdminWidget wAccount = null;
 	
 	public ContentWidget(ClientPersistence cp) {
 		this.cp = cp;
 		
-		wAccount = new AccountWidget(cp);
+		wAccount = new AdminWidget(cp);
 		
 		pWidget.add(pContent);
 		pWidget.add(wAccount);
