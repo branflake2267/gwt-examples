@@ -1,11 +1,12 @@
 package com.gawkat.demo.client;
 
-import org.gonevertical.core.client.BreadCrumbs;
 import org.gonevertical.core.client.ClientPersistence;
-import org.gonevertical.core.client.account.ui.LoginUi;
-import org.gonevertical.core.client.account.ui.LoginWidget;
+import org.gonevertical.core.client.ui.breadcrumbs.BreadCrumbs;
+import org.gonevertical.core.client.ui.login.LoginUi;
+import org.gonevertical.core.client.ui.login.LoginWidget;
 
 import com.gawkat.demo.client.layout.ContentWidget;
+import com.gawkat.demo.client.layout.zold_ContentWidgetV1;
 import com.gawkat.demo.client.layout.FooterWidget;
 import com.gawkat.demo.client.layout.LinksWidget;
 import com.gawkat.demo.client.layout.LogoWidget;

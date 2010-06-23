@@ -1,9 +1,9 @@
 package com.gawkat.demo.client.layout.widgets;
 
 import org.gonevertical.core.client.ClientPersistence;
-import org.gonevertical.core.client.account.ui.LoginUi;
-import org.gonevertical.core.client.account.ui.LoginWidget;
 import org.gonevertical.core.client.global.EventManager;
+import org.gonevertical.core.client.ui.login.LoginUi;
+import org.gonevertical.core.client.ui.login.LoginWidget;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -34,21 +34,22 @@ public class TestWidget extends Composite {
 		initWidget(pWidget);
 		
 		// observe login events
-		cp.addChangeHandler(new ChangeHandler() {
-			public void onChange(ChangeEvent event) {
-				
-				ClientPersistence wcp = (ClientPersistence) event.getSource();
-				
-				if (wcp.getChangeEvent() == EventManager.LOGGEDIN) {
-					drawLoggedIn();
-					
-				} else if (wcp.getChangeEvent() == EventManager.LOGGEDOUT) {
-					drawLoggedOut();
-				}
-				
-			}				
-		});
-		
+		if (cp != null) {
+  		cp.addChangeHandler(new ChangeHandler() {
+  			public void onChange(ChangeEvent event) {
+  				
+  				ClientPersistence wcp = (ClientPersistence) event.getSource();
+  				
+  				if (wcp.getChangeEvent() == EventManager.LOGGEDIN) {
+  					drawLoggedIn();
+  					
+  				} else if (wcp.getChangeEvent() == EventManager.LOGGEDOUT) {
+  					drawLoggedOut();
+  				}
+  				
+  			}				
+  		});
+		}
 	}
 	
 	public void draw() {
