@@ -2,14 +2,14 @@ package org.gonevertical.core.server.db;
 
 import java.util.logging.Logger;
 
-import org.gonevertical.core.client.admin.thing.ThingData;
-import org.gonevertical.core.client.admin.thing.ThingDataFilter;
-import org.gonevertical.core.client.admin.thing.ThingsData;
-import org.gonevertical.core.client.admin.thingstuff.ThingStuffData;
-import org.gonevertical.core.client.admin.thingstuff.ThingStuffDataFilter;
-import org.gonevertical.core.client.admin.thingstuff.ThingStuffsData;
-import org.gonevertical.core.client.admin.thingtype.ThingTypesData;
 import org.gonevertical.core.client.oauth.OAuthTokenData;
+import org.gonevertical.core.client.ui.admin.thing.ThingData;
+import org.gonevertical.core.client.ui.admin.thing.ThingDataFilter;
+import org.gonevertical.core.client.ui.admin.thing.ThingsData;
+import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffData;
+import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffDataFilter;
+import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffsData;
+import org.gonevertical.core.client.ui.admin.thingtype.ThingTypesData;
 import org.gonevertical.core.server.ServerPersistence;
 import org.gonevertical.core.server.jdo.data.ThingJdo;
 
