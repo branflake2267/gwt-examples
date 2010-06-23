@@ -1,54 +1,48 @@
 package com.gawkat.demo.client.layout;
 
 import org.gonevertical.core.client.ClientPersistence;
-import org.gonevertical.core.client.admin.AdminWidget;
-import org.gonevertical.core.client.global.QueryString;
-import org.gonevertical.core.client.global.QueryStringData;
 
-import com.gawkat.demo.client.layout.widgets.Home;
-import com.gawkat.demo.client.layout.widgets.TestWidget;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class ContentWidget extends Composite implements ValueChangeHandler<String> {
+import org.gonevertical.core.client.global.QueryString;
+import org.gonevertical.core.client.global.QueryStringData;
+import org.gonevertical.core.client.ui.profile.ProfileTabs;
+import org.gonevertical.core.client.ui.admin.AdminTabs;
 
+import com.gawkat.demo.client.layout.widgets.Home;
+import com.gawkat.demo.client.layout.widgets.TestWidget;
+
+public class ContentWidget extends Composite implements ValueChangeHandler<String> {
 	private ClientPersistence cp;
-	
-	private VerticalPanel pWidget = new VerticalPanel();
-	
-	private FlowPanel pContent = new FlowPanel();
-	
-	private AdminWidget wAccount = null;
-	
+	private VerticalPanel verticalPanel;
+	private ProfileTabs profileTabs;
+	private AdminTabs adminTabs;
+	private Home home;
+	private TestWidget testWidget;
+
 	public ContentWidget(ClientPersistence cp) {
 		this.cp = cp;
-		
-		wAccount = new AdminWidget(cp);
-		
-		pWidget.add(pContent);
-		pWidget.add(wAccount);
-		
-		initWidget(pWidget);
-		
-		pWidget.setWidth("100%");
-		pWidget.addStyleName("gv_layout_middle");
+		initWidget(getVerticalPanel());
 		
 		History.addValueChangeHandler(this);
 		
 		changeState(History.getToken());
 	}
-	
+
 	public void changeState(String historyToken) {
 		if (historyToken == null) {
 			return;
 		}
 		
-		if (wAccount.getMatchHistoryToken() == true) {
-  		drawState_Account();
+		if (adminTabs.getMatchHistoryToken() == true) {
+  		drawState_Admin();
+  		
+  	} else if (profileTabs.getMatchHistoryToken() == true) {
+  		drawState_Profile();
   		
   	} else if (historyToken.matches("^dce_.*?$") == true ) {
   		drawState_Dce();
@@ -60,45 +54,106 @@ public class ContentWidget extends Composite implements ValueChangeHandler<Strin
 	}
 	
 	private void drawState_Dce() {
-		pContent.setVisible(true);
-		pContent.clear();
-		
+	
 		QueryStringData qsd = QueryString.getQueryStringData();
 		
 		if (qsd == null || qsd.getHistoryToken() == null) {
-			// TODO - does this happen?
-			System.err.println("ContentWidget.drawState_Dce(): historyToken Null");
+			drawState_HomePage();
 			
 		} else if (qsd.getHistoryToken().equals("dce_home") == true) {
 			drawState_HomePage();
 			
 		} else if (qsd.getHistoryToken().equals("dce_test") == true) {
 			drawState_Test();
+			
+		} else if (adminTabs.getMatchHistoryToken() == true) {
+			drawState_Admin();
+			
+		} else if (profileTabs.getMatchHistoryToken() == true) {
+			drawState_Profile();
+			
 		}
 		
   }
 	
 	public void drawState_HomePage() {
-		Home home = new Home(cp);
-		pContent.add(home);
+		home.setVisible(true);
 		home.draw();
+		
+		adminTabs.setVisible(false);
+		profileTabs.setVisible(false);
+		testWidget.setVisible(false);
 	}
 	
 	private void drawState_Test() {
-		TestWidget wTest = new TestWidget(cp);
-		pContent.add(wTest);
-		wTest.draw();
+		testWidget.setVisible(true);
+		testWidget.draw();
+		
+		home.setVisible(false);
+		adminTabs.setVisible(false);
+		profileTabs.setVisible(false);
   }
 
-	private void drawState_Account() {
-		pContent.setVisible(false);
-		wAccount.draw();
+	private void drawState_Admin() {
+		adminTabs.setVisible(true);
+		adminTabs.draw();
+		
+		home.setVisible(false);
+		testWidget.setVisible(false);
+		profileTabs.setVisible(false);
   }
+	
+	private void drawState_Profile() {
+		profileTabs.setVisible(true);
+		profileTabs.draw();
+		
+		home.setVisible(false);
+		testWidget.setVisible(false);
+		adminTabs.setVisible(false);
+  }
+	
+	private VerticalPanel getVerticalPanel() {
+		if (verticalPanel == null) {
+			verticalPanel = new VerticalPanel();
+			verticalPanel.add(getHome());
+			verticalPanel.add(getTestWidget());
+			verticalPanel.add(getProfileTabs());
+			verticalPanel.add(getAdminTabs());
+			
+			verticalPanel.setWidth("100%");
+		}
+		return verticalPanel;
+	}
+	private ProfileTabs getProfileTabs() {
+		if (profileTabs == null) {
+			profileTabs = new ProfileTabs(cp);
+		}
+		return profileTabs;
+	}
+	private AdminTabs getAdminTabs() {
+		if (adminTabs == null) {
+			adminTabs = new AdminTabs(cp);
+		}
+		return adminTabs;
+	}
+	
+	private Home getHome() {
+		if (home == null) {
+			home = new Home(cp);
+		}
+		return home;
+	}
 
+	private TestWidget getTestWidget() {
+		if (testWidget == null) {
+			testWidget = new TestWidget(cp);
+		}
+		return testWidget;
+	}
+	
   public void onValueChange(ValueChangeEvent<String> event) {
-    String historyToken = event.getValue();
+		String historyToken = event.getValue();
   	changeState(historyToken);
   }
-  
   
 }

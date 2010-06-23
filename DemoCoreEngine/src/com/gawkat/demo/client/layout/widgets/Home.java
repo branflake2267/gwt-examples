@@ -29,6 +29,7 @@ public class Home extends Composite implements ClickHandler {
 	}
 
 	public void draw() {
+		pWidget.clear();
 	  
 		HorizontalPanel hp = new HorizontalPanel();
 		hp.add(bLogin);
