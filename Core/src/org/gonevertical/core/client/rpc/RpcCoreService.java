@@ -1,21 +1,21 @@
 package org.gonevertical.core.client.rpc;
 
-import org.gonevertical.core.client.admin.ChangePasswordData;
-import org.gonevertical.core.client.admin.UserData;
-import org.gonevertical.core.client.admin.thing.ThingData;
-import org.gonevertical.core.client.admin.thing.ThingDataFilter;
-import org.gonevertical.core.client.admin.thing.ThingsData;
-import org.gonevertical.core.client.admin.thingstuff.ThingStuffData;
-import org.gonevertical.core.client.admin.thingstuff.ThingStuffDataFilter;
-import org.gonevertical.core.client.admin.thingstuff.ThingStuffsData;
-import org.gonevertical.core.client.admin.thingstufftype.ThingStuffTypeData;
-import org.gonevertical.core.client.admin.thingstufftype.ThingStuffTypeDataFilter;
-import org.gonevertical.core.client.admin.thingstufftype.ThingStuffTypesData;
-import org.gonevertical.core.client.admin.thingtype.ThingTypeData;
-import org.gonevertical.core.client.admin.thingtype.ThingTypeDataFilter;
-import org.gonevertical.core.client.admin.thingtype.ThingTypesData;
 import org.gonevertical.core.client.oauth.OAuthTokenData;
+import org.gonevertical.core.client.ui.admin.thing.ThingData;
+import org.gonevertical.core.client.ui.admin.thing.ThingDataFilter;
+import org.gonevertical.core.client.ui.admin.thing.ThingsData;
+import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffData;
+import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffDataFilter;
+import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffsData;
+import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeData;
+import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeDataFilter;
+import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypesData;
+import org.gonevertical.core.client.ui.admin.thingtype.ThingTypeData;
+import org.gonevertical.core.client.ui.admin.thingtype.ThingTypeDataFilter;
+import org.gonevertical.core.client.ui.admin.thingtype.ThingTypesData;
 import org.gonevertical.core.client.ui.feedback.FeedbackData;
+import org.gonevertical.core.client.ui.login.ChangePasswordData;
+import org.gonevertical.core.client.ui.login.UserData;
 import org.gonevertical.core.client.widget.WidgetAttrData;
 import org.gonevertical.core.client.widget.WidgetAttrDataFilter;
 

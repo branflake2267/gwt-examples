@@ -5,11 +5,11 @@ import java.util.logging.Logger;
 
 import org.gonevertical.core.client.ClientPersistence;
 import org.gonevertical.core.client.SetDefaultsData;
-import org.gonevertical.core.client.admin.thingstuff.ThingStuffData;
-import org.gonevertical.core.client.admin.thingstuff.ThingStuffDataFilter;
-import org.gonevertical.core.client.admin.thingstufftype.ThingStuffTypeData;
-import org.gonevertical.core.client.admin.thingtype.ThingTypeData;
 import org.gonevertical.core.client.oauth.Sha1;
+import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffData;
+import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffDataFilter;
+import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeData;
+import org.gonevertical.core.client.ui.admin.thingtype.ThingTypeData;
 import org.gonevertical.core.server.jdo.data.ThingJdo;
 import org.gonevertical.core.server.jdo.data.ThingStuffAboutJdo;
 import org.gonevertical.core.server.jdo.data.ThingStuffJdo;

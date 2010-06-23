@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.logging.Logger;
 
 import org.gonevertical.core.client.SetDefaultsData;
-import org.gonevertical.core.client.admin.thing.ThingData;
-import org.gonevertical.core.client.admin.thingstuff.ThingStuffData;
-import org.gonevertical.core.client.admin.thingstuff.ThingStuffDataFilter;
 import org.gonevertical.core.client.oauth.OAuthTokenData;
+import org.gonevertical.core.client.ui.admin.thing.ThingData;
+import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffData;
+import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffDataFilter;
 import org.gonevertical.core.client.widget.WidgetAttrData;
 import org.gonevertical.core.client.widget.WidgetAttrDataFilter;
 import org.gonevertical.core.server.ServerPersistence;

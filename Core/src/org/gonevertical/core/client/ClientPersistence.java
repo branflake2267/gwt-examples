@@ -1,9 +1,11 @@
 package org.gonevertical.core.client;
 
-import org.gonevertical.core.client.account.ui.LoginWidget;
 import org.gonevertical.core.client.global.EventManager;
 import org.gonevertical.core.client.global.LoadingWidget;
 import org.gonevertical.core.client.oauth.OAuthTokenData;
+import org.gonevertical.core.client.ui.breadcrumbs.BreadCrumbs;
+import org.gonevertical.core.client.ui.breadcrumbs.BreadCrumbs;
+import org.gonevertical.core.client.ui.login.LoginWidget;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
