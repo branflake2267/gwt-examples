@@ -6,7 +6,6 @@ import org.gonevertical.core.client.ui.login.LoginUi;
 import org.gonevertical.core.client.ui.login.LoginWidget;
 
 import com.gawkat.demo.client.layout.ContentWidget;
-import com.gawkat.demo.client.layout.zold_ContentWidgetV1;
 import com.gawkat.demo.client.layout.FooterWidget;
 import com.gawkat.demo.client.layout.LinksWidget;
 import com.gawkat.demo.client.layout.LogoWidget;
