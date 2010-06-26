@@ -15,7 +15,7 @@ public class TestWidget extends Composite {
 	
 	private ClientPersistence cp;
 	
-	private LoginWidget wLogin = null;
+	//private LoginWidget wLogin = null;
 	
 	private VerticalPanel pContentLoggedIn = new VerticalPanel();
 	private VerticalPanel pContentLoggedOut = new VerticalPanel();
@@ -23,11 +23,11 @@ public class TestWidget extends Composite {
 	public TestWidget(ClientPersistence cp) {
 		this.cp = cp;
 		
-		wLogin = LoginWidget.getInstance(cp, LoginUi.LOGIN_VERTICAL);
+		//wLogin = LoginWidget.getInstance(cp, LoginUi.LOGIN_VERTICAL);
 		
 		VerticalPanel pWidget = new VerticalPanel();
 		pWidget.add(pContentLoggedOut);
-		pWidget.add(wLogin);
+		//pWidget.add(wLogin);
 		pWidget.add(pContentLoggedIn);
 		
 		
@@ -63,7 +63,7 @@ public class TestWidget extends Composite {
 	}
 
 	private void drawLoggedOut() {
-		wLogin.setVisible(true);
+		//wLogin.setVisible(true);
 		pContentLoggedIn.setVisible(false);
 		pContentLoggedOut.setVisible(true);
 		
@@ -73,7 +73,7 @@ public class TestWidget extends Composite {
 	}
 	
 	private void drawLoggedIn() {
-		wLogin.setVisible(false);
+		//wLogin.setVisible(false);
 		pContentLoggedIn.setVisible(true);
 		pContentLoggedOut.setVisible(false);
 		
