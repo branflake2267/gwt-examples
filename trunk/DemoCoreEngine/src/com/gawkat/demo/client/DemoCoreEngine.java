@@ -2,6 +2,7 @@ package com.gawkat.demo.client;
 
 import org.gonevertical.core.client.ClientPersistence;
 import org.gonevertical.core.client.global.EventManager;
+import org.gonevertical.core.client.global.LoadingWidget;
 import org.gonevertical.core.client.ui.breadcrumbs.BreadCrumbs;
 import org.gonevertical.core.client.ui.login.LoginUi;
 import org.gonevertical.core.client.ui.login.LoginWidget;
@@ -19,6 +20,7 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -28,12 +30,12 @@ public class DemoCoreEngine implements EntryPoint, ValueChangeHandler<String> {
   private ClientPersistence cp = null;
   
   private LoginWidget wLogin = null;
-     
+   
   /**
    * entry point
    */
   public void onModuleLoad() {
-  	
+
   	String appConsumerKey = "demo_application";
   	String appConsumerSecret = "c1d0e06998305903ac76f589bbd6d4b61a670ba6"; //salt:password  
   	
@@ -42,10 +44,9 @@ public class DemoCoreEngine implements EntryPoint, ValueChangeHandler<String> {
   	cp.init("UA-2862268-9", "DemoCoreEngine", appConsumerKey, appConsumerSecret);
   
   	// set up login inputs top right
-  	wLogin = new LoginWidget(cp);
-    wLogin.initSession();
-    wLogin.setUi(LoginUi.LOGIN_HORIZONTAL);
-
+  	wLogin = new LoginWidget(cp, LoginUi.LOGIN_HORIZONTAL);
+  	wLogin.initSession();
+   
   	// observe history so we can track every querystring change
   	History.addValueChangeHandler(this);
   	
@@ -57,14 +58,17 @@ public class DemoCoreEngine implements EntryPoint, ValueChangeHandler<String> {
 				ClientPersistence wcp = (ClientPersistence) event.getSource();
 				if (wcp.getChangeEvent() == EventManager.APPLICATION_LOADED) {
 					drawLayout();
-				} else if (wcp.getChangeEvent() == EventManager.LOGGEDIN) {
-				} else if (wcp.getChangeEvent() == EventManager.LOGGEDOUT) {
+				} else if (wcp.getChangeEvent() == EventManager.USER_LOGGEDIN) {
+					// Nothing to do here
+				} else if (wcp.getChangeEvent() == EventManager.USER_LOGGEDOUT) {
+					// Nothing to do here
 				}
 			}
 		});
   }
   
 	private void drawLayout() {
+		hideApplicationLoading();
 		
 		LogoWidget wLogo = new LogoWidget(cp);
 		LinksWidget wLinks = new LinksWidget(cp);
@@ -97,6 +101,16 @@ public class DemoCoreEngine implements EntryPoint, ValueChangeHandler<String> {
 	  
 	  wBreadCrumbs.draw();
 	  
+  }
+
+	private void hideApplicationLoading() {
+		// hide the div that has the loading icon and info. war/DemoCoreEngine.html
+		try {
+	    Widget w = RootPanel.get("loading");
+	    w.setVisible(false);
+    } catch (Exception e) {
+	    e.printStackTrace();
+    }
   }
 
 	/**
