@@ -39,6 +39,16 @@ public class QueryStringData {
     return s;
   }
   
+  public String[] getHistoryToken_byUnderScore() {
+  	if (historyToken.contains("_") == false) {
+  		String[] s = new String[1];
+  		s[0] = historyToken;
+  		return s;
+  	}
+  	String[] s = historyToken.split("_");
+    return s;
+  }
+  
   public HashMap<String, String> getParameters() {
     return this.parameters;
   }

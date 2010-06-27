@@ -74,18 +74,18 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 	private	FlowPanel pUi = new FlowPanel();
 
 	// login button
-	private PushButton bLogin = new PushButton("Signin");
+	private PushButton bLogin = new PushButton("Sign in");
 
 	// forgot password, ask for it
 	private PushButton bForgot = new PushButton("Get Password");
 
-	private Hyperlink hAccountProfile = new Hyperlink("My Account", "core_profile");
-	private Hyperlink hAccountCreate = new Hyperlink("Create Account", "core_create");
+	private Hyperlink hAccountProfile = new Hyperlink("My Account", "core_profile_aboutme");
+	private Hyperlink hAccountCreate = new Hyperlink("Create Account", "core_profile_create");
 
 	// lets not change the url for these
 	private Anchor aForgotLink = new Anchor("Forgot Password");
-	private Anchor aLoginLink = new Anchor("SignIn");
-	private Anchor aLogout = new Anchor("SignOut");
+	private Anchor aLoginLink = new Anchor("Sign in");
+	private Anchor aLogout = new Anchor("Sign out");
 
 
 	// true, when logged in, false, when not
@@ -109,9 +109,13 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 	public LoginUiInputs(ClientPersistence cp, int uiType) {
 		this.cp = cp;
 		this.uiType = uiType;
+		
+		bLogin.setWidth("50px");
 
 		inputLabel_ConsumerKey = cp.getInputLabel_ConsumerKey();
 
+		initWidget(pWidget);
+		
 		HorizontalPanel hp = new HorizontalPanel();
 		hp.add(wLoading);
 		hp.add(new HTML("&nbsp;"));
@@ -119,24 +123,19 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 
 		pWidget.add(hp);
 
-		initWidget(pWidget);
-
 		// defaults
 		bForgot.setVisible(false);
+		pError.setVisible(false);
 
 		pWidget.addMouseOverHandler(this);
 		pWidget.addMouseOutHandler(this);
-
 		tbConsumerKey.addMouseOverHandler(this);
 		tbConsumerKey.addMouseOutHandler(this);
-
 		tbConsumerSecret.addMouseOverHandler(this);
 		tbConsumerSecret.addMouseOutHandler(this);
-
 		tbConsumerSecretPass.addMouseOverHandler(this);
 		tbConsumerSecretPass.addMouseOutHandler(this);
-
-
+		
 		// TODO
 		hAccountCreate.addClickHandler(this);
 		hAccountProfile.addClickHandler(this);
@@ -145,11 +144,9 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 		tbConsumerKey.addClickHandler(this);
 		tbConsumerKey.addFocusHandler(this);
 		tbConsumerKey.addBlurHandler(this);
-
 		tbConsumerSecret.addClickHandler(this);
 		tbConsumerSecret.addFocusHandler(this);
 		tbConsumerSecret.addBlurHandler(this);
-
 		tbConsumerSecretPass.addClickHandler(this);
 		tbConsumerSecretPass.addFocusHandler(this);
 		tbConsumerSecretPass.addBlurHandler(this);
@@ -158,7 +155,6 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 		bLogin.addClickHandler(this);
 		bForgot.addClickHandler(this);		
 		cbRemberMe.addClickHandler(this);
-
 		aLoginLink.addClickHandler(this);
 		aForgotLink.addClickHandler(this);
 		aLogout.addClickHandler(this);
@@ -166,14 +162,35 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 		// style
 		pWidget.setStyleName("core-login-ui");
 		pError.setStyleName("core-Notification");
-
-		// defaults
-		pError.setVisible(false);
-
 		hp.setCellVerticalAlignment(wLoading, VerticalPanel.ALIGN_MIDDLE);
+		
 
 		// observe global login events, and change state accordingly
-		cp.addChangeHandler(this);
+		if (cp != null) {
+  		cp.addChangeHandler(new ChangeHandler() {
+  			public void onChange(ChangeEvent event) {
+  				ClientPersistence cp = (ClientPersistence) event.getSource();
+  				
+  				if (cp.getChangeEvent() == EventManager.APPLICATION_LOADED) {
+  					draw();
+  					
+  				} else if (cp.getChangeEvent() == EventManager.NEW_USER_CREATED) {
+  					// nothing to do
+  
+  				} else if (cp.getChangeEvent() == EventManager.USER_LOGGEDIN) {
+  					setLoginStatus(true);
+  
+  				} else if (cp.getChangeEvent() == EventManager.USER_LOGGEDOUT) {
+  					setLoginStatus(false);
+  
+  				} else if (cp.getChangeEvent() == EventManager.LOGIN_DEMO) {
+  					cp.resetEvent();
+  					setDemoLogin();
+  					
+  				} 
+  			}
+  		});
+		}
 
 	}
 
@@ -256,6 +273,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 		drawInputLabel_key();
 		drawInputLabel_secret();
 
+		ploginItems.setCellHorizontalAlignment(bLogin, HorizontalPanel.ALIGN_CENTER);
 		tbConsumerKey.addStyleName("core-login-ui-inputconsumerkey");
 		tbConsumerSecret.addStyleName("core-login-ui-inputconsumersecret");
 		tbConsumerSecretPass.addStyleName("core-login-ui-inputconsumersecret");
@@ -454,6 +472,11 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 		if (error == null) {
 			return;
 		}
+		
+		if (pOptions.isAttached() == false) {
+			return;
+		}
+		
 		int left = pWidget.getAbsoluteLeft();
 		int top = pWidget.getAbsoluteTop() + pWidget.getOffsetHeight();
 		int width = pWidget.getOffsetWidth();
@@ -675,38 +698,19 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 
 		Widget sender = (Widget) event.getSource();
 
-		if (sender == cp) {
-			if (cp.getChangeEvent() == EventManager.APPLICATION_LOADED) {
-				draw();
-				
-			} else if (cp.getChangeEvent() == EventManager.NEW_USER_CREATED) {
-				// nothing to do
+		if (sender == tbConsumerKey) {
+			changeUsernameInput(false);
 
-			} else if (cp.getChangeEvent() == EventManager.LOGGEDIN) {
-				setLoginStatus(true);
+		} else if (sender == tbConsumerSecret) {
+			// TODO
 
-			} else if (cp.getChangeEvent() == EventManager.LOGGEDOUT) {
-				setLoginStatus(false);
+		} else if (sender == tbConsumerSecretPass) {
+			changePasswordInput_Blur();
 
-			} else if (cp.getChangeEvent() == EventManager.LOGIN_DEMO) {
-				setDemoLogin();
-				
-			} else if (sender == tbConsumerKey) {
-				changeUsernameInput(false);
+		} else if (sender == cbRemberMe) {
+			// TODO
 
-			} else if (sender == tbConsumerSecret) {
-				// TODO
-
-			} else if (sender == tbConsumerSecretPass) {
-				changePasswordInput_Blur();
-
-			} else if (sender == cbRemberMe) {
-				// TODO
-
-			} 
-
-		}
-
+		} 
 	}
 
 }

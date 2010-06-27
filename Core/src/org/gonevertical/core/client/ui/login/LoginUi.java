@@ -39,6 +39,8 @@ public class LoginUi extends Composite implements ChangeHandler {
 		this.cp = cp;
 
 		initWidget(pWidget);
+		
+		//pWidget.addStyleName("test1");
 	}
 
 	/**
@@ -59,6 +61,10 @@ public class LoginUi extends Composite implements ChangeHandler {
 		} else if (uiType == LOGIN_VERTICAL) {
 			pWidget.setCellHorizontalAlignment(loginUi, HorizontalPanel.ALIGN_CENTER);
 		}
+	}
+	
+	public void draw() {
+		loginUi.draw();
 	}
 
 	/**

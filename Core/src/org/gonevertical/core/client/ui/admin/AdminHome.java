@@ -42,31 +42,9 @@ public class AdminHome extends Composite implements ClickHandler {
 
 		rpc = RpcCore.initRpc();
 
-		cp.addChangeHandler(new ChangeHandler() {
-			public void onChange(ChangeEvent event) {
-				ClientPersistence wcp = (ClientPersistence) event.getSource();
-				if (wcp.getChangeEvent() == EventManager.LOGGEDIN) {
-					drawLoggedIn();
-				} else if (wcp.getChangeEvent() == EventManager.LOGGEDOUT) {
-					drawLoggedOut();
-				}
-			}
-		});
-
-	}
-
-	private void drawLoggedOut() {
-		pMenu.clear();
-	}
-
-	private void drawLoggedIn() {
-		drawMenu();
 	}
 
 	public void draw() {
-		if (cp.getLoginStatus() == false) {
-			return;
-		}
 		drawMenu();
 	}
 

@@ -115,22 +115,29 @@ public class BreadCrumbs extends Composite implements ValueChangeHandler<String>
   }
   
   /**
-   * bread crumb the domain.tld?[historyToken_.*]
+   * Split up the bread crumb with underscores, underscores will represent categories
    */
   private void drawMiddle(QueryStringData qsd) {
   	
-  	String historyToken = qsd.getHistoryToken_ToUnderScore();
-  	if (historyToken == null) {
+  	String[] middles = qsd.getHistoryToken_byUnderScore();
+  	if (middles == null) {
   		return;
   	}
   	
-  	String breadCrumbName = breadCrumbsCategory.get(historyToken);
+  	for(int i=0; i < middles.length; i++) {
+  		drawCategoryCrumbs(middles[i]);
+  	}
+  	
+  }
+  
+  private void drawCategoryCrumbs(String middle) {
+  	String breadCrumbName = breadCrumbsCategory.get(middle);
   	
   	if (breadCrumbName == null || breadCrumbName.trim().length() == 0) {
   		return;
   	}
   	
-    BreadCrumb b = new BreadCrumb(breadCrumbName, homeHistoryToken);
+    BreadCrumb b = new BreadCrumb(breadCrumbName);
     pCrumbs.add(b);
   }
 

@@ -32,7 +32,7 @@ public class AboutMe extends Composite {
 		flexTable.setSize("596px", "55px");
 		
 		VerticalPanel vp = new VerticalPanel();
-		vp.setHeight("130px");
+		vp.setSize("100%", "130px");
 		vp.add(flexTable);
 		
 		initWidget(vp);
@@ -82,7 +82,7 @@ public class AboutMe extends Composite {
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
 		flexTable.setWidget(4, 1, horizontalPanel);
 		
-		PushButton pushButton = new PushButton("New button");
+		PushButton pushButton = new PushButton();
 		pushButton.setHTML("Change Username");
 		horizontalPanel.add(pushButton);
 		
