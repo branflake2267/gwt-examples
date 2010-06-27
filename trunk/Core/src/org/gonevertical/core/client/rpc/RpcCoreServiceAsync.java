@@ -16,6 +16,7 @@ import org.gonevertical.core.client.ui.admin.thingtype.ThingTypesData;
 import org.gonevertical.core.client.ui.feedback.FeedbackData;
 import org.gonevertical.core.client.ui.login.ChangePasswordData;
 import org.gonevertical.core.client.ui.login.UserData;
+import org.gonevertical.core.client.ui.profile.ProfileData;
 import org.gonevertical.core.client.widget.WidgetAttrData;
 import org.gonevertical.core.client.widget.WidgetAttrDataFilter;
 
@@ -65,4 +66,6 @@ public interface RpcCoreServiceAsync {
   public void saveFeedBack(FeedbackData feedbackData, AsyncCallback<Boolean> callback);
   
   public void getWidgetAttributes(OAuthTokenData accessToken, WidgetAttrDataFilter widgetAttrDataFilter, AsyncCallback<WidgetAttrData> callback);
+  
+  public void getProfileData(OAuthTokenData accessToken, long thingId, AsyncCallback<ProfileData> callback);
 }

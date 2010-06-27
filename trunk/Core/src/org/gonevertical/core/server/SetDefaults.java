@@ -6,10 +6,12 @@ import java.util.logging.Logger;
 import org.gonevertical.core.client.ClientPersistence;
 import org.gonevertical.core.client.SetDefaultsData;
 import org.gonevertical.core.client.oauth.Sha1;
+import org.gonevertical.core.client.ui.admin.thing.ThingData;
 import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffData;
 import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffDataFilter;
 import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeData;
 import org.gonevertical.core.client.ui.admin.thingtype.ThingTypeData;
+import org.gonevertical.core.server.db.Db_ThingStuff;
 import org.gonevertical.core.server.jdo.data.ThingJdo;
 import org.gonevertical.core.server.jdo.data.ThingStuffAboutJdo;
 import org.gonevertical.core.server.jdo.data.ThingStuffJdo;
@@ -27,9 +29,11 @@ public class SetDefaults {
 	private static final Logger log = Logger.getLogger(SetDefaults.class.getName());
 
 	private ServerPersistence sp = null;
+	private Db_ThingStuff dbTs;
 
 	public SetDefaults(ServerPersistence sp) {
 		this.sp = sp;
+		dbTs = new Db_ThingStuff(sp);
 	}
 
 	public boolean setDefaults(int defaultType) {
@@ -47,24 +51,25 @@ public class SetDefaults {
 
 	private void createStuffTypes() {
 
-		createStuffType(SetDefaultsData.THINGSTUFFTYPE_NAME, "Name", ThingStuffTypeData.VT_STRING);
-		createStuffType(SetDefaultsData.THINGSTUFFTYPE_LINK, "Thing Link", ThingStuffTypeData.VT_LINK);
-		createStuffType(SetDefaultsData.THINGSTUFFTYPE_ADMIN, "Is Site Admin", ThingStuffTypeData.VT_BOOLEAN);
-		createStuffType(4, "Can View", ThingStuffTypeData.VT_BOOLEAN);
-		createStuffType(5, "Can Edit", ThingStuffTypeData.VT_BOOLEAN);
-		createStuffType(6, "Can Add", ThingStuffTypeData.VT_BOOLEAN);
-		createStuffType(7, "Can't View", ThingStuffTypeData.VT_BOOLEAN);
-		createStuffType(8, "Can't Edit", ThingStuffTypeData.VT_BOOLEAN);
-		createStuffType(9, "Can't Add", ThingStuffTypeData.VT_BOOLEAN);
-		createStuffType(10, "Alias", ThingStuffTypeData.VT_STRING);
-		createStuffType(11, "Nick Name", ThingStuffTypeData.VT_STRING);
-		createStuffType(12, "First Name", ThingStuffTypeData.VT_STRING);
-		createStuffType(13, "Middle Name", ThingStuffTypeData.VT_STRING);		
-		createStuffType(14, "Last Name", ThingStuffTypeData.VT_STRING);
-		createStuffType(15, "Email", ThingStuffTypeData.VT_EMAIL);
-		createStuffType(16, "Mobile", ThingStuffTypeData.VT_PHONE);
-		createStuffType(17, "Phone", ThingStuffTypeData.VT_PHONE);
-		createStuffType(18, "Description", ThingStuffTypeData.VT_STRING);
+		createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_NAME, "Name", ThingStuffTypeData.VALUETYPE_STRING);
+		createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_LINK, "Thing Link", ThingStuffTypeData.VALUETYPE_LINK);
+		createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_ADMIN, "Is Site Admin", ThingStuffTypeData.VALUETYPE_BOOLEAN);
+		createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_CANVIEW, "Can View", ThingStuffTypeData.VALUETYPE_BOOLEAN);
+		createStuffType(5, "Can Edit", ThingStuffTypeData.VALUETYPE_BOOLEAN);
+		createStuffType(6, "Can Add", ThingStuffTypeData.VALUETYPE_BOOLEAN);
+		createStuffType(7, "Can't View", ThingStuffTypeData.VALUETYPE_BOOLEAN);
+		createStuffType(8, "Can't Edit", ThingStuffTypeData.VALUETYPE_BOOLEAN);
+		createStuffType(9, "Can't Add", ThingStuffTypeData.VALUETYPE_BOOLEAN);
+		createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_ALIAS, "Alias", ThingStuffTypeData.VALUETYPE_STRING);
+		createStuffType(11, "Nick Name", ThingStuffTypeData.VALUETYPE_STRING);
+		createStuffType(12, "First Name", ThingStuffTypeData.VALUETYPE_STRING);
+		createStuffType(13, "Middle Name", ThingStuffTypeData.VALUETYPE_STRING);		
+		createStuffType(14, "Last Name", ThingStuffTypeData.VALUETYPE_STRING);
+		createStuffType(15, "Email", ThingStuffTypeData.VALUETYPE_EMAIL);
+		createStuffType(16, "Mobile", ThingStuffTypeData.VALUETYPE_PHONE);
+		createStuffType(17, "Phone", ThingStuffTypeData.VALUETYPE_PHONE);
+		createStuffType(18, "Description", ThingStuffTypeData.VALUETYPE_STRING);
+		createStuffType(19, "Accept Terms", ThingStuffTypeData.VALUETYPE_BOOLEAN);
 
 	}
 
@@ -85,54 +90,58 @@ public class SetDefaults {
 
 	private void createThings() {
 
-		createThing(SetDefaultsData.THING_APPLICATION, ThingTypeData.TYPE_APPLICATION, "demo_application", "password");
-		createThing(SetDefaultsData.THING_ADMINISTRATOR, ThingTypeData.TYPE_USER, "administrator", "password");
-		createThing(SetDefaultsData.THING_DEMOUSER, ThingTypeData.TYPE_USER, "demo_user", "password");
+		createThing(ThingData.THING_APPLICATION_DEMO, ThingTypeData.TYPE_APPLICATION, "demo_application", "password");
+		createThing(ThingData.THING_USER_ADMIN, ThingTypeData.TYPE_USER, "administrator", "password");
+		createThing(ThingData.THING_USER_DEMO, ThingTypeData.TYPE_USER, "demo_user", "password");
 
-		createThing(SetDefaultsData.THING_PERMISSION_OPEN, ThingTypeData.TYPE_PERMISSION, null, null); // open
-		createThing(SetDefaultsData.THING_PERMISSION_CLOSED, ThingTypeData.TYPE_PERMISSION, null, null); // closed
+		createThing(ThingData.THING_PERMISSION_OPEN, ThingTypeData.TYPE_PERMISSION, null, null); // open
+		createThing(ThingData.THING_PERMISSION_CLOSED, ThingTypeData.TYPE_PERMISSION, null, null); // closed
 
-		createThing(SetDefaultsData.THING_WIDGET_THINGTYPES, ThingTypeData.TYPE_WIDGET, null, null); // ThingTypes
-		createThing(SetDefaultsData.THING_WIDGET_THINGSTUFFTYPES, ThingTypeData.TYPE_WIDGET, null, null); // ThingStuffTypes
-		createThing(SetDefaultsData.THING_WIDGET_THINGS, ThingTypeData.TYPE_WIDGET, null, null); // Things
-		createThing(SetDefaultsData.THING_WIDGET_EDITTHING, ThingTypeData.TYPE_WIDGET, null, null); // EditThing
+		createThing(ThingData.THING_WIDGET_CORETHINGTYPES, ThingTypeData.TYPE_WIDGET, null, null); // ThingTypes
+		createThing(ThingData.THING_WIDGET_CORETHINGSTUFFTYPES, ThingTypeData.TYPE_WIDGET, null, null); // ThingStuffTypes
+		createThing(ThingData.THING_WIDGET_CORETHINGS, ThingTypeData.TYPE_WIDGET, null, null); // Things
+		createThing(ThingData.THING_WIDGET_COREEDITTHING, ThingTypeData.TYPE_WIDGET, null, null); // EditThing
 
 	}
 
 	private void createThingsStuff() {
 
-		createThingStuff(4, 1, "Open By Default"); // open name
-		createThingStuff(5, 1, "Closed By Default"); // closed name
+		dbTs.createThingStuff_Unique(4, 1, "Open By Default"); // open name
+		dbTs.createThingStuff_Unique(5, 1, "Closed By Default"); // closed name
 
-		createThingStuff(6, 1, "Core Thing Types"); // ThingTypes name
-		createThingStuff(7, 1, "Core Thing Stuff Types"); // ThingStuffTypes name
-		createThingStuff(8, 1, "Core Things Name"); // Things name
-		createThingStuff(9, 1, "Core Edit Thing"); // EditThings name
+		dbTs.createThingStuff_Unique(6, 1, "Core Thing Types"); // ThingTypes name
+		dbTs.createThingStuff_Unique(7, 1, "Core Thing Stuff Types"); // ThingStuffTypes name
+		dbTs.createThingStuff_Unique(8, 1, "Core Things Name"); // Things name
+		dbTs.createThingStuff_Unique(9, 1, "Core Edit Thing"); // EditThings name
 
 		// admin is admin
-		createThingStuff(2, 3, true);
+		dbTs.createThingStuff_Unique(2, 3, true);
 
 		// open by default
-		createThingStuff(4, 7, false); // open can't view
-		createThingStuff(4, 8, false); // open can't edit
-		createThingStuff(4, 9, false); // open can't add
+		dbTs.createThingStuff_Unique(4, 7, false); // open can't view
+		dbTs.createThingStuff_Unique(4, 8, false); // open can't edit
+		dbTs.createThingStuff_Unique(4, 9, false); // open can't add
 
 		// closed
-		createThingStuff(5, 4, false); // closed can view
-		createThingStuff(5, 5, false); // closed can edit
-		createThingStuff(5, 6, false); // closed can add
+		dbTs.createThingStuff_Unique(5, 4, false); // closed can view
+		dbTs.createThingStuff_Unique(5, 5, false); // closed can edit
+		dbTs.createThingStuff_Unique(5, 6, false); // closed can add
 
 		// widgets are closed - restricted
-		createThingStuff(6, 2, 5); // 6 ThingTypes closed
-		createThingStuff(7, 2, 5); // 7 ThingStypes closed
-		createThingStuff(8, 2, 5); // 8 things closed
-		createThingStuff(9, 2, 5); // 9 edit things closed
+		dbTs.createThingStuff_Unique(6, 2, 5); // 6 ThingTypes closed
+		dbTs.createThingStuff_Unique(7, 2, 5); // 7 ThingStypes closed
+		dbTs.createThingStuff_Unique(8, 2, 5); // 8 things closed
+		dbTs.createThingStuff_Unique(9, 2, 5); // 9 edit things closed
 
 		// demo_user link, 6,7,8,9 
-		createThingStuff(3, 2, 6); // links the widgets into place
-		createThingStuff(3, 2, 7);
-		createThingStuff(3, 2, 8);
-		createThingStuff(3, 2, 9);
+		dbTs.createThingStuff_Unique(3, 2, 6); // links the widgets into place
+		dbTs.createThingStuff_Unique(3, 2, 7);
+		dbTs.createThingStuff_Unique(3, 2, 8);
+		dbTs.createThingStuff_Unique(3, 2, 9);
+		
+		dbTs.createThingStuff_Unique(ThingData.THING_USER_DEMO, ThingStuffTypeData.THINGSTUFFTYPE_ALIAS, "Deem");
+		dbTs.createThingStuff_Unique(ThingData.THING_USER_DEMO, ThingStuffTypeData.THINGSTUFFTYPE_FIRSTNAME, "Firsty");
+		dbTs.createThingStuff_Unique(ThingData.THING_USER_DEMO, ThingStuffTypeData.THINGSTUFFTYPE_LASTNAME, "Lastious");
 
 		// create multi-demo about the link
 		// link 3,2,6 - 4(canview)=true
@@ -174,41 +183,7 @@ public class SetDefaults {
 		tsaj.saveUnique(tsd);
 	}
 
-	public void createThingStuff(int thingId, int thingStuffTypeId, long value) {
-
-		ThingStuffData ts2 = new ThingStuffData();
-		ts2.setThingId(thingId);
-		ts2.setThingStuffTypeId(thingStuffTypeId);
-		ts2.setValue(value);
-
-		ThingStuffJdo tsj2 = new ThingStuffJdo(sp);
-		tsj2.saveUnique(ts2);
-
-	}
-
-	public void createThingStuff(int thingId, int thingStuffTypeId, String value) {
-
-		ThingStuffData ts2 = new ThingStuffData();
-		ts2.setThingId(thingId);
-		ts2.setThingStuffTypeId(thingStuffTypeId);
-		ts2.setValue(value);
-
-		ThingStuffJdo tsj2 = new ThingStuffJdo(sp);
-		tsj2.saveUnique(ts2);
-
-	}
-
-	public void createThingStuff(int thingId, int thingStuffTypeId, boolean value) {
-
-		ThingStuffData ts2 = new ThingStuffData();
-		ts2.setThingId(thingId);
-		ts2.setThingStuffTypeId(thingStuffTypeId);
-		ts2.setValue(value);
-
-		ThingStuffJdo tsj2 = new ThingStuffJdo(sp);
-		tsj2.saveUnique(ts2);
-
-	}
+	
 
 	public void createThing(int id, int thingTypeId, String key, String password) {
 		Sha1 sha = new Sha1();
@@ -217,6 +192,9 @@ public class SetDefaults {
 		if (password != null) {
 			secret = sha.hex_hmac_sha1(ClientPersistence.PASSWORD_SALT, password);
 		}
+		
+		//debug
+		System.out.println("SetDefaults.createThing(): key=" + key + " password=" + password);
 
 		ThingJdo a = new ThingJdo(sp);
 		a.setThingId(id);

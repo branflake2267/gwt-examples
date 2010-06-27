@@ -185,6 +185,7 @@ public class ClientPersistence extends Composite implements ChangeHandler  {
    * @param changeEvent
    */
   public void fireChange(int changeEvent) {
+  	System.out.println("ClientPersistence.fireChange() changeEvent=" + changeEvent);
     this.changeEvent = changeEvent;
     NativeEvent nativeEvent = Document.get().createChangeEvent();
     ChangeEvent.fireNativeEvent(nativeEvent, this);

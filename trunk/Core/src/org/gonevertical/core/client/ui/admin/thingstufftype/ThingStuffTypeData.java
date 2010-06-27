@@ -5,38 +5,53 @@ import java.util.Date;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ThingStuffTypeData implements IsSerializable {
+	
+	public static final int THINGSTUFFTYPE_NAME = 1;
+	public static final int THINGSTUFFTYPE_LINK = 2;
+	public static final int THINGSTUFFTYPE_ADMIN = 3;
+	public static final int THINGSTUFFTYPE_CANVIEW = 4;
+	public static final int THINGSTUFFTYPE_CANEDIT = 5;
+	public static final int THINGSTUFFTYPE_CANADD = 6;
+	public static final int THINGSTUFFTYPE_CANTVIEW = 7;
+	public static final int THINGSTUFFTYPE_CANTEDIT = 8;
+	public static final int THINGSTUFFTYPE_CANTADD = 9;
+	public static final int THINGSTUFFTYPE_ALIAS = 10;
+	public static final int THINGSTUFFTYPE_NICKNAME = 11;
+	public static final int THINGSTUFFTYPE_FIRSTNAME = 12;
+	public static final int THINGSTUFFTYPE_MIDDLENAME = 13;
+	public static final int THINGSTUFFTYPE_LASTNAME = 14;
+	public static final int THINGSTUFFTYPE_EMAIL = 15;
+	public static final int THINGSTUFFTYPE_MOBILE = 16;
+	public static final int THINGSTUFFTYPE_PHONE = 17;
+	public static final int THINGSTUFFTYPE_DESC = 18;
+	public static final int THINGSTUFFTYPE_ACCEPTTERMS = 19;
 
 	// NOTE: app engine storage types - str, int32, int64, double, bool, safest to store in text, so its exact when decimal
-	
-  public static final int VT_STRING = 1;
-  public static final int VT_BOOLEAN = 2;
-  public static final int VT_DOUBLE = 3;
-  public static final int VT_INT = 4;
-  
-  public static final int VT_STRING_LARGE = 5; // text area
-  public static final int VT_STRING_CASE = 6; // text box case sensitive
-  public static final int VT_STRING_LARGE_CASE = 7; // text area case sensitive
-  
-  public static final int VT_HTML = 8;
-  public static final int VT_URL = 9;
-  public static final int VT_EMAIL = 10;
-  public static final int VT_PHONE = 11;
-  
+  public static final int VALUETYPE_STRING = 1;
+  public static final int VALUETYPE_BOOLEAN = 2;
+  public static final int VALUETYPE_DOUBLE = 3;
+  public static final int VALUETYPE_INT = 4;
+  public static final int VALUETYPE_STRING_LARGE = 5; // text area
+  public static final int VALUETYPE_STRING_CASE = 6; // text box case sensitive
+  public static final int VALUETYPE_STRING_LARGE_CASE = 7; // text area case sensitive
+  public static final int VALUETYPE_HTML = 8;
+  public static final int VALUETYPE_URL = 9;
+  public static final int VALUETYPE_EMAIL = 10;
+  public static final int VALUETYPE_PHONE = 11;
   /**
    * Thing Link - link to another thing - thing relationships
    */
-	public static final int VT_LINK = 12;
-	
+	public static final int VALUETYPE_LINK = 12;
 	/**
 	 * file types
 	 */
-	public static final int VT_FILE = 13;
+	public static final int VALUETYPE_FILE = 13;
 	
   // identity
   private long stuffTypeId;
   
   // type of value storage format
-  private int valueTypeId = VT_STRING;
+  private int valueTypeId = VALUETYPE_STRING;
   
   // name of the stuff item
   private String name;

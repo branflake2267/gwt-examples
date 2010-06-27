@@ -4,6 +4,8 @@ import java.util.logging.Logger;
 
 import org.gonevertical.core.client.oauth.OAuthTokenData;
 import org.gonevertical.core.client.ui.admin.thing.ThingData;
+import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffData;
+import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeData;
 import org.gonevertical.core.client.ui.login.ChangePasswordData;
 import org.gonevertical.core.client.ui.login.UserData;
 import org.gonevertical.core.server.ServerPersistence;
@@ -23,12 +25,14 @@ public class Db_User {
 	private static final Logger log = Logger.getLogger(Db_User.class.getName());
 	
   private ServerPersistence sp = null;
+	private Db_ThingStuff dbTs;
   
   /**
    * constructor
    */
   public Db_User(ServerPersistence sp) {
     this.sp = sp;
+    dbTs = new Db_ThingStuff(sp);
   }
   
   private boolean verifyUserData(UserData userData) {
@@ -41,7 +45,7 @@ public class Db_User {
   
   private UserData getError(int error) {
     UserData ud = new UserData();
-    ud.error = error;
+    ud.setError(error);
     return ud;
   }
   
@@ -61,14 +65,9 @@ public class Db_User {
       return udErr;
     }
     
-    
-    // TODO - deal with this in a thing hash table
-    boolean acceptTerms = userData.acceptTerms;
-    
-    
     long thingTypeId = ThingTypeJdo.TYPE_USER;
-    String key = userData.consumerKey;
-    String secret = userData.consumerSecret;
+    String key = userData.getConsumreKey();
+    String secret = userData.getConsumerSecret();
     
     ThingJdo user = new ThingJdo(sp);
     user.insertUnique(thingTypeId, key, secret);
@@ -80,15 +79,28 @@ public class Db_User {
       // make an error?
     }
     
+    saveAcceptTerms(newUserId, userData);
+    
     // create user oAuthToken access token
     UserData newUd = new UserData();
-    newUd.accessToken = getUserAccessToken(userData); 
+    newUd.setAccessToken(getUserAccessToken(userData)); 
     newUd.sign();
     
     return newUd;
   }
   
-  /**
+  private void saveAcceptTerms(Long newUserId, UserData userData) {
+  	if (newUserId == null) {
+  		return;
+  	}
+  	
+    boolean acceptTerms = userData.getAcceptTerms();
+    
+    dbTs.createThingStuff_Unique(newUserId, ThingStuffTypeData.THINGSTUFFTYPE_ACCEPTTERMS, acceptTerms);
+    
+  }
+
+	/**
    * does the user exist in the database?
    * 
    * @param userData
@@ -102,8 +114,8 @@ public class Db_User {
       return udErr;
     }
     
-    String userConsumerKey = userData.consumerKey;
-    String userConsumerSecret = userData.consumerSecret;
+    String userConsumerKey = userData.getConsumreKey();
+    String userConsumerSecret = userData.getConsumerSecret();
     
     if (userConsumerKey == null) {
       userConsumerKey = "";
@@ -126,7 +138,7 @@ public class Db_User {
 
     // get userId
     ThingJdo tj = new ThingJdo(sp);
-    ThingJdo[] users = tj.query((long)ThingTypeJdo.TYPE_USER, userData.consumerKey);
+    ThingJdo[] users = tj.query((long)ThingTypeJdo.TYPE_USER, userData.getConsumreKey());
     long userId = 0;
     if (users != null && users.length > 0) {
       userId = users[0].getThingId();
@@ -139,7 +151,7 @@ public class Db_User {
     
     UserData ud = new UserData();
     if (exists == true) {
-      ud.error = UserData.KEY_EXISTS;
+      ud.setError(UserData.KEY_EXISTS);
     }
     
     return ud;
@@ -172,9 +184,9 @@ public class Db_User {
     
     // create a userAccessToken
     // which is used to exchange the appAccessToken to userAccessToken
-    OAuthTokenData appAccessToken = userData.accessToken; // this is the app token shipped in
-    appAccessToken.setConsumerKey(userData.consumerKey);
-    appAccessToken.sign(url, userData.consumerSecret);
+    OAuthTokenData appAccessToken = userData.getAccessToken(); // this is the app token shipped in
+    appAccessToken.setConsumerKey(userData.getConsumreKey());
+    appAccessToken.sign(url, userData.getConsumerSecret());
     
     OAuthServer oAuthServer = new OAuthServer(sp);
     OAuthTokenData userAccessToken = oAuthServer.getUserAccessToken(appAccessToken);

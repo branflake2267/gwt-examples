@@ -1,6 +1,7 @@
 package org.gonevertical.core.client.ui.profile;
 
 import org.gonevertical.core.client.ClientPersistence;
+import org.gonevertical.core.client.ui.admin.thing.ThingData;
 import org.gonevertical.core.client.ui.login.ChangePassword;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -19,6 +20,10 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class AboutMe extends Composite {
 
 	private ClientPersistence cp;
+	private TextBox tbAlias;
+	private TextBox tbNameFirst;
+	private TextBox tbNameLast;
+	private HTML htmlUserName;
 
 	public AboutMe(ClientPersistence cp) {
 		this.cp = cp;
@@ -38,9 +43,9 @@ public class AboutMe extends Composite {
 		PushButton pshbtnSave = new PushButton("Save");
 		hpButtonsTop.add(pshbtnSave);
 		
-		HTML htmlNickName = new HTML("Nick Name", true);
-		htmlNickName.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		flexTable.setWidget(1, 0, htmlNickName);
+		HTML htmlAlias = new HTML("Alias", true);
+		htmlAlias.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		flexTable.setWidget(1, 0, htmlAlias);
 		
 		HTML htmlFirstName = new HTML("First Name", true);
 		htmlFirstName.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
@@ -50,16 +55,16 @@ public class AboutMe extends Composite {
 		htmlLastName.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		flexTable.setWidget(1, 2, htmlLastName);
 		
-		TextBox tbNameNick = new TextBox();
-		tbNameNick.setTextAlignment(TextBoxBase.ALIGN_LEFT);
-		flexTable.setWidget(2, 0, tbNameNick);
-		tbNameNick.setWidth("200");
+		tbAlias = new TextBox();
+		tbAlias.setTextAlignment(TextBoxBase.ALIGN_LEFT);
+		flexTable.setWidget(2, 0, tbAlias);
+		tbAlias.setWidth("200");
 		
-		TextBox tbNameFirst = new TextBox();
+		tbNameFirst = new TextBox();
 		flexTable.setWidget(2, 1, tbNameFirst);
 		tbNameFirst.setWidth("200");
 		
-		TextBox tbNameLast = new TextBox();
+		tbNameLast = new TextBox();
 		flexTable.setWidget(2, 2, tbNameLast);
 		tbNameLast.setWidth("200");
 		flexTable.getCellFormatter().setHorizontalAlignment(2, 0, HasHorizontalAlignment.ALIGN_CENTER);
@@ -71,14 +76,18 @@ public class AboutMe extends Composite {
 		flexTable.getCellFormatter().setHorizontalAlignment(3, 0, HasHorizontalAlignment.ALIGN_CENTER);
 		flexTable.getCellFormatter().setVerticalAlignment(3, 0, HasVerticalAlignment.ALIGN_MIDDLE);
 		
-		TextBox textBox = new TextBox();
-		flexTable.setWidget(4, 0, textBox);
-		textBox.setWidth("200");
-		flexTable.getCellFormatter().setVerticalAlignment(4, 0, HasVerticalAlignment.ALIGN_MIDDLE);
-		flexTable.getCellFormatter().setHorizontalAlignment(4, 0, HasHorizontalAlignment.ALIGN_CENTER);
+		htmlUserName = new HTML("", true);
+		flexTable.setWidget(4, 0, htmlUserName);
+		
+		HorizontalPanel horizontalPanel = new HorizontalPanel();
+		flexTable.setWidget(4, 1, horizontalPanel);
+		
+		PushButton pushButton = new PushButton("New button");
+		pushButton.setHTML("Change Username");
+		horizontalPanel.add(pushButton);
 		
 		HorizontalPanel hpButtons = new HorizontalPanel();
-		flexTable.setWidget(4, 1, hpButtons);
+		flexTable.setWidget(4, 2, hpButtons);
 		
 		PushButton pshbtnChangePassword = new PushButton("Change Password");
 		hpButtons.add(pshbtnChangePassword);
@@ -87,7 +96,13 @@ public class AboutMe extends Composite {
 				changePassword();
 			}
 		});
-		pshbtnChangePassword.setHTML("Change My Password");
+		pshbtnChangePassword.setHTML("Change Password");
+		flexTable.getCellFormatter().setVerticalAlignment(4, 1, HasVerticalAlignment.ALIGN_MIDDLE);
+		flexTable.getCellFormatter().setHorizontalAlignment(4, 1, HasHorizontalAlignment.ALIGN_CENTER);
+		flexTable.getCellFormatter().setVerticalAlignment(4, 2, HasVerticalAlignment.ALIGN_MIDDLE);
+		flexTable.getCellFormatter().setHorizontalAlignment(4, 2, HasHorizontalAlignment.ALIGN_CENTER);
+		flexTable.getCellFormatter().setVerticalAlignment(4, 0, HasVerticalAlignment.ALIGN_MIDDLE);
+		flexTable.getCellFormatter().setHorizontalAlignment(4, 0, HasHorizontalAlignment.ALIGN_CENTER);
 		
 		HTML htmlnbsp_1 = new HTML("&nbsp;", true);
 		vp.add(htmlnbsp_1);
@@ -104,4 +119,42 @@ public class AboutMe extends Composite {
 	  wcp.center();
   }
 
+	public void setProfileData(ProfileData profileData) {
+		
+		drawNames(profileData);
+		
+		drawEmails(profileData);
+		
+  }
+	
+	private void drawNames(ProfileData profileData) {
+
+		if (profileData == null) {
+			return;
+		}
+		
+		String alias = profileData.getAlias();
+		tbAlias.setText(alias);
+		
+		String firstName = profileData.getFirstName();
+		tbNameFirst.setText(firstName);
+		
+		String lastName = profileData.getLastName();
+		tbNameLast.setText(lastName);
+		
+		String userName = profileData.getThingData().getKey();
+		htmlUserName.setText(userName);
+		
+  }
+
+	private void drawEmails(ProfileData profileData) {
+		
+	  
+  }
+
+
+
+	public HTML getHtmlUserName() {
+		return htmlUserName;
+	}
 }

@@ -1,5 +1,6 @@
 package org.gonevertical.core.client.ui.login;
 
+import org.gonevertical.core.client.ClientPersistence;
 import org.gonevertical.core.client.oauth.Sha1;
 import org.gonevertical.core.client.ui.admin.thing.ThingData;
 
@@ -16,7 +17,9 @@ public class ChangePasswordData implements IsSerializable {
   
   public void setData(ThingData thingData, String newPassword) {
     this.thingData = thingData;
-    this.password = newPassword;
+    
+    Sha1 sha = new Sha1();
+    this.password = sha.hex_hmac_sha1(ClientPersistence.PASSWORD_SALT, password);
   }
   
   public ThingData getThingData() {

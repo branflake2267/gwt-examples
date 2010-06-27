@@ -248,7 +248,10 @@ public class LoginWidget extends Composite implements ChangeHandler {
 		}
 		tokenData.setConsumerKey(consumerKey);
 		tokenData.sign(url, consumerSecret);
-
+		
+		String debug = tokenData.getDebugSigning();
+		RootPanel.get().add(new HTML("LoginWidget: debugSigning " + debug));
+		
 		// rpc
 		getUserAccessToken(tokenData);
 	}

@@ -43,7 +43,7 @@ public class ThingStuffTypeJdo {
 
 	// type of value, like int, double, string, ...
 	@Persistent
-	private int valueTypeId = ThingStuffTypeData.VT_STRING;
+	private int valueTypeId = ThingStuffTypeData.VALUETYPE_STRING;
 
 	// when did this start in time
 	@Persistent

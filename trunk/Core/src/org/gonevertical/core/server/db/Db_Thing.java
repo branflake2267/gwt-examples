@@ -118,16 +118,15 @@ public class Db_Thing {
     return b;
   }
   
-  public ThingData getThing(OAuthTokenData accessToken, ThingDataFilter filter, long thingId) {
+  public ThingData getThing(OAuthTokenData accessToken, ThingDataFilter filter) {
   	
   	// get thing
   	ThingJdo tj = new ThingJdo(sp);
-  	ThingData td = tj.query(thingId);
+  	ThingData td = tj.query(filter.getThingId());
   	
   	// get thing stuffs
-  	
   	ThingStuffDataFilter f = new ThingStuffDataFilter();
-  	f.setThingId(thingId);
+  	f.setThingId(filter.getThingId());
   	ThingStuffsData tsd = dbTs.getThingStuffsData(accessToken, f);
   	td.setThingStuffsData(tsd);
   	
@@ -166,7 +165,12 @@ public class Db_Thing {
 		dbTs.saveThingStuffData(accessToken, f, tsd.getThingStuffData());
 		
 		// get thing
-		ThingData r = getThing(accessToken, filter, thingId);
+		//filter.setThingId(thingId); // TODO should I need this
+		System.out.println("Db_Thing.save() thingId=" + thingId);
+		if (thingId <= 0) {
+			System.out.println("Db_Thing.save() ERROROROROROROROROROROR*****************");
+		}
+		ThingData r = getThing(accessToken, filter);
 	  return r;
   }
   

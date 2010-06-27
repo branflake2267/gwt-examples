@@ -7,7 +7,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 public class ThingStuffDataFilter implements IsSerializable {
   
   private long start = 0;
-  private long limit = 0;
+  private long limit = 100;
   
   // primary key(id) (when saved)
   private long thingStuffId = 0;

@@ -250,9 +250,9 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
   private void doesConsumerExistAlready() {
     
     UserData userData = new UserData();
-    userData.accessToken = cp.getAccessToken();
-    userData.consumerKey = getKey(); // could be -> getKeyHash();
-    userData.consumerSecret = wSecret.getPasswordHash();
+    userData.setAccessToken(cp.getAccessToken());
+    userData.setConsumerKey(getKey()); // could be -> getKeyHash(); // although this would be hard to retrieve if forgotten
+    userData.setConsumerSecret(wSecret.getPasswordHash());
     userData.sign();
     
     doesUserExistRpc(userData);
@@ -285,7 +285,7 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
   
   private void processKeyExist(UserData userData) {
     
-    if (userData.error > 0) {
+    if (userData.getErrorInt() > 0) {
       drawNotification(userData.getNotification());
       return;
     }
@@ -408,10 +408,10 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
 
     // prepare for transport
     UserData userData = new UserData();
-    userData.accessToken = cp.getAccessToken();
-    userData.consumerKey = getKey(); // could be - getKeyHash();;
-    userData.consumerSecret = wSecret.getPasswordHash();
-    userData.acceptTerms = cbAccept.getValue();
+    userData.setAccessToken(cp.getAccessToken());
+    userData.setConsumerKey(getKey()); // could be - getKeyHash();;
+    userData.setConsumerSecret(wSecret.getPasswordHash());
+    userData.setAcceptTerms(cbAccept.getValue());
     userData.sign();
     
     createAccountRpc(userData);
@@ -424,12 +424,12 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
     }
     
     // are there errors???
-    if (userData.error > 0) {
-      drawNotification(UserData.getError(userData.error));
+    if (userData.getErrorInt() > 0) {
+      drawNotification(UserData.getError(userData.getErrorInt()));
       return;
     }
     
-    cp.setAccessToken(userData.accessToken);
+    cp.setAccessToken(userData.getAccessToken());
 
     History.newItem("account_Profile");
     

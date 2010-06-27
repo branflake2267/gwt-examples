@@ -210,40 +210,40 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     pInput.clear();
       
     long typeId = getDataTypeId();
-    if (typeId == ThingStuffTypeData.VT_STRING) {
+    if (typeId == ThingStuffTypeData.VALUETYPE_STRING) {
       drawInput(typeId, thingStuffData.getValue());
       
-    } else if (typeId == ThingStuffTypeData.VT_BOOLEAN) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_BOOLEAN) {
       drawInput(thingStuffData.getValueBol());
       
-    } else if (typeId == ThingStuffTypeData.VT_DOUBLE) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_DOUBLE) {
       drawInput(thingStuffData.getValueDouble());
       
-    } else if (typeId == ThingStuffTypeData.VT_INT) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_INT) {
       drawInput(thingStuffData.getValueLong());
       
-    } else if (typeId == ThingStuffTypeData.VT_STRING_LARGE) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_STRING_LARGE) {
       drawInput(typeId, thingStuffData.getValue());
       
-    } else if (typeId == ThingStuffTypeData.VT_STRING_CASE) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_STRING_CASE) {
       drawInput(typeId, thingStuffData.getValue());
       
-    } else if (typeId == ThingStuffTypeData.VT_STRING_LARGE_CASE) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_STRING_LARGE_CASE) {
       drawInput(typeId, thingStuffData.getValue());
       
-    } else if (typeId == ThingStuffTypeData.VT_HTML) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_HTML) {
       drawInput(typeId, thingStuffData.getValue());
       
-    } else if (typeId == ThingStuffTypeData.VT_URL) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_URL) {
       drawInput(typeId, thingStuffData.getValue());
       
-    } else if (typeId == ThingStuffTypeData.VT_EMAIL) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_EMAIL) {
       drawInput(typeId, thingStuffData.getValue());
       
-    } else if (typeId == ThingStuffTypeData.VT_PHONE) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_PHONE) {
       drawInput(typeId, thingStuffData.getValue());
       
-    } else if (typeId == ThingStuffTypeData.VT_LINK) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_LINK) {
     	drawInput(thingStuffData.getValueLong());
       
     } else {
@@ -258,32 +258,32 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   
   private void drawInput(long typeId, String value) {
     Widget w = null;
-    if (typeId == ThingStuffTypeData.VT_STRING) {
+    if (typeId == ThingStuffTypeData.VALUETYPE_STRING) {
       w = tbValue;
       tbValue.setText(value);
-    } else if (typeId == ThingStuffTypeData.VT_STRING_LARGE) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_STRING_LARGE) {
       w = taValue;
       taValue.setText(value);
-    } else if (typeId == ThingStuffTypeData.VT_STRING_CASE) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_STRING_CASE) {
       w = tbValue;
       tbValue.setText(value);
-    } else if (typeId == ThingStuffTypeData.VT_STRING_LARGE_CASE) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_STRING_LARGE_CASE) {
       w = taValue;
       taValue.setText(value);
-    } else if (typeId == ThingStuffTypeData.VT_HTML) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_HTML) {
       w = taValue;
       taValue.setText(value);
-    } else if (typeId == ThingStuffTypeData.VT_URL) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_URL) {
       w = tbValue;
       tbValue.setText(value);
-    } else if (typeId == ThingStuffTypeData.VT_EMAIL) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_EMAIL) {
       w = tbValue;
       tbValue.setText(value);
-    } else if (typeId == ThingStuffTypeData.VT_PHONE) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_PHONE) {
       w = tbValue;
       tbValue.setText(value);
       
-    } else if (typeId == ThingStuffTypeData.VT_LINK) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_LINK) {
       w = tbValue;
       tbValue.setText(value);
     }
@@ -302,62 +302,62 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     Long valueLong = null;
     
     long typeId = getDataTypeId();
-    if (typeId == ThingStuffTypeData.VT_STRING) {
+    if (typeId == ThingStuffTypeData.VALUETYPE_STRING) {
       value = getTextBox_String();
       valueBol = false;
       valueDouble = null;
       valueLong = null;
-    } else if (typeId == ThingStuffTypeData.VT_BOOLEAN) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_BOOLEAN) {
       value = null;
       valueBol = cbValue.getValue();
       valueDouble = null;
       valueLong = null;
-    } else if (typeId == ThingStuffTypeData.VT_DOUBLE) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_DOUBLE) {
       value = null;
       valueBol = false;
       valueDouble = getTextBox_Double();
       valueLong = null;
-    } else if (typeId == ThingStuffTypeData.VT_INT) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_INT) {
       value = null;
       valueBol = false;
       valueDouble = null;
       valueLong = getTextBox_Long();
-    } else if (typeId == ThingStuffTypeData.VT_STRING_LARGE) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_STRING_LARGE) {
       value = getTextArea_String();
       valueBol = false;
       valueDouble = null;
       valueLong = null;
-    } else if (typeId == ThingStuffTypeData.VT_STRING_CASE) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_STRING_CASE) {
       value = getTextBox_String();
       valueBol = false;
       valueDouble = null;
       valueLong = null;
-    } else if (typeId == ThingStuffTypeData.VT_STRING_LARGE_CASE) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_STRING_LARGE_CASE) {
       value = getTextArea_String();
       valueBol = false;
       valueDouble = null;
       valueLong = null;
-    } else if (typeId == ThingStuffTypeData.VT_HTML) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_HTML) {
       value = getTextArea_String();
       valueBol = false;
       valueDouble = null;
       valueLong = null;
-    } else if (typeId == ThingStuffTypeData.VT_URL) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_URL) {
       value = getTextBox_String();
       valueBol = false;
       valueDouble = null;
       valueLong = null;
-    } else if (typeId == ThingStuffTypeData.VT_EMAIL) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_EMAIL) {
       value = getTextBox_String();
       valueBol = false;
       valueDouble = null;
       valueLong = null;
-    } else if (typeId == ThingStuffTypeData.VT_PHONE) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_PHONE) {
       value = getTextBox_String();
       valueBol = false;
       valueDouble = null;
       valueLong = null;
-    } else if (typeId == ThingStuffTypeData.VT_LINK) {
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_LINK) {
       value = null;
       valueBol = false;
       valueDouble = null;
@@ -487,29 +487,29 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     int wtc = cbValue.getOffsetWidth();
     int wta = taValue.getOffsetWidth();
     int width = 0;
-    if (dataTypeId == ThingStuffTypeData.VT_STRING) {
+    if (dataTypeId == ThingStuffTypeData.VALUETYPE_STRING) {
       width = wt;
-    } else if (dataTypeId == ThingStuffTypeData.VT_BOOLEAN) {
+    } else if (dataTypeId == ThingStuffTypeData.VALUETYPE_BOOLEAN) {
       width = wtc;
-    } else if (dataTypeId == ThingStuffTypeData.VT_DOUBLE) {
+    } else if (dataTypeId == ThingStuffTypeData.VALUETYPE_DOUBLE) {
       width = wt;
-    } else if (dataTypeId == ThingStuffTypeData.VT_INT) {
+    } else if (dataTypeId == ThingStuffTypeData.VALUETYPE_INT) {
       width = wt;
-    } else if (dataTypeId == ThingStuffTypeData.VT_STRING_LARGE) {
+    } else if (dataTypeId == ThingStuffTypeData.VALUETYPE_STRING_LARGE) {
       width = wta;
-    } else if (dataTypeId == ThingStuffTypeData.VT_STRING_CASE) {
+    } else if (dataTypeId == ThingStuffTypeData.VALUETYPE_STRING_CASE) {
       width = wt;
-    } else if (dataTypeId == ThingStuffTypeData.VT_STRING_LARGE_CASE) {
+    } else if (dataTypeId == ThingStuffTypeData.VALUETYPE_STRING_LARGE_CASE) {
       width = wta;
-    } else if (dataTypeId == ThingStuffTypeData.VT_HTML) {
+    } else if (dataTypeId == ThingStuffTypeData.VALUETYPE_HTML) {
       width = wta;
-    } else if (dataTypeId == ThingStuffTypeData.VT_URL) {
+    } else if (dataTypeId == ThingStuffTypeData.VALUETYPE_URL) {
       width = wt;
-    } else if (dataTypeId == ThingStuffTypeData.VT_EMAIL) {
+    } else if (dataTypeId == ThingStuffTypeData.VALUETYPE_EMAIL) {
       width = wt;
-    } else if (dataTypeId == ThingStuffTypeData.VT_PHONE) {
+    } else if (dataTypeId == ThingStuffTypeData.VALUETYPE_PHONE) {
       width = wt;
-    } else if (dataTypeId == ThingStuffTypeData.VT_LINK) {
+    } else if (dataTypeId == ThingStuffTypeData.VALUETYPE_LINK) {
       width = wt;
     } else {
       width = wt;
