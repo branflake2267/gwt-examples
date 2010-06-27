@@ -27,38 +27,88 @@ public class UserData implements IsSerializable {
   
   
   // used on server side
-  public long userId;
+  private long userId;
   
   // consumer accessToken
   // web application has access
   // will be used to verify this application can create users
   // will be used to verify this application can login users
   // its like a sessionVars that are for a non-user session
-  public OAuthTokenData accessToken = null; 
+  private OAuthTokenData accessToken = null; 
   
   // userName for login
-  public String consumerKey = null;
+  private String consumerKey = null;
   
   // hash of password
-  public String consumerSecret = null;
+  private String consumerSecret = null;
 
   // accept terms of use
-  public boolean acceptTerms = false;
+  private boolean acceptTerms = false;
   
   // error notifications
-  public int error = 0;
-  
-
-  
+  private int error = 0;
+    
   // hash of this objects vars
   // verify it was disturbed during transit
   private String signature = null;
-  
-  
-  /**
-   * constructor - nothing to do
-   */
+
   public UserData() {
+  }
+  
+  public void setUserId(long userId) {
+  	this.userId = userId;
+  }
+  
+  public long getUserId() {
+  	return userId;
+  }
+  
+  public void setAccessToken(OAuthTokenData accessToken) {
+  	this.accessToken = accessToken;
+  }
+  
+  public OAuthTokenData getAccessToken() {
+  	return accessToken;
+  }
+  
+  public void setConsumerKey(String consumerKey) {
+  	this.consumerKey = consumerKey;
+  }
+  
+  public String getConsumreKey() {
+  	return consumerKey;
+  }
+  
+  public void setConsumerSecret(String consumerSecret) {
+  	this.consumerSecret = consumerSecret;
+  }
+  
+  public String getConsumerSecret() {
+  	return consumerSecret;
+  }
+  
+  public void setAcceptTerms(boolean acceptTerms) {
+  	this.acceptTerms = acceptTerms;
+  }
+  
+  public boolean getAcceptTerms() {
+  	return acceptTerms;
+  }
+  
+  public void setError(int error) {
+  	this.error = error;
+  }
+  
+  public int getErrorInt() {
+  	return error;
+  }
+  
+  public void setSignature(String signature) {
+  	this.signature = signature;
+  }
+  
+  public String getSignature() {
+  	return signature;
   }
   
   /**
@@ -68,7 +118,7 @@ public class UserData implements IsSerializable {
    */
   public void sign() {
     Sha1 sha = new Sha1();
-    this.signature = sha.b64_sha1(getSignatureBaseString());
+    signature = sha.b64_sha1(getSignatureBaseString());
   }
   
   /**
@@ -79,7 +129,7 @@ public class UserData implements IsSerializable {
   public boolean verifySignature() {
     Sha1 sha = new Sha1();
     boolean pass = false;
-    if (this.signature.equals(sha.b64_sha1(getSignatureBaseString()))) {
+    if (signature.equals(sha.b64_sha1(getSignatureBaseString()))) {
       pass = true;
     }
     return pass;
@@ -118,7 +168,7 @@ public class UserData implements IsSerializable {
   /**
    * possible errors
    * 
-   * TODO - switch to internation version later
+   * TODO - switch to international language version later
    * 
    * @param error
    * @return
@@ -175,4 +225,6 @@ public class UserData implements IsSerializable {
   public String getError() {
     return getError(this.error);
   }
+  
+
 }

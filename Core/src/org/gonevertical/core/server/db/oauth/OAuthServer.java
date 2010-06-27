@@ -122,30 +122,36 @@ public class OAuthServer {
     String url = sp.getRequestUrlOAuth();
     
     // debug
-    sp.getLogger().info("getAccessToken: token: " + appAccessToken.toString() + " url: " + url);
+    System.out.println("\n***************\n***************\nOAuthServer.getUserAccessToken(): Token Output: OAuthTokenData=" + appAccessToken.toString());
 
     // find the user? - return null if none
     UserData userData = getUserData(appAccessToken);
     if(userData == null) {
       appAccessToken.setResult(OAuthTokenData.ERROR_USERNOTFOUND);
+      System.out.println("OAuthServer.getUserAccessToken(): Warning: Sorry, I could not find the user for comparison. Returning for try agian.");
       return appAccessToken;
     }
     
+    System.out.println("OAuthServer.getUserAccessToken(): Incoming url=" + url + " Found User key=" + userData.getConsumreKey() + " secret=" + userData.getConsumerSecret());
+    
     // verify the signed signature from the client matches the local
-    // TODO - should I be verifying with consumerSecret?
-    boolean verifySignature = appAccessToken.verify(url, userData.consumerSecret);
+    boolean verifySignature = appAccessToken.verify(url, userData.getConsumerSecret());
 
+    System.out.println("OAuthServer.getUserAccessToken(): Signatures Pass: [true|false] " + verifySignature);
+    
     // if true - thats bad
-    boolean nonceAlreadyUsed = hasNonceBeenFoundUsed(appAccessToken, (long) ThingTypeJdo.TYPE_USER, userData.userId);
+    boolean nonceAlreadyUsed = hasNonceBeenFoundUsed(appAccessToken, (long) ThingTypeJdo.TYPE_USER, userData.getUserId());
 
     // verify application's access, then transfer it to the user if all passes
     long accessId = getAccessId(appAccessToken);
 
+    System.out.println("OAuthServer.getUserAccessToken(): Retrieved AccessId=" + accessId);
+    
     // examine if we can go to the next step
     if (userData != null && 
         accessId == 0 | 
-        userData.userId == 0 | 
-        userData.error > 0 | 
+        userData.getUserId() == 0 | 
+        userData.getErrorInt() > 0 | 
         verifySignature == false | nonceAlreadyUsed == true) {
       // TODO - make the error more granular
       appAccessToken.setResult(OAuthTokenData.ERROR);
@@ -155,20 +161,20 @@ public class OAuthServer {
 
     // change access token session to user - after app credentials pass
     if (appAccessToken.getResult() == OAuthTokenData.SUCCESS) {
-      setAccessToken_user(accessId, userData.userId);
+      setAccessToken_user(accessId, userData.getUserId());
     } else {
       // TODO - what to do, what to do?
     }
 
     // set nonce, so it can't be used again.
-    setNonce(appAccessToken, url, (long) ThingTypeJdo.TYPE_USER, userData.userId);
+    setNonce(appAccessToken, url, (long) ThingTypeJdo.TYPE_USER, userData.getUserId());
 
     // be sure not to send back the userkey, b/c it transforms into token
     appAccessToken.setConsumerKey(null);
     
     // sign the token for transport back
     try {
-      appAccessToken.sign(url, userData.consumerSecret);
+      appAccessToken.sign(url, userData.getConsumerSecret());
     } catch (Exception e) {
     	sp.getLogger().log(Level.SEVERE, "requestToken: ****** ERROR SIGNING", e);
       e.printStackTrace();
@@ -198,12 +204,12 @@ public class OAuthServer {
     
     UserData ud = null;
     if (users == null || token == null || users == null || users.length == 0) {
-      // skip
+      sp.getLogger().info("OAuthServer.getUserData(): Warning: Sorry, I couldn't find the user with that key=" + consumerKey + ". Will return to try agian.");
     } else {
       ud = new UserData();
-      ud.consumerKey = token.getConsumerKey();
-      ud.userId = users[0].getThingId();
-      ud.consumerSecret = users[0].getSecret();
+      ud.setUserId(users[0].getThingId());
+      ud.setConsumerKey(users[0].getKey());
+      ud.setConsumerSecret(users[0].getSecret());
     }
 
     return ud;
@@ -257,9 +263,9 @@ public class OAuthServer {
     String consumerSecret = things[0].getSecret();
     
     UserData r = new UserData();
-    r.userId = id;
-    r.consumerKey = consumerKey;
-    r.consumerSecret = consumerSecret;
+    r.setUserId(id);
+    r.setConsumerKey(consumerKey);
+    r.setConsumerSecret(consumerSecret);
       
     return r;
   }

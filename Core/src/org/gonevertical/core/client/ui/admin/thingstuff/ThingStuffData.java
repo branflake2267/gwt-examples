@@ -2,10 +2,12 @@ package org.gonevertical.core.client.ui.admin.thingstuff;
 
 import java.util.Date;
 
+import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeData;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ThingStuffData implements IsSerializable {
-  
+	  
 	// identity for just stuff
   private long thingStuffId;
   
@@ -246,6 +248,15 @@ public class ThingStuffData implements IsSerializable {
   
 	public Date getDateUpdated() {
 		return dateUpdated;
+	}
+	
+	public String getValueForTextBox() {
+		
+		String s = "";
+		
+		
+		
+		return s;
 	}
 
 	public String toString() {

@@ -18,6 +18,7 @@ public class EmailWidget extends Composite {
 		
 		TextBox tbEmail = new TextBox();
 		flexTable.setWidget(0, 0, tbEmail);
+		flexTable.getCellFormatter().setWidth(0, 0, "240px");
 		tbEmail.setWidth("100%");
 		
 		HTML htmlnbspnbsp = new HTML("&nbsp;", true);

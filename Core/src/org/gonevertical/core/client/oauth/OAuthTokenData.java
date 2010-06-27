@@ -105,6 +105,13 @@ public class OAuthTokenData implements IsSerializable {
 	boolean debug = true;
 	int debugIndex = 0;
 
+	// for debugging the signatures when comparing to see whats different
+	private String debugSignatureRight;
+
+	private String debugSignatureLeft;
+
+	private String debugSigning;
+
 	/**
 	 * constructor - init
 	 */
@@ -135,16 +142,16 @@ public class OAuthTokenData implements IsSerializable {
     // removing port for now, rpc method different
     url = url.replaceAll(":[0-9]+", "");
 	  
-		//debug
-		debug("sign(): url: " + url + " secret: " + secret);
-
 		String key = getConcatConsumerSecretAndTokenSecret(secret);
 		String data = getSignatureBaseString(url);
 		
 		Sha1 sha = new Sha1();
-		this.oauth_signature = sha.b64_hmac_sha1(key, data);
+		oauth_signature = sha.b64_hmac_sha1(key, data);
 		
-		debug("OAuthTockenData.sign(): signingData: " + data + " auth_signature: " + oauth_signature);
+		debugSigning = "OAuthTokenData.sign(): ***SIGNING***: url=" + url + " secret=" + secret + " key="+key + " data=" + data + " auth_signature=" + oauth_signature;
+		
+		debug("OAuthTokenData.sign(): ***SIGNING***: url=" + url + " secret=" + secret + " key="+key + " data=" + data + " auth_signature=" + oauth_signature);
+		
 	}
 	
 	/**
@@ -156,29 +163,31 @@ public class OAuthTokenData implements IsSerializable {
 	 */
 	public boolean verify(String url, String consumerSecret) {
 	  
-		if (url == null | consumerSecret == null) {
+		if (url == null || consumerSecret == null) {
 		  return false;
 		}
 
 		// removing port for now, rpc method is different
     url = url.replaceAll(":[0-9]+", ""); 
 		
-    // // debug
-    String debugbeforekey = getConcatConsumerSecretAndTokenSecret(consumerSecret);
-    String debugbeforedata = getSignatureBaseString(url);
+    debug("OAuthTokenData.verify(): 1st Incoming url=" + url + " consumerKey=" + oauth_consumer_key + " consumerSecret=" + consumerSecret + " Base=" + getSignatureBaseString(url) + " oauth_signature=" + oauth_signature);
     
-	  debug("verify: url: " + url + " consumerSecret: " + consumerSecret);
-
-		String verify = this.oauth_signature;
+		String verify = oauth_signature;
+		debugSignatureRight = verify;
+		
+		// sign this object again to see if it matches the string that came in
 		sign(url, consumerSecret);
+		
 		boolean bol = false;
-		if (this.oauth_signature.equals(verify)) {
+		if (oauth_signature.equals(verify)) {
 			bol = true;
 		}
+		debugSignatureLeft = oauth_signature;
 		
-		debug("verify(): signature: [true|false]: " + bol + " auth_signature Given: " + oauth_signature + " verify: " + verify);
+		debug("OAuthTokenData.verify(): signatures match: [true|false]: " + bol);
+		debug("OAuthTokenData.verify():\nL Signature: " + debugSignatureLeft + "\nR Signature: " + debugSignatureRight);
 		
-		//debug("secret: " + consumerSecret + " dataBefore: " + debugbeforedata);
+		 debug("OAuthTokenData.verify(): 2nd Incoming url=" + url + " consumerKey=" + oauth_consumer_key + " consumerSecret=" + consumerSecret + " Base=" + getSignatureBaseString(url) + " oauth_signature=" + oauth_signature);
 		
 		return bol;
 	}
@@ -326,8 +335,24 @@ public class OAuthTokenData implements IsSerializable {
 		s += "oauth_token_secret=" + oauth_token_secret + "&";
 		s += "oauth_version=" + oauth_version;
 		
-		//System.out.println("base:" + s);
+		System.out.println("OAuthTokenData.getSignatureBaseString() " + s);
 		
+		return s;
+	}
+	
+	/**
+	 * output object as a string to help debug
+	 */
+	public String toString() {
+		String s = "";
+		s += "oauth_callback=" + encode(oauth_callback) + "&";
+		s += "oauth_consumer_key=" + encode(oauth_consumer_key) + "&";
+		s += "oauth_nounce=" + oauth_nounce + "&";
+		s += "oauth_signature_method=" + oauth_signature_method + "&";
+		s += "oauth_timestamp=" + oauth_timestamp + "&";
+		s += "oauth_token=" + oauth_token + "&";
+		s += "oauth_token_secret=" + oauth_token_secret + "&";
+		s += "oauth_version=" + oauth_version;
 		return s;
 	}
 	
@@ -411,5 +436,7 @@ public class OAuthTokenData implements IsSerializable {
     return s;
   }
   
-
+  public String getDebugSigning() {
+  	return debugSigning;
+  }
 }

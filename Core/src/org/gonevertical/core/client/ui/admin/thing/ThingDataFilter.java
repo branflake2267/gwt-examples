@@ -4,6 +4,8 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ThingDataFilter implements IsSerializable {
 
+	private long thingId;
+	
   private long start = 0;
   private long limit = 0;
   
@@ -46,6 +48,14 @@ public class ThingDataFilter implements IsSerializable {
 		}
 
 	  return s;
+  }
+
+	public long getThingId() {
+	  return thingId;
+  }
+
+	public void setThingId(long thingId) {
+	  this.thingId = thingId;
   }
   
 }

@@ -28,7 +28,7 @@ public class EmailsWidget extends Composite {
 		HTML htmlTitle = new HTML("Email", true);
 		htmlTitle.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		hpTop.add(htmlTitle);
-		htmlTitle.setWidth("256px");
+		htmlTitle.setWidth("249px");
 		hpTop.setCellVerticalAlignment(htmlTitle, HasVerticalAlignment.ALIGN_MIDDLE);
 		hpTop.setCellHorizontalAlignment(htmlTitle, HasHorizontalAlignment.ALIGN_CENTER);
 		
@@ -38,7 +38,10 @@ public class EmailsWidget extends Composite {
 				addEmail();
 			}
 		});
+		
 		hpTop.add(bAdd);
+		hpTop.setCellHorizontalAlignment(bAdd, HasHorizontalAlignment.ALIGN_CENTER);
+		hpTop.setCellVerticalAlignment(bAdd, HasVerticalAlignment.ALIGN_MIDDLE);
 		
 		pEmails = new VerticalPanel();
 		flexTable.setWidget(1, 0, pEmails);

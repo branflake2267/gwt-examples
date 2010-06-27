@@ -529,11 +529,11 @@ public class ThingJdo {
 	}
 
 	public String getKey() {
-		return this.key;
+		return key;
 	}
 
 	public String getSecret() {
-		return this.secret;
+		return secret;
 	}
 
 	public void setThingId(long thingId) {

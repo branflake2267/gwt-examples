@@ -8,6 +8,16 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ThingData implements IsSerializable {
   
+	public static final int THING_APPLICATION_DEMO = 1;
+	public static final int THING_USER_ADMIN = 2;
+	public static final int THING_USER_DEMO = 3;
+	public static final int THING_PERMISSION_OPEN = 4;
+	public static final int THING_PERMISSION_CLOSED = 5;
+	public static final int THING_WIDGET_CORETHINGTYPES = 6;
+	public static final int THING_WIDGET_CORETHINGSTUFFTYPES = 7;
+	public static final int THING_WIDGET_CORETHINGS = 8;
+	public static final int THING_WIDGET_COREEDITTHING = 9;
+	
 	// type of thing, app, user, group...
   private long thingTypeId = 0;
   

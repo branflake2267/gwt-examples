@@ -69,10 +69,8 @@ public class Db_ThingStuff {
     
     
     // TODO move filter upline, not sure what I am aiming for yet
-    // TODO This will get up to a 100 items for the drop down choice
+    // TODO This will get up to a 100 items for the drop down choice  
     ThingStuffTypeDataFilter stuffTypeDataFilter = new ThingStuffTypeDataFilter();
-    stuffTypeDataFilter.setLimit(0, 100); 
-    
     
     // get the thing types to choose from
     Db_ThingStuffType t = new Db_ThingStuffType(sp);
@@ -184,6 +182,41 @@ public class Db_ThingStuff {
   	boolean b = tsaj.delete(thingStuffAboutId);
     return b;
   }
-  
+  	
+	public void createThingStuff_Unique(long thingId, int thingStuffTypeId, long value) {
+
+		ThingStuffData ts2 = new ThingStuffData();
+		ts2.setThingId(thingId);
+		ts2.setThingStuffTypeId(thingStuffTypeId);
+		ts2.setValue(value);
+
+		ThingStuffJdo tsj2 = new ThingStuffJdo(sp);
+		tsj2.saveUnique(ts2);
+
+	}
+
+	public void createThingStuff_Unique(long thingId, int thingStuffTypeId, String value) {
+
+		ThingStuffData ts2 = new ThingStuffData();
+		ts2.setThingId(thingId);
+		ts2.setThingStuffTypeId(thingStuffTypeId);
+		ts2.setValue(value);
+
+		ThingStuffJdo tsj2 = new ThingStuffJdo(sp);
+		tsj2.saveUnique(ts2);
+
+	}
+
+	public void createThingStuff_Unique(long thingId, int thingStuffTypeId, boolean value) {
+
+		ThingStuffData ts2 = new ThingStuffData();
+		ts2.setThingId(thingId);
+		ts2.setThingStuffTypeId(thingStuffTypeId);
+		ts2.setValue(value);
+
+		ThingStuffJdo tsj2 = new ThingStuffJdo(sp);
+		tsj2.saveUnique(ts2);
+
+	}
 
 }

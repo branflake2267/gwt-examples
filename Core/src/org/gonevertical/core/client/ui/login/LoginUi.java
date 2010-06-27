@@ -90,13 +90,12 @@ public class LoginUi extends Composite implements ChangeHandler {
 	}
 
 	protected String getConsumerSecret() {
-		String s = loginUi.getConsumerSecret();
+		String secret = loginUi.getConsumerSecret();
 
 		// create digest of password, before sending it to the server
 		Sha1 sha = new Sha1();
-		
-		//String hash = sha.b64_sha1(s); // simpler version
-		String hash = sha.hex_hmac_sha1(ClientPersistence.PASSWORD_SALT, s);
+		//String hash = sha.b64_sha1(s); // simpler version, also exists in change password and setdefaults
+		String hash = sha.hex_hmac_sha1(ClientPersistence.PASSWORD_SALT, secret);
 		
 		return hash;
 	}

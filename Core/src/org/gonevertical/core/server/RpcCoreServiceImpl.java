@@ -19,9 +19,11 @@ import org.gonevertical.core.client.ui.admin.thingtype.ThingTypesData;
 import org.gonevertical.core.client.ui.feedback.FeedbackData;
 import org.gonevertical.core.client.ui.login.ChangePasswordData;
 import org.gonevertical.core.client.ui.login.UserData;
+import org.gonevertical.core.client.ui.profile.ProfileData;
 import org.gonevertical.core.client.widget.WidgetAttrData;
 import org.gonevertical.core.client.widget.WidgetAttrDataFilter;
 import org.gonevertical.core.server.db.Db_Feedback;
+import org.gonevertical.core.server.db.Db_Profile;
 import org.gonevertical.core.server.db.Db_Thing;
 import org.gonevertical.core.server.db.Db_ThingStuff;
 import org.gonevertical.core.server.db.Db_ThingStuffType;
@@ -253,7 +255,13 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   	sp.end();
 	  return r;
   }
-
+  
+  public ProfileData getProfileData(OAuthTokenData accessToken, long thingId) {
+   	sp.start(getThreadLocalRequest());
+  	ProfileData r = new Db_Profile(sp).getProfileData(accessToken, thingId);
+  	sp.end();
+  	return r;
+  }
 
 
 }

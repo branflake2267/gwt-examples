@@ -199,9 +199,11 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 	 * for testing loggin
 	 */
 	private void setDemoLogin() {
+		
 		tbConsumerKey.setText("demo_user");
 		tbConsumerSecret.setFocus(true);
 		tbConsumerSecretPass.setText("password");
+		
 		Timer t = new Timer() {
 			public void run() {
 				startLogin();

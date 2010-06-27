@@ -5,7 +5,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 public class ThingStuffTypeDataFilter implements IsSerializable {
   
 	private long start;
-  private long limit;
+  private long limit = 100;
   
   public void setLimit(long start, long limit) {
   	this.start = start;
