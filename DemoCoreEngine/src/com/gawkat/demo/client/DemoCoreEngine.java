@@ -1,6 +1,7 @@
 package com.gawkat.demo.client;
 
 import org.gonevertical.core.client.ClientPersistence;
+import org.gonevertical.core.client.global.EventManager;
 import org.gonevertical.core.client.ui.breadcrumbs.BreadCrumbs;
 import org.gonevertical.core.client.ui.login.LoginUi;
 import org.gonevertical.core.client.ui.login.LoginWidget;
@@ -10,6 +11,8 @@ import com.gawkat.demo.client.layout.FooterWidget;
 import com.gawkat.demo.client.layout.LinksWidget;
 import com.gawkat.demo.client.layout.LogoWidget;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
@@ -43,14 +46,22 @@ public class DemoCoreEngine implements EntryPoint, ValueChangeHandler<String> {
     wLogin.initSession();
     wLogin.setUi(LoginUi.LOGIN_HORIZONTAL);
 
-    // draw the overall layout
-    drawLayout();
-    
   	// observe history so we can track every querystring change
   	History.addValueChangeHandler(this);
   	
     // move to home if no historyToken
     setHomeHistoryToken();
+    
+    cp.addChangeHandler(new ChangeHandler() {
+			public void onChange(ChangeEvent event) {
+				ClientPersistence wcp = (ClientPersistence) event.getSource();
+				if (wcp.getChangeEvent() == EventManager.APPLICATION_LOADED) {
+					drawLayout();
+				} else if (wcp.getChangeEvent() == EventManager.LOGGEDIN) {
+				} else if (wcp.getChangeEvent() == EventManager.LOGGEDOUT) {
+				}
+			}
+		});
   }
   
 	private void drawLayout() {

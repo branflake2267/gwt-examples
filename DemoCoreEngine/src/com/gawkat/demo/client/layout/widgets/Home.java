@@ -3,6 +3,8 @@ package com.gawkat.demo.client.layout.widgets;
 import org.gonevertical.core.client.ClientPersistence;
 import org.gonevertical.core.client.global.EventManager;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Composite;
@@ -26,9 +28,35 @@ public class Home extends Composite implements ClickHandler {
 		initWidget(pWidget);
 		
 		bLogin.addClickHandler(this);
+		
+		cp.addChangeHandler(new ChangeHandler() {
+			public void onChange(ChangeEvent event) {
+				ClientPersistence wcp = (ClientPersistence) event.getSource();
+				if (wcp.getChangeEvent() == EventManager.APPLICATION_LOADED) {
+					draw();
+					
+				} else if (wcp.getChangeEvent() == EventManager.LOGGEDIN) {
+					drawLoggedIn();
+						
+				} else if (wcp.getChangeEvent() == EventManager.LOGGEDOUT) {
+					drawLoggedOut();
+				}
+			}
+		});
+	}
+	
+	private void drawLoggedOut() {
+		
+	}
+
+	private void drawLoggedIn() {
+		
 	}
 
 	public void draw() {
+		if (cp.getApplicationLoadedStatus() == false) {
+			return;
+		}
 		pWidget.clear();
 	  
 		HorizontalPanel hp = new HorizontalPanel();
@@ -38,8 +66,6 @@ public class Home extends Composite implements ClickHandler {
 		pWidget.add(new HTML("&nbsp;"));
 		pWidget.add(new HTML("home widget"));
 		pWidget.add(hp);
-		
-		
   }
 
   public void onClick(ClickEvent event) {
