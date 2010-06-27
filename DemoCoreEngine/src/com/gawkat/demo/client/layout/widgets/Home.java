@@ -46,11 +46,9 @@ public class Home extends Composite implements ClickHandler {
 	}
 	
 	private void drawLoggedOut() {
-		
 	}
 
 	private void drawLoggedIn() {
-		
 	}
 
 	public void draw() {
