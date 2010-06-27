@@ -38,9 +38,9 @@ public class TestWidget extends Composite {
   		cp.addChangeHandler(new ChangeHandler() {
   			public void onChange(ChangeEvent event) {
   				ClientPersistence wcp = (ClientPersistence) event.getSource();
-  				if (wcp.getChangeEvent() == EventManager.LOGGEDIN) {
+  				if (wcp.getChangeEvent() == EventManager.USER_LOGGEDIN) {
   					drawLoggedIn();
-  				} else if (wcp.getChangeEvent() == EventManager.LOGGEDOUT) {
+  				} else if (wcp.getChangeEvent() == EventManager.USER_LOGGEDOUT) {
   					drawLoggedOut();
   				}
   			}				

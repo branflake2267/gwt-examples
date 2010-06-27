@@ -27,6 +27,14 @@ public class Home extends Composite implements ClickHandler {
 		
 		initWidget(pWidget);
 		
+		HorizontalPanel hp = new HorizontalPanel();
+		hp.add(bLogin);
+		hp.add(new HTML("&nbsp;Try the demo sign in."));
+		
+		pWidget.add(new HTML("&nbsp;"));
+		pWidget.add(new HTML("home widget"));
+		pWidget.add(hp);
+		
 		bLogin.addClickHandler(this);
 		
 		cp.addChangeHandler(new ChangeHandler() {
@@ -35,10 +43,10 @@ public class Home extends Composite implements ClickHandler {
 				if (wcp.getChangeEvent() == EventManager.APPLICATION_LOADED) {
 					draw();
 					
-				} else if (wcp.getChangeEvent() == EventManager.LOGGEDIN) {
+				} else if (wcp.getChangeEvent() == EventManager.USER_LOGGEDIN) {
 					drawLoggedIn();
 						
-				} else if (wcp.getChangeEvent() == EventManager.LOGGEDOUT) {
+				} else if (wcp.getChangeEvent() == EventManager.USER_LOGGEDOUT) {
 					drawLoggedOut();
 				}
 			}
@@ -55,15 +63,9 @@ public class Home extends Composite implements ClickHandler {
 		if (cp.getApplicationLoadedStatus() == false) {
 			return;
 		}
-		pWidget.clear();
+	
 	  
-		HorizontalPanel hp = new HorizontalPanel();
-		hp.add(bLogin);
-		hp.add(new HTML("&nbsp;Try the demo sign in."));
-		
-		pWidget.add(new HTML("&nbsp;"));
-		pWidget.add(new HTML("home widget"));
-		pWidget.add(hp);
+
   }
 
   public void onClick(ClickEvent event) {
@@ -71,6 +73,7 @@ public class Home extends Composite implements ClickHandler {
   	Widget sender = (Widget) event.getSource();
   	
   	if (sender == bLogin) {
+  		System.out.println("fire logindemo");
   		cp.fireChange(EventManager.LOGIN_DEMO);
   	}
   	
