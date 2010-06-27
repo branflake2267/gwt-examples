@@ -88,7 +88,7 @@ public class LoginWidget extends Composite implements ChangeHandler {
 
 		LoginWidget wLogin = new LoginWidget(cp);
 		wLogin.setUi(uiType);
-		wLogin.draw();
+		//wLogin.draw();
 
 		return wLogin;
 	}
@@ -111,10 +111,6 @@ public class LoginWidget extends Composite implements ChangeHandler {
 	 */
 	public void setUi(int uiType) {
 		wloginUi.setUi(uiType);
-	}
-
-	private void draw() {
-		wloginUi.draw();
 	}
 
 	/**
@@ -163,12 +159,13 @@ public class LoginWidget extends Composite implements ChangeHandler {
 		int result = token.getResult();
 		switch (result) {
 		case OAuthTokenData.SUCCESS:
-			draw(); // this means the application is loaded, so lets draw the login inputs
+			// this means the application is loaded, so lets draw the login inputs
+			cp.fireChange(EventManager.APPLICATION_LOADED);
 			break;
 		case OAuthTokenData.ERROR:
 			// TODO - make better notification
 			Window.alert("ERROR: This application's access token " +
-			"did not match up.\n This application has not been granted access.");
+				"did not match up.\n This application has not been granted access.");
 			break;
 
 		}

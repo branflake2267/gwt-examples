@@ -617,25 +617,6 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 
 	}
 
-	@Deprecated
-	public void onChange(Widget sender) {
-
-		if (sender == tbConsumerKey) {
-			changeUsernameInput(false);
-
-		} else if (sender == tbConsumerSecret) {
-			// TODO
-
-		} else if (sender == tbConsumerSecretPass) {
-			changePasswordInput_Blur();
-
-		} else if (sender == cbRemberMe) {
-			// TODO
-
-		} 
-
-	}
-
 	public void onMouseOver(MouseOverEvent event) {
 
 		Widget sender = (Widget) event.getSource();
@@ -695,8 +676,10 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 		Widget sender = (Widget) event.getSource();
 
 		if (sender == cp) {
-
-			if (cp.getChangeEvent() == EventManager.NEW_USER_CREATED) {
+			if (cp.getChangeEvent() == EventManager.APPLICATION_LOADED) {
+				draw();
+				
+			} else if (cp.getChangeEvent() == EventManager.NEW_USER_CREATED) {
 				// nothing to do
 
 			} else if (cp.getChangeEvent() == EventManager.LOGGEDIN) {
@@ -707,7 +690,20 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 
 			} else if (cp.getChangeEvent() == EventManager.LOGIN_DEMO) {
 				setDemoLogin();
-			}
+				
+			} else if (sender == tbConsumerKey) {
+				changeUsernameInput(false);
+
+			} else if (sender == tbConsumerSecret) {
+				// TODO
+
+			} else if (sender == tbConsumerSecretPass) {
+				changePasswordInput_Blur();
+
+			} else if (sender == cbRemberMe) {
+				// TODO
+
+			} 
 
 		}
 

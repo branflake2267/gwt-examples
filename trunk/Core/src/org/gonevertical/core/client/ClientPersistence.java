@@ -49,6 +49,7 @@ public class ClientPersistence extends Composite implements ChangeHandler  {
   private Track track = new Track();
 	private String trackingCategory;
 	
+	private boolean applicationLoaded = false;
 	private boolean loginStatus = false;
 	
 	/**
@@ -179,6 +180,10 @@ public class ClientPersistence extends Composite implements ChangeHandler  {
   public boolean getLoginStatus() {
   	return loginStatus;
   }
+  
+  public boolean getApplicationLoadedStatus() {
+  	return applicationLoaded;
+  }
    
   /**
    * cordinate events with the top parent
@@ -203,6 +208,10 @@ public class ClientPersistence extends Composite implements ChangeHandler  {
   		
   	} else if (changeEvent == EventManager.LOGGEDOUT) {
   		loginStatus = false;
+  		
+  	} else if (changeEvent == EventManager.APPLICATION_LOADED) {
+  		applicationLoaded = true;
+  		
   	}
   	
   }

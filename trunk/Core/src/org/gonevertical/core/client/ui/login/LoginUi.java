@@ -70,13 +70,6 @@ public class LoginUi extends Composite implements ChangeHandler {
 		return b;
 	}
 
-	/**
-	 * draw widget
-	 */
-	protected void draw() {
-		loginUi.draw();
-	}
-
 	protected void drawError(String error) {
 		if (error == null) {
 			return;
