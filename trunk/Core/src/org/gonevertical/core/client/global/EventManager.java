@@ -40,12 +40,12 @@ public class EventManager {
   /**
    * rpc logged in succesfully
    */
-  public static final int LOGGEDIN = 4;
+  public static final int USER_LOGGEDIN = 4;
   
   /**
    * log out was pushed
    */
-  public static final int LOGGEDOUT = 5;
+  public static final int USER_LOGGEDOUT = 5;
   
   /**
    * a new user was created

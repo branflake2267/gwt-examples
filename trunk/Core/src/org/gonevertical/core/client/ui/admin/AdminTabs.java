@@ -1,12 +1,15 @@
 package org.gonevertical.core.client.ui.admin;
 
 import org.gonevertical.core.client.ClientPersistence;
+import org.gonevertical.core.client.global.EventManager;
 import org.gonevertical.core.client.global.QueryString;
 import org.gonevertical.core.client.global.QueryStringData;
 import org.gonevertical.core.client.ui.admin.thing.Things;
 import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypes;
 import org.gonevertical.core.client.ui.admin.thingtype.ThingTypes;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.logical.shared.BeforeSelectionEvent;
 import com.google.gwt.event.logical.shared.BeforeSelectionHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -55,12 +58,32 @@ public class AdminTabs extends Composite implements BeforeSelectionHandler<Integ
     
     // register bread crumbs that are used in this widget
     setCrumbs();
-  }
-  
+    
+    cp.addChangeHandler(new ChangeHandler() {
+			public void onChange(ChangeEvent event) {
+				ClientPersistence wcp = (ClientPersistence) event.getSource();
+				if (wcp.getChangeEvent() == EventManager.USER_LOGGEDIN) {
+					drawLoggedIn();
+				} else if (wcp.getChangeEvent() == EventManager.USER_LOGGEDOUT) {
+					drawLoggedOut();
+				}
+			}
+		});
+
+	}
+
+	private void drawLoggedOut() {
+
+	}
+
+	private void drawLoggedIn() {
+
+	}
+ 
   private void setCrumbs() {
   	if (cp != null) {
       cp.setBreadCrumbCategory("Admin", "admin");
-      cp.setBreadCrumb("Admin", "core_admin_home");
+      cp.setBreadCrumb("Core", "core_admin_home");
       cp.setBreadCrumb("Things", "core_admin_things");
       cp.setBreadCrumb("Thing Stuff Types", "core_admin_stufftype");
       cp.setBreadCrumb("Thing Types", "core_admin_types");

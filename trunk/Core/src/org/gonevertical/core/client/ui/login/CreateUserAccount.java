@@ -228,8 +228,6 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
     
   }
   
-
-  
   private void createUserStart() {
     
     // verify the inputs have data, and has what is needed.

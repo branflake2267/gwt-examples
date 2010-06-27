@@ -21,7 +21,7 @@ import com.google.gwt.user.client.ui.Composite;
  * @author branflake2267
  *
  */
-public class ClientPersistence extends Composite implements ChangeHandler  {
+public class ClientPersistence extends Composite  {
   
 	/**
 	 * encrypt and hash the password with some salt
@@ -43,7 +43,7 @@ public class ClientPersistence extends Composite implements ChangeHandler  {
   private LoadingWidget wLoading = new LoadingWidget();
   
   private BreadCrumbs wBreadCrumbsWidget = null;
-  private LoginWidget wLoginWidget = null;
+  
   
   // google analytics tracking
   private Track track = new Track();
@@ -58,7 +58,21 @@ public class ClientPersistence extends Composite implements ChangeHandler  {
 	public ClientPersistence() {
 		
 		// add overall observations to listen for events that we want to act on globally in the app
-		this.addChangeHandler(this);
+		addChangeHandler(new ChangeHandler() {
+			public void onChange(ChangeEvent event) {
+		  	if (changeEvent == EventManager.APPLICATION_LOADED) {
+		  		applicationLoaded = true;
+		  		
+		  	} else if (changeEvent == EventManager.USER_LOGGEDIN) {
+		  		loginStatus = true;
+		  		
+		  	} else if (changeEvent == EventManager.USER_LOGGEDOUT) {
+		  		loginStatus = false;
+		  		
+		  	} 
+			}
+		});
+		
 	}
 
   /**
@@ -113,14 +127,6 @@ public class ClientPersistence extends Composite implements ChangeHandler  {
   	}
   	this.wBreadCrumbsWidget = wBreadCrumbs;
   	wBreadCrumbs.setLoadingWidget(wLoading);
-  }
-  
-	public void setLoginWidgetReference(LoginWidget wLoginWidget) {
-		if (wLoginWidget == null) {
-			System.err.println("ClientPersistence.setLoginWidgetReference(): Did you set this in the wrong order?");
-			return;
-		}
-		this.wLoginWidget = wLoginWidget;
   }
   
   /**
@@ -200,21 +206,10 @@ public class ClientPersistence extends Composite implements ChangeHandler  {
     return addDomHandler(handler, ChangeEvent.getType());
   }
 
-  public void onChange(ChangeEvent event) {
-  	//Type<ChangeHandler> t = event.getType();
-  	
-  	if (changeEvent == EventManager.LOGGEDIN) {
-  		loginStatus = true;
-  		
-  	} else if (changeEvent == EventManager.LOGGEDOUT) {
-  		loginStatus = false;
-  		
-  	} else if (changeEvent == EventManager.APPLICATION_LOADED) {
-  		applicationLoaded = true;
-  		
-  	}
-  	
+	public void resetEvent() {
+		changeEvent = EventManager.ZERO;
   }
+
 
 
   
