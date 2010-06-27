@@ -62,6 +62,10 @@ public class EventManager {
    */
   public static final int LOGIN_DEMO = 8;
   
+  /**
+   * application has finished loading
+   */
+  public static final int APPLICATION_LOADED = 9; 
  
   public static final int DELETE_YES = 20;
   public static final int DELETE_NO = 21;
