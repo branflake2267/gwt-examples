@@ -51,6 +51,8 @@ public class ClientPersistence extends Composite  {
 	
 	private boolean applicationLoaded = false;
 	private boolean loginStatus = false;
+
+	private String newUserLanding;
 	
 	/**
 	 * constructor - init persitence widget
@@ -210,7 +212,17 @@ public class ClientPersistence extends Composite  {
 		changeEvent = EventManager.ZERO;
   }
 
+	public void setNewUserLanding(String newUserLanding) {
+		this.newUserLanding = newUserLanding;
+  }
 
+	public String getNewUserLanding() {
+		String s = newUserLanding;
+		if (newUserLanding == null || newUserLanding.length() == 0) {
+			s = "core_profile_aboutme";
+		}
+		return s;
+	}
 
   
 }

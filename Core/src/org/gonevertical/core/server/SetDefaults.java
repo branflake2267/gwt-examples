@@ -142,6 +142,9 @@ public class SetDefaults {
 		dbTs.createThingStuff_Unique(ThingData.THING_USER_DEMO, ThingStuffTypeData.THINGSTUFFTYPE_ALIAS, "Deem");
 		dbTs.createThingStuff_Unique(ThingData.THING_USER_DEMO, ThingStuffTypeData.THINGSTUFFTYPE_FIRSTNAME, "Firsty");
 		dbTs.createThingStuff_Unique(ThingData.THING_USER_DEMO, ThingStuffTypeData.THINGSTUFFTYPE_LASTNAME, "Lastious");
+		dbTs.createThingStuff_Unique(ThingData.THING_USER_DEMO, ThingStuffTypeData.THINGSTUFFTYPE_EMAIL, "test@gonevertical.org");
+		dbTs.createThingStuff_Unique(ThingData.THING_USER_DEMO, ThingStuffTypeData.THINGSTUFFTYPE_EMAIL, "deem@gonevertical.com");
+		dbTs.createThingStuff_Unique(ThingData.THING_USER_DEMO, ThingStuffTypeData.THINGSTUFFTYPE_EMAIL, "4253739212@tmobile.net");
 
 		// create multi-demo about the link
 		// link 3,2,6 - 4(canview)=true

@@ -57,6 +57,7 @@ public abstract class LoginWidget_Abs extends Composite implements ChangeHandler
 					int changeEvent = cp.getChangeEvent();
 					if (cp.getChangeEvent() == EventManager.NEW_USER_CREATED || // when new user is created auto login
 							cp.getChangeEvent() == EventManager.LOGINBUTTONCLICKED) { // when the login button is clicked try logging in
+						cp.resetEvent();
 						login();
 						
 					} else if (changeEvent == EventManager.LOGOUT) {

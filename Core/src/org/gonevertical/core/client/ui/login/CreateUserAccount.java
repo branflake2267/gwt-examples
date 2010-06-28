@@ -16,12 +16,14 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PushButton;
@@ -84,6 +86,8 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
   // after all checks are processed, then we can create a user
   private boolean canCreateUser = false;
   
+  private Hyperlink hForgotUserName = new Hyperlink("Forgot Username", "core_profile_forgotusername");
+  private Hyperlink hForgetPassword = new Hyperlink("Forgot Password", "core_profile_forgotpassword");
   
   /**
    * constructor - init widget
@@ -124,6 +128,11 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
    * draw the inputs and items that make up the create user widget
    */
   public void draw() {
+  	
+  	HorizontalPanel hpLinks = new HorizontalPanel();
+  	hpLinks.add(hForgotUserName);
+  	hpLinks.add(new HTML("&nbsp;&nbsp;&nbsp;"));
+  	hpLinks.add(hForgetPassword);
     
     tbK1.setWidth("300px");
     tbK2.setWidth("300px");
@@ -175,6 +184,8 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
     pWidget.add(pAccept);
     pWidget.add(new HTML("&nbsp;"));
     pWidget.add(hpBottom);
+    pWidget.add(new HTML("&nbsp;"));
+    pWidget.add(hpLinks);
     
     // fields
     lk1.setStyleName("core-CreateUserAccount-Field");
@@ -429,7 +440,8 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
     
     cp.setAccessToken(userData.getAccessToken());
 
-    History.newItem("account_Profile");
+    String newUserLanding = cp.getNewUserLanding();
+    History.newItem(newUserLanding);
     
     // Notify change logged in - needs to notify Login Widget
     cp.fireChange(EventManager.NEW_USER_CREATED);
@@ -529,12 +541,15 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
    * @param userData
    */
   private void doesUserExistRpc(UserData userData) {
+  	cp.showLoading(true);
     
     AsyncCallback<UserData> callback = new AsyncCallback<UserData>() {
       public void onFailure(Throwable caught) {
       	cp.setRpcFailure(caught);
+      	cp.showLoading(false);
       }
       public void onSuccess(UserData userData) {
+      	cp.showLoading(false);
         processKeyExist(userData);
       }
     };
@@ -547,12 +562,15 @@ public class CreateUserAccount extends Composite implements KeyboardListener, Fo
    * @param userData
    */
   private void createAccountRpc(UserData userData) {
-    
+  	cp.showLoading(true);
+  	
     AsyncCallback<UserData> callback = new AsyncCallback<UserData>() {
       public void onFailure(Throwable caught) {
       	cp.setRpcFailure(caught);
+      	cp.showLoading(false);
       }
       public void onSuccess(UserData userData) {
+      	cp.showLoading(false);
         processAccountCreation(userData);
       }
     };

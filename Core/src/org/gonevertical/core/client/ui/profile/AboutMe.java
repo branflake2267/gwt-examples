@@ -2,6 +2,7 @@ package org.gonevertical.core.client.ui.profile;
 
 import org.gonevertical.core.client.ClientPersistence;
 import org.gonevertical.core.client.ui.admin.thing.ThingData;
+import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffData;
 import org.gonevertical.core.client.ui.login.ChangePassword;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -24,6 +25,7 @@ public class AboutMe extends Composite {
 	private TextBox tbNameFirst;
 	private TextBox tbNameLast;
 	private HTML htmlUserName;
+	private EmailsWidget emailsWidget;
 
 	public AboutMe(ClientPersistence cp) {
 		this.cp = cp;
@@ -107,7 +109,7 @@ public class AboutMe extends Composite {
 		HTML htmlnbsp_1 = new HTML("&nbsp;", true);
 		vp.add(htmlnbsp_1);
 		
-		EmailsWidget emailsWidget = new EmailsWidget();
+		emailsWidget = new EmailsWidget(cp);
 		vp.add(emailsWidget);
 		
 		HTML htmlnbsp = new HTML("&nbsp;", true);
@@ -149,12 +151,16 @@ public class AboutMe extends Composite {
 
 	private void drawEmails(ProfileData profileData) {
 		
+		ThingStuffData[] tsd = profileData.getEmails();
+	  if (tsd == null) {
+	  	return;
+	  }
 	  
+	  emailsWidget.drawEmails(tsd);
   }
-
-
 
 	public HTML getHtmlUserName() {
 		return htmlUserName;
 	}
+	
 }

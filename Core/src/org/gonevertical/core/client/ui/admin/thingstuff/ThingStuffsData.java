@@ -1,5 +1,7 @@
 package org.gonevertical.core.client.ui.admin.thingstuff;
 
+import java.util.ArrayList;
+
 import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypesData;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
@@ -60,6 +62,29 @@ public class ThingStuffsData implements IsSerializable {
   			break;
   		}
   	}
+  	
+  	return tsd;
+  }
+  
+  public ThingStuffData[] getThingStuffsData(long thingStufftypeId) {
+  	if (thingStuffData == null) {
+  		return null;
+  	}
+  	
+  	ArrayList<ThingStuffData> atsd = new ArrayList<ThingStuffData>();
+  	for (int i=0; i < thingStuffData.length; i++) {
+  		long tsid = thingStuffData[i].getThingStuffTypeId();
+  		if (thingStufftypeId == tsid) {
+  			atsd.add(thingStuffData[i]);
+  		}
+  	}
+  	
+  	if (atsd.size() == 0) {
+  		return null;
+  	}
+  	
+  	ThingStuffData[] tsd = new ThingStuffData[atsd.size()];
+  	atsd.toArray(tsd);
   	
   	return tsd;
   }

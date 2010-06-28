@@ -46,5 +46,13 @@ public class ProfileData implements IsSerializable {
 
 		return s;
 	}
+	
+	public ThingStuffData[] getEmails() {
+		
+		ThingStuffsData tsds = thingData.getThingStuffsData();
+		ThingStuffData[] tsd = tsds.getThingStuffsData((long) ThingStuffTypeData.THINGSTUFFTYPE_EMAIL);
+			
+		return tsd;
+	}
 
 }

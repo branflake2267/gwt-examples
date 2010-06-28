@@ -104,4 +104,12 @@ public class LoginUi extends Composite implements ChangeHandler {
 
 	}
 
+	public void drawForgotUsername() {
+		loginUi.drawForgotUsername();
+  }
+
+	public void drawForgotPassword() {
+		loginUi.drawForgotPassword();
+  }
+
 }

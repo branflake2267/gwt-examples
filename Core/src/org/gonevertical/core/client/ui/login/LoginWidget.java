@@ -40,5 +40,12 @@ public class LoginWidget extends LoginWidget_Abs  {
 		wloginUi.draw();
 	}
 
+	public void drawForgotUsername() {
+		wloginUi.drawForgotUsername();
+	}
+	
+	public void drawForgotPassword() {
+		wloginUi.drawForgotPassword();    
+	}
 
 }
