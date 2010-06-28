@@ -19,6 +19,7 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
@@ -77,13 +78,14 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 	private PushButton bLogin = new PushButton("Sign in");
 
 	// forgot password, ask for it
-	private PushButton bForgot = new PushButton("Get Password");
+	private PushButton bForgotPassword = new PushButton("Get Password");
 
 	private Hyperlink hAccountProfile = new Hyperlink("My Account", "core_profile_aboutme");
 	private Hyperlink hAccountCreate = new Hyperlink("Create Account", "core_profile_create");
 
 	// lets not change the url for these
-	private Anchor aForgotLink = new Anchor("Forgot Password");
+	private Anchor aForgotUsername = new Anchor("Forgot Username");
+	private Anchor aForgotPassword = new Anchor("Forgot Password");
 	private Anchor aLoginLink = new Anchor("Sign in");
 	private Anchor aLogout = new Anchor("Sign out");
 
@@ -124,7 +126,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 		pWidget.add(hp);
 
 		// defaults
-		bForgot.setVisible(false);
+		bForgotPassword.setVisible(false);
 		pError.setVisible(false);
 
 		pWidget.addMouseOverHandler(this);
@@ -153,10 +155,11 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 
 		aLogout.addClickHandler(this);
 		bLogin.addClickHandler(this);
-		bForgot.addClickHandler(this);		
+		bForgotPassword.addClickHandler(this);		
 		cbRemberMe.addClickHandler(this);
 		aLoginLink.addClickHandler(this);
-		aForgotLink.addClickHandler(this);
+		aForgotUsername.addClickHandler(this);
+		aForgotPassword.addClickHandler(this);
 		aLogout.addClickHandler(this);
 
 		// style
@@ -277,9 +280,10 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 		tbConsumerKey.addStyleName("core-login-ui-inputconsumerkey");
 		tbConsumerSecret.addStyleName("core-login-ui-inputconsumersecret");
 		tbConsumerSecretPass.addStyleName("core-login-ui-inputconsumersecret");
-		pOptions.setCellHorizontalAlignment(aForgotLink, HorizontalPanel.ALIGN_RIGHT);
+		pOptions.setCellHorizontalAlignment(aForgotUsername, HorizontalPanel.ALIGN_RIGHT);
+		pOptions.setCellHorizontalAlignment(aForgotPassword, HorizontalPanel.ALIGN_RIGHT);
 		pOptions.setCellHorizontalAlignment(hAccountCreate, HorizontalPanel.ALIGN_RIGHT);
-		pOptions.setCellVerticalAlignment(aForgotLink, VerticalPanel.ALIGN_BOTTOM);
+		pOptions.setCellVerticalAlignment(aForgotPassword, VerticalPanel.ALIGN_BOTTOM);
 		pOptions.setCellVerticalAlignment(hAccountCreate, VerticalPanel.ALIGN_BOTTOM);
 		pOptions.addStyleName("core-login-ui-inputoptions");
 		pOptions.setWidth("100%");
@@ -322,7 +326,8 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 		ploginItems.add(tbConsumerSecretPass);
 		ploginItems.add(hp);
 		ploginItems.add(cbRemberMe);
-		ploginItems.add(aForgotLink);
+		ploginItems.add(aForgotUsername);
+		ploginItems.add(aForgotPassword);
 		ploginItems.add(hAccountCreate);
 
 
@@ -342,9 +347,11 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 		tbConsumerKey.addStyleName("core-login-ui-inputconsumerkey");
 		tbConsumerSecret.addStyleName("core-login-ui-inputconsumersecret");
 		tbConsumerSecretPass.addStyleName("core-login-ui-inputconsumersecret");
-		pOptions.setCellHorizontalAlignment(aForgotLink, HorizontalPanel.ALIGN_RIGHT);
+		pOptions.setCellHorizontalAlignment(aForgotUsername, HorizontalPanel.ALIGN_RIGHT);
+		pOptions.setCellHorizontalAlignment(aForgotPassword, HorizontalPanel.ALIGN_RIGHT);
 		pOptions.setCellHorizontalAlignment(hAccountCreate, HorizontalPanel.ALIGN_RIGHT);
-		pOptions.setCellVerticalAlignment(aForgotLink, VerticalPanel.ALIGN_BOTTOM);
+		pOptions.setCellVerticalAlignment(aForgotUsername, VerticalPanel.ALIGN_BOTTOM);
+		pOptions.setCellVerticalAlignment(aForgotPassword, VerticalPanel.ALIGN_BOTTOM);
 		pOptions.setCellVerticalAlignment(hAccountCreate, VerticalPanel.ALIGN_BOTTOM);
 		pOptions.addStyleName("core-login-ui-inputoptions");
 		pOptions.setWidth("100%");
@@ -357,7 +364,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 	private void initOptionsPanel() {
 		pOptions.clear();
 		pOptions.add(cbRemberMe);
-		pOptions.add(aForgotLink);
+		pOptions.add(aForgotPassword);
 		pOptions.add(hAccountCreate);
 		pOptions.setVisible(false);
 		RootPanel.get().add(pOptions);
@@ -374,7 +381,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 		if (loginStatus == true) {
 			return;
 		}
-		if (bForgot.isVisible() == true) {
+		if (bForgotPassword.isVisible() == true) {
 			return;
 		}
 		if (pOptions == null) {
@@ -415,29 +422,34 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 		t.schedule(3000);
 	}
 
-	private void drawForgotPassword() {
+	public void drawForgotPassword() {
 
 		// reset ui
 		clear();
 
-		bForgot.setTitle("This will reset your password, " +
+		bForgotPassword.setTitle("This will reset your password, " +
 		"and send you a email of the new password to login.");
 
 		// tells the options not to show this way
-		bForgot.setVisible(true);
+		bForgotPassword.setVisible(true);
 
 		HorizontalPanel hp = new HorizontalPanel();
 		hp.setSpacing(4);
 		hp.add(tbConsumerKey);
-		hp.add(bForgot);
+		hp.add(bForgotPassword);
 		hp.add(aLoginLink);
 
 		pUi.add(hp);
 
 		// style
-		aForgotLink.addStyleName("core-login-ui-inputoptions");
+		aForgotPassword.addStyleName("core-login-ui-inputoptions");
 		hp.setCellVerticalAlignment(aLoginLink, VerticalPanel.ALIGN_BOTTOM);
 	}
+	
+	public void drawForgotUsername() {
+		Window.alert("Coming soon...");
+  }
+
 
 	private void drawLoggedIn() {
 		hideLoading();
@@ -464,7 +476,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 
 	private void clear() {
 		// I use the bForgot to tell the options not to show up
-		bForgot.setVisible(false);
+		bForgotPassword.setVisible(false);
 		pUi.clear();
 	}
 
@@ -605,7 +617,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 		if (sender == bLogin) {
 			startLogin();
 
-		} else if (sender == bForgot) {
+		} else if (sender == bForgotPassword) {
 			drawLoading();
 			cp.fireChange(EventManager.FORGOT_PASSWORD);
 
@@ -618,8 +630,11 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 		} else if (sender == cbRemberMe) {
 			// TODO - save a cookie
 
-		} else if (sender == aForgotLink) {
+		} else if (sender == aForgotPassword) {
 			drawForgotPassword();
+
+		} else if (sender == aForgotUsername) {
+			drawForgotUsername();
 
 		} else if (sender == aLoginLink) {
 			drawInputs();
@@ -639,7 +654,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 		} 
 
 	}
-
+	
 	public void onMouseOver(MouseOverEvent event) {
 
 		Widget sender = (Widget) event.getSource();
@@ -712,5 +727,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 
 		} 
 	}
+
+
 
 }

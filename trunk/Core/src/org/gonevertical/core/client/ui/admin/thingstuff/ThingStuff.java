@@ -629,7 +629,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
   	this.widgetType = widgetType;
   }
 
-  private void deleteRpcThingStuff(long thingStuffId) {
+  public void deleteRpcThingStuff(long thingStuffId) {
     
     rpc.deleteThingStuffData(cp.getAccessToken(), thingStuffId, new AsyncCallback<Boolean>() {
       public void onSuccess(Boolean b) {
