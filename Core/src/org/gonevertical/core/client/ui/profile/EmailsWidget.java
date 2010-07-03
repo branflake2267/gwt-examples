@@ -1,4 +1,4 @@
-package org.gonevertical.core.client.ui.profile;
+package org.gonevertical.core.client.ui.account;
 
 import org.gonevertical.core.client.ClientPersistence;
 import org.gonevertical.core.client.global.DeleteDialog;
@@ -85,6 +85,23 @@ public class EmailsWidget extends Composite {
 			addEmail(tsd[i]);
 		}
 
+	}
+	
+	public ThingStuffData[] getThingStuffData() {
+		
+		int c = pEmails.getWidgetCount();
+		
+		if (c == 0) {
+			return null;
+		}
+		
+		ThingStuffData[] tsds = new ThingStuffData[c];
+		for (int i=0; i < c; i++) {
+			EmailWidget ew = (EmailWidget) pEmails.getWidget(i);
+			tsds[i]	= ew.getThingStuffData();
+		}
+	
+		return tsds;
 	}
 	
 
