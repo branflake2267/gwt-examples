@@ -131,7 +131,7 @@ public class Db_User {
     }
     if (userConsumerSecret.length() == 0) {
       System.out.println("isUserNameExist(); No consumerSecret.");
-      return null;
+      // TODO - this isn't needed at the moment, like not used in usernamecchange return null;
     }
     
     // TODO - I think I need to run more checking later

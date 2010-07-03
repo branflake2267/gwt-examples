@@ -132,6 +132,7 @@ public class ServerPersistence {
 
 	/**
 	 * get persistence manager - TODO wondering if there is a different way to speed recurring connections?
+	 * TODO Connection Pooling???
 	 * 
 	 * @return
 	 */

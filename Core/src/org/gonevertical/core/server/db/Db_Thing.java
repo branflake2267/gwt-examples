@@ -161,8 +161,10 @@ public class Db_Thing {
 		f.setThingId(thingId);
 		
 		// get thing stuff
-		Db_ThingStuff dbTs = new Db_ThingStuff(sp);
-		dbTs.saveThingStuffData(accessToken, f, tsd.getThingStuffData());
+		if (tsd != null && tsd.getThingStuffData() != null) {
+			Db_ThingStuff dbTs = new Db_ThingStuff(sp);
+			dbTs.saveThingStuffData(accessToken, f, tsd.getThingStuffData());
+		}
 		
 		// get thing
 		//filter.setThingId(thingId); // TODO should I need this
