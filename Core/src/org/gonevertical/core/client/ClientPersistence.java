@@ -179,6 +179,8 @@ public class ClientPersistence extends Composite  {
 		// TODO - fixup later
 		Window.alert("ClientPersistence.setRpcFailure: " + caught.toString());
 		System.out.println(caught);
+		
+		showLoading(false);
   }
 	
   /**
