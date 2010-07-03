@@ -80,8 +80,8 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 	// forgot password, ask for it
 	private PushButton bForgotPassword = new PushButton("Get Password");
 
-	private Hyperlink hAccountProfile = new Hyperlink("My Account", "core_profile_aboutme");
-	private Hyperlink hAccountCreate = new Hyperlink("Create Account", "core_profile_create");
+	private Hyperlink hAccount = new Hyperlink("My Account", "core_account_aboutme");
+	private Hyperlink hAccountCreate = new Hyperlink("Create Account", "core_account_create");
 
 	// lets not change the url for these
 	private Anchor aForgotUsername = new Anchor("Forgot Username");
@@ -140,7 +140,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 		
 		// TODO
 		hAccountCreate.addClickHandler(this);
-		hAccountProfile.addClickHandler(this);
+		hAccount.addClickHandler(this);
 
 
 		tbConsumerKey.addClickHandler(this);
@@ -464,7 +464,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 		clear();
 
 		HorizontalPanel hp = new HorizontalPanel();
-		hp.add(hAccountProfile);
+		hp.add(hAccount);
 		hp.add(new HTML("&nbsp;&nbsp;"));
 		hp.add(aLogout);
 
@@ -644,9 +644,9 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 				cp.fireChange(EventManager.ACCOUNT_CREATE);
 			}
 
-		} else if (sender == hAccountProfile) {
-			if (QueryString.getQueryStringData().getHistoryToken().equals("core_profile")) {
-				cp.fireChange(EventManager.ACCOUNT_PROFILE);
+		} else if (sender == hAccount) {
+			if (QueryString.getQueryStringData().getHistoryToken().equals("core_account")) {
+				cp.fireChange(EventManager.ACCOUNT);
 			}
 
 		} else if (sender == aLogout) {
