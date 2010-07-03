@@ -210,6 +210,14 @@ public class ThingStuffData implements IsSerializable {
     return value;
   }
   
+	public String getValue_ForTextBox() {
+		String s = "";
+		if (value != null) {
+			s = value;
+		}
+		return s;
+	}
+  
   public Boolean getValueBol() {
     return valueBol;
   }
@@ -250,15 +258,6 @@ public class ThingStuffData implements IsSerializable {
 		return dateUpdated;
 	}
 	
-	public String getValueForTextBox() {
-		
-		String s = "";
-		
-		
-		
-		return s;
-	}
-
 	public String toString() {
 		String s = "";
 		s += "thingId=" + thingId + " ";

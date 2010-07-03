@@ -150,6 +150,10 @@ public class ThingEdit extends Ui implements ClickHandler, ChangeHandler, MouseO
 	 * @param thingData
 	 */
 	private void processThingData(ThingData thingData) {
+		if (thingData == null) {
+			System.out.println("ThingEdit.processThingData(): Something went wrong");
+			return;
+		}
 		this.thingsStuffData = thingData.getThingStuffsData();
 
 		wStuff.draw(thingData, thingData.getThingStuffsData());
@@ -245,6 +249,7 @@ public class ThingEdit extends Ui implements ClickHandler, ChangeHandler, MouseO
 		td.setThingStuffsData(thingStuffsData);
 
 		ThingDataFilter filter = new ThingDataFilter();
+		filter.setThingId(thingData.getThingId());
 
 		//saveThingStuffsData(thingStuffData);
 		saveThingRpc(td, filter);
