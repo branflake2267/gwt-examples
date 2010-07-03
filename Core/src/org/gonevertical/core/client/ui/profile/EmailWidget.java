@@ -1,4 +1,4 @@
-package org.gonevertical.core.client.ui.profile;
+package org.gonevertical.core.client.ui.account;
 
 import org.gonevertical.core.client.ClientPersistence;
 import org.gonevertical.core.client.global.DeleteDialog;
@@ -7,6 +7,7 @@ import org.gonevertical.core.client.rpc.RpcCore;
 import org.gonevertical.core.client.rpc.RpcCoreServiceAsync;
 import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffData;
 import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffs;
+import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeData;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -71,6 +72,16 @@ public class EmailWidget extends Composite implements ClickHandler {
 		String text = tsd.getValue();
 		tbEmail.setText(text);
 	}
+	
+	public ThingStuffData getThingStuffData() {
+		String value = tbEmail.getText().trim();
+		if (tsd == null) {
+			tsd = new ThingStuffData();
+			tsd.setThingStuffTypeId(ThingStuffTypeData.THINGSTUFFTYPE_EMAIL);
+		}
+		tsd.setValue(value);
+	  return tsd;
+  }
 
 	private void delete() {
 		wdelete.center();
@@ -128,5 +139,6 @@ public class EmailWidget extends Composite implements ClickHandler {
   	}
   	
   }
+
 
 }
