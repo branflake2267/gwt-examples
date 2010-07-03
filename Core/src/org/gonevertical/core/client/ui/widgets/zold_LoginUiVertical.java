@@ -1,4 +1,4 @@
-package org.gonevertical.core.client.ui;
+package org.gonevertical.core.client.ui.widgets;
 
 import org.gonevertical.core.client.ClientPersistence;
 import org.gonevertical.core.client.global.LoadingWidget;

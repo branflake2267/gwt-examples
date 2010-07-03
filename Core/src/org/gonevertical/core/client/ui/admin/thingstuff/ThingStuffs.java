@@ -5,10 +5,11 @@ import org.gonevertical.core.client.global.EventManager;
 import org.gonevertical.core.client.global.Style;
 import org.gonevertical.core.client.rpc.RpcCore;
 import org.gonevertical.core.client.rpc.RpcCoreServiceAsync;
-import org.gonevertical.core.client.ui.Paging;
-import org.gonevertical.core.client.ui.Row;
+import org.gonevertical.core.client.ui.Ui;
 import org.gonevertical.core.client.ui.admin.thing.ThingData;
 import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypesData;
+import org.gonevertical.core.client.ui.widgets.Paging;
+import org.gonevertical.core.client.ui.widgets.Row;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
@@ -28,14 +29,11 @@ import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ThingStuffs extends Composite implements ClickHandler, ChangeHandler {
+public class ThingStuffs extends Ui implements ClickHandler, ChangeHandler {
 
 	public static final int WIDGETTYPE_THINGSTUFF = 1;
 	public static final int WIDGETTYPE_THINGSTUFFABOUT = 2;
-	
-  private ClientPersistence cp = null;
-  private RpcCoreServiceAsync rpc = null;
-  
+	 
   private VerticalPanel pWidget = new VerticalPanel();
   
   private VerticalPanel pMenu = new VerticalPanel();
@@ -81,7 +79,7 @@ public class ThingStuffs extends Composite implements ClickHandler, ChangeHandle
    * @param cp
    */
   public ThingStuffs(ClientPersistence cp) {
-    this.cp = cp;
+    super(cp);
     
     pWidget.add(pMenu);
     pWidget.add(pListTop);
@@ -89,8 +87,6 @@ public class ThingStuffs extends Composite implements ClickHandler, ChangeHandle
     pWidget.add(wPage);
     
     initWidget(pWidget);
-    
-    rpc = RpcCore.initRpc();
     
     drawMenu();
     

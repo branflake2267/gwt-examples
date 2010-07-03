@@ -6,10 +6,11 @@ import org.gonevertical.core.client.global.EventManager;
 import org.gonevertical.core.client.global.Global_ListBox;
 import org.gonevertical.core.client.rpc.RpcCore;
 import org.gonevertical.core.client.rpc.RpcCoreServiceAsync;
-import org.gonevertical.core.client.ui.Row;
+import org.gonevertical.core.client.ui.Ui;
 import org.gonevertical.core.client.ui.admin.thing.ThingData;
 import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeData;
 import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypesData;
+import org.gonevertical.core.client.ui.widgets.Row;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
@@ -36,17 +37,11 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ThingStuff extends Composite implements ClickHandler, ChangeHandler, MouseOverHandler, MouseOutHandler {
-  	
-  private ClientPersistence cp = null;
-  
-  private RpcCoreServiceAsync rpc;
-  
+public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, MouseOverHandler, MouseOutHandler {
+  	  
   private int changeEvent = 0;
   
   private Row pWidget = new Row();
-
-  private DeleteDialog wdelete = new DeleteDialog();
   
   private FlowPanel pId = new FlowPanel();
   
@@ -84,7 +79,7 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
 	 * @param widgetType - what type of widget, thingstuff or thingabout stuff
 	 */
   public ThingStuff(ClientPersistence cp, int widgetType) {
-    this.cp = cp;
+    super(cp);
     this.widgetType = widgetType;
     
     // inputs of stuff, and then add another group of stuffs
@@ -106,8 +101,6 @@ public class ThingStuff extends Composite implements ClickHandler, ChangeHandler
     pWidget.addMouseOutHandler(this);
     bDelete.addClickHandler(this);
     lbTypes.addChangeHandler(this);
-    
-    rpc = RpcCore.initRpc();
     
     //pWidget.addStyleName("test2");
   }
