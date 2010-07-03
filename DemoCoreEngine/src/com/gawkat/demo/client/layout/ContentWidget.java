@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import org.gonevertical.core.client.global.QueryString;
 import org.gonevertical.core.client.global.QueryStringData;
-import org.gonevertical.core.client.ui.profile.ProfileTabs;
+import org.gonevertical.core.client.ui.account.AccountTabs;
 import org.gonevertical.core.client.ui.admin.AdminTabs;
 
 import com.gawkat.demo.client.layout.widgets.Home;
@@ -19,7 +19,7 @@ import com.gawkat.demo.client.layout.widgets.TestWidget;
 public class ContentWidget extends Composite implements ValueChangeHandler<String> {
 	private ClientPersistence cp;
 	private VerticalPanel verticalPanel;
-	private ProfileTabs profileTabs;
+	private AccountTabs accountTabs;
 	private AdminTabs adminTabs;
 	private Home home;
 	private TestWidget testWidget;
@@ -41,8 +41,8 @@ public class ContentWidget extends Composite implements ValueChangeHandler<Strin
 		if (adminTabs.getMatchHistoryToken() == true) {
   		drawState_Admin();
   		
-  	} else if (profileTabs.getMatchHistoryToken() == true) {
-  		drawState_Profile();
+  	} else if (accountTabs.getMatchHistoryToken() == true) {
+  		drawState_Account();
   		
   	} else if (historyToken.matches("^dce_.*?$") == true ) {
   		drawState_Dce();
@@ -69,8 +69,8 @@ public class ContentWidget extends Composite implements ValueChangeHandler<Strin
 		} else if (adminTabs.getMatchHistoryToken() == true) {
 			drawState_Admin();
 			
-		} else if (profileTabs.getMatchHistoryToken() == true) {
-			drawState_Profile();
+		} else if (accountTabs.getMatchHistoryToken() == true) {
+			drawState_Account();
 			
 		}
 		
@@ -81,7 +81,7 @@ public class ContentWidget extends Composite implements ValueChangeHandler<Strin
 		home.draw();
 		
 		adminTabs.setVisible(false);
-		profileTabs.setVisible(false);
+		accountTabs.setVisible(false);
 		testWidget.setVisible(false);
 	}
 	
@@ -91,7 +91,7 @@ public class ContentWidget extends Composite implements ValueChangeHandler<Strin
 		
 		home.setVisible(false);
 		adminTabs.setVisible(false);
-		profileTabs.setVisible(false);
+		accountTabs.setVisible(false);
   }
 
 	private void drawState_Admin() {
@@ -100,12 +100,12 @@ public class ContentWidget extends Composite implements ValueChangeHandler<Strin
 		
 		home.setVisible(false);
 		testWidget.setVisible(false);
-		profileTabs.setVisible(false);
+		accountTabs.setVisible(false);
   }
 	
-	private void drawState_Profile() {
-		profileTabs.setVisible(true);
-		profileTabs.draw();
+	private void drawState_Account() {
+		accountTabs.setVisible(true);
+		accountTabs.draw();
 		
 		home.setVisible(false);
 		testWidget.setVisible(false);
@@ -117,18 +117,18 @@ public class ContentWidget extends Composite implements ValueChangeHandler<Strin
 			verticalPanel = new VerticalPanel();
 			verticalPanel.add(getHome());
 			verticalPanel.add(getTestWidget());
-			verticalPanel.add(getProfileTabs());
+			verticalPanel.add(getAccountTabs());
 			verticalPanel.add(getAdminTabs());
 			
 			verticalPanel.setWidth("100%");
 		}
 		return verticalPanel;
 	}
-	private ProfileTabs getProfileTabs() {
-		if (profileTabs == null) {
-			profileTabs = new ProfileTabs(cp);
+	private AccountTabs getAccountTabs() {
+		if (accountTabs == null) {
+			accountTabs = new AccountTabs(cp);
 		}
-		return profileTabs;
+		return accountTabs;
 	}
 	private AdminTabs getAdminTabs() {
 		if (adminTabs == null) {
