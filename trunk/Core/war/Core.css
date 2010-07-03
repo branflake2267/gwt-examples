@@ -123,8 +123,11 @@
   padding: 2px;
 }
 
-.core-Profile {
+.core-account {
   padding: 7px;
+}
+.core-account-notify {
+	color: Green;
 }
 
 

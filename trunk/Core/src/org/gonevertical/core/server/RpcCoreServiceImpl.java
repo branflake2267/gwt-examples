@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import org.gonevertical.core.client.oauth.OAuthTokenData;
 import org.gonevertical.core.client.rpc.RpcCoreService;
+import org.gonevertical.core.client.ui.account.AccountData;
 import org.gonevertical.core.client.ui.admin.thing.ThingData;
 import org.gonevertical.core.client.ui.admin.thing.ThingDataFilter;
 import org.gonevertical.core.client.ui.admin.thing.ThingsData;
@@ -20,7 +21,6 @@ import org.gonevertical.core.client.ui.admin.thingtype.ThingTypesData;
 import org.gonevertical.core.client.ui.feedback.FeedbackData;
 import org.gonevertical.core.client.ui.login.ChangePasswordData;
 import org.gonevertical.core.client.ui.login.UserData;
-import org.gonevertical.core.client.ui.profile.ProfileData;
 import org.gonevertical.core.client.widget.WidgetAttrData;
 import org.gonevertical.core.client.widget.WidgetAttrDataFilter;
 import org.gonevertical.core.server.db.Db_Feedback;
@@ -359,9 +359,9 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
 	  return r;
   }
   
-  public ProfileData getProfileData(OAuthTokenData accessToken, long thingId) {
+  public AccountData getAccountData(OAuthTokenData accessToken, long thingId) {
    	sp.start(getThreadLocalRequest());
-  	ProfileData r = null;
+  	AccountData r = null;
     try {
 	    r = new Db_Profile(sp).getProfileData(accessToken, thingId);
     } catch (Exception e) {
@@ -371,9 +371,9 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   	return r;
   }
 
-  public ProfileData saveProfileData(OAuthTokenData accessToken, ThingDataFilter filter, ProfileData profileData) {
+  public AccountData saveAccountData(OAuthTokenData accessToken, ThingDataFilter filter, AccountData profileData) {
   	sp.start(getThreadLocalRequest());
-  	ProfileData r = null;
+  	AccountData r = null;
     try {
 	    r = new Db_Profile(sp).saveProfileData(accessToken, filter, profileData);
     } catch (Exception e) {
