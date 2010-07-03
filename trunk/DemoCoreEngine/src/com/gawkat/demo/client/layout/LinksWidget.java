@@ -27,7 +27,7 @@ public class LinksWidget extends Composite {
 		Hyperlink h1 = new Hyperlink("Home", "dce_home");
 		Hyperlink h2 = new Hyperlink("Content Test", "dce_test");
 		Hyperlink h3 = new Hyperlink("Core Admin", "core_admin_home");
-		Hyperlink h4 = new Hyperlink("Core Profile", "core_profile_aboutme");
+		Hyperlink h4 = new Hyperlink("My Account", "core_account_aboutme");
 		
 		HorizontalPanel hp = new HorizontalPanel();
 		hp.add(h1);
