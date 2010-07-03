@@ -69,5 +69,7 @@ public interface RpcCoreService extends RemoteService {
   
   public WidgetAttrData getWidgetAttributes(OAuthTokenData accessToken, WidgetAttrDataFilter widgetAttrDataFilter);
   
+  // profile data
   public ProfileData getProfileData(OAuthTokenData accessToken, long thingId);
+  public ProfileData saveProfileData(OAuthTokenData accessToken, ThingDataFilter filter, ProfileData profileData);
 }
