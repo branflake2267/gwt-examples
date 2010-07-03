@@ -66,8 +66,8 @@ public abstract class LoginWidget_Abs extends Composite implements ChangeHandler
 					} else if (changeEvent == EventManager.FORGOT_PASSWORD) {
 						forgotPassword();
 
-					} else if (changeEvent == EventManager.PROFILE) {
-						displayProfile();
+					} else if (changeEvent == EventManager.ACCOUNT_DISPLAY) {
+						displayAccount();
 						
 					} else if (changeEvent == EventManager.USER_LOGGEDIN) {
 						// nothing to do
@@ -251,7 +251,7 @@ public abstract class LoginWidget_Abs extends Composite implements ChangeHandler
 		Window.alert("forgot password in session manager");
 	}
 
-	private void displayProfile() {
+	private void displayAccount() {
 		Window.alert("display profile in session manager");
 	}
 
