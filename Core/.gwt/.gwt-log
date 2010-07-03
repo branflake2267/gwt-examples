@@ -3606,3 +3606,406 @@ Rebinding com.google.gwt.i18n.client.impl.LocaleInfoImpl
          Generating method body for defCurrencyCode()
    Adding '4' new generated units
       Removing invalidated units
+Module location: file:/Users/branflake2267/Documents/workspace/Core/src/org/gonevertical/core/Core.gwt.xml
+Loading inherited module 'com.google.gwt.user.User'
+   Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/user/User.gwt.xml
+   Loading inherited module 'com.google.gwt.core.Core'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/core/Core.gwt.xml
+      Loading inherited module 'com.google.gwt.dev.jjs.intrinsic.Intrinsic'
+         Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-dev.jar!/com/google/gwt/dev/jjs/intrinsic/Intrinsic.gwt.xml
+         Loading inherited module 'com.google.gwt.lang.LongLib'
+            Module location: jar:file:/Applications/eclipse/plugins/com.instantiations.designer.gwt.hosted.2_0.super_7.6.0.r35x201006260720.jar!/com/google/gwt/lang/LongLib.gwt.xml
+      Loading inherited module 'com.google.gwt.emul.Emulation'
+         Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/emul/Emulation.gwt.xml
+      Loading inherited module 'com.google.gwt.xhr.XMLHttpRequest'
+         Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/xhr/XMLHttpRequest.gwt.xml
+         Loading inherited module 'com.google.gwt.core.Core'
+            Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.core.CompilerParameters'
+         Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/core/CompilerParameters.gwt.xml
+      Loading inherited module 'com.google.gwt.core.EmulateJsStack'
+         Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/core/EmulateJsStack.gwt.xml
+         Loading inherited module 'com.google.gwt.core.Core'
+            Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.event.Event'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/event/Event.gwt.xml
+      Loading inherited module 'com.google.gwt.event.EventBase'
+         Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/event/EventBase.gwt.xml
+         Loading inherited module 'com.google.gwt.core.Core'
+            Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.event.dom.DomEvent'
+         Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/event/dom/DomEvent.gwt.xml
+         Loading inherited module 'com.google.gwt.event.EventBase'
+            Module 'com.google.gwt.event.EventBase' has already been loaded and will be skipped
+         Loading inherited module 'com.google.gwt.dom.DOM'
+            Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/dom/DOM.gwt.xml
+            Loading inherited module 'com.google.gwt.core.Core'
+               Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+            Loading inherited module 'com.google.gwt.user.UserAgent'
+               Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/user/UserAgent.gwt.xml
+               Loading inherited module 'com.google.gwt.emul.EmulationWithUserAgent'
+                  Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/emul/EmulationWithUserAgent.gwt.xml
+                  Loading inherited module 'com.google.gwt.emul.Emulation'
+                     Module 'com.google.gwt.emul.Emulation' has already been loaded and will be skipped
+               Loading inherited module 'com.google.gwt.core.CoreWithUserAgent'
+                  Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/core/CoreWithUserAgent.gwt.xml
+                  Loading inherited module 'com.google.gwt.core.Core'
+                     Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.event.logical.LogicalEvent'
+         Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/event/logical/LogicalEvent.gwt.xml
+         Loading inherited module 'com.google.gwt.event.EventBase'
+            Module 'com.google.gwt.event.EventBase' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.animation.Animation'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/animation/Animation.gwt.xml
+      Loading inherited module 'com.google.gwt.core.Core'
+         Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.user.User'
+         Module 'com.google.gwt.user.User' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.resources.Resources'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/resources/Resources.gwt.xml
+      Loading inherited module 'com.google.gwt.core.Core'
+         Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.dom.DOM'
+         Module 'com.google.gwt.dom.DOM' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.http.HTTP'
+         Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/http/HTTP.gwt.xml
+         Loading inherited module 'com.google.gwt.core.Core'
+            Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+         Loading inherited module 'com.google.gwt.xhr.XMLHttpRequest'
+            Module 'com.google.gwt.xhr.XMLHttpRequest' has already been loaded and will be skipped
+         Loading inherited module 'com.google.gwt.user.User'
+            Module 'com.google.gwt.user.User' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.layout.Layout'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/layout/Layout.gwt.xml
+      Loading inherited module 'com.google.gwt.core.Core'
+         Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.user.UserAgent'
+         Module 'com.google.gwt.user.UserAgent' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.dom.DOM'
+         Module 'com.google.gwt.dom.DOM' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.animation.Animation'
+         Module 'com.google.gwt.animation.Animation' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.uibinder.UiBinder'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/uibinder/UiBinder.gwt.xml
+      Loading inherited module 'com.google.gwt.resources.Resources'
+         Module 'com.google.gwt.resources.Resources' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.user.AsyncProxy'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/user/AsyncProxy.gwt.xml
+   Loading inherited module 'com.google.gwt.user.RemoteService'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/user/RemoteService.gwt.xml
+      Loading inherited module 'com.google.gwt.http.HTTP'
+         Module 'com.google.gwt.http.HTTP' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.user.DocumentRoot'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/user/DocumentRoot.gwt.xml
+      Loading inherited module 'com.google.gwt.core.Core'
+         Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.user.UserAgent'
+         Module 'com.google.gwt.user.UserAgent' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.user.DOM'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/user/DOM.gwt.xml
+      Loading inherited module 'com.google.gwt.core.Core'
+         Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.dom.DOM'
+         Module 'com.google.gwt.dom.DOM' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.user.UserAgent'
+         Module 'com.google.gwt.user.UserAgent' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.user.Window'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/user/Window.gwt.xml
+      Loading inherited module 'com.google.gwt.core.Core'
+         Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.user.UserAgent'
+         Module 'com.google.gwt.user.UserAgent' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.user.HTTPRequest'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/user/HTTPRequest.gwt.xml
+      Loading inherited module 'com.google.gwt.core.Core'
+         Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.xhr.XMLHttpRequest'
+         Module 'com.google.gwt.xhr.XMLHttpRequest' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.user.History'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/user/History.gwt.xml
+      Loading inherited module 'com.google.gwt.core.Core'
+         Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.user.UserAgent'
+         Module 'com.google.gwt.user.UserAgent' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.i18n.I18N'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/i18n/I18N.gwt.xml
+   Loading inherited module 'com.google.gwt.user.Popup'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/user/Popup.gwt.xml
+      Loading inherited module 'com.google.gwt.core.Core'
+         Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.user.UserAgent'
+         Module 'com.google.gwt.user.UserAgent' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.user.Form'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/user/Form.gwt.xml
+      Loading inherited module 'com.google.gwt.core.Core'
+         Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.user.UserAgent'
+         Module 'com.google.gwt.user.UserAgent' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.user.TextBox'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/user/TextBox.gwt.xml
+      Loading inherited module 'com.google.gwt.core.Core'
+         Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.user.UserAgent'
+         Module 'com.google.gwt.user.UserAgent' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.user.Focus'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/user/Focus.gwt.xml
+      Loading inherited module 'com.google.gwt.core.Core'
+         Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.user.UserAgent'
+         Module 'com.google.gwt.user.UserAgent' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.user.ImageBundle'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/user/ImageBundle.gwt.xml
+      Loading inherited module 'com.google.gwt.user.ClippedImage'
+         Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/user/ClippedImage.gwt.xml
+         Loading inherited module 'com.google.gwt.core.Core'
+            Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+         Loading inherited module 'com.google.gwt.user.UserAgent'
+            Module 'com.google.gwt.user.UserAgent' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.user.ClippedImage'
+      Module 'com.google.gwt.user.ClippedImage' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.user.RichText'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/user/RichText.gwt.xml
+      Loading inherited module 'com.google.gwt.core.Core'
+         Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.user.UserAgent'
+         Module 'com.google.gwt.user.UserAgent' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.user.SplitPanel'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/user/SplitPanel.gwt.xml
+      Loading inherited module 'com.google.gwt.user.User'
+         Module 'com.google.gwt.user.User' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.user.CaptionPanel'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/user/CaptionPanel.gwt.xml
+      Loading inherited module 'com.google.gwt.core.Core'
+         Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.user.UserAgent'
+         Module 'com.google.gwt.user.UserAgent' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.user.Window'
+      Module 'com.google.gwt.user.Window' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.user.Tree'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/user/Tree.gwt.xml
+      Loading inherited module 'com.google.gwt.core.Core'
+         Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.user.UserAgent'
+         Module 'com.google.gwt.user.UserAgent' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.user.Hyperlink'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/user/Hyperlink.gwt.xml
+      Loading inherited module 'com.google.gwt.core.Core'
+         Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.user.UserAgent'
+         Module 'com.google.gwt.user.UserAgent' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.user.FileUpload'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/user/FileUpload.gwt.xml
+      Loading inherited module 'com.google.gwt.core.Core'
+         Module 'com.google.gwt.core.Core' has already been loaded and will be skipped
+      Loading inherited module 'com.google.gwt.user.UserAgent'
+         Module 'com.google.gwt.user.UserAgent' has already been loaded and will be skipped
+   Loading inherited module 'com.google.gwt.user.datepicker.DatePicker'
+      Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/user/datepicker/DatePicker.gwt.xml
+Loading inherited module 'com.google.gwt.user.theme.standard.Standard'
+   Module location: jar:file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar!/com/google/gwt/user/theme/standard/Standard.gwt.xml
+Public resources found in...
+   Refreshing resources
+      Searching for resources within file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar
+         Indexing zip file: /Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-user.jar
+      Searching for resources within file:/Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-dev.jar
+         Indexing zip file: /Applications/eclipse/plugins/com.google.gwt.eclipse.sdkbundle.2.0.4_2.0.4.v201006301254/gwt-2.0.4/gwt-dev.jar
+      Searching for resources within file:/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/shared/appengine-local-runtime-shared.jar
+         Indexing zip file: /Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/shared/appengine-local-runtime-shared.jar
+      Searching for resources within file:/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/shared/geronimo-el_1.0_spec-1.0.1.jar
+         Indexing zip file: /Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/shared/geronimo-el_1.0_spec-1.0.1.jar
+      Searching for resources within file:/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/shared/geronimo-jsp_2.1_spec-1.0.1.jar
+         Indexing zip file: /Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/shared/geronimo-jsp_2.1_spec-1.0.1.jar
+      Searching for resources within file:/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/shared/geronimo-servlet_2.5_spec-1.2.jar
+         Indexing zip file: /Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/shared/geronimo-servlet_2.5_spec-1.2.jar
+      Searching for resources within file:/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/shared/jsp/repackaged-appengine-ant-1.7.1.jar
+         Indexing zip file: /Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/shared/jsp/repackaged-appengine-ant-1.7.1.jar
+      Searching for resources within file:/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/shared/jsp/repackaged-appengine-ant-launcher-1.7.1.jar
+         Indexing zip file: /Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/shared/jsp/repackaged-appengine-ant-launcher-1.7.1.jar
+      Searching for resources within file:/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/shared/jsp/repackaged-appengine-commons-el-1.0.jar
+         Indexing zip file: /Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/shared/jsp/repackaged-appengine-commons-el-1.0.jar
+      Searching for resources within file:/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/shared/jsp/repackaged-appengine-commons-logging-1.1.1.jar
+         Indexing zip file: /Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/shared/jsp/repackaged-appengine-commons-logging-1.1.1.jar
+      Searching for resources within file:/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/shared/jsp/repackaged-appengine-jasper-compiler-5.0.28.jar
+         Indexing zip file: /Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/shared/jsp/repackaged-appengine-jasper-compiler-5.0.28.jar
+      Searching for resources within file:/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/shared/jsp/repackaged-appengine-jasper-runtime-5.0.28.jar
+         Indexing zip file: /Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/shared/jsp/repackaged-appengine-jasper-runtime-5.0.28.jar
+      Searching for resources within file:/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/user/appengine-api-1.0-sdk-1.3.5.jar
+         Indexing zip file: /Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/user/appengine-api-1.0-sdk-1.3.5.jar
+      Searching for resources within file:/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/user/appengine-api-labs-1.3.5.jar
+         Indexing zip file: /Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/user/appengine-api-labs-1.3.5.jar
+      Searching for resources within file:/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/user/appengine-jsr107cache-1.3.5.jar
+         Indexing zip file: /Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/user/appengine-jsr107cache-1.3.5.jar
+      Searching for resources within file:/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/user/jsr107cache-1.1.jar
+         Indexing zip file: /Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/user/jsr107cache-1.1.jar
+      Searching for resources within file:/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/user/orm/datanucleus-appengine-1.0.7.final.jar
+         Indexing zip file: /Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/user/orm/datanucleus-appengine-1.0.7.final.jar
+      Searching for resources within file:/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/user/orm/datanucleus-core-1.1.5.jar
+         Indexing zip file: /Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/user/orm/datanucleus-core-1.1.5.jar
+      Searching for resources within file:/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/user/orm/datanucleus-jpa-1.1.5.jar
+         Indexing zip file: /Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/user/orm/datanucleus-jpa-1.1.5.jar
+      Searching for resources within file:/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/user/orm/geronimo-jpa_3.0_spec-1.1.1.jar
+         Indexing zip file: /Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/user/orm/geronimo-jpa_3.0_spec-1.1.1.jar
+      Searching for resources within file:/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/user/orm/geronimo-jta_1.1_spec-1.1.1.jar
+         Indexing zip file: /Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/user/orm/geronimo-jta_1.1_spec-1.1.1.jar
+      Searching for resources within file:/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/user/orm/jdo2-api-2.3-eb.jar
+         Indexing zip file: /Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/user/orm/jdo2-api-2.3-eb.jar
+      Searching for resources within file:/Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/appengine-tools-api.jar
+         Indexing zip file: /Applications/eclipse/plugins/com.google.appengine.eclipse.sdkbundle.1.3.5_1.3.5.v201006301254/appengine-java-sdk-1.3.5/lib/appengine-tools-api.jar
+Translatable source found in...
+   Refreshing resources
+Removing invalidated units
+Rebinding com.google.gwt.i18n.client.impl.LocaleInfoImpl
+   Invoking generator com.google.gwt.i18n.rebind.LocaleInfoGenerator
+      Processing interface com.google.gwt.i18n.client.constants.DateTimeConstantsImpl
+         Generating method body for weekendRange()
+         Generating method body for standaloneMonths()
+         Generating method body for weekdays()
+         Generating method body for standaloneShortMonths()
+         Generating method body for firstDayOfTheWeek()
+         Generating method body for months()
+         Generating method body for eraNames()
+         Generating method body for narrowMonths()
+         Generating method body for shortMonths()
+         Generating method body for narrowWeekdays()
+         Generating method body for standaloneWeekdays()
+         Generating method body for standaloneNarrowMonths()
+         Generating method body for standaloneNarrowWeekdays()
+         Generating method body for ampms()
+         Generating method body for dateFormats()
+         Generating method body for shortWeekdays()
+         Generating method body for timeFormats()
+         Generating method body for standaloneShortWeekdays()
+         Generating method body for eras()
+         Generating method body for quarters()
+         Generating method body for shortQuarters()
+      Processing interface com.google.gwt.i18n.client.constants.NumberConstantsImpl
+         Generating method body for percentPattern()
+         Generating method body for zeroDigit()
+         Generating method body for scientificPattern()
+         Generating method body for decimalSeparator()
+         Generating method body for notANumber()
+         Generating method body for minusSign()
+         Generating method body for infinity()
+         Generating method body for exponentialSymbol()
+         Generating method body for plusSign()
+         Generating method body for currencyPattern()
+         Generating method body for monetaryGroupingSeparator()
+         Generating method body for groupingSeparator()
+         Generating method body for perMill()
+         Generating method body for monetarySeparator()
+         Generating method body for decimalPattern()
+         Generating method body for percent()
+         Generating method body for defCurrencyCode()
+   Adding '4' new generated units
+      Removing invalidated units
+Rebinding org.gonevertical.core.client.rpc.RpcCoreService
+   Invoking generator com.google.gwt.user.rebind.rpc.ServiceInterfaceProxyGenerator
+      Generating client proxy for remote service interface 'org.gonevertical.core.client.rpc.RpcCoreService'
+         Analyzing 'org.gonevertical.core.client.rpc.RpcCoreService' for serializable types
+            Analyzing methods:
+               public abstract boolean deleteThing(org.gonevertical.core.client.oauth.OAuthTokenData accessToken, org.gonevertical.core.client.ui.admin.thing.ThingData thingData)
+                  Parameter: org.gonevertical.core.client.oauth.OAuthTokenData accessToken
+                     org.gonevertical.core.client.oauth.OAuthTokenData is already a root type.
+               public abstract boolean deleteThingStuffAboutData(org.gonevertical.core.client.oauth.OAuthTokenData accessToken, long thingStuffAboutId)
+                  Parameter: org.gonevertical.core.client.oauth.OAuthTokenData accessToken
+                     org.gonevertical.core.client.oauth.OAuthTokenData is already a root type.
+               public abstract boolean deleteThingStuffData(org.gonevertical.core.client.oauth.OAuthTokenData accessToken, long thingStuffId)
+                  Parameter: org.gonevertical.core.client.oauth.OAuthTokenData accessToken
+                     org.gonevertical.core.client.oauth.OAuthTokenData is already a root type.
+               public abstract boolean deleteThingStuffType(org.gonevertical.core.client.oauth.OAuthTokenData accessToken, org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeData thingStuffTypeData)
+                  Parameter: org.gonevertical.core.client.oauth.OAuthTokenData accessToken
+                     org.gonevertical.core.client.oauth.OAuthTokenData is already a root type.
+               public abstract boolean deleteThingType(org.gonevertical.core.client.oauth.OAuthTokenData accessToken, org.gonevertical.core.client.ui.admin.thingtype.ThingTypeData thingTypeData)
+                  Parameter: org.gonevertical.core.client.oauth.OAuthTokenData accessToken
+                     org.gonevertical.core.client.oauth.OAuthTokenData is already a root type.
+               public abstract org.gonevertical.core.client.ui.login.UserData doesUserNameExist(org.gonevertical.core.client.ui.login.UserData userData)
+                  Return type: org.gonevertical.core.client.ui.login.UserData
+                     org.gonevertical.core.client.ui.login.UserData is already a root type.
+                  Parameter: org.gonevertical.core.client.ui.login.UserData userData
+                     org.gonevertical.core.client.ui.login.UserData is already a root type.
+               public abstract org.gonevertical.core.client.ui.login.UserData forgotPassword(org.gonevertical.core.client.ui.login.UserData userData)
+                  Return type: org.gonevertical.core.client.ui.login.UserData
+                     org.gonevertical.core.client.ui.login.UserData is already a root type.
+                  Parameter: org.gonevertical.core.client.ui.login.UserData userData
+                     org.gonevertical.core.client.ui.login.UserData is already a root type.
+               public abstract org.gonevertical.core.client.ui.profile.ProfileData getProfileData(org.gonevertical.core.client.oauth.OAuthTokenData accessToken, long thingId)
+                  Parameter: org.gonevertical.core.client.oauth.OAuthTokenData accessToken
+                     org.gonevertical.core.client.oauth.OAuthTokenData is already a root type.
+               public abstract org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffsData getThingStuffData(org.gonevertical.core.client.oauth.OAuthTokenData accessToken, org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffDataFilter filter)
+                  Parameter: org.gonevertical.core.client.oauth.OAuthTokenData accessToken
+                     org.gonevertical.core.client.oauth.OAuthTokenData is already a root type.
+               public abstract org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypesData getThingStuffTypes(org.gonevertical.core.client.oauth.OAuthTokenData accessToken, org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeDataFilter filter)
+                  Parameter: org.gonevertical.core.client.oauth.OAuthTokenData accessToken
+                     org.gonevertical.core.client.oauth.OAuthTokenData is already a root type.
+               public abstract org.gonevertical.core.client.ui.admin.thingtype.ThingTypesData getThingTypes(org.gonevertical.core.client.oauth.OAuthTokenData accessToken, org.gonevertical.core.client.ui.admin.thingtype.ThingTypeDataFilter filter)
+                  Parameter: org.gonevertical.core.client.oauth.OAuthTokenData accessToken
+                     org.gonevertical.core.client.oauth.OAuthTokenData is already a root type.
+               public abstract org.gonevertical.core.client.ui.admin.thing.ThingsData getThings(org.gonevertical.core.client.oauth.OAuthTokenData accessToken, org.gonevertical.core.client.ui.admin.thing.ThingDataFilter filter)
+                  Parameter: org.gonevertical.core.client.oauth.OAuthTokenData accessToken
+                     org.gonevertical.core.client.oauth.OAuthTokenData is already a root type.
+               public abstract org.gonevertical.core.client.oauth.OAuthTokenData getUserAccessToken(org.gonevertical.core.client.oauth.OAuthTokenData appAccessToken)
+                  Parameter: org.gonevertical.core.client.oauth.OAuthTokenData appAccessToken
+                     org.gonevertical.core.client.oauth.OAuthTokenData is already a root type.
+               public abstract org.gonevertical.core.client.widget.WidgetAttrData getWidgetAttributes(org.gonevertical.core.client.oauth.OAuthTokenData accessToken, org.gonevertical.core.client.widget.WidgetAttrDataFilter widgetAttrDataFilter)
+                  Parameter: org.gonevertical.core.client.oauth.OAuthTokenData accessToken
+                     org.gonevertical.core.client.oauth.OAuthTokenData is already a root type.
+               public abstract org.gonevertical.core.client.oauth.OAuthTokenData requestToken(org.gonevertical.core.client.oauth.OAuthTokenData tokenData)
+                  Return type: org.gonevertical.core.client.oauth.OAuthTokenData
+                     org.gonevertical.core.client.oauth.OAuthTokenData is already a root type.
+                  Parameter: org.gonevertical.core.client.oauth.OAuthTokenData tokenData
+                     org.gonevertical.core.client.oauth.OAuthTokenData is already a root type.
+               public abstract org.gonevertical.core.client.ui.profile.ProfileData saveProfileData(org.gonevertical.core.client.oauth.OAuthTokenData accessToken, org.gonevertical.core.client.ui.admin.thing.ThingDataFilter filter, org.gonevertical.core.client.ui.profile.ProfileData profileData)
+                  Return type: org.gonevertical.core.client.ui.profile.ProfileData
+                     org.gonevertical.core.client.ui.profile.ProfileData is already a root type.
+                  Parameter: org.gonevertical.core.client.oauth.OAuthTokenData accessToken
+                     org.gonevertical.core.client.oauth.OAuthTokenData is already a root type.
+                  Parameter: org.gonevertical.core.client.ui.admin.thing.ThingDataFilter filter
+                     org.gonevertical.core.client.ui.admin.thing.ThingDataFilter is already a root type.
+               public abstract org.gonevertical.core.client.ui.admin.thing.ThingData saveThing(org.gonevertical.core.client.oauth.OAuthTokenData accessToken, org.gonevertical.core.client.ui.admin.thing.ThingDataFilter filter, org.gonevertical.core.client.ui.admin.thing.ThingData thingData)
+                  Parameter: org.gonevertical.core.client.oauth.OAuthTokenData accessToken
+                     org.gonevertical.core.client.oauth.OAuthTokenData is already a root type.
+                  Parameter: org.gonevertical.core.client.ui.admin.thing.ThingDataFilter filter
+                     org.gonevertical.core.client.ui.admin.thing.ThingDataFilter is already a root type.
+                  Parameter: org.gonevertical.core.client.ui.admin.thing.ThingData thingData
+                     org.gonevertical.core.client.ui.admin.thing.ThingData is already a root type.
+               public abstract org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffsData saveThingStuffData(org.gonevertical.core.client.oauth.OAuthTokenData accessToken, org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffDataFilter filter, org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffData[] thingStuffData)
+                  Return type: org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffsData
+                     org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffsData is already a root type.
+                  Parameter: org.gonevertical.core.client.oauth.OAuthTokenData accessToken
+                     org.gonevertical.core.client.oauth.OAuthTokenData is already a root type.
+                  Parameter: org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffDataFilter filter
+                     org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffDataFilter is already a root type.
+               public abstract org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypesData saveThingStuffTypes(org.gonevertical.core.client.oauth.OAuthTokenData accessToken, org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeDataFilter filter, org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeData[] thingStuffTypeData)
+                  Return type: org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypesData
+                     org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypesData is already a root type.
+                  Parameter: org.gonevertical.core.client.oauth.OAuthTokenData accessToken
+                     org.gonevertical.core.client.oauth.OAuthTokenData is already a root type.
+                  Parameter: org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeDataFilter filter
+                     org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeDataFilter is already a root type.
+               public abstract org.gonevertical.core.client.ui.admin.thingtype.ThingTypesData saveThingTypes(org.gonevertical.core.client.oauth.OAuthTokenData accessToken, org.gonevertical.core.client.ui.admin.thingtype.ThingTypeDataFilter filter, org.gonevertical.core.client.ui.admin.thingtype.ThingTypeData[] thingTypeData)
+                  Return type: org.gonevertical.core.client.ui.admin.thingtype.ThingTypesData
+                     org.gonevertical.core.client.ui.admin.thingtype.ThingTypesData is already a root type.
+                  Parameter: org.gonevertical.core.client.oauth.OAuthTokenData accessToken
+                     org.gonevertical.core.client.oauth.OAuthTokenData is already a root type.
+                  Parameter: org.gonevertical.core.client.ui.admin.thingtype.ThingTypeDataFilter filter
+                     org.gonevertical.core.client.ui.admin.thingtype.ThingTypeDataFilter is already a root type.
+               public abstract org.gonevertical.core.client.ui.admin.thing.ThingsData saveThings(org.gonevertical.core.client.oauth.OAuthTokenData accessToken, org.gonevertical.core.client.ui.admin.thing.ThingDataFilter filter, org.gonevertical.core.client.ui.admin.thing.ThingData[] thingData)
+                  Return type: org.gonevertical.core.client.ui.admin.thing.ThingsData
+                     org.gonevertical.core.client.ui.admin.thing.ThingsData is already a root type.
+                  Parameter: org.gonevertical.core.client.oauth.OAuthTokenData accessToken
+                     org.gonevertical.core.client.oauth.OAuthTokenData is already a root type.
+                  Parameter: org.gonevertical.core.client.ui.admin.thing.ThingDataFilter filter
+                     org.gonevertical.core.client.ui.admin.thing.ThingDataFilter is already a root type.
+               public abstract boolean setDefaults(org.gonevertical.core.client.oauth.OAuthTokenData accessToken, int defaultType)
+                  Parameter: org.gonevertical.core.client.oauth.OAuthTokenData accessToken
+                     org.gonevertical.core.client.oauth.OAuthTokenData is already a root type.
+               public abstract java.lang.String testMethod(java.lang.String s)
+                  Return type: java.lang.String
+                     java.lang.String is already a root type.
+                  Parameter: java.lang.String s
+                     java.lang.String is already a root type.
+         Writing generated resource '/Users/branflake2267/Documents/workspace/Core/.gwt/.tmp/shell/org.gonevertical.core.Core/org.gonevertical.core.client.rpc.RpcCoreService.rpc.log'
+         Using a shard size of 0 for TypeSerializerCreator createMethodMap
+         Writing generated resource '/Users/branflake2267/Documents/workspace/Core/.gwt/.tmp/shell/org.gonevertical.core.Core/C5B15710CA0F2F1CB70BA8854448456C.gwt.rpc'
+   Adding '41' new generated units
+      Removing invalidated units
