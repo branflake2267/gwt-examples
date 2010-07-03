@@ -67,5 +67,7 @@ public interface RpcCoreServiceAsync {
   
   public void getWidgetAttributes(OAuthTokenData accessToken, WidgetAttrDataFilter widgetAttrDataFilter, AsyncCallback<WidgetAttrData> callback);
   
+  // profile data
   public void getProfileData(OAuthTokenData accessToken, long thingId, AsyncCallback<ProfileData> callback);
+  public void saveProfileData(OAuthTokenData accessToken, ThingDataFilter filter, ProfileData profileData, AsyncCallback<ProfileData> callback);
 }

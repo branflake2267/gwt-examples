@@ -1,5 +1,6 @@
 package org.gonevertical.core.server;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.gonevertical.core.client.oauth.OAuthTokenData;
@@ -64,24 +65,39 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
 	 */
 	public OAuthTokenData requestToken(OAuthTokenData tokenData) {
 	  sp.start(getThreadLocalRequest());
-		OAuthServer oauth = new OAuthServer(sp);
-		OAuthTokenData r = oauth.requestToken(tokenData);
+		OAuthTokenData r = null;
+    try {
+	    OAuthServer oauth = new OAuthServer(sp);
+	    r = oauth.requestToken(tokenData);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.requestToken(): Error:", e);
+    }
 		sp.end();
 		return r;
 	}
 
   public UserData createUser(UserData userData) {
     sp.start(getThreadLocalRequest());
-    Db_User db = new Db_User(sp);
-    UserData r = db.createUser(userData);
+    UserData r = null;
+    try {
+	    Db_User db = new Db_User(sp);
+	    r = db.createUser(userData);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.createUser(): Error:", e);
+    }
     sp.end();
     return r;
   }
   
   public UserData doesUserNameExist(UserData userData) {
     sp.start(getThreadLocalRequest());
-    Db_User db = new Db_User(sp);
-    UserData r = db.getUserExist(userData);
+    UserData r = null;
+    try {
+	    Db_User db = new Db_User(sp);
+	    r = db.getUserExist(userData);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.doesUserNameExist(): Error:", e);
+    }
     sp.end();
     return r;
   }
@@ -96,24 +112,26 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   
   public OAuthTokenData getUserAccessToken(OAuthTokenData appAccessToken) {
     sp.start(getThreadLocalRequest());
-    OAuthServer oauth = new OAuthServer(sp);
-    OAuthTokenData rtnToken = oauth.getUserAccessToken(appAccessToken);
+    OAuthTokenData rtnToken = null;
+    try {
+	    OAuthServer oauth = new OAuthServer(sp);
+	    rtnToken = oauth.getUserAccessToken(appAccessToken);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.getUserAccessToken(): Error:", e);
+    }
     sp.end();
     return rtnToken;
   }
 	
-  
-  
-  /**
-   * get thing types
-   * 
-   * @param filter
-   * @return
-   */
   public ThingTypesData getThingTypes(OAuthTokenData accessToken, ThingTypeDataFilter filter) {
     sp.start(getThreadLocalRequest());
-    Db_ThingType thingType = new Db_ThingType(sp);
-    ThingTypesData r = thingType.getThingTypes(filter);
+    ThingTypesData r = null;
+    try {
+	    Db_ThingType thingType = new Db_ThingType(sp);
+	    r = thingType.getThingTypes(filter);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.getThingTypes(): Error:", e);
+    }
     sp.end();
     return r;
   }
@@ -123,145 +141,246 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
    */
   public boolean setDefaults(OAuthTokenData accessToken, int defaultType) {
     sp.start(getThreadLocalRequest());
-    SetDefaults sd = new SetDefaults(sp);
-    boolean r = sd.setDefaults(defaultType);
+    boolean r = false;
+    try {
+	    SetDefaults sd = new SetDefaults(sp);
+	    r = sd.setDefaults(defaultType);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.setDefaults(): Error:", e);
+    }
     sp.end();
     return r;
   }
   
   public ThingTypesData saveThingTypes(OAuthTokenData accessToken, ThingTypeDataFilter filter, ThingTypeData[] thingTypeData) {
     sp.start(getThreadLocalRequest());
-    Db_ThingType t = new Db_ThingType(sp);
-    ThingTypesData r = t.saveThingTypes(filter, thingTypeData);
+    ThingTypesData r = null;
+    try {
+	    Db_ThingType t = new Db_ThingType(sp);
+	    r = t.saveThingTypes(filter, thingTypeData);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.saveThingTypes(): Error:", e);
+    }
     sp.end();
     return r;
   }
   
   public boolean deleteThingType(OAuthTokenData accessToken, ThingTypeData thingTypeData) {
     sp.start(getThreadLocalRequest());
-    Db_ThingType t = new Db_ThingType(sp);
-    boolean r = t.delete(accessToken, thingTypeData);
+    boolean r = false;
+    try {
+	    Db_ThingType t = new Db_ThingType(sp);
+	    r = t.delete(accessToken, thingTypeData);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.deleteThingTypes(): Error:", e);
+    }
     sp.end();
     return r;
   }
   
   public ThingsData getThings(OAuthTokenData accessToken, ThingDataFilter filter) {
     sp.start(getThreadLocalRequest());
-    Db_Thing t = new Db_Thing(sp);
-    ThingsData r = t.getThings(accessToken, filter);
+    ThingsData r = null;
+    try {
+	    Db_Thing t = new Db_Thing(sp);
+	    r = t.getThings(accessToken, filter);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.getThings(): Error:", e);
+    }
     sp.end();
     return r;
   }
   
   public ThingData saveThing(OAuthTokenData accessToken, ThingDataFilter filter, ThingData thingData) {
     sp.start(getThreadLocalRequest());
-    Db_Thing t = new Db_Thing(sp);
-    ThingData r = t.saveThing(accessToken, filter, thingData);
+    ThingData r = null;
+    try {
+	    Db_Thing t = new Db_Thing(sp);
+	    r = t.saveThing(accessToken, filter, thingData);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.saveThing(): Error:", e);
+    }
     sp.end();
     return r;
   }
   
   public ThingsData saveThings(OAuthTokenData accessToken, ThingDataFilter filter, ThingData[] thingData) {
     sp.start(getThreadLocalRequest());
-    Db_Thing t = new Db_Thing(sp);
-    ThingsData r = t.saveThings(accessToken, filter, thingData);
+    ThingsData r = null;
+    try {
+	    Db_Thing t = new Db_Thing(sp);
+	    r = t.saveThings(accessToken, filter, thingData);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.saveThings(): Error:", e);
+    }
     sp.end();
     return r;
   }
   
   public boolean deleteThing(OAuthTokenData accessToken, ThingData thingData) {
     sp.start(getThreadLocalRequest());
-    Db_Thing t = new Db_Thing(sp);
-    boolean r = t.deleteThing(accessToken, thingData);
+    boolean r = false;
+    try {
+	    Db_Thing t = new Db_Thing(sp);
+	    r = t.deleteThing(accessToken, thingData);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.deleteThing(): Error:", e);
+    }
     sp.end();
     return r;
   }
 
   public boolean deleteThingStuffType(OAuthTokenData accessToken, ThingStuffTypeData thingStuffTypeData) {
     sp.start(getThreadLocalRequest());
-    Db_ThingStuffType t = new Db_ThingStuffType(sp);
-    boolean r = t.delete(accessToken, thingStuffTypeData);
+    boolean r = false;
+    try {
+	    Db_ThingStuffType t = new Db_ThingStuffType(sp);
+	    r = t.delete(accessToken, thingStuffTypeData);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.deleteThingStuff(): Error:", e);
+    }
     sp.end();
     return r;
   }
 
   public ThingStuffTypesData getThingStuffTypes(OAuthTokenData accessToken, ThingStuffTypeDataFilter filter) {
     sp.start(getThreadLocalRequest());
-    Db_ThingStuffType t = new Db_ThingStuffType(sp);
-    ThingStuffTypesData r = t.getThingStuffTypes(accessToken, filter);
+    ThingStuffTypesData r = null;
+    try {
+	    Db_ThingStuffType t = new Db_ThingStuffType(sp);
+	    r = t.getThingStuffTypes(accessToken, filter);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.getThingStuffTypes(): Error:", e);
+    }
     sp.end();
     return r;
   }
 
   public ThingStuffTypesData saveThingStuffTypes(OAuthTokenData accessToken, ThingStuffTypeDataFilter filter, ThingStuffTypeData[] thingStuffTypeData) {
     sp.start(getThreadLocalRequest());
-    Db_ThingStuffType t = new Db_ThingStuffType(sp);
-    ThingStuffTypesData r = t.saveThingStuffTypes(accessToken, filter, thingStuffTypeData);
+    ThingStuffTypesData r = null;
+    try {
+	    Db_ThingStuffType t = new Db_ThingStuffType(sp);
+	    r = t.saveThingStuffTypes(accessToken, filter, thingStuffTypeData);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.saveThingStuffTypes(): Error:", e);
+    }
     sp.end();
     return r;
   }
   
   public ThingStuffsData getThingStuffData(OAuthTokenData accessToken, ThingStuffDataFilter filter) {
     sp.start(getThreadLocalRequest());
-    Db_ThingStuff db = new Db_ThingStuff(sp);
-    ThingStuffsData r = db.getThingStuffsData(accessToken, filter);
+    ThingStuffsData r = null;
+    try {
+	    Db_ThingStuff db = new Db_ThingStuff(sp);
+	    r = db.getThingStuffsData(accessToken, filter);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.getThingStuffData(): Error:", e);
+    }
     sp.end();
     return r;
   }
   
   public ThingStuffsData saveThingStuffData(OAuthTokenData accessToken, ThingStuffDataFilter filter, ThingStuffData[] thingStuffData) {
     sp.start(getThreadLocalRequest());
-    Db_ThingStuff db = new Db_ThingStuff(sp);
-    ThingStuffsData r = db.saveThingStuffData(accessToken, filter, thingStuffData);
+    ThingStuffsData r = null;
+    try {
+	    Db_ThingStuff db = new Db_ThingStuff(sp);
+	    r = db.saveThingStuffData(accessToken, filter, thingStuffData);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.saveThingStuffData(): Error:", e);
+    }
     sp.end();
     return r;
   }
   
   public boolean deleteThingStuffData(OAuthTokenData accessToken, long thingStuffId) {
     sp.start(getThreadLocalRequest());
-    Db_ThingStuff db = new Db_ThingStuff(sp);
-    boolean r = db.deleteThingStuffData(accessToken, thingStuffId);
+    boolean r = false;
+    try {
+	    Db_ThingStuff db = new Db_ThingStuff(sp);
+	    r = db.deleteThingStuffData(accessToken, thingStuffId);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.deleteThingStuffData(): Error:", e);
+    }
     sp.end();
     return r;
   }
   
   public boolean changePassword(OAuthTokenData accessToken, ChangePasswordData changePassswordData) {
     sp.start(getThreadLocalRequest());
-    Db_User db = new Db_User(sp);
-    boolean r = db.changePassword(accessToken, changePassswordData);
+    boolean r = false;
+    try {
+	    Db_User db = new Db_User(sp);
+	    r = db.changePassword(accessToken, changePassswordData);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.changePassword(): Error:", e);
+    }
     sp.end();
     return r;
   }
 
   public boolean deleteThingStuffAboutData(OAuthTokenData accessToken, long thingStuffAboutId) {
   	sp.start(getThreadLocalRequest());
-  	Db_ThingStuff db = new Db_ThingStuff(sp);
-  	boolean r = db.deleteThingStuffAboutData(accessToken, thingStuffAboutId);
+  	boolean r = false;
+    try {
+	    Db_ThingStuff db = new Db_ThingStuff(sp);
+	    r = db.deleteThingStuffAboutData(accessToken, thingStuffAboutId);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.deleteThingStuffAboutData(): Error:", e);
+    }
   	sp.end();
 	  return r;
   }
 
   public boolean saveFeedBack(FeedbackData feedbackData) {
   	sp.start(getThreadLocalRequest());
-	  Db_Feedback db = new Db_Feedback(sp);
-	  boolean r = db.sendFeedback(feedbackData);
+	  boolean r = false;
+    try {
+	    Db_Feedback db = new Db_Feedback(sp);
+	    r = db.sendFeedback(feedbackData);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.saveFeedBack(): Error:", e);
+    }
 	  sp.end();
 	  return r;
   }
 
   public WidgetAttrData getWidgetAttributes(OAuthTokenData accessToken, WidgetAttrDataFilter widgetAttrDataFilter) {
   	sp.start(getThreadLocalRequest());
-  	WidgetAttrData r = new Db_WidgetAttr(sp).getWidgetAttributes(accessToken, widgetAttrDataFilter);
+  	WidgetAttrData r = null;
+    try {
+	    r = new Db_WidgetAttr(sp).getWidgetAttributes(accessToken, widgetAttrDataFilter);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.getWidgetAttributes(): Error:", e);
+    }
   	sp.end();
 	  return r;
   }
   
   public ProfileData getProfileData(OAuthTokenData accessToken, long thingId) {
    	sp.start(getThreadLocalRequest());
-  	ProfileData r = new Db_Profile(sp).getProfileData(accessToken, thingId);
+  	ProfileData r = null;
+    try {
+	    r = new Db_Profile(sp).getProfileData(accessToken, thingId);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.getProfileData(): Error:", e);
+    }
   	sp.end();
   	return r;
   }
 
+  public ProfileData saveProfileData(OAuthTokenData accessToken, ThingDataFilter filter, ProfileData profileData) {
+  	sp.start(getThreadLocalRequest());
+  	ProfileData r = null;
+    try {
+	    r = new Db_Profile(sp).saveProfileData(accessToken, filter, profileData);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.saveProfileData(): Error:", e);
+    }
+  	sp.end();
+  	return r;
+  }
 
 }
