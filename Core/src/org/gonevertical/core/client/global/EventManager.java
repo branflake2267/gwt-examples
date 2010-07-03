@@ -52,10 +52,12 @@ public class EventManager {
    */
   public static final int NEW_USER_CREATED = 6;
   
+  
+  
   /**
    * show account profile
    */
-  public static final int PROFILE = 7;
+  public static final int ACCOUNT_DISPLAY = 7; // DUPLICATE OF ACCOUNT
   
   /**
    * trigger a demo login
@@ -66,6 +68,11 @@ public class EventManager {
    * application has finished loading
    */
   public static final int APPLICATION_LOADED = 9; 
+  
+  /**
+   * changed username widget throws this
+   */
+  public static final int USER_CHANGEDUSERNAME = 10;
  
   public static final int DELETE_YES = 20;
   public static final int DELETE_NO = 21;
@@ -76,7 +83,7 @@ public class EventManager {
   public static final int THINGSTUFF_TYPECHANGE = 40;
   
   public static final int ACCOUNT_CREATE = 100;
-  public static final int ACCOUNT_PROFILE = 101;
+  public static final int ACCOUNT = 101;
   
   public static final int ROW_OVER = 50;
   public static final int ROW_OUT = 51;
@@ -112,6 +119,8 @@ public class EventManager {
 	 * paging
 	 */
 	public static final int PAGE_CHANGELIMIT = 11;
+
+	
 
 	
 }
