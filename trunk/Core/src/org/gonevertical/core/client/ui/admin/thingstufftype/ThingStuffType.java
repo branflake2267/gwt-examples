@@ -6,7 +6,8 @@ import org.gonevertical.core.client.global.EventManager;
 import org.gonevertical.core.client.global.Global_ListBox;
 import org.gonevertical.core.client.rpc.RpcCore;
 import org.gonevertical.core.client.rpc.RpcCoreServiceAsync;
-import org.gonevertical.core.client.ui.Row;
+import org.gonevertical.core.client.ui.Ui;
+import org.gonevertical.core.client.ui.widgets.Row;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
@@ -26,14 +27,8 @@ import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ThingStuffType extends Composite implements ChangeHandler, ClickHandler {
+public class ThingStuffType extends Ui implements ChangeHandler, ClickHandler {
 
-  private ClientPersistence cp = null;
-  
-  private RpcCoreServiceAsync rpc = null;
-  
-  private DeleteDialog wdelete = new DeleteDialog();
-  
   private Row pWidget = new Row();
   
   private FlowPanel pCount = new FlowPanel();
@@ -56,7 +51,7 @@ public class ThingStuffType extends Composite implements ChangeHandler, ClickHan
   private int changeEvent = 0;
   
   public ThingStuffType(ClientPersistence cp) {
-    this.cp = cp;
+    super(cp);
     
     hpName.add(tbName);
     hpName.add(fpName);
@@ -71,7 +66,6 @@ public class ThingStuffType extends Composite implements ChangeHandler, ClickHan
     pWidget.addChangeHandler(this);
     bDelete.addClickHandler(this);
     
-    rpc = RpcCore.initRpc();
   }
 
   public void setData(int row, ThingStuffTypeData thingStuffTypeData) {

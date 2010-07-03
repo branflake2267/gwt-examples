@@ -1,4 +1,4 @@
-package org.gonevertical.core.client.ui;
+package org.gonevertical.core.client.ui.widgets;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
