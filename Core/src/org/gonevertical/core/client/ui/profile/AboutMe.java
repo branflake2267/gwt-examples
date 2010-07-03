@@ -1,7 +1,6 @@
 package org.gonevertical.core.client.ui.profile;
 
 import org.gonevertical.core.client.ClientPersistence;
-import org.gonevertical.core.client.ui.admin.thing.ThingData;
 import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffData;
 import org.gonevertical.core.client.ui.login.ChangePassword;
 
