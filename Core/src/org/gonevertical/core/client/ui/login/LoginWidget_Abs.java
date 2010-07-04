@@ -231,7 +231,7 @@ public abstract class LoginWidget_Abs extends Composite implements ChangeHandler
 		tokenData.sign(url, consumerSecret);
 		
 		String debug = tokenData.getDebugSigning();
-		//RootPanel.get().add(new HTML("LoginWidget: debugSigning " + debug));
+		RootPanel.get().add(new HTML("LoginWidget: debugSigning " + debug));
 		
 		// rpc
 		getUserAccessToken(tokenData);
