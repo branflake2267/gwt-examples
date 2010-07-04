@@ -17,6 +17,7 @@ public class ThingData implements IsSerializable {
 	public static final int THING_WIDGET_CORETHINGSTUFFTYPES = 7;
 	public static final int THING_WIDGET_CORETHINGS = 8;
 	public static final int THING_WIDGET_COREEDITTHING = 9;
+	public static final int THING_WIDGET_CORE_ACCOUNT_ABOUTME = 10;
 	
 	// type of thing, app, user, group...
   private long thingTypeId = 0;

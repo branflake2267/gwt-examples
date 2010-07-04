@@ -182,7 +182,6 @@ public class AdminTabs extends Composite implements BeforeSelectionHandler<Integ
     
   }
 
-
   public void onValueChange(ValueChangeEvent<String> event) {
     //draw();
   }

@@ -1,5 +1,6 @@
 package org.gonevertical.core.client.ui.login;
 
+import org.gonevertical.core.client.ClientPersistence;
 import org.gonevertical.core.client.oauth.Sha1;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -135,7 +136,7 @@ public class PasswordWidget extends Composite implements KeyPressHandler, Change
   public String getPasswordHash() {
     String password = getS1();
     Sha1 sha = new Sha1();
-    String hash = sha.b64_sha1(password);
+    String hash = sha.hex_hmac_sha1(ClientPersistence.PASSWORD_SALT, password);
     return hash;
   }
   

@@ -55,21 +55,21 @@ public class SetDefaults {
 		createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_LINK, "Thing Link", ThingStuffTypeData.VALUETYPE_LINK);
 		createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_ADMIN, "Is Site Admin", ThingStuffTypeData.VALUETYPE_BOOLEAN);
 		createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_CANVIEW, "Can View", ThingStuffTypeData.VALUETYPE_BOOLEAN);
-		createStuffType(5, "Can Edit", ThingStuffTypeData.VALUETYPE_BOOLEAN);
-		createStuffType(6, "Can Add", ThingStuffTypeData.VALUETYPE_BOOLEAN);
-		createStuffType(7, "Can't View", ThingStuffTypeData.VALUETYPE_BOOLEAN);
-		createStuffType(8, "Can't Edit", ThingStuffTypeData.VALUETYPE_BOOLEAN);
-		createStuffType(9, "Can't Add", ThingStuffTypeData.VALUETYPE_BOOLEAN);
+		createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_CANEDIT, "Can Edit", ThingStuffTypeData.VALUETYPE_BOOLEAN);
+		createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_CANADD, "Can Add", ThingStuffTypeData.VALUETYPE_BOOLEAN);
+		createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_CANVIEW, "Can't View", ThingStuffTypeData.VALUETYPE_BOOLEAN);
+		createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_CANTEDIT, "Can't Edit", ThingStuffTypeData.VALUETYPE_BOOLEAN);
+		createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_CANTADD, "Can't Add", ThingStuffTypeData.VALUETYPE_BOOLEAN);
 		createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_ALIAS, "Alias", ThingStuffTypeData.VALUETYPE_STRING);
-		createStuffType(11, "Nick Name", ThingStuffTypeData.VALUETYPE_STRING);
-		createStuffType(12, "First Name", ThingStuffTypeData.VALUETYPE_STRING);
-		createStuffType(13, "Middle Name", ThingStuffTypeData.VALUETYPE_STRING);		
-		createStuffType(14, "Last Name", ThingStuffTypeData.VALUETYPE_STRING);
-		createStuffType(15, "Email", ThingStuffTypeData.VALUETYPE_EMAIL);
-		createStuffType(16, "Mobile", ThingStuffTypeData.VALUETYPE_PHONE);
-		createStuffType(17, "Phone", ThingStuffTypeData.VALUETYPE_PHONE);
-		createStuffType(18, "Description", ThingStuffTypeData.VALUETYPE_STRING);
-		createStuffType(19, "Accept Terms", ThingStuffTypeData.VALUETYPE_BOOLEAN);
+		createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_NICKNAME, "Nick Name", ThingStuffTypeData.VALUETYPE_STRING);
+		createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_FIRSTNAME, "First Name", ThingStuffTypeData.VALUETYPE_STRING);
+		createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_MIDDLENAME, "Middle Name", ThingStuffTypeData.VALUETYPE_STRING);		
+		createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_LASTNAME, "Last Name", ThingStuffTypeData.VALUETYPE_STRING);
+		createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_EMAIL, "Email", ThingStuffTypeData.VALUETYPE_EMAIL);
+		createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_MOBILE, "Mobile", ThingStuffTypeData.VALUETYPE_PHONE);
+		createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_PHONE, "Phone", ThingStuffTypeData.VALUETYPE_PHONE);
+		createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_DESC, "Description", ThingStuffTypeData.VALUETYPE_STRING);
+		createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_ACCEPTTERMS, "Accept Terms", ThingStuffTypeData.VALUETYPE_BOOLEAN);
 
 	}
 
@@ -101,43 +101,44 @@ public class SetDefaults {
 		createThing(ThingData.THING_WIDGET_CORETHINGSTUFFTYPES, ThingTypeData.TYPE_WIDGET, null, null); // ThingStuffTypes
 		createThing(ThingData.THING_WIDGET_CORETHINGS, ThingTypeData.TYPE_WIDGET, null, null); // Things
 		createThing(ThingData.THING_WIDGET_COREEDITTHING, ThingTypeData.TYPE_WIDGET, null, null); // EditThing
+		createThing(ThingData.THING_WIDGET_CORE_ACCOUNT_ABOUTME, ThingTypeData.TYPE_WIDGET, null, null); // EditThing
 
 	}
 
 	private void createThingsStuff() {
 
-		dbTs.createThingStuff_Unique(4, 1, "Open By Default"); // open name
-		dbTs.createThingStuff_Unique(5, 1, "Closed By Default"); // closed name
+		dbTs.createThingStuff_Unique(ThingData.THING_PERMISSION_OPEN, ThingStuffTypeData.THINGSTUFFTYPE_NAME, "Open By Default"); // open name
+		dbTs.createThingStuff_Unique(ThingData.THING_PERMISSION_CLOSED, ThingStuffTypeData.THINGSTUFFTYPE_NAME, "Closed By Default"); // closed name
 
-		dbTs.createThingStuff_Unique(6, 1, "Core Thing Types"); // ThingTypes name
-		dbTs.createThingStuff_Unique(7, 1, "Core Thing Stuff Types"); // ThingStuffTypes name
-		dbTs.createThingStuff_Unique(8, 1, "Core Things Name"); // Things name
-		dbTs.createThingStuff_Unique(9, 1, "Core Edit Thing"); // EditThings name
+		dbTs.createThingStuff_Unique(ThingData.THING_WIDGET_CORETHINGTYPES, ThingStuffTypeData.THINGSTUFFTYPE_NAME, "Core Thing Types"); // ThingTypes name
+		dbTs.createThingStuff_Unique(ThingData.THING_WIDGET_CORETHINGSTUFFTYPES, ThingStuffTypeData.THINGSTUFFTYPE_NAME, "Core Thing Stuff Types"); // ThingStuffTypes name
+		dbTs.createThingStuff_Unique(ThingData.THING_WIDGET_CORETHINGS, ThingStuffTypeData.THINGSTUFFTYPE_NAME, "Core Things Name"); // Things name
+		dbTs.createThingStuff_Unique(ThingData.THING_WIDGET_COREEDITTHING, ThingStuffTypeData.THINGSTUFFTYPE_NAME, "Core Edit Thing"); // EditThings name
 
 		// admin is admin
-		dbTs.createThingStuff_Unique(2, 3, true);
+		dbTs.createThingStuff_Unique(ThingData.THING_USER_ADMIN, ThingStuffTypeData.THINGSTUFFTYPE_ADMIN, true);
 
 		// open by default
-		dbTs.createThingStuff_Unique(4, 7, false); // open can't view
-		dbTs.createThingStuff_Unique(4, 8, false); // open can't edit
-		dbTs.createThingStuff_Unique(4, 9, false); // open can't add
+		dbTs.createThingStuff_Unique(ThingData.THING_PERMISSION_OPEN, ThingStuffTypeData.THINGSTUFFTYPE_CANVIEW, false); // open can't view
+		dbTs.createThingStuff_Unique(ThingData.THING_PERMISSION_OPEN, ThingStuffTypeData.THINGSTUFFTYPE_CANTEDIT, false); // open can't edit
+		dbTs.createThingStuff_Unique(ThingData.THING_PERMISSION_OPEN, ThingStuffTypeData.THINGSTUFFTYPE_CANTADD, false); // open can't add
 
 		// closed
-		dbTs.createThingStuff_Unique(5, 4, false); // closed can view
-		dbTs.createThingStuff_Unique(5, 5, false); // closed can edit
-		dbTs.createThingStuff_Unique(5, 6, false); // closed can add
+		dbTs.createThingStuff_Unique(ThingData.THING_PERMISSION_CLOSED, ThingStuffTypeData.THINGSTUFFTYPE_CANVIEW, false); // closed can view
+		dbTs.createThingStuff_Unique(ThingData.THING_PERMISSION_CLOSED, ThingStuffTypeData.THINGSTUFFTYPE_CANEDIT, false); // closed can edit
+		dbTs.createThingStuff_Unique(ThingData.THING_PERMISSION_CLOSED, ThingStuffTypeData.THINGSTUFFTYPE_CANADD, false); // closed can add
 
 		// widgets are closed - restricted
-		dbTs.createThingStuff_Unique(6, 2, 5); // 6 ThingTypes closed
-		dbTs.createThingStuff_Unique(7, 2, 5); // 7 ThingStypes closed
-		dbTs.createThingStuff_Unique(8, 2, 5); // 8 things closed
-		dbTs.createThingStuff_Unique(9, 2, 5); // 9 edit things closed
+		dbTs.createThingStuff_Unique(ThingData.THING_WIDGET_CORETHINGTYPES, ThingStuffTypeData.THINGSTUFFTYPE_LINK, 5); // 6 ThingTypes closed
+		dbTs.createThingStuff_Unique(ThingData.THING_WIDGET_CORETHINGSTUFFTYPES, ThingStuffTypeData.THINGSTUFFTYPE_LINK, 5); // 7 ThingStypes closed
+		dbTs.createThingStuff_Unique(ThingData.THING_WIDGET_CORETHINGS, ThingStuffTypeData.THINGSTUFFTYPE_LINK, 5); // 8 things closed
+		dbTs.createThingStuff_Unique(ThingData.THING_WIDGET_COREEDITTHING, ThingStuffTypeData.THINGSTUFFTYPE_LINK, 5); // 9 edit things closed
 
 		// demo_user link, 6,7,8,9 
-		dbTs.createThingStuff_Unique(3, 2, 6); // links the widgets into place
-		dbTs.createThingStuff_Unique(3, 2, 7);
-		dbTs.createThingStuff_Unique(3, 2, 8);
-		dbTs.createThingStuff_Unique(3, 2, 9);
+		dbTs.createThingStuff_Unique(ThingData.THING_USER_DEMO, ThingStuffTypeData.THINGSTUFFTYPE_LINK, 6); // links the widgets into place
+		dbTs.createThingStuff_Unique(ThingData.THING_USER_DEMO, ThingStuffTypeData.THINGSTUFFTYPE_LINK, 7);
+		dbTs.createThingStuff_Unique(ThingData.THING_USER_DEMO, ThingStuffTypeData.THINGSTUFFTYPE_LINK, 8);
+		dbTs.createThingStuff_Unique(ThingData.THING_USER_DEMO, ThingStuffTypeData.THINGSTUFFTYPE_LINK, 9);
 		
 		dbTs.createThingStuff_Unique(ThingData.THING_USER_DEMO, ThingStuffTypeData.THINGSTUFFTYPE_ALIAS, "Deem");
 		dbTs.createThingStuff_Unique(ThingData.THING_USER_DEMO, ThingStuffTypeData.THINGSTUFFTYPE_FIRSTNAME, "Firsty");
@@ -148,10 +149,10 @@ public class SetDefaults {
 
 		// create multi-demo about the link
 		// link 3,2,6 - 4(canview)=true
-		createThingStuffMulti(3, 2, 6, 4, new Boolean(true));
-		createThingStuffMulti(3, 2, 7, 4, new Boolean(true));
-		createThingStuffMulti(3, 2, 8, 4, new Boolean(true));
-		createThingStuffMulti(3, 2, 9, 4, new Boolean(true));
+		createThingStuffMulti(ThingData.THING_USER_DEMO, ThingStuffTypeData.THINGSTUFFTYPE_LINK, 6, 4, new Boolean(true));
+		createThingStuffMulti(ThingData.THING_USER_DEMO, ThingStuffTypeData.THINGSTUFFTYPE_LINK, 7, 4, new Boolean(true));
+		createThingStuffMulti(ThingData.THING_USER_DEMO, ThingStuffTypeData.THINGSTUFFTYPE_LINK, 8, 4, new Boolean(true));
+		createThingStuffMulti(ThingData.THING_USER_DEMO, ThingStuffTypeData.THINGSTUFFTYPE_LINK, 9, 4, new Boolean(true));
 	}
 
 	public void createThingStuffMulti(
