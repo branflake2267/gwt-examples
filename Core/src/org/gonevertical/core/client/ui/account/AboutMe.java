@@ -180,14 +180,31 @@ public class AboutMe extends Composite implements ClickHandler {
 			return;
 		}
 		
+		if (accountData.getThingData() == null) {
+			System.out.println("AboutMe.drawNames(): Error, No thingdata");
+			return;
+		}
+		
 		tsd_alias = accountData.getAlias();
-		tbAlias.setText(tsd_alias.getValue_ForTextBox());
+		if (tsd_alias != null) {
+			tbAlias.setText(tsd_alias.getValue_ForTextBox());
+		} else {
+			tbAlias.setText("");
+		}
 		
 		tsd_Namefirst = accountData.getFirstName();
-		tbNameFirst.setText(tsd_Namefirst.getValue_ForTextBox());
+		if (tsd_Namefirst != null) {
+			tbNameFirst.setText(tsd_Namefirst.getValue_ForTextBox());
+		} else {
+			tbNameFirst.setText("");
+		}
 		
 		tsd_Namelast = accountData.getLastName();
-		tbNameLast.setText(tsd_Namelast.getValue_ForTextBox());
+		if (tsd_Namelast != null) {
+			tbNameLast.setText(tsd_Namelast.getValue_ForTextBox());
+		} else {
+			tbNameLast.setText("");
+		}
 		
 		String userName = accountData.getThingData().getKey();
 		htmlUserName.setText(userName);

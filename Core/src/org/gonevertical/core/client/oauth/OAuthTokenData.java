@@ -437,6 +437,7 @@ public class OAuthTokenData implements IsSerializable {
   }
   
   public String getDebugSigning() {
+  	
   	return debugSigning;
   }
 }
