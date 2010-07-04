@@ -46,6 +46,7 @@ public class TestWidget extends Composite {
   			}				
   		});
 		}
+		
 	}
 	
 	public void draw() {

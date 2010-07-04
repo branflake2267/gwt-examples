@@ -20,7 +20,7 @@ public class Home extends Composite implements ClickHandler {
 	
 	private VerticalPanel pWidget = new VerticalPanel();
 	
-	private PushButton bLogin = new PushButton("Demo SignIn");
+	private PushButton bDemo = new PushButton("Demo SignIn");
 	
 	public Home(ClientPersistence cp) {
 		this.cp = cp;
@@ -28,14 +28,14 @@ public class Home extends Composite implements ClickHandler {
 		initWidget(pWidget);
 		
 		HorizontalPanel hp = new HorizontalPanel();
-		hp.add(bLogin);
+		hp.add(bDemo);
 		hp.add(new HTML("&nbsp;Try the demo sign in."));
 		
 		pWidget.add(new HTML("&nbsp;"));
 		pWidget.add(new HTML("home widget"));
 		pWidget.add(hp);
 		
-		bLogin.addClickHandler(this);
+		bDemo.addClickHandler(this);
 		
 		cp.addChangeHandler(new ChangeHandler() {
 			public void onChange(ChangeEvent event) {
@@ -72,7 +72,7 @@ public class Home extends Composite implements ClickHandler {
   	
   	Widget sender = (Widget) event.getSource();
   	
-  	if (sender == bLogin) {
+  	if (sender == bDemo) {
   		System.out.println("fire logindemo");
   		cp.fireChange(EventManager.LOGIN_DEMO);
   	}
