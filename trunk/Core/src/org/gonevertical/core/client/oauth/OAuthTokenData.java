@@ -54,7 +54,7 @@ public class OAuthTokenData implements IsSerializable {
 	*/
 	
 	// domain
-	private String realm;
+	private String realmm;
 	
 	// call back url - in the case of using rpc for this application
 	// this will be excluded for now
@@ -320,7 +320,7 @@ public class OAuthTokenData implements IsSerializable {
 		}
 		
 		// set realm like http://host.domain.tld:8180
-		this.realm = Global_Domain.getRealm(url) + "/";
+		this.realmm = Global_Domain.getRealm(url) + "/";
 		
 		// make base string
 		String s = "";
@@ -437,7 +437,6 @@ public class OAuthTokenData implements IsSerializable {
   }
   
   public String getDebugSigning() {
-  	
   	return debugSigning;
   }
 }
