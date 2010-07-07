@@ -10,7 +10,7 @@ public class Global_ListBox {
    * @param lb
    * @return
    */
-  public static int getSelectedValue(ListBox lb) {
+  public static long getSelectedValue(ListBox lb) {
   	if (lb == null) {
   		System.out.println("Global_Listbox().getSelectedValue() is null");
   		return -1;
@@ -21,9 +21,9 @@ public class Global_ListBox {
   	
     int sel = lb.getSelectedIndex();
     String value = lb.getValue(sel);
-    int r = 0;
+    long r = 0;
     try {
-      r = Integer.parseInt(value);
+      r = Long.parseLong(value);
     } catch (NumberFormatException e) {
       r = 0;
     }
