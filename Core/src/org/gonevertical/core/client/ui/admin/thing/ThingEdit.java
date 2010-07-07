@@ -121,9 +121,9 @@ public class ThingEdit extends Ui implements ClickHandler, ChangeHandler, MouseO
 
 	private void drawThingTypes() {
 		lbThingTypes.clear();
-		for (int i=0; i < thingTypesData.thingTypeData.length; i++) {
-			String item = thingTypesData.thingTypeData[i].getName();
-			String value = Long.toString(thingTypesData.thingTypeData[i].getId());
+		for (int i=0; i < thingTypesData.getThingTypeData().length; i++) {
+			String item = thingTypesData.getThingTypeData()[i].getName();
+			String value = Long.toString(thingTypesData.getThingTypeData()[i].getId());
 			lbThingTypes.addItem(item, value);
 		}
 

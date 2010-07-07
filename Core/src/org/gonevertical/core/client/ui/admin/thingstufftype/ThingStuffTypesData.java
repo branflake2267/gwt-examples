@@ -24,7 +24,7 @@ public class ThingStuffTypesData implements IsSerializable {
   	return thingStuffTypeData;
   }
   
-  public ThingStuffTypeData getStuffTypeData(int id) {
+  public ThingStuffTypeData getStuffTypeData(long id) {
     if (thingStuffTypeData == null) {
     	return null;
     }

@@ -51,7 +51,7 @@ public class ThingStuffTypeData implements IsSerializable {
   private long stuffTypeId;
   
   // type of value storage format
-  private int valueTypeId = VALUETYPE_STRING;
+  private long valueTypeId = VALUETYPE_STRING;
   
   // name of the stuff item
   private String name;
@@ -74,7 +74,7 @@ public class ThingStuffTypeData implements IsSerializable {
   public ThingStuffTypeData() {
   }
   
-  public void setData(long id, String name, int valueTypeId, 
+  public void setData(long id, String name, long valueTypeId, 
   		Date startOf, Date endOf, Date dateCreated, Date dateUpdated) {
   	
     this.stuffTypeId = id;
@@ -100,11 +100,11 @@ public class ThingStuffTypeData implements IsSerializable {
     this.name = name;
   }
   
-  public void setValueTypeId(int valueTypeId) {
+  public void setValueTypeId(long valueTypeId) {
     this.valueTypeId = valueTypeId;
   }
   
-  public int getValueTypeId() {
+  public long getValueTypeId() {
     return valueTypeId;
   }
 

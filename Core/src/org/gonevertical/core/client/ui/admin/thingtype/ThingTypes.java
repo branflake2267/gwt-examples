@@ -52,7 +52,9 @@ public class ThingTypes extends Ui implements ClickHandler, ChangeHandler {
   }
   
   public void draw() {
-    getThingTypesRpc();
+    // TODO use this later
+    ThingTypeDataFilter filter = new ThingTypeDataFilter();
+    getThingTypesRpc(filter);
   }
   
   public void drawMenu() {
@@ -95,11 +97,11 @@ public class ThingTypes extends Ui implements ClickHandler, ChangeHandler {
       return;
     }
     
-    if (thingTypesData.thingTypeData == null) {
+    if (thingTypesData.getThingTypeData() == null) {
       return;
     }
     
-    ThingTypeData[] thingTypeData = thingTypesData.thingTypeData;
+    ThingTypeData[] thingTypeData = thingTypesData.getThingTypeData();
     
     if (thingTypeData.length == 0) {
     	return;
@@ -107,7 +109,7 @@ public class ThingTypes extends Ui implements ClickHandler, ChangeHandler {
     
     drawTopRow();
     
-    wPage.setCounts(thingTypesData.total);
+    wPage.setCounts(thingTypesData.getTotal());
 
     int count = (int) wPage.getCountOffset();
     for (int i=0; i < thingTypeData.length; i++){
@@ -178,13 +180,10 @@ public class ThingTypes extends Ui implements ClickHandler, ChangeHandler {
     }
   }
   
-  private void getThingTypesRpc() {
+  private void getThingTypesRpc(ThingTypeDataFilter filter) {
     
   	cp.showLoading(true);
-    
-    // TODO use this later
-    ThingTypeDataFilter filter = new ThingTypeDataFilter();
-    
+   
     rpc.getThingTypes(cp.getAccessToken(), filter, new AsyncCallback<ThingTypesData>() {
       public void onSuccess(ThingTypesData thingTypesData) {
         process(thingTypesData);

@@ -28,6 +28,8 @@ public class Things extends Ui implements ClickHandler, ChangeHandler {
   
   private ThingEdit wEdit = null;
   
+  private ThingFilter wFilter;
+  
   private VerticalPanel pMenu = new VerticalPanel();
   
   private VerticalPanel pListTop = new VerticalPanel();
@@ -46,8 +48,10 @@ public class Things extends Ui implements ClickHandler, ChangeHandler {
   public Things(ClientPersistence cp) {
   	super(cp);
     
+  	wFilter = new ThingFilter(cp);
     wEdit = new ThingEdit(cp);
     
+    pWidget.add(wFilter);
     pWidget.add(pMenu);
     pWidget.add(pListTop);
     pWidget.add(pList);
@@ -75,7 +79,14 @@ public class Things extends Ui implements ClickHandler, ChangeHandler {
   }
   
   public void draw() {
+  	
+  	// get filter choices
+  	wFilter.draw();
+  	
+  	// hide edit stuff
   	drawEdit(false);
+  	
+  	// get things to show
     getThingsRpc();
   }
   
@@ -226,6 +237,7 @@ public class Things extends Ui implements ClickHandler, ChangeHandler {
   
   private void drawEdit(boolean b) {
     if (b == true) {
+    	wFilter.setVisible(false);
       pListTop.setVisible(false);
       pList.setVisible(false);
       wEdit.setVisible(true);
@@ -235,6 +247,7 @@ public class Things extends Ui implements ClickHandler, ChangeHandler {
       wPage.setVisible(false);
       
     } else if (b == false ) {
+    	wFilter.setVisible(true);
       pListTop.setVisible(true);
       pList.setVisible(true);
       wEdit.setVisible(false);

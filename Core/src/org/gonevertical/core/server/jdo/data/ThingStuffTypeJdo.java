@@ -43,7 +43,7 @@ public class ThingStuffTypeJdo {
 
 	// type of value, like int, double, string, ...
 	@Persistent
-	private int valueTypeId = ThingStuffTypeData.VALUETYPE_STRING;
+	private long valueTypeId = ThingStuffTypeData.VALUETYPE_STRING;
 
 	// when did this start in time
 	@Persistent
@@ -113,7 +113,7 @@ public class ThingStuffTypeJdo {
 		return name;
 	}
 
-	public int getValueTypeId() {
+	public long getValueTypeId() {
 		return valueTypeId;
 	}
 

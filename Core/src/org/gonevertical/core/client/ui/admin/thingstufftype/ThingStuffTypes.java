@@ -217,16 +217,16 @@ public class ThingStuffTypes extends Ui implements ClickHandler, ChangeHandler {
     
   }
 
-  private void saveThingTypesRpc(ThingStuffTypeData[] ThingStuffTypeData) {
+  private void saveThingTypesRpc(ThingStuffTypeData[] thingStuffTypeData) {
     
   	cp.showLoading(true);
     
     ThingStuffTypeDataFilter filter = new ThingStuffTypeDataFilter();
     filter.setLimit(wPage.getStart(), wPage.getLimit());
 
-    rpc.saveThingStuffTypes(cp.getAccessToken(), filter, ThingStuffTypeData, new AsyncCallback<ThingStuffTypesData>() {
-      public void onSuccess(ThingStuffTypesData ThingStuffTypesData) {
-        process(ThingStuffTypesData);
+    rpc.saveThingStuffTypes(cp.getAccessToken(), filter, thingStuffTypeData, new AsyncCallback<ThingStuffTypesData>() {
+      public void onSuccess(ThingStuffTypesData thingStuffTypesData) {
+        process(thingStuffTypesData);
         cp.showLoading(false);
       }
       public void onFailure(Throwable caught) {

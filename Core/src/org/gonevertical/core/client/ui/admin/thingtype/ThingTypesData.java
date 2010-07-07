@@ -4,9 +4,25 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ThingTypesData implements IsSerializable {
 
-  public long total = 0;
+  private long total = 0;
   
-  public ThingTypeData[] thingTypeData = null;
+  private ThingTypeData[] thingTypeData = null;
+  
+  public void setThingTypeData(ThingTypeData[] thingTypeData) {
+  	this.thingTypeData = thingTypeData;
+  }
+  
+  public ThingTypeData[] getThingTypeData() {
+  	return thingTypeData;
+  }
+  
+  public void setTotal(long total) {
+  	this.total = total;
+  }
+  
+  public long getTotal() {
+  	return total;
+  }
   
   /**
    * get the thing type by id

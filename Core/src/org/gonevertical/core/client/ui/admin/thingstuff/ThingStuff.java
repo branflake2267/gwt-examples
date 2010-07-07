@@ -362,7 +362,7 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
       valueLong = null;
     }
     
-    int stuffTypeId = Global_ListBox.getSelectedValue(lbTypes);
+    long stuffTypeId = Global_ListBox.getSelectedValue(lbTypes);
     thingStuffData.setThingStuffTypeId(stuffTypeId);
     thingStuffData.setValue(value);
     thingStuffData.setValue(valueBol);
@@ -445,16 +445,16 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
     tbValue.setText(Long.toString(valueLong));
   }
 
-  private int getDataTypeId() {
+  private long getDataTypeId() {
   	if (lbTypes == null) {
   		return -1;
   	}
-    int thingStuffId = Global_ListBox.getSelectedValue(lbTypes);
+    long thingStuffId = Global_ListBox.getSelectedValue(lbTypes);
     if (thingStuffId == -1) {
     	return -1;
     }
     ThingStuffTypeData type = thingStuffTypesData.getStuffTypeData(thingStuffId);
-    int typeId = 0;
+    long typeId = 0;
     if (type == null) {
       typeId = 0;
     } else {
@@ -464,7 +464,7 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
   }
   
   private void changeType() {
-    int dataTypeId = getDataTypeId();
+    long dataTypeId = getDataTypeId();
     drawInput();
     resizeInput(dataTypeId);
     fireChange(EventManager.THINGSTUFF_TYPECHANGE);
@@ -474,7 +474,7 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
     return pWidget;
   }
   
-  private void resizeInput(int dataTypeId) {
+  private void resizeInput(long dataTypeId) {
 
     int wt = tbValue.getOffsetWidth();
     int wtc = cbValue.getOffsetWidth();

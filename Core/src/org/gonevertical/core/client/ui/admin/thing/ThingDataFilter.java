@@ -4,16 +4,25 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ThingDataFilter implements IsSerializable {
 
-	private long thingId;
-	
   private long start = 0;
   private long limit = 0;
-  
+
+  /**
+   * filter by one thing
+   */
+	private long thingId;
+
   /**
    * filter by type
    */
   private long thingTypeId = 0;
 
+  /**
+   * constructor - nothing to do
+   */
+  public ThingDataFilter() {
+  }
+  
   public void setThingTypeId(long thingTypeId) {
   	this.thingTypeId = thingTypeId;
   }
@@ -35,6 +44,10 @@ public class ThingDataFilter implements IsSerializable {
 	  return start;
   }
 
+	/**
+	 * get end of range finish - this is a work around for the offset
+	 * @return
+	 */
 	public long getRangeFinish() {
 		long finish = start + limit;
 	  return finish;

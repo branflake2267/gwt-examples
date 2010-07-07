@@ -36,8 +36,8 @@ public class Db_ThingType {
     ThingTypeData[] t = ThingTypeJdo.convert(thingTypeJdo);
     
     ThingTypesData r = new ThingTypesData();
-    r.thingTypeData = t;
-    r.total = ttj.queryTotal();
+    r.setThingTypeData(t);
+    r.setTotal(ttj.queryTotal());
     
     return r;
   }
