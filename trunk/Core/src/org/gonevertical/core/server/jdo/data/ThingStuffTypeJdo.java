@@ -236,7 +236,7 @@ public class ThingStuffTypeJdo {
 
 	public ThingStuffTypeJdo[] query(ThingStuffTypeDataFilter filter) {
 
-		String qfilter = filter.getFilter();
+		String qfilter = filter.getFilter_Or();
 
 		ArrayList<ThingStuffTypeJdo> aT = new ArrayList<ThingStuffTypeJdo>();
 

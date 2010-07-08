@@ -122,7 +122,7 @@ public class ThingStuffDataFilter implements IsSerializable {
   	this.valueDate[0] = value;
   }
   
-  public String getAndFilter() {
+  public String getFilter_And() {
   	String s = null;
   	
   	s = "thingId==" + thingId + " ";

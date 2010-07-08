@@ -39,6 +39,7 @@ public class Things extends Ui implements ClickHandler, ChangeHandler {
   private PushButton bAdd = new PushButton("Add");
   private PushButton bSave = new PushButton("Save");
   private PushButton bBack = new PushButton("Back");
+  private PushButton bFilter = new PushButton("Filter");
   
   // use for edit
   private ThingTypesData thingTypesData = null;
@@ -69,6 +70,7 @@ public class Things extends Ui implements ClickHandler, ChangeHandler {
     bSave.addClickHandler(this);
     bBack.addClickHandler(this);
     wPage.addChangeHandler(this);
+    bFilter.addClickHandler(this);
     
     //pList.addStyleName("test1");
     //wEdit.addStyleName("test2");
@@ -98,6 +100,8 @@ public class Things extends Ui implements ClickHandler, ChangeHandler {
     hp.add(bAdd);
     hp.add(new HTML("&nbsp;"));
     hp.add(bSave);
+    hp.add(new HTML("&nbsp;&nbsp;&nbsp;"));
+    hp.add(bFilter);
     
     pMenu.add(hp);
   }
@@ -245,6 +249,7 @@ public class Things extends Ui implements ClickHandler, ChangeHandler {
       bAdd.setVisible(false);
       bSave.setVisible(true);
       wPage.setVisible(false);
+      bFilter.setVisible(false);
       
     } else if (b == false ) {
     	wFilter.setVisible(true);
@@ -255,6 +260,7 @@ public class Things extends Ui implements ClickHandler, ChangeHandler {
       bAdd.setVisible(true);
       bSave.setVisible(true);
       wPage.setVisible(true);
+      bFilter.setVisible(true);
     }
   }
   
@@ -274,7 +280,12 @@ public class Things extends Ui implements ClickHandler, ChangeHandler {
       
     } else if (sender == bBack) {
       drawEdit(false);
+      
+    } else if (sender == bFilter) {
+    	getThingsRpc();
+    	
     }
+    
   }
   
   public void onChange(ChangeEvent event) {
@@ -289,8 +300,9 @@ public class Things extends Ui implements ClickHandler, ChangeHandler {
   private void getThingsRpc() {
   	
   	cp.showLoading(true);
-    
+  	
     ThingDataFilter filter = new ThingDataFilter();
+    filter.setThingTypeId(wFilter.getThingTypeIds());
     filter.setLimit(wPage.getStart(), wPage.getLimit());
     
     rpc.getThings(cp.getAccessToken(), filter, new AsyncCallback<ThingsData>() {
