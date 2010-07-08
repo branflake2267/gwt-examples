@@ -23,7 +23,6 @@ import com.google.gwt.user.client.ui.Widget;
 public class ThingStuffTypes extends Ui implements ClickHandler, ChangeHandler {
   
   private VerticalPanel pWidget = new VerticalPanel();
-  
   private VerticalPanel pMenu = new VerticalPanel();
   
   private VerticalPanel pListTop = new VerticalPanel();
@@ -32,14 +31,17 @@ public class ThingStuffTypes extends Ui implements ClickHandler, ChangeHandler {
   
   private PushButton bAdd = new PushButton("Add");
   private PushButton bSave = new PushButton("Save");
+  private PushButton bFilter = new PushButton("Filter");
   
   private ThingData thingData = null;
   
   private Paging wPage = new Paging();
+  private ThingStuffFilter wFilter = new ThingStuffFilter(cp);
   
   public ThingStuffTypes(ClientPersistence cp) {
     super(cp);
     
+    pWidget.add(wFilter);
     pWidget.add(pMenu);
     pWidget.add(pListTop);
     pWidget.add(pList);
@@ -52,6 +54,7 @@ public class ThingStuffTypes extends Ui implements ClickHandler, ChangeHandler {
     bAdd.addClickHandler(this);
     bSave.addClickHandler(this);
     wPage.addChangeHandler(this);
+    bFilter.addClickHandler(this);
   }
   
   public void setData(ThingData thingData) {
@@ -68,6 +71,8 @@ public class ThingStuffTypes extends Ui implements ClickHandler, ChangeHandler {
     hp.add(bAdd);
     hp.add(new HTML("&nbsp;"));
     hp.add(bSave);
+    hp.add(new HTML("&nbsp;"));
+    hp.add(bFilter);
     
     pMenu.add(hp);
   }
@@ -193,6 +198,10 @@ public class ThingStuffTypes extends Ui implements ClickHandler, ChangeHandler {
   	
   	if (sender == wPage) {
   		getThingTypesRpc();
+  		
+  	} else if (sender == bFilter) {
+  		getThingTypesRpc();
+  		
   	}
   
   }
@@ -202,6 +211,7 @@ public class ThingStuffTypes extends Ui implements ClickHandler, ChangeHandler {
   	cp.showLoading(true);
     
     ThingStuffTypeDataFilter filter = new ThingStuffTypeDataFilter();
+    filter.setValueTypeId(wFilter.getThingStuffValueTypeIds());
     filter.setLimit(wPage.getStart(), wPage.getLimit());
     
     rpc.getThingStuffTypes(cp.getAccessToken(), filter, new AsyncCallback<ThingStuffTypesData>() {

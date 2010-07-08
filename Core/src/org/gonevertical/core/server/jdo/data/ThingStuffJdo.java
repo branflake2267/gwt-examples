@@ -295,7 +295,7 @@ public class ThingStuffJdo {
 			return null;
 		}
 
-		String qfilter = filter.getAndFilter();
+		String qfilter = filter.getFilter_And();
 		
 		ArrayList<ThingStuffJdo> aT = new ArrayList<ThingStuffJdo>();
 		PersistenceManager pm = sp.getPersistenceManager();

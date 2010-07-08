@@ -22,7 +22,7 @@ public class ThingTypeDropDown extends Composite implements ClickHandler {
 	public void draw(ThingTypesData thingTypesData) {
 		
 		lbStuffTypes.clear();
-		lbStuffTypes.addItem("Any", "0");
+		lbStuffTypes.addItem("", "0");
 		
 		if (thingTypesData == null) {
 			return;
@@ -48,6 +48,10 @@ public class ThingTypeDropDown extends Composite implements ClickHandler {
 	public long getSelected() {
 		return Global_ListBox.getSelectedValue(lbStuffTypes);
 	}
+	
+	public long getThingTypeId() {
+	  return getSelected();
+  }
 	
 	public void hideDelete() {
 		bDelete.setVisible(false);
@@ -91,6 +95,8 @@ public class ThingTypeDropDown extends Composite implements ClickHandler {
   	}
   	
   }
+
+	
 	
 	
 }

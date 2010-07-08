@@ -1,4 +1,4 @@
-package org.gonevertical.core.client.ui.admin.thing;
+package org.gonevertical.core.client.ui.admin.thingstufftype;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 
-public class ThingFilter extends Composite implements ClickHandler {
+public class ThingStuffFilter extends Composite implements ClickHandler {
 
 	private ClientPersistence cp;
 
@@ -33,12 +33,12 @@ public class ThingFilter extends Composite implements ClickHandler {
 	private VerticalPanel pWidget = new VerticalPanel();
 	private PushButton bAddType;
 	private VerticalPanel pTypes;
-	private ThingTypeDropDown thingTypeDropDown;
-
-	private ThingTypesData thingTypesData;
+	
 	private HorizontalPanel horizontalPanel;
 
-	public ThingFilter(ClientPersistence cp) {
+	private ThingStuffValueTypeDropDown thingStuffValueTypeDropDown;
+
+	public ThingStuffFilter(ClientPersistence cp) {
 		this.cp = cp;
 
 		initWidget(pWidget);
@@ -49,12 +49,10 @@ public class ThingFilter extends Composite implements ClickHandler {
 	}
 
 	public void draw() {
-		ThingTypeDataFilter filter = new ThingTypeDataFilter();
-		filter.setLimit(0, 200);
-		getThingTypesRpc(filter);
+		
 	}
 	
-	public long[] getThingTypeIds() {
+	public long[] getThingStuffValueTypeIds() {
 	  
 		int c = pTypes.getWidgetCount();
 		if (c == 0) {
@@ -63,8 +61,8 @@ public class ThingFilter extends Composite implements ClickHandler {
 		
 		ArrayList<Long> al = new ArrayList<Long>();
 		for (int i=0; i < c; i++) {
-			ThingTypeDropDown w = (ThingTypeDropDown) pTypes.getWidget(i);
-			long l = w.getThingTypeId();
+			ThingStuffValueTypeDropDown w = (ThingStuffValueTypeDropDown) pTypes.getWidget(i);
+			long l = w.getThingStuffValueTypeId();
 			if (l > 0) {
 				al.add(l);
 			}
@@ -81,33 +79,10 @@ public class ThingFilter extends Composite implements ClickHandler {
 		
 	  return aal;
   }
-
-	protected void process(ThingTypesData thingTypesData) {
-		this.thingTypesData = thingTypesData;
-
-		if (thingTypeDropDown != null) {
-			thingTypeDropDown.draw(thingTypesData);
-		}
-	}	
-
-	private void getThingTypesRpc(ThingTypeDataFilter filter) {
-
-		cp.showLoading(true);
-
-		rpc.getThingTypes(cp.getAccessToken(), filter, new AsyncCallback<ThingTypesData>() {
-			public void onSuccess(ThingTypesData thingTypesData) {
-				process(thingTypesData);
-				cp.showLoading(false);
-			}
-			public void onFailure(Throwable caught) {
-			}
-		});
-
-	}
 	
 	private PushButton getPushButton() {
 		if (bAddType == null) {
-			bAddType = new PushButton("Add Filter By Type");
+			bAddType = new PushButton("Add Filter by ValueType");
 			bAddType.addClickHandler(this);
 		}
 		return bAddType;
@@ -116,23 +91,26 @@ public class ThingFilter extends Composite implements ClickHandler {
 	private VerticalPanel getPTypes() {
 		if (pTypes == null) {
 			pTypes = new VerticalPanel();
-			pTypes.add(getThingTypeDropDown());
+			pTypes.add(getThingStuffValueTypeDropDown());
 		}
 		return pTypes;
 	}
 	
-	private ThingTypeDropDown getThingTypeDropDown() {
-		if (thingTypeDropDown == null) {
-			thingTypeDropDown = new ThingTypeDropDown();
-			thingTypeDropDown.hideDelete();
+	private ThingStuffValueTypeDropDown getThingStuffValueTypeDropDown() {
+		if (thingStuffValueTypeDropDown == null) {
+			thingStuffValueTypeDropDown = new ThingStuffValueTypeDropDown();
+			thingStuffValueTypeDropDown.hideDelete();
 		}
-		return thingTypeDropDown;
+		return thingStuffValueTypeDropDown;
 	}
 
-	private void addType() {
+	private void addType(boolean hideDelete) {
 
-		ThingTypeDropDown dd = new ThingTypeDropDown();
-		dd.draw(thingTypesData);
+		ThingStuffValueTypeDropDown dd = new ThingStuffValueTypeDropDown();
+		dd.draw();
+		if (hideDelete == true) {
+			dd.hideDelete();
+		}
 		pTypes.add(dd);
 
 	}
@@ -141,7 +119,7 @@ public class ThingFilter extends Composite implements ClickHandler {
 		Widget sender = (Widget) event.getSource();
 
 		if (sender == bAddType) {
-			addType();
+			addType(false);
 		}
 	}
 	private HorizontalPanel getHorizontalPanel() {

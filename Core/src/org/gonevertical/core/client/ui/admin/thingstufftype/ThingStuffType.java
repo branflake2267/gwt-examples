@@ -105,25 +105,22 @@ public class ThingStuffType extends Ui implements ChangeHandler, ClickHandler {
   
   private void drawLb() {
   
-  	lbValueType.addItem("Link", Integer.toString(ThingStuffTypeData.VALUETYPE_LINK));
-  	
-  	lbValueType.addItem("Text", Integer.toString(ThingStuffTypeData.VALUETYPE_STRING));
-    lbValueType.addItem("Checkbox", Integer.toString(ThingStuffTypeData.VALUETYPE_BOOLEAN));
-    lbValueType.addItem("Decimal", Integer.toString(ThingStuffTypeData.VALUETYPE_STRING));
-    lbValueType.addItem("Number", Integer.toString(ThingStuffTypeData.VALUETYPE_INT));
+  	lbValueType.addItem("String", Integer.toString(ThingStuffTypeData.VALUETYPE_STRING));
+    lbValueType.addItem("Boolean", Integer.toString(ThingStuffTypeData.VALUETYPE_BOOLEAN));
+    lbValueType.addItem("Double", Integer.toString(ThingStuffTypeData.VALUETYPE_DOUBLE));
+    lbValueType.addItem("Long", Integer.toString(ThingStuffTypeData.VALUETYPE_INT));
     
-    lbValueType.addItem("Large Text Box", Integer.toString(ThingStuffTypeData.VALUETYPE_STRING_LARGE));
-    lbValueType.addItem("Text Case Sensitive", Integer.toString(ThingStuffTypeData.VALUETYPE_STRING_CASE));
-    lbValueType.addItem("Large Text Area Case Sensitive", Integer.toString(ThingStuffTypeData.VALUETYPE_STRING_LARGE_CASE));
+    lbValueType.addItem("String Large", Integer.toString(ThingStuffTypeData.VALUETYPE_STRING_LARGE));
+    lbValueType.addItem("String Case Sensitive", Integer.toString(ThingStuffTypeData.VALUETYPE_STRING_CASE));
+    lbValueType.addItem("String Large Case Sensitive", Integer.toString(ThingStuffTypeData.VALUETYPE_STRING_LARGE_CASE));
     
     lbValueType.addItem("HTML", Integer.toString(ThingStuffTypeData.VALUETYPE_HTML));
     lbValueType.addItem("URL", Integer.toString(ThingStuffTypeData.VALUETYPE_URL));
-    lbValueType.addItem("Email", Integer.toString(ThingStuffTypeData.VALUETYPE_EMAIL));
     lbValueType.addItem("Phone", Integer.toString(ThingStuffTypeData.VALUETYPE_PHONE));
-    lbValueType.addItem("Money", Integer.toString(ThingStuffTypeData.VALUETYPE_STRING));
-    
+    lbValueType.addItem("Email", Integer.toString(ThingStuffTypeData.VALUETYPE_EMAIL));
+    lbValueType.addItem("Link", Integer.toString(ThingStuffTypeData.VALUETYPE_LINK));
     lbValueType.addItem("File", Integer.toString(ThingStuffTypeData.VALUETYPE_FILE));
-    
+   
     Global_ListBox.setSelected(lbValueType, thingStuffTypeData.getValueTypeId());
   }
   

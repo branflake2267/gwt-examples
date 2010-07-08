@@ -31,21 +31,22 @@ public class ThingStuffTypeData implements IsSerializable {
   public static final int VALUETYPE_BOOLEAN = 2;
   public static final int VALUETYPE_DOUBLE = 3;
   public static final int VALUETYPE_INT = 4;
+  
   public static final int VALUETYPE_STRING_LARGE = 5; // text area
   public static final int VALUETYPE_STRING_CASE = 6; // text box case sensitive
   public static final int VALUETYPE_STRING_LARGE_CASE = 7; // text area case sensitive
+  
   public static final int VALUETYPE_HTML = 8;
   public static final int VALUETYPE_URL = 9;
   public static final int VALUETYPE_EMAIL = 10;
   public static final int VALUETYPE_PHONE = 11;
-  /**
-   * Thing Link - link to another thing - thing relationships
-   */
 	public static final int VALUETYPE_LINK = 12;
-	/**
-	 * file types
-	 */
 	public static final int VALUETYPE_FILE = 13;
+	
+	// added - question is should I keep it basic here, and more defined in custome app builder logic
+	public static final int VALUETYPE_DECIMAL = 14; // decimal
+	public static final int VALUETYPE_NUMBER = 15; // number
+	public static final int VALUETYPE_MONEY = 16; // money
 	
   // identity
   private long stuffTypeId;

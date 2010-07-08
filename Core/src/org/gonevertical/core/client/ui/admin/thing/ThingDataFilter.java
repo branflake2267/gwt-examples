@@ -15,7 +15,7 @@ public class ThingDataFilter implements IsSerializable {
   /**
    * filter by type
    */
-  private long thingTypeId = 0;
+  private long thingTypeId[] = null;
 
   /**
    * constructor - nothing to do
@@ -23,11 +23,11 @@ public class ThingDataFilter implements IsSerializable {
   public ThingDataFilter() {
   }
   
-  public void setThingTypeId(long thingTypeId) {
+  public void setThingTypeId(long[] thingTypeId) {
   	this.thingTypeId = thingTypeId;
   }
   
-  public long getThingTypeId() {
+  public long[] getThingTypeId() {
   	return thingTypeId;
   }
   
@@ -53,13 +53,19 @@ public class ThingDataFilter implements IsSerializable {
 	  return finish;
   }
 
-	public String getFilter() {
-		
-		String s = null;
-		if (thingTypeId > 0) {
-			s = "thingTypeId==" + thingTypeId + "";
+	public String getFilter_Or() {
+		if (thingTypeId == null || thingTypeId.length == 0) {
+			return null;
 		}
-
+		String s = "";
+		if (thingTypeId != null && thingTypeId.length > 0) {
+			for (int i=0; i < thingTypeId.length; i++) {
+				s += "thingTypeId==" + thingTypeId[i] + "";
+				if (i < thingTypeId.length -1) {
+					s += " || ";
+				}
+			}
+		}
 	  return s;
   }
 

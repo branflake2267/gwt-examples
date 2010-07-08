@@ -317,7 +317,7 @@ public class ThingJdo {
 
 	public ThingData[] query(ThingDataFilter filter) {
 
-		String qfilter = filter.getFilter();
+		String qfilter = filter.getFilter_Or();
 		
 		ArrayList<ThingJdo> aT = new ArrayList<ThingJdo>();
 		PersistenceManager pm = sp.getPersistenceManager();

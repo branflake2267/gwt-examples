@@ -19,27 +19,27 @@ public class ThingStuffTypeDropDown extends Composite implements ClickHandler {
 		initWidget(getHorizontalPanel());
 	}
 	
-	public void draw(ThingStuffTypesData thingStuffTypesData) {
+	public void draw(ThingStuffTypesData thingTypesData) {
 		
 		lbStuffTypes.clear();
 		lbStuffTypes.addItem("", "0");
 		
-		if (thingStuffTypesData == null) {
+		if (thingTypesData == null) {
 			return;
 		}
 
-		if (thingStuffTypesData.getThingStuffTypeData() == null) {
+		if (thingTypesData == null) {
 			return;
 		}
-		ThingStuffTypeData[] thingStuffTypeData = thingStuffTypesData.getThingStuffTypeData();
+		ThingStuffTypeData[] thingTypeData = thingTypesData.getThingStuffTypeData();
 
-		if (thingStuffTypeData.length == 0) {
+		if (thingTypeData.length == 0) {
 			return;
 		}
 
-		for (int i=0; i < thingStuffTypeData.length; i++){
-			String item = thingStuffTypeData[i].getName();
-			String value = Long.toString(thingStuffTypeData[i].getStuffTypeId());
+		for (int i=0; i < thingTypeData.length; i++){
+			String item = thingTypeData[i].getName();
+			String value = Long.toString(thingTypeData[i].getId());
 			lbStuffTypes.addItem(item, value);
 		}
 
@@ -47,6 +47,14 @@ public class ThingStuffTypeDropDown extends Composite implements ClickHandler {
 	
 	public long getSelected() {
 		return Global_ListBox.getSelectedValue(lbStuffTypes);
+	}
+	
+	public long getThingTypeId() {
+	  return getSelected();
+  }
+	
+	public void hideDelete() {
+		bDelete.setVisible(false);
 	}
 	
 	private HorizontalPanel getHorizontalPanel() {
@@ -75,7 +83,7 @@ public class ThingStuffTypeDropDown extends Composite implements ClickHandler {
 	}
 
 	private void delete() {
-		bDelete.removeFromParent();
+		removeFromParent();
 	}
 	
   public void onClick(ClickEvent event) {
@@ -87,6 +95,8 @@ public class ThingStuffTypeDropDown extends Composite implements ClickHandler {
   	}
   	
   }
+
+	
 	
 	
 }

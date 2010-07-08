@@ -291,7 +291,7 @@ public class ThingStuffAboutJdo {
 
 		ArrayList<ThingStuffAboutJdo> aT = new ArrayList<ThingStuffAboutJdo>();
 
-		String qfilter = filter.getAndFilter();
+		String qfilter = filter.getFilter_And();
 
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
