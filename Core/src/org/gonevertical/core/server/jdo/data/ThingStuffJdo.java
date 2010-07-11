@@ -72,6 +72,10 @@ public class ThingStuffJdo {
 	// when did this end in time
 	@Persistent
 	private Date endOf;
+	
+	// order the list by this
+	@Persistent
+	private Double rank;
 
 	// when this object was created
 	@Persistent
@@ -88,11 +92,29 @@ public class ThingStuffJdo {
 	// who updated this object
 	@Persistent
 	private long updatedByThingId;
+	
+	// assign ownership of this thing to this thing
+	@Persistent
+	private long[] ownerThingIds;
 
+	/**
+	 * constructor 
+	 * 
+	 * @throws Exception
+	 */
+	public ThingStuffJdo() throws Exception {
+		//System.err.println("Don't use this constructor - Exiting");
+		//throw new Exception();
+	}
+	
 	/**
 	 * constructor
 	 */
 	public ThingStuffJdo(ServerPersistence sp) {
+		this.sp = sp;
+	}
+	
+	public void set(ServerPersistence sp) {
 		this.sp = sp;
 	}
 
@@ -115,11 +137,16 @@ public class ThingStuffJdo {
 
 		this.startOf = thingStuffData.getStartOf();
 		this.endOf = thingStuffData.getEndOf();
+		
+		this.rank = thingStuffData.getRank();
+		this.ownerThingIds = thingStuffData.getOwners();
 
 		if (thingStuffData != null && thingStuffData.getStuffId() > 0) {
 			this.dateUpdated = new Date();
+ 			this.updatedByThingId = sp.getThingId();
 		} else {
 			this.dateCreated = new Date();
+			this.createdByThingId = sp.getThingId();
 		}
 	}
 
@@ -140,11 +167,16 @@ public class ThingStuffJdo {
 
 		this.startOf = thingStuffJdo.getStartOf();
 		this.endOf = thingStuffJdo.getEndOf();
+		
+		this.rank = thingStuffJdo.getRank();
+		this.ownerThingIds = thingStuffJdo.getOwners();
 
 		if (thingStuffIdKey != null && thingStuffIdKey.getId() > 0) {
 			this.dateUpdated = new Date();
+			this.updatedByThingId = sp.getThingId();
 		} else {
 			this.dateCreated = new Date();
+			this.createdByThingId = sp.getThingId();
 		}
 	}
 
@@ -164,16 +196,20 @@ public class ThingStuffJdo {
 
 			if (thingStuffData != null && thingStuffData.getStuffId() > 0) { // update
 				ThingStuffJdo update = pm.getObjectById(ThingStuffJdo.class, thingStuffData.getStuffId());
+				update.set(sp);
 				update.setData(thingStuffData);
+				
 				this.thingStuffIdKey = update.thingStuffIdKey;
-
+				
+				//System.out.println(" " + update.getUpdatedBy());
+				
 			} else { // insert
 				thingStuffIdKey = null;
 				pm.makePersistent(this);
 			}
 
 			tx.commit();
-
+			
 		} catch (Exception e) { 
 			e.printStackTrace();
 			log.log(Level.SEVERE, "save(): ", e);
@@ -404,9 +440,10 @@ public class ThingStuffJdo {
 					
 					tsja.getStartOf(),
 					tsja.getEndOf(), 
-
+					tsja.getRank(),
 					tsja.getDateCreated(),
-					tsja.getDateUpdated());
+					tsja.getDateUpdated(),
+					tsja.getOwners());
 
 			i++;
 		}
@@ -437,6 +474,9 @@ public class ThingStuffJdo {
 
 			r[i].startOf = tsd[i].getStartOf();
 			r[i].endOf = tsd[i].getEndOf();
+			r[i].rank = tsd[i].getRank();
+			r[i].ownerThingIds = tsd[i].getOwners();
+			
 		}
 
 		List<ThingStuffJdo> l = Arrays.asList(r);
@@ -586,6 +626,14 @@ public class ThingStuffJdo {
 	public Date getEndOf() {
 		return endOf;
 	}
+	
+	public void setRank(Double rank) {
+		this.rank = rank;
+	}
+	
+	public Double getRank() {
+		return rank;
+	}
 
 	public Date getDateCreated() {
 		return dateCreated;
@@ -601,6 +649,14 @@ public class ThingStuffJdo {
 
 	public long getUpdatedBy() {
 		return updatedByThingId;
+	}
+	
+	public void setOwners(long[] ownerThingIds) {
+		this.ownerThingIds = ownerThingIds;
+	}
+	
+	public long[] getOwners() {
+		return ownerThingIds;
 	}
 
 	private Key getKey(long id) {

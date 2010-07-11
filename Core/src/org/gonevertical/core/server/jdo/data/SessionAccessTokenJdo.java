@@ -57,6 +57,10 @@ public class SessionAccessTokenJdo {
 		this.sp = sp;
 	}
 
+	public void set(ServerPersistence sp) {
+		this.sp = sp;
+	}
+	
 	/**
 	 * insert access token
 	 * 
@@ -162,6 +166,9 @@ public class SessionAccessTokenJdo {
 	 * @return
 	 */
 	public ThingData getThingData(String accessToken, String accessTokenSecret) {
+		if (accessToken == null || accessTokenSecret == null) {
+			return null;
+		}
 		SessionAccessTokenJdo[] s = query(accessToken, accessTokenSecret);
 		ThingData t = new ThingData(s[0].getThingTypeId(), s[0].getThingId());
 		return t;
@@ -184,6 +191,7 @@ public class SessionAccessTokenJdo {
 			
 			SessionAccessTokenJdo sa = null;
 			sa = pm.getObjectById(SessionAccessTokenJdo.class, id);
+			sa.set(sp);
 			sa.setThingId(userId);
 			sa.setThingTypeId(ThingTypeJdo.TYPE_USER); // switch session var to the user and not the application
 			

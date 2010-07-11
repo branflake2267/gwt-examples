@@ -62,7 +62,7 @@ public class OAuthServer {
     ApplicationData appData = getApplicationId(token);
 
     if (appData == null) {
-    	sp.getLogger().severe("No applications are set yet.");
+    	sp.getLogger().severe("OAuthServer.requestToken(): Error: No applications are set yet.");
     	return null;
     }
     

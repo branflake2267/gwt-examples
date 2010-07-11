@@ -71,7 +71,7 @@ public class Thing extends Ui implements ChangeHandler, ClickHandler {
     this.row = row;
     this.thingData = thingData;
     this.thingTypeData = thingTypeData;
-    pWidget.setRow(row);
+    pWidget.setRow((int)row);
     draw();
   }
   

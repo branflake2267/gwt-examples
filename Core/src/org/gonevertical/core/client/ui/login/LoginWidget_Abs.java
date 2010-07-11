@@ -3,6 +3,7 @@ package org.gonevertical.core.client.ui.login;
 import java.util.Date;
 
 import org.gonevertical.core.client.ClientPersistence;
+import org.gonevertical.core.client.SetDefaultsData;
 import org.gonevertical.core.client.global.EventManager;
 import org.gonevertical.core.client.oauth.OAuthTokenData;
 import org.gonevertical.core.client.rpc.RpcCore;
@@ -11,11 +12,14 @@ import org.gonevertical.core.client.rpc.RpcCoreServiceAsync;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -133,6 +137,8 @@ public abstract class LoginWidget_Abs extends Composite implements ChangeHandler
 	private void request_Request_Token_Response(OAuthTokenData token) {
 
 		if (token == null) {
+			Window.alert("LoginWidget_Abs.request_Request_Token_Response(): I wasn't able to use the Applications Access Token to setup the system.");
+			addDefaultsButton();
 			return;
 		}
 
@@ -154,6 +160,16 @@ public abstract class LoginWidget_Abs extends Composite implements ChangeHandler
 
 		}
 	}
+
+	private void addDefaultsButton() {
+		PushButton bDefaults = new PushButton("Create Defaults");
+		RootPanel.get().add(bDefaults);
+		bDefaults.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				setDefaults();
+			}
+		});
+  }
 
 	/**
 	 * TODO needs testing and finishing
@@ -327,6 +343,19 @@ public abstract class LoginWidget_Abs extends Composite implements ChangeHandler
 		};
 		rpc.getUserAccessToken(tokenData, callback);
 	}
+	
+	private void setDefaults() {
+		
+		rpc.setDefaults(cp.getAccessToken(), SetDefaultsData.DEFAULT_ALL, new AsyncCallback<Boolean>() {
+			public void onSuccess(Boolean result) {
+				Window.alert("Defaults created, please refresh.");
+			}
+			public void onFailure(Throwable caught) {
+				Window.alert("Defaults Error, tell the admin.");
+			}
+		});
+		
+  }
 
 
 }

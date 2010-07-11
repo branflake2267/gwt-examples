@@ -13,6 +13,7 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -20,48 +21,94 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentC
 
 public class Row extends Composite implements MouseOverHandler, MouseOutHandler {
   
-  private HorizontalPanelEvent hp = new HorizontalPanelEvent();
+  private HorizontalPanelEvent pWidget = new HorizontalPanelEvent();
   
   private long row = 0;
   
   private int changeEvent = 0;
   
-  public Row() {
-    initWidget(hp);
+  // set a max width to constrain the row to, either by growing or maybe shrinking?
+  // shrinking may need a way to move back and forth to see the data correctly
+  private int maxWidth = 0;
   
-    hp.addMouseOverHandler(this);
-    hp.addMouseOutHandler(this);
+  public Row() {
+    initWidget(pWidget);
+  
+    pWidget.addMouseOverHandler(this);
+    pWidget.addMouseOutHandler(this);
     
     //hp.setStyleName("core-row-cell");
-    hp.setSpacing(3);
+    pWidget.setSpacing(3);
+   
   }
   
-  public void setRow(long row) {
+  public void setMaxWidth(int maxWidth) {
+    this.maxWidth = maxWidth;
+  }
+  
+  public void setRow(int row) {
     this.row = row;
     setStyle();
   }
   
+  public void setSpacing(int pixels) {
+    pWidget.setSpacing(pixels);
+  }
+  
   public void add(Widget w) {
-    hp.add(w);
-    hp.setCellVerticalAlignment(w, VerticalPanel.ALIGN_MIDDLE);
+    FlowPanel fp = new FlowPanel();
+    fp.add(w);
+    pWidget.add(fp);
+    pWidget.setCellVerticalAlignment(fp, VerticalPanel.ALIGN_MIDDLE);
+    
+    //fp.addStyleName("test1");
   }
   
   public void add(Widget w, HorizontalAlignmentConstant align) {
-    hp.add(w);
-    hp.setCellVerticalAlignment(w, VerticalPanel.ALIGN_MIDDLE);
-    hp.setCellHorizontalAlignment(w, align);
+    FlowPanel fp = new FlowPanel();
+    fp.add(w);
+    pWidget.add(fp);
+    pWidget.setCellVerticalAlignment(fp, VerticalPanel.ALIGN_MIDDLE);
+    pWidget.setCellHorizontalAlignment(fp, align);
+    
+    //fp.addStyleName("test2");
+  }
+  
+  public void add(Widget w, HorizontalAlignmentConstant align, String style) {
+    FlowPanel fp = new FlowPanel();
+    fp.add(w);
+    pWidget.add(fp);
+    pWidget.setCellVerticalAlignment(fp, VerticalPanel.ALIGN_MIDDLE);
+    pWidget.setCellHorizontalAlignment(fp, align);
+    
+    if (style != null && style.length() > 0) {
+    	fp.addStyleName(style);
+    }
+    
+    //fp.addStyleName("test3");
+  }
+  
+  public void add(Widget w, HorizontalAlignmentConstant align, int width) {
+    FlowPanel fp = new FlowPanel();
+    fp.add(w);
+    pWidget.add(fp);
+    pWidget.setCellVerticalAlignment(fp, VerticalPanel.ALIGN_MIDDLE);
+    pWidget.setCellHorizontalAlignment(fp, align);
+    fp.setWidth(width + "px");
+    
+    //fp.addStyleName("test4");
   }
   
   private void setStyle() {
     String style = Style.getRowStyle(row);
-    hp.addStyleName(style);
+    pWidget.addStyleName(style);
   }
   
   private void setStyleHover(boolean b) {
     if (b == true) {
-      hp.addStyleName(Style.getRowStyleHover());
+      pWidget.addStyleName(Style.getRowStyleHover());
     } else if (b == false) {
-      hp.removeStyleName(Style.getRowStyleHover());
+      pWidget.removeStyleName(Style.getRowStyleHover());
     }
   }
 
@@ -83,38 +130,99 @@ public class Row extends Composite implements MouseOverHandler, MouseOutHandler 
   	if (widths == null) {
   		return;
   	}
-    for (int i=0; i < hp.getWidgetCount(); i++) {
-      hp.getWidget(i).setWidth(widths[i] + "px");
+    for (int i=0; i < pWidget.getWidgetCount(); i++) {
+    	if (i < widths.length) {
+    		pWidget.getWidget(i).setWidth(widths[i] + "px");
+    	}
     }
   }
   
   public int[] getWidths() {
-    int[] r = new int[hp.getWidgetCount()];
-    for (int i=0; i < hp.getWidgetCount(); i++) {
-      r[i] = hp.getWidget(i).getOffsetWidth();
+    int[] r = new int[pWidget.getWidgetCount()];
+    for (int i=0; i < pWidget.getWidgetCount(); i++) {
+      r[i] = pWidget.getWidget(i).getOffsetWidth();
     }
     return r;
   }
   
-  public static int[] getMaxWidths(int[] a, int[] b) {
-  	if (a == null || b == null || (a.length != b.length)) {
+  /**
+   * get widths with the growth to fix the max width set
+   * 
+   * @return
+   */
+  public int[] getWidths_With_MaxGrowth() {
+    int currentWidth = pWidget.getOffsetWidth();
+    int[] r = new int[pWidget.getWidgetCount()];
+    for (int i=0; i < pWidget.getWidgetCount(); i++) {
+      int width = pWidget.getWidget(i).getOffsetWidth();
+      if (currentWidth > 0) {
+        r[i] = maxWidth * (width / currentWidth);
+      } else {
+        r[i] = 0;
+      }
+    }
+    return r;
+  }
+  
+  /**
+   * grow the widths bigger, but keep the rations of the columns the same
+   * 
+   * @param widths
+   * @param maxGrowWidth
+   * @return
+   */
+  public static int[] getGrowthWidths(int[] widths, int maxGrowWidth) {
+  	if (widths == null) {
   		return null;
   	}
-    for (int i=0; i < a.length; i++) {
-      if (b[i] > a[i]) {
-        a[i] = b[i];
+    int currentWidth = 0;
+    for (int i=0; i < widths.length; i++) {
+      currentWidth += widths[i];
+    }
+    if (currentWidth > maxGrowWidth) {
+      return widths;
+    }
+    for (int i=0; i < widths.length; i++) {
+      if (currentWidth > 0) {
+        widths[i] =  (int) (maxGrowWidth * ((double) widths[i]  / (double) currentWidth));
+      } else {
+        widths[i] = 0;
       }
+    }
+    return widths;
+  }
+  
+  public static int[] getMaxWidths(int[] a, int[] b) {
+    if (b == null) {
+      return a;
+    } else if (a.length != b.length) {
+      return a;
+    }
+    
+    try {
+      for (int i=0; i < a.length; i++) {
+        if (b[i] > a[i]) {
+          a[i] = b[i];
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
     return a;
   }
-
+  
   public void setWidthOnColumn(int columnIndex, int width) {
-    int wc = hp.getWidgetCount();
+    int wc = pWidget.getWidgetCount();
     if (columnIndex > wc) {
       return;
     }
-    Widget w = (HorizontalPanel) hp.getWidget(columnIndex);
+    Widget w = (HorizontalPanel) pWidget.getWidget(columnIndex);
     w.setWidth(width + "px");
+  }
+  
+  public Widget getWidgetIn(int index) {
+    FlowPanel fp = (FlowPanel) pWidget.getWidget(index);
+    return fp.getWidget(0);
   }
   
   public int getChangeEvent() {

@@ -59,7 +59,6 @@ public class Db_Thing {
   	
   	// get name for things
   	for (int i=0; i < td.length; i++) {
-  		
   		ThingStuffDataFilter f = new ThingStuffDataFilter();
     	f.setThingId(td[i].getThingId());
     	f.setThingStuffTypeId(1); // only get name
@@ -69,11 +68,9 @@ public class Db_Thing {
       	ThingStuffsData tsds= new ThingStuffsData();
       	tsds.setThingStuffData(tsd);
       	td[i].setThingStuffsData(tsds);
-    	}
-    	
+    	}  	
   	}
   
-  	
 	  return td;
   }
 

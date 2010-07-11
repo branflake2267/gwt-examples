@@ -22,6 +22,7 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -38,9 +39,8 @@ public class ThingStuffs extends Ui implements ClickHandler, ChangeHandler {
   
   private VerticalPanel pMenu = new VerticalPanel();
   
-  private VerticalPanel pListTop = new VerticalPanel();
   private VerticalPanel pListStuff = new VerticalPanel();
-  private int[] widths = new int[5];
+  private int[] widths = new int[13];
   
   private PushButton bAdd = new PushButton("Add");
   
@@ -72,7 +72,7 @@ public class ThingStuffs extends Ui implements ClickHandler, ChangeHandler {
 	private ThingStuffData editingIndexThis_AboutThingStuffData = null;
 	
 	private boolean ignoreMouseOver;
-	private HTML l4;
+	private Row th;
 	
   /**
    * constructor
@@ -81,22 +81,22 @@ public class ThingStuffs extends Ui implements ClickHandler, ChangeHandler {
   public ThingStuffs(ClientPersistence cp) {
     super(cp);
     
+    th = new Row();
+    
     pWidget.add(pMenu);
-    pWidget.add(pListTop);
+    pWidget.add(th);
     pWidget.add(pListStuff);
     pWidget.add(wPage);
     
     initWidget(pWidget);
     
-    drawMenu();
-    
+    wPage.addChangeHandler(this);
     bAdd.addClickHandler(this);
     
+    drawMenu();
+    
     pWidget.setStyleName("core-Account-ThingStuffs");
-    
-    //pWidget.addStyleName("test1");
-    
-    wPage.addChangeHandler(this);
+   
   }
   
   public void draw(ThingData thingData, ThingStuffsData thingStuffsData) {
@@ -114,27 +114,50 @@ public class ThingStuffs extends Ui implements ClickHandler, ChangeHandler {
   }
   
   private void drawTopRow() {
-    pListTop.clear();
     
     HTML l0 = new HTML("Id");
     HTML l1 = new HTML("Name"); // drop down type
     HTML l2 = new HTML("Value"); // input box
-    HTML l3 = new HTML("&nbsp;");
-    l4 = new HTML("&nbsp;");
+    HTML l3 = new HTML("StartDt");
+    HTML l4 = new HTML("EndDt");
+    HTML l5 = new HTML("Rank");
+    HTML l6 = new HTML("CreatedBy");
+    HTML l7 = new HTML("CreatedDt");
+    HTML l8 = new HTML("UpdatedBy");
+    HTML l9 = new HTML("UpdatedDt");
+    HTML l10 = new HTML("Owners");
+    HTML l11 = new HTML("&nbsp;");
+    HTML l12 = new HTML("&nbsp;");
 
-    l0.setStyleName("core-row-top");
-    l1.setStyleName("core-row-top");
-    l2.setStyleName("core-row-top");
-    l3.setStyleName("core-row-top");
+    l0.addStyleName("core-row-top");
+    l1.addStyleName("core-row-top");
+    l2.addStyleName("core-row-top");
+    l3.addStyleName("core-row-top");
+    l4.addStyleName("core-row-top");
+    l5.addStyleName("core-row-top");
+    l6.addStyleName("core-row-top");
+    l7.addStyleName("core-row-top");
+    l8.addStyleName("core-row-top");
+    l9.addStyleName("core-row-top");
+    l10.addStyleName("core-row-top");
+    l11.addStyleName("core-row-top");
+    l12.addStyleName("core-row-top");
 
-    Row th = new Row();
+    
     th.add(l0, HorizontalPanel.ALIGN_CENTER);
     th.add(l1, HorizontalPanel.ALIGN_CENTER);
     th.add(l2, HorizontalPanel.ALIGN_CENTER);
     th.add(l3, HorizontalPanel.ALIGN_CENTER);
     th.add(l4, HorizontalPanel.ALIGN_CENTER);
+    th.add(l5, HorizontalPanel.ALIGN_CENTER);
+    th.add(l6, HorizontalPanel.ALIGN_CENTER);
+    th.add(l7, HorizontalPanel.ALIGN_CENTER);
+    th.add(l8, HorizontalPanel.ALIGN_CENTER);
+    th.add(l9, HorizontalPanel.ALIGN_CENTER);
+    th.add(l10, HorizontalPanel.ALIGN_CENTER);
+    th.add(l11, HorizontalPanel.ALIGN_CENTER);
+    th.add(l12, HorizontalPanel.ALIGN_CENTER);
 
-    pListTop.add(th);
   }
   
   private void process(ThingStuffsData thingStuffsData) {
@@ -155,12 +178,13 @@ public class ThingStuffs extends Ui implements ClickHandler, ChangeHandler {
       return;
     }
     
-    drawTopRow();
-    
     wPage.setCounts(thingStuffData.length);
 
     int count = (int) wPage.getCountOffset();
-    for (int i=0; i < thingStuffData.length; i++){
+    for (int i=0; i < thingStuffData.length; i++) {
+    	if (i == 0) {
+    		drawTopRow();
+    	}
       addStuff(i, thingStuffData[i], count);
       count++;
     }
@@ -176,6 +200,8 @@ public class ThingStuffs extends Ui implements ClickHandler, ChangeHandler {
       return;
     }
     
+    widths = th.getWidths();
+    
     // get widths from list
     for (int i=0; i < pListStuff.getWidgetCount(); i++) {
       ThingStuff t = (ThingStuff) pListStuff.getWidget(i);
@@ -189,7 +215,6 @@ public class ThingStuffs extends Ui implements ClickHandler, ChangeHandler {
     }
     
     // set the header names of list
-    Row th = (Row) pListTop.getWidget(0);
     th.setWidths(widths);
   }
   

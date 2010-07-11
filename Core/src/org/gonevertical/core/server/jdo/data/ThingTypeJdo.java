@@ -54,6 +54,10 @@ public class ThingTypeJdo {
 	// when did this end in time
 	@Persistent
 	private Date endOf = null;
+	
+	// order the list by this
+	@Persistent
+	private Double rank;
 
 	// when this object was created
 	@Persistent
@@ -71,10 +75,28 @@ public class ThingTypeJdo {
 	@Persistent
 	private long updatedByThingId;
 
+	// assign ownership of this thing to this thing
+	@Persistent
+	private long[] ownerThingIds;
+	
+	/**
+	 * constructor 
+	 * 
+	 * @throws Exception
+	 */
+  public ThingTypeJdo() throws Exception {
+  	//System.err.println("Don't use this constructor - Exiting");
+  	//throw new Exception();
+  }
+  	
 	/**
 	 * constructor
 	 */
 	public ThingTypeJdo(ServerPersistence sp) {
+		this.sp = sp;
+	}
+	
+	public void set(ServerPersistence sp) {
 		this.sp = sp;
 	}
 
@@ -95,11 +117,16 @@ public class ThingTypeJdo {
 
 		this.startOf = thingTypeData.getStartOf();
 		this.endOf = thingTypeData.getEndOf();
+		
+		this.rank = thingTypeData.getRank();
+		this.ownerThingIds = thingTypeData.getOwners();
 
 		if (thingTypeIdKey != null && thingTypeIdKey.getId() > 0) {
-			dateUpdated = new Date();
+			this.dateUpdated = new Date();
+			this.updatedByThingId = sp.getThingId();
 		} else {
-			dateCreated = new Date();
+			this.dateCreated = new Date();
+			this.createdByThingId = sp.getThingId();
 		}
 	}
 
@@ -326,8 +353,10 @@ public class ThingTypeJdo {
 					thingTypeJdo[i].getName(),
 					thingTypeJdo[i].getStartOf(),
 					thingTypeJdo[i].getEndOf(),
+					thingTypeJdo[i].getRank(),
 					thingTypeJdo[i].getDateCreated(),
-					thingTypeJdo[i].getDateUpdated());
+					thingTypeJdo[i].getDateUpdated(),
+					thingTypeJdo[i].getOwners());
 		}
 		return r;
 	}
@@ -348,6 +377,14 @@ public class ThingTypeJdo {
 		return startOf;
 	}
 
+	public void setRank(Double rank) {
+		this.rank = rank;
+	}
+	
+	public Double getRank() {
+		return rank;
+	}
+	
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -363,4 +400,14 @@ public class ThingTypeJdo {
 	public long getUpdatedBy() {
 		return updatedByThingId;
 	}
+	
+	public void setOwners(long[] ownerThingIds) {
+		this.ownerThingIds = ownerThingIds;
+	}
+	
+	public long[] getOwners() {
+		return ownerThingIds;
+	}
+	
+	
 }

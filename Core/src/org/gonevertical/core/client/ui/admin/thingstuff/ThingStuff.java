@@ -3,6 +3,7 @@ package org.gonevertical.core.client.ui.admin.thingstuff;
 import org.gonevertical.core.client.ClientPersistence;
 import org.gonevertical.core.client.global.DeleteDialog;
 import org.gonevertical.core.client.global.EventManager;
+import org.gonevertical.core.client.global.Global_Date;
 import org.gonevertical.core.client.global.Global_ListBox;
 import org.gonevertical.core.client.rpc.RpcCore;
 import org.gonevertical.core.client.rpc.RpcCoreServiceAsync;
@@ -36,6 +37,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.datepicker.client.DateBox;
 
 public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, MouseOverHandler, MouseOutHandler {
   	  
@@ -55,8 +57,18 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
   private TextBox tbValue = new TextBox();
   private CheckBox cbValue = new CheckBox();
   private TextArea taValue = new TextArea();
-
-  // owner
+  
+  private DateBox tbStartDt = new DateBox();
+  private DateBox tbEndDt = new DateBox();
+  private TextBox tbRank = new TextBox();
+  
+  private FlowPanel pCreatedBy = new FlowPanel();
+  private FlowPanel pCreatedDt = new FlowPanel();
+  private FlowPanel pUpdatedBy = new FlowPanel();
+  private FlowPanel pUpdatedDt = new FlowPanel();
+  private FlowPanel pOwner = new FlowPanel();
+  
+  // parent owner
   private ThingData thingData = new ThingData();
   
   private ThingStuffData thingStuffData = null;
@@ -89,11 +101,19 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
     HorizontalPanel hpButtons = new HorizontalPanel();
     hpButtons.add(bDelete);
     
-    pWidget.add(pId);
-    pWidget.add(lbTypes);
-    pWidget.add(vpInput);
-    pWidget.add(hpButtons);
-    pWidget.add(pThingStuffCount);
+    pWidget.add(pId, HorizontalPanel.ALIGN_CENTER);
+    pWidget.add(lbTypes, HorizontalPanel.ALIGN_CENTER);
+    pWidget.add(vpInput, HorizontalPanel.ALIGN_CENTER);
+    pWidget.add(tbStartDt, HorizontalPanel.ALIGN_CENTER);
+    pWidget.add(tbEndDt, HorizontalPanel.ALIGN_CENTER);
+    pWidget.add(tbRank, HorizontalPanel.ALIGN_CENTER);
+    pWidget.add(pCreatedBy, HorizontalPanel.ALIGN_CENTER);
+    pWidget.add(pCreatedDt, HorizontalPanel.ALIGN_CENTER);
+    pWidget.add(pUpdatedBy, HorizontalPanel.ALIGN_CENTER);
+    pWidget.add(pUpdatedDt, HorizontalPanel.ALIGN_CENTER);
+    pWidget.add(pOwner, HorizontalPanel.ALIGN_CENTER);
+    pWidget.add(hpButtons, HorizontalPanel.ALIGN_CENTER);
+    pWidget.add(pThingStuffCount, HorizontalPanel.ALIGN_CENTER);
     
     initWidget(pWidget);
     
@@ -102,7 +122,10 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
     bDelete.addClickHandler(this);
     lbTypes.addChangeHandler(this);
     
-    //pWidget.addStyleName("test2");
+    tbStartDt.setWidth("75px");
+    tbEndDt.setWidth("75px");
+    tbRank.setWidth("30px");
+    
   }
   
   /**
@@ -136,9 +159,94 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
     drawInput();
     
     drawStuffCount();
+    
+    drawStartDt();
+    
+    drawEndDt();
+    
+    drawRank();
+    
+    drawCreatedBy();
+    
+    drawCreatedDt();
+    
+    drawUpdatedBy();
+    
+    drawUpdatedDt();
+    
+    drawOwners();
+  }
+
+	private void drawCreatedBy() {
+		pCreatedBy.clear();
+		String s = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+		if (thingStuffData.getCreatedBy() > 0) {
+			s = Long.toString(thingStuffData.getCreatedBy());
+		}
+		HTML h = new HTML(s);
+		pCreatedBy.add(h);
+  }
+
+	private void drawCreatedDt() {
+		pCreatedDt.clear();
+	  String s = Global_Date.getDate_Eng(thingStuffData.getDateCreated());
+	  HTML h = new HTML(s);
+	  pCreatedDt.clear();
+	  pCreatedDt.add(h);
+  }
+
+	private void drawUpdatedBy() {
+		pUpdatedBy.clear();
+		String s = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+		if (thingStuffData.getUpdatedBy() > 0) {
+			s = Long.toString(thingStuffData.getUpdatedBy());
+		}
+		HTML h = new HTML(s);
+		pUpdatedBy.add(h);
+  }
+
+	private void drawUpdatedDt() {
+		pUpdatedDt.clear();
+	  String s = Global_Date.getDate_Eng(thingStuffData.getDateUpdated());
+	  HTML h = new HTML(s);
+	  pUpdatedDt.clear();
+	  pUpdatedDt.add(h);
+  }
+
+	private void drawOwners() {
+		pOwner.clear();
+		String s = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+		if (thingStuffData.getOwners() == null || thingStuffData.getOwners().length == 0) {
+			s = "";
+		} else {
+			for (int i=0; i < thingStuffData.getOwners().length; i++) {
+				s += Long.toString(thingStuffData.getOwners()[i]);
+				if (i < thingStuffData.getOwners().length -1) {
+					s += ",";
+				}
+			}
+		}
+		HTML h = new HTML(s);
+		pOwner.add(h);
+  }
+
+	private void drawStartDt() {
+		tbStartDt.setValue(thingStuffData.getStartOf());
   }
   
-  private void drawStuffCount() {
+  private void drawEndDt() {
+  	tbEndDt.setValue(thingStuffData.getEndOf());
+  }
+
+	private void drawRank() {
+  	String s = "0";
+  	if (thingStuffData.getRank() != null) {
+  		s = Double.toString(thingStuffData.getRank());
+  	} 
+  	tbRank.setText(s);
+  }
+
+	private void drawStuffCount() {
   	pThingStuffCount.clear();
   	String s = "&nbsp;";
     if (widgetType == ThingStuffs.WIDGETTYPE_THINGSTUFF) {
@@ -380,10 +488,27 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
     // multi dem format for stuff having stuff
     //thingStuffData.setThingStuffsAbout(thingStuffData.getThingStuffsAbout());
     
+    thingStuffData.setStartOf(tbStartDt.getValue());
+    thingStuffData.setEndOf(tbEndDt.getValue());
+    thingStuffData.setRank(getRank());
+    
     return thingStuffData;
   }
 
-  private String getTextBox_String() {
+  private Double getRank() {
+	  String s = tbRank.getValue().trim();
+	  Double d = null;
+	  if (s.length() != 0) {
+	  	try {
+	      d = Double.parseDouble(s);
+      } catch (NumberFormatException e) {
+      	d = null;
+      }
+	  }
+	  return d;
+  }
+
+	private String getTextBox_String() {
   	String s = null;
   	if (tbValue.getText().trim().length() > 0) {
   		s = tbValue.getText().trim();

@@ -63,11 +63,15 @@ public class ThingStuffTypeData implements IsSerializable {
   // when this end in time
   private Date endOf;
   
+  private Double rank;
+  
   // when this object was created
   private Date dateCreated;
   
   // when this object was last updated
   private Date dateUpdated;
+  
+  private long[] ownerThingIds;
   
   /**
    * constructor
@@ -75,8 +79,16 @@ public class ThingStuffTypeData implements IsSerializable {
   public ThingStuffTypeData() {
   }
   
-  public void setData(long id, String name, long valueTypeId, 
-  		Date startOf, Date endOf, Date dateCreated, Date dateUpdated) {
+  public void setData(
+  		long id, 
+  		String name, 
+  		long valueTypeId, 
+  		Date startOf, 
+  		Date endOf,
+  		Double rank,
+  		Date dateCreated, 
+  		Date dateUpdated,
+  		long[] ownerThingIds) {
   	
     this.stuffTypeId = id;
     this.name = name;
@@ -84,6 +96,10 @@ public class ThingStuffTypeData implements IsSerializable {
     
     this.startOf = startOf;
     this.endOf = endOf;
+    
+    this.rank = rank;
+    this.ownerThingIds = ownerThingIds;
+    
     this.dateCreated = dateCreated;
     this.dateUpdated = dateUpdated;
     
@@ -120,6 +136,14 @@ public class ThingStuffTypeData implements IsSerializable {
 	public Date getEndOf() {
 	  return endOf;
   }
+	
+	public void setRank(Double rank) {
+		this.rank = rank;
+	}
+	
+	public Double getRank() {
+		return rank;
+	}
   
 	public Date getDateCreated() {
 		return dateCreated;
@@ -128,4 +152,13 @@ public class ThingStuffTypeData implements IsSerializable {
 	public Date getDateUpdated() {
 		return dateUpdated;
 	}
+	
+	public void setOwners(long[] ownerThingIds) {
+		this.ownerThingIds = ownerThingIds;
+	}
+	
+	public long[] getOwners() {
+		return ownerThingIds;
+	}
+	
 }

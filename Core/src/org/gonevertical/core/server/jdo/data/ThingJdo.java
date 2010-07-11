@@ -57,6 +57,10 @@ public class ThingJdo {
 	// when did this end in time
 	@Persistent
 	private Date endOf;
+	
+	// order the list by this
+	@Persistent
+	private Double rank;
 
 	// when this object was created
 	@Persistent
@@ -73,7 +77,21 @@ public class ThingJdo {
 	// who last updated this object
 	@Persistent
 	private long updatedByThingId;
+	
+	// assign ownership of this thing to this thing
+	@Persistent
+	private long[] ownerThingIds;
 
+	/**
+	 * constructor
+	 * 
+	 * @throws Exception
+	 */
+	public ThingJdo() throws Exception {
+		//System.err.println("Don't use this constructor - Exiting");
+		//throw new Exception();
+	}
+	
 	/**
 	 * constructor
 	 */
@@ -81,6 +99,10 @@ public class ThingJdo {
 		this.sp = sp;
 	}
 
+	public void set(ServerPersistence sp) {
+		this.sp = sp;
+	}
+	
 	/**
 	 * set data
 	 * 
@@ -96,42 +118,52 @@ public class ThingJdo {
 		key = thingData.getKey();
 
 		// TODO be able to update secret (password hash)
-		//this.secret = thingData.getSecret(); // TODO?
+		//this.secret = thingData.getSecret(); // TODO? // This is moved to its own rpc call
 
 		this.startOf = thingData.getStartOf();
 		this.endOf = thingData.getEndOf();
 
+		this.rank = thingData.getRank();
+		this.ownerThingIds = thingData.getOwners();
+		
 		if (thingIdKey != null && thingIdKey.getId() > 0) {
-			dateUpdated = new Date();
+			this.dateUpdated = new Date();
+			this.updatedByThingId = sp.getThingId();
 		} else {
-			dateCreated = new Date();
+			this.dateCreated = new Date();
+			this.createdByThingId = sp.getThingId();
 		}
 	}
 
-	public void setData(ThingJdo thingData) {
-		if (thingData == null) {
+	public void setData(ThingJdo thingJdo) {
+		if (thingJdo == null) {
 			return;
 		}
-		setThingId(thingData.getThingId());
+		setThingId(thingJdo.getThingId());
 
-		this.thingTypeId = thingData.getThingTypeId();
-		this.key = thingData.getKey();
+		this.thingTypeId = thingJdo.getThingTypeId();
+		this.key = thingJdo.getKey();
 
 		//this.secret = thingData.getSecret(); // TODO? do I do someting here, can't remember
 
-		this.startOf = thingData.getStartOf();
-		this.endOf = thingData.getEndOf();
+		this.startOf = thingJdo.getStartOf();
+		this.endOf = thingJdo.getEndOf();
+		
+		this.rank = thingJdo.getRank();
+		this.ownerThingIds = thingJdo.getOwners();
 
 		if (thingIdKey != null && thingIdKey.getId() > 0) {
-			dateUpdated = new Date();
+			this.dateUpdated = new Date();
+			this.updatedByThingId = sp.getThingId();
 		} else {
-			dateCreated = new Date();
+			this.dateCreated = new Date();
+			this.createdByThingId = sp.getThingId();
 		}
 	}
 
 	public ThingData getThingData() {
 		ThingData thingData = new ThingData();
-		thingData.setData(thingTypeId, thingIdKey.getId(), key, startOf, endOf, dateCreated, dateUpdated);
+		thingData.setData(thingTypeId, thingIdKey.getId(), key, startOf, endOf, rank, dateCreated, dateUpdated, ownerThingIds);
 		return thingData;
 	}
 
@@ -203,6 +235,7 @@ public class ThingJdo {
 
 			if (thingIdKey != null && thingIdKey.getId() > 0) { // update
 				ThingJdo update = pm.getObjectById(ThingJdo.class, thingIdKey);
+				update.set(sp);
 				update.setData(thingData);
 				thingIdKey = update.thingIdKey;
 
@@ -233,6 +266,7 @@ public class ThingJdo {
 
 			if (thingIdKey.getId() > 0) { // update
 				ThingJdo update = pm.getObjectById(ThingJdo.class, thingIdKey);
+				update.set(sp);
 				update.setSecret(secretHash);
 			} else { // insert   
 
@@ -426,8 +460,10 @@ public class ThingJdo {
 					thingJdo[i].getKey(), 
 					thingJdo[i].getStartOf(), 
 					thingJdo[i].getEndOf(), 
+					thingJdo[i].getRank(),
 					thingJdo[i].getDateCreated(), 
-					thingJdo[i].getDateUpdated());
+					thingJdo[i].getDateUpdated(),
+					thingJdo[i].getOwners());
 		}
 		return r;
 	}
@@ -441,8 +477,10 @@ public class ThingJdo {
 				thingJdo.getKey(), 
 				thingJdo.getStartOf(), 
 				thingJdo.getEndOf(), 
+				thingJdo.getRank(),
 				thingJdo.getDateCreated(), 
-				thingJdo.getDateUpdated());
+				thingJdo.getDateUpdated(),
+				thingJdo.getOwners());
 
 		return r;
 	}
@@ -551,6 +589,14 @@ public class ThingJdo {
 	public Date getStartOf() {
 		return startOf;
 	}
+	
+	public void setRank(Double rank) {
+		this.rank = rank;
+	}
+	
+	public Double getRank() {
+		return rank;
+	}
 
 	public Date getDateCreated() {
 		return dateCreated;
@@ -566,6 +612,14 @@ public class ThingJdo {
 
 	public long getUpdatedBy() {
 		return updatedByThingId;
+	}
+	
+	public void setOwners(long[] ownerThingIds) {
+		this.ownerThingIds = ownerThingIds;
+	}
+	
+	public long[] getOwners() {
+		return ownerThingIds;
 	}
 
 }

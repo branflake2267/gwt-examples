@@ -8,6 +8,8 @@ import javax.jdo.PersistenceManager;
 import javax.servlet.http.HttpServletRequest;
 
 import org.gonevertical.core.client.oauth.OAuthTokenData;
+import org.gonevertical.core.client.ui.admin.thing.ThingData;
+import org.gonevertical.core.server.db.Db_User;
 import org.gonevertical.core.server.jdo.PMF;
 import org.gonevertical.core.server.jdo.data.SessionAccessTokenJdo;
 
@@ -27,6 +29,8 @@ public class ServerPersistence {
 	// keep track of the http request coming in
 	private HttpServletRequest request = null;
 
+	private OAuthTokenData accessToken;
+	
 	// whos controlling this session
 	private long thingId = 0;
 
@@ -36,9 +40,27 @@ public class ServerPersistence {
 	public ServerPersistence() {
 	}
 
-	public void start(HttpServletRequest request) {
+	/**
+	 * set up what we need for the session
+	 * 
+	 * @param request
+	 * @param accessToken
+	 */
+	public void start(HttpServletRequest request, OAuthTokenData accessToken) {
+		this.accessToken = accessToken;
 		this.request = request;
+		
+		// set the user that is logged in
+		setSession_ThingId();
 	}
+
+	private void setSession_ThingId() {
+		Db_User dbU = new Db_User(this);
+		ThingData td = dbU.getUser(accessToken);
+		if (td != null && td.getThingId() > 0) {
+			thingId = td.getThingId();
+		}
+  }
 
 	public void end() {
 	}
@@ -124,9 +146,18 @@ public class ServerPersistence {
 		return s;
 	}
 
-	public long getThingId(OAuthTokenData accessToken) {
+	private long getThingId(OAuthTokenData accessToken) {
 		SessionAccessTokenJdo satj = new SessionAccessTokenJdo(this);
 		satj.getThingId();
+		return thingId;
+	}
+	
+	/**
+	 * get thing controlling session
+	 * 
+	 * @return
+	 */
+	public long getThingId() {
 		return thingId;
 	}
 
