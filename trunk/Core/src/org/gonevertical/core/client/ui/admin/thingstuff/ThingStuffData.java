@@ -99,7 +99,9 @@ public class ThingStuffData implements IsSerializable {
       Date startOf,
       Date endOf,
       Double rank,
+      long createdBy,
       Date dateCreated,
+      long updatedBy,
       Date dateUpdated,
       long[] ownerThingIds) {
   	
@@ -119,7 +121,9 @@ public class ThingStuffData implements IsSerializable {
     this.rank = rank;
     this.ownerThingIds = ownerThingIds;
     
+    this.createdByThingId = createdBy;
     this.dateCreated = dateCreated;
+    this.updatedByThingId = updatedBy;
     this.dateUpdated = dateUpdated;
   }
   
@@ -153,7 +157,9 @@ public class ThingStuffData implements IsSerializable {
       Date startOf,
       Date endOf,
       Double rank,
+      long createdBy,
       Date dateCreated,
+      long updatedBy,
       Date dateUpdated,
       long[] ownerThingIds) {
   	
@@ -174,7 +180,9 @@ public class ThingStuffData implements IsSerializable {
     this.rank = rank;
     this.ownerThingIds = ownerThingIds;
     
+    this.createdByThingId = createdBy;
     this.dateCreated = dateCreated;
+    this.updatedByThingId = updatedBy;
     this.dateUpdated = dateUpdated;
   }
   

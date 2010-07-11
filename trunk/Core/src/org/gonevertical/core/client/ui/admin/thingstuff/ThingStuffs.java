@@ -114,6 +114,9 @@ public class ThingStuffs extends Ui implements ClickHandler, ChangeHandler {
   }
   
   private void drawTopRow() {
+  	if (th.getWidths().length == widths.length) {
+  		return;
+  	}
     
     HTML l0 = new HTML("Id");
     HTML l1 = new HTML("Name"); // drop down type

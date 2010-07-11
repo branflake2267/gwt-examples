@@ -2,6 +2,7 @@ package org.gonevertical.core.client.ui.admin.thing;
 
 import org.gonevertical.core.client.ClientPersistence;
 import org.gonevertical.core.client.global.EventManager;
+import org.gonevertical.core.client.global.Global_Date;
 import org.gonevertical.core.client.global.Global_ListBox;
 import org.gonevertical.core.client.rpc.RpcCore;
 import org.gonevertical.core.client.rpc.RpcCoreServiceAsync;
@@ -23,6 +24,7 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -31,6 +33,7 @@ import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.datepicker.client.DateBox;
 
 public class ThingEdit extends Ui implements ClickHandler, ChangeHandler, MouseOverHandler, MouseOutHandler {
 
@@ -56,6 +59,15 @@ public class ThingEdit extends Ui implements ClickHandler, ChangeHandler, MouseO
 	private ThingStuffsData thingsStuffData;
 
 	private int editingIndex = 0;
+	
+	private VerticalPanel pOwner = new VerticalPanel();
+	private DateBox tbStartDt = new DateBox();
+	private DateBox tbEndDt = new DateBox();
+	private TextBox tbRank = new TextBox();
+	private FlowPanel pCreatedBy = new FlowPanel();
+	private FlowPanel pCreatedDt = new FlowPanel();
+	private FlowPanel pUpdatedBy = new FlowPanel();
+	private FlowPanel pUpdatedDt = new FlowPanel();
 
 	public ThingEdit(ClientPersistence cp) {
 		super(cp);
@@ -109,7 +121,16 @@ public class ThingEdit extends Ui implements ClickHandler, ChangeHandler, MouseO
 		drawTop();
 
 		drawThingTypes();
-
+		
+		drawStartDt();
+		drawEndDt();
+		drawRank();
+		drawCreatedBy();
+		drawCreatedDt();
+		drawUpdatedBy();
+		drawUpdatedDt();
+		drawOwners();
+		
 		ThingStuffDataFilter filter = new ThingStuffDataFilter();
 		filter.setThingId(thingData.getThingId());
 
@@ -118,6 +139,75 @@ public class ThingEdit extends Ui implements ClickHandler, ChangeHandler, MouseO
 
 		getThingStuffRpc(filter);
 	}
+
+	private void drawStartDt() {
+		tbStartDt.setValue(thingData.getStartOf());
+  }
+
+	private void drawEndDt() {
+		tbEndDt.setValue(thingData.getEndOf());
+  }
+
+	private void drawRank() {
+  	String s = "0";
+  	if (thingData.getRank() != null) {
+  		s = Double.toString(thingData.getRank());
+  	} 
+  	tbRank.setText(s);
+  }
+
+	private void drawCreatedBy() {
+		pCreatedBy.clear();
+		String s = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+		if (thingData.getCreatedBy() > 0) {
+			s = Long.toString(thingData.getCreatedBy());
+		}
+		HTML h = new HTML(s);
+		pCreatedBy.add(h);
+  }
+
+	private void drawCreatedDt() {
+		pCreatedDt.clear();
+	  String s = Global_Date.getDate_Eng(thingData.getDateCreated());
+	  HTML h = new HTML(s);
+	  pCreatedDt.clear();
+	  pCreatedDt.add(h);
+  }
+
+	private void drawUpdatedBy() {
+		pUpdatedBy.clear();
+		String s = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+		if (thingData.getUpdatedBy() > 0) {
+			s = Long.toString(thingData.getUpdatedBy());
+		}
+		HTML h = new HTML(s);
+		pUpdatedBy.add(h);
+  }
+
+	private void drawUpdatedDt() {
+		pUpdatedDt.clear();
+	  String s = Global_Date.getDate_Eng(thingData.getDateUpdated());
+	  HTML h = new HTML(s);
+	  pUpdatedDt.clear();
+	  pUpdatedDt.add(h);
+  }
+
+	private void drawOwners() {
+		pOwner.clear();
+		String s = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+		if (thingData.getOwners() == null || thingData.getOwners().length == 0) {
+			s = "";
+		} else {
+			for (int i=0; i < thingData.getOwners().length; i++) {
+				s += Long.toString(thingData.getOwners()[i]);
+				if (i < thingData.getOwners().length -1) {
+					s += ",";
+				}
+			}
+		}
+		HTML h = new HTML(s);
+		pOwner.add(h);
+  }
 
 	private void drawThingTypes() {
 		lbThingTypes.clear();
@@ -201,21 +291,58 @@ public class ThingEdit extends Ui implements ClickHandler, ChangeHandler, MouseO
 
 		hp.add(new HTML("Id: " + thingData.getThingId()));
 
-		Grid grid = new Grid(2, 2);
+		int rows = 5;
+		int columns = 6;
+		Grid grid = new Grid(rows, columns);
 		pTop.add(grid);
 
 		HTML l1 = new HTML("Username");
 		HTML l2 = new HTML("Password");
+		HTML l3 = new HTML("Owners");
+		HTML l4 = new HTML("StartDt");
+		HTML l5 = new HTML("EndDt");
+		HTML l6 = new HTML("Rank");
+		HTML l7 = new HTML("CreatedBy");
+		HTML l8 = new HTML("CreatedDt");
+		HTML l9 = new HTML("UpdatedBy");
+		HTML l10 = new HTML("UpdatedDt");
+		
 
 		HorizontalPanel bButtons = new HorizontalPanel();
 		bButtons.add(bChangePassword);
 
+		// column 1
 		grid.setWidget(0, 0, l1);
 		grid.setWidget(0, 1, tbKey);
 
 		grid.setWidget(1, 0, l2);
 		grid.setWidget(1, 1, bButtons);
+		
+		grid.setWidget(2, 0, l4);
+		grid.setWidget(2, 1, tbStartDt);
+		
+		grid.setWidget(3, 0, l5);
+		grid.setWidget(3, 1, tbEndDt);
+		
+		grid.setWidget(4, 0, l6);
+		grid.setWidget(4, 1, tbRank);
 
+
+		grid.setWidget(0, 2, l7);
+		grid.setWidget(0, 3, pCreatedBy);
+		
+		grid.setWidget(1, 2, l8);
+		grid.setWidget(1, 3, pCreatedDt);
+		
+		grid.setWidget(2, 2, l9);
+		grid.setWidget(2, 3, pUpdatedBy);
+		
+		grid.setWidget(3, 2, l10);
+		grid.setWidget(3, 3, pUpdatedDt);
+		
+		// column 2
+		grid.setWidget(0, 4, l3);
+		grid.setWidget(0, 5, pOwner);
 	}
 
 	private void changePassword() {
@@ -237,8 +364,11 @@ public class ThingEdit extends Ui implements ClickHandler, ChangeHandler, MouseO
 
 		//thing
 		ThingData td = thingData;
-		td.setKey(getKey());
+		td.setKey(getKey()); // TODO - remove this, needs to be a dialog box
 		td.setThingTypeId(getThingTypeId());
+		td.setStartOf(tbStartDt.getValue());
+		td.setEndOf(tbEndDt.getValue()); 
+		td.setRank(getRank());
 
 		//thing stuff
 		ThingStuffData[] thingStuffData = wStuff.getData();
@@ -254,6 +384,19 @@ public class ThingEdit extends Ui implements ClickHandler, ChangeHandler, MouseO
 		//saveThingStuffsData(thingStuffData);
 		saveThingRpc(td, filter);
 	}
+	
+	private Double getRank() {
+	  String s = tbRank.getValue().trim();
+	  Double d = null;
+	  if (s.length() != 0) {
+	  	try {
+	      d = Double.parseDouble(s);
+      } catch (NumberFormatException e) {
+      	d = null;
+      }
+	  }
+	  return d;
+  }
 
 	private long getThingTypeId() {
 		long l = Global_ListBox.getSelectedValue(lbThingTypes);

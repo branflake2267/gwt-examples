@@ -441,7 +441,9 @@ public class ThingStuffJdo {
 					tsja.getStartOf(),
 					tsja.getEndOf(), 
 					tsja.getRank(),
+					tsja.getCreatedBy(),
 					tsja.getDateCreated(),
+					tsja.getUpdatedBy(),
 					tsja.getDateUpdated(),
 					tsja.getOwners());
 
