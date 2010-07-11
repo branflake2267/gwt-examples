@@ -36,8 +36,12 @@ public class ThingData implements IsSerializable {
 	
 	private Double rank;
 	
+	private long createdBy;
+	
 	// when database created object
 	private Date dateCreated;
+	
+	private long updatedBy;
 	
 	// when database updated object
 	private Date dateUpdated;
@@ -76,7 +80,9 @@ public class ThingData implements IsSerializable {
   		Date startOf, 
   		Date endOf,
   		Double rank,
-  		Date dateCreated, 
+  		long createdBy,
+  		Date dateCreated,
+  		long updatedBy,
   		Date dateUpdated,
   		long[] ownerThingIds) {
   	
@@ -86,7 +92,9 @@ public class ThingData implements IsSerializable {
     this.startOf = startOf;
     this.endOf = endOf;
     this.rank = rank;
+    this.createdBy = createdBy;
     this.dateCreated = dateCreated;
+    this.updatedBy = updatedBy;
     this.dateUpdated = dateUpdated;
     this.ownerThingIds = ownerThingIds;
   }
@@ -116,10 +124,18 @@ public class ThingData implements IsSerializable {
   	this.key = key;
   }
 
+  public void setStartOf(Date startOf) {
+  	this.startOf = startOf;
+  }
+  
 	public Date getStartOf() {
 	  return startOf;
   }
 
+	public void setEndOf(Date endOf) {
+		this.endOf = endOf;
+	}
+	
 	public Date getEndOf() {
 	  return endOf;
   }
@@ -131,9 +147,17 @@ public class ThingData implements IsSerializable {
 	public Double getRank() {
 		return rank;
 	}
+	
+	public long getCreatedBy() {
+		return createdBy;
+	}
   
 	public Date getDateCreated() {
 		return dateCreated;
+	}
+	
+	public long getUpdatedBy() {
+		return updatedBy;
 	}
 	
 	public Date getDateUpdated() {

@@ -183,8 +183,24 @@ public class SetDefaults {
 		
 		ThingStuffData tsd = new ThingStuffData();
 		tsd.setStuffId(stuffId);
-		tsd.setData(thingId, stuffId, 0, thingStuffTypeId, value, 
-				valueBol, valueDouble, valueLong, valueDate, startOf, endOf, rank, dateCreated, dateUpdated, ownerThingIds);
+		tsd.setData(
+				thingId, 
+				stuffId, 
+				0, 
+				thingStuffTypeId, 
+				value, 
+				valueBol, 
+				valueDouble, 
+				valueLong, 
+				valueDate, 
+				startOf, 
+				endOf, 
+				rank,
+				0, // created by
+				dateCreated,
+				0, // updated by
+				dateUpdated, 
+				ownerThingIds);
 		
 		ThingStuffAboutJdo tsaj = new ThingStuffAboutJdo(sp);
 		tsaj.saveUnique(tsd);

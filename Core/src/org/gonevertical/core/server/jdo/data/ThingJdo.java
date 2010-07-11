@@ -163,7 +163,18 @@ public class ThingJdo {
 
 	public ThingData getThingData() {
 		ThingData thingData = new ThingData();
-		thingData.setData(thingTypeId, thingIdKey.getId(), key, startOf, endOf, rank, dateCreated, dateUpdated, ownerThingIds);
+		thingData.setData(
+				thingTypeId, 
+				thingIdKey.getId(), 
+				key, 
+				startOf, 
+				endOf, 
+				rank, 
+				createdByThingId, 
+				dateCreated, 
+				updatedByThingId, 
+				dateUpdated, 
+				ownerThingIds);
 		return thingData;
 	}
 
@@ -461,7 +472,9 @@ public class ThingJdo {
 					thingJdo[i].getStartOf(), 
 					thingJdo[i].getEndOf(), 
 					thingJdo[i].getRank(),
-					thingJdo[i].getDateCreated(), 
+					thingJdo[i].getCreatedBy(),
+					thingJdo[i].getDateCreated(),
+					thingJdo[i].getUpdatedBy(),
 					thingJdo[i].getDateUpdated(),
 					thingJdo[i].getOwners());
 		}
@@ -478,7 +491,9 @@ public class ThingJdo {
 				thingJdo.getStartOf(), 
 				thingJdo.getEndOf(), 
 				thingJdo.getRank(),
-				thingJdo.getDateCreated(), 
+				thingJdo.getCreatedBy(),
+				thingJdo.getDateCreated(),
+				thingJdo.getUpdatedBy(),
 				thingJdo.getDateUpdated(),
 				thingJdo.getOwners());
 
