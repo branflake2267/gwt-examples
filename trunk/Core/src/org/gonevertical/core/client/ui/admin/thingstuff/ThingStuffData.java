@@ -2,6 +2,8 @@ package org.gonevertical.core.client.ui.admin.thingstuff;
 
 import java.util.Date;
 
+import javax.jdo.annotations.Persistent;
+
 import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeData;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
@@ -46,11 +48,23 @@ public class ThingStuffData implements IsSerializable {
   // when did this end in time
   private Date endOf;
   
+  // order the list by this
+  private Double rank;
+  
   // when this object was created
   private Date dateCreated;
   
   // when this object was updated
   private Date dateUpdated;
+  
+  // who created this object
+	private long createdByThingId;
+
+	// who updated this object
+	private long updatedByThingId;
+	
+	// assign ownership of this thing to this thing
+	private long[] ownerThingIds;
    
   /**
    * constructor
@@ -84,8 +98,10 @@ public class ThingStuffData implements IsSerializable {
       Date valueDate,
       Date startOf,
       Date endOf,
+      Double rank,
       Date dateCreated,
-      Date dateUpdated) {
+      Date dateUpdated,
+      long[] ownerThingIds) {
   	
     this.thingId = thingId;
     this.thingStuffId = thingStuffId;
@@ -99,6 +115,9 @@ public class ThingStuffData implements IsSerializable {
    
     this.startOf = startOf;
     this.endOf = endOf;
+    
+    this.rank = rank;
+    this.ownerThingIds = ownerThingIds;
     
     this.dateCreated = dateCreated;
     this.dateUpdated = dateUpdated;
@@ -133,8 +152,10 @@ public class ThingStuffData implements IsSerializable {
       Date valueDate,
       Date startOf,
       Date endOf,
+      Double rank,
       Date dateCreated,
-      Date dateUpdated) {
+      Date dateUpdated,
+      long[] ownerThingIds) {
   	
     this.thingId = thingId;
     this.thingStuffId = thingStuffId;
@@ -149,6 +170,9 @@ public class ThingStuffData implements IsSerializable {
    
     this.startOf = startOf;
     this.endOf = endOf;
+    
+    this.rank = rank;
+    this.ownerThingIds = ownerThingIds;
     
     this.dateCreated = dateCreated;
     this.dateUpdated = dateUpdated;
@@ -241,22 +265,54 @@ public class ThingStuffData implements IsSerializable {
 	public void setThingStuffsAbout(ThingStuffsData thingStuffAbout) {
 		this.thingStuffsAbout = thingStuffAbout;
 	}
+	
+	public void setStartOf(Date startOf) {
+		this.startOf = startOf;
+	}
 
 	public Date getStartOf() {
 	  return startOf;
   }
 
+	public void setEndOf(Date endOf) {
+		this.endOf = endOf;
+	}
+	
 	public Date getEndOf() {
 	  return endOf;
+  }
+	
+	public long getCreatedBy() {
+	  return createdByThingId;
   }
 	
 	public Date getDateCreated() {
 		return dateCreated;
 	}
   
+	public long getUpdatedBy() {
+		return updatedByThingId;
+	}
+	
 	public Date getDateUpdated() {
 		return dateUpdated;
 	}
+	
+	public void setRank(Double rank) {
+		this.rank = rank;
+	}
+	
+	public Double getRank() {
+		return rank;
+	}
+	
+	public void setOwners(long[] ownerThingIds) {
+		this.ownerThingIds = ownerThingIds;
+	}
+	
+	public long[] getOwners() {
+	  return ownerThingIds;
+  }
 	
 	public String toString() {
 		String s = "";
@@ -271,6 +327,12 @@ public class ThingStuffData implements IsSerializable {
 		s += "valueDate=" + valueDate + " ";
 		s += "startOf=" + startOf + " "; 
 		s += "endOf=" + endOf + " ";
+		s += "rank=" + rank + " ";
+		
 		return s;
 	}
+
+
+
+
 }

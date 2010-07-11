@@ -202,12 +202,24 @@ public class Db_User {
    * @return
    */
   public ThingData getUser(OAuthTokenData accessToken) {
+  	
+  	if (accessToken == null) {
+  		return null;
+  	}
     
     String ct = accessToken.getAccessToken_key(); // at this point its a consumer token, and not the hash
     String cs = accessToken.getAccessToken_secret();
     
+    if (ct == null || cs == null) {
+    	return null;
+    }
+    
     SessionAccessTokenJdo s = new SessionAccessTokenJdo(sp);
     ThingData t = s.getThingData(ct, cs);
+    
+    if (t == null) {
+    	return null;
+    }
     
     // the id has to be a user
     if (t.getThingTypeId() != 2) {

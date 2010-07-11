@@ -178,10 +178,13 @@ public class SetDefaults {
 
 		long stuffId = r[0].getStuffId();
 		
+		Double rank = Double.parseDouble("0");
+		long[] ownerThingIds = null;
+		
 		ThingStuffData tsd = new ThingStuffData();
 		tsd.setStuffId(stuffId);
 		tsd.setData(thingId, stuffId, 0, thingStuffTypeId, value, 
-				valueBol, valueDouble, valueLong, valueDate, startOf, endOf, dateCreated, dateUpdated);
+				valueBol, valueDouble, valueLong, valueDate, startOf, endOf, rank, dateCreated, dateUpdated, ownerThingIds);
 		
 		ThingStuffAboutJdo tsaj = new ThingStuffAboutJdo(sp);
 		tsaj.saveUnique(tsd);
@@ -214,7 +217,7 @@ public class SetDefaults {
 	 */
 	public void createStuffType(int id, String name, int valueTypeId) {
 		ThingStuffTypeData tstd = new ThingStuffTypeData();
-		tstd.setData(id, name, valueTypeId, new Date(), null, null, null);
+		tstd.setData(id, name, valueTypeId, new Date(), null, null, null, null, null);
 
 		ThingStuffTypeJdo tstj = new ThingStuffTypeJdo(sp);
 		tstj.setData(tstd);

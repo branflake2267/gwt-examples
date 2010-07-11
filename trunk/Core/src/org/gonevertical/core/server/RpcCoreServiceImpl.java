@@ -54,7 +54,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
 	 * test method for rpc
 	 */
 	public String testMethod(String s) {
-	  sp.start(getThreadLocalRequest());
+	  sp.start(getThreadLocalRequest(), null);
 		s += " was modified on the server.";
 		sp.end();
 		return s;
@@ -64,7 +64,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
 	 * A. ->(B.?) grant request token?
 	 */
 	public OAuthTokenData requestToken(OAuthTokenData tokenData) {
-	  sp.start(getThreadLocalRequest());
+	  sp.start(getThreadLocalRequest(), tokenData);
 		OAuthTokenData r = null;
     try {
 	    OAuthServer oauth = new OAuthServer(sp);
@@ -77,7 +77,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
 	}
 
   public UserData createUser(UserData userData) {
-    sp.start(getThreadLocalRequest());
+    sp.start(getThreadLocalRequest(), null);
     UserData r = null;
     try {
 	    Db_User db = new Db_User(sp);
@@ -90,7 +90,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   }
   
   public UserData doesUserNameExist(UserData userData) {
-    sp.start(getThreadLocalRequest());
+    sp.start(getThreadLocalRequest(), null);
     UserData r = null;
     try {
 	    Db_User db = new Db_User(sp);
@@ -103,7 +103,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   }
   
   public UserData forgotPassword(UserData userData) {
-    sp.start(getThreadLocalRequest());
+    sp.start(getThreadLocalRequest(), null);
     Db_User db = new Db_User(sp);
     UserData r = db.forgotPassword(userData);
     sp.end();
@@ -111,7 +111,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   }
   
   public OAuthTokenData getUserAccessToken(OAuthTokenData appAccessToken) {
-    sp.start(getThreadLocalRequest());
+    sp.start(getThreadLocalRequest(), appAccessToken);
     OAuthTokenData rtnToken = null;
     try {
 	    OAuthServer oauth = new OAuthServer(sp);
@@ -124,7 +124,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   }
 	
   public ThingTypesData getThingTypes(OAuthTokenData accessToken, ThingTypeDataFilter filter) {
-    sp.start(getThreadLocalRequest());
+    sp.start(getThreadLocalRequest(), accessToken);
     ThingTypesData r = null;
     try {
 	    Db_ThingType thingType = new Db_ThingType(sp);
@@ -140,7 +140,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
    * set default items in db
    */
   public boolean setDefaults(OAuthTokenData accessToken, int defaultType) {
-    sp.start(getThreadLocalRequest());
+    sp.start(getThreadLocalRequest(), accessToken);
     boolean r = false;
     try {
 	    SetDefaults sd = new SetDefaults(sp);
@@ -153,7 +153,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   }
   
   public ThingTypesData saveThingTypes(OAuthTokenData accessToken, ThingTypeDataFilter filter, ThingTypeData[] thingTypeData) {
-    sp.start(getThreadLocalRequest());
+    sp.start(getThreadLocalRequest(), accessToken);
     ThingTypesData r = null;
     try {
 	    Db_ThingType t = new Db_ThingType(sp);
@@ -166,7 +166,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   }
   
   public boolean deleteThingType(OAuthTokenData accessToken, ThingTypeData thingTypeData) {
-    sp.start(getThreadLocalRequest());
+    sp.start(getThreadLocalRequest(), accessToken);
     boolean r = false;
     try {
 	    Db_ThingType t = new Db_ThingType(sp);
@@ -179,7 +179,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   }
   
   public ThingsData getThings(OAuthTokenData accessToken, ThingDataFilter filter) {
-    sp.start(getThreadLocalRequest());
+    sp.start(getThreadLocalRequest(), accessToken);
     ThingsData r = null;
     try {
 	    Db_Thing t = new Db_Thing(sp);
@@ -192,7 +192,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   }
   
   public ThingData saveThing(OAuthTokenData accessToken, ThingDataFilter filter, ThingData thingData) {
-    sp.start(getThreadLocalRequest());
+    sp.start(getThreadLocalRequest(), accessToken);
     ThingData r = null;
     try {
 	    Db_Thing t = new Db_Thing(sp);
@@ -205,7 +205,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   }
   
   public ThingsData saveThings(OAuthTokenData accessToken, ThingDataFilter filter, ThingData[] thingData) {
-    sp.start(getThreadLocalRequest());
+    sp.start(getThreadLocalRequest(), accessToken);
     ThingsData r = null;
     try {
 	    Db_Thing t = new Db_Thing(sp);
@@ -218,7 +218,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   }
   
   public boolean deleteThing(OAuthTokenData accessToken, ThingData thingData) {
-    sp.start(getThreadLocalRequest());
+    sp.start(getThreadLocalRequest(), accessToken);
     boolean r = false;
     try {
 	    Db_Thing t = new Db_Thing(sp);
@@ -231,7 +231,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   }
 
   public boolean deleteThingStuffType(OAuthTokenData accessToken, ThingStuffTypeData thingStuffTypeData) {
-    sp.start(getThreadLocalRequest());
+    sp.start(getThreadLocalRequest(), accessToken);
     boolean r = false;
     try {
 	    Db_ThingStuffType t = new Db_ThingStuffType(sp);
@@ -244,7 +244,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   }
 
   public ThingStuffTypesData getThingStuffTypes(OAuthTokenData accessToken, ThingStuffTypeDataFilter filter) {
-    sp.start(getThreadLocalRequest());
+    sp.start(getThreadLocalRequest(), accessToken);
     ThingStuffTypesData r = null;
     try {
 	    Db_ThingStuffType t = new Db_ThingStuffType(sp);
@@ -257,7 +257,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   }
 
   public ThingStuffTypesData saveThingStuffTypes(OAuthTokenData accessToken, ThingStuffTypeDataFilter filter, ThingStuffTypeData[] thingStuffTypeData) {
-    sp.start(getThreadLocalRequest());
+    sp.start(getThreadLocalRequest(), accessToken);
     ThingStuffTypesData r = null;
     try {
 	    Db_ThingStuffType t = new Db_ThingStuffType(sp);
@@ -270,7 +270,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   }
   
   public ThingStuffsData getThingStuffData(OAuthTokenData accessToken, ThingStuffDataFilter filter) {
-    sp.start(getThreadLocalRequest());
+    sp.start(getThreadLocalRequest(), accessToken);
     ThingStuffsData r = null;
     try {
 	    Db_ThingStuff db = new Db_ThingStuff(sp);
@@ -283,7 +283,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   }
   
   public ThingStuffsData saveThingStuffData(OAuthTokenData accessToken, ThingStuffDataFilter filter, ThingStuffData[] thingStuffData) {
-    sp.start(getThreadLocalRequest());
+    sp.start(getThreadLocalRequest(), accessToken);
     ThingStuffsData r = null;
     try {
 	    Db_ThingStuff db = new Db_ThingStuff(sp);
@@ -296,7 +296,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   }
   
   public boolean deleteThingStuffData(OAuthTokenData accessToken, long thingStuffId) {
-    sp.start(getThreadLocalRequest());
+    sp.start(getThreadLocalRequest(), accessToken);
     boolean r = false;
     try {
 	    Db_ThingStuff db = new Db_ThingStuff(sp);
@@ -309,7 +309,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   }
   
   public boolean changePassword(OAuthTokenData accessToken, ChangePasswordData changePassswordData) {
-    sp.start(getThreadLocalRequest());
+    sp.start(getThreadLocalRequest(), accessToken);
     boolean r = false;
     try {
 	    Db_User db = new Db_User(sp);
@@ -322,7 +322,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   }
 
   public boolean deleteThingStuffAboutData(OAuthTokenData accessToken, long thingStuffAboutId) {
-  	sp.start(getThreadLocalRequest());
+  	sp.start(getThreadLocalRequest(), accessToken);
   	boolean r = false;
     try {
 	    Db_ThingStuff db = new Db_ThingStuff(sp);
@@ -334,8 +334,9 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
 	  return r;
   }
 
+  // add accessToken to this
   public boolean saveFeedBack(FeedbackData feedbackData) {
-  	sp.start(getThreadLocalRequest());
+  	sp.start(getThreadLocalRequest(), null);
 	  boolean r = false;
     try {
 	    Db_Feedback db = new Db_Feedback(sp);
@@ -348,7 +349,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   }
 
   public WidgetAttrData getWidgetAttributes(OAuthTokenData accessToken, WidgetAttrDataFilter widgetAttrDataFilter) {
-  	sp.start(getThreadLocalRequest());
+  	sp.start(getThreadLocalRequest(), accessToken);
   	WidgetAttrData r = null;
     try {
 	    r = new Db_WidgetAttr(sp).getWidgetAttributes(accessToken, widgetAttrDataFilter);
@@ -360,7 +361,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   }
   
   public AccountData getAccountData(OAuthTokenData accessToken, long thingId) {
-   	sp.start(getThreadLocalRequest());
+   	sp.start(getThreadLocalRequest(), accessToken);
   	AccountData r = null;
     try {
 	    r = new Db_Profile(sp).getProfileData(accessToken, thingId);
@@ -372,7 +373,7 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
   }
 
   public AccountData saveAccountData(OAuthTokenData accessToken, ThingDataFilter filter, AccountData profileData) {
-  	sp.start(getThreadLocalRequest());
+  	sp.start(getThreadLocalRequest(), accessToken);
   	AccountData r = null;
     try {
 	    r = new Db_Profile(sp).saveProfileData(accessToken, filter, profileData);

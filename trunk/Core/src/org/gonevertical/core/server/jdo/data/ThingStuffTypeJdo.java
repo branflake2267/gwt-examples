@@ -52,6 +52,10 @@ public class ThingStuffTypeJdo {
 	// when did this end in time
 	@Persistent
 	private Date endOf = null;
+	
+	// order the list by this
+	@Persistent
+	private Double rank;
 
 	// when this object was created
 	@Persistent
@@ -69,10 +73,28 @@ public class ThingStuffTypeJdo {
 	@Persistent
 	private long updatedByThingId;
 
+	// assign ownership of this thing to this thing
+	@Persistent
+	private long[] ownerThingIds;
+	
+	/**
+	 * constructor 
+	 * 
+	 * @throws Exception
+	 */
+	public ThingStuffTypeJdo() throws Exception {
+		//System.err.println("Don't use this constructor - Exiting");
+		//throw new Exception();
+	}
+	
 	/**
 	 * constructor
 	 */
 	public ThingStuffTypeJdo(ServerPersistence sp) {
+		this.sp = sp;
+	}
+	
+	public void set(ServerPersistence sp) {
 		this.sp = sp;
 	}
 
@@ -86,12 +108,16 @@ public class ThingStuffTypeJdo {
 
 		this.startOf = thingStuffTypeData.getStartOf();
 		this.endOf = thingStuffTypeData.getEndOf();
+		
+		this.rank = thingStuffTypeData.getRank();
+		this.ownerThingIds = thingStuffTypeData.getOwners();
 
 		if (stuffTypeIdKey != null && stuffTypeIdKey.getId() > 0) {
-			dateUpdated = new Date();
-
+			this.dateUpdated = new Date();
+			this.updatedByThingId = sp.getThingId();
 		} else {
-			dateCreated = new Date();
+			this.dateCreated = new Date();
+			this.createdByThingId = sp.getThingId();
 		}
 	}
 
@@ -181,6 +207,7 @@ public class ThingStuffTypeJdo {
 			tx.begin();
 			if (stuffTypeIdKey != null && stuffTypeIdKey.getId() > 0) {
 				ThingStuffTypeJdo update = pm.getObjectById(ThingStuffTypeJdo.class, stuffTypeIdKey);
+				update.set(sp);
 				update.setData(thingStuffTypeData);
 			} else {
 				stuffTypeIdKey = null;
@@ -357,12 +384,14 @@ public class ThingStuffTypeJdo {
 			r[i] = new ThingStuffTypeData();
 			r[i].setData(
 					thingStuffTypeJdo[i].stuffTypeIdKey.getId(), 
-					thingStuffTypeJdo[i].name, 
-					thingStuffTypeJdo[i].valueTypeId,
-					thingStuffTypeJdo[i].startOf,
-					thingStuffTypeJdo[i].endOf,
-					thingStuffTypeJdo[i].dateCreated,
-					thingStuffTypeJdo[i].dateUpdated);
+					thingStuffTypeJdo[i].getName(), 
+					thingStuffTypeJdo[i].getValueTypeId(),
+					thingStuffTypeJdo[i].getStartOf(),
+					thingStuffTypeJdo[i].getEndOf(),
+					thingStuffTypeJdo[i].getRank(),
+					thingStuffTypeJdo[i].getCreatedDt(),
+					thingStuffTypeJdo[i].getUpdatedDt(),
+					thingStuffTypeJdo[i].getOwners());
 		}
 		return r;
 	}
@@ -375,6 +404,14 @@ public class ThingStuffTypeJdo {
 	public Date getEndOf() {
 		return endOf;
 	}
+	
+	public void setRank(Double rank) {
+		this.rank = rank;
+	}
+	
+	public Double getRank() {
+		return rank;
+	}
 
 	public long getCreatedBy() {
 		return createdByThingId;
@@ -382,6 +419,22 @@ public class ThingStuffTypeJdo {
 
 	public long getUpdatedBy() {
 		return updatedByThingId;
+	}
+	
+	public void setOwners(long[] ownerThingIds) {
+		this.ownerThingIds = ownerThingIds;
+	}
+	
+	public long[] getOwners() {
+		return ownerThingIds;
+	}
+	
+	public Date getCreatedDt() {
+		return dateCreated;
+	}
+	
+	public Date getUpdatedDt() {
+		return dateUpdated;
 	}
 
 }

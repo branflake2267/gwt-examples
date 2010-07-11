@@ -34,6 +34,8 @@ public class ThingData implements IsSerializable {
 	// end of the thing
 	private Date endOf;
 	
+	private Double rank;
+	
 	// when database created object
 	private Date dateCreated;
 	
@@ -42,6 +44,8 @@ public class ThingData implements IsSerializable {
   
 	// multi dem of the thingstuff
 	private ThingStuffsData thingStuffsData;
+	
+	private long[] ownerThingIds;
 	
 	/**
 	 * constructor
@@ -65,14 +69,26 @@ public class ThingData implements IsSerializable {
     this.thingId = thingId;
   }
   
-  public void setData(long thingTypeId, long thingId, String key, Date startOf, Date endOf, Date dateCreated, Date dateUpdated) {
+  public void setData(
+  		long thingTypeId, 
+  		long thingId, 
+  		String key, 
+  		Date startOf, 
+  		Date endOf,
+  		Double rank,
+  		Date dateCreated, 
+  		Date dateUpdated,
+  		long[] ownerThingIds) {
+  	
     this.thingTypeId = thingTypeId;
     this.thingId = thingId;
     this.key = key;
     this.startOf = startOf;
     this.endOf = endOf;
+    this.rank = rank;
     this.dateCreated = dateCreated;
     this.dateUpdated = dateUpdated;
+    this.ownerThingIds = ownerThingIds;
   }
   
   public long getThingTypeId() {
@@ -107,6 +123,14 @@ public class ThingData implements IsSerializable {
 	public Date getEndOf() {
 	  return endOf;
   }
+	
+	public void setRank(Double rank) {
+		this.rank = rank;
+	}
+	
+	public Double getRank() {
+		return rank;
+	}
   
 	public Date getDateCreated() {
 		return dateCreated;
@@ -128,5 +152,12 @@ public class ThingData implements IsSerializable {
 	  this.thingTypeId = thingTypeId;
   }
 
+	public void setOwners(long[] ownerThingIds) {
+		this.ownerThingIds = ownerThingIds;
+	}
 
+	public long[] getOwners() {
+		return ownerThingIds;
+	}
+	
 }

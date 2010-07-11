@@ -33,7 +33,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 public class ThingStuffAboutJdo {
 
 	private static final Logger log = Logger.getLogger(ThingStuffAboutJdo.class.getName());
-	
+
 	@NotPersistent
 	private ServerPersistence sp = null;
 
@@ -78,6 +78,10 @@ public class ThingStuffAboutJdo {
 	@Persistent
 	private Date endOf;
 
+	// order the list by this
+	@Persistent
+	private Double rank;
+
 	// when this object was created
 	@Persistent
 	private Date dateCreated;
@@ -94,10 +98,28 @@ public class ThingStuffAboutJdo {
 	@Persistent
 	private long updatedByThingId;
 
+	// assign ownership of this thing to this thing
+	@Persistent
+	private long[] ownerThingIds;
+
+	/**
+	 * constructor 
+	 * 
+	 * @throws Exception
+	 */
+	public ThingStuffAboutJdo() throws Exception {
+		//System.err.println("Don't use this constructor - Exiting");
+		//throw new Exception();
+	}
+
 	/**
 	 * constructor
 	 */
 	public ThingStuffAboutJdo(ServerPersistence sp) {
+		this.sp = sp;
+	}
+	
+	public void set(ServerPersistence sp) {
 		this.sp = sp;
 	}
 
@@ -119,14 +141,19 @@ public class ThingStuffAboutJdo {
 		this.valueDouble = thingStuffData.getValueDouble();
 		this.valueLong = thingStuffData.getValueLong();
 		this.valueDate = thingStuffData.getValueDate(); 
-			
+
 		this.startOf = thingStuffData.getStartOf();
 		this.endOf = thingStuffData.getEndOf();
 
+		this.rank = thingStuffData.getRank();
+		this.ownerThingIds = thingStuffData.getOwners();
+
 		if (thingStuffData != null && thingStuffData.getStuffAboutId() > 0) {
 			this.dateUpdated = new Date();
+			this.updatedByThingId = sp.getThingId();
 		} else {
 			this.dateCreated = new Date();
+			this.createdByThingId = sp.getThingId();
 		}
 	}
 
@@ -151,10 +178,15 @@ public class ThingStuffAboutJdo {
 		this.startOf = thingStuffJdo.getStartOf();
 		this.endOf = thingStuffJdo.getEndOf();
 
+		this.rank = thingStuffJdo.getRank();
+		this.ownerThingIds = thingStuffJdo.getOwners();
+
 		if (thingStuffAboutIdKey != null && thingStuffAboutIdKey.getId() > 0) {
 			this.dateUpdated = new Date();
+			this.updatedByThingId = sp.getThingId();
 		} else {
 			this.dateCreated = new Date();
+			this.createdByThingId = sp.getThingId();
 		}
 	}
 
@@ -175,6 +207,7 @@ public class ThingStuffAboutJdo {
 			if (thingStuffData != null && thingStuffData.getStuffAboutId() > 0) { // update
 				ThingStuffAboutJdo update = pm.getObjectById(ThingStuffAboutJdo.class, thingStuffData.getStuffAboutId());
 				update.setData(thingStuffData);
+				update.set(sp);
 				this.thingStuffAboutIdKey = update.thingStuffAboutIdKey;
 
 			} else { // insert
@@ -194,10 +227,10 @@ public class ThingStuffAboutJdo {
 		// debug
 		//System.out.println("ThingStuffAboutJdo.save(): thingStuffAboutId: " + getStuffAboutId() + " thingStuffId(Parent): " + thingStuffId + " thingStuffTypeId: " + thingStuffTypeId + " " +
 		//"value: " + getString(value) + " valueBol: " + getString(valueBol) + " valueLong: " + getString(valueLong) + " valueDate: " + getString(valueDate));
-		
+
 		return getStuffAboutId();
 	}
-	
+
 	public long saveUnique(ThingStuffData thingStuffData) {
 		setData(thingStuffData);
 
@@ -206,19 +239,19 @@ public class ThingStuffAboutJdo {
 		filter.setThingId(thingStuffData.getThingId());
 		filter.setThingStuffTypeId(thingStuffData.getThingStuffTypeId());
 		filter.setThingStuffId(thingStuffData.getStuffId());
-		
+
 		if (thingStuffData.getValue() != null) {
 			filter.setValueString(thingStuffData.getValue());
 		}
-		
+
 		if (thingStuffData.getValueBol() != null) {
 			filter.setValueBoolean(thingStuffData.getValueBol());
 		}
-		
+
 		if (thingStuffData.getValueDouble() != null) {
 			filter.setValueDouble(thingStuffData.getValueDouble());
 		}
-		
+
 		if (thingStuffData.getValueLong() != null) {
 			filter.setValueLong(thingStuffData.getValueLong());
 		}
@@ -231,7 +264,7 @@ public class ThingStuffAboutJdo {
 			tsds[0].setValue(thingStuffData.getValueDouble());
 			tsds[0].setValue(thingStuffData.getValueLong());
 			tsds[0].setValue(thingStuffData.getValueDate());
-		
+
 			save(tsd);
 			return thingStuffData.getStuffId();
 		}
@@ -243,7 +276,7 @@ public class ThingStuffAboutJdo {
 
 			thingStuffAboutIdKey = null;
 			pm.makePersistent(this);
-			
+
 			tx.commit();
 
 		} catch (Exception e) { 
@@ -324,7 +357,7 @@ public class ThingStuffAboutJdo {
 
 		return td;
 	}
-	
+
 	/**
 	 * query total
 	 * 
@@ -333,21 +366,21 @@ public class ThingStuffAboutJdo {
 	 * @return
 	 */
 	public long queryTotal() {
-		
+
 		/* future spec I think
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		
+
 		com.google.appengine.api.datastore.Query query = new com.google.appengine.api.datastore.Query("__Stat_Kind__");
 		query.addFilter("kind_name", FilterOperator.EQUAL, TThingStuffAboutJdo.class);
-		
+
     Entity globalStat = datastore.prepare(query).asSingleEntity();
     Long totalBytes = (Long) globalStat.getProperty("bytes");
     Long totalEntities = (Long) globalStat.getProperty("count");
-		*/
-		
+		 */
+
 		// TODO - work around, have to wait for the api/gae to make it to hosted mode
 		long total = 0;
-		
+
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
 			Extent<ThingStuffAboutJdo> e = pm.getExtent(ThingStuffAboutJdo.class, true);
@@ -356,12 +389,12 @@ public class ThingStuffAboutJdo {
 
 			Collection<ThingStuffAboutJdo> c = (Collection<ThingStuffAboutJdo>) q.execute();
 			total = c.size();
-			
+
 			q.closeAll();
 		} finally {
 			pm.close();
 		}
-		
+
 		return total;
 	}
 
@@ -388,12 +421,13 @@ public class ThingStuffAboutJdo {
 					tsja.getValueDouble(),
 					tsja.getValueLong(), 
 					tsja.getValueDate(),
-					
+
 					tsja.getStartOf(),
 					tsja.getEndOf(), 
-
+					tsja.getRank(),
 					tsja.getDateCreated(),
-					tsja.getDateUpdated());
+					tsja.getDateUpdated(),
+					tsja.getOwners());
 
 			i++;
 		}
@@ -441,7 +475,7 @@ public class ThingStuffAboutJdo {
 	 * @return
 	 */
 	public boolean delete(long thingStuffAboutId) {
-		
+
 		System.out.println("ThingStuffAboutJdo.delete(): deleting: " + thingStuffAboutId);
 
 		PersistenceManager pm = sp.getPersistenceManager();
@@ -508,7 +542,7 @@ public class ThingStuffAboutJdo {
 
 		return true;
 	}
-	
+
 	/**
 	 * delete by parent id, thingStuffId
 	 * 
@@ -600,10 +634,10 @@ public class ThingStuffAboutJdo {
 	public Long getValueLong() {
 		return valueLong;
 	}
-	
+
 	private Date getValueDate() {
-	  return valueDate;
-  }
+		return valueDate;
+	}
 
 	public Date getStartOf() {
 		return startOf;
@@ -611,6 +645,14 @@ public class ThingStuffAboutJdo {
 
 	public Date getEndOf() {
 		return endOf;
+	}
+
+	public void setRank(Double rank) {
+		this.rank = rank;
+	}
+
+	public Double getRank() {
+		return rank;
 	}
 
 	public Date getDateCreated() {
@@ -629,6 +671,14 @@ public class ThingStuffAboutJdo {
 		return updatedByThingId;
 	}
 
+	public void setOwners(long[] ownerThingIds) {
+		this.ownerThingIds = ownerThingIds;
+	}
+
+	public long[] getOwners() {
+		return ownerThingIds;
+	}
+
 	private Key getKey(long id) {
 		Key key = null;
 		if (id == 0) {
@@ -636,9 +686,9 @@ public class ThingStuffAboutJdo {
 		}
 		return key;
 	}
-	
 
-	
+
+
 	private String getString(Boolean value) {
 		String s = "";
 		if (value != null) {
