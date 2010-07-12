@@ -19,6 +19,8 @@ import javax.jdo.annotations.PrimaryKey;
 
 import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeData;
 import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeDataFilter;
+import org.gonevertical.core.client.ui.admin.thingtype.ThingTypeData;
+import org.gonevertical.core.client.ui.admin.thingtype.ThingTypeDataFilter;
 import org.gonevertical.core.server.ServerPersistence;
 
 import com.google.appengine.api.datastore.Key;
@@ -146,6 +148,32 @@ public class ThingStuffTypeJdo {
 	/**
 	 * insert only if unique
 	 */
+	public void saveUnique() {
+		this.dateCreated = new Date();
+
+		// don't insert if name already exists
+		if (getId() > 0) {
+  		ThingStuffTypeData tt = query(getId());
+  		if (tt != null) {
+  			save(convert(this));
+  			return;
+  		}
+		} else {
+			// check to see if name exists already
+			ThingStuffTypeDataFilter filter = new ThingStuffTypeDataFilter();
+			filter.setName(getName());
+			ThingStuffTypeJdo[] t = query(filter);
+			if (t != null && t.length > 0) {
+				System.out.println("ThingStuffTypeJdo.saveUnique(): skipped b/c name already exists. name=" + getName());
+				return;
+			}
+			
+			insert();
+		}
+
+		System.out.println("ThingStuffTypeJdo.saveUnique(): thingTypeId=" + getId());
+	}
+	
 	public void insertUnique() {
 		this.dateCreated = new Date();
 
@@ -190,7 +218,7 @@ public class ThingStuffTypeJdo {
 			pm.close();
 		}
 
-		System.out.println("saved: thingStuffTypeId:" + getId());
+		System.out.println("ThingStuffTypeJdo.saveUnique(): thingStuffTypeId=" + getId());
 	}
 
 	/**
@@ -250,7 +278,10 @@ public class ThingStuffTypeJdo {
 		} finally {
 			pm.close();
 		}
-
+		
+		if (aT.size() == 0) {
+			return null;
+		}
 
 		ThingStuffTypeJdo[] r = null;
 		if (aT.size() > 0) {
@@ -297,6 +328,10 @@ public class ThingStuffTypeJdo {
 		} finally {
 			pm.close();
 		}
+		
+		if (aT.size() == 0) {
+			return null;
+		}
 
 		ThingStuffTypeJdo[] r = null;
 		if (aT.size() > 0) {
@@ -304,6 +339,31 @@ public class ThingStuffTypeJdo {
 			aT.toArray(r);
 		}
 		return r;
+	}
+	
+	public ThingStuffTypeData query(long thingStuffTypeId) {
+		if (thingStuffTypeId == 0) {
+			return null;
+		}
+
+		ThingStuffTypeJdo thingStuffTypeJdo = null;
+
+		PersistenceManager pm = sp.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+			thingStuffTypeJdo = pm.getObjectById(ThingStuffTypeJdo.class, thingStuffTypeId);
+			tx.commit();
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+
+		ThingStuffTypeData t = convert(thingStuffTypeJdo);
+
+		return t;
 	}
 
 	public boolean delete(ThingStuffTypeData thingStuffTypeData) {
@@ -389,13 +449,35 @@ public class ThingStuffTypeJdo {
 					thingStuffTypeJdo[i].getStartOf(),
 					thingStuffTypeJdo[i].getEndOf(),
 					thingStuffTypeJdo[i].getRank(),
+					thingStuffTypeJdo[i].getCreatedBy(),
 					thingStuffTypeJdo[i].getCreatedDt(),
+					thingStuffTypeJdo[i].getUpdatedBy(),
 					thingStuffTypeJdo[i].getUpdatedDt(),
 					thingStuffTypeJdo[i].getOwners());
 		}
 		return r;
 	}
 
+	public static ThingStuffTypeData convert(ThingStuffTypeJdo thingStuffTypeJdo) {
+		if (thingStuffTypeJdo == null) {
+			return null;
+		}
+		ThingStuffTypeData r = new ThingStuffTypeData();
+		r.setData(
+				thingStuffTypeJdo.stuffTypeIdKey.getId(), 
+				thingStuffTypeJdo.getName(), 
+				thingStuffTypeJdo.getValueTypeId(),
+				thingStuffTypeJdo.getStartOf(),
+				thingStuffTypeJdo.getEndOf(),
+				thingStuffTypeJdo.getRank(),
+				thingStuffTypeJdo.getCreatedBy(),
+				thingStuffTypeJdo.getCreatedDt(),
+				thingStuffTypeJdo.getUpdatedBy(),
+				thingStuffTypeJdo.getUpdatedDt(),
+				thingStuffTypeJdo.getOwners());
+
+		return r;
+	}
 
 	public Date getStartOf() {
 		return startOf;

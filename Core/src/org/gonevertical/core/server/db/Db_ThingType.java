@@ -62,7 +62,7 @@ public class Db_ThingType {
 
     ThingTypeJdo j = new ThingTypeJdo(sp);
     j.setData(thingTypeData);
-    j.insertUnique();
+    j.saveUnique();
     
   }
 

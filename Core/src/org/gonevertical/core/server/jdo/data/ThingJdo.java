@@ -19,6 +19,8 @@ import javax.jdo.annotations.PrimaryKey;
 
 import org.gonevertical.core.client.ui.admin.thing.ThingData;
 import org.gonevertical.core.client.ui.admin.thing.ThingDataFilter;
+import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeData;
+import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeDataFilter;
 import org.gonevertical.core.server.ServerPersistence;
 
 import com.google.appengine.api.datastore.Key;
@@ -210,6 +212,39 @@ public class ThingJdo {
 			pm.close();
 		}
 	}
+	
+	public void saveUnique(long thingTypeId, String key, String secret) {
+		this.thingTypeId = thingTypeId;
+		this.key = key;
+		this.secret = secret;
+		this.dateCreated = new Date();
+
+		// don't insert if name already exists
+		if (getThingId() > 0) {
+  		ThingData tt = query(getThingId());
+  		tt.setThingTypeId(thingTypeId);
+  		tt.setKey(key);
+  		if (tt != null) {
+  			save(tt, secret);
+  			return;
+  		}
+		} else {
+			
+			// TODO skipping adding a user like this
+			// check to see if name exists already
+			//ThingStuffTypeDataFilter filter = new ThingStuffTypeDataFilter();
+			//filter.setName(getName());
+			//ThingStuffTypeJdo[] t = query(filter);
+			//if (t != null && t.length > 0) {
+				//System.out.println("ThingStuffTypeJdo.saveUnique(): skipped b/c name already exists. name=" + getName());
+				//return;
+			//}
+			
+			//insert();
+		}
+
+		System.out.println("ThingData.saveUnique(): thingId=" + getThingId());
+	}
 
 	public void insert() {
 		this.dateCreated = new Date();
@@ -234,6 +269,11 @@ public class ThingJdo {
 			save(thingData[i]);
 		}
 
+	}
+	
+	public long save(ThingData thingData, String secret) {
+		this.secret = secret;
+		return save(thingData);
 	}
 
 	public long save(ThingData thingData) {

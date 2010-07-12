@@ -127,9 +127,7 @@ public class ThingStuffAboutJdo {
 		if (thingStuffData == null) {
 			return;
 		}
-		// don't do this here messes with the getObjectById key
-		//setKey(thingStuffData.getStuffAboutId());
-
+		
 		// parent id
 		this.thingStuffId = thingStuffData.getStuffId();
 
@@ -206,8 +204,8 @@ public class ThingStuffAboutJdo {
 
 			if (thingStuffData != null && thingStuffData.getStuffAboutId() > 0) { // update
 				ThingStuffAboutJdo update = pm.getObjectById(ThingStuffAboutJdo.class, thingStuffData.getStuffAboutId());
-				update.setData(thingStuffData);
 				update.set(sp);
+				update.setData(thingStuffData);				
 				this.thingStuffAboutIdKey = update.thingStuffAboutIdKey;
 
 			} else { // insert
@@ -462,6 +460,13 @@ public class ThingStuffAboutJdo {
 
 			r[i].startOf = tsd[i].getStartOf();
 			r[i].endOf = tsd[i].getEndOf();
+			r[i].rank = tsd[i].getRank();
+			
+			r[i].createdByThingId = tsd[i].getCreatedBy();
+			r[i].dateCreated = tsd[i].getDateCreated();
+			r[i].updatedByThingId = tsd[i].getUpdatedBy();
+			r[i].dateUpdated = tsd[i].getDateUpdated();
+			r[i].ownerThingIds = tsd[i].getOwners();
 
 		}
 
@@ -722,4 +727,6 @@ public class ThingStuffAboutJdo {
 		}
 		return s;
 	}
+	
+	
 }
