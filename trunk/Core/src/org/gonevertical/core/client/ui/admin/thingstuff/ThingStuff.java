@@ -125,7 +125,6 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
     tbStartDt.setWidth("75px");
     tbEndDt.setWidth("75px");
     tbRank.setWidth("30px");
-    
   }
   
   /**

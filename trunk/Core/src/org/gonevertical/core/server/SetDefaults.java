@@ -156,7 +156,11 @@ public class SetDefaults {
 	}
 
 	public void createThingStuffMulti(
-			long thingId, long parentThingTypeId, long parentLinkThingId, long thingStuffTypeId, Boolean valueBol) {
+			long thingId, 
+			long parentThingTypeId, 
+			long parentLinkThingId, 
+			long thingStuffTypeId, 
+			Boolean valueBol) {
 		
 		String value = null;
 		//Boolean valueBol = null;
@@ -181,12 +185,14 @@ public class SetDefaults {
 		Double rank = Double.parseDouble("0");
 		long[] ownerThingIds = null;
 		
+		long createdBy = 0;
+		long updatedBy = 0;
+		
 		ThingStuffData tsd = new ThingStuffData();
 		tsd.setStuffId(stuffId);
 		tsd.setData(
-				thingId, 
+				parentLinkThingId, 
 				stuffId, 
-				0, 
 				thingStuffTypeId, 
 				value, 
 				valueBol, 
@@ -195,18 +201,16 @@ public class SetDefaults {
 				valueDate, 
 				startOf, 
 				endOf, 
-				rank,
-				0, // created by
-				dateCreated,
-				0, // updated by
+				rank, 
+				createdBy, 
+				dateCreated, 
+				updatedBy, 
 				dateUpdated, 
 				ownerThingIds);
 		
 		ThingStuffAboutJdo tsaj = new ThingStuffAboutJdo(sp);
 		tsaj.saveUnique(tsd);
 	}
-
-	
 
 	public void createThing(int id, int thingTypeId, String key, String password) {
 		Sha1 sha = new Sha1();
@@ -232,9 +236,30 @@ public class SetDefaults {
 	 * @param valueTypeId
 	 */
 	public void createStuffType(int id, String name, int valueTypeId) {
+		
+		Date startOf = null;
+		Date endOf = null;
+		Double rank = null;
+		long createdBy = 0;
+		Date dateCreated = new Date();
+		long updatedBy = 0;
+		Date dateUpdated = null;
+		long[] ownerThingIds = null;
+		
 		ThingStuffTypeData tstd = new ThingStuffTypeData();
-		tstd.setData(id, name, valueTypeId, new Date(), null, null, null, null, null);
-
+		tstd.setData(
+				id, 
+				name, 
+				valueTypeId, 
+				startOf, 
+				endOf, 
+				rank, 
+				createdBy, 
+				dateCreated, 
+				updatedBy, 
+				dateUpdated, 
+				ownerThingIds);
+		
 		ThingStuffTypeJdo tstj = new ThingStuffTypeJdo(sp);
 		tstj.setData(tstd);
 		tstj.insertUnique();

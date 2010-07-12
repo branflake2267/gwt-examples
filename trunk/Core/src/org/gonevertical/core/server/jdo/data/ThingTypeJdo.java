@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.jdo.Extent;
@@ -17,6 +18,8 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import org.gonevertical.core.client.ui.admin.thing.ThingData;
+import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffData;
 import org.gonevertical.core.client.ui.admin.thingtype.ThingTypeData;
 import org.gonevertical.core.client.ui.admin.thingtype.ThingTypeDataFilter;
 import org.gonevertical.core.server.ServerPersistence;
@@ -141,6 +144,39 @@ public class ThingTypeJdo {
 	 * 
 	 * @param name
 	 */
+	public void saveUnique() {
+		this.dateCreated = new Date();
+
+		// don't insert if name already exists
+		if (getId() > 0) {
+			
+  		ThingTypeData tt = query(getId());
+  		if (tt != null) {
+  			save(convert(this));
+  			return;
+  		}
+  		
+		} else {
+			
+			// check to see if name exists already
+			ThingTypeDataFilter filter = new ThingTypeDataFilter();
+			filter.setName(getName());
+			ThingTypeJdo[] t = query(filter);
+			if (t != null && t.length > 0) {
+				return;
+			}
+			
+			insert();
+		}
+
+		System.out.println("saved: thingTypeId:" + getId());
+	}
+	
+	/**
+	 * can only insert unique names
+	 * 
+	 * @param name
+	 */
 	public void insertUnique() {
 		this.dateCreated = new Date();
 
@@ -164,6 +200,42 @@ public class ThingTypeJdo {
 		}
 
 		System.out.println("saved: thingTypeId:" + getId());
+	}	
+	private long save(ThingTypeData thingTypeData) {
+		setData(thingTypeData);
+
+		PersistenceManager pm = sp.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+
+			if (thingTypeData != null && thingTypeData.getId() > 0) { // update
+				ThingTypeJdo update = pm.getObjectById(ThingTypeJdo.class, thingTypeData.getId());
+				update.set(sp);
+				update.setData(thingTypeData);
+				
+				this.thingTypeIdKey = update.thingTypeIdKey;
+				
+				//System.out.println(" " + update.getUpdatedBy());
+				
+			} else { // insert
+				thingTypeIdKey = null;
+				pm.makePersistent(this);
+			}
+
+			tx.commit();
+			
+		} catch (Exception e) { 
+			e.printStackTrace();
+			log.log(Level.SEVERE, "save(): ", e);
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+
+		return getId();
 	}
 
 	/**
@@ -186,6 +258,31 @@ public class ThingTypeJdo {
 		}
 
 		System.out.println("saved: thingTypeId:" + getId());
+	}
+	
+	public ThingTypeData query(long thingTypeId) {
+		if (thingTypeId == 0) {
+			return null;
+		}
+
+		ThingTypeJdo thingTypeJdo = null;
+
+		PersistenceManager pm = sp.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+			thingTypeJdo = pm.getObjectById(ThingTypeJdo.class, thingTypeId);
+			tx.commit();
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+
+		ThingTypeData t = convert(thingTypeJdo);
+
+		return t;
 	}
 
 	/**
@@ -237,7 +334,11 @@ public class ThingTypeJdo {
 	 */
 	public ThingTypeJdo[] query(ThingTypeDataFilter filter) {
 
-		// TODO configure drill to setup filters
+		// setup filters
+		String qfilter = null;
+		if (filter !=null) {
+			qfilter = filter.getFilter_Or();
+		}
 
 		ArrayList<ThingTypeJdo> aT = new ArrayList<ThingTypeJdo>();
 
@@ -246,7 +347,7 @@ public class ThingTypeJdo {
 			
 			// TODO build filter
 			Extent<ThingTypeJdo> e = pm.getExtent(ThingTypeJdo.class, true);
-			Query q = pm.newQuery(e);
+			Query q = pm.newQuery(e, qfilter);
 			//q.setRange(0, 10); // TODO - finish range
 			q.execute();
 
@@ -354,10 +455,31 @@ public class ThingTypeJdo {
 					thingTypeJdo[i].getStartOf(),
 					thingTypeJdo[i].getEndOf(),
 					thingTypeJdo[i].getRank(),
+					thingTypeJdo[i].getCreatedBy(),
 					thingTypeJdo[i].getDateCreated(),
+					thingTypeJdo[i].getUpdatedBy(),
 					thingTypeJdo[i].getDateUpdated(),
 					thingTypeJdo[i].getOwners());
 		}
+		return r;
+	}
+	
+	public static ThingTypeData convert(ThingTypeJdo thingTypeJdo) {
+		if (thingTypeJdo == null) {
+			return null;
+		}
+		ThingTypeData r = new ThingTypeData();
+		r.setData(
+				thingTypeJdo.getId(), 
+				thingTypeJdo.getName(),
+				thingTypeJdo.getStartOf(),
+				thingTypeJdo.getEndOf(),
+				thingTypeJdo.getRank(),
+				thingTypeJdo.getCreatedBy(),
+				thingTypeJdo.getDateCreated(),
+				thingTypeJdo.getUpdatedBy(),
+				thingTypeJdo.getDateUpdated(),
+				thingTypeJdo.getOwners());
 		return r;
 	}
 

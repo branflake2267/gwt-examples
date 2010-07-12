@@ -3,6 +3,7 @@ package org.gonevertical.core.client.ui.admin.thingstufftype;
 import org.gonevertical.core.client.ClientPersistence;
 import org.gonevertical.core.client.global.DeleteDialog;
 import org.gonevertical.core.client.global.EventManager;
+import org.gonevertical.core.client.global.Global_Date;
 import org.gonevertical.core.client.global.Global_ListBox;
 import org.gonevertical.core.client.rpc.RpcCore;
 import org.gonevertical.core.client.rpc.RpcCoreServiceAsync;
@@ -26,6 +27,7 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.datepicker.client.DateBox;
 
 public class ThingStuffType extends Ui implements ChangeHandler, ClickHandler {
 
@@ -50,6 +52,21 @@ public class ThingStuffType extends Ui implements ChangeHandler, ClickHandler {
   
   private int changeEvent = 0;
   
+  private DateBox tbStartDt = new DateBox();
+  private DateBox tbEndDt = new DateBox();
+  private TextBox tbRank = new TextBox();
+  
+  private FlowPanel pCreatedBy = new FlowPanel();
+  private FlowPanel pCreatedDt = new FlowPanel();
+  private FlowPanel pUpdatedBy = new FlowPanel();
+  private FlowPanel pUpdatedDt = new FlowPanel();
+  private FlowPanel pOwner = new FlowPanel();
+  
+  /**
+   * constructor
+   * 
+   * @param cp
+   */
   public ThingStuffType(ClientPersistence cp) {
     super(cp);
     
@@ -66,6 +83,10 @@ public class ThingStuffType extends Ui implements ChangeHandler, ClickHandler {
     pWidget.addChangeHandler(this);
     bDelete.addClickHandler(this);
     
+    
+    tbStartDt.setWidth("75px");
+    tbEndDt.setWidth("75px");
+    tbRank.setWidth("30px");
   }
 
   public void setData(int row, ThingStuffTypeData thingStuffTypeData) {
@@ -98,9 +119,28 @@ public class ThingStuffType extends Ui implements ChangeHandler, ClickHandler {
     pWidget.add(pId);
     pWidget.add(hpName);
     pWidget.add(lbValueType);
+    
+    pWidget.add(tbStartDt);
+    pWidget.add(tbEndDt);
+    pWidget.add(tbRank);
+    pWidget.add(pCreatedBy);
+    pWidget.add(pCreatedDt);
+    pWidget.add(pUpdatedBy);
+    pWidget.add(pUpdatedDt);
+    pWidget.add(pOwner);
+    
     pWidget.add(hpDelete);
    
     drawLb();
+    
+    drawStartDt();
+    drawEndDt();
+    drawRank();
+    drawCreatedBy();
+    drawCreatedDt();
+    drawUpdatedBy();
+    drawUpdatedDt();
+    drawOwners();
   }
   
   private void drawLb() {
@@ -145,7 +185,26 @@ public class ThingStuffType extends Ui implements ChangeHandler, ClickHandler {
   public ThingStuffTypeData getData() {
     thingStuffTypeData.setName(tbName.getText().trim());
     thingStuffTypeData.setValueTypeId(Global_ListBox.getSelectedValue(lbValueType));
+
+    thingStuffTypeData.setStartOf(tbStartDt.getValue());
+    thingStuffTypeData.setEndOf(tbEndDt.getValue());
+    thingStuffTypeData.setRank(getRank());
+    
+    
     return thingStuffTypeData;
+  }
+  
+  private Double getRank() {
+	  String s = tbRank.getValue().trim();
+	  Double d = null;
+	  if (s.length() != 0) {
+	  	try {
+	      d = Double.parseDouble(s);
+      } catch (NumberFormatException e) {
+      	d = null;
+      }
+	  }
+	  return d;
   }
   
   private void delete() {
@@ -169,6 +228,75 @@ public class ThingStuffType extends Ui implements ChangeHandler, ClickHandler {
     } else {
       Window.alert("Wasn't able to delete thingType. Please try again?");
     }
+  }
+  
+	private void drawCreatedBy() {
+		pCreatedBy.clear();
+		String s = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+		if (thingStuffTypeData.getCreatedBy() > 0) {
+			s = Long.toString(thingStuffTypeData.getCreatedBy());
+		}
+		HTML h = new HTML(s);
+		pCreatedBy.add(h);
+  }
+
+	private void drawCreatedDt() {
+		pCreatedDt.clear();
+	  String s = Global_Date.getDate_Eng(thingStuffTypeData.getDateCreated());
+	  HTML h = new HTML(s);
+	  pCreatedDt.clear();
+	  pCreatedDt.add(h);
+  }
+
+	private void drawUpdatedBy() {
+		pUpdatedBy.clear();
+		String s = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+		if (thingStuffTypeData.getUpdatedBy() > 0) {
+			s = Long.toString(thingStuffTypeData.getUpdatedBy());
+		}
+		HTML h = new HTML(s);
+		pUpdatedBy.add(h);
+  }
+
+	private void drawUpdatedDt() {
+		pUpdatedDt.clear();
+	  String s = Global_Date.getDate_Eng(thingStuffTypeData.getDateUpdated());
+	  HTML h = new HTML(s);
+	  pUpdatedDt.clear();
+	  pUpdatedDt.add(h);
+  }
+
+	private void drawOwners() {
+		pOwner.clear();
+		String s = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+		if (thingStuffTypeData.getOwners() == null || thingStuffTypeData.getOwners().length == 0) {
+			s = "";
+		} else {
+			for (int i=0; i < thingStuffTypeData.getOwners().length; i++) {
+				s += Long.toString(thingStuffTypeData.getOwners()[i]);
+				if (i < thingStuffTypeData.getOwners().length -1) {
+					s += ",";
+				}
+			}
+		}
+		HTML h = new HTML(s);
+		pOwner.add(h);
+  }
+
+	private void drawStartDt() {
+		tbStartDt.setValue(thingStuffTypeData.getStartOf());
+  }
+  
+  private void drawEndDt() {
+  	tbEndDt.setValue(thingStuffTypeData.getEndOf());
+  }
+
+	private void drawRank() {
+  	String s = "0";
+  	if (thingStuffTypeData.getRank() != null) {
+  		s = Double.toString(thingStuffTypeData.getRank());
+  	} 
+  	tbRank.setText(s);
   }
   
   public void onChange(ChangeEvent event) {

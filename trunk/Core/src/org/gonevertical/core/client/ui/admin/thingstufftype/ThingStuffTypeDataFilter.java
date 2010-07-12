@@ -9,6 +9,8 @@ public class ThingStuffTypeDataFilter implements IsSerializable {
   
   private long[] valueTypeId = null;
   
+  private String[] name = null;
+  
   public void setLimit(long start, long limit) {
   	this.start = start;
   	this.limit = limit;
@@ -22,12 +24,16 @@ public class ThingStuffTypeDataFilter implements IsSerializable {
   	return valueTypeId;
   }
   
+	public void setName(String name) {
+		String[] s = new String[1];
+		s[0] = name;
+		this.name = s;
+  }
+  
   public String getFilter_Or() {
-  	if (valueTypeId == null || valueTypeId.length == 0) {
-  		return null;
-  	}
   	String s = "";
-		if (valueTypeId != null && valueTypeId.length > 0) {
+		
+  	if (valueTypeId != null && valueTypeId.length > 0) {
 			for (int i=0; i < valueTypeId.length; i++) {
 				s += "valueTypeId==" + valueTypeId[i] + "";
 				if (i < valueTypeId.length -1) {
@@ -35,6 +41,20 @@ public class ThingStuffTypeDataFilter implements IsSerializable {
 				}
 			}
 		}
+		
+		if (name != null && name.length > 0) {
+			for (int i=0; i < name.length; i++) {
+				s += "name==\"" + name[i] + "\"";
+				if (i < name.length - 1) {
+					s += " || ";
+				}
+			}
+		}
+		
+		if (s != null && s.trim().length() == 0) {
+			s = null;
+		}
+		
 	  return s;
   }
   
@@ -46,5 +66,6 @@ public class ThingStuffTypeDataFilter implements IsSerializable {
 		long finish = start + limit;
 	  return finish;
   }
+
 
 }

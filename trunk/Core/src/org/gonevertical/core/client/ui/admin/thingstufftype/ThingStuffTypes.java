@@ -25,9 +25,8 @@ public class ThingStuffTypes extends Ui implements ClickHandler, ChangeHandler {
   private VerticalPanel pWidget = new VerticalPanel();
   private VerticalPanel pMenu = new VerticalPanel();
   
-  private VerticalPanel pListTop = new VerticalPanel();
   private VerticalPanel pList = new VerticalPanel();
-  private int[] widths = new int[5];
+  private int[] widths = new int[14];
   
   private PushButton bAdd = new PushButton("Add");
   private PushButton bSave = new PushButton("Save");
@@ -38,12 +37,21 @@ public class ThingStuffTypes extends Ui implements ClickHandler, ChangeHandler {
   private Paging wPage = new Paging();
   private ThingStuffFilter wFilter = new ThingStuffFilter(cp);
   
+  private Row th = new Row();
+  
+  /**
+   * constructor 
+   * 
+   * @param cp
+   */
   public ThingStuffTypes(ClientPersistence cp) {
     super(cp);
     
+    th = new Row();
+    
     pWidget.add(wFilter);
     pWidget.add(pMenu);
-    pWidget.add(pListTop);
+    pWidget.add(th);
     pWidget.add(pList);
     pWidget.add(wPage);
     
@@ -78,27 +86,52 @@ public class ThingStuffTypes extends Ui implements ClickHandler, ChangeHandler {
   }
   
   private void drawTopRow() {
-    pListTop.clear();
+  	
+  	if (th.getWidths().length > 0) {
+  		return;
+  	}
+  	
     HTML l1 = new HTML("#");
     HTML l2 = new HTML("Id");
     HTML l3 = new HTML("Name");
     HTML l4 = new HTML("Type");
-    HTML l5 = new HTML("&nbsp;");
+    HTML l5 = new HTML("StartDt");
+    HTML l6 = new HTML("EndDt");
+    HTML l7 = new HTML("Rank");
+    HTML l8 = new HTML("CreatedBy");
+    HTML l9 = new HTML("CreatedDt");
+    HTML l10 = new HTML("UpdatedBy");
+    HTML l11 = new HTML("UpdatedDt");
+    HTML l12 = new HTML("Owners");
+    HTML l13 = new HTML("&nbsp;");
 
     l1.setStyleName("core-row-top");
     l2.setStyleName("core-row-top");
     l3.setStyleName("core-row-top");
     l4.setStyleName("core-row-top");
     l5.setStyleName("core-row-top");
+    l6.setStyleName("core-row-top");
+    l7.setStyleName("core-row-top");
+    l8.setStyleName("core-row-top");
+    l9.setStyleName("core-row-top");
+    l10.setStyleName("core-row-top");
+    l11.setStyleName("core-row-top");
+    l12.setStyleName("core-row-top");
+    l13.setStyleName("core-row-top");
     
-    Row th = new Row();
     th.add(l1, HorizontalPanel.ALIGN_CENTER);
     th.add(l2, HorizontalPanel.ALIGN_CENTER);
     th.add(l3, HorizontalPanel.ALIGN_CENTER);
     th.add(l4, HorizontalPanel.ALIGN_CENTER);
     th.add(l5, HorizontalPanel.ALIGN_CENTER);
-    
-    pListTop.add(th);
+    th.add(l6, HorizontalPanel.ALIGN_CENTER);
+    th.add(l7, HorizontalPanel.ALIGN_CENTER);
+    th.add(l8, HorizontalPanel.ALIGN_CENTER);
+    th.add(l9, HorizontalPanel.ALIGN_CENTER);
+    th.add(l10, HorizontalPanel.ALIGN_CENTER);
+    th.add(l11, HorizontalPanel.ALIGN_CENTER);
+    th.add(l12, HorizontalPanel.ALIGN_CENTER);
+    th.add(l13, HorizontalPanel.ALIGN_CENTER);
   }
   
   private void process(ThingStuffTypesData thingStuffTypesData) {
@@ -118,11 +151,12 @@ public class ThingStuffTypes extends Ui implements ClickHandler, ChangeHandler {
     	return;
     }
     
-    drawTopRow();
-    
     wPage.setCounts(thingStuffTypeData.length);
 
     for (int i=0; i < thingStuffTypeData.length; i++){
+    	if (i == 0) {
+    		drawTopRow();
+    	}
       addStuffType(i, thingStuffTypeData[i]);
     }
     
@@ -135,6 +169,8 @@ public class ThingStuffTypes extends Ui implements ClickHandler, ChangeHandler {
       return;
     }
     
+    widths = th.getWidths();
+    
     for (int i=0; i < pList.getWidgetCount(); i++) {
       ThingStuffType t = (ThingStuffType) pList.getWidget(i);
       widths = Row.getMaxWidths(widths, t.getRow().getWidths());
@@ -145,7 +181,6 @@ public class ThingStuffTypes extends Ui implements ClickHandler, ChangeHandler {
       t.getRow().setWidths(widths);
     }
     
-    Row th = (Row) pListTop.getWidget(0);
     th.setWidths(widths);
   }
   
@@ -160,7 +195,7 @@ public class ThingStuffTypes extends Ui implements ClickHandler, ChangeHandler {
   
   private void add() {
     int i = pList.getWidgetCount();
-    if (i==0) {
+    if (i == 0) {
       drawTopRow();
     }
     ThingStuffTypeData ThingStuffTypeData = new ThingStuffTypeData();
