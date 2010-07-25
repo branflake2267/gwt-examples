@@ -17,6 +17,7 @@ public class ThingTypeData implements IsSerializable {
   public static final int TYPE_REMINDER = 8;
   public static final int TYPE_LOCATION = 9;
   public static final int TYPE_DEVICE = 10;
+  public static final int TYPE_DATA = 11;
   
   // to set the defaults use this int
   public static final int DEFAULT_TYPE = 1;

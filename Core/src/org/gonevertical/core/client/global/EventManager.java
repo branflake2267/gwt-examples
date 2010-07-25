@@ -79,6 +79,7 @@ public class EventManager {
   
   public static final int THING_EDIT = 30;
   public static final int THING_VIEW = 31;
+  public static final int THING_SELECT = 32;
   
   public static final int THINGSTUFF_TYPECHANGE = 40;
   
@@ -119,6 +120,8 @@ public class EventManager {
 	 * paging
 	 */
 	public static final int PAGE_CHANGELIMIT = 11;
+
+	
 
 	
 

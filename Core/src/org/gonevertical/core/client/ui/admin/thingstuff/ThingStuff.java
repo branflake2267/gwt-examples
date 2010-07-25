@@ -8,7 +8,10 @@ import org.gonevertical.core.client.global.Global_ListBox;
 import org.gonevertical.core.client.rpc.RpcCore;
 import org.gonevertical.core.client.rpc.RpcCoreServiceAsync;
 import org.gonevertical.core.client.ui.Ui;
+import org.gonevertical.core.client.ui.account.AccountData;
 import org.gonevertical.core.client.ui.admin.thing.ThingData;
+import org.gonevertical.core.client.ui.admin.thing.ThingDataFilter;
+import org.gonevertical.core.client.ui.admin.thing.ThingsData;
 import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeData;
 import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypesData;
 import org.gonevertical.core.client.ui.widgets.Row;
@@ -68,6 +71,8 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
   private FlowPanel pUpdatedDt = new FlowPanel();
   private FlowPanel pOwner = new FlowPanel();
   
+  private FlowPanel pThingLinkName = new FlowPanel();
+  
   // parent owner
   private ThingData thingData = new ThingData();
   
@@ -84,6 +89,10 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
 	
 	private int widgetType = 0;
 
+	private SearchForThingLink wSearch;
+	
+	private PushButton bSearch = new PushButton("S");
+	
 	/**
 	 * consturctor - init widget
 	 * 
@@ -94,9 +103,19 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
     super(cp);
     this.widgetType = widgetType;
     
+    wSearch = new SearchForThingLink(cp);
+    
+    HorizontalPanel hpSearch = new HorizontalPanel();
+    hpSearch.add(bSearch);
+    hpSearch.add(new HTML("&nbsp;"));
+    hpSearch.add(pThingLinkName);
+    
+    
     // inputs of stuff, and then add another group of stuffs
     VerticalPanel vpInput = new VerticalPanel();
     vpInput.add(pInput);
+    vpInput.add(hpSearch);
+    
     
     HorizontalPanel hpButtons = new HorizontalPanel();
     hpButtons.add(bDelete);
@@ -121,6 +140,11 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
     pWidget.addMouseOutHandler(this);
     bDelete.addClickHandler(this);
     lbTypes.addChangeHandler(this);
+    bSearch.addClickHandler(this);
+    wSearch.addChangeHandler(this);
+    
+    pThingLinkName.setVisible(false);
+    bSearch.setVisible(false);
     
     tbStartDt.setWidth("75px");
     tbEndDt.setWidth("75px");
@@ -308,6 +332,7 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
   
   private void drawInput() {
     pInput.clear();
+    pThingLinkName.clear();
       
     long typeId = getDataTypeId();
     if (typeId == ThingStuffTypeData.VALUETYPE_STRING) {
@@ -345,10 +370,15 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
       
     } else if (typeId == ThingStuffTypeData.VALUETYPE_LINK) {
     	drawInput(thingStuffData.getValueLong());
+    	bSearch.setVisible(true);
+    	if (thingStuffData != null) {
+    		drawThingLinkName(thingStuffData.getValueLong());
+    	}
       
     } else {
       drawInputBlank();
     }
+
     
   }
   
@@ -386,15 +416,23 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
     } else if (typeId == ThingStuffTypeData.VALUETYPE_LINK) {
       w = tbValue;
       tbValue.setText(value);
+      
     }
     
     if (w != null) {
       pInput.add(w);
     }
     
+    
   }
   
-  public ThingStuffData getData() {
+  private void drawThingLinkName(long l) {
+  	if (l > 0) {
+  		getThingDataRpc(l);	
+  	}
+  }
+
+	public ThingStuffData getData() {
     
     String value = null;
     Boolean valueBol = false;
@@ -681,6 +719,12 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
     fireChange(EventManager.THINGSTUFF_REDRAW);
   }
   
+  private void setLink() {
+  	long thingId = wSearch.getSelectedThingId();
+  	tbValue.setValue(Long.toString(thingId));
+  	getThingDataRpc(thingId);
+  }
+  
   public int getChangeEvent() {
     return changeEvent;
   }
@@ -700,6 +744,10 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
     
     if (sender == bDelete) {
       delete();
+      
+    } else if (sender == bSearch) {
+    	wSearch.center();
+    	wSearch.draw();
     }
   }
 
@@ -707,6 +755,8 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
     Widget sender = (Widget) event.getSource();
     if (sender == lbTypes) {
       changeType();
+    } else if (sender == wSearch) {
+    	setLink();
     }
   }
 
@@ -745,6 +795,41 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
   public void setWidgetType(int widgetType) {
   	this.widgetType = widgetType;
   }
+  
+  private void processLink(AccountData ad) {
+  	pThingLinkName.clear();
+  	pThingLinkName.setVisible(true);
+  	
+  	
+  	String n = "";
+  	if (ad == null || ad.getThingData() == null) {
+  		n = "Couldn't find";
+  		
+  	} else {
+  		
+  		ThingStuffData[] t = ad.getNames();
+  		if (t != null) {
+    		for (int i=0; i < t.length; i++) {
+    			if (t[i] != null) { 
+      			n += t[i].getValue();
+      			if (i < n.length()-1) {
+      				n += ", ";
+      			}
+    			}
+    		}
+  		}
+  		
+  		if (ad != null && ad.getThingData() != null) {
+  			String un = ad.getThingData().getKey();
+  			if (un != null) {
+  				n += un;
+  			}
+  		}
+  		
+  	}
+		HTML h = new HTML(n);
+		pThingLinkName.add(h);
+  }
 
   public void deleteRpcThingStuff(long thingStuffId) {
     
@@ -770,6 +855,20 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
 		});
   }
   
-
+  private void getThingDataRpc(long thingId) {
+  	
+  	cp.showLoading(true);
+  	
+  	rpc.getAccountData(cp.getAccessToken(), thingId, new AsyncCallback<AccountData>() {
+			public void onSuccess(AccountData result) {
+				processLink(result);
+				cp.showLoading(false);
+			}
+			public void onFailure(Throwable caught) {
+				cp.setRpcFailure(caught);
+			}
+		});
+  	
+  }
   
 }

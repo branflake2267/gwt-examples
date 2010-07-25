@@ -34,6 +34,11 @@ public class AccountData implements IsSerializable {
 		return getValue(thingStuffTypeId);
 	}
 	
+	public ThingStuffData getName() {
+		int thingStuffTypeId = ThingStuffTypeData.THINGSTUFFTYPE_NAME;
+		return getValue(thingStuffTypeId);
+	}
+	
 	public ThingStuffData getValue(int thingStuffTypeId) {
 		
 		ThingStuffsData tsds = thingData.getThingStuffsData();
@@ -49,5 +54,16 @@ public class AccountData implements IsSerializable {
 			
 		return tsd;
 	}
+
+	public ThingStuffData[] getNames() {
+	 
+		ThingStuffData[] tsd = new ThingStuffData[4];
+		tsd[0] = getAlias();
+		tsd[1] = getFirstName();
+		tsd[2] = getLastName();
+		tsd[3] = getName();
+		
+	  return tsd;
+  }
 
 }

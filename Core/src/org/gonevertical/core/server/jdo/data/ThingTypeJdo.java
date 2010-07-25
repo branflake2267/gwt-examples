@@ -148,7 +148,7 @@ public class ThingTypeJdo {
 		this.dateCreated = new Date();
 
 		// don't insert if name already exists
-		if (getId() > 0) {
+		if (getId() != null && getId() > 0) {
 			
   		ThingTypeData tt = query(getId());
   		if (tt != null) {
@@ -484,6 +484,9 @@ public class ThingTypeJdo {
 	}
 
 	public Long getId() {
+		if (thingTypeIdKey == null) {
+			return null;
+		}
 		return thingTypeIdKey.getId();
 	}
 

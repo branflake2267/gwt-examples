@@ -85,6 +85,7 @@ public class SetDefaults {
 		createThingType(ThingTypeData.TYPE_REMINDER, "Reminder");
 		createThingType(ThingTypeData.TYPE_LOCATION, "Location");
 		createThingType(ThingTypeData.TYPE_DEVICE, "Device");
+		createThingType(ThingTypeData.TYPE_DATA, "Task Data");
 
 	}
 
