@@ -41,9 +41,9 @@ public class Db_Thing {
     ThingTypesData tdt = dbt.getThingTypes(null); // TODO filter later
     
     ThingsData r = new ThingsData();
-    r.thingData = td;
-    r.thingTypesData = tdt;
-    r.total = tj.queryTotal();
+    r.setThingData(td);
+    r.setThingTypesData(tdt);
+    r.setTotal(tj.queryTotal());
     
     // get names for the things
     td = getNamesForThings(accessToken, td);

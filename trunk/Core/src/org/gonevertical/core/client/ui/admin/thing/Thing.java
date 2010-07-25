@@ -39,6 +39,7 @@ public class Thing extends Ui implements ChangeHandler, ClickHandler {
   private PushButton bDelete = new PushButton("X");
   private PushButton bEdit = new PushButton("Edit");
   private PushButton bView = new PushButton("View"); // TODO - use this later
+  private PushButton bSelect = new PushButton("Select");
    
   private ThingData thingData = null;
 
@@ -54,6 +55,7 @@ public class Thing extends Ui implements ChangeHandler, ClickHandler {
     pModify.add(bDelete);
     pModify.add(new HTML("&nbsp;"));   
     pModify.add(bEdit);
+    pModify.add(bSelect);
     
     initWidget(pWidget);
     
@@ -61,6 +63,9 @@ public class Thing extends Ui implements ChangeHandler, ClickHandler {
     bDelete.addClickHandler(this);
     bEdit.addClickHandler(this);
     bView.addClickHandler(this);
+    bSelect.addClickHandler(this);
+    
+    bSelect.setVisible(false);
     
   }
 
@@ -193,8 +198,12 @@ public class Thing extends Ui implements ChangeHandler, ClickHandler {
       delete();
     } else if (sender == bEdit) {
       fireChange(EventManager.THING_EDIT);
+      
     } else if (sender == bView) {
       fireChange(EventManager.THING_VIEW);
+      
+    } else if (sender == bSelect) {
+    	fireChange(EventManager.THING_SELECT);
     }
     
   }
@@ -208,6 +217,18 @@ public class Thing extends Ui implements ChangeHandler, ClickHandler {
       	cp.setRpcFailure(caught);
       }
     });
+  }
+
+	public void setSelectionOn(boolean selectionOn) {
+		if (selectionOn == true) {
+			bSelect.setVisible(true);
+		} else {
+			bSelect.setVisible(false);
+		}
+  }
+
+	public ThingData getThingData() {
+	  return thingData;
   }
   
   
