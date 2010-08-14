@@ -1,32 +1,43 @@
 package org.gonevertical.core.client.ui.admin.thingstuff;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.ListIterator;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ThingStuffDataFilter implements IsSerializable {
   
   private long start = 0;
-  private long limit = 100;
+  private long limit = 20;
   
   // primary key(id) (when saved)
-  private long thingStuffId = 0;
+  private long thingStuffId;
   
   // when dealing with about 
-  private long thingStuffAboutId = 0;
+  private long thingStuffAboutId;
   
   // parent
-  private long thingId = 0;
+  private long thingId;
     
   // get multiple thing stuff type ids 1,18,19,4
-  private long[] thingStuffTypeId = null;
+  private long[] thingStuffTypeId;
   
-  private String[] value = null;
-  private Boolean[] valueBol = null;
-  private Double[] valueDouble = null;
-  private Long[] valueLong = null;
-  private Date[] valueDate = null;
+  private String[] value;
+  private Boolean[] valueBol;
+  private Double[] valueDouble;
+  private Long[] valueLong;
+  private Date[] valueDate;
   
+  /**
+   * where expression using and &&
+   */
+  private ArrayList<String> whereAnd;
+  
+  /**
+   * where expression using or ||
+   */
+  private ArrayList<String> whereOr;
   
   public ThingStuffDataFilter() {
   }
@@ -123,12 +134,19 @@ public class ThingStuffDataFilter implements IsSerializable {
   }
   
   public String getFilter_And() {
-  	String s = null;
   	
-  	s = "thingId==" + thingId + " ";
+  	if (whereAnd == null) {
+  		whereAnd = new ArrayList<String>();
+  	}
+  	
+  	if (thingId > 0) {
+  		String s1 = "thingId==" + thingId;
+  		whereAnd.add(s1);
+  	}
   	
   	if (thingStuffId > 0) { // parent owner
-  		s += " && thingStuffId==" + thingStuffId + " ";
+  		String s2 = "thingStuffId==" + thingStuffId;
+  		whereAnd.add(s2);
   	}
   	
   	// I don't want to do this here, I can get it by object id
@@ -138,68 +156,61 @@ public class ThingStuffDataFilter implements IsSerializable {
 		
   	// filter by multiple stuffTypeIds
 		if (thingStuffTypeId != null && thingStuffTypeId.length > 0) {
-			s += "&&";
 			for (int i=0; i < thingStuffTypeId.length; i++) {
-				s += " thingStuffTypeId==" + thingStuffTypeId[i] + " ";
-				if (i < thingStuffTypeId.length - 1) {
-					s += "&&";
-				}
+				String s3= " thingStuffTypeId==" + thingStuffTypeId[i];
+				whereAnd.add(s3);
 			}
 		}
 		
 		// value string
 		if (value != null && value.length > 0) {
-			s += "&&";
 			for (int i=0; i < value.length; i++) {
-				s += " value==\"" + value[i] + "\" ";
-				if (i < value.length - 1) {
-					s += "&&";
-				}
+				String s4= "value==\"" + value[i] + "\"";
+				whereAnd.add(s4);
 			}
 		}
 		
 		// value boolean
 		if (valueBol != null && valueBol.length > 0) {
-			s += "&&";
 			for (int i=0; i < valueBol.length; i++) {
-				s += " valueBol==" + valueBol[i] + " ";
-				if (i < valueBol.length - 1) {
-					s += "&&";
-				}
+				String s5 = " valueBol==" + valueBol[i];
+				whereAnd.add(s5);
 			}
 		}
 		
 		// value double
 		if (valueDouble != null && valueDouble.length > 0) {
-			s += "&&";
 			for (int i=0; i < valueDouble.length; i++) {
-				s += " valueDouble==" + valueDouble[i] + " ";
-				if (i < valueDouble.length - 1) {
-					s += "&&";
-				}
+				String s6 = " valueDouble==" + valueDouble[i];
+				whereAnd.add(s6);
 			}
 		}
 		
 		// value long
 		if (valueLong != null && valueLong.length > 0) {
-			s += "&&";
 			for (int i=0; i < valueLong.length; i++) {
-				s += " valueLong==" + valueLong[i] + " ";
-				if (i < valueLong.length - 1) {
-					s += "&&";
-				}
+				String s7 = " valueLong==" + valueLong[i];
+				whereAnd.add(s7);
 			}
 		}
 		
 		if (valueDate != null && valueDate.length > 0) {
-			s += "&&";
 			for (int i=0; i < valueDate.length; i++) {
-				s += " valueDate==" + valueDate[i] + " ";
-				if (i < valueDate.length - 1) {
-					s += "&&";
-				}
+				String s8 = " valueDate==" + valueDate[i];
+				whereAnd.add(s8);
 			}
 		}
+		
+		String s = null;
+    for(int i=0; i < whereAnd.size(); i++) {
+    	if (s == null) {
+    		s = "";
+    	}
+    	s += whereAnd.get(i);
+    	if (i < whereAnd.size() - 1) {
+    		s += " && ";
+    	}
+    }
   	
   	return s;
   }

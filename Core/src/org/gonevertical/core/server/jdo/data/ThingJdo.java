@@ -22,6 +22,7 @@ import org.gonevertical.core.client.ui.admin.thing.ThingDataFilter;
 import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeData;
 import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeDataFilter;
 import org.gonevertical.core.server.ServerPersistence;
+import org.gonevertical.core.server.db.Db_Thing;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -30,6 +31,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class ThingJdo {
 
+	@NotPersistent
 	private static final Logger log = Logger.getLogger(ThingJdo.class.getName());
 	
 	@NotPersistent 
@@ -130,10 +132,10 @@ public class ThingJdo {
 		
 		if (thingIdKey != null && thingIdKey.getId() > 0) {
 			this.dateUpdated = new Date();
-			this.updatedByThingId = sp.getThingId();
+			this.updatedByThingId = sp.getUserThingId();
 		} else {
 			this.dateCreated = new Date();
-			this.createdByThingId = sp.getThingId();
+			this.createdByThingId = sp.getUserThingId();
 		}
 	}
 
@@ -156,10 +158,10 @@ public class ThingJdo {
 
 		if (thingIdKey != null && thingIdKey.getId() > 0) {
 			this.dateUpdated = new Date();
-			this.updatedByThingId = sp.getThingId();
+			this.updatedByThingId = sp.getUserThingId();
 		} else {
 			this.dateCreated = new Date();
-			this.createdByThingId = sp.getThingId();
+			this.createdByThingId = sp.getUserThingId();
 		}
 	}
 
@@ -403,6 +405,20 @@ public class ThingJdo {
 	public ThingData[] query(ThingDataFilter filter) {
 
 		String qfilter = filter.getFilter_Or();
+		
+		//TODO This is going to be an unowned relationship hack for now, since there is not an easy join yet.
+		//TODO This stinks at the moment, SQL is so much easier...
+    //TODO Workaround
+		if (filter.getThingIdLink() > 0) {
+			Db_Thing db = new Db_Thing(sp);
+			String csv = db.getThingIds(null, filter.getThingIdLink());
+			if (csv == null) {
+				return null;
+			}
+			qfilter = " thingIdKey.contains("+csv+") ";
+		}
+		
+		System.out.println("queryfilter: " + qfilter);
 		
 		ArrayList<ThingJdo> aT = new ArrayList<ThingJdo>();
 		PersistenceManager pm = sp.getPersistenceManager();

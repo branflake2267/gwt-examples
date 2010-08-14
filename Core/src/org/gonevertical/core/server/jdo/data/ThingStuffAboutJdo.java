@@ -32,6 +32,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class ThingStuffAboutJdo {
 
+	@NotPersistent
 	private static final Logger log = Logger.getLogger(ThingStuffAboutJdo.class.getName());
 
 	@NotPersistent
@@ -41,15 +42,15 @@ public class ThingStuffAboutJdo {
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key thingStuffAboutIdKey;
 
-	// who is the owner
+	// who is the main parent
 	@Persistent
-	private long thingId;
+	private long parentThingId;
 
 	// parent
 	@Persistent
-	private long thingStuffId;
+	private long parentThingStuffId;
 
-	// why kind of stuff, defined as type
+	// why kind of stuff, defined as type, is this type of stuff
 	@Persistent
 	private long thingStuffTypeId;
 
@@ -129,10 +130,10 @@ public class ThingStuffAboutJdo {
 		}
 		
 		// parent id
-		this.thingStuffId = thingStuffData.getStuffId();
+		this.parentThingStuffId = thingStuffData.getStuffId();
 
 		this.thingStuffTypeId = thingStuffData.getThingStuffTypeId();
-		this.thingId = thingStuffData.getThingId();
+		this.parentThingId = thingStuffData.getThingId();
 
 		this.value = thingStuffData.getValue();
 		this.valueBol = thingStuffData.getValueBol();
@@ -148,10 +149,10 @@ public class ThingStuffAboutJdo {
 
 		if (thingStuffData != null && thingStuffData.getStuffAboutId() > 0) {
 			this.dateUpdated = new Date();
-			this.updatedByThingId = sp.getThingId();
+			this.updatedByThingId = sp.getUserThingId();
 		} else {
 			this.dateCreated = new Date();
-			this.createdByThingId = sp.getThingId();
+			this.createdByThingId = sp.getUserThingId();
 		}
 	}
 
@@ -162,10 +163,10 @@ public class ThingStuffAboutJdo {
 		setKey(thingStuffJdo.getStuffId());
 
 		// parent id
-		this.thingStuffId = thingStuffJdo.getStuffId();
+		this.parentThingStuffId = thingStuffJdo.getStuffId();
 
 		this.thingStuffTypeId = thingStuffJdo.getThingStuffTypeId();
-		this.thingId = thingStuffJdo.getThingId();
+		this.parentThingId = thingStuffJdo.getThingId();
 
 		this.value = thingStuffJdo.getValue();
 		this.valueBol = thingStuffJdo.getValueBol();
@@ -181,10 +182,10 @@ public class ThingStuffAboutJdo {
 
 		if (thingStuffAboutIdKey != null && thingStuffAboutIdKey.getId() > 0) {
 			this.dateUpdated = new Date();
-			this.updatedByThingId = sp.getThingId();
+			this.updatedByThingId = sp.getUserThingId();
 		} else {
 			this.dateCreated = new Date();
-			this.createdByThingId = sp.getThingId();
+			this.createdByThingId = sp.getUserThingId();
 		}
 	}
 
@@ -448,8 +449,8 @@ public class ThingStuffAboutJdo {
 		for (int i=0; i < tsd.length; i++) {
 			r[i] = new ThingStuffAboutJdo(sp);
 
-			r[i].thingId = tsd[i].getThingId();
-			r[i].thingStuffId = tsd[i].getStuffId();
+			r[i].parentThingId = tsd[i].getThingId();
+			r[i].parentThingStuffId = tsd[i].getStuffId();
 			r[i].thingStuffAboutIdKey = getKey(tsd[i].getStuffId());
 			r[i].thingStuffTypeId = tsd[i].getThingStuffTypeId();
 
@@ -599,7 +600,7 @@ public class ThingStuffAboutJdo {
 	 * @return
 	 */
 	public long getStuffId() {
-		return thingStuffId;
+		return parentThingStuffId;
 	}
 
 	public long getStuffTypeId() {
@@ -607,7 +608,7 @@ public class ThingStuffAboutJdo {
 	}
 
 	public long getThingId() {
-		return thingId;
+		return parentThingId;
 	}
 
 	public long getThingStuffTypeId() {

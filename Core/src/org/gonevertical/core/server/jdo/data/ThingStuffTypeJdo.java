@@ -29,6 +29,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class ThingStuffTypeJdo {
 
+	@NotPersistent
 	private static final Logger log = Logger.getLogger(ThingStuffTypeJdo.class.getName());
 
 	@NotPersistent
@@ -116,10 +117,10 @@ public class ThingStuffTypeJdo {
 
 		if (stuffTypeIdKey != null && stuffTypeIdKey.getId() > 0) {
 			this.dateUpdated = new Date();
-			this.updatedByThingId = sp.getThingId();
+			this.updatedByThingId = sp.getUserThingId();
 		} else {
 			this.dateCreated = new Date();
-			this.createdByThingId = sp.getThingId();
+			this.createdByThingId = sp.getUserThingId();
 		}
 	}
 

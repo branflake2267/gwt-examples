@@ -1,5 +1,7 @@
 package org.gonevertical.core.client.ui.admin.thing;
 
+import org.gonevertical.core.server.jdo.data.ThingStuffJdo;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ThingDataFilter implements IsSerializable {
@@ -8,7 +10,7 @@ public class ThingDataFilter implements IsSerializable {
   private long limit = 0;
 
   /**
-   * filter by one thing
+   * filter by one thingIds in the stuff under links
    */
 	private long thingId;
 
@@ -16,6 +18,9 @@ public class ThingDataFilter implements IsSerializable {
    * filter by type
    */
   private long thingTypeId[] = null;
+
+  
+  private long thingIdLink;
 
   /**
    * constructor - nothing to do
@@ -54,9 +59,7 @@ public class ThingDataFilter implements IsSerializable {
   }
 
 	public String getFilter_Or() {
-		if (thingTypeId == null || thingTypeId.length == 0) {
-			return null;
-		}
+
 		String s = "";
 		if (thingTypeId != null && thingTypeId.length > 0) {
 			for (int i=0; i < thingTypeId.length; i++) {
@@ -66,15 +69,37 @@ public class ThingDataFilter implements IsSerializable {
 				}
 			}
 		}
+		
+		if (s != null && s.length() > 0) {
+			s += " || ";
+		}
+		
+		// TODO - not sure how to do a one to many unowned relationship, it doesn't look easy at moment, dang
+		if (s != null && thingIdLink > 0) {
+			//s += " "; 
+		}
+		
+		if (s != null && s.trim().length() == 0) {
+			s = null;
+		}
+			
 	  return s;
-  }
-
-	public long getThingId() {
-	  return thingId;
   }
 
 	public void setThingId(long thingId) {
 	  this.thingId = thingId;
   }
+	
+	public long getThingId() {
+	  return thingId;
+  }
+
+	public void setThingIdLink(long thingIdLink) {
+	  this.thingIdLink = thingIdLink;
+  }
+
+	public long getThingIdLink() {
+		return thingIdLink;
+	}
   
 }

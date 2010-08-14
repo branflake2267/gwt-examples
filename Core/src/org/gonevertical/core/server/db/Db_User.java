@@ -6,6 +6,7 @@ import org.gonevertical.core.client.oauth.OAuthTokenData;
 import org.gonevertical.core.client.ui.admin.thing.ThingData;
 import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffData;
 import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeData;
+import org.gonevertical.core.client.ui.admin.thingtype.ThingTypeData;
 import org.gonevertical.core.client.ui.login.ChangePasswordData;
 import org.gonevertical.core.client.ui.login.UserData;
 import org.gonevertical.core.server.ServerPersistence;
@@ -96,7 +97,7 @@ public class Db_User {
   	
     boolean acceptTerms = userData.getAcceptTerms();
     
-    dbTs.createThingStuff_Unique(newUserId, ThingStuffTypeData.THINGSTUFFTYPE_ACCEPTTERMS, acceptTerms);
+    dbTs.createThingStuff_Unique(newUserId, ThingTypeData.TYPE_USER, ThingStuffTypeData.THINGSTUFFTYPE_ACCEPTTERMS, acceptTerms);
     
   }
 

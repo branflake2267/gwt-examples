@@ -19,8 +19,8 @@ public class ThingStuffData implements IsSerializable {
   // what type of data is it?
   private long thingStuffTypeId;
 
-  // who is the owner, what thing
-  private long thingId;
+  // who is the parent, what thing
+  private long parentThingId;
   
   // store in string format
   private String value;
@@ -88,7 +88,7 @@ public class ThingStuffData implements IsSerializable {
    * @param dateUpdated
    */
   public void setData(
-  		long thingId, 
+  		long thingId,
   		long thingStuffId, 
       long thingStuffTypeId, 
       String value, 
@@ -105,7 +105,7 @@ public class ThingStuffData implements IsSerializable {
       Date dateUpdated,
       long[] ownerThingIds) {
   	
-    this.thingId = thingId;
+    this.parentThingId = thingId;
     this.thingStuffId = thingStuffId;
     this.thingStuffTypeId = thingStuffTypeId;
     
@@ -163,7 +163,7 @@ public class ThingStuffData implements IsSerializable {
       Date dateUpdated,
       long[] ownerThingIds) {
   	
-    this.thingId = thingId;
+    this.parentThingId = thingId;
     this.thingStuffId = thingStuffId;
     this.thingStuffAboutId = thingStuffAboutId;
     this.thingStuffTypeId = thingStuffTypeId;
@@ -203,13 +203,13 @@ public class ThingStuffData implements IsSerializable {
 	}
   
   public long getThingId() {
-    return thingId;
+    return parentThingId;
   }
-  
+
   public void setThingId(long thingId) {
-    this.thingId = thingId;
+    this.parentThingId = thingId;
   }
-  
+	
   public long getThingStuffTypeId() {
     return thingStuffTypeId;
   }
@@ -324,7 +324,7 @@ public class ThingStuffData implements IsSerializable {
 	
 	public String toString() {
 		String s = "";
-		s += "thingId=" + thingId + " ";
+		s += "thingId=" + parentThingId + " ";
 		s += "thingStuffId=" + thingStuffId + " ";
 		s += "thingStuffAboutId=" + thingStuffAboutId + " ";
 		s += "thingStuffTypeId=" + thingStuffTypeId + " ";
@@ -339,6 +339,9 @@ public class ThingStuffData implements IsSerializable {
 		
 		return s;
 	}
+
+
+
 
 
 

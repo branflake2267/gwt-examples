@@ -216,7 +216,7 @@ public class ThingStuffType extends Ui implements ChangeHandler, ClickHandler {
         if (changeEvent == EventManager.DELETE_YES && thingStuffTypeData.getStuffTypeId() > 0) {
           deleteRpc();
         } else {
-          //deleteIt(false);
+          deleteIt(true);
         }
       }
     });

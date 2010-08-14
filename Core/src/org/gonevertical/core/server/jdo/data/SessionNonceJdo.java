@@ -23,6 +23,7 @@ import com.google.appengine.api.datastore.Key;
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class SessionNonceJdo {
 
+	@NotPersistent
 	private static final Logger log = Logger.getLogger(SessionNonceJdo.class.getName());
 	
 	@NotPersistent

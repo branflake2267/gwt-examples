@@ -26,6 +26,7 @@ import com.google.appengine.api.datastore.Key;
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class SessionAccessTokenJdo {
 
+	@NotPersistent
 	private static final Logger log = Logger.getLogger(SessionAccessTokenJdo.class.getName());
 	
 	@NotPersistent

@@ -32,6 +32,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class ThingStuffJdo {
 
+	@NotPersistent
 	private static final Logger log = Logger.getLogger(ThingStuffJdo.class.getName());
 	
 	@NotPersistent
@@ -45,10 +46,10 @@ public class ThingStuffJdo {
 	@Persistent
 	private long thingStuffTypeId;
 
-	// who is the owner
+	// who is the parent
 	@Persistent
-	private long thingId;
-
+	private long parentThingId;
+	
 	// values that can be stored
 	@Persistent
 	private String value;
@@ -126,7 +127,7 @@ public class ThingStuffJdo {
 		// can't do this here, bc it messes up the key gotten from getObjectById, cant mutate key
 		//setKey(thingStuffData.getStuffId());
 
-		this.thingId = thingStuffData.getThingId();
+		this.parentThingId = thingStuffData.getThingId();
 		this.thingStuffTypeId = thingStuffData.getThingStuffTypeId();
 
 		this.value = thingStuffData.getValue();
@@ -143,10 +144,10 @@ public class ThingStuffJdo {
 
 		if (thingStuffData != null && thingStuffData.getStuffId() > 0) {
 			this.dateUpdated = new Date();
- 			this.updatedByThingId = sp.getThingId();
+ 			this.updatedByThingId = sp.getUserThingId();
 		} else {
 			this.dateCreated = new Date();
-			this.createdByThingId = sp.getThingId();
+			this.createdByThingId = sp.getUserThingId();
 		}
 	}
 
@@ -156,7 +157,7 @@ public class ThingStuffJdo {
 		}
 		setKey(thingStuffJdo.getId());
 
-		this.thingId = thingStuffJdo.getThingId();
+		this.parentThingId = thingStuffJdo.getThingId();
 		this.thingStuffTypeId = thingStuffJdo.getThingStuffTypeId();
 
 		this.value = thingStuffJdo.getValue();
@@ -173,16 +174,10 @@ public class ThingStuffJdo {
 
 		if (thingStuffIdKey != null && thingStuffIdKey.getId() > 0) {
 			this.dateUpdated = new Date();
-			this.updatedByThingId = sp.getThingId();
+			this.updatedByThingId = sp.getUserThingId();
 		} else {
 			this.dateCreated = new Date();
-			this.createdByThingId = sp.getThingId();
-		}
-	}
-
-	private void setKey(long id) {
-		if (id > 0) {
-			thingStuffIdKey = getKey(id);
+			this.createdByThingId = sp.getUserThingId();
 		}
 	}
 
@@ -465,19 +460,19 @@ public class ThingStuffJdo {
 
 		for (int i=0; i < tsd.length; i++) {
 			r[i] = new ThingStuffJdo(sp);
-			r[i].thingId = tsd[i].getThingId();
-			r[i].thingStuffIdKey = getKey(tsd[i].getStuffId());
-			r[i].thingStuffTypeId = tsd[i].getThingStuffTypeId();
+			r[i].setThingId(tsd[i].getThingId());
+			r[i].setThingStuffIdKey(getKey(tsd[i].getStuffId()));
+			r[i].setThingStuffTypeId(tsd[i].getThingStuffTypeId());
 
-			r[i].value = tsd[i].getValue();
-			r[i].valueBol = tsd[i].getValueBol();
-			r[i].valueDouble = tsd[i].getValueDouble();
-			r[i].valueLong = tsd[i].getValueLong();
+			r[i].setValue(tsd[i].getValue());
+			r[i].setValueBol(tsd[i].getValueBol());
+			r[i].setValueDouble(tsd[i].getValueDouble());
+			r[i].setValueLong(tsd[i].getValueLong());
 
-			r[i].startOf = tsd[i].getStartOf();
-			r[i].endOf = tsd[i].getEndOf();
-			r[i].rank = tsd[i].getRank();
-			r[i].ownerThingIds = tsd[i].getOwners();
+			r[i].setStartOf(tsd[i].getStartOf());
+			r[i].setEndOf(tsd[i].getEndOf());
+			r[i].setRank(tsd[i].getRank());
+			r[i].setOwnerThingIds(tsd[i].getOwners());
 			
 		}
 
@@ -558,6 +553,49 @@ public class ThingStuffJdo {
 		return true;
 	}
 
+	private void setKey(long id) {
+		if (id > 0) {
+			thingStuffIdKey = getKey(id);
+		}
+	}
+	
+	private void setOwnerThingIds(long[] ownerThingIds) {
+		this.ownerThingIds = ownerThingIds;
+  }
+
+	private void setEndOf(Date endOf) {
+	  this.endOf = endOf;
+  }
+
+	private void setStartOf(Date startOf) {
+	  this.startOf = startOf;
+  }
+
+	private void setValueLong(Long valueLong) {
+	  this.valueLong = valueLong;
+  }
+
+	private void setValueDouble(Double valueDouble) {
+		this.valueDouble = valueDouble;
+  }
+
+	private void setValueBol(Boolean valueBol) {
+		this.valueBol = valueBol;
+  }
+
+	private void setThingStuffTypeId(long thingStuffTypeId) {
+		this.thingStuffTypeId = thingStuffTypeId;
+  }
+
+	private void setThingStuffIdKey(Key thingStuffIdKey) {
+		this.thingStuffIdKey = thingStuffIdKey;
+  }
+
+	private void setThingId(long thingId) {
+		this.parentThingId = thingId;
+  }
+
+	
 	/**
 	 * get key long identity number
 	 * @return
@@ -582,7 +620,7 @@ public class ThingStuffJdo {
 	}
 
 	public long getThingId() {
-		return thingId;
+		return parentThingId;
 	}
 
 	public long getThingStuffTypeId() {

@@ -2,16 +2,21 @@ package org.gonevertical.core.server.db;
 
 import java.util.logging.Logger;
 
+import org.gonevertical.core.client.ClientPersistence;
 import org.gonevertical.core.client.oauth.OAuthTokenData;
+import org.gonevertical.core.client.oauth.Sha1;
 import org.gonevertical.core.client.ui.admin.thing.ThingData;
 import org.gonevertical.core.client.ui.admin.thing.ThingDataFilter;
 import org.gonevertical.core.client.ui.admin.thing.ThingsData;
 import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffData;
 import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffDataFilter;
 import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffsData;
+import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeData;
+import org.gonevertical.core.client.ui.admin.thingtype.ThingTypeData;
 import org.gonevertical.core.client.ui.admin.thingtype.ThingTypesData;
 import org.gonevertical.core.server.ServerPersistence;
 import org.gonevertical.core.server.jdo.data.ThingJdo;
+import org.gonevertical.core.server.jdo.data.ThingTypeJdo;
 
 public class Db_Thing {
 	
@@ -173,6 +178,58 @@ public class Db_Thing {
 	  return r;
   }
   
+	public String getThingIds(OAuthTokenData accessToken, long thingIdLink) {
+		
+		ThingStuffDataFilter filter = new ThingStuffDataFilter();
+		filter.setThingStuffTypeId(ThingStuffTypeData.THINGSTUFFTYPE_LINK);
+		filter.setValueLong(thingIdLink);
+		
+		ThingStuffData[] tsd = dbTs.getThingStuffData(accessToken, filter);
+		
+		long[] links = new long[tsd.length];
+		for (int i=0; i < tsd.length; i++) {
+			links[i] = tsd[i].getValueLong();
+		}
+		
+		String s = null;
+		if (links.length > 0) {
+			if (s == null) {
+				s = "";
+			}
+			for (int i=0; i < links.length; i++) {
+				s += links[i];
+				if (i < links.length -1) {
+					s += ",";
+				}
+			}
+		
+		}
+		
+		return s;
+	}
+	
+	/**
+	 * create a thing from set defaults
+	 * 
+	 * @param id
+	 * @param thingTypeId
+	 * @param key
+	 * @param password
+	 */
+	public void createThing(int id, int thingTypeId, String key, String password) {
+		Sha1 sha = new Sha1();
 
+		String secret = null;
+		if (password != null) {
+			secret = sha.hex_hmac_sha1(ClientPersistence.PASSWORD_SALT, password);
+		}
+		
+		//debug
+		System.out.println("SetDefaults.createThing(): key=" + key + " password=" + password);
+
+		ThingJdo a = new ThingJdo(sp);
+		a.setThingId(id);
+		a.insertUnique(thingTypeId, key, secret);
+	}
   
 }
