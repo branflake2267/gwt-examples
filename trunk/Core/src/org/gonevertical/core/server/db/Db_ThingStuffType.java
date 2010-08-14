@@ -1,5 +1,6 @@
 package org.gonevertical.core.server.db;
 
+import java.util.Date;
 import java.util.logging.Logger;
 
 import org.gonevertical.core.client.oauth.OAuthTokenData;
@@ -50,5 +51,42 @@ public class Db_ThingStuffType {
     boolean b = tstj.delete(thingStuffTypeData);
     return b;
   }
+  
+  /**
+	 * create stuff type for set defaults
+	 * 
+	 * @param id
+	 * @param name
+	 * @param valueTypeId
+	 */
+	public void createStuffType(int id, String name, int valueTypeId) {
+		
+		Date startOf = null;
+		Date endOf = null;
+		Double rank = null;
+		long createdBy = 0;
+		Date dateCreated = new Date();
+		long updatedBy = 0;
+		Date dateUpdated = null;
+		long[] ownerThingIds = null;
+		
+		ThingStuffTypeData tstd = new ThingStuffTypeData();
+		tstd.setData(
+				id, 
+				name, 
+				valueTypeId, 
+				startOf, 
+				endOf, 
+				rank, 
+				createdBy, 
+				dateCreated, 
+				updatedBy, 
+				dateUpdated, 
+				ownerThingIds);
+		
+		ThingStuffTypeJdo tstj = new ThingStuffTypeJdo(sp);
+		tstj.setData(tstd);
+		tstj.insertUnique();
+	}
   
 }

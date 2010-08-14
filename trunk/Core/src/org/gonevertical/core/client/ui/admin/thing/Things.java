@@ -353,15 +353,13 @@ public class Things extends Ui implements ClickHandler, ChangeHandler {
 
 		ThingDataFilter filter = new ThingDataFilter();
 		filter.setThingTypeId(wFilter.getThingTypeIds());
+		filter.setThingIdLink(wFilter.getThingIdLinker());
 		filter.setLimit(wPage.getStart(), wPage.getLimit());
 
 		rpc.getThings(cp.getAccessToken(), filter, new AsyncCallback<ThingsData>() {
 			public void onSuccess(ThingsData thingsData) {
-
 				process(thingsData);
-
 				cp.showLoading(false);
-
 			}
 			public void onFailure(Throwable caught) {
 				cp.setRpcFailure(caught);
@@ -375,6 +373,8 @@ public class Things extends Ui implements ClickHandler, ChangeHandler {
 		cp.showLoading(true);
 
 		ThingDataFilter filter = new ThingDataFilter();
+		filter.setThingTypeId(wFilter.getThingTypeIds());
+		filter.setThingIdLink(wFilter.getThingIdLinker());
 		filter.setLimit(wPage.getStart(), wPage.getLimit());
 
 		rpc.saveThings(cp.getAccessToken(), filter, thingData, new AsyncCallback<ThingsData>() {
@@ -391,6 +391,10 @@ public class Things extends Ui implements ClickHandler, ChangeHandler {
 
 	public long getSelectedThingId() {
 	  return selectedThingId;
+  }
+
+	public void setThingLinkers(long thingIdLinker) {
+		wFilter.setLinkers(thingIdLinker);
   }
 
 

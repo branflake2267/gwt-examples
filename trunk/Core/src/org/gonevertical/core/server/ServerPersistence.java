@@ -157,7 +157,7 @@ public class ServerPersistence {
 	 * 
 	 * @return
 	 */
-	public long getThingId() {
+	public long getUserThingId() {
 		return thingId;
 	}
 

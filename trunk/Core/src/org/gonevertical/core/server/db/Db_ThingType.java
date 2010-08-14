@@ -75,7 +75,20 @@ public class Db_ThingType {
     return b;
   }
   
-  
-  
+	/**
+	 * set defaults create thing type
+	 * 
+	 * @param id
+	 * @param name
+	 */
+	public void createThingType(int id, String name) {
+		ThingTypeData at = new ThingTypeData();
+		at.setKey(id);
+		at.setName(name);
+
+		ThingTypeJdo a = new ThingTypeJdo(sp);
+		a.setData(at);
+		a.insertUnique();
+	}
   
 }

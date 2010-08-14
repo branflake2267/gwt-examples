@@ -47,6 +47,8 @@ public class ThingEdit extends Ui implements ClickHandler, ChangeHandler, MouseO
 
 	private ThingStuffs wStuff;
 	private ThingStuffs wStuffAbout;
+	
+	private ThingLinkers wLinkers;
 
 	private TextBox tbKey = new TextBox();
 
@@ -77,6 +79,8 @@ public class ThingEdit extends Ui implements ClickHandler, ChangeHandler, MouseO
 
 		wStuffAbout = new ThingStuffs(cp);
 		wStuffAbout.setWidgetType(ThingStuffs.WIDGETTYPE_THINGSTUFFABOUT);
+		
+		wLinkers = new ThingLinkers(cp);
 
 		pThingTypes.add(lbThingTypes);
 
@@ -90,6 +94,7 @@ public class ThingEdit extends Ui implements ClickHandler, ChangeHandler, MouseO
 		pWidget.add(new HTML("&nbsp;"));
 		pWidget.add(pThingTypes);
 		pWidget.add(hp);
+		pWidget.add(wLinkers);
 
 		initWidget(pWidget);
 
@@ -108,6 +113,7 @@ public class ThingEdit extends Ui implements ClickHandler, ChangeHandler, MouseO
 	public void setData(ThingData thingData, ThingTypesData thingTypesData) {
 		this.thingData = thingData;
 		this.thingTypesData  = thingTypesData;
+		wLinkers.setThingData(thingData);
 	}
 
 	/**
@@ -117,6 +123,7 @@ public class ThingEdit extends Ui implements ClickHandler, ChangeHandler, MouseO
 
 		wStuff.clear();
 		wStuffAbout.clear();
+		wLinkers.close();
 
 		drawTop();
 
@@ -137,7 +144,9 @@ public class ThingEdit extends Ui implements ClickHandler, ChangeHandler, MouseO
 		// TODO - will need to interact with wStuff and wStuff About
 		filter.setLimit(0, 100);
 
-		getThingStuffRpc(filter);
+		if (thingData != null && thingData.getThingId() > 0) {
+			getThingStuffRpc(filter);
+		}
 	}
 
 	private void drawStartDt() {

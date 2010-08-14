@@ -3,12 +3,14 @@ package org.gonevertical.core.server.db;
 import java.util.logging.Logger;
 
 import org.gonevertical.core.client.oauth.OAuthTokenData;
+import org.gonevertical.core.client.ui.admin.thing.ThingData;
 import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffData;
 import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffDataFilter;
 import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffsData;
 import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeDataFilter;
 import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypesData;
 import org.gonevertical.core.server.ServerPersistence;
+import org.gonevertical.core.server.jdo.data.ThingJdo;
 import org.gonevertical.core.server.jdo.data.ThingStuffAboutJdo;
 import org.gonevertical.core.server.jdo.data.ThingStuffJdo;
 
@@ -18,10 +20,10 @@ public class Db_ThingStuff {
 	
   private ServerPersistence sp = null;
   
+  private ThingJdo dbThing;
 	private ThingStuffJdo dbThingStuffJdo;
-
 	private ThingStuffAboutJdo dbThingStuffAboutJdo;
-  
+
 	/**
 	 * construtor
 	 * 
@@ -29,6 +31,7 @@ public class Db_ThingStuff {
 	 */
   public Db_ThingStuff(ServerPersistence sp) {
     this.sp = sp;
+    dbThing = new ThingJdo(sp);
     dbThingStuffJdo = new ThingStuffJdo(sp);
     dbThingStuffAboutJdo = new ThingStuffAboutJdo(sp);
   }
@@ -119,6 +122,7 @@ public class Db_ThingStuff {
   		return true;
   	}
   	
+  	
     long stuffId = dbThingStuffJdo.save(thingStuffData);
     
     
@@ -147,7 +151,23 @@ public class Db_ThingStuff {
     return true;
   }
 
-  /**
+  private long getThingTypeId(ThingStuffData thingStuffData) {
+	  
+  	if (thingStuffData == null) {
+  		return 0;
+  	}
+  	
+  	ThingData thingData = dbThing.query(thingStuffData.getThingId());
+  	
+  	long thingTypeId = 0; 
+  	if (thingData != null) {
+  		thingTypeId = thingData.getThingTypeId();
+  	}
+  	
+	  return thingTypeId;
+  }
+
+	/**
    * delete stuff
    * 
    * @param accessToken
@@ -183,7 +203,7 @@ public class Db_ThingStuff {
     return b;
   }
   	
-	public void createThingStuff_Unique(long thingId, int thingStuffTypeId, long value) {
+	public void createThingStuff_Unique(long thingId, long thingTypeId, int thingStuffTypeId, long value) {
 
 		ThingStuffData ts2 = new ThingStuffData();
 		ts2.setThingId(thingId);
@@ -195,7 +215,7 @@ public class Db_ThingStuff {
 
 	}
 
-	public void createThingStuff_Unique(long thingId, int thingStuffTypeId, String value) {
+	public void createThingStuff_Unique(long thingId, long thingTypeId, int thingStuffTypeId, String value) {
 
 		ThingStuffData ts2 = new ThingStuffData();
 		ts2.setThingId(thingId);
@@ -207,7 +227,7 @@ public class Db_ThingStuff {
 
 	}
 
-	public void createThingStuff_Unique(long thingId, int thingStuffTypeId, boolean value) {
+	public void createThingStuff_Unique(long thingId, long thingTypeId, int thingStuffTypeId, boolean value) {
 
 		ThingStuffData ts2 = new ThingStuffData();
 		ts2.setThingId(thingId);
