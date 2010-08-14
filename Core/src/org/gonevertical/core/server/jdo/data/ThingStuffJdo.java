@@ -40,11 +40,11 @@ public class ThingStuffJdo {
 
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Key thingStuffIdKey;
+	private Key stuffIdKey;
 
 	// why kind of stuff, defined as type
 	@Persistent
-	private long thingStuffTypeId;
+	private long stuffTypeId;
 
 	// who is the parent
 	@Persistent
@@ -128,7 +128,7 @@ public class ThingStuffJdo {
 		//setKey(thingStuffData.getStuffId());
 
 		this.parentThingId = thingStuffData.getThingId();
-		this.thingStuffTypeId = thingStuffData.getThingStuffTypeId();
+		this.stuffTypeId = thingStuffData.getStuffTypeId();
 
 		this.value = thingStuffData.getValue();
 		this.valueBol = thingStuffData.getValueBol();
@@ -158,7 +158,7 @@ public class ThingStuffJdo {
 		setKey(thingStuffJdo.getId());
 
 		this.parentThingId = thingStuffJdo.getThingId();
-		this.thingStuffTypeId = thingStuffJdo.getThingStuffTypeId();
+		this.stuffTypeId = thingStuffJdo.getThingStuffTypeId();
 
 		this.value = thingStuffJdo.getValue();
 		this.valueBol = thingStuffJdo.getValueBol();
@@ -172,7 +172,7 @@ public class ThingStuffJdo {
 		this.rank = thingStuffJdo.getRank();
 		this.ownerThingIds = thingStuffJdo.getOwners();
 
-		if (thingStuffIdKey != null && thingStuffIdKey.getId() > 0) {
+		if (stuffIdKey != null && stuffIdKey.getId() > 0) {
 			this.dateUpdated = new Date();
 			this.updatedByThingId = sp.getUserThingId();
 		} else {
@@ -194,12 +194,12 @@ public class ThingStuffJdo {
 				update.set(sp);
 				update.setData(thingStuffData);
 				
-				this.thingStuffIdKey = update.thingStuffIdKey;
+				this.stuffIdKey = update.stuffIdKey;
 				
 				//System.out.println(" " + update.getUpdatedBy());
 				
 			} else { // insert
-				thingStuffIdKey = null;
+				stuffIdKey = null;
 				pm.makePersistent(this);
 			}
 
@@ -228,7 +228,7 @@ public class ThingStuffJdo {
 		// setup filter so that I only create unique by identities [thingId, thingStuffTypeId)
 		ThingStuffDataFilter filter = new ThingStuffDataFilter();
 		filter.setThingId(thingStuffData.getThingId());
-		filter.setThingStuffTypeId(thingStuffData.getThingStuffTypeId());
+		filter.setStuffTypeId(thingStuffData.getStuffTypeId());
 		
 		if (thingStuffData.getValue() != null) {
 			filter.setValueString(thingStuffData.getValue());
@@ -264,7 +264,7 @@ public class ThingStuffJdo {
 		try {
 			tx.begin();
 
-			thingStuffIdKey = null;
+			stuffIdKey = null;
 			pm.makePersistent(this);
 			
 			tx.commit();
@@ -462,7 +462,7 @@ public class ThingStuffJdo {
 			r[i] = new ThingStuffJdo(sp);
 			r[i].setThingId(tsd[i].getThingId());
 			r[i].setThingStuffIdKey(getKey(tsd[i].getStuffId()));
-			r[i].setThingStuffTypeId(tsd[i].getThingStuffTypeId());
+			r[i].setThingStuffTypeId(tsd[i].getStuffTypeId());
 
 			r[i].setValue(tsd[i].getValue());
 			r[i].setValueBol(tsd[i].getValueBol());
@@ -555,7 +555,7 @@ public class ThingStuffJdo {
 
 	private void setKey(long id) {
 		if (id > 0) {
-			thingStuffIdKey = getKey(id);
+			stuffIdKey = getKey(id);
 		}
 	}
 	
@@ -584,11 +584,11 @@ public class ThingStuffJdo {
   }
 
 	private void setThingStuffTypeId(long thingStuffTypeId) {
-		this.thingStuffTypeId = thingStuffTypeId;
+		this.stuffTypeId = thingStuffTypeId;
   }
 
 	private void setThingStuffIdKey(Key thingStuffIdKey) {
-		this.thingStuffIdKey = thingStuffIdKey;
+		this.stuffIdKey = thingStuffIdKey;
   }
 
 	private void setThingId(long thingId) {
@@ -601,10 +601,10 @@ public class ThingStuffJdo {
 	 * @return
 	 */
 	public long getId() {
-		if (thingStuffIdKey == null) {
+		if (stuffIdKey == null) {
 			return -1;
 		}
-		return thingStuffIdKey.getId();
+		return stuffIdKey.getId();
 	}
 
 	/**
@@ -612,11 +612,11 @@ public class ThingStuffJdo {
 	 * @return
 	 */
 	public long getStuffId() {
-		return thingStuffIdKey.getId();
+		return stuffIdKey.getId();
 	}
 
 	public long getStuffTypeId() {
-		return thingStuffTypeId;
+		return stuffTypeId;
 	}
 
 	public long getThingId() {
@@ -624,7 +624,7 @@ public class ThingStuffJdo {
 	}
 
 	public long getThingStuffTypeId() {
-		return thingStuffTypeId;
+		return stuffTypeId;
 	}
 
 	public void setValue(String value) {

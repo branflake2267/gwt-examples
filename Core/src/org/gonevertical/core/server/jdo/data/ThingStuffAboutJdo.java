@@ -132,7 +132,7 @@ public class ThingStuffAboutJdo {
 		// parent id
 		this.parentThingStuffId = thingStuffData.getStuffId();
 
-		this.thingStuffTypeId = thingStuffData.getThingStuffTypeId();
+		this.thingStuffTypeId = thingStuffData.getStuffTypeId();
 		this.parentThingId = thingStuffData.getThingId();
 
 		this.value = thingStuffData.getValue();
@@ -236,7 +236,7 @@ public class ThingStuffAboutJdo {
 		// setup filter so that I only create unique by identities [thingId, thingStuffTypeId)
 		ThingStuffDataFilter filter = new ThingStuffDataFilter();
 		filter.setThingId(thingStuffData.getThingId());
-		filter.setThingStuffTypeId(thingStuffData.getThingStuffTypeId());
+		filter.setStuffTypeId(thingStuffData.getStuffTypeId());
 		filter.setThingStuffId(thingStuffData.getStuffId());
 
 		if (thingStuffData.getValue() != null) {
@@ -452,7 +452,7 @@ public class ThingStuffAboutJdo {
 			r[i].parentThingId = tsd[i].getThingId();
 			r[i].parentThingStuffId = tsd[i].getStuffId();
 			r[i].thingStuffAboutIdKey = getKey(tsd[i].getStuffId());
-			r[i].thingStuffTypeId = tsd[i].getThingStuffTypeId();
+			r[i].thingStuffTypeId = tsd[i].getStuffTypeId();
 
 			r[i].value = tsd[i].getValue();
 			r[i].valueBol = tsd[i].getValueBol();

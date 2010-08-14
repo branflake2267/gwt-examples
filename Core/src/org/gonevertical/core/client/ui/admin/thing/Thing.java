@@ -121,7 +121,7 @@ public class Thing extends Ui implements ChangeHandler, ClickHandler {
   	
   	String n = null;
   	for (int i=0; i < tsds.getThingStuffData().length; i++) {
-  		if (tsds.getThingStuffData()[i].getThingStuffTypeId() == 1) {
+  		if (tsds.getThingStuffData()[i].getStuffTypeId() == 1) {
   			n = tsds.getThingStuffData()[i].getValue();
   		}
   	}

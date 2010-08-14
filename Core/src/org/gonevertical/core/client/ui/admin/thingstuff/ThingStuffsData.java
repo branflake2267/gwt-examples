@@ -56,7 +56,7 @@ public class ThingStuffsData implements IsSerializable {
   	
   	ThingStuffData tsd = null;
   	for (int i=0; i < thingStuffData.length; i++) {
-  		long tsid = thingStuffData[i].getThingStuffTypeId();
+  		long tsid = thingStuffData[i].getStuffTypeId();
   		if (thingStufftypeId == tsid) {
   			tsd = thingStuffData[i];
   			break;
@@ -73,7 +73,7 @@ public class ThingStuffsData implements IsSerializable {
   	
   	ArrayList<ThingStuffData> atsd = new ArrayList<ThingStuffData>();
   	for (int i=0; i < thingStuffData.length; i++) {
-  		long tsid = thingStuffData[i].getThingStuffTypeId();
+  		long tsid = thingStuffData[i].getStuffTypeId();
   		if (thingStufftypeId == tsid) {
   			atsd.add(thingStuffData[i]);
   		}

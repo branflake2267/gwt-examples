@@ -17,7 +17,7 @@ public class ThingStuffData implements IsSerializable {
   private long thingStuffAboutId;
 
   // what type of data is it?
-  private long thingStuffTypeId;
+  private long stuffTypeId;
 
   // who is the parent, what thing
   private long parentThingId;
@@ -107,7 +107,7 @@ public class ThingStuffData implements IsSerializable {
   	
     this.parentThingId = thingId;
     this.thingStuffId = thingStuffId;
-    this.thingStuffTypeId = thingStuffTypeId;
+    this.stuffTypeId = thingStuffTypeId;
     
     this.value = value;
     this.valueBol = valueBol;
@@ -166,7 +166,7 @@ public class ThingStuffData implements IsSerializable {
     this.parentThingId = thingId;
     this.thingStuffId = thingStuffId;
     this.thingStuffAboutId = thingStuffAboutId;
-    this.thingStuffTypeId = thingStuffTypeId;
+    this.stuffTypeId = thingStuffTypeId;
     
     this.value = value;
     this.valueBol = valueBol;
@@ -210,12 +210,12 @@ public class ThingStuffData implements IsSerializable {
     this.parentThingId = thingId;
   }
 	
-  public long getThingStuffTypeId() {
-    return thingStuffTypeId;
+  public long getStuffTypeId() {
+    return stuffTypeId;
   }
   
-  public void setThingStuffTypeId(long thingStuffTypeId) {
-    this.thingStuffTypeId = thingStuffTypeId;
+  public void setStuffTypeId(long thingStuffTypeId) {
+    this.stuffTypeId = thingStuffTypeId;
   }
   
   public void setValue(String value) {
@@ -327,7 +327,7 @@ public class ThingStuffData implements IsSerializable {
 		s += "thingId=" + parentThingId + " ";
 		s += "thingStuffId=" + thingStuffId + " ";
 		s += "thingStuffAboutId=" + thingStuffAboutId + " ";
-		s += "thingStuffTypeId=" + thingStuffTypeId + " ";
+		s += "thingStuffTypeId=" + stuffTypeId + " ";
 		s += "value=" + value + " ";
 		s += "valueBol=" + valueBol + " ";
 		s += "valueDouble=" + valueDouble + " ";

@@ -91,7 +91,7 @@ public class Db_WidgetAttr {
   	// find if the widget contains open
   	ThingStuffDataFilter filter = new ThingStuffDataFilter();
   	filter.setThingId(thingId_Widget);
-  	filter.setThingStuffTypeId(thingStuffTypeId);
+  	filter.setStuffTypeId(thingStuffTypeId);
   	filter.setValueLong(open);
   	
   	ThingStuffJdo tsj = new ThingStuffJdo(sp);
@@ -171,7 +171,7 @@ public class Db_WidgetAttr {
   		// find if the widget contains open
     	ThingStuffDataFilter filter = new ThingStuffDataFilter();
     	filter.setThingId(thingId_Person); // filter by person
-    	filter.setThingStuffTypeId(thingStuffTypeId); // filter by the linking
+    	filter.setStuffTypeId(thingStuffTypeId); // filter by the linking
     	filter.setValueLong(thingId_Widget);
     	
   		ThingStuffData[] tsds = tsj.query(filter);
@@ -182,7 +182,7 @@ public class Db_WidgetAttr {
   			ThingStuffDataFilter filter2 = new ThingStuffDataFilter();
   			filter2.setThingStuffId(thingStuffId); // parent owner
   	  	filter2.setThingId(thingId_Person);
-  	  	filter2.setThingStuffTypeId(stuffTypeId_closed);
+  	  	filter2.setStuffTypeId(stuffTypeId_closed);
   	  	ThingStuffData[] tsdsa = tsJa.query(filter2);
   	  	if (tsdsa != null && tsdsa.length > 0) {
   	  		Boolean bb = tsdsa[0].getValueBol();
@@ -199,7 +199,7 @@ public class Db_WidgetAttr {
   		// find if the widget contains open
     	ThingStuffDataFilter filter = new ThingStuffDataFilter();
     	filter.setThingId(thingId_Person); // filter by person
-    	filter.setThingStuffTypeId(thingStuffTypeId); // filter by the linking
+    	filter.setStuffTypeId(thingStuffTypeId); // filter by the linking
     	filter.setValueLong(thingId_Widget);
     	
   		ThingStuffData[] tsds = tsj.query(filter);
@@ -210,7 +210,7 @@ public class Db_WidgetAttr {
   			ThingStuffDataFilter filter2 = new ThingStuffDataFilter();
   			filter2.setThingStuffId(thingStuffId); // parent owner
   	  	filter2.setThingId(thingId_Person);
-  	  	filter2.setThingStuffTypeId(stuffTypeId_open);
+  	  	filter2.setStuffTypeId(stuffTypeId_open);
   	  	ThingStuffData[] tsdsa = tsJa.query(filter2);
   	  	if (tsdsa != null && tsdsa.length > 0) {
   	  		Boolean bb = tsdsa[0].getValueBol();

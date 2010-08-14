@@ -77,7 +77,7 @@ public class EmailWidget extends Composite implements ClickHandler {
 		String value = tbEmail.getText().trim();
 		if (tsd == null) {
 			tsd = new ThingStuffData();
-			tsd.setThingStuffTypeId(ThingStuffTypeData.THINGSTUFFTYPE_EMAIL);
+			tsd.setStuffTypeId(ThingStuffTypeData.THINGSTUFFTYPE_EMAIL);
 		}
 		tsd.setValue(value);
 	  return tsd;

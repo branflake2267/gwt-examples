@@ -207,7 +207,7 @@ public class Db_ThingStuff {
 
 		ThingStuffData ts2 = new ThingStuffData();
 		ts2.setThingId(thingId);
-		ts2.setThingStuffTypeId(thingStuffTypeId);
+		ts2.setStuffTypeId(thingStuffTypeId);
 		ts2.setValue(value);
 
 		ThingStuffJdo tsj2 = new ThingStuffJdo(sp);
@@ -219,7 +219,7 @@ public class Db_ThingStuff {
 
 		ThingStuffData ts2 = new ThingStuffData();
 		ts2.setThingId(thingId);
-		ts2.setThingStuffTypeId(thingStuffTypeId);
+		ts2.setStuffTypeId(thingStuffTypeId);
 		ts2.setValue(value);
 
 		ThingStuffJdo tsj2 = new ThingStuffJdo(sp);
@@ -231,7 +231,7 @@ public class Db_ThingStuff {
 
 		ThingStuffData ts2 = new ThingStuffData();
 		ts2.setThingId(thingId);
-		ts2.setThingStuffTypeId(thingStuffTypeId);
+		ts2.setStuffTypeId(thingStuffTypeId);
 		ts2.setValue(value);
 
 		ThingStuffJdo tsj2 = new ThingStuffJdo(sp);
