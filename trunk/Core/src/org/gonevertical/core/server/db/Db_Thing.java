@@ -66,7 +66,7 @@ public class Db_Thing {
   	for (int i=0; i < td.length; i++) {
   		ThingStuffDataFilter f = new ThingStuffDataFilter();
     	f.setThingId(td[i].getThingId());
-    	f.setThingStuffTypeId(1); // only get name
+    	f.setStuffTypeId(1); // only get name
     	
     	ThingStuffData[] tsd = dbTs.getThingStuffData(accessToken, f);
     	if (tsd != null && tsd.length > 0) {
@@ -181,7 +181,7 @@ public class Db_Thing {
 	public String getThingIds(OAuthTokenData accessToken, long thingIdLink) {
 		
 		ThingStuffDataFilter filter = new ThingStuffDataFilter();
-		filter.setThingStuffTypeId(ThingStuffTypeData.THINGSTUFFTYPE_LINK);
+		filter.setStuffTypeId(ThingStuffTypeData.THINGSTUFFTYPE_LINK);
 		filter.setValueLong(thingIdLink);
 		
 		ThingStuffData[] tsd = dbTs.getThingStuffData(accessToken, filter);

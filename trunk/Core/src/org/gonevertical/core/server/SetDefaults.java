@@ -185,7 +185,7 @@ public class SetDefaults {
 
 		ThingStuffDataFilter filter = new ThingStuffDataFilter();
 		filter.setThingId(thingId);
-		filter.setThingStuffTypeId(parentThingTypeId);
+		filter.setStuffTypeId(parentThingTypeId);
 		filter.setValueLong(parentLinkThingId);
 		
 		ThingStuffJdo tsj = new ThingStuffJdo(sp);

@@ -75,7 +75,7 @@ public class ThingStuffDataFilter implements IsSerializable {
   	return thingId;
   }
  
-  public void setThingStuffTypeId(long thingStuffTypeId) {
+  public void setStuffTypeId(long thingStuffTypeId) {
   	this.thingStuffTypeId = new long[1];
   	this.thingStuffTypeId[0] = thingStuffTypeId;
   }

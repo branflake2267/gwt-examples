@@ -326,7 +326,7 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
       //System.out.println("item: " + item + " value: " + value);
     }
         
-    long sel = thingStuffData.getThingStuffTypeId();
+    long sel = thingStuffData.getStuffTypeId();
     Global_ListBox.setSelected(lbTypes, (int) sel);
   }
   
@@ -508,7 +508,7 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
     }
     
     long stuffTypeId = Global_ListBox.getSelectedValue(lbTypes);
-    thingStuffData.setThingStuffTypeId(stuffTypeId);
+    thingStuffData.setStuffTypeId(stuffTypeId);
     thingStuffData.setValue(value);
     thingStuffData.setValue(valueBol);
     
