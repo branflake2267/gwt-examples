@@ -38,6 +38,15 @@ public class ThingStuffJdo {
 	@NotPersistent
 	private ServerPersistence sp = null;
 
+  // who is the parent
+	@Persistent
+	private long parentThingId;
+	
+  // recursive parent relationship
+	@Persistent
+	private long parentStuffId;
+	
+	
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key stuffIdKey;
@@ -46,10 +55,6 @@ public class ThingStuffJdo {
 	@Persistent
 	private long stuffTypeId;
 
-	// who is the parent
-	@Persistent
-	private long parentThingId;
-	
 	// values that can be stored
 	@Persistent
 	private String value;
@@ -127,7 +132,9 @@ public class ThingStuffJdo {
 		// can't do this here, bc it messes up the key gotten from getObjectById, cant mutate key
 		//setKey(thingStuffData.getStuffId());
 
-		this.parentThingId = thingStuffData.getThingId();
+		this.parentThingId = thingStuffData.getParentThingId();
+		this.parentStuffId = thingStuffData.getParentStuffId();
+		
 		this.stuffTypeId = thingStuffData.getStuffTypeId();
 
 		this.value = thingStuffData.getValue();
@@ -155,10 +162,12 @@ public class ThingStuffJdo {
 		if (thingStuffJdo == null) {
 			return;
 		}
-		setKey(thingStuffJdo.getId());
+		setKey(thingStuffJdo.getStuffId());
 
-		this.parentThingId = thingStuffJdo.getThingId();
-		this.stuffTypeId = thingStuffJdo.getThingStuffTypeId();
+		this.parentThingId = thingStuffJdo.getParentThingId();
+		this.parentStuffId = thingStuffJdo.getParentStuffId();
+		
+		this.stuffTypeId = thingStuffJdo.getStuffTypeId();
 
 		this.value = thingStuffJdo.getValue();
 		this.valueBol = thingStuffJdo.getValueBol();
@@ -181,18 +190,18 @@ public class ThingStuffJdo {
 		}
 	}
 
-	public long save(ThingStuffData thingStuffData) {
-		setData(thingStuffData);
+	public long save(ThingStuffData stuffData) {
+		setData(stuffData);
 
 		PersistenceManager pm = sp.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
 			tx.begin();
 
-			if (thingStuffData != null && thingStuffData.getStuffId() > 0) { // update
-				ThingStuffJdo update = pm.getObjectById(ThingStuffJdo.class, thingStuffData.getStuffId());
+			if (stuffData != null && stuffData.getStuffId() > 0) { // update
+				ThingStuffJdo update = pm.getObjectById(ThingStuffJdo.class, stuffData.getStuffId());
 				update.set(sp);
-				update.setData(thingStuffData);
+				update.setData(stuffData);
 				
 				this.stuffIdKey = update.stuffIdKey;
 				
@@ -219,44 +228,44 @@ public class ThingStuffJdo {
 		//System.out.println("ThingJdo: thingStuffId: " + getId() + " thingStuffTypeId: " + thingStuffTypeId + " " +
 		//"value: " + getString(value) + " valueBol: " + getString(valueBol) + " valueLong: " + getString(valueLong) + " valueDate: " + getString(valueDate));
 
-		return getId();
+		return getStuffId();
 	}
 
-	public long saveUnique(ThingStuffData thingStuffData) {
-		setData(thingStuffData);
+	public long saveUnique(ThingStuffData stuffData) {
+		setData(stuffData);
 
 		// setup filter so that I only create unique by identities [thingId, thingStuffTypeId)
 		ThingStuffDataFilter filter = new ThingStuffDataFilter();
-		filter.setThingId(thingStuffData.getThingId());
-		filter.setStuffTypeId(thingStuffData.getStuffTypeId());
+		filter.setParentThingId(stuffData.getParentThingId());
+		filter.setStuffTypeId(stuffData.getStuffTypeId());
 		
-		if (thingStuffData.getValue() != null) {
-			filter.setValueString(thingStuffData.getValue());
+		if (stuffData.getValue() != null) {
+			filter.setValueString(stuffData.getValue());
 		}
 		
-		if (thingStuffData.getValueBol() != null) {
-			filter.setValueBoolean(thingStuffData.getValueBol());
+		if (stuffData.getValueBol() != null) {
+			filter.setValueBoolean(stuffData.getValueBol());
 		}
 		
-		if (thingStuffData.getValueDouble() != null) {
-			filter.setValueDouble(thingStuffData.getValueDouble());
+		if (stuffData.getValueDouble() != null) {
+			filter.setValueDouble(stuffData.getValueDouble());
 		}
 		
-		if (thingStuffData.getValueLong() != null) {
-			filter.setValueLong(thingStuffData.getValueLong());
+		if (stuffData.getValueLong() != null) {
+			filter.setValueLong(stuffData.getValueLong());
 		}
 
 		ThingStuffData[] tsds = query(filter);
 		if (tsds != null && tsds.length > 0) {
 			ThingStuffData tsd = tsds[0];
-			tsds[0].setValue(thingStuffData.getValue());
-			tsds[0].setValue(thingStuffData.getValueBol());
-			tsds[0].setValue(thingStuffData.getValueDouble());
-			tsds[0].setValue(thingStuffData.getValueLong());
-			tsds[0].setValue(thingStuffData.getValueDate());
+			tsds[0].setValue(stuffData.getValue());
+			tsds[0].setValue(stuffData.getValueBol());
+			tsds[0].setValue(stuffData.getValueDouble());
+			tsds[0].setValue(stuffData.getValueLong());
+			tsds[0].setValue(stuffData.getValueDate());
 			
 			save(tsd);
-			return thingStuffData.getStuffId();
+			return stuffData.getStuffId();
 		}
 
 		PersistenceManager pm = sp.getPersistenceManager();
@@ -283,7 +292,7 @@ public class ThingStuffJdo {
 		//System.out.println("ThingJdo: thingStuffId: " + getId() + " thingStuffTypeId: " + thingStuffTypeId + " " +
 		//"value: " + getString(value) + " valueBol: " + getString(valueBol) + " valueLong: " + getString(valueLong) + " valueDate: " + getString(valueDate));
 
-		return getId();
+		return getStuffId();
 	}
 
 	/**
@@ -423,7 +432,7 @@ public class ThingStuffJdo {
 
 			r[i] = new ThingStuffData();
 			r[i].setData(
-					tsja.getThingId(),
+					tsja.getParentThingId(),
 					tsja.getStuffId(), 
 					tsja.getStuffTypeId(), 
 
@@ -460,14 +469,15 @@ public class ThingStuffJdo {
 
 		for (int i=0; i < tsd.length; i++) {
 			r[i] = new ThingStuffJdo(sp);
-			r[i].setThingId(tsd[i].getThingId());
-			r[i].setThingStuffIdKey(getKey(tsd[i].getStuffId()));
-			r[i].setThingStuffTypeId(tsd[i].getStuffTypeId());
+			r[i].setParentThingId(tsd[i].getParentThingId());
+			r[i].setStuffIdKey(getKey(tsd[i].getStuffId()));
+			r[i].setStuffTypeId(tsd[i].getStuffTypeId());
 
 			r[i].setValue(tsd[i].getValue());
 			r[i].setValueBol(tsd[i].getValueBol());
 			r[i].setValueDouble(tsd[i].getValueDouble());
 			r[i].setValueLong(tsd[i].getValueLong());
+			r[i].setValueDate(tsd[i].setValueDate());
 
 			r[i].setStartOf(tsd[i].getStartOf());
 			r[i].setEndOf(tsd[i].getEndOf());
@@ -481,9 +491,10 @@ public class ThingStuffJdo {
 		return l;
 	}
 
-	public boolean delete(long thingStuffTypeId) {
 
-		System.out.println("ThingStuffJdo.delete(): deleting: " + thingStuffTypeId);
+	public boolean delete(long stuffId) {
+
+		System.out.println("ThingStuffJdo.delete(): deleting: " + stuffId);
 
 		PersistenceManager pm = sp.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -491,7 +502,7 @@ public class ThingStuffJdo {
 		try {
 			tx.begin();
 
-			ThingStuffJdo ttj2 = (ThingStuffJdo) pm.getObjectById(ThingStuffJdo.class, thingStuffTypeId);
+			ThingStuffJdo ttj2 = (ThingStuffJdo) pm.getObjectById(ThingStuffJdo.class, stuffId);
 			pm.deletePersistent(ttj2);
 
 			tx.commit();
@@ -508,6 +519,43 @@ public class ThingStuffJdo {
 		}
 
 		return b;
+	}
+	
+	public boolean deleteByParentStuffId(long parentStuffId) {
+
+		if (parentStuffId == 0) {
+			return false;
+		}
+
+		String qfilter = "parentStuffId==" + parentStuffId + "";
+
+		PersistenceManager pm = sp.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+
+			Extent<ThingStuffJdo> e = pm.getExtent(ThingStuffJdo.class, true);
+			Query q = pm.newQuery(e, qfilter);
+			q.execute();
+
+			Collection<ThingStuffJdo> c = (Collection<ThingStuffJdo>) q.execute();
+
+			// delete all
+			pm.deletePersistentAll(c);
+
+			tx.commit();
+			q.closeAll();
+		} catch (Exception e) { 
+			e.printStackTrace();
+			log.log(Level.SEVERE, "", e);
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+
+		return true;
 	}
 
 	public boolean delete(ThingData thingData) {
@@ -553,119 +601,141 @@ public class ThingStuffJdo {
 		return true;
 	}
 
-	private void setKey(long id) {
-		if (id > 0) {
-			stuffIdKey = getKey(id);
-		}
-	}
 	
-	private void setOwnerThingIds(long[] ownerThingIds) {
-		this.ownerThingIds = ownerThingIds;
-  }
-
-	private void setEndOf(Date endOf) {
-	  this.endOf = endOf;
-  }
-
-	private void setStartOf(Date startOf) {
-	  this.startOf = startOf;
-  }
-
-	private void setValueLong(Long valueLong) {
-	  this.valueLong = valueLong;
-  }
-
-	private void setValueDouble(Double valueDouble) {
-		this.valueDouble = valueDouble;
-  }
-
-	private void setValueBol(Boolean valueBol) {
-		this.valueBol = valueBol;
-  }
-
-	private void setThingStuffTypeId(long thingStuffTypeId) {
-		this.stuffTypeId = thingStuffTypeId;
-  }
-
-	private void setThingStuffIdKey(Key thingStuffIdKey) {
-		this.stuffIdKey = thingStuffIdKey;
-  }
-
-	private void setThingId(long thingId) {
+	
+	private void setParentThingId(long thingId) {
 		this.parentThingId = thingId;
   }
 
+	public long getParentThingId() {
+		return parentThingId;
+	}
 	
-	/**
-	 * get key long identity number
-	 * @return
-	 */
-	public long getId() {
+	
+	public void setParentStuffId(long parentStuffId) {
+		this.parentStuffId = parentStuffId;
+	}
+	
+	public long getParentStuffId() {
+		return parentStuffId;
+	}
+	
+	
+	
+	
+	private void setStuffIdKey(Key stuffIdKey) {
+		this.stuffIdKey = stuffIdKey;
+  }
+	
+	public long getStuffId() {
 		if (stuffIdKey == null) {
 			return -1;
 		}
 		return stuffIdKey.getId();
 	}
 
-	/**
-	 * get id (same as getId()
-	 * @return
-	 */
-	public long getStuffId() {
-		return stuffIdKey.getId();
+		
+	
+	private void setKey(long id) {
+		if (id > 0) {
+			stuffIdKey = getKey(id);
+		}
+	}
+	
+	private Key getKey(long id) {
+		Key key = null;
+		if (id == 0) {
+			key = KeyFactory.createKey(ThingStuffJdo.class.getSimpleName(), id);
+		}
+		return key;
 	}
 
+
+	
+	private void setStuffTypeId(long stuffTypeId) {
+		this.stuffTypeId = stuffTypeId;
+  }
+	
 	public long getStuffTypeId() {
 		return stuffTypeId;
 	}
 
-	public long getThingId() {
-		return parentThingId;
-	}
 
-	public long getThingStuffTypeId() {
-		return stuffTypeId;
-	}
 
-	public void setValue(String value) {
-		this.value = value;
-	}
 
-	public void setValue(Boolean value) {
-		this.valueBol = value;
-	}
+	private void setValueDouble(Double valueDouble) {
+		this.valueDouble = valueDouble;
+  }
 
 	public void setValue(Double value) {
 		this.valueDouble = value;
+	}
+	
+	public Double getValueDouble() {
+		return valueDouble;
+	}
+	
+	
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	public String getValue() {
 		return value;
 	}
+	
+	
+	public void setValue(Boolean value) {
+		this.valueBol = value;
+	}
+	
+	private void setValueBol(Boolean valueBol) {
+		this.valueBol = valueBol;
+  }
 
 	public Boolean getValueBol() {
 		return valueBol;
 	}
 
-	public Double getValueDouble() {
-		return valueDouble;
-	}
+	
 
+
+	private void setValueLong(Long valueLong) {
+	  this.valueLong = valueLong;
+  }
+	
 	public Long getValueLong() {
 		return valueLong;
+	}
+	
+	
+	private void setValueDate(Date valueDate) {
+		this.valueDate = valueDate;
 	}
 	
 	private Date getValueDate() {
 	  return valueDate;
   }
+	
+	
 
+	private void setStartOf(Date startOf) {
+	  this.startOf = startOf;
+  }
+	
 	public Date getStartOf() {
 		return startOf;
 	}
 
+	
+	private void setEndOf(Date endOf) {
+	  this.endOf = endOf;
+  }
+	
 	public Date getEndOf() {
 		return endOf;
 	}
+	
 	
 	public void setRank(Double rank) {
 		this.rank = rank;
@@ -674,6 +744,7 @@ public class ThingStuffJdo {
 	public Double getRank() {
 		return rank;
 	}
+	
 
 	public Date getDateCreated() {
 		return dateCreated;
@@ -682,6 +753,7 @@ public class ThingStuffJdo {
 	public Date getDateUpdated() {
 		return dateUpdated;
 	}
+	
 
 	public long getCreatedBy() {
 		return createdByThingId;
@@ -691,21 +763,16 @@ public class ThingStuffJdo {
 		return updatedByThingId;
 	}
 	
-	public void setOwners(long[] ownerThingIds) {
+	
+	private void setOwnerThingIds(long[] ownerThingIds) {
 		this.ownerThingIds = ownerThingIds;
-	}
+  }
 	
 	public long[] getOwners() {
 		return ownerThingIds;
 	}
 
-	private Key getKey(long id) {
-		Key key = null;
-		if (id == 0) {
-			key = KeyFactory.createKey(ThingStuffJdo.class.getSimpleName(), id);
-		}
-		return key;
-	}
+
 
 	private String getString(Boolean value) {
 		String s = "";

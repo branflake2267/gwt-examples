@@ -26,50 +26,48 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("rpccore")
 public interface RpcCoreService extends RemoteService {
 
-	public String testMethod(String s);
-
+	// login session system
 	public OAuthTokenData requestToken(OAuthTokenData tokenData);
-	
   public UserData createUser(UserData userData);
-  
   public UserData doesUserNameExist(UserData userData);
-  
   public UserData forgotPassword(UserData userData);
-  
   public boolean changePassword(OAuthTokenData accessToken, ChangePasswordData changePassswordData);
-  
   public OAuthTokenData getUserAccessToken(OAuthTokenData appAccessToken);
   
-  
+  // setup defaults
   public boolean setDefaults(OAuthTokenData accessToken, int defaultType);
+  
+  // thing types
   public ThingTypesData getThingTypes(OAuthTokenData accessToken, ThingTypeDataFilter filter);
   public ThingTypesData saveThingTypes(OAuthTokenData accessToken, ThingTypeDataFilter filter, ThingTypeData[] thingTypeData);
   public boolean deleteThingType(OAuthTokenData accessToken, ThingTypeData thingTypeData);
   
-  
+  // things
   public ThingsData getThings(OAuthTokenData accessToken, ThingDataFilter filter);
   public ThingData saveThing(OAuthTokenData accessToken, ThingDataFilter filter, ThingData thingData);
   public ThingsData saveThings(OAuthTokenData accessToken, ThingDataFilter filter, ThingData[] thingData);
   public boolean deleteThing(OAuthTokenData accessToken, ThingData thingData);
   
-  
+  // thing types
   public ThingStuffTypesData getThingStuffTypes(OAuthTokenData accessToken, ThingStuffTypeDataFilter filter);
-  public ThingStuffTypesData saveThingStuffTypes(OAuthTokenData accessToken, ThingStuffTypeDataFilter filter, ThingStuffTypeData[] thingStuffTypeData);
-  public boolean deleteThingStuffType(OAuthTokenData accessToken, ThingStuffTypeData thingStuffTypeData);
-  public boolean deleteThingStuffAboutData(OAuthTokenData accessToken, long thingStuffAboutId);
+  public ThingStuffTypesData saveThingStuffTypes(OAuthTokenData accessToken, ThingStuffTypeDataFilter filter, ThingStuffTypeData[] stuffTypeData);
+  public boolean deleteThingStuffType(OAuthTokenData accessToken, ThingStuffTypeData stuffTypeData);
  
-  
+  // thing stuff data
   public ThingStuffsData getThingStuffData(OAuthTokenData accessToken, ThingStuffDataFilter filter);
-  public ThingStuffsData saveThingStuffData(OAuthTokenData accessToken, ThingStuffDataFilter filter, ThingStuffData[] thingStuffData);
-  public boolean deleteThingStuffData(OAuthTokenData accessToken, long thingStuffId);
-  
-  //public ThingLinksData getHierarchy(OAuthTokenData accessToken, ThingLinkFilterData filter);
-  
-  public boolean saveFeedBack(FeedbackData feedbackData);
-  
-  public WidgetAttrData getWidgetAttributes(OAuthTokenData accessToken, WidgetAttrDataFilter widgetAttrDataFilter);
-  
+  public ThingStuffsData saveThingStuffData(OAuthTokenData accessToken, ThingStuffDataFilter filter, ThingStuffData[] stuffData);
+  public boolean deleteThingStuffData(OAuthTokenData accessToken, long stuffId);
+    
   // account data
   public AccountData getAccountData(OAuthTokenData accessToken, long thingId);
   public AccountData saveAccountData(OAuthTokenData accessToken, ThingDataFilter filter, AccountData accountData);
+  
+  // misc
+  public boolean saveFeedBack(FeedbackData feedbackData);
+  public WidgetAttrData getWidgetAttributes(OAuthTokenData accessToken, WidgetAttrDataFilter widgetAttrDataFilter);
+  
+  
+  
+  
+  
 }

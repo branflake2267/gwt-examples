@@ -3,9 +3,7 @@ package org.gonevertical.core.server;
 import java.util.Date;
 import java.util.logging.Logger;
 
-import org.gonevertical.core.client.ClientPersistence;
 import org.gonevertical.core.client.SetDefaultsData;
-import org.gonevertical.core.client.oauth.Sha1;
 import org.gonevertical.core.client.ui.admin.thing.ThingData;
 import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffData;
 import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffDataFilter;
@@ -15,11 +13,7 @@ import org.gonevertical.core.server.db.Db_Thing;
 import org.gonevertical.core.server.db.Db_ThingStuff;
 import org.gonevertical.core.server.db.Db_ThingStuffType;
 import org.gonevertical.core.server.db.Db_ThingType;
-import org.gonevertical.core.server.jdo.data.ThingJdo;
-import org.gonevertical.core.server.jdo.data.ThingStuffAboutJdo;
 import org.gonevertical.core.server.jdo.data.ThingStuffJdo;
-import org.gonevertical.core.server.jdo.data.ThingStuffTypeJdo;
-import org.gonevertical.core.server.jdo.data.ThingTypeJdo;
 
 /**
  * TODO - link of the defaults static constants
@@ -160,17 +154,17 @@ public class SetDefaults {
 
 		// create multi-demo about the link
 		// link 3,2,6 - 4(canview)=true
-		createThingStuffMulti(ThingData.THING_USER_DEMO, ThingStuffTypeData.THINGSTUFFTYPE_LINK, 6, 4, new Boolean(true));
-		createThingStuffMulti(ThingData.THING_USER_DEMO, ThingStuffTypeData.THINGSTUFFTYPE_LINK, 7, 4, new Boolean(true));
-		createThingStuffMulti(ThingData.THING_USER_DEMO, ThingStuffTypeData.THINGSTUFFTYPE_LINK, 8, 4, new Boolean(true));
-		createThingStuffMulti(ThingData.THING_USER_DEMO, ThingStuffTypeData.THINGSTUFFTYPE_LINK, 9, 4, new Boolean(true));
+		//createStuffChildren(ThingData.THING_USER_DEMO, 6, 4, new Boolean(true));
+		//createStuffChildren(ThingData.THING_USER_DEMO, 7, 4, new Boolean(true));
+		//createStuffChildren(ThingData.THING_USER_DEMO, 8, 4, new Boolean(true));
+		//createStuffChildren(ThingData.THING_USER_DEMO, 9, 4, new Boolean(true));
 	}
 
-	public void createThingStuffMulti(
-			long thingId, 
-			long parentThingTypeId, 
-			long parentLinkThingId, 
-			long thingStuffTypeId, 
+	// This needs to be fixed
+	public void createStuffChildren(
+			long parentThingId,
+			long parentThingTypeId,
+			long stuffTypeId, 
 			Boolean valueBol) {
 		
 		String value = null;
@@ -183,15 +177,16 @@ public class SetDefaults {
 		Date dateCreated = new Date();
 		Date dateUpdated = null;
 
+		// get the parent
 		ThingStuffDataFilter filter = new ThingStuffDataFilter();
-		filter.setThingId(thingId);
-		filter.setStuffTypeId(parentThingTypeId);
-		filter.setValueLong(parentLinkThingId);
+		filter.setParentThingId(parentThingId);
+		filter.setStuffTypeId(stuffTypeId);
+		filter.setValueLong(parentThingId);
 		
 		ThingStuffJdo tsj = new ThingStuffJdo(sp);
 		ThingStuffData[] r = tsj.query(filter);
 
-		long stuffId = r[0].getStuffId();
+		long parentStuffId = r[0].getStuffId();
 		
 		Double rank = Double.parseDouble("0");
 		long[] ownerThingIds = null;
@@ -200,12 +195,13 @@ public class SetDefaults {
 		long updatedBy = 0;
 		
 		ThingStuffData tsd = new ThingStuffData();
-		tsd.setStuffId(stuffId);
 		tsd.setData(
-				parentLinkThingId,
-				parentThingTypeId,
-				stuffId, 
-				thingStuffTypeId, 
+				parentThingId,
+				parentStuffId,
+				
+				parentStuffId, 
+				stuffTypeId, 
+				
 				value, 
 				valueBol, 
 				valueDouble, 
@@ -220,7 +216,7 @@ public class SetDefaults {
 				dateUpdated, 
 				ownerThingIds);
 		
-		ThingStuffAboutJdo tsaj = new ThingStuffAboutJdo(sp);
+		ThingStuffJdo tsaj = new ThingStuffJdo(sp);
 		tsaj.saveUnique(tsd);
 	}
 

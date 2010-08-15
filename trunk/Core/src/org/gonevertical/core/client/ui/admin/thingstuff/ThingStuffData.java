@@ -2,26 +2,23 @@ package org.gonevertical.core.client.ui.admin.thingstuff;
 
 import java.util.Date;
 
-import javax.jdo.annotations.Persistent;
-
-import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeData;
-
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ThingStuffData implements IsSerializable {
-	  
-	// identity for just stuff
-  private long thingStuffId;
-  
-  // identity for about stuff
-  private long thingStuffAboutId;
+	
+  // who is the parent, what thing
+  private long parentThingId;
 
+  // identity for about stuff
+  private long parentStuffId;
+  
+  
+	// identity for just stuff
+  private long stuffId;
+  
   // what type of data is it?
   private long stuffTypeId;
 
-  // who is the parent, what thing
-  private long parentThingId;
-  
   // store in string format
   private String value;
   
@@ -40,7 +37,7 @@ public class ThingStuffData implements IsSerializable {
   private Date valueDate;
   
   // define the link type - adjetives of the relationship
-  private ThingStuffsData thingStuffsAbout;
+  private ThingStuffsData thingStuffsChild;
   
   // when did this start in time
   private Date startOf;
@@ -76,8 +73,8 @@ public class ThingStuffData implements IsSerializable {
    * set stuff
    * 
    * @param thingId
-   * @param thingStuffId
-   * @param thingStuffTypeId
+   * @param stuffId
+   * @param stuffTypeId
    * @param value
    * @param valueBol
    * @param valueDouble
@@ -89,8 +86,8 @@ public class ThingStuffData implements IsSerializable {
    */
   public void setData(
   		long thingId,
-  		long thingStuffId, 
-      long thingStuffTypeId, 
+  		long stuffId, 
+      long stuffTypeId, 
       String value, 
       Boolean valueBol, 
       Double valueDouble, 
@@ -106,8 +103,9 @@ public class ThingStuffData implements IsSerializable {
       long[] ownerThingIds) {
   	
     this.parentThingId = thingId;
-    this.thingStuffId = thingStuffId;
-    this.stuffTypeId = thingStuffTypeId;
+    
+    this.stuffId = stuffId;
+    this.stuffTypeId = stuffTypeId;
     
     this.value = value;
     this.valueBol = valueBol;
@@ -130,11 +128,13 @@ public class ThingStuffData implements IsSerializable {
   /**
    * set stuff "about"
    *   Note: this one has ThingStuffAboutId
+   *   
+   *   Setting a recursive ThingStuffData
    * 
-   * @param thingId
-   * @param thingStuffId
-   * @param thingStuffAboutId
-   * @param thingStuffTypeId
+   * @param parentThingId
+   * @param stuffId
+   * @param parentStuffId
+   * @param stuffTypeId
    * @param value
    * @param valueBol
    * @param valueDouble
@@ -145,10 +145,11 @@ public class ThingStuffData implements IsSerializable {
    * @param dateUpdated
    */
   public void setData(
-  		long thingId, 
-  		long thingStuffId, 
-  		long thingStuffAboutId,
-      long thingStuffTypeId, 
+  		long parentThingId, 
+  		long parentStuffId,
+  		
+  		long stuffId, 
+      long stuffTypeId, 
       String value, 
       Boolean valueBol, 
       Double valueDouble, 
@@ -163,10 +164,11 @@ public class ThingStuffData implements IsSerializable {
       Date dateUpdated,
       long[] ownerThingIds) {
   	
-    this.parentThingId = thingId;
-    this.thingStuffId = thingStuffId;
-    this.thingStuffAboutId = thingStuffAboutId;
-    this.stuffTypeId = thingStuffTypeId;
+    this.parentThingId = parentThingId;
+    this.parentStuffId = parentStuffId;
+    
+    this.stuffId = stuffId;
+    this.stuffTypeId = stuffTypeId;
     
     this.value = value;
     this.valueBol = valueBol;
@@ -186,36 +188,38 @@ public class ThingStuffData implements IsSerializable {
     this.dateUpdated = dateUpdated;
   }
   
-  public long getStuffId() {
-    return thingStuffId;
-  }
   
-  public void setStuffId(long thingStuffId) {
-    this.thingStuffId = thingStuffId;
-  }
-  
-	public void setStuffAboutId(long thingStuffAboutId) {
-		this.thingStuffAboutId = thingStuffAboutId;
-  }
-	
-	public long getStuffAboutId() {
-		return thingStuffAboutId;
-	}
-  
-  public long getThingId() {
+  public long getParentThingId() {
     return parentThingId;
   }
 
-  public void setThingId(long thingId) {
+  public void setParentThingId(long thingId) {
     this.parentThingId = thingId;
   }
+  
+  public void setParentStuffId(long parentStuffId) {
+		this.parentStuffId = parentStuffId;
+  }
 	
+	public long getParentStuffId() {
+		return parentStuffId;
+	}
+  
+  
+  public long getStuffId() {
+    return stuffId;
+  }
+  
+  public void setStuffId(long stuffId) {
+    this.stuffId = stuffId;
+  }
+  
   public long getStuffTypeId() {
     return stuffTypeId;
   }
   
-  public void setStuffTypeId(long thingStuffTypeId) {
-    this.stuffTypeId = thingStuffTypeId;
+  public void setStuffTypeId(long stuffTypeId) {
+    this.stuffTypeId = stuffTypeId;
   }
   
   public void setValue(String value) {
@@ -262,16 +266,20 @@ public class ThingStuffData implements IsSerializable {
     return valueLong;
   }
   
+	public Date setValueDate() {
+	  return valueDate;
+  }
+  
   public Date getValueDate() {
   	return valueDate;
   }
 
-	public ThingStuffsData getThingStuffsAbout() {
-	  return thingStuffsAbout;
+	public ThingStuffsData getChildStuffs() {
+	  return thingStuffsChild;
   }
 	
-	public void setThingStuffsAbout(ThingStuffsData thingStuffAbout) {
-		this.thingStuffsAbout = thingStuffAbout;
+	public void setThingStuffChilds(ThingStuffsData thingStuffChilds) {
+		this.thingStuffsChild = thingStuffChilds;
 	}
 	
 	public void setStartOf(Date startOf) {
@@ -325,8 +333,8 @@ public class ThingStuffData implements IsSerializable {
 	public String toString() {
 		String s = "";
 		s += "thingId=" + parentThingId + " ";
-		s += "thingStuffId=" + thingStuffId + " ";
-		s += "thingStuffAboutId=" + thingStuffAboutId + " ";
+		s += "thingStuffId=" + stuffId + " ";
+		s += "thingStuffAboutId=" + parentStuffId + " ";
 		s += "thingStuffTypeId=" + stuffTypeId + " ";
 		s += "value=" + value + " ";
 		s += "valueBol=" + valueBol + " ";
@@ -339,6 +347,8 @@ public class ThingStuffData implements IsSerializable {
 		
 		return s;
 	}
+
+
 
 
 

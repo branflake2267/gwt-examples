@@ -230,12 +230,12 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
     return r;
   }
 
-  public boolean deleteThingStuffType(OAuthTokenData accessToken, ThingStuffTypeData thingStuffTypeData) {
+  public boolean deleteThingStuffType(OAuthTokenData accessToken, ThingStuffTypeData stuffTypeData) {
     sp.start(getThreadLocalRequest(), accessToken);
     boolean r = false;
     try {
 	    Db_ThingStuffType t = new Db_ThingStuffType(sp);
-	    r = t.delete(accessToken, thingStuffTypeData);
+	    r = t.delete(accessToken, stuffTypeData);
     } catch (Exception e) {
     	log.log(Level.SEVERE, "RpcCoreServiceImpl.deleteThingStuff(): Error:", e);
     }
@@ -256,12 +256,12 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
     return r;
   }
 
-  public ThingStuffTypesData saveThingStuffTypes(OAuthTokenData accessToken, ThingStuffTypeDataFilter filter, ThingStuffTypeData[] thingStuffTypeData) {
+  public ThingStuffTypesData saveThingStuffTypes(OAuthTokenData accessToken, ThingStuffTypeDataFilter filter, ThingStuffTypeData[] stuffTypeData) {
     sp.start(getThreadLocalRequest(), accessToken);
     ThingStuffTypesData r = null;
     try {
 	    Db_ThingStuffType t = new Db_ThingStuffType(sp);
-	    r = t.saveThingStuffTypes(accessToken, filter, thingStuffTypeData);
+	    r = t.saveThingStuffTypes(accessToken, filter, stuffTypeData);
     } catch (Exception e) {
     	log.log(Level.SEVERE, "RpcCoreServiceImpl.saveThingStuffTypes(): Error:", e);
     }
@@ -282,12 +282,12 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
     return r;
   }
   
-  public ThingStuffsData saveThingStuffData(OAuthTokenData accessToken, ThingStuffDataFilter filter, ThingStuffData[] thingStuffData) {
+  public ThingStuffsData saveThingStuffData(OAuthTokenData accessToken, ThingStuffDataFilter filter, ThingStuffData[] stuffData) {
     sp.start(getThreadLocalRequest(), accessToken);
     ThingStuffsData r = null;
     try {
 	    Db_ThingStuff db = new Db_ThingStuff(sp);
-	    r = db.saveThingStuffData(accessToken, filter, thingStuffData);
+	    r = db.saveThingStuffData(accessToken, filter, stuffData);
     } catch (Exception e) {
     	log.log(Level.SEVERE, "RpcCoreServiceImpl.saveThingStuffData(): Error:", e);
     }
@@ -295,12 +295,12 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
     return r;
   }
   
-  public boolean deleteThingStuffData(OAuthTokenData accessToken, long thingStuffId) {
+  public boolean deleteThingStuffData(OAuthTokenData accessToken, long stuffId) {
     sp.start(getThreadLocalRequest(), accessToken);
     boolean r = false;
     try {
 	    Db_ThingStuff db = new Db_ThingStuff(sp);
-	    r = db.deleteThingStuffData(accessToken, thingStuffId);
+	    r = db.deleteThingStuffData(accessToken, stuffId);
     } catch (Exception e) {
     	log.log(Level.SEVERE, "RpcCoreServiceImpl.deleteThingStuffData(): Error:", e);
     }
@@ -319,19 +319,6 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
     }
     sp.end();
     return r;
-  }
-
-  public boolean deleteThingStuffAboutData(OAuthTokenData accessToken, long thingStuffAboutId) {
-  	sp.start(getThreadLocalRequest(), accessToken);
-  	boolean r = false;
-    try {
-	    Db_ThingStuff db = new Db_ThingStuff(sp);
-	    r = db.deleteThingStuffAboutData(accessToken, thingStuffAboutId);
-    } catch (Exception e) {
-    	log.log(Level.SEVERE, "RpcCoreServiceImpl.deleteThingStuffAboutData(): Error:", e);
-    }
-  	sp.end();
-	  return r;
   }
 
   // add accessToken to this

@@ -4,8 +4,6 @@ import org.gonevertical.core.client.ClientPersistence;
 import org.gonevertical.core.client.global.DeleteDialog;
 import org.gonevertical.core.client.global.EventManager;
 import org.gonevertical.core.client.global.Global_Date;
-import org.gonevertical.core.client.rpc.RpcCore;
-import org.gonevertical.core.client.rpc.RpcCoreServiceAsync;
 import org.gonevertical.core.client.ui.Ui;
 import org.gonevertical.core.client.ui.widgets.Row;
 
@@ -18,7 +16,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;

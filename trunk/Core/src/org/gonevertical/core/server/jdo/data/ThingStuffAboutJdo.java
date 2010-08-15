@@ -29,8 +29,8 @@ import org.gonevertical.core.server.ServerPersistence;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
-@PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
-public class ThingStuffAboutJdo {
+@Deprecated
+@PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true") class ThingStuffAboutJdo {
 
 	@NotPersistent
 	private static final Logger log = Logger.getLogger(ThingStuffAboutJdo.class.getName());
@@ -48,7 +48,7 @@ public class ThingStuffAboutJdo {
 
 	// parent
 	@Persistent
-	private long parentThingStuffId;
+	private long parentStuffId;
 
 	// why kind of stuff, defined as type, is this type of stuff
 	@Persistent
@@ -108,7 +108,8 @@ public class ThingStuffAboutJdo {
 	 * 
 	 * @throws Exception
 	 */
-	public ThingStuffAboutJdo() throws Exception {
+	@Deprecated
+	private ThingStuffAboutJdo() throws Exception {
 		//System.err.println("Don't use this constructor - Exiting");
 		//throw new Exception();
 	}
@@ -116,24 +117,27 @@ public class ThingStuffAboutJdo {
 	/**
 	 * constructor
 	 */
-	public ThingStuffAboutJdo(ServerPersistence sp) {
+	@Deprecated
+	private ThingStuffAboutJdo(ServerPersistence sp) {
 		this.sp = sp;
 	}
 	
-	public void set(ServerPersistence sp) {
+	@Deprecated
+	private void set(ServerPersistence sp) {
 		this.sp = sp;
 	}
 
-	public void setData(ThingStuffData thingStuffData) {
+	@Deprecated
+	private void setAboutStuffData(ThingStuffData thingStuffData) {
 		if (thingStuffData == null) {
 			return;
 		}
 		
 		// parent id
-		this.parentThingStuffId = thingStuffData.getStuffId();
+		this.parentStuffId = thingStuffData.getStuffId();
 
 		this.thingStuffTypeId = thingStuffData.getStuffTypeId();
-		this.parentThingId = thingStuffData.getThingId();
+		this.parentThingId = thingStuffData.getParentThingId();
 
 		this.value = thingStuffData.getValue();
 		this.valueBol = thingStuffData.getValueBol();
@@ -147,7 +151,7 @@ public class ThingStuffAboutJdo {
 		this.rank = thingStuffData.getRank();
 		this.ownerThingIds = thingStuffData.getOwners();
 
-		if (thingStuffData != null && thingStuffData.getStuffAboutId() > 0) {
+		if (thingStuffData != null && thingStuffData.getParentStuffId() > 0) {
 			this.dateUpdated = new Date();
 			this.updatedByThingId = sp.getUserThingId();
 		} else {
@@ -156,14 +160,15 @@ public class ThingStuffAboutJdo {
 		}
 	}
 
-	public void setData(ThingStuffAboutJdo thingStuffJdo) {
+	@Deprecated
+	private void setAboutStuffData(ThingStuffAboutJdo thingStuffJdo) {
 		if (thingStuffJdo == null) {
 			return;
 		}
-		setKey(thingStuffJdo.getStuffId());
+		setKey(thingStuffJdo.getParentStuffId());
 
 		// parent id
-		this.parentThingStuffId = thingStuffJdo.getStuffId();
+		this.parentStuffId = thingStuffJdo.getParentStuffId();
 
 		this.thingStuffTypeId = thingStuffJdo.getThingStuffTypeId();
 		this.parentThingId = thingStuffJdo.getThingId();
@@ -195,18 +200,18 @@ public class ThingStuffAboutJdo {
 		}
 	}
 
-	public long save(ThingStuffData thingStuffData) {
-		setData(thingStuffData);
+	private long save(ThingStuffData thingStuffData) {
+		setAboutStuffData(thingStuffData);
 
 		PersistenceManager pm = sp.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
 			tx.begin();
 
-			if (thingStuffData != null && thingStuffData.getStuffAboutId() > 0) { // update
-				ThingStuffAboutJdo update = pm.getObjectById(ThingStuffAboutJdo.class, thingStuffData.getStuffAboutId());
+			if (thingStuffData != null && thingStuffData.getParentStuffId() > 0) { // update
+				ThingStuffAboutJdo update = pm.getObjectById(ThingStuffAboutJdo.class, thingStuffData.getParentStuffId());
 				update.set(sp);
-				update.setData(thingStuffData);				
+				update.setAboutStuffData(thingStuffData);				
 				this.thingStuffAboutIdKey = update.thingStuffAboutIdKey;
 
 			} else { // insert
@@ -230,14 +235,14 @@ public class ThingStuffAboutJdo {
 		return getStuffAboutId();
 	}
 
-	public long saveUnique(ThingStuffData thingStuffData) {
-		setData(thingStuffData);
+	private long saveUnique(ThingStuffData thingStuffData) {
+		setAboutStuffData(thingStuffData);
 
 		// setup filter so that I only create unique by identities [thingId, thingStuffTypeId)
 		ThingStuffDataFilter filter = new ThingStuffDataFilter();
-		filter.setThingId(thingStuffData.getThingId());
+		filter.setParentThingId(thingStuffData.getParentThingId());
 		filter.setStuffTypeId(thingStuffData.getStuffTypeId());
-		filter.setThingStuffId(thingStuffData.getStuffId());
+		filter.setStuffId(thingStuffData.getStuffId());
 
 		if (thingStuffData.getValue() != null) {
 			filter.setValueString(thingStuffData.getValue());
@@ -301,7 +306,7 @@ public class ThingStuffAboutJdo {
 	 * @param thingStuffId
 	 * @return
 	 */
-	public ThingStuffAboutJdo query(long thingStuffId) {
+	private ThingStuffAboutJdo query(long thingStuffId) {
 
 		ThingStuffAboutJdo thingStuff = null;
 		PersistenceManager pm = sp.getPersistenceManager();
@@ -319,7 +324,7 @@ public class ThingStuffAboutJdo {
 	 * @param filter
 	 * @return
 	 */
-	public ThingStuffData[] query(ThingStuffDataFilter filter) {
+	private ThingStuffData[] query(ThingStuffDataFilter filter) {
 
 		ArrayList<ThingStuffAboutJdo> aT = new ArrayList<ThingStuffAboutJdo>();
 
@@ -364,7 +369,7 @@ public class ThingStuffAboutJdo {
 	 * 
 	 * @return
 	 */
-	public long queryTotal() {
+	private long queryTotal() {
 
 		/* future spec I think
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -397,7 +402,7 @@ public class ThingStuffAboutJdo {
 		return total;
 	}
 
-	public static ThingStuffData[] convert(List<ThingStuffAboutJdo> thingStuffJdoAbout) {
+	private static ThingStuffData[] convert(List<ThingStuffAboutJdo> thingStuffJdoAbout) {
 
 		Iterator<ThingStuffAboutJdo> itr = thingStuffJdoAbout.iterator();
 
@@ -406,29 +411,30 @@ public class ThingStuffAboutJdo {
 		int i = 0;
 		while(itr.hasNext()) {
 
-			ThingStuffAboutJdo tsja = itr.next();
+			//ThingStuffAboutJdo tsja = itr.next();
 
-			r[i] = new ThingStuffData();
-			r[i].setData(
-					tsja.getThingId(),
-					tsja.getStuffId(),
-					tsja.getStuffAboutId(),
-					tsja.getStuffTypeId(), 
+			//r[i] = new ThingStuffData();
+			//r[i].setData(
+					//tsja.getThingId(),
+					//tsja.getParentStuffId(),
+					
+					//tsja.getStuffAboutId(),
+					//tsja.getStuffTypeId(), 
 
-					tsja.getValue(), 
-					tsja.getValueBol(), 
-					tsja.getValueDouble(),
-					tsja.getValueLong(), 
-					tsja.getValueDate(),
+					//tsja.getValue(), 
+					//tsja.getValueBol(), 
+					//tsja.getValueDouble(),
+					//tsja.getValueLong(), 
+					//tsja.getValueDate(),
 
-					tsja.getStartOf(),
-					tsja.getEndOf(), 
-					tsja.getRank(),
-					tsja.getCreatedBy(),
-					tsja.getDateCreated(),
-					tsja.getUpdatedBy(),
-					tsja.getDateUpdated(),
-					tsja.getOwners());
+					//tsja.getStartOf(),
+					//tsja.getEndOf(), 
+					//tsja.getRank(),
+					//tsja.getCreatedBy(),
+					//tsja.getDateCreated(),
+					//tsja.getUpdatedBy(),
+					//tsja.getDateUpdated(),
+					//tsja.getOwners());
 
 			i++;
 		}
@@ -436,7 +442,7 @@ public class ThingStuffAboutJdo {
 		return r;
 	}
 
-	public List<ThingStuffAboutJdo> convertStuffsAboutToJdo(ThingStuffsData thingStuffsData) {
+	private List<ThingStuffAboutJdo> convertStuffsAboutToJdo(ThingStuffsData thingStuffsData) {
 
 		if (thingStuffsData == null) {
 			return null;
@@ -449,8 +455,8 @@ public class ThingStuffAboutJdo {
 		for (int i=0; i < tsd.length; i++) {
 			r[i] = new ThingStuffAboutJdo(sp);
 
-			r[i].parentThingId = tsd[i].getThingId();
-			r[i].parentThingStuffId = tsd[i].getStuffId();
+			r[i].parentThingId = tsd[i].getParentThingId();
+			r[i].parentStuffId = tsd[i].getStuffId();
 			r[i].thingStuffAboutIdKey = getKey(tsd[i].getStuffId());
 			r[i].thingStuffTypeId = tsd[i].getStuffTypeId();
 
@@ -479,12 +485,12 @@ public class ThingStuffAboutJdo {
 	/**
 	 * delete thing about the about id
 	 * 
-	 * @param thingStuffAboutId
+	 * @param stuffId
 	 * @return
 	 */
-	public boolean delete(long thingStuffAboutId) {
+	private boolean delete(long stuffId) {
 
-		System.out.println("ThingStuffAboutJdo.delete(): deleting: " + thingStuffAboutId);
+		System.out.println("ThingStuffAboutJdo.delete(): deleting: " + stuffId);
 
 		PersistenceManager pm = sp.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -492,7 +498,7 @@ public class ThingStuffAboutJdo {
 		try {
 			tx.begin();
 
-			ThingStuffAboutJdo ttj2 = (ThingStuffAboutJdo) pm.getObjectById(ThingStuffAboutJdo.class, thingStuffAboutId);
+			ThingStuffAboutJdo ttj2 = (ThingStuffAboutJdo) pm.getObjectById(ThingStuffAboutJdo.class, stuffId);
 			pm.deletePersistent(ttj2);
 
 			tx.commit();
@@ -511,7 +517,7 @@ public class ThingStuffAboutJdo {
 		return b;
 	}
 
-	public boolean delete(ThingData thingData) {
+	private boolean delete(ThingData thingData) {
 
 		if (thingData == null) {
 			return false;
@@ -557,7 +563,7 @@ public class ThingStuffAboutJdo {
 	 * @param thingStuffId
 	 * @return
 	 */
-	public boolean deleteByParent(long thingStuffId) {
+	private boolean deleteByParent(long thingStuffId) {
 
 		String qfilter = "thingStuffId==" + thingStuffId + "";
 
@@ -587,7 +593,7 @@ public class ThingStuffAboutJdo {
 		return true;
 	}
 
-	public long getStuffAboutId() {
+	private long getStuffAboutId() {
 		if (thingStuffAboutIdKey == null) {
 			return -1;
 		}
@@ -599,47 +605,47 @@ public class ThingStuffAboutJdo {
 	 * 
 	 * @return
 	 */
-	public long getStuffId() {
-		return parentThingStuffId;
+	private long getParentStuffId() {
+		return parentStuffId;
 	}
 
-	public long getStuffTypeId() {
+	private long getStuffTypeId() {
 		return thingStuffTypeId;
 	}
 
-	public long getThingId() {
+	private long getThingId() {
 		return parentThingId;
 	}
 
-	public long getThingStuffTypeId() {
+	private long getThingStuffTypeId() {
 		return thingStuffTypeId;
 	}
 
-	public void setValue(String value) {
+	private void setValue(String value) {
 		this.value = value;
 	}
 
-	public void setValue(Boolean value) {
+	private void setValue(Boolean value) {
 		this.valueBol = value;
 	}
 
-	public void setValue(Double value) {
+	private void setValue(Double value) {
 		this.valueDouble = value;
 	}
 
-	public String getValue() {
+	private String getValue() {
 		return value;
 	}
 
-	public Boolean getValueBol() {
+	private Boolean getValueBol() {
 		return valueBol;
 	}
 
-	public Double getValueDouble() {
+	private Double getValueDouble() {
 		return valueDouble;
 	}
 
-	public Long getValueLong() {
+	private Long getValueLong() {
 		return valueLong;
 	}
 
@@ -647,43 +653,43 @@ public class ThingStuffAboutJdo {
 		return valueDate;
 	}
 
-	public Date getStartOf() {
+	private Date getStartOf() {
 		return startOf;
 	}
 
-	public Date getEndOf() {
+	private Date getEndOf() {
 		return endOf;
 	}
 
-	public void setRank(Double rank) {
+	private void setRank(Double rank) {
 		this.rank = rank;
 	}
 
-	public Double getRank() {
+	private Double getRank() {
 		return rank;
 	}
 
-	public Date getDateCreated() {
+	private Date getDateCreated() {
 		return dateCreated;
 	}
 
-	public Date getDateUpdated() {
+	private Date getDateUpdated() {
 		return dateUpdated;
 	}
 
-	public long getCreatedBy() {
+	private long getCreatedBy() {
 		return createdByThingId;
 	}
 
-	public long getUpdatedBy() {
+	private long getUpdatedBy() {
 		return updatedByThingId;
 	}
 
-	public void setOwners(long[] ownerThingIds) {
+	private void setOwners(long[] ownerThingIds) {
 		this.ownerThingIds = ownerThingIds;
 	}
 
-	public long[] getOwners() {
+	private long[] getOwners() {
 		return ownerThingIds;
 	}
 

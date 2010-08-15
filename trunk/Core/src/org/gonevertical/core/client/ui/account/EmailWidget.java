@@ -6,7 +6,6 @@ import org.gonevertical.core.client.global.EventManager;
 import org.gonevertical.core.client.rpc.RpcCore;
 import org.gonevertical.core.client.rpc.RpcCoreServiceAsync;
 import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffData;
-import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffs;
 import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeData;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -17,11 +16,11 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
 public class EmailWidget extends Composite implements ClickHandler {

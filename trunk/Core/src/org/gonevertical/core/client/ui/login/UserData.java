@@ -2,7 +2,6 @@ package org.gonevertical.core.client.ui.login;
 
 import org.gonevertical.core.client.oauth.OAuthTokenData;
 import org.gonevertical.core.client.oauth.Sha1;
-import org.gonevertical.core.client.ui.login.UserData;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 

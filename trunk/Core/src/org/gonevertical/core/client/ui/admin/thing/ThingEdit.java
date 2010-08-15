@@ -4,8 +4,6 @@ import org.gonevertical.core.client.ClientPersistence;
 import org.gonevertical.core.client.global.EventManager;
 import org.gonevertical.core.client.global.Global_Date;
 import org.gonevertical.core.client.global.Global_ListBox;
-import org.gonevertical.core.client.rpc.RpcCore;
-import org.gonevertical.core.client.rpc.RpcCoreServiceAsync;
 import org.gonevertical.core.client.ui.Ui;
 import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffData;
 import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffDataFilter;
@@ -23,7 +21,6 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
@@ -139,7 +136,7 @@ public class ThingEdit extends Ui implements ClickHandler, ChangeHandler, MouseO
 		drawOwners();
 		
 		ThingStuffDataFilter filter = new ThingStuffDataFilter();
-		filter.setThingId(thingData.getThingId());
+		filter.setParentThingId(thingData.getThingId());
 
 		// TODO - will need to interact with wStuff and wStuff About
 		filter.setLimit(0, 100);
@@ -278,7 +275,7 @@ public class ThingEdit extends Ui implements ClickHandler, ChangeHandler, MouseO
 
 		ThingStuffsData thingStuffsData_About = null;
 		if (thingStuffData != null) {
-			thingStuffsData_About = thingStuffData.getThingStuffsAbout();
+			thingStuffsData_About = thingStuffData.getChildStuffs();
 
 		} else {
 			thingStuffsData_About = new ThingStuffsData();
@@ -521,7 +518,7 @@ public class ThingEdit extends Ui implements ClickHandler, ChangeHandler, MouseO
 		cp.showLoading(true);
 
 		ThingStuffDataFilter filter = new ThingStuffDataFilter();
-		filter.setThingId(thingData.getThingId());
+		filter.setParentThingId(thingData.getThingId());
 
 		rpc.saveThingStuffData(cp.getAccessToken(), filter, thingStuffData, new AsyncCallback<ThingStuffsData>() {
 			public void onSuccess(ThingStuffsData thingStuffsData) {
