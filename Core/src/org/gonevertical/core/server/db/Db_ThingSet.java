@@ -44,7 +44,7 @@ public class Db_ThingSet {
       sets[i].thingData = things[i];
       
       ThingStuffDataFilter thingStuffFilter = new ThingStuffDataFilter();
-      thingStuffFilter.setThingId(things[i].getThingId());
+      thingStuffFilter.setParentThingId(things[i].getThingId());
       
       ThingStuffJdo tsj = new ThingStuffJdo(sp);
       sets[i].thingStuffData = tsj.query(thingStuffFilter);

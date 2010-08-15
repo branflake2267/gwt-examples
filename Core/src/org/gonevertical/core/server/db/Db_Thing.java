@@ -12,11 +12,9 @@ import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffData;
 import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffDataFilter;
 import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffsData;
 import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeData;
-import org.gonevertical.core.client.ui.admin.thingtype.ThingTypeData;
 import org.gonevertical.core.client.ui.admin.thingtype.ThingTypesData;
 import org.gonevertical.core.server.ServerPersistence;
 import org.gonevertical.core.server.jdo.data.ThingJdo;
-import org.gonevertical.core.server.jdo.data.ThingTypeJdo;
 
 public class Db_Thing {
 	
@@ -65,7 +63,7 @@ public class Db_Thing {
   	// get name for things
   	for (int i=0; i < td.length; i++) {
   		ThingStuffDataFilter f = new ThingStuffDataFilter();
-    	f.setThingId(td[i].getThingId());
+    	f.setParentThingId(td[i].getThingId());
     	f.setStuffTypeId(1); // only get name
     	
     	ThingStuffData[] tsd = dbTs.getThingStuffData(accessToken, f);
@@ -128,7 +126,7 @@ public class Db_Thing {
   	
   	// get thing stuffs
   	ThingStuffDataFilter f = new ThingStuffDataFilter();
-  	f.setThingId(filter.getThingId());
+  	f.setParentThingId(filter.getThingId());
   	ThingStuffsData tsd = dbTs.getThingStuffsData(accessToken, f);
   	td.setThingStuffsData(tsd);
   	
@@ -153,14 +151,14 @@ public class Db_Thing {
 		if (tsd != null &&  tsd.getThingStuffData() != null) {
 			
 			for (int i=0; i < tsd.getThingStuffData().length; i++) {
-				tsd.getThingStuffData()[i].setThingId(thingId);
+				tsd.getThingStuffData()[i].setParentThingId(thingId);
 			}
 
 		}
 		
 		// filter by thingId
 		ThingStuffDataFilter f = new ThingStuffDataFilter();
-		f.setThingId(thingId);
+		f.setParentThingId(thingId);
 		
 		// get thing stuff
 		if (tsd != null && tsd.getThingStuffData() != null) {

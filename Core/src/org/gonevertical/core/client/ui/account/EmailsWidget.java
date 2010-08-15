@@ -1,19 +1,10 @@
 package org.gonevertical.core.client.ui.account;
 
 import org.gonevertical.core.client.ClientPersistence;
-import org.gonevertical.core.client.global.DeleteDialog;
-import org.gonevertical.core.client.global.EventManager;
-import org.gonevertical.core.client.rpc.RpcCore;
-import org.gonevertical.core.client.rpc.RpcCoreServiceAsync;
 import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffData;
-import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffs;
 
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;

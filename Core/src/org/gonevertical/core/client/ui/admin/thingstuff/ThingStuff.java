@@ -5,13 +5,9 @@ import org.gonevertical.core.client.global.DeleteDialog;
 import org.gonevertical.core.client.global.EventManager;
 import org.gonevertical.core.client.global.Global_Date;
 import org.gonevertical.core.client.global.Global_ListBox;
-import org.gonevertical.core.client.rpc.RpcCore;
-import org.gonevertical.core.client.rpc.RpcCoreServiceAsync;
 import org.gonevertical.core.client.ui.Ui;
 import org.gonevertical.core.client.ui.account.AccountData;
 import org.gonevertical.core.client.ui.admin.thing.ThingData;
-import org.gonevertical.core.client.ui.admin.thing.ThingDataFilter;
-import org.gonevertical.core.client.ui.admin.thing.ThingsData;
 import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeData;
 import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypesData;
 import org.gonevertical.core.client.ui.widgets.Row;
@@ -30,7 +26,6 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.CheckBox;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -273,8 +268,8 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
   	pThingStuffCount.clear();
   	String s = "&nbsp;";
     if (widgetType == ThingStuffs.WIDGETTYPE_THINGSTUFF) {
-    	if (thingStuffData.getThingStuffsAbout() != null && 	thingStuffData.getThingStuffsAbout().getThingStuffData() != null) {
-    		s = Long.toString(thingStuffData.getThingStuffsAbout().getThingStuffData().length);
+    	if (thingStuffData.getChildStuffs() != null && 	thingStuffData.getChildStuffs().getThingStuffData() != null) {
+    		s = Long.toString(thingStuffData.getChildStuffs().getThingStuffData().length);
     	}
     }
     pThingStuffCount.add(new HTML(s));
@@ -285,8 +280,8 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
   	long id = 0;
   	if (thingStuffData.getStuffId() > 0 && widgetType == ThingStuffs.WIDGETTYPE_THINGSTUFF) {
   		id = thingStuffData.getStuffId();
-  	} else if (thingStuffData.getStuffAboutId() > 0 && widgetType == ThingStuffs.WIDGETTYPE_THINGSTUFFABOUT) {
-  		id = thingStuffData.getStuffAboutId();
+  	} else if (thingStuffData.getParentStuffId() > 0 && widgetType == ThingStuffs.WIDGETTYPE_THINGSTUFFABOUT) {
+  		id = thingStuffData.getParentStuffId();
   	}
   	
   	String s = "";
@@ -519,7 +514,7 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
     thingStuffData.setValue(getTextBox_Double());
     thingStuffData.setValue(getTextBox_Long());
     
-    thingStuffData.setThingId(thingData.getThingId());
+    thingStuffData.setParentThingId(thingData.getThingId());
     
     // TODO no need, already sets on mousing
     // multi dem format for stuff having stuff
@@ -696,10 +691,10 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
         	deleteRpcThingStuff(thingStuffData.getStuffId());
         		
         } else if (changeEvent == EventManager.DELETE_YES && 
-        		thingStuffData.getStuffAboutId() > 0 && 
+        		thingStuffData.getParentStuffId() > 0 && 
         		widgetType == ThingStuffs.WIDGETTYPE_THINGSTUFFABOUT) {
         	
-        	deleteRpcThingStuffAbout(thingStuffData.getStuffAboutId());
+        	deleteRpcThingStuff(thingStuffData.getStuffId());
         	
         } else {
           deleteIt(true);
@@ -789,7 +784,7 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
 		ThingStuffsData tssd = new ThingStuffsData();
 		tssd.setThingStuffData(tsd);
 		
-		thingStuffData.setThingStuffsAbout(tssd);
+		thingStuffData.setThingStuffChilds(tssd);
   }
 	
   public void setWidgetType(int widgetType) {
@@ -831,9 +826,8 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
 		pThingLinkName.add(h);
   }
 
-  public void deleteRpcThingStuff(long thingStuffId) {
-    
-    rpc.deleteThingStuffData(cp.getAccessToken(), thingStuffId, new AsyncCallback<Boolean>() {
+  public void deleteRpcThingStuff(long stuffId) {
+    rpc.deleteThingStuffData(cp.getAccessToken(), stuffId, new AsyncCallback<Boolean>() {
       public void onSuccess(Boolean b) {
         deleteIt(b);
       }
@@ -843,22 +837,8 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
     });
   }
   
-  private void deleteRpcThingStuffAbout(long thingStuffAboutId) {
-    
-  	rpc.deleteThingStuffAboutData(cp.getAccessToken(), thingStuffAboutId, new AsyncCallback<Boolean>() {
-			public void onSuccess(Boolean result) {
-				deleteIt(result);
-			}
-			public void onFailure(Throwable caught) {
-				cp.setRpcFailure(caught);
-			}
-		});
-  }
-  
   private void getThingDataRpc(long thingId) {
-  	
   	cp.showLoading(true);
-  	
   	rpc.getAccountData(cp.getAccessToken(), thingId, new AsyncCallback<AccountData>() {
 			public void onSuccess(AccountData result) {
 				processLink(result);
@@ -868,7 +848,6 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
 				cp.setRpcFailure(caught);
 			}
 		});
-  	
   }
   
 }

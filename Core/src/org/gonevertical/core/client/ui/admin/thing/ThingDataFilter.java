@@ -1,7 +1,5 @@
 package org.gonevertical.core.client.ui.admin.thing;
 
-import org.gonevertical.core.server.jdo.data.ThingStuffJdo;
-
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ThingDataFilter implements IsSerializable {

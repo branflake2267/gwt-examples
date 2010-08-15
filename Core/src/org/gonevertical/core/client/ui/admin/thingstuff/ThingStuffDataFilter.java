@@ -2,7 +2,6 @@ package org.gonevertical.core.client.ui.admin.thingstuff;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.ListIterator;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
@@ -11,17 +10,19 @@ public class ThingStuffDataFilter implements IsSerializable {
   private long start = 0;
   private long limit = 20;
   
-  // primary key(id) (when saved)
-  private long thingStuffId;
-  
-  // when dealing with about 
-  private long thingStuffAboutId;
   
   // parent
-  private long thingId;
-    
+  private long parentThingId;
+  
+  // filter by parentStuff
+  private long parentStuffId;
+  
+  
+  // primary id
+  private long stuffId;
+
   // get multiple thing stuff type ids 1,18,19,4
-  private long[] thingStuffTypeId;
+  private long[] stuffTypeId;
   
   private String[] value;
   private Boolean[] valueBol;
@@ -39,6 +40,9 @@ public class ThingStuffDataFilter implements IsSerializable {
    */
   private ArrayList<String> whereOr;
   
+  /**
+   * constructor - nothing to do
+   */
   public ThingStuffDataFilter() {
   }
   
@@ -55,37 +59,42 @@ public class ThingStuffDataFilter implements IsSerializable {
   	return limit;
   }
   
-  public void setThingStuffId(long thingStuffId) {
-  	this.thingStuffId = thingStuffId;
+  public void setParentThingId(long parentThingId) {
+  	this.parentThingId = parentThingId;
   }
   
-  public long getThingStuffId() {
-  	return thingStuffId;
+  public long getParentThingId() {
+  	return parentThingId;
   }
   
-  public void setThingStuffAboutId(long thingStuffAboutId) {
-  	this.thingStuffAboutId = thingStuffAboutId;
+  public void setParentStuffId(long parentStuffId) {
+  	this.parentStuffId = parentStuffId;
   }
   
-  public void setThingId(long thingId) {
-  	this.thingId = thingId;
+  public long getParentStuffId() {
+  	return parentStuffId;
   }
   
-  public long getThingId() {
-  	return thingId;
+  
+  public void setStuffId(long stuffId) {
+  	this.stuffId = stuffId;
   }
- 
+  
+  public long getStuffId() {
+  	return stuffId;
+  }
+   
   public void setStuffTypeId(long thingStuffTypeId) {
-  	this.thingStuffTypeId = new long[1];
-  	this.thingStuffTypeId[0] = thingStuffTypeId;
+  	this.stuffTypeId = new long[1];
+  	this.stuffTypeId[0] = thingStuffTypeId;
   }
   
   public void setThingStuffTypeId(long[] thingStuffTypeId) {
-  	this.thingStuffTypeId = thingStuffTypeId;
+  	this.stuffTypeId = thingStuffTypeId;
   }
   
   public long[] getThingStuffTypeId() {
-  	return thingStuffTypeId;
+  	return stuffTypeId;
   }
   
   public void setValueString(String[] values) {
@@ -139,25 +148,25 @@ public class ThingStuffDataFilter implements IsSerializable {
   		whereAnd = new ArrayList<String>();
   	}
   	
-  	if (thingId > 0) {
-  		String s1 = "thingId==" + thingId;
+  	if (parentThingId > 0) {
+  		String s1 = "parentThingId==" + parentThingId;
   		whereAnd.add(s1);
   	}
   	
-  	if (thingStuffId > 0) { // parent owner
-  		String s2 = "thingStuffId==" + thingStuffId;
-  		whereAnd.add(s2);
+  	if (parentStuffId > 0) {
+  		String s11 = "parentStuffId==" + parentStuffId;
+  		whereAnd.add(s11);
   	}
   	
-  	// I don't want to do this here, I can get it by object id
-  	//if (thingStuffAboutId > 0) { // this is for the about thing stuff data
-  		//s += " && thingStuffAboutId==" + thingStuffAboutId + " ";
-  	//}
+  	if (stuffId > 0) { // parent owner
+  		String s2 = "stuffId==" + stuffId;
+  		whereAnd.add(s2);
+  	}
 		
   	// filter by multiple stuffTypeIds
-		if (thingStuffTypeId != null && thingStuffTypeId.length > 0) {
-			for (int i=0; i < thingStuffTypeId.length; i++) {
-				String s3= " thingStuffTypeId==" + thingStuffTypeId[i];
+		if (stuffTypeId != null && stuffTypeId.length > 0) {
+			for (int i=0; i < stuffTypeId.length; i++) {
+				String s3= " stuffTypeId==" + stuffTypeId[i];
 				whereAnd.add(s3);
 			}
 		}

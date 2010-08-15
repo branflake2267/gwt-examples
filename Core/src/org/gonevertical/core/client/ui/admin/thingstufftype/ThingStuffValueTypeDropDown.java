@@ -1,7 +1,6 @@
 package org.gonevertical.core.client.ui.admin.thingstufftype;
 
 import org.gonevertical.core.client.global.Global_ListBox;
-import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffData;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

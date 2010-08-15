@@ -5,7 +5,6 @@ import java.util.HashMap;
 import org.gonevertical.core.client.ClientPersistence;
 import org.gonevertical.core.client.global.QueryString;
 import org.gonevertical.core.client.global.QueryStringData;
-import org.gonevertical.core.client.ui.breadcrumbs.BreadCrumb;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;

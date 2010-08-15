@@ -8,10 +8,10 @@ import org.gonevertical.core.client.oauth.OAuthTokenData;
 import org.gonevertical.core.client.ui.admin.thing.ThingData;
 import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffData;
 import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffDataFilter;
+import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeData;
 import org.gonevertical.core.client.widget.WidgetAttrData;
 import org.gonevertical.core.client.widget.WidgetAttrDataFilter;
 import org.gonevertical.core.server.ServerPersistence;
-import org.gonevertical.core.server.jdo.data.ThingStuffAboutJdo;
 import org.gonevertical.core.server.jdo.data.ThingStuffJdo;
 
 public class Db_WidgetAttr {
@@ -19,15 +19,11 @@ public class Db_WidgetAttr {
 	private static final Logger log = Logger.getLogger(Db_WidgetAttr.class.getName());
 
 	private ServerPersistence sp = null;
-
 	private ThingStuffJdo tsj;
-
-	private ThingStuffAboutJdo tsJa;
 
   public Db_WidgetAttr(ServerPersistence sp) {
     this.sp  = sp;
     tsj = new ThingStuffJdo(sp);
-    tsJa = new ThingStuffAboutJdo(sp);
   }
   
   public WidgetAttrData getWidgetAttributes(OAuthTokenData accessToken, WidgetAttrDataFilter widgetAttrDataFilter) {
@@ -90,7 +86,7 @@ public class Db_WidgetAttr {
   	
   	// find if the widget contains open
   	ThingStuffDataFilter filter = new ThingStuffDataFilter();
-  	filter.setThingId(thingId_Widget);
+  	filter.setParentThingId(thingId_Widget);
   	filter.setStuffTypeId(thingStuffTypeId);
   	filter.setValueLong(open);
   	
@@ -122,8 +118,8 @@ public class Db_WidgetAttr {
 
 	private boolean getCanView(boolean isOpen, long thingId_Person, long thingId_Widget) {
 	  
-		int stuffTypeId_open = SetDefaultsData.THINGSTUFFTYPE_CANTVIEW;
-		int stuffTypeId_closed = SetDefaultsData.THINGSTUFFTYPE_CANVIEW;
+		int stuffTypeId_open = ThingStuffTypeData.THINGSTUFFTYPE_CANTVIEW;
+		int stuffTypeId_closed = ThingStuffTypeData.THINGSTUFFTYPE_CANVIEW;
 		boolean can = getCan(isOpen, thingId_Person, thingId_Widget, stuffTypeId_open, stuffTypeId_closed);
 		
 	  return can;
@@ -131,8 +127,8 @@ public class Db_WidgetAttr {
 
 	private boolean getCanEdit(boolean isOpen, long thingId_Person, long thingId_Widget) {
 
-		int stuffTypeId_open = SetDefaultsData.THINGSTUFFTYPE_CANTEDIT;
-		int stuffTypeId_closed = SetDefaultsData.THINGSTUFFTYPE_CANEDIT;
+		int stuffTypeId_open = ThingStuffTypeData.THINGSTUFFTYPE_CANTEDIT;
+		int stuffTypeId_closed = ThingStuffTypeData.THINGSTUFFTYPE_CANEDIT;
 		boolean can = getCan(isOpen, thingId_Person, thingId_Widget, stuffTypeId_open, stuffTypeId_closed);
 		
 	  return can;
@@ -140,8 +136,8 @@ public class Db_WidgetAttr {
 	
 	private boolean getCanAdd(boolean isOpen, long thingId_Person, long thingId_Widget) {
 	  
-		int stuffTypeId_open = SetDefaultsData.THINGSTUFFTYPE_CANTADD;
-		int stuffTypeId_closed = SetDefaultsData.THINGSTUFFTYPE_CANADD;
+		int stuffTypeId_open = ThingStuffTypeData.THINGSTUFFTYPE_CANTADD;
+		int stuffTypeId_closed = ThingStuffTypeData.THINGSTUFFTYPE_CANADD;
 		boolean can = getCan(isOpen, thingId_Person, thingId_Widget, stuffTypeId_open, stuffTypeId_closed);
 		
 	  return can;
@@ -166,24 +162,25 @@ public class Db_WidgetAttr {
 		boolean canView = false;
 		
 		if (isOpen == false) {
-  		long thingStuffTypeId = SetDefaultsData.THINGSTUFFTYPE_LINK;
+  		long thingStuffTypeId = ThingStuffTypeData.THINGSTUFFTYPE_LINK;
   		
   		// find if the widget contains open
     	ThingStuffDataFilter filter = new ThingStuffDataFilter();
-    	filter.setThingId(thingId_Person); // filter by person
+    	filter.setParentThingId(thingId_Person); // filter by person
     	filter.setStuffTypeId(thingStuffTypeId); // filter by the linking
     	filter.setValueLong(thingId_Widget);
     	
   		ThingStuffData[] tsds = tsj.query(filter);
   		
   		if (tsds != null && tsds.length > 0) {
-  			long thingStuffId = tsds[0].getStuffId();
+  			long parentStuffId = tsds[0].getStuffId();
   			
   			ThingStuffDataFilter filter2 = new ThingStuffDataFilter();
-  			filter2.setThingStuffId(thingStuffId); // parent owner
-  	  	filter2.setThingId(thingId_Person);
+  			filter2.setParentStuffId(parentStuffId); // parent owner
+  	  	filter2.setParentThingId(thingId_Person);
   	  	filter2.setStuffTypeId(stuffTypeId_closed);
-  	  	ThingStuffData[] tsdsa = tsJa.query(filter2);
+  	  	
+  	  	ThingStuffData[] tsdsa = tsj.query(filter2);
   	  	if (tsdsa != null && tsdsa.length > 0) {
   	  		Boolean bb = tsdsa[0].getValueBol();
   	  		if (bb != null) {
@@ -194,24 +191,25 @@ public class Db_WidgetAttr {
   		
 		} else {
 			
-			long thingStuffTypeId = SetDefaultsData.THINGSTUFFTYPE_LINK;
+			long stuffTypeId = ThingStuffTypeData.THINGSTUFFTYPE_LINK;
   		
   		// find if the widget contains open
     	ThingStuffDataFilter filter = new ThingStuffDataFilter();
-    	filter.setThingId(thingId_Person); // filter by person
-    	filter.setStuffTypeId(thingStuffTypeId); // filter by the linking
+    	filter.setParentThingId(thingId_Person); // filter by person
+    	filter.setStuffTypeId(stuffTypeId); // filter by the linking
     	filter.setValueLong(thingId_Widget);
     	
   		ThingStuffData[] tsds = tsj.query(filter);
   		
   		if (tsds != null && tsds.length > 0) {
-  			long thingStuffId = tsds[0].getStuffId();
+  			long parentStuffId = tsds[0].getStuffId();
   			
   			ThingStuffDataFilter filter2 = new ThingStuffDataFilter();
-  			filter2.setThingStuffId(thingStuffId); // parent owner
-  	  	filter2.setThingId(thingId_Person);
+  			filter2.setParentThingId(thingId_Person);
+  			filter2.setParentStuffId(parentStuffId); // parent owner
   	  	filter2.setStuffTypeId(stuffTypeId_open);
-  	  	ThingStuffData[] tsdsa = tsJa.query(filter2);
+  	  	
+  	  	ThingStuffData[] tsdsa = tsj.query(filter2);
   	  	if (tsdsa != null && tsdsa.length > 0) {
   	  		Boolean bb = tsdsa[0].getValueBol();
   	  		if (bb != null) {

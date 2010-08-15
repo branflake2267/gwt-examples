@@ -4,6 +4,9 @@ import org.gonevertical.core.client.ClientPersistence;
 import org.gonevertical.core.client.global.EventManager;
 import org.gonevertical.core.client.rpc.RpcCore;
 import org.gonevertical.core.client.rpc.RpcCoreServiceAsync;
+import org.gonevertical.core.client.ui.login.CreateUserAccount;
+import org.gonevertical.core.client.ui.login.LoginUi;
+import org.gonevertical.core.client.ui.login.LoginWidget;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -13,10 +16,6 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-
-import org.gonevertical.core.client.ui.login.CreateUserAccount;
-import org.gonevertical.core.client.ui.login.LoginUi;
-import org.gonevertical.core.client.ui.login.LoginWidget;
 
 public class AccountTabs extends Composite {
 
