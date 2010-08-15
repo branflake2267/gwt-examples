@@ -635,6 +635,10 @@ public class ThingJdo {
 		return thingTypeId;
 	}
 
+	/**
+	 * get username
+	 * @return
+	 */
 	public String getKey() {
 		return key;
 	}

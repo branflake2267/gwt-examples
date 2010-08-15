@@ -298,15 +298,15 @@ public class ThingStuffJdo {
 	/**
 	 * query a thing by its id
 	 * 
-	 * @param thingStuffId
+	 * @param stuffId
 	 * @return
 	 */
-	public ThingStuffJdo query(long thingStuffId) {
+	public ThingStuffJdo query(long stuffId) {
 
 		ThingStuffJdo thingStuff = null;
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
-			thingStuff = pm.getObjectById(ThingStuffJdo.class, thingStuffId);
+			thingStuff = pm.getObjectById(ThingStuffJdo.class, stuffId);
 		} catch (Exception e) { 
 			e.printStackTrace();
 			log.log(Level.SEVERE, "", e);
@@ -336,6 +336,8 @@ public class ThingStuffJdo {
 		}
 
 		String qfilter = filter.getFilter_And();
+		
+		System.out.println("filter=" + qfilter);
 		
 		ArrayList<ThingStuffJdo> aT = new ArrayList<ThingStuffJdo>();
 		PersistenceManager pm = sp.getPersistenceManager();
@@ -456,41 +458,6 @@ public class ThingStuffJdo {
 
 		return r;
 	}
-
-	public List<ThingStuffJdo> convertStuffsAboutToJdo(ThingStuffsData thingStuffsData) {
-
-		if (thingStuffsData == null) {
-			return null;
-		}
-
-		ThingStuffData[] tsd = thingStuffsData.getThingStuffData();
-
-		ThingStuffJdo[] r = new ThingStuffJdo[tsd.length];
-
-		for (int i=0; i < tsd.length; i++) {
-			r[i] = new ThingStuffJdo(sp);
-			r[i].setParentThingId(tsd[i].getParentThingId());
-			r[i].setStuffIdKey(getKey(tsd[i].getStuffId()));
-			r[i].setStuffTypeId(tsd[i].getStuffTypeId());
-
-			r[i].setValue(tsd[i].getValue());
-			r[i].setValueBol(tsd[i].getValueBol());
-			r[i].setValueDouble(tsd[i].getValueDouble());
-			r[i].setValueLong(tsd[i].getValueLong());
-			r[i].setValueDate(tsd[i].setValueDate());
-
-			r[i].setStartOf(tsd[i].getStartOf());
-			r[i].setEndOf(tsd[i].getEndOf());
-			r[i].setRank(tsd[i].getRank());
-			r[i].setOwnerThingIds(tsd[i].getOwners());
-			
-		}
-
-		List<ThingStuffJdo> l = Arrays.asList(r);
-
-		return l;
-	}
-
 
 	public boolean delete(long stuffId) {
 
@@ -713,7 +680,7 @@ public class ThingStuffJdo {
 		this.valueDate = valueDate;
 	}
 	
-	private Date getValueDate() {
+	public Date getValueDate() {
 	  return valueDate;
   }
 	
