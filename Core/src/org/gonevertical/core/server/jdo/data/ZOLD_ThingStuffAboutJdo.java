@@ -30,10 +30,10 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
 @Deprecated
-@PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true") class ThingStuffAboutJdo {
+@PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true") class ZOLD_ThingStuffAboutJdo {
 
 	@NotPersistent
-	private static final Logger log = Logger.getLogger(ThingStuffAboutJdo.class.getName());
+	private static final Logger log = Logger.getLogger(ZOLD_ThingStuffAboutJdo.class.getName());
 
 	@NotPersistent
 	private ServerPersistence sp = null;
@@ -109,7 +109,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 	 * @throws Exception
 	 */
 	@Deprecated
-	private ThingStuffAboutJdo() throws Exception {
+	private ZOLD_ThingStuffAboutJdo() throws Exception {
 		//System.err.println("Don't use this constructor - Exiting");
 		//throw new Exception();
 	}
@@ -118,7 +118,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 	 * constructor
 	 */
 	@Deprecated
-	private ThingStuffAboutJdo(ServerPersistence sp) {
+	private ZOLD_ThingStuffAboutJdo(ServerPersistence sp) {
 		this.sp = sp;
 	}
 	
@@ -161,7 +161,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 	}
 
 	@Deprecated
-	private void setAboutStuffData(ThingStuffAboutJdo thingStuffJdo) {
+	private void setAboutStuffData(ZOLD_ThingStuffAboutJdo thingStuffJdo) {
 		if (thingStuffJdo == null) {
 			return;
 		}
@@ -209,7 +209,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 			tx.begin();
 
 			if (thingStuffData != null && thingStuffData.getParentStuffId() > 0) { // update
-				ThingStuffAboutJdo update = pm.getObjectById(ThingStuffAboutJdo.class, thingStuffData.getParentStuffId());
+				ZOLD_ThingStuffAboutJdo update = pm.getObjectById(ZOLD_ThingStuffAboutJdo.class, thingStuffData.getParentStuffId());
 				update.set(sp);
 				update.setAboutStuffData(thingStuffData);				
 				this.thingStuffAboutIdKey = update.thingStuffAboutIdKey;
@@ -306,12 +306,12 @@ import com.google.appengine.api.datastore.KeyFactory;
 	 * @param thingStuffId
 	 * @return
 	 */
-	private ThingStuffAboutJdo query(long thingStuffId) {
+	private ZOLD_ThingStuffAboutJdo query(long thingStuffId) {
 
-		ThingStuffAboutJdo thingStuff = null;
+		ZOLD_ThingStuffAboutJdo thingStuff = null;
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
-			thingStuff = pm.getObjectById(ThingStuffAboutJdo.class, thingStuffId);
+			thingStuff = pm.getObjectById(ZOLD_ThingStuffAboutJdo.class, thingStuffId);
 		} finally {
 			pm.close();
 		}
@@ -326,20 +326,20 @@ import com.google.appengine.api.datastore.KeyFactory;
 	 */
 	private ThingStuffData[] query(ThingStuffDataFilter filter) {
 
-		ArrayList<ThingStuffAboutJdo> aT = new ArrayList<ThingStuffAboutJdo>();
+		ArrayList<ZOLD_ThingStuffAboutJdo> aT = new ArrayList<ZOLD_ThingStuffAboutJdo>();
 
 		String qfilter = filter.getFilter_And();
 
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
-			Extent<ThingStuffAboutJdo> e = pm.getExtent(ThingStuffAboutJdo.class, true);
+			Extent<ZOLD_ThingStuffAboutJdo> e = pm.getExtent(ZOLD_ThingStuffAboutJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
 			q.execute();
 
-			Collection<ThingStuffAboutJdo> c = (Collection<ThingStuffAboutJdo>) q.execute();
-			Iterator<ThingStuffAboutJdo> iter = c.iterator();
+			Collection<ZOLD_ThingStuffAboutJdo> c = (Collection<ZOLD_ThingStuffAboutJdo>) q.execute();
+			Iterator<ZOLD_ThingStuffAboutJdo> iter = c.iterator();
 			while (iter.hasNext()) {
-				ThingStuffAboutJdo t = (ThingStuffAboutJdo) iter.next();
+				ZOLD_ThingStuffAboutJdo t = (ZOLD_ThingStuffAboutJdo) iter.next();
 				aT.add(t);
 			}
 
@@ -348,14 +348,14 @@ import com.google.appengine.api.datastore.KeyFactory;
 			pm.close();
 		}
 
-		ThingStuffAboutJdo[] tj = new ThingStuffAboutJdo[aT.size()];
+		ZOLD_ThingStuffAboutJdo[] tj = new ZOLD_ThingStuffAboutJdo[aT.size()];
 		if (aT.size() > 0) {
-			tj = new ThingStuffAboutJdo[aT.size()];
+			tj = new ZOLD_ThingStuffAboutJdo[aT.size()];
 			aT.toArray(tj);
 		}
 
 		// TODO overkill here - can get the list up above
-		List<ThingStuffAboutJdo> tjsa_list = Arrays.asList(tj);
+		List<ZOLD_ThingStuffAboutJdo> tjsa_list = Arrays.asList(tj);
 
 		ThingStuffData[] td = convert(tjsa_list);
 
@@ -387,11 +387,11 @@ import com.google.appengine.api.datastore.KeyFactory;
 
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
-			Extent<ThingStuffAboutJdo> e = pm.getExtent(ThingStuffAboutJdo.class, true);
+			Extent<ZOLD_ThingStuffAboutJdo> e = pm.getExtent(ZOLD_ThingStuffAboutJdo.class, true);
 			Query q = pm.newQuery(e);
 			q.execute();
 
-			Collection<ThingStuffAboutJdo> c = (Collection<ThingStuffAboutJdo>) q.execute();
+			Collection<ZOLD_ThingStuffAboutJdo> c = (Collection<ZOLD_ThingStuffAboutJdo>) q.execute();
 			total = c.size();
 
 			q.closeAll();
@@ -402,9 +402,9 @@ import com.google.appengine.api.datastore.KeyFactory;
 		return total;
 	}
 
-	private static ThingStuffData[] convert(List<ThingStuffAboutJdo> thingStuffJdoAbout) {
+	private static ThingStuffData[] convert(List<ZOLD_ThingStuffAboutJdo> thingStuffJdoAbout) {
 
-		Iterator<ThingStuffAboutJdo> itr = thingStuffJdoAbout.iterator();
+		Iterator<ZOLD_ThingStuffAboutJdo> itr = thingStuffJdoAbout.iterator();
 
 		ThingStuffData[] r = new ThingStuffData[thingStuffJdoAbout.size()];
 
@@ -442,7 +442,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 		return r;
 	}
 
-	private List<ThingStuffAboutJdo> convertStuffsAboutToJdo(ThingStuffsData thingStuffsData) {
+	private List<ZOLD_ThingStuffAboutJdo> convertStuffsAboutToJdo(ThingStuffsData thingStuffsData) {
 
 		if (thingStuffsData == null) {
 			return null;
@@ -450,10 +450,10 @@ import com.google.appengine.api.datastore.KeyFactory;
 
 		ThingStuffData[] tsd = thingStuffsData.getThingStuffData();
 
-		ThingStuffAboutJdo[] r = new ThingStuffAboutJdo[tsd.length];
+		ZOLD_ThingStuffAboutJdo[] r = new ZOLD_ThingStuffAboutJdo[tsd.length];
 
 		for (int i=0; i < tsd.length; i++) {
-			r[i] = new ThingStuffAboutJdo(sp);
+			r[i] = new ZOLD_ThingStuffAboutJdo(sp);
 
 			r[i].parentThingId = tsd[i].getParentThingId();
 			r[i].parentStuffId = tsd[i].getStuffId();
@@ -477,7 +477,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 
 		}
 
-		List<ThingStuffAboutJdo> l = Arrays.asList(r);
+		List<ZOLD_ThingStuffAboutJdo> l = Arrays.asList(r);
 
 		return l;
 	}
@@ -498,7 +498,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 		try {
 			tx.begin();
 
-			ThingStuffAboutJdo ttj2 = (ThingStuffAboutJdo) pm.getObjectById(ThingStuffAboutJdo.class, stuffId);
+			ZOLD_ThingStuffAboutJdo ttj2 = (ZOLD_ThingStuffAboutJdo) pm.getObjectById(ZOLD_ThingStuffAboutJdo.class, stuffId);
 			pm.deletePersistent(ttj2);
 
 			tx.commit();
@@ -536,11 +536,11 @@ import com.google.appengine.api.datastore.KeyFactory;
 		try {
 			tx.begin();
 
-			Extent<ThingStuffAboutJdo> e = pm.getExtent(ThingStuffAboutJdo.class, true);
+			Extent<ZOLD_ThingStuffAboutJdo> e = pm.getExtent(ZOLD_ThingStuffAboutJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
 			q.execute();
 
-			Collection<ThingStuffAboutJdo> c = (Collection<ThingStuffAboutJdo>) q.execute();
+			Collection<ZOLD_ThingStuffAboutJdo> c = (Collection<ZOLD_ThingStuffAboutJdo>) q.execute();
 
 			// delete all
 			pm.deletePersistentAll(c);
@@ -572,11 +572,11 @@ import com.google.appengine.api.datastore.KeyFactory;
 		try {
 			tx.begin();
 
-			Extent<ThingStuffAboutJdo> e = pm.getExtent(ThingStuffAboutJdo.class, true);
+			Extent<ZOLD_ThingStuffAboutJdo> e = pm.getExtent(ZOLD_ThingStuffAboutJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
 			q.execute();
 
-			Collection<ThingStuffAboutJdo> c = (Collection<ThingStuffAboutJdo>) q.execute();
+			Collection<ZOLD_ThingStuffAboutJdo> c = (Collection<ZOLD_ThingStuffAboutJdo>) q.execute();
 
 			// delete all
 			pm.deletePersistentAll(c);
@@ -696,7 +696,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 	private Key getKey(long id) {
 		Key key = null;
 		if (id == 0) {
-			key = KeyFactory.createKey(ThingStuffAboutJdo.class.getSimpleName(), id);
+			key = KeyFactory.createKey(ZOLD_ThingStuffAboutJdo.class.getSimpleName(), id);
 		}
 		return key;
 	}

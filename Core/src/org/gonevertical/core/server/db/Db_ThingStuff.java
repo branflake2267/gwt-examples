@@ -52,7 +52,7 @@ public class Db_ThingStuff {
       	// filter by parent stuff id
       	ThingStuffDataFilter filterByParent = new ThingStuffDataFilter();
       	filterByParent.setParentThingId(thingStuffData[i].getParentThingId());
-      	filterByParent.setStuffId(parentStuffId);
+      	filterByParent.setParentStuffId(parentStuffId);
       	
       	// get the child stuff (by parentId StuffId)
       	ThingStuffData[] stuffData_child = dbThingStuffJdo.query(filterByParent);

@@ -1,8 +1,16 @@
 package org.gonevertical.core.server.jdo.data;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.jdo.Extent;
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
+import javax.jdo.Transaction;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.NotPersistent;
@@ -10,6 +18,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffData;
 import org.gonevertical.core.server.ServerPersistence;
 
 import com.google.appengine.api.datastore.Key;
@@ -93,15 +102,15 @@ public class DataJoinJdo {
 	
 
 	@Persistent
-	private long stuffThingStuffId;
+	private long stuffParentStuffId;
+	
+	@Persistent
+	private long stuffId;
 
+	// why kind of stuff, defined as type
 	@Persistent
-	private long stuffThingStuffTypeId;
-	
-	// who is the parent
-	@Persistent
-	private long stuffParentThingId;
-	
+	private long stuffTypeId;
+
 	// values that can be stored
 	@Persistent
 	private String stuffValue;
@@ -148,87 +157,194 @@ public class DataJoinJdo {
 	
 	// assign ownership of this thing to this thing
 	@Persistent
-	private long[] stuffOwnerThingIds;
+	private long[] ownerThingIds;
 
-	
-	
-	
-	
-	@Persistent
-	private long stuffAboutId;
-	
-	//why kind of stuff, defined as type, is this type of stuff
-	@Persistent
-	private long stuffAboutThingStuffTypeId;
-
-	// values that can be stored
-	@Persistent
-	private String stuffAboutValue;
-
-	@Persistent
-	private Boolean stuffAboutValueBol;
-
-	@Persistent
-	private Double stuffAboutValueDouble;
-
-	@Persistent
-	private Long stuffAboutValueLong;
-
-	// TODO - could stick this in valueLong, but wondering how to deal with timezone
-	@Persistent 
-	private Date stuffAboutValueDate;
-
-	// when did this start in time
-	@Persistent
-	private Date stuffAboutStartOf;
-
-	// when did this end in time
-	@Persistent
-	private Date stuffAboutEndOf;
-
-	// order the list by this
-	@Persistent
-	private Double stuffAboutRank;
-
-	// when this object was created
-	@Persistent
-	private Date stuffAboutDateCreated;
-
-	// when this object was updated
-	@Persistent
-	private Date stuffAboutDateUpdated;
-
-	// who created this object
-	@Persistent
-	private long stuffAboutCreatedByThingId;
-
-	// who updated this object
-	@Persistent
-	private long stuffAboutUpdatedByThingId;
-
-	// assign ownership of this thing to this thing
-	@Persistent
-	private long[] stuffAboutOwnerThingIds;
-	
-	
-	
 	/**
 	 * constructor - nothing to do
 	 */
 	public DataJoinJdo(ServerPersistence sp) {
 		this.sp = sp;
 	}
-
-	private void setData(ThingJdo thingJdo, ThingStuffJdo thingStuffJdo) {
-		
 	
+	public void set(ServerPersistence sp) {
+		this.sp = sp;
 	}
 
-	private void setData(ThingJdo thingJdo, ThingStuffJdo thingStuffJdo, ThingStuffJdo thingStuffAboutJdo) {
+	public void setData(ThingJdo thingJdo, ThingStuffJdo thingStuffJdo) {
+		setThingJdo(thingJdo);
+		setStuffJdo(thingStuffJdo);
+	}
+
+	private void setThingJdo(ThingJdo tj) {
+		this.thingId = tj.getThingId();
+		this.thingTypeId = tj.getThingTypeId();
+		this.thingKey = tj.getKey();
+		this.thingSecret = tj.getSecret();
+		this.thingStartOf = tj.getStartOf();
+		this.thingEndOf = tj.getEndOf();
+		this.thingRank = tj.getRank();
+		this.thingDateCreated = tj.getDateCreated();
+		this.thingDateUpdated = tj.getDateUpdated();
+		this.thingCreatedByThingId = tj.getCreatedBy();
+		this.thingUpdatedByThingId = tj.getUpdatedBy();
+		this.thingOwnerThingIds = tj.getOwners();
+	}
+	
+	private void setStuffJdo(ThingStuffJdo sj) {
+		this.stuffParentStuffId = sj.getParentStuffId();
+	  this.stuffId = sj.getStuffId();
+	  this.stuffTypeId = sj.getStuffTypeId();
+	  this.stuffValue = sj.getValue();
+	  this.stuffValueBol = sj.getValueBol();
+	  this.stuffValueDouble = sj.getValueDouble();
+	  this.stuffValueLong = sj.getValueLong();
+	  this.stuffValueDate = sj.getValueDate();
+	  this.stuffStartOf = sj.getStartOf();
+	  this.stuffEndOf = sj.getEndOf();
+	  this.stuffRank = sj.getRank();
+	  this.stuffDateCreated = sj.getDateCreated();
+	  this.stuffDateUpdated = sj.getDateUpdated();
+	  this.stuffCreatedByThingId = sj.getCreatedBy();
+	  this.stuffUpdatedByThingId = sj.getUpdatedBy();
+	  this.ownerThingIds = sj.getOwners();
+  }
+	
+	public long save(ThingJdo thingJdo, ThingStuffJdo thingStuffJdo) {
+		setData(thingJdo, thingStuffJdo);
+
+		DataJoinJdo update = idExist(thingJdo, thingStuffJdo);
+		update.set(sp);
 		
+		PersistenceManager pm = sp.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
 
+			if (update != null) { // update
+				update.setData(thingJdo, thingStuffJdo);			
+				this.id = update.id;
+	
+			} else { // insert
+				id = null;
+				pm.makePersistent(this);
+			}
+
+			tx.commit();
+			
+		} catch (Exception e) { 
+			e.printStackTrace();
+			log.log(Level.SEVERE, "save(): ", e);
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+
+		return getId();
 	}
 
+	private DataJoinJdo idExist(ThingJdo thingJdo, ThingStuffJdo thingStuffJdo) {
+	  
+		long stuffId = thingStuffJdo.getStuffId();
+		
+		DataJoinJdo[] djj = query(stuffId);
+		
+		DataJoinJdo r = null;
+		if (djj == null || djj.length > 0) {
+			r = djj[0];
+			
+		} else if (djj.length > 1) { // something must have went wrong, so lets take care of it now
+			deleteExtras(djj);
+		}
+		
+	  return r;
+  }
+
+	/**
+	 * shouldn't be more than one of these
+	 *   This could change if I add in another join of stuff
+	 * @param djj
+	 */
+	private void deleteExtras(DataJoinJdo[] djj) {
+		if (djj == null) {
+			return;
+		}
+		for (int i=0; i < djj.length; i++) {
+			if (i > 1) {
+				delete(djj[i]);
+			}
+		}
+  }
+
+	private void delete(DataJoinJdo djj) {
+
+		PersistenceManager pm = sp.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		boolean b = false;
+		try {
+			tx.begin();
+
+			DataJoinJdo ttj2 = (DataJoinJdo) pm.getObjectById(DataJoinJdo.class, djj.getId());
+			pm.deletePersistent(ttj2);
+
+			tx.commit();
+			b = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			b = false;
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+				b = false;
+			}
+			pm.close();
+		}
+
+  }
+
+	private long getId() {
+	  return this.getId();
+  }
+	
+	public DataJoinJdo[] query(long stuffId) {
+
+		ArrayList<DataJoinJdo> aT = new ArrayList<DataJoinJdo>();
+
+		String qfilter = "stuffId==" + stuffId;
+
+		PersistenceManager pm = sp.getPersistenceManager();
+		try {
+			Extent<ThingJdo> e = pm.getExtent(ThingJdo.class, true);
+			Query q = pm.newQuery(e, qfilter);
+			q.execute();
+
+			Collection<DataJoinJdo> c = (Collection<DataJoinJdo>) q.execute();
+			Iterator<DataJoinJdo> iter = c.iterator();
+			while (iter.hasNext()) {
+				DataJoinJdo t = (DataJoinJdo) iter.next();
+				aT.add(t);
+			}
+
+			q.closeAll();
+		} finally {
+			pm.close();
+		}
+		
+		if (aT.size() == 0) {
+			return null;
+		}
+
+		DataJoinJdo[] r = new DataJoinJdo[aT.size()];
+		if (aT.size() > 0) {
+			r = new DataJoinJdo[aT.size()];
+			aT.toArray(r);
+		}
+		return r;
+	}
+	
+	
+	
 }
 
 

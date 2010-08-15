@@ -421,7 +421,11 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
     
   }
   
-  private void drawThingLinkName(long l) {
+  private void drawThingLinkName(Long l) {
+  	if (l == null) {
+  		System.out.println("hmmm drawThingLinkName has null");
+  		return;
+  	}
   	if (l > 0) {
   		getThingDataRpc(l);	
   	}
