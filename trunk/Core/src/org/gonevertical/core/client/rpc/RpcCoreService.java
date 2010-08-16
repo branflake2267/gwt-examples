@@ -2,6 +2,7 @@ package org.gonevertical.core.client.rpc;
 
 import org.gonevertical.core.client.oauth.OAuthTokenData;
 import org.gonevertical.core.client.ui.account.AccountData;
+import org.gonevertical.core.client.ui.admin.join.JoinDataFilter;
 import org.gonevertical.core.client.ui.admin.thing.ThingData;
 import org.gonevertical.core.client.ui.admin.thing.ThingDataFilter;
 import org.gonevertical.core.client.ui.admin.thing.ThingsData;
@@ -65,7 +66,7 @@ public interface RpcCoreService extends RemoteService {
   // misc
   public boolean saveFeedBack(FeedbackData feedbackData);
   public WidgetAttrData getWidgetAttributes(OAuthTokenData accessToken, WidgetAttrDataFilter widgetAttrDataFilter);
-  
+  public boolean buildDataJoin(OAuthTokenData accessToken, JoinDataFilter filter);
   
   
   

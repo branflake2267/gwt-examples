@@ -36,7 +36,10 @@ public class ThingStuffJdo {
 	private static final Logger log = Logger.getLogger(ThingStuffJdo.class.getName());
 	
 	@NotPersistent
-	private ServerPersistence sp = null;
+	private ServerPersistence sp;
+	
+	@NotPersistent 
+	private DataJoinJdo dataJoin;
 
   // who is the parent
 	@Persistent
@@ -118,10 +121,13 @@ public class ThingStuffJdo {
 	 */
 	public ThingStuffJdo(ServerPersistence sp) {
 		this.sp = sp;
+		ThingJdo tj = new ThingJdo(sp);
+		dataJoin = new DataJoinJdo(sp, tj, this);
 	}
 	
 	public void set(ServerPersistence sp) {
 		this.sp = sp;
+		dataJoin.set(sp);
 	}
 
 	public void setData(ThingStuffData thingStuffData) {
@@ -202,17 +208,19 @@ public class ThingStuffJdo {
 				ThingStuffJdo update = pm.getObjectById(ThingStuffJdo.class, stuffData.getStuffId());
 				update.set(sp);
 				update.setData(stuffData);
-				
 				this.stuffIdKey = update.stuffIdKey;
-				
-				//System.out.println(" " + update.getUpdatedBy());
 				
 			} else { // insert
 				stuffIdKey = null;
 				pm.makePersistent(this);
 			}
-
 			tx.commit();
+
+			boolean success = dataJoin.save(getStuffId());
+			if (success == false) {
+				tx.rollback();
+				// TODO - need to figure out what to do with failure
+			} 
 			
 		} catch (Exception e) { 
 			e.printStackTrace();
@@ -276,8 +284,13 @@ public class ThingStuffJdo {
 			stuffIdKey = null;
 			pm.makePersistent(this);
 			
+			boolean success = dataJoin.save(getStuffId());
+			if (success == false) {
+				tx.rollback();
+				// TODO - need to figure out what to do with failure
+			} 
+			
 			tx.commit();
-
 		} catch (Exception e) { 
 			e.printStackTrace();
 			log.log(Level.SEVERE, "saveUnique()", e);
@@ -288,6 +301,7 @@ public class ThingStuffJdo {
 			pm.close();
 		}
 
+		
 		// debug
 		//System.out.println("ThingJdo: thingStuffId: " + getId() + " thingStuffTypeId: " + thingStuffTypeId + " " +
 		//"value: " + getString(value) + " valueBol: " + getString(valueBol) + " valueLong: " + getString(valueLong) + " valueDate: " + getString(valueDate));
@@ -301,7 +315,7 @@ public class ThingStuffJdo {
 	 * @param stuffId
 	 * @return
 	 */
-	public ThingStuffJdo query(long stuffId) {
+	public ThingStuffJdo queryJdo(long stuffId) {
 
 		ThingStuffJdo thingStuff = null;
 		PersistenceManager pm = sp.getPersistenceManager();
@@ -471,9 +485,17 @@ public class ThingStuffJdo {
 
 			ThingStuffJdo ttj2 = (ThingStuffJdo) pm.getObjectById(ThingStuffJdo.class, stuffId);
 			pm.deletePersistent(ttj2);
-
+			
 			tx.commit();
 			b = true;
+			
+			// delete join data
+			boolean success = dataJoin.deleteByStuffId(stuffId);
+			if (success = false) {
+				b = success;
+				tx.rollback();
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			b = false;
@@ -495,7 +517,8 @@ public class ThingStuffJdo {
 		}
 
 		String qfilter = "parentStuffId==" + parentStuffId + "";
-
+		
+		boolean success = false;
 		PersistenceManager pm = sp.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
@@ -511,6 +534,14 @@ public class ThingStuffJdo {
 			pm.deletePersistentAll(c);
 
 			tx.commit();
+			success = true;
+			
+			// delete join data
+			success = dataJoin.deleteByStuffParent(parentStuffId);
+			if (success = false) {	
+				tx.rollback();
+			}
+			
 			q.closeAll();
 		} catch (Exception e) { 
 			e.printStackTrace();
@@ -522,7 +553,7 @@ public class ThingStuffJdo {
 			pm.close();
 		}
 
-		return true;
+		return success;
 	}
 
 	public boolean delete(ThingData thingData) {
@@ -590,7 +621,7 @@ public class ThingStuffJdo {
 	
 	
 	
-	private void setStuffIdKey(Key stuffIdKey) {
+	public void setStuffIdKey(Key stuffIdKey) {
 		this.stuffIdKey = stuffIdKey;
   }
 	
