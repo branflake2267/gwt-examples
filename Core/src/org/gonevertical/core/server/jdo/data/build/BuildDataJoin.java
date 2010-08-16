@@ -29,15 +29,22 @@ public class BuildDataJoin {
 	private Date buildDate;
 
 	/**
+	 * constructor - use the one with sp
+	 * @throws NullPointerException
+	 */
+	public BuildDataJoin() throws NullPointerException {
+		// don't use this one
+	}
+	
+	/**
 	 * constructor 
 	 * 
 	 * @param sp
 	 */
 	public BuildDataJoin(ServerPersistence sp) {
 		this.sp = sp;
-		this.tj = new ThingJdo(sp);
-		this.tsj = new ThingStuffJdo(sp);
-		dataJoin = new DataJoinJdo(sp, tj, tsj);
+		tj = new ThingJdo(sp);
+		tsj = new ThingStuffJdo(sp);
 	}
 
 	public boolean buildDataJoin() {
@@ -48,7 +55,7 @@ public class BuildDataJoin {
 		b = loopJoin();
 		
 		// purge records
-		dataJoin.deleteRecordsBefore(buildDate);
+		b = dataJoin.deleteRecordsBefore(buildDate);
 		
 		return b;
 	}
@@ -80,6 +87,11 @@ public class BuildDataJoin {
 	}
 	
 	private void processJoinBuild(long stuffId) {
+		
+		if (dataJoin == null) {
+			dataJoin = new DataJoinJdo(sp);
+		}
+		
 		dataJoin.setBuildDate(buildDate);
 		dataJoin.save(stuffId);
   }

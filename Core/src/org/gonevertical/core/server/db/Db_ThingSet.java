@@ -8,6 +8,7 @@ import org.gonevertical.core.client.ui.admin.thingset.ThingSetOfData;
 import org.gonevertical.core.client.ui.admin.thingset.ThingSetOfFilterData;
 import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffDataFilter;
 import org.gonevertical.core.server.ServerPersistence;
+import org.gonevertical.core.server.jdo.data.DataJoinJdo;
 import org.gonevertical.core.server.jdo.data.ThingJdo;
 import org.gonevertical.core.server.jdo.data.ThingStuffJdo;
 

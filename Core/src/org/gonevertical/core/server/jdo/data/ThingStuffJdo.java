@@ -121,8 +121,7 @@ public class ThingStuffJdo {
 	 */
 	public ThingStuffJdo(ServerPersistence sp) {
 		this.sp = sp;
-		ThingJdo tj = new ThingJdo(sp);
-		dataJoin = new DataJoinJdo(sp, tj, this);
+		this.dataJoin = new DataJoinJdo(sp); 
 	}
 	
 	public void set(ServerPersistence sp) {
