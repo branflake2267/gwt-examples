@@ -361,6 +361,26 @@ public class ThingJdo {
 
 		return td;
 	}
+	
+	public ThingJdo queryJdo(long thingId) {
+		if (thingId == 0) {
+			return null;
+		}
+		ThingJdo thingJdo = null;
+		PersistenceManager pm = sp.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+			thingJdo = pm.getObjectById(ThingJdo.class, thingId);
+			tx.commit();
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+		return thingJdo;
+	}
 
 	/**
 	 * query thing by key(usernameKey,ApplicationKey,GroupKey,...)
@@ -400,6 +420,11 @@ public class ThingJdo {
 		return r;
 	}
 
+	/**
+	 * this needs to be reworked, maybe by using a key query, then get that set
+	 * @param filter
+	 * @return
+	 */
 	public ThingData[] query(ThingDataFilter filter) {
 
 		String qfilter = filter.getFilter_Or();

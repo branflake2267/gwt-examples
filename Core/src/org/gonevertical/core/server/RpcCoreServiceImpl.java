@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import org.gonevertical.core.client.oauth.OAuthTokenData;
 import org.gonevertical.core.client.rpc.RpcCoreService;
 import org.gonevertical.core.client.ui.account.AccountData;
+import org.gonevertical.core.client.ui.admin.join.JoinDataFilter;
 import org.gonevertical.core.client.ui.admin.thing.ThingData;
 import org.gonevertical.core.client.ui.admin.thing.ThingDataFilter;
 import org.gonevertical.core.client.ui.admin.thing.ThingsData;
@@ -24,6 +25,7 @@ import org.gonevertical.core.client.ui.login.UserData;
 import org.gonevertical.core.client.widget.WidgetAttrData;
 import org.gonevertical.core.client.widget.WidgetAttrDataFilter;
 import org.gonevertical.core.server.db.Db_Feedback;
+import org.gonevertical.core.server.db.Db_Join;
 import org.gonevertical.core.server.db.Db_Profile;
 import org.gonevertical.core.server.db.Db_Thing;
 import org.gonevertical.core.server.db.Db_ThingStuff;
@@ -365,10 +367,22 @@ public class RpcCoreServiceImpl extends RemoteServiceServlet implements RpcCoreS
     try {
 	    r = new Db_Profile(sp).saveProfileData(accessToken, filter, profileData);
     } catch (Exception e) {
-    	log.log(Level.SEVERE, "RpcCoreServiceImpl.saveProfileData(): Error:", e);
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.saveAccountData(): Error:", e);
     }
   	sp.end();
   	return r;
+  }
+
+  public boolean buildDataJoin(OAuthTokenData accessToken, JoinDataFilter filter) {
+  	sp.start(getThreadLocalRequest(), accessToken);
+  	boolean r = false;
+    try {
+	    r = new Db_Join(sp).buildDataJoin(accessToken, filter);
+    } catch (Exception e) {
+    	log.log(Level.SEVERE, "RpcCoreServiceImpl.buildDataJoin(): Error:", e);
+    } 
+  	sp.end();
+	  return r;
   }
 
 }
