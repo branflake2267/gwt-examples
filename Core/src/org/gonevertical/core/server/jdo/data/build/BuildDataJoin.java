@@ -45,6 +45,7 @@ public class BuildDataJoin {
 		this.sp = sp;
 		tj = new ThingJdo(sp);
 		tsj = new ThingStuffJdo(sp);
+		buildDate = new Date();
 	}
 
 	public boolean buildDataJoin() {
@@ -55,7 +56,7 @@ public class BuildDataJoin {
 		b = loopJoin();
 		
 		// purge records
-		b = dataJoin.deleteRecordsBefore(buildDate);
+		b = new DataJoinJdo(sp).deleteRecordsBefore(buildDate);
 		
 		return b;
 	}

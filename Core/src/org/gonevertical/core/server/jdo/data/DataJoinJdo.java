@@ -427,7 +427,7 @@ public class DataJoinJdo {
 	 * @param buildDate
 	 */
 	public boolean deleteRecordsBefore(Date buildDate) {
-		String qfilter = "joinUpdatedDate < buildDate";
+		String qfilter = "joinUpdatedDate > buildDate";
 		boolean success = false;
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
