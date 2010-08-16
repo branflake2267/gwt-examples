@@ -43,11 +43,11 @@ public class DataJoinJdo {
 	@NotPersistent
 	private ServerPersistence sp;
 	
-	@NotPersistent
-	private ThingJdo tj;
+	//@NotPersistent
+	//private ThingJdo tj;
 	
-	@NotPersistent
-	private ThingStuffJdo tsj;
+	//@NotPersistent
+	//private ThingStuffJdo tsj;
 	
 	@NotPersistent
 	private Date buildDate;
@@ -173,18 +173,24 @@ public class DataJoinJdo {
 	private long[] ownerThingIds;
 
 	/**
+	 * constructor - use the one with sp
+	 * @throws NullPointerException
+	 */
+	public DataJoinJdo() throws NullPointerException {
+		// don't use this one
+	}
+	
+	/**
 	 * constructor - nothing to do
 	 */
-	public DataJoinJdo(ServerPersistence sp, ThingJdo tj, ThingStuffJdo tsj) {
+	public DataJoinJdo(ServerPersistence sp) {
 		this.sp = sp;
-		this.tj = tj;
-		this.tsj = tsj;
 	}
 	
 	public void set(ServerPersistence sp) {
 		this.sp = sp;
-		tj.set(sp);
-		tsj.set(sp);
+		//tj.set(sp);
+		//tsj.set(sp);
 	}
 
 	private void setData(ThingJdo thingJdo, ThingStuffJdo thingStuffJdo) {
@@ -245,14 +251,16 @@ public class DataJoinJdo {
 		}
 		
 		// get stuffJdo
-		ThingStuffJdo tsd = tsj.queryJdo(stuffId);
+		// TODO change back to class var for ThinStuffJdo
+		ThingStuffJdo tsd = new ThingStuffJdo(sp).queryJdo(stuffId);
 		
 		if (tsd == null) {
 			return false;
 		}
 		
-		// get ThingJdo
-		ThingJdo td = tj.queryJdo(tsd.getParentThingId());
+		// get ThingJdo 
+		// TODO - change back to class var for ThingJdo
+		ThingJdo td = new ThingJdo(sp).queryJdo(tsd.getParentThingId());
 		
 		if (td == null) {
 			return false;
@@ -268,10 +276,11 @@ public class DataJoinJdo {
 		setData(thingJdo, thingStuffJdo);
 
 		DataJoinJdo update = idExist(thingJdo, thingStuffJdo);
-		update.set(sp);
+		if (update != null) {
+			update.set(sp);
+		}
 		
 		boolean success = false;
-		
 		PersistenceManager pm = sp.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
@@ -315,11 +324,12 @@ public class DataJoinJdo {
 		DataJoinJdo[] djj = queryByStuffId(stuffId);
 		
 		DataJoinJdo r = null;
-		if (djj == null || djj.length > 0) {
+		if (djj != null && djj.length > 0) {
 			r = djj[0];
 			
-		} else if (djj.length > 1) { // something must have went wrong, so lets take care of it now
+		} else if (djj != null && djj.length > 1) { // something must have went wrong, so lets take care of it now
 			deleteExtras(djj);
+			// TODO report the problem
 		}
 		
 	  return r;
@@ -371,27 +381,28 @@ public class DataJoinJdo {
 
 		String qfilter = "stuffId==" + stuffId;
 
+		DataJoinJdo[] r = null;
 		Collection<DataJoinJdo> c = null;
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
-			Extent<ThingJdo> e = pm.getExtent(ThingJdo.class, true);
+			Extent<DataJoinJdo> e = pm.getExtent(DataJoinJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
-			q.execute();
 		  c = (Collection<DataJoinJdo>) q.execute();
+		  
+		  // I wonder why I can't have this outside of query yet? have to disconnect the collection Or does it stream somehow, which I think it does.. hmmm
+		  if (c != null && c.size() != 0) {
+  			r = new DataJoinJdo[c.size()];
+  			if (c.size() > 0) {
+  				r = new DataJoinJdo[c.size()];
+  				c.toArray(r);
+  			}
+		  }
+		  
 			q.closeAll();
 		} finally {
 			pm.close();
 		}
 
-		if (c.size() == 0) {
-			return null;
-		}
-		
-		DataJoinJdo[] r = new DataJoinJdo[c.size()];
-		if (c.size() > 0) {
-			r = new DataJoinJdo[c.size()];
-			c.toArray(r);
-		}
 		return r;
 	}
 
@@ -416,14 +427,16 @@ public class DataJoinJdo {
 	 * @param buildDate
 	 */
 	public boolean deleteRecordsBefore(Date buildDate) {
-		String qfilter = "joinUpdatedDate < " + buildDate;
+		String qfilter = "joinUpdatedDate < buildDate";
 		boolean success = false;
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
-			Query q = pm.newQuery("select id from " + ThingStuffJdo.class.getName());
-			q.setOrdering("joinUpdatedDate");
+			Query q = pm.newQuery("select id from " + DataJoinJdo.class.getName());
 			q.setFilter(qfilter);
-	    List<Key> ids = (List<Key>) q.execute();
+			q.declareImports("import java.util.Date");
+			q.declareParameters("Date buildDate");
+			q.setOrdering("joinUpdatedDate desc");
+	    List<Key> ids = (List<Key>) q.execute(buildDate);
 	    Iterator<Key> itr = ids.iterator();
 	    while(itr.hasNext()) {
 	    	Key idkey = itr.next();
@@ -434,7 +447,7 @@ public class DataJoinJdo {
 	    q.closeAll();
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.log(Level.SEVERE, "joinUpdatedDate(): ", e);
+			log.log(Level.SEVERE, "deleteRecordsBefore(): ", e);
 		} finally {
 			pm.close();
 		}
