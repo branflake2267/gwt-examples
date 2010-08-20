@@ -182,7 +182,8 @@ public class Db_ThingStuff {
     long parentStuffId = stuffId;
     
     // delete stuff children
-    b = dbThingStuffJdo.deleteByParentStuffId(parentStuffId);
+    // TODO - not sure if there is any parents, but could use some more error checking on return?
+    dbThingStuffJdo.deleteByParentStuffId(parentStuffId);
     
     return b;
   }

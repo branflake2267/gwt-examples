@@ -358,17 +358,17 @@ public class ThingStuffJdo {
 		}
 
 		// convert to object array
-		ThingStuffJdo[] tj = new ThingStuffJdo[queryThingStuffJdo.size()];
+		ThingStuffJdo[] tsj = new ThingStuffJdo[queryThingStuffJdo.size()];
 		if (queryThingStuffJdo.size() > 0) {
-			tj = new ThingStuffJdo[queryThingStuffJdo.size()];
-			queryThingStuffJdo.toArray(tj);
+			tsj = new ThingStuffJdo[queryThingStuffJdo.size()];
+			queryThingStuffJdo.toArray(tsj);
 		}
 
 		// convert for transport to client
-		List<ThingStuffJdo> tjsa_list = Arrays.asList(tj);
-		ThingStuffData[] td = convert(tjsa_list);
+		List<ThingStuffJdo> tjsa_list = Arrays.asList(tsj);
+		ThingStuffData[] tsd = convert(tjsa_list);
 
-		return td;
+		return tsd;
 	}
 
 	private void queryKey(Key key) {
@@ -408,19 +408,16 @@ public class ThingStuffJdo {
 	}
 
 	public static ThingStuffData[] convert(List<ThingStuffJdo> thingStuffJdoAbout) {
-
 		Iterator<ThingStuffJdo> itr = thingStuffJdoAbout.iterator();
-
 		ThingStuffData[] r = new ThingStuffData[thingStuffJdoAbout.size()];
-
 		int i = 0;
 		while(itr.hasNext()) {
-
 			ThingStuffJdo tsja = itr.next();
-
 			r[i] = new ThingStuffData();
 			r[i].setData(
 					tsja.getParentThingId(),
+					tsja.getParentStuffId(),
+					
 					tsja.getStuffId(), 
 					tsja.getStuffTypeId(), 
 
@@ -433,15 +430,14 @@ public class ThingStuffJdo {
 					tsja.getStartOf(),
 					tsja.getEndOf(), 
 					tsja.getRank(),
+					
 					tsja.getCreatedBy(),
 					tsja.getDateCreated(),
 					tsja.getUpdatedBy(),
 					tsja.getDateUpdated(),
 					tsja.getOwners());
-
 			i++;
 		}
-
 		return r;
 	}
 
@@ -493,7 +489,7 @@ public class ThingStuffJdo {
 	public boolean deleteByParentStuffId(long parentStuffId) {
 
 		if (parentStuffId == 0) {
-			return false;
+			return true;
 		}
 
 		String qfilter = "parentStuffId==" + parentStuffId + "";
@@ -575,6 +571,8 @@ public class ThingStuffJdo {
 			}
 			pm.close();
 		}
+		
+		dataJoin.deleteByThingId(thingData.getThingId());
 
 		return true;
 	}

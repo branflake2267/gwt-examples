@@ -250,7 +250,6 @@ public class ThingJdo {
 
 	public void insert() {
 		this.dateCreated = new Date();
-
 		PersistenceManager pm = sp.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
@@ -266,11 +265,9 @@ public class ThingJdo {
 	}
 
 	public void save(ThingData[] thingData) {
-
 		for (int i=0; i < thingData.length; i++) {
 			save(thingData[i]);
 		}
-
 	}
 	
 	public long save(ThingData thingData, String secret) {
@@ -280,49 +277,41 @@ public class ThingJdo {
 
 	public long save(ThingData thingData) {
 		setData(thingData);
-
 		PersistenceManager pm = sp.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
 			tx.begin();
-
 			if (thingIdKey != null && thingIdKey.getId() > 0) { // update
 				ThingJdo update = pm.getObjectById(ThingJdo.class, thingIdKey);
 				update.set(sp);
 				update.setData(thingData);
 				thingIdKey = update.thingIdKey;
-
 			} else { // insert  
 				thingIdKey = null;
 				pm.makePersistent(this);
 			}
 			tx.commit();
-
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
 			}
 			pm.close();
 		}
-
 		return getThingId();
 	}
 
 	public boolean savePassword(ThingData thingData, String secretHash) {
 		setData(thingData);
-
 		boolean b = false;
 		PersistenceManager pm = sp.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
 			tx.begin();
-
 			if (thingIdKey.getId() > 0) { // update
 				ThingJdo update = pm.getObjectById(ThingJdo.class, thingIdKey);
 				update.set(sp);
 				update.setSecret(secretHash);
 			} else { // insert   
-
 				thingIdKey = null;
 				pm.makePersistent(this);
 			}
@@ -335,7 +324,6 @@ public class ThingJdo {
 			}
 			pm.close();
 		}
-
 		return b;
 	}
 
@@ -343,9 +331,7 @@ public class ThingJdo {
 		if (thingId == 0) {
 			return null;
 		}
-
 		ThingJdo thingJdo = null;
-
 		PersistenceManager pm = sp.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
@@ -358,9 +344,7 @@ public class ThingJdo {
 			}
 			pm.close();
 		}
-
 		ThingData td = convert(thingJdo);
-
 		return td;
 	}
 	
@@ -390,50 +374,38 @@ public class ThingJdo {
 	 * @param key
 	 * @return
 	 */
-	public ThingJdo[] query(long thingTypeId, String key) {
-
-		ArrayList<ThingJdo> aT = new ArrayList<ThingJdo>();
-
+	@SuppressWarnings("unchecked")
+  public ThingJdo[] query(long thingTypeId, String key) {
 		String qfilter = "thingTypeId==" + thingTypeId + " && key==\"" + key + "\" ";
-
+		ThingJdo[] r = null;
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
 			Extent<ThingJdo> e = pm.getExtent(ThingJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
 			q.execute();
-
 			Collection<ThingJdo> c = (Collection<ThingJdo>) q.execute();
-			Iterator<ThingJdo> iter = c.iterator();
-			while (iter.hasNext()) {
-				ThingJdo t = (ThingJdo) iter.next();
-				aT.add(t);
+			r = new ThingJdo[c.size()];
+			if (c.size() > 0) {
+				r = new ThingJdo[c.size()];
+				c.toArray(r);
 			}
-
 			q.closeAll();
 		} finally {
 			pm.close();
-		}
-
-		ThingJdo[] r = new ThingJdo[aT.size()];
-		if (aT.size() > 0) {
-			r = new ThingJdo[aT.size()];
-			aT.toArray(r);
 		}
 		return r;
 	}
 
 	/**
-	 * this needs to be reworked, maybe by using a key query, then get that set
+	 * query thing data
+	 * 
+	 *  I'm using my DataJoin system to retrieve 
+	 * 
 	 * @param filter
 	 * @return
 	 */
-	public ThingData[] query(ThingDataFilter filter) {
-
-		
-		
-		//TODO This is going to be an unowned relationship hack for now, since there is not an easy join yet.
-		//TODO This stinks at the moment, SQL is so much easier...
-    //TODO Workaround
+	@SuppressWarnings("unchecked")
+  public ThingData[] query(ThingDataFilter filter) {
 		if (filter.getThingIdLink() > 0) {
 			DataJoinJdo db = new DataJoinJdo(sp);
 			long[] thingIds = db.getThingIds_ByLinkers(filter.getThingIdLink());
@@ -444,55 +416,28 @@ public class ThingJdo {
 		}
 		
 		String qfilter = filter.getFilter_Or();
-		
-		System.out.println("queryfilter: " + qfilter);
-		
-		ArrayList<ThingJdo> aT = new ArrayList<ThingJdo>();
+		//System.out.println("queryfilter: " + qfilter);
+
+		ThingJdo[] tj = null;
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
 			Extent<ThingJdo> e = pm.getExtent(ThingJdo.class, true);
 			Query q = pm.newQuery(e);
 			q.setFilter(qfilter);
-			
-			// TODO - this wont work, stink. This is not as easy as SQL.
-			// TODO - range will not work. I saw some fetching api, but can't find it again, postpone to another day
-			//q.setRange(filter.getRangeStart(), filter.getRangeFinish());
-			
+			q.setRange(filter.getRangeStart(), filter.getRangeFinish());
 			q.execute();
-
 			Collection<ThingJdo> c = (Collection<ThingJdo>) q.execute();
-			Iterator<ThingJdo> iter = c.iterator();
-			
-			// TODO - making my own pagination for now, fix this later
-			int i=0;
-			while (iter.hasNext()) {
-				
-				ThingJdo t = (ThingJdo) iter.next();
-				
-				// TODO work around, this sucks - change it later to something better - ran out of time today.
-				if (i >= filter.getRangeStart() && i <= filter.getRangeFinish()) {
-
-  				aT.add(t);
-  				 
-  				//System.out.println("adding thing: " + i + " s: " + filter.getRangeStart() + " f: " + filter.getRangeFinish());
-				}
-				
-				i++;
+			tj = new ThingJdo[c.size()];
+			if (c.size() > 0) {
+				tj = new ThingJdo[c.size()];
+				c.toArray(tj);
 			}
-
 			q.closeAll();
 		} finally {
 			pm.close();
 		}
-
-		ThingJdo[] tj = new ThingJdo[aT.size()];
-		if (aT.size() > 0) {
-			tj = new ThingJdo[aT.size()];
-			aT.toArray(tj);
-		}
-
+		// pack for transfport to client
 		ThingData[] td = convert(tj);
-
 		return td;
 	}
 	
@@ -501,7 +446,8 @@ public class ThingJdo {
 	 * 
 	 * @return
 	 */
-	public long queryTotal() {
+	@SuppressWarnings("unchecked")
+  public long queryTotal() {
 		long total = 0;
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
@@ -525,12 +471,9 @@ public class ThingJdo {
 	 * @return
 	 */
 	public static ThingData[] convert(ThingJdo[] thingJdo) {
-
 		ThingData[] r = new ThingData[thingJdo.length];
-
 		for (int i=0; i < thingJdo.length; i++) {
 			r[i] = new ThingData();
-
 			r[i].setData(
 					thingJdo[i].getThingTypeId(), 
 					thingJdo[i].getThingId(), 
@@ -548,7 +491,6 @@ public class ThingJdo {
 	}
 
 	public static ThingData convert(ThingJdo thingJdo) {
-
 		ThingData r = new ThingData();
 		r.setData(
 				thingJdo.getThingTypeId(), 
@@ -562,7 +504,6 @@ public class ThingJdo {
 				thingJdo.getUpdatedBy(),
 				thingJdo.getDateUpdated(),
 				thingJdo.getOwners());
-
 		return r;
 	}
 
@@ -598,10 +539,8 @@ public class ThingJdo {
 		boolean b = false;
 		try {
 			tx.begin();
-
 			ThingJdo ttj2 = (ThingJdo) pm.getObjectById(ThingJdo.class, ttj.getThingId());
 			pm.deletePersistent(ttj2);
-
 			tx.commit();
 			b = true;
 		} catch (Exception e) {
@@ -629,9 +568,6 @@ public class ThingJdo {
 
 		// stuff data
 		tsj.delete(thingData);
-
-		// TODO - delete other data that this thing owns
-
 	}
 
 	public void setSecret(String secret) {

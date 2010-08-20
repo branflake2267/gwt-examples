@@ -75,7 +75,7 @@ public class ThingEdit extends Ui implements ClickHandler, ChangeHandler, MouseO
 		wStuff.setWidgetType(ThingStuffs.WIDGETTYPE_THINGSTUFF);
 
 		wStuffAbout = new ThingStuffs(cp);
-		wStuffAbout.setWidgetType(ThingStuffs.WIDGETTYPE_THINGSTUFFABOUT);
+		wStuffAbout.setWidgetType(ThingStuffs.WIDGETTYPE_THINGSTUFF_PARENT);
 		
 		wLinkers = new ThingLinkers(cp);
 

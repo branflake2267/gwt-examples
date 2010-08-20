@@ -292,37 +292,25 @@ public class ThingTypeJdo {
 	 * @return
 	 */
 	public ThingTypeJdo[] query(String name) {
-
-		ArrayList<ThingTypeJdo> aT = new ArrayList<ThingTypeJdo>();
-
 		String qfilter = "name==\"" + name + "\"";
 
+		ThingTypeJdo[] r = null;
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
 			Extent<ThingTypeJdo> e = pm.getExtent(ThingTypeJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
 			q.execute();
-
 			Collection<ThingTypeJdo> c = (Collection<ThingTypeJdo>) q.execute();
-			Iterator<ThingTypeJdo> iter = c.iterator();
-			while (iter.hasNext()) {
-				ThingTypeJdo t = (ThingTypeJdo) iter.next();
-				aT.add(t);
+			if (c.size() > 0) {
+				r = new ThingTypeJdo[c.size()];
+				c.toArray(r);
 			}
-
 			q.closeAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			pm.close();
 		}
-
-		ThingTypeJdo[] r = null;
-		if (aT.size() > 0) {
-			r = new ThingTypeJdo[aT.size()];
-			aT.toArray(r);
-		}
-
 		return r;
 	}
 
@@ -340,53 +328,39 @@ public class ThingTypeJdo {
 			qfilter = filter.getFilter_Or();
 		}
 
-		ArrayList<ThingTypeJdo> aT = new ArrayList<ThingTypeJdo>();
-
+		ThingTypeJdo[] r = null;
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
-			
-			// TODO build filter
 			Extent<ThingTypeJdo> e = pm.getExtent(ThingTypeJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
-			//q.setRange(0, 10); // TODO - finish range
+			
+			//TODO q.setRange(0, 10); // TODO - finish range
+			
 			q.execute();
-
 			Collection<ThingTypeJdo> c = (Collection<ThingTypeJdo>) q.execute();
-			Iterator<ThingTypeJdo> iter = c.iterator();
-			while (iter.hasNext()) {
-				ThingTypeJdo t = (ThingTypeJdo) iter.next();
-				aT.add(t);
+			if (c.size() > 0) {
+				r = new ThingTypeJdo[c.size()];
+				c.toArray(r);
 			}
-
 			q.closeAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			pm.close();
 		}
-
-		ThingTypeJdo[] r = null;
-		if (aT.size() > 0) {
-			r = new ThingTypeJdo[aT.size()];
-			aT.toArray(r);
-		}
 		return r;
 	}
 
 	public boolean deleteThingTypeDataJdo(ThingTypeData thingTypeData) {
-
 		ThingTypeJdo ttj = new ThingTypeJdo(sp);
 		ttj.setData(thingTypeData);
-
 		PersistenceManager pm = sp.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		boolean b = false;
 		try {
 			tx.begin();
-
 			ThingTypeJdo ttj2 = (ThingTypeJdo) pm.getObjectById(ThingTypeJdo.class, ttj.getId());
 			pm.deletePersistent(ttj2);
-
 			tx.commit();
 			b = true;
 		} catch (Exception e) {
@@ -399,7 +373,6 @@ public class ThingTypeJdo {
 			}
 			pm.close();
 		}
-
 		return b;
 	}
 
