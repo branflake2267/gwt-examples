@@ -39,30 +39,30 @@ public class DataJoinJdo {
 
 	@NotPersistent
 	private static final Logger log = Logger.getLogger(DataJoinJdo.class.getName());
-	
+
 	@NotPersistent
 	private ServerPersistence sp;
-	
+
 	//@NotPersistent
 	//private ThingJdo tj;
-	
+
 	//@NotPersistent
 	//private ThingStuffJdo tsj;
-	
+
 	@NotPersistent
 	private Date buildDate;
-	
 
-	
+
+
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key id;
 
 	@Persistent
 	private Date joinUpdatedDate;
-	
-	
-  // left table
+
+
+	// left table
 	@Persistent
 	private long thingId; 
 
@@ -85,7 +85,7 @@ public class DataJoinJdo {
 	// when did this end in time
 	@Persistent
 	private Date thingEndOf;
-	
+
 	// order the list by this
 	@Persistent
 	private Double thingRank;
@@ -105,18 +105,18 @@ public class DataJoinJdo {
 	// who last updated this object
 	@Persistent
 	private long thingUpdatedByThingId;
-	
+
 	// assign ownership of this thing to this thing
 	@Persistent
 	private long[] thingOwnerThingIds;
 
 
-	
-	
+
+
 	// right table
 	@Persistent
 	private long stuffParentStuffId;
-	
+
 	@Persistent
 	private long stuffId;
 
@@ -147,7 +147,7 @@ public class DataJoinJdo {
 	// when did this end in time
 	@Persistent
 	private Date stuffEndOf;
-	
+
 	// order the list by this
 	@Persistent
 	private Double stuffRank;
@@ -167,7 +167,7 @@ public class DataJoinJdo {
 	// who updated this object
 	@Persistent
 	private long stuffUpdatedByThingId;
-	
+
 	// assign ownership of this thing to this thing
 	@Persistent
 	private long[] ownerThingIds;
@@ -179,14 +179,14 @@ public class DataJoinJdo {
 	public DataJoinJdo() throws NullPointerException {
 		// don't use this one
 	}
-	
+
 	/**
 	 * constructor - nothing to do
 	 */
 	public DataJoinJdo(ServerPersistence sp) {
 		this.sp = sp;
 	}
-	
+
 	public void set(ServerPersistence sp) {
 		this.sp = sp;
 		//tj.set(sp);
@@ -212,66 +212,74 @@ public class DataJoinJdo {
 		this.thingUpdatedByThingId = tj.getUpdatedBy();
 		this.thingOwnerThingIds = tj.getOwners();
 	}
-	
+
 	private void setStuffJdo(ThingStuffJdo sj) {
 		this.stuffParentStuffId = sj.getParentStuffId();
-	  this.stuffId = sj.getStuffId();
-	  this.stuffTypeId = sj.getStuffTypeId();
-	  this.stuffValue = sj.getValue();
-	  this.stuffValueBol = sj.getValueBol();
-	  this.stuffValueDouble = sj.getValueDouble();
-	  this.stuffValueLong = sj.getValueLong();
-	  this.stuffValueDate = sj.getValueDate();
-	  this.stuffStartOf = sj.getStartOf();
-	  this.stuffEndOf = sj.getEndOf();
-	  this.stuffRank = sj.getRank();
-	  this.stuffDateCreated = sj.getDateCreated();
-	  this.stuffDateUpdated = sj.getDateUpdated();
-	  this.stuffCreatedByThingId = sj.getCreatedBy();
-	  this.stuffUpdatedByThingId = sj.getUpdatedBy();
-	  this.ownerThingIds = sj.getOwners();
-  }
-	
+		this.stuffId = sj.getStuffId();
+		this.stuffTypeId = sj.getStuffTypeId();
+		this.stuffValue = sj.getValue();
+		this.stuffValueBol = sj.getValueBol();
+		this.stuffValueDouble = sj.getValueDouble();
+		this.stuffValueLong = sj.getValueLong();
+		this.stuffValueDate = sj.getValueDate();
+		this.stuffStartOf = sj.getStartOf();
+		this.stuffEndOf = sj.getEndOf();
+		this.stuffRank = sj.getRank();
+		this.stuffDateCreated = sj.getDateCreated();
+		this.stuffDateUpdated = sj.getDateUpdated();
+		this.stuffCreatedByThingId = sj.getCreatedBy();
+		this.stuffUpdatedByThingId = sj.getUpdatedBy();
+		this.ownerThingIds = sj.getOwners();
+	}
+
 	private long getId() {
-	  return this.getId();
-  }
-	
+		long i = 0;
+		if (id != null) {
+			i = id.getId();
+		}
+		return i;
+	}
+
 	public void setBuildDate(Date date) {
 		buildDate = date;
 	}
-	
+
 	private void setJoinBuildDate(Date date) {
 		joinUpdatedDate = date;
 	}
 	
+	private long getThingId() {
+	  return thingId;
+  }
+
 	public boolean save(long stuffId) {
-	  
+
 		if (stuffId == 0) {
 			return false;
 		}
-		
+
 		// get stuffJdo
 		// TODO change back to class var for ThinStuffJdo
 		ThingStuffJdo tsd = new ThingStuffJdo(sp).queryJdo(stuffId);
-		
+
 		if (tsd == null) {
 			return false;
 		}
-		
+
 		// get ThingJdo 
 		// TODO - change back to class var for ThingJdo
 		ThingJdo td = new ThingJdo(sp).queryJdo(tsd.getParentThingId());
-		
+
 		if (td == null) {
 			return false;
 		}
-		
+
 		// save
 		boolean success = save(td, tsd);
-	  
+
 		return success;
-  }
-	
+	}
+
 	private boolean save(ThingJdo thingJdo, ThingStuffJdo thingStuffJdo) {
 		setData(thingJdo, thingStuffJdo);
 
@@ -279,7 +287,7 @@ public class DataJoinJdo {
 		if (update != null) {
 			update.set(sp);
 		}
-		
+
 		boolean success = false;
 		PersistenceManager pm = sp.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -291,9 +299,8 @@ public class DataJoinJdo {
 					update.setJoinBuildDate(buildDate);
 				}
 				update.setData(thingJdo, thingStuffJdo);
-				
 				this.id = update.id;
-	
+
 			} else { // insert
 				if (joinUpdatedDate != null) {
 					joinUpdatedDate = buildDate;
@@ -303,6 +310,7 @@ public class DataJoinJdo {
 			}
 
 			tx.commit();
+			success = true;
 		} catch (Exception e) { 
 			e.printStackTrace();
 			log.log(Level.SEVERE, "save(): ", e);
@@ -318,22 +326,22 @@ public class DataJoinJdo {
 	}
 
 	private DataJoinJdo idExist(ThingJdo thingJdo, ThingStuffJdo thingStuffJdo) {
-	  
+
 		long stuffId = thingStuffJdo.getStuffId();
-		
+
 		DataJoinJdo[] djj = queryByStuffId(stuffId);
-		
+
 		DataJoinJdo r = null;
 		if (djj != null && djj.length > 0) {
 			r = djj[0];
-			
+
 		} else if (djj != null && djj.length > 1) { // something must have went wrong, so lets take care of it now
 			deleteExtras(djj);
 			// TODO report the problem
 		}
-		
-	  return r;
-  }
+
+		return r;
+	}
 
 	/**
 	 * shouldn't be more than one of these
@@ -349,10 +357,10 @@ public class DataJoinJdo {
 				delete(djj[i]);
 			}
 		}
-  }
+	}
 
 	private boolean delete(DataJoinJdo djj) {
-		
+
 		System.out.println("deleting DataJoin, something must have went wrong.");
 
 		PersistenceManager pm = sp.getPersistenceManager();
@@ -375,8 +383,8 @@ public class DataJoinJdo {
 			pm.close();
 		}
 		return success;
-  }
-	
+	}
+
 	private DataJoinJdo[] queryByStuffId(long stuffId) {
 
 		String qfilter = "stuffId==" + stuffId;
@@ -387,17 +395,17 @@ public class DataJoinJdo {
 		try {
 			Extent<DataJoinJdo> e = pm.getExtent(DataJoinJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
-		  c = (Collection<DataJoinJdo>) q.execute();
-		  
-		  // I wonder why I can't have this outside of query yet? have to disconnect the collection Or does it stream somehow, which I think it does.. hmmm
-		  if (c != null && c.size() != 0) {
-  			r = new DataJoinJdo[c.size()];
-  			if (c.size() > 0) {
-  				r = new DataJoinJdo[c.size()];
-  				c.toArray(r);
-  			}
-		  }
-		  
+			c = (Collection<DataJoinJdo>) q.execute();
+
+			// I wonder why I can't have this outside of query yet? have to disconnect the collection Or does it stream somehow, which I think it does.. hmmm
+			if (c != null && c.size() != 0) {
+				r = new DataJoinJdo[c.size()];
+				if (c.size() > 0) {
+					r = new DataJoinJdo[c.size()];
+					c.toArray(r);
+				}
+			}
+
 			q.closeAll();
 		} finally {
 			pm.close();
@@ -421,7 +429,7 @@ public class DataJoinJdo {
 		}
 		return b;
 	}
-	
+
 	/**
 	 * purge records before this date - which stands for the latest update
 	 * @param buildDate
@@ -436,15 +444,15 @@ public class DataJoinJdo {
 			q.declareImports("import java.util.Date");
 			q.declareParameters("Date buildDate");
 			q.setOrdering("joinUpdatedDate desc");
-	    List<Key> ids = (List<Key>) q.execute(buildDate);
-	    Iterator<Key> itr = ids.iterator();
-	    while(itr.hasNext()) {
-	    	Key idkey = itr.next();
-	    	long id = idkey.getId();
-	    	deleteById(id);
-	    }
-	    success = true;
-	    q.closeAll();
+			List<Key> ids = (List<Key>) q.execute(buildDate);
+			Iterator<Key> itr = ids.iterator();
+			while(itr.hasNext()) {
+				Key idkey = itr.next();
+				long id = idkey.getId();
+				deleteById(id);
+			}
+			success = true;
+			q.closeAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.log(Level.SEVERE, "deleteRecordsBefore(): ", e);
@@ -452,7 +460,7 @@ public class DataJoinJdo {
 			pm.close();
 		}
 		return success;
-  }
+	}
 
 	private boolean deleteById(long id) {
 		PersistenceManager pm = sp.getPersistenceManager();
@@ -463,10 +471,10 @@ public class DataJoinJdo {
 
 			DataJoinJdo djj = (DataJoinJdo) pm.getObjectById(DataJoinJdo.class, id);
 			pm.deletePersistent(djj);
-			
+
 			tx.commit();
 			b = true;
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			b = false;
@@ -478,7 +486,7 @@ public class DataJoinJdo {
 			pm.close();
 		}
 		return b;
-  }
+	}
 
 	public boolean deleteByStuffParent(long parentStuffId) {
 		String qfilter = "parentStuffId==" + parentStuffId;
@@ -487,15 +495,15 @@ public class DataJoinJdo {
 		try {
 			Query q = pm.newQuery("select stuffIdKey from " + ThingStuffJdo.class.getName());
 			q.setFilter(qfilter);
-	    List<Key> ids = (List<Key>) q.execute();
-	    Iterator<Key> itr = ids.iterator();
-	    while(itr.hasNext()) {
-	    	Key stuffIdkey = itr.next();
-	    	long stuffId = stuffIdkey.getId();
-	    	deleteByStuffId(stuffId);
-	    }
-	    success = true;
-	    q.closeAll();
+			List<Key> ids = (List<Key>) q.execute();
+			Iterator<Key> itr = ids.iterator();
+			while(itr.hasNext()) {
+				Key stuffIdkey = itr.next();
+				long stuffId = stuffIdkey.getId();
+				deleteByStuffId(stuffId);
+			}
+			success = true;
+			q.closeAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.log(Level.SEVERE, "joinUpdatedDate(): ", e);
@@ -503,9 +511,80 @@ public class DataJoinJdo {
 			pm.close();
 		}
 		return success;
-  }
-	
-	
+	}
+
+	@SuppressWarnings("unchecked")
+	public long queryTotal() {
+		long total = 0;
+		PersistenceManager pm = sp.getPersistenceManager();
+		try {
+			Query q = pm.newQuery("select id from " + DataJoinJdo.class.getName());
+			List<Key> ids = (List<Key>) q.execute();
+			total = ids.size();
+			q.closeAll();
+		} catch (Exception e) { 
+			e.printStackTrace();
+			log.log(Level.SEVERE, "", e);
+		} finally {
+			pm.close();
+		}
+		return total;
+	}
+
+	/**
+	 * look into the stuff of other things, and find this thingId
+	 * 
+	 * @param thingIdLink
+	 * @return
+	 */
+	public long[] getThingIds_ByLinkers(long thingIdLink) {
+
+		if (thingIdLink == 0) {
+			return null;
+		}
+
+		// filter by links
+		String qfilter =  "stuffTypeId==2 && stuffValueLong==" + thingIdLink + "";
+
+		ArrayList<DataJoinJdo> aT = new ArrayList<DataJoinJdo>();
+		PersistenceManager pm = sp.getPersistenceManager();
+		try {
+			Extent<DataJoinJdo> e = pm.getExtent(DataJoinJdo.class, true);
+			Query q = pm.newQuery(e, qfilter);
+			q.execute();
+
+			Collection<DataJoinJdo> c = (Collection<DataJoinJdo>) q.execute();
+			Iterator<DataJoinJdo> iter = c.iterator();
+			while (iter.hasNext()) {
+				DataJoinJdo t = (DataJoinJdo) iter.next();
+				aT.add(t);
+			}
+
+			q.closeAll();
+		} finally {
+			pm.close();
+		}
+
+		if (aT.size() == 0) {
+			return null;
+		}
+		
+		// return csv of the things
+		long[] thingIds = new long[aT.size()];
+		for (int i=0; i < aT.size(); i++) {
+			DataJoinJdo djj = aT.get(i);
+			Long thingId = djj.getThingId();
+			if (thingId != null) {
+				thingIds[i] = thingId;
+			}
+		}
+
+		
+		return thingIds;
+	}
+
+
+
 }
 
 

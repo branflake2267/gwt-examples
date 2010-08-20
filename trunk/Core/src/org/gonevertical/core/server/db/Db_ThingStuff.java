@@ -58,11 +58,13 @@ public class Db_ThingStuff {
       	ThingStuffData[] stuffData_child = dbThingStuffJdo.query(filterByParent);
       	
       	// setup thing childs and set it in stuff
-      	ThingStuffsData stuffsData_childs = new ThingStuffsData();
-      	stuffsData_childs.setTotal(stuffData_child.length);
-      	stuffsData_childs.setThingStuffData(stuffData_child);
-      
-      	thingStuffData[i].setThingStuffChilds(stuffsData_childs);
+      	if (stuffData_child != null && stuffData_child.length > 0) {
+        	ThingStuffsData stuffsData_childs = new ThingStuffsData();
+        	stuffsData_childs.setTotal(stuffData_child.length);
+        	stuffsData_childs.setThingStuffData(stuffData_child);
+        
+        	thingStuffData[i].setThingStuffChilds(stuffsData_childs);
+      	}
       }
     	
     }

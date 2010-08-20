@@ -1,5 +1,7 @@
 package org.gonevertical.core.client.ui.admin.thing;
 
+import java.util.ArrayList;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ThingDataFilter implements IsSerializable {
@@ -11,6 +13,7 @@ public class ThingDataFilter implements IsSerializable {
    * filter by one thingIds in the stuff under links
    */
 	private long thingId;
+	private long[] thingIds;
 
   /**
    * filter by type
@@ -56,31 +59,41 @@ public class ThingDataFilter implements IsSerializable {
 	  return finish;
   }
 
+	/**
+	 * I need to add a dimension to this so I can add the expression dynamcially
+	 * @return
+	 */
 	public String getFilter_Or() {
 
-		String s = "";
+		ArrayList<String> w = new ArrayList<String>();
+		
 		if (thingTypeId != null && thingTypeId.length > 0) {
 			for (int i=0; i < thingTypeId.length; i++) {
-				s += "thingTypeId==" + thingTypeId[i] + "";
-				if (i < thingTypeId.length -1) {
-					s += " || ";
-				}
+				String s = "thingTypeId==" + thingTypeId[i];
+				w.add(s);
 			}
 		}
 		
-		if (s != null && s.length() > 0) {
-			s += " || ";
+		if (thingIds != null && thingIds.length > 0) {
+			for (int i=0; i < thingIds.length; i++) {
+				String s2 = "thingIdKey==" + thingIds[i];
+				w.add(s2);
+			}
 		}
 		
-		// TODO - not sure how to do a one to many unowned relationship, it doesn't look easy at moment, dang
-		if (s != null && thingIdLink > 0) {
-			//s += " "; 
+		
+		if (w == null || w.size() == 0) {
+			return null;
 		}
 		
-		if (s != null && s.trim().length() == 0) {
-			s = null;
+		String s = "";
+		for (int i=0; i < w.size(); i++) {
+			s += w.get(i);
+			if (i < w.size() -1) {
+				s += " || ";
+			}
 		}
-			
+		
 	  return s;
   }
 
@@ -91,6 +104,10 @@ public class ThingDataFilter implements IsSerializable {
 	public long getThingId() {
 	  return thingId;
   }
+	
+	public void setThingIds(long[] thingIds) {
+		this.thingIds = thingIds;
+  }
 
 	public void setThingIdLink(long thingIdLink) {
 	  this.thingIdLink = thingIdLink;
@@ -99,5 +116,7 @@ public class ThingDataFilter implements IsSerializable {
 	public long getThingIdLink() {
 		return thingIdLink;
 	}
+
+
   
 }

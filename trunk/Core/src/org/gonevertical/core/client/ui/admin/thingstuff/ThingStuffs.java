@@ -97,7 +97,9 @@ public class ThingStuffs extends Ui implements ClickHandler, ChangeHandler {
   
   public void draw(ThingData thingData, ThingStuffsData thingStuffsData) {
   	this.thingData = thingData;
-  	this.thingStuffTypesData = thingStuffsData.getThingStuffTypesData();
+  	if (thingStuffsData != null) {
+  		this.thingStuffTypesData = thingStuffsData.getThingStuffTypesData();
+  	}
   	process(thingStuffsData);
   }  
 
