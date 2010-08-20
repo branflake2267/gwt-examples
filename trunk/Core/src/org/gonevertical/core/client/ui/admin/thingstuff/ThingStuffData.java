@@ -72,68 +72,8 @@ public class ThingStuffData implements IsSerializable {
   /**
    * set stuff
    * 
-   * @param thingId
-   * @param stuffId
-   * @param stuffTypeId
-   * @param value
-   * @param valueBol
-   * @param valueDouble
-   * @param valueLong
-   * @param startOf
-   * @param endOf
-   * @param dateCreated
-   * @param dateUpdated
-   */
-  public void setData(
-  		long thingId,
-  		long stuffId, 
-      long stuffTypeId, 
-      String value, 
-      Boolean valueBol, 
-      Double valueDouble, 
-      Long valueLong,
-      Date valueDate,
-      Date startOf,
-      Date endOf,
-      Double rank,
-      long createdBy,
-      Date dateCreated,
-      long updatedBy,
-      Date dateUpdated,
-      long[] ownerThingIds) {
-  	
-    this.parentThingId = thingId;
-    
-    this.stuffId = stuffId;
-    this.stuffTypeId = stuffTypeId;
-    
-    this.value = value;
-    this.valueBol = valueBol;
-    this.valueDouble = valueDouble;
-    this.valueLong = valueLong;
-    this.valueDate = valueDate;
-   
-    this.startOf = startOf;
-    this.endOf = endOf;
-    
-    this.rank = rank;
-    this.ownerThingIds = ownerThingIds;
-    
-    this.createdByThingId = createdBy;
-    this.dateCreated = dateCreated;
-    this.updatedByThingId = updatedBy;
-    this.dateUpdated = dateUpdated;
-  }
-  
-  /**
-   * set stuff "about"
-   *   Note: this one has ThingStuffAboutId
-   *   
-   *   Setting a recursive ThingStuffData
-   * 
    * @param parentThingId
    * @param stuffId
-   * @param parentStuffId
    * @param stuffTypeId
    * @param value
    * @param valueBol
@@ -145,9 +85,8 @@ public class ThingStuffData implements IsSerializable {
    * @param dateUpdated
    */
   public void setData(
-  		long parentThingId, 
+  		long parentThingId,
   		long parentStuffId,
-  		
   		long stuffId, 
       long stuffTypeId, 
       String value, 
@@ -187,7 +126,6 @@ public class ThingStuffData implements IsSerializable {
     this.updatedByThingId = updatedBy;
     this.dateUpdated = dateUpdated;
   }
-  
   
   public long getParentThingId() {
     return parentThingId;
@@ -332,10 +270,10 @@ public class ThingStuffData implements IsSerializable {
 	
 	public String toString() {
 		String s = "";
-		s += "thingId=" + parentThingId + " ";
-		s += "thingStuffId=" + stuffId + " ";
-		s += "thingStuffAboutId=" + parentStuffId + " ";
-		s += "thingStuffTypeId=" + stuffTypeId + " ";
+		s += "parentThingId=" + parentThingId + " ";
+		s += "parentStuffId=" + parentStuffId + " ";
+		s += "stuffId=" + stuffId + " ";
+		s += "stuffTypeId=" + stuffTypeId + " ";
 		s += "value=" + value + " ";
 		s += "valueBol=" + valueBol + " ";
 		s += "valueDouble=" + valueDouble + " ";

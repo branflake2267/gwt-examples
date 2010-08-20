@@ -207,9 +207,11 @@ public class SetDefaults {
 				valueDouble, 
 				valueLong, 
 				valueDate, 
+				
 				startOf, 
 				endOf, 
 				rank, 
+				
 				createdBy, 
 				dateCreated, 
 				updatedBy, 

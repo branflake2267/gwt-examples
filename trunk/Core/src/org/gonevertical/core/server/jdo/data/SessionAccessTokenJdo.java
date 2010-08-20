@@ -129,32 +129,22 @@ public class SessionAccessTokenJdo {
 
 		String qfilter = "accessToken==\"" + accessToken + "\" && accessTokenSecret==\"" + accessTokenSecret + "\" ";
 
-		ArrayList<SessionAccessTokenJdo> aT = new ArrayList<SessionAccessTokenJdo>();
-
+		SessionAccessTokenJdo[] r = null;
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
 			Extent<SessionAccessTokenJdo> e = pm.getExtent(SessionAccessTokenJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
 			q.execute();
-
 			Collection<SessionAccessTokenJdo> c = (Collection<SessionAccessTokenJdo>) q.execute();
-			Iterator<SessionAccessTokenJdo> iter = c.iterator();
-			while (iter.hasNext()) {
-				SessionAccessTokenJdo t = (SessionAccessTokenJdo) iter.next();
-				aT.add(t);
+			if (c.size() > 0) {
+				r = new SessionAccessTokenJdo[c.size()];
+				c.toArray(r);
 			}
-
 			q.closeAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			pm.close();
-		}
-
-		SessionAccessTokenJdo[] r = null;
-		if (aT.size() > 0) {
-			r = new SessionAccessTokenJdo[aT.size()];
-			aT.toArray(r);
 		}
 
 		return r;

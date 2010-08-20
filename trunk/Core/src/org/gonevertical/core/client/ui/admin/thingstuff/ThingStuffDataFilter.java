@@ -153,11 +153,11 @@ public class ThingStuffDataFilter implements IsSerializable {
   		whereAnd.add(s1);
   	}
   	
-  	if (parentStuffId == 0) {
+  	if (parentStuffId == 0) { // don't get any with parentid
   		String s11 = "parentStuffId==0";
   		whereAnd.add(s11);
   		
-  	} else if (parentStuffId > 0) {
+  	} else if (parentStuffId > 0) { // only get this parent
   		String s111 = "parentStuffId==" + parentStuffId;
   		whereAnd.add(s111);
   	}

@@ -44,6 +44,7 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
   private Row pWidget = new Row();
   
   private FlowPanel pId = new FlowPanel();
+  private FlowPanel pParentId = new FlowPanel();
   
   private ListBox lbTypes = new ListBox();
   
@@ -116,6 +117,7 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
     hpButtons.add(bDelete);
     
     pWidget.add(pId, HorizontalPanel.ALIGN_CENTER);
+    pWidget.add(pParentId, HorizontalPanel.ALIGN_CENTER);
     pWidget.add(lbTypes, HorizontalPanel.ALIGN_CENTER);
     pWidget.add(vpInput, HorizontalPanel.ALIGN_CENTER);
     pWidget.add(tbStartDt, HorizontalPanel.ALIGN_CENTER);
@@ -169,6 +171,8 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
     }
     
     drawId();
+    
+    drawParentId();
     
     // draw choices
     drawListBoxTypes();
@@ -277,22 +281,28 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
 
 	private void drawId() {
   	pId.clear();
-  	long id = 0;
-  	if (thingStuffData.getStuffId() > 0 && widgetType == ThingStuffs.WIDGETTYPE_THINGSTUFF) {
-  		id = thingStuffData.getStuffId();
-  	} else if (thingStuffData.getParentStuffId() > 0 && widgetType == ThingStuffs.WIDGETTYPE_THINGSTUFFABOUT) {
-  		id = thingStuffData.getParentStuffId();
-  	}
-  	
+  	long id = thingStuffData.getStuffId();
   	String s = "";
   	if (id != 0) {
   		s = Long.toString(id);
   	} else {
   		s = "&nbsp;&nbsp;";
   	}
-  	
   	HTML h = new HTML(s);
   	pId.add(h);
+  }
+	
+	private void drawParentId() {
+  	pParentId.clear();
+  	long id = thingStuffData.getParentStuffId();
+  	String s = "";
+  	if (id != 0) {
+  		s = Long.toString(id);
+  	} else {
+  		s = "&nbsp;&nbsp;";
+  	}
+  	HTML h = new HTML(s);
+  	pParentId.add(h);
   }
 
 	/**
@@ -688,18 +698,10 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
         
         int changeEvent = dd.getChangeEvent();
         
-        if (changeEvent == EventManager.DELETE_YES && 
-        		thingStuffData.getStuffId() > 0 && 
-        		widgetType == ThingStuffs.WIDGETTYPE_THINGSTUFF) {
+        if (changeEvent == EventManager.DELETE_YES && thingStuffData.getStuffId() > 0) {
         
         	deleteRpcThingStuff(thingStuffData.getStuffId());
         		
-        } else if (changeEvent == EventManager.DELETE_YES && 
-        		thingStuffData.getParentStuffId() > 0 && 
-        		widgetType == ThingStuffs.WIDGETTYPE_THINGSTUFFABOUT) {
-        	
-        	deleteRpcThingStuff(thingStuffData.getStuffId());
-        	
         } else {
           deleteIt(true);
         }

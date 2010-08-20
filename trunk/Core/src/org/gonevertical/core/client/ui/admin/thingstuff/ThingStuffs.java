@@ -29,14 +29,14 @@ import com.google.gwt.user.client.ui.Widget;
 public class ThingStuffs extends Ui implements ClickHandler, ChangeHandler {
 
 	public static final int WIDGETTYPE_THINGSTUFF = 1;
-	public static final int WIDGETTYPE_THINGSTUFFABOUT = 2;
+	public static final int WIDGETTYPE_THINGSTUFF_PARENT = 2;
 	 
   private VerticalPanel pWidget = new VerticalPanel();
   
   private VerticalPanel pMenu = new VerticalPanel();
   
   private VerticalPanel pListStuff = new VerticalPanel();
-  private int[] widths = new int[13];
+  private int[] widths = new int[14];
   
   private PushButton bAdd = new PushButton("Add");
   
@@ -117,18 +117,19 @@ public class ThingStuffs extends Ui implements ClickHandler, ChangeHandler {
   	}
     
     HTML l0 = new HTML("Id");
-    HTML l1 = new HTML("Name"); // drop down type
-    HTML l2 = new HTML("Value"); // input box
-    HTML l3 = new HTML("StartDt");
-    HTML l4 = new HTML("EndDt");
-    HTML l5 = new HTML("Rank");
-    HTML l6 = new HTML("CreatedBy");
-    HTML l7 = new HTML("CreatedDt");
-    HTML l8 = new HTML("UpdatedBy");
-    HTML l9 = new HTML("UpdatedDt");
-    HTML l10 = new HTML("Owners");
-    HTML l11 = new HTML("&nbsp;");
+    HTML l1 = new HTML("ParentId");
+    HTML l2 = new HTML("Name"); // drop down type
+    HTML l3 = new HTML("Value"); // input box
+    HTML l4 = new HTML("StartDt");
+    HTML l5 = new HTML("EndDt");
+    HTML l6 = new HTML("Rank");
+    HTML l7 = new HTML("CreatedBy");
+    HTML l8 = new HTML("CreatedDt");
+    HTML l9 = new HTML("UpdatedBy");
+    HTML l10 = new HTML("UpdatedDt");
+    HTML l11 = new HTML("Owners");
     HTML l12 = new HTML("&nbsp;");
+    HTML l13 = new HTML("&nbsp;");
 
     l0.addStyleName("core-row-top");
     l1.addStyleName("core-row-top");
@@ -143,6 +144,7 @@ public class ThingStuffs extends Ui implements ClickHandler, ChangeHandler {
     l10.addStyleName("core-row-top");
     l11.addStyleName("core-row-top");
     l12.addStyleName("core-row-top");
+    l13.addStyleName("core-row-top");
 
     
     th.add(l0, HorizontalPanel.ALIGN_CENTER);
@@ -158,6 +160,7 @@ public class ThingStuffs extends Ui implements ClickHandler, ChangeHandler {
     th.add(l10, HorizontalPanel.ALIGN_CENTER);
     th.add(l11, HorizontalPanel.ALIGN_CENTER);
     th.add(l12, HorizontalPanel.ALIGN_CENTER);
+    th.add(l13, HorizontalPanel.ALIGN_CENTER);
 
   }
   

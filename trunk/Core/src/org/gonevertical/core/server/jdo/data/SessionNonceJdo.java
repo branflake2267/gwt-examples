@@ -105,13 +105,10 @@ public class SessionNonceJdo {
       Extent<SessionNonceJdo> e = pm.getExtent(SessionNonceJdo.class, true);
       Query q = pm.newQuery(e, qfilter);
       q.execute();
-
       Collection<SessionNonceJdo> c = (Collection<SessionNonceJdo>) q.execute();
-      Iterator<SessionNonceJdo> iter = c.iterator();
-      while (iter.hasNext()) {
+      if (c.size() > 0) {
       	found = true;
       }
-
       q.closeAll();
     } catch (Exception e) {
       e.printStackTrace();

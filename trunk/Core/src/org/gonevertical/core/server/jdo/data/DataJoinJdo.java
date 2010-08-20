@@ -414,27 +414,80 @@ public class DataJoinJdo {
 		return r;
 	}
 
-	public boolean deleteByStuffId(long stuffId) {
-		DataJoinJdo[] djj = queryByStuffId(stuffId);
-		if (djj == null) {
-			return false;
-		}
-		boolean b = true;
-		for (int i=0; i < djj.length; i++) {
-			boolean bb = true;
-			bb = delete(djj[i]);
-			if (bb == false) {
-				b = false;
+	/**
+	 * delete by stuff id
+	 *   TODO - maybe switch to Key query
+	 * @param stuffId
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+  public boolean deleteByStuffId(long stuffId) {
+		String qfilter = "stuffId==" + stuffId + "";
+		boolean success = false;
+		PersistenceManager pm = sp.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+			Extent<DataJoinJdo> e = pm.getExtent(DataJoinJdo.class, true);
+			Query q = pm.newQuery(e, qfilter);
+			q.execute();
+			Collection<DataJoinJdo> c = (Collection<DataJoinJdo>) q.execute();
+			pm.deletePersistentAll(c);
+			tx.commit();
+			q.closeAll();
+			success = true;
+		} catch (Exception e) { 
+			e.printStackTrace();
+			log.log(Level.SEVERE, "", e);
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
 			}
+			pm.close();
 		}
-		return b;
+		return success;
 	}
+	
+	/**
+	 * delete by thingId
+	 *   TODO maybe switch to Key query
+	 * @param thingId
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+  public boolean deleteByThingId(long thingId) {
+		String qfilter = "thingId==" + thingId + "";
+		boolean success = false;
+		PersistenceManager pm = sp.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+			Extent<DataJoinJdo> e = pm.getExtent(DataJoinJdo.class, true);
+			Query q = pm.newQuery(e, qfilter);
+			q.execute();
+			Collection<DataJoinJdo> c = (Collection<DataJoinJdo>) q.execute();
+			pm.deletePersistentAll(c);
+			tx.commit();
+			q.closeAll();
+			success = true;
+		} catch (Exception e) { 
+			e.printStackTrace();
+			log.log(Level.SEVERE, "", e);
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+		return success;
+  }
 
 	/**
 	 * purge records before this date - which stands for the latest update
 	 * @param buildDate
 	 */
-	public boolean deleteRecordsBefore(Date buildDate) {
+	@SuppressWarnings("unchecked")
+  public boolean deleteRecordsBefore(Date buildDate) {
 		String qfilter = "joinUpdatedDate > buildDate";
 		boolean success = false;
 		PersistenceManager pm = sp.getPersistenceManager();
@@ -488,7 +541,8 @@ public class DataJoinJdo {
 		return b;
 	}
 
-	public boolean deleteByStuffParent(long parentStuffId) {
+	@SuppressWarnings("unchecked")
+  public boolean deleteByStuffParent(long parentStuffId) {
 		String qfilter = "parentStuffId==" + parentStuffId;
 		boolean success = false;
 		PersistenceManager pm = sp.getPersistenceManager();
@@ -534,54 +588,43 @@ public class DataJoinJdo {
 	/**
 	 * look into the stuff of other things, and find this thingId
 	 * 
+	 * TODO add range?
+	 * 
 	 * @param thingIdLink
 	 * @return
 	 */
 	public long[] getThingIds_ByLinkers(long thingIdLink) {
-
 		if (thingIdLink == 0) {
 			return null;
 		}
-
 		// filter by links
 		String qfilter =  "stuffTypeId==2 && stuffValueLong==" + thingIdLink + "";
-
-		ArrayList<DataJoinJdo> aT = new ArrayList<DataJoinJdo>();
+		long[] thingIds = null;;
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
 			Extent<DataJoinJdo> e = pm.getExtent(DataJoinJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
 			q.execute();
-
 			Collection<DataJoinJdo> c = (Collection<DataJoinJdo>) q.execute();
+			thingIds = new long[c.size()];
 			Iterator<DataJoinJdo> iter = c.iterator();
+			int i =0;
 			while (iter.hasNext()) {
-				DataJoinJdo t = (DataJoinJdo) iter.next();
-				aT.add(t);
+				DataJoinJdo djj = (DataJoinJdo) iter.next();
+				Long thingId = djj.getThingId();
+				if (thingId != null) {
+					thingIds[i] = thingId;
+				}
+				i++;
 			}
-
 			q.closeAll();
 		} finally {
 			pm.close();
 		}
-
-		if (aT.size() == 0) {
-			return null;
-		}
-		
-		// return csv of the things
-		long[] thingIds = new long[aT.size()];
-		for (int i=0; i < aT.size(); i++) {
-			DataJoinJdo djj = aT.get(i);
-			Long thingId = djj.getThingId();
-			if (thingId != null) {
-				thingIds[i] = thingId;
-			}
-		}
-
-		
 		return thingIds;
 	}
+
+	
 
 
 
