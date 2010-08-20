@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -402,36 +403,21 @@ public class ThingTypeJdo {
 		return b;
 	}
 
-	public long queryTotal() {
-		
-		/* future spec I think
-		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		
-		com.google.appengine.api.datastore.Query query = new com.google.appengine.api.datastore.Query("__Stat_Kind__");
-		query.addFilter("kind_name", FilterOperator.EQUAL, TThingStuffAboutJdo.class);
-		
-    Entity globalStat = datastore.prepare(query).asSingleEntity();
-    Long totalBytes = (Long) globalStat.getProperty("bytes");
-    Long totalEntities = (Long) globalStat.getProperty("count");
-		*/
-		
-		// TODO - work around, have to wait for the api/gae to make it to hosted mode
+	@SuppressWarnings("unchecked")
+  public long queryTotal() {
 		long total = 0;
-		
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
-			Extent<ThingTypeJdo> e = pm.getExtent(ThingTypeJdo.class, true);
-			Query q = pm.newQuery(e);
-			q.execute();
-
-			Collection<ThingTypeJdo> c = (Collection<ThingTypeJdo>) q.execute();
-			total = c.size();
-
+			Query q = pm.newQuery("select thingTypeIdKey from " + ThingTypeJdo.class.getName());
+	    List<Key> ids = (List<Key>) q.execute();
+			total = ids.size();
 			q.closeAll();
+		} catch (Exception e) { 
+			e.printStackTrace();
+			log.log(Level.SEVERE, "", e);
 		} finally {
 			pm.close();
 		}
-		
 		return total;
 	}
 	

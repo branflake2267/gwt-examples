@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.jdo.Extent;
@@ -427,19 +429,21 @@ public class ThingJdo {
 	 */
 	public ThingData[] query(ThingDataFilter filter) {
 
-		String qfilter = filter.getFilter_Or();
+		
 		
 		//TODO This is going to be an unowned relationship hack for now, since there is not an easy join yet.
 		//TODO This stinks at the moment, SQL is so much easier...
     //TODO Workaround
 		if (filter.getThingIdLink() > 0) {
-			Db_Thing db = new Db_Thing(sp);
-			String csv = db.getThingIds(null, filter.getThingIdLink());
-			if (csv == null) {
+			DataJoinJdo db = new DataJoinJdo(sp);
+			long[] thingIds = db.getThingIds_ByLinkers(filter.getThingIdLink());
+			if (thingIds  == null) {
 				return null;
 			}
-			qfilter = " thingIdKey.contains("+csv+") ";
+			filter.setThingIds(thingIds);
 		}
+		
+		String qfilter = filter.getFilter_Or();
 		
 		System.out.println("queryfilter: " + qfilter);
 		
@@ -447,7 +451,8 @@ public class ThingJdo {
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
 			Extent<ThingJdo> e = pm.getExtent(ThingJdo.class, true);
-			Query q = pm.newQuery(e, qfilter);
+			Query q = pm.newQuery(e);
+			q.setFilter(qfilter);
 			
 			// TODO - this wont work, stink. This is not as easy as SQL.
 			// TODO - range will not work. I saw some fetching api, but can't find it again, postpone to another day
@@ -494,40 +499,22 @@ public class ThingJdo {
 	/**
 	 * query total
 	 * 
-	 *  TODO API not ready to do this effectively in hosted mode yet
-	 * 
 	 * @return
 	 */
 	public long queryTotal() {
-		
-		/* future spec I think
-		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		
-		com.google.appengine.api.datastore.Query query = new com.google.appengine.api.datastore.Query("__Stat_Kind__");
-		query.addFilter("kind_name", FilterOperator.EQUAL, ThingJdo.class);
-		
-    Entity globalStat = datastore.prepare(query).asSingleEntity();
-    Long totalBytes = (Long) globalStat.getProperty("bytes");
-    Long totalEntities = (Long) globalStat.getProperty("count");
-		*/
-		
-		// TODO - work around, have to wait for the api/gae to make it to hosted mode
 		long total = 0;
-		
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
-			Extent<ThingJdo> e = pm.getExtent(ThingJdo.class, true);
-			Query q = pm.newQuery(e);
-			q.execute();
-
-			Collection<ThingJdo> c = (Collection<ThingJdo>) q.execute();
-			total = c.size();
-
+			Query q = pm.newQuery("select thingIdKey from " + ThingJdo.class.getName());
+	    List<Key> ids = (List<Key>) q.execute();
+			total = ids.size();
 			q.closeAll();
+		} catch (Exception e) { 
+			e.printStackTrace();
+			log.log(Level.SEVERE, "", e);
 		} finally {
 			pm.close();
 		}
-		
 		return total;
 	}
 

@@ -40,6 +40,9 @@ public class ThingStuffJdo {
 	
 	@NotPersistent 
 	private DataJoinJdo dataJoin;
+	
+	@NotPersistent
+	private ArrayList<ThingStuffJdo> queryThingStuffJdo = null;
 
   // who is the parent
 	@Persistent
@@ -126,7 +129,7 @@ public class ThingStuffJdo {
 	
 	public void set(ServerPersistence sp) {
 		this.sp = sp;
-		dataJoin.set(sp);
+		this.dataJoin = new DataJoinJdo(sp); 
 	}
 
 	public void setData(ThingStuffData thingStuffData) {
@@ -214,12 +217,6 @@ public class ThingStuffJdo {
 				pm.makePersistent(this);
 			}
 			tx.commit();
-
-			boolean success = dataJoin.save(getStuffId());
-			if (success == false) {
-				tx.rollback();
-				// TODO - need to figure out what to do with failure
-			} 
 			
 		} catch (Exception e) { 
 			e.printStackTrace();
@@ -230,7 +227,16 @@ public class ThingStuffJdo {
 			}
 			pm.close();
 		}
-
+		
+		if (getStuffId() > 0) {
+  		boolean success = dataJoin.save(getStuffId());
+  		if (success == false) {
+  			delete(getStuffId());
+  			// TODO - deal with error
+  			stuffIdKey = null;
+  		} 
+		}
+		
 		// debug
 		//System.out.println("ThingJdo: thingStuffId: " + getId() + " thingStuffTypeId: " + thingStuffTypeId + " " +
 		//"value: " + getString(value) + " valueBol: " + getString(valueBol) + " valueLong: " + getString(valueLong) + " valueDate: " + getString(valueDate));
@@ -239,7 +245,6 @@ public class ThingStuffJdo {
 	}
 
 	public long saveUnique(ThingStuffData stuffData) {
-		setData(stuffData);
 
 		// setup filter so that I only create unique by identities [thingId, thingStuffTypeId)
 		ThingStuffDataFilter filter = new ThingStuffDataFilter();
@@ -263,7 +268,7 @@ public class ThingStuffJdo {
 		}
 
 		ThingStuffData[] tsds = query(filter);
-		if (tsds != null && tsds.length > 0) {
+		if (tsds != null && tsds.length > 0) { // update stuff that exists already
 			ThingStuffData tsd = tsds[0];
 			tsds[0].setValue(stuffData.getValue());
 			tsds[0].setValue(stuffData.getValueBol());
@@ -272,34 +277,10 @@ public class ThingStuffJdo {
 			tsds[0].setValue(stuffData.getValueDate());
 			
 			save(tsd);
-			return stuffData.getStuffId();
+		} else { // insert
+
+			save(stuffData);
 		}
-
-		PersistenceManager pm = sp.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		try {
-			tx.begin();
-
-			stuffIdKey = null;
-			pm.makePersistent(this);
-			
-			boolean success = dataJoin.save(getStuffId());
-			if (success == false) {
-				tx.rollback();
-				// TODO - need to figure out what to do with failure
-			} 
-			
-			tx.commit();
-		} catch (Exception e) { 
-			e.printStackTrace();
-			log.log(Level.SEVERE, "saveUnique()", e);
-		} finally {
-			if (tx.isActive()) {
-				tx.rollback();
-			}
-			pm.close();
-		}
-
 		
 		// debug
 		//System.out.println("ThingJdo: thingStuffId: " + getId() + " thingStuffTypeId: " + thingStuffTypeId + " " +
@@ -315,7 +296,6 @@ public class ThingStuffJdo {
 	 * @return
 	 */
 	public ThingStuffJdo queryJdo(long stuffId) {
-
 		ThingStuffJdo thingStuff = null;
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
@@ -326,56 +306,44 @@ public class ThingStuffJdo {
 		} finally {
 			pm.close();
 		}
-
 		return thingStuff;
 	}
 
 	public ThingStuffsData queryStuffs(ThingStuffDataFilter filter) {
-
 		ThingStuffData[] tsd = query(filter);
-
 		ThingStuffsData tsds = new ThingStuffsData();
 		tsds.setTotal(queryTotal());
 		tsds.setThingStuffData(tsd);
-
 		return tsds;
 	}
 
-	public ThingStuffData[] query(ThingStuffDataFilter filter) {
+	@SuppressWarnings("unchecked")
+  public ThingStuffData[] query(ThingStuffDataFilter filter) {
 
 		if (filter == null) {
 			log.severe("ERROR: ThingStuffJdo.query() Set a filter");
 			return null;
 		}
 
+		// get filter
 		String qfilter = filter.getFilter_And();
 		
-		System.out.println("filter=" + qfilter);
+		//System.out.println("filter=" + qfilter);
 		
-		ArrayList<ThingStuffJdo> aT = new ArrayList<ThingStuffJdo>();
+		// nullify
+		queryThingStuffJdo = new ArrayList<ThingStuffJdo>();
+		
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
-			Extent<ThingStuffJdo> e = pm.getExtent(ThingStuffJdo.class, true);
-			Query q = pm.newQuery(e, qfilter);
-			q.execute();
-
-			Collection<ThingStuffJdo> c = (Collection<ThingStuffJdo>) q.execute();
-			Iterator<ThingStuffJdo> iter = c.iterator();
-			
-			// TODO - making my own pagination for now, fix this later
-			int i=0;
+			Query q = pm.newQuery("select stuffIdKey from " + ThingStuffJdo.class.getName());
+			q.setFilter(qfilter);
+	    List<Key> ids = (List<Key>) q.execute();
+			Iterator<Key> iter = ids.iterator();
+			q.setRange(filter.getRangeStart(), filter.getRangeFinish());
 			while (iter.hasNext()) {
-				
-				ThingStuffJdo t = (ThingStuffJdo) iter.next();
-				
-				// TODO work around, this sucks - change it later to something better - ran out of time today.
-				if (i >= filter.getRangeStart() && i <= filter.getRangeFinish()) {
-					aT.add(t);
-				}
-				
-				i++;
+				Key key = (Key) iter.next();
+				queryKey(key);
 			}
-
 			q.closeAll();
 		} catch (Exception e) { 
 			e.printStackTrace();
@@ -383,46 +351,52 @@ public class ThingStuffJdo {
 		} finally {
 			pm.close();
 		}
-
-		ThingStuffJdo[] tj = new ThingStuffJdo[aT.size()];
-		if (aT.size() > 0) {
-			tj = new ThingStuffJdo[aT.size()];
-			aT.toArray(tj);
+		
+		// work in null if need be
+		if (queryThingStuffJdo == null || queryThingStuffJdo.size() == 0) {
+			return null;
 		}
 
-		// TODO overkill here - can get the list up above
-		List<ThingStuffJdo> tjsa_list = Arrays.asList(tj);
+		// convert to object array
+		ThingStuffJdo[] tj = new ThingStuffJdo[queryThingStuffJdo.size()];
+		if (queryThingStuffJdo.size() > 0) {
+			tj = new ThingStuffJdo[queryThingStuffJdo.size()];
+			queryThingStuffJdo.toArray(tj);
+		}
 
+		// convert for transport to client
+		List<ThingStuffJdo> tjsa_list = Arrays.asList(tj);
 		ThingStuffData[] td = convert(tjsa_list);
 
 		return td;
 	}
 
-	public long queryTotal() {
-
-		/* future spec I think
-		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-
-		com.google.appengine.api.datastore.Query query = new com.google.appengine.api.datastore.Query("__Stat_Kind__");
-		query.addFilter("kind_name", FilterOperator.EQUAL, TThingStuffAboutJdo.class);
-
-    Entity globalStat = datastore.prepare(query).asSingleEntity();
-    Long totalBytes = (Long) globalStat.getProperty("bytes");
-    Long totalEntities = (Long) globalStat.getProperty("count");
-		 */
-
-		// TODO - work around, have to wait for the api/gae to make it to hosted mode
-		long total = 0;
-
+	private void queryKey(Key key) {
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
-			Extent<ThingStuffJdo> e = pm.getExtent(ThingStuffJdo.class, true);
-			Query q = pm.newQuery(e);
-			q.execute();
+			ThingStuffJdo tsj = pm.getObjectById(ThingStuffJdo.class, key);
+			queryThingStuffJdo.add(tsj);
+		} catch (Exception e) { 
+			e.printStackTrace();
+			log.log(Level.SEVERE, "", e);
+		} finally {
+			pm.close();
+		}
+  }
 
-			Collection<ThingStuffJdo> c = (Collection<ThingStuffJdo>) q.execute();
-			total = c.size();
-
+	/**
+	 * get total of all
+	 * 
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+  public long queryTotal() {
+		long total = 0;
+		PersistenceManager pm = sp.getPersistenceManager();
+		try {
+			Query q = pm.newQuery("select stuffIdKey from " + ThingStuffJdo.class.getName());
+	    List<Key> ids = (List<Key>) q.execute();
+			total = ids.size();
 			q.closeAll();
 		} catch (Exception e) { 
 			e.printStackTrace();
@@ -430,7 +404,6 @@ public class ThingStuffJdo {
 		} finally {
 			pm.close();
 		}
-
 		return total;
 	}
 
@@ -472,6 +445,14 @@ public class ThingStuffJdo {
 		return r;
 	}
 
+	/**
+	 * delete stuff
+	 * 
+	 * TODO - build in optimistic delete, to be sure it gets erased
+	 * 
+	 * @param stuffId
+	 * @return
+	 */
 	public boolean delete(long stuffId) {
 
 		System.out.println("ThingStuffJdo.delete(): deleting: " + stuffId);
@@ -600,7 +581,7 @@ public class ThingStuffJdo {
 
 	
 	
-	private void setParentThingId(long thingId) {
+	public void setParentThingId(long thingId) {
 		this.parentThingId = thingId;
   }
 
@@ -616,7 +597,6 @@ public class ThingStuffJdo {
 	public long getParentStuffId() {
 		return parentStuffId;
 	}
-	
 	
 	
 	

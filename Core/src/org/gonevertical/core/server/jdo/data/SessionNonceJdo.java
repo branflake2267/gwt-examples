@@ -3,6 +3,8 @@ package org.gonevertical.core.server.jdo.data;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.jdo.Extent;
@@ -119,5 +121,22 @@ public class SessionNonceJdo {
 
     return found;
   }
+  
+  public long queryTotal() {
+		long total = 0;
+		PersistenceManager pm = sp.getPersistenceManager();
+		try {
+			Query q = pm.newQuery("select nonceIdKey from " + SessionNonceJdo.class.getName());
+	    List<Key> ids = (List<Key>) q.execute();
+			total = ids.size();
+			q.closeAll();
+		} catch (Exception e) { 
+			e.printStackTrace();
+			log.log(Level.SEVERE, "", e);
+		} finally {
+			pm.close();
+		}
+		return total;
+	}
 
 }

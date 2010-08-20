@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+import javax.jdo.Transaction;
 import javax.jdo.annotations.NotPersistent;
 
 import org.gonevertical.core.server.ServerPersistence;

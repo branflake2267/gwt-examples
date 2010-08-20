@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -212,6 +213,24 @@ public class SessionAccessTokenJdo {
 		}
 
 		return success;
+	}
+	
+	@SuppressWarnings("unchecked")
+  public long queryTotal() {
+		long total = 0;
+		PersistenceManager pm = sp.getPersistenceManager();
+		try {
+			Query q = pm.newQuery("select idKey from " + SessionAccessTokenJdo.class.getName());
+	    List<Key> ids = (List<Key>) q.execute();
+			total = ids.size();
+			q.closeAll();
+		} catch (Exception e) { 
+			e.printStackTrace();
+			log.log(Level.SEVERE, "", e);
+		} finally {
+			pm.close();
+		}
+		return total;
 	}
 
 	public String toString() {

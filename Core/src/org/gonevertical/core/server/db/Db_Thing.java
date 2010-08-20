@@ -176,6 +176,14 @@ public class Db_Thing {
 	  return r;
   }
   
+	/**
+	 * moved to dataJoinJdo
+	 * 
+	 * @param accessToken
+	 * @param thingIdLink
+	 * @return
+	 */
+	@Deprecated
 	public String getThingIds(OAuthTokenData accessToken, long thingIdLink) {
 		
 		ThingStuffDataFilter filter = new ThingStuffDataFilter();
@@ -183,6 +191,11 @@ public class Db_Thing {
 		filter.setValueLong(thingIdLink);
 		
 		ThingStuffData[] tsd = dbTs.getThingStuffData(accessToken, filter);
+		
+		// TODO not sure this should happen
+		if (tsd == null || tsd.length == 0) {
+			return null;
+		}
 		
 		long[] links = new long[tsd.length];
 		for (int i=0; i < tsd.length; i++) {
