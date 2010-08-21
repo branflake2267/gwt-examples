@@ -5,7 +5,7 @@
 = My GAE Snippets =
 
 == Query Date Range ==
- Here is how I query a date range with declaration of the import type Date, and then set the filter and the date to fiter. Don't forget to sort during the delete.
+ Here is how I query a date range with declaration of the import type Date, and then set the filter and the date to fiter. Don't forget to sort the query.
 
  [http://code.google.com/p/gwt-examples/source/browse/trunk/Core/src/org/gonevertical/core/server/jdo/data/DataJoinJdo.java#490 Source]
  {{{
