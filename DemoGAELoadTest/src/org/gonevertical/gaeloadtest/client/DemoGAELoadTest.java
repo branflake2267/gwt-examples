@@ -33,19 +33,22 @@ public class DemoGAELoadTest implements EntryPoint {
   	HTML html = new HTML(d.getTime() + " - " + d.toString() + " - GWT has Loaded");
   	RootPanel.get().add(html);
   	
-  	rpc = new RpcInit().initRpc();
+  	rpc = RpcInit.initRpc();
   	d = new Date();
   	HTML html2 = new HTML(d.getTime() + " - " + d.toString() + " - Rpc Ready - to calling");
   	RootPanel.get().add(html2);
   	
-  	testRpc();
+  	testRpc(1);
+  	testRpc(2);
+  	testRpc(3);
+  	testRpc(4);
   }
 
-	private void testRpc() {
+	private void testRpc(final int tryCount) {
 		rpc.saveTest(new AsyncCallback<Boolean>() {
 			public void onSuccess(Boolean result) {
 				Date d = new Date();
-		  	HTML html = new HTML(d.getTime() + " - " + d.toString() + " - Saved something to TestJdo");
+		  	HTML html = new HTML(d.getTime() + " - " + d.toString() + " - try#: " + tryCount +" - Saved something to TestJdo");
 		  	RootPanel.get().add(html);
 			}
 			public void onFailure(Throwable caught) {
