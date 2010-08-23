@@ -325,21 +325,18 @@ public class ThingStuffJdo {
 			return null;
 		}
 
-		// get filter
 		String qfilter = filter.getFilter_And();
-		
 		//System.out.println("filter=" + qfilter);
 		
 		// nullify
 		queryThingStuffJdo = new ArrayList<ThingStuffJdo>();
-		
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
 			Query q = pm.newQuery("select stuffIdKey from " + ThingStuffJdo.class.getName());
 			q.setFilter(qfilter);
-	    List<Key> ids = (List<Key>) q.execute();
-			Iterator<Key> iter = ids.iterator();
 			q.setRange(filter.getRangeStart(), filter.getRangeFinish());
+			List<Key> ids = (List<Key>) q.execute();
+			Iterator<Key> iter = ids.iterator();
 			while (iter.hasNext()) {
 				Key key = (Key) iter.next();
 				queryKey(key);
@@ -369,6 +366,34 @@ public class ThingStuffJdo {
 		ThingStuffData[] tsd = convert(tjsa_list);
 
 		return tsd;
+	}
+	
+	@SuppressWarnings("unchecked")
+  public Key[] query_Keys(ThingStuffDataFilter filter) {
+		if (filter == null) {
+			log.severe("ERROR: ThingStuffJdo.query_Keys() Set a filter");
+			return null;
+		}
+		String qfilter = filter.getFilter_And();
+		Key[] keys = null;
+		PersistenceManager pm = sp.getPersistenceManager();
+		try {
+			Query q = pm.newQuery("select stuffIdKey from " + ThingStuffJdo.class.getName());
+			q.setFilter(qfilter);
+			q.setRange(filter.getRangeStart(), filter.getRangeFinish());
+			List<Key> ids = (List<Key>) q.execute();
+			if (ids.size() > 0) {
+				keys = new Key[ids.size()];
+				ids.toArray(keys);
+			}
+			q.closeAll();
+		} catch (Exception e) { 
+			e.printStackTrace();
+			log.log(Level.SEVERE, "", e);
+		} finally {
+			pm.close();
+		}
+		return keys;
 	}
 
 	private void queryKey(Key key) {

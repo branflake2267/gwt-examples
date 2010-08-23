@@ -62,10 +62,10 @@ public interface RpcCoreService extends RemoteService {
   // account data
   public AccountData getAccountData(OAuthTokenData accessToken, long thingId);
   public AccountData saveAccountData(OAuthTokenData accessToken, ThingDataFilter filter, AccountData accountData);
+  public WidgetAttrData getWidgetAttributes(OAuthTokenData accessToken, WidgetAttrDataFilter widgetAttrDataFilter);
   
   // misc
   public boolean saveFeedBack(FeedbackData feedbackData);
-  public WidgetAttrData getWidgetAttributes(OAuthTokenData accessToken, WidgetAttrDataFilter widgetAttrDataFilter);
   public boolean buildDataJoin(OAuthTokenData accessToken, JoinDataFilter filter);
   
   

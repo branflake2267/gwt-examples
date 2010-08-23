@@ -8,7 +8,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ThingData implements IsSerializable {
   
-	public static final int THING_APPLICATION_DEMO = 1;
+	public static final int THING_APPLICATION = 1;
 	public static final int THING_USER_ADMIN = 2;
 	public static final int THING_USER_DEMO = 3;
 	public static final int THING_PERMISSION_OPEN = 4;
