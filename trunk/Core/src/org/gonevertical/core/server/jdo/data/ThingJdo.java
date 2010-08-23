@@ -33,7 +33,7 @@ public class ThingJdo {
 
 	@NotPersistent
 	private static final Logger log = Logger.getLogger(ThingJdo.class.getName());
-	
+
 	@NotPersistent 
 	private ServerPersistence sp = null;
 
@@ -61,7 +61,7 @@ public class ThingJdo {
 	// when did this end in time
 	@Persistent
 	private Date endOf;
-	
+
 	// order the list by this
 	@Persistent
 	private Double rank;
@@ -81,7 +81,7 @@ public class ThingJdo {
 	// who last updated this object
 	@Persistent
 	private long updatedByThingId;
-	
+
 	// assign ownership of this thing to this thing
 	@Persistent
 	private long[] ownerThingIds;
@@ -95,7 +95,7 @@ public class ThingJdo {
 		//System.err.println("Don't use this constructor - Exiting");
 		//throw new Exception();
 	}
-	
+
 	/**
 	 * constructor
 	 */
@@ -106,7 +106,7 @@ public class ThingJdo {
 	public void set(ServerPersistence sp) {
 		this.sp = sp;
 	}
-	
+
 	/**
 	 * set data
 	 * 
@@ -129,7 +129,7 @@ public class ThingJdo {
 
 		this.rank = thingData.getRank();
 		this.ownerThingIds = thingData.getOwners();
-		
+
 		if (thingIdKey != null && thingIdKey.getId() > 0) {
 			this.dateUpdated = new Date();
 			this.updatedByThingId = sp.getUserThingId();
@@ -152,7 +152,7 @@ public class ThingJdo {
 
 		this.startOf = thingJdo.getStartOf();
 		this.endOf = thingJdo.getEndOf();
-		
+
 		this.rank = thingJdo.getRank();
 		this.ownerThingIds = thingJdo.getOwners();
 
@@ -214,7 +214,7 @@ public class ThingJdo {
 			pm.close();
 		}
 	}
-	
+
 	public void saveUnique(long thingTypeId, String key, String secret) {
 		this.thingTypeId = thingTypeId;
 		this.key = key;
@@ -223,25 +223,25 @@ public class ThingJdo {
 
 		// don't insert if name already exists
 		if (getThingId() > 0) {
-  		ThingData tt = query(getThingId());
-  		tt.setThingTypeId(thingTypeId);
-  		tt.setKey(key);
-  		if (tt != null) {
-  			save(tt, secret);
-  			return;
-  		}
+			ThingData tt = query(getThingId());
+			tt.setThingTypeId(thingTypeId);
+			tt.setKey(key);
+			if (tt != null) {
+				save(tt, secret);
+				return;
+			}
 		} else {
-			
+
 			// TODO skipping adding a user like this
 			// check to see if name exists already
 			//ThingStuffTypeDataFilter filter = new ThingStuffTypeDataFilter();
 			//filter.setName(getName());
 			//ThingStuffTypeJdo[] t = query(filter);
 			//if (t != null && t.length > 0) {
-				//System.out.println("ThingStuffTypeJdo.saveUnique(): skipped b/c name already exists. name=" + getName());
-				//return;
+			//System.out.println("ThingStuffTypeJdo.saveUnique(): skipped b/c name already exists. name=" + getName());
+			//return;
 			//}
-			
+
 			//insert();
 		}
 
@@ -269,7 +269,7 @@ public class ThingJdo {
 			save(thingData[i]);
 		}
 	}
-	
+
 	public long save(ThingData thingData, String secret) {
 		this.secret = secret;
 		return save(thingData);
@@ -347,7 +347,7 @@ public class ThingJdo {
 		ThingData td = convert(thingJdo);
 		return td;
 	}
-	
+
 	public ThingJdo queryJdo(long thingId) {
 		if (thingId == 0) {
 			return null;
@@ -375,7 +375,7 @@ public class ThingJdo {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-  public ThingJdo[] query(long thingTypeId, String key) {
+	public ThingJdo[] query(long thingTypeId, String key) {
 		String qfilter = "thingTypeId==" + thingTypeId + " && key==\"" + key + "\" ";
 		ThingJdo[] r = null;
 		PersistenceManager pm = sp.getPersistenceManager();
@@ -405,7 +405,7 @@ public class ThingJdo {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-  public ThingData[] query(ThingDataFilter filter) {
+	public ThingData[] query(ThingDataFilter filter) {
 		if (filter.getThingIdLink() > 0) {
 			DataJoinJdo db = new DataJoinJdo(sp);
 			long[] thingIds = db.getThingIds_ByLinkers(filter.getThingIdLink());
@@ -414,7 +414,7 @@ public class ThingJdo {
 			}
 			filter.setThingIds(thingIds);
 		}
-		
+
 		String qfilter = filter.getFilter_Or();
 		//System.out.println("queryfilter: " + qfilter);
 
@@ -440,19 +440,53 @@ public class ThingJdo {
 		ThingData[] td = convert(tj);
 		return td;
 	}
-	
+
+	@SuppressWarnings("unchecked")
+  public Key[] query_Keys(ThingDataFilter filter) {
+		if (filter.getThingIdLink() > 0) {
+			DataJoinJdo db = new DataJoinJdo(sp);
+			long[] thingIds = db.getThingIds_ByLinkers(filter.getThingIdLink());
+			if (thingIds  == null) {
+				return null;
+			}
+			filter.setThingIds(thingIds);
+		}
+
+		String qfilter = filter.getFilter_Or();
+		//System.out.println("queryfilter: " + qfilter);
+
+		Key[] keys = null;
+		PersistenceManager pm = sp.getPersistenceManager();
+		try {
+			Query q = pm.newQuery("select thingIdKey from " + ThingJdo.class.getName());
+			q.setFilter(qfilter);
+			q.setRange(filter.getRangeStart(), filter.getRangeFinish());
+			q.execute();
+			Collection<Key> c = (Collection<Key>) q.execute();
+			keys = new Key[c.size()];
+			if (c.size() > 0) {
+				keys = new Key[c.size()];
+				c.toArray(keys);
+			}
+			q.closeAll();
+		} finally {
+			pm.close();
+		}
+		return keys;
+	}
+
 	/**
 	 * query total
 	 * 
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-  public long queryTotal() {
+	public long queryTotal() {
 		long total = 0;
 		PersistenceManager pm = sp.getPersistenceManager();
 		try {
 			Query q = pm.newQuery("select thingIdKey from " + ThingJdo.class.getName());
-	    List<Key> ids = (List<Key>) q.execute();
+			List<Key> ids = (List<Key>) q.execute();
 			total = ids.size();
 			q.closeAll();
 		} catch (Exception e) { 
@@ -610,11 +644,11 @@ public class ThingJdo {
 	public Date getStartOf() {
 		return startOf;
 	}
-	
+
 	public void setRank(Double rank) {
 		this.rank = rank;
 	}
-	
+
 	public Double getRank() {
 		return rank;
 	}
@@ -634,11 +668,11 @@ public class ThingJdo {
 	public long getUpdatedBy() {
 		return updatedByThingId;
 	}
-	
+
 	public void setOwners(long[] ownerThingIds) {
 		this.ownerThingIds = ownerThingIds;
 	}
-	
+
 	public long[] getOwners() {
 		return ownerThingIds;
 	}

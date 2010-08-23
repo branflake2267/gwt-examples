@@ -60,10 +60,10 @@ public interface RpcCoreServiceAsync {
   // account data
   public void getAccountData(OAuthTokenData accessToken, long thingId, AsyncCallback<AccountData> callback);
   public void saveAccountData(OAuthTokenData accessToken, ThingDataFilter filter, AccountData accountData, AsyncCallback<AccountData> callback);
+  public void getWidgetAttributes(OAuthTokenData accessToken, WidgetAttrDataFilter widgetAttrDataFilter, AsyncCallback<WidgetAttrData> callback);
   
   // misc
   public void saveFeedBack(FeedbackData feedbackData, AsyncCallback<Boolean> callback);
-  public void getWidgetAttributes(OAuthTokenData accessToken, WidgetAttrDataFilter widgetAttrDataFilter, AsyncCallback<WidgetAttrData> callback);
   public void buildDataJoin(OAuthTokenData accessToken, JoinDataFilter filter, AsyncCallback<Boolean> callback);
   
   

@@ -19,6 +19,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import org.gonevertical.core.client.ui.admin.thing.ThingDataFilter;
 import org.gonevertical.core.server.ServerPersistence;
 
 import com.google.appengine.api.datastore.Key;
@@ -521,13 +522,10 @@ public class DataJoinJdo {
 		boolean b = false;
 		try {
 			tx.begin();
-
 			DataJoinJdo djj = (DataJoinJdo) pm.getObjectById(DataJoinJdo.class, id);
 			pm.deletePersistent(djj);
-
 			tx.commit();
 			b = true;
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			b = false;
@@ -584,7 +582,42 @@ public class DataJoinJdo {
 		}
 		return total;
 	}
+	
+	/* TODO query by keys, but need a filter setup?
+	public Key[] query_Keys(ThingDataFilter filter) {
+		if (filter.getThingIdLink() > 0) {
+			DataJoinJdo db = new DataJoinJdo(sp);
+			long[] thingIds = db.getThingIds_ByLinkers(filter.getThingIdLink());
+			if (thingIds  == null) {
+				return null;
+			}
+			filter.setThingIds(thingIds);
+		}
 
+		String qfilter = filter.getFilter_Or();
+		//System.out.println("queryfilter: " + qfilter);
+
+		Key[] keys = null;
+		PersistenceManager pm = sp.getPersistenceManager();
+		try {
+			Query q = pm.newQuery("select thingIdKey from " + ThingJdo.class.getName());
+			q.setFilter(qfilter);
+			q.setRange(filter.getRangeStart(), filter.getRangeFinish());
+			q.execute();
+			Collection<Key> c = (Collection<Key>) q.execute();
+			keys = new Key[c.size()];
+			if (c.size() > 0) {
+				keys = new Key[c.size()];
+				c.toArray(keys);
+			}
+			q.closeAll();
+		} finally {
+			pm.close();
+		}
+		return keys;
+	}
+	*/
+	
 	/**
 	 * look into the stuff of other things, and find this thingId
 	 * 

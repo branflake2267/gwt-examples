@@ -95,7 +95,7 @@ public class SetDefaults {
 
 	private void createThings() {
 
-		dbT.createThing(ThingData.THING_APPLICATION_DEMO, ThingTypeData.TYPE_APPLICATION, "demo_application", "password");
+		dbT.createThing(ThingData.THING_APPLICATION, ThingTypeData.TYPE_APPLICATION, "demo_application", "password");
 		dbT.createThing(ThingData.THING_USER_ADMIN, ThingTypeData.TYPE_USER, "administrator", "password");
 		dbT.createThing(ThingData.THING_USER_DEMO, ThingTypeData.TYPE_USER, "demo_user", "password");
 
