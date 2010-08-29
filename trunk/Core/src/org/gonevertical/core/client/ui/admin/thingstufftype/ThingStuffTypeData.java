@@ -25,7 +25,15 @@ public class ThingStuffTypeData implements IsSerializable {
 	public static final int THINGSTUFFTYPE_PHONE = 17;
 	public static final int THINGSTUFFTYPE_DESC = 18;
 	public static final int THINGSTUFFTYPE_ACCEPTTERMS = 19;
-
+	
+	public static final int THINGSTUFFTYPE_BIBLEBOOKNAME = 20;
+	public static final int THINGSTUFFTYPE_BIBLEBOOKNUM = 21;
+	public static final int THINGSTUFFTYPE_BIBLEBOOKLINK = 22;
+	public static final int THINGSTUFFTYPE_BIBLEBOOKCHAPTERNUM = 23;
+	public static final int THINGSTUFFTYPE_BIBLEBOOKVERSENUM = 24;
+	public static final int THIGNSTUFFTYPE_BIBLEBOOKVERSECONTENT = 25;
+	
+	
 	// NOTE: app engine storage types - str, int32, int64, double, bool, safest to store in text, so its exact when decimal
   public static final int VALUETYPE_STRING = 1;
   public static final int VALUETYPE_BOOLEAN = 2;
@@ -47,6 +55,8 @@ public class ThingStuffTypeData implements IsSerializable {
 	public static final int VALUETYPE_DECIMAL = 14; // decimal
 	public static final int VALUETYPE_NUMBER = 15; // number
 	public static final int VALUETYPE_MONEY = 16; // money
+	
+	
 	
   // identity
   private long stuffTypeId;

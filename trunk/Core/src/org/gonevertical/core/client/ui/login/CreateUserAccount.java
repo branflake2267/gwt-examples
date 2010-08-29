@@ -443,7 +443,7 @@ public class CreateUserAccount extends Composite implements FocusListener, Click
 		History.newItem(newUserLanding);
 
 		// Notify change logged in - needs to notify Login Widget
-		cp.fireChange(EventManager.NEW_USER_CREATED);
+		cp.fireChange(EventManager.USER_NEW_CREATED);
 	}
 
 	private void countCharacters(int input, TextBox tb) {

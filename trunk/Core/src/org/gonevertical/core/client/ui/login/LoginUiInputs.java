@@ -177,7 +177,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
   				if (cp.getChangeEvent() == EventManager.APPLICATION_LOADED) {
   					draw();
   					
-  				} else if (cp.getChangeEvent() == EventManager.NEW_USER_CREATED) {
+  				} else if (cp.getChangeEvent() == EventManager.USER_NEW_CREATED) {
   					// nothing to do
   
   				} else if (cp.getChangeEvent() == EventManager.USER_LOGGEDIN) {
@@ -186,7 +186,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
   				} else if (cp.getChangeEvent() == EventManager.USER_LOGGEDOUT) {
   					setLoginStatus(false);
   
-  				} else if (cp.getChangeEvent() == EventManager.LOGIN_DEMO) {
+  				} else if (cp.getChangeEvent() == EventManager.ACCOUNT_LOGIN_DEMO) {
   					cp.resetEvent();
   					setDemoLogin();
   					
@@ -608,7 +608,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 	private void startLogin() {
 		myLoginButtonWasClicked = true;
 		drawLoading();
-		cp.fireChange(EventManager.LOGINBUTTONCLICKED);
+		cp.fireChange(EventManager.ACCOUNT_LOGINBUTTONCLICKED);
 	}
 
 	public void onClick(ClickEvent event) {
@@ -619,7 +619,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 
 		} else if (sender == bForgotPassword) {
 			drawLoading();
-			cp.fireChange(EventManager.FORGOT_PASSWORD);
+			cp.fireChange(EventManager.ACCOUNT_FORGOT_PASSWORD);
 
 		} else if (sender == tbConsumerKey) {
 			changeUsernameInput(true);
@@ -650,7 +650,7 @@ MouseOverHandler, MouseOutHandler, ClickHandler, FocusHandler, BlurHandler, Chan
 			}
 
 		} else if (sender == aLogout) {
-			cp.fireChange(EventManager.LOGOUT);
+			cp.fireChange(EventManager.ACCOUNT_LOGOUT);
 		} 
 
 	}

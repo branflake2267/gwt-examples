@@ -73,7 +73,7 @@ public class AdminHome extends Composite implements ClickHandler {
 			setDefaults();
 
 		} else if (sender == bLogin) {
-			cp.fireChange(EventManager.LOGIN_DEMO);
+			cp.fireChange(EventManager.ACCOUNT_LOGIN_DEMO);
 			
 		} else if (sender == bBuildJoin) {
 			setBuildJoin();

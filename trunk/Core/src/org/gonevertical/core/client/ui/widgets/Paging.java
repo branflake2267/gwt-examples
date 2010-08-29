@@ -33,6 +33,7 @@ public class Paging extends Composite implements ClickHandler, ChangeHandler {
 	private HorizontalPanel pNextPages = new HorizontalPanel();
 	private FlowPanel pOnPage = new FlowPanel();
 	private FlowPanel pTotalPages = new FlowPanel();
+	private HorizontalPanel pTotal = new HorizontalPanel();
 	private LoadingWidget wLoading = new LoadingWidget();
 
 	// buttons
@@ -64,7 +65,7 @@ public class Paging extends Composite implements ClickHandler, ChangeHandler {
 		pOnPage.setTitle("Current page");
 		pTotalPages.setTitle("Total pages");
 		lbLimit.setTitle("Display this many records at a time in a page");
-
+		
 		HorizontalPanel hp = new HorizontalPanel();
 		hp.add(bStart);
 		hp.add(new HTML("&nbsp;"));
@@ -83,6 +84,8 @@ public class Paging extends Composite implements ClickHandler, ChangeHandler {
 		hp.add(pTotalPages);
 		hp.add(new HTML("&nbsp;"));
 		hp.add(lbLimit);
+		hp.add(new HTML("&nbsp;"));
+		hp.add(pTotal);
 		hp.add(new HTML("&nbsp;"));
 		hp.add(wLoading);
 
@@ -111,6 +114,8 @@ public class Paging extends Composite implements ClickHandler, ChangeHandler {
 		drawLimitChoices();
 		
 		hp.setCellVerticalAlignment(lbLimit, VerticalPanel.ALIGN_MIDDLE);
+		hp.setCellVerticalAlignment(pTotal, VerticalPanel.ALIGN_MIDDLE);
+		hp.setCellVerticalAlignment(wLoading, VerticalPanel.ALIGN_MIDDLE);
 		
 		pWidget.setVisible(false);
 	}
@@ -183,7 +188,14 @@ public class Paging extends Composite implements ClickHandler, ChangeHandler {
 		drawTotalPages();
 
 		setLimitAt();
+		
+		drawTotal();
 	}
+
+	private void drawTotal() {
+		pTotal.clear();
+		pTotal.add(new HTML("Total: " + Long.toString(total)));
+  }
 
 	private void setOnPage() {
 		onPage = (int) (start / limit);
@@ -191,6 +203,9 @@ public class Paging extends Composite implements ClickHandler, ChangeHandler {
 
 	private void setTotalPages() {
 		totalPages = (int) (total / limit);
+		if (total % limit > 0) {
+			totalPages++;
+		}
 	}
 
 	private void setFirstPage() {
@@ -199,7 +214,14 @@ public class Paging extends Composite implements ClickHandler, ChangeHandler {
 	}
 
 	private void setLastPage() {
-		lastPage = (int) (total - limit);
+		lastPage = (int) (total / limit);
+		if (total % limit > 0) {
+			lastPage++;
+		}
+		// based on zero odrinal
+		if (lastPage > 0) {
+			lastPage--;
+		}
 	}
 
 	private void displayPrev() {
@@ -213,16 +235,20 @@ public class Paging extends Composite implements ClickHandler, ChangeHandler {
 	}
 
 	private void displayNext() {
+		
 		if (onPage == lastPage) {
 			bNext.setEnabled(false);
 			bEnd.setEnabled(false);
+			
 		} else if (totalPages > 0) {
 			bNext.setEnabled(true);
 			bEnd.setEnabled(true);
+			
 		} else {
 			bNext.setEnabled(false);
 			bEnd.setEnabled(false);
 		}
+		
 	}
 
 	private void drawPrevPages() {
@@ -329,6 +355,9 @@ public class Paging extends Composite implements ClickHandler, ChangeHandler {
 	private void setLimit() {
 		int sel = lbLimit.getSelectedIndex();
 		limit = Integer.parseInt(lbLimit.getItemText(sel));
+		setOnPage();
+		setFirstPage();
+		setLastPage();
 		fire(CHANGE_LIMIT);
 	}
 
