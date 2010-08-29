@@ -150,11 +150,13 @@ public class ThingStuffTypes extends Ui implements ClickHandler, ChangeHandler {
     
     wPage.setCounts(thingStuffTypeData.length);
 
+    long count = wPage.getCountOffset();
     for (int i=0; i < thingStuffTypeData.length; i++){
     	if (i == 0) {
     		drawTopRow();
     	}
-      addStuffType(i, thingStuffTypeData[i]);
+      addStuffType((int)count, thingStuffTypeData[i]);
+      count++;
     }
     
     setWidths();
@@ -181,9 +183,9 @@ public class ThingStuffTypes extends Ui implements ClickHandler, ChangeHandler {
     th.setWidths(widths);
   }
   
-  private ThingStuffType addStuffType(int i, ThingStuffTypeData ThingStuffTypeData) {
+  private ThingStuffType addStuffType(int count, ThingStuffTypeData ThingStuffTypeData) {
     ThingStuffType t = new ThingStuffType(cp);
-    t.setData(i, ThingStuffTypeData);
+    t.setData(count, ThingStuffTypeData);
     pList.add(t);
     widths = Row.getMaxWidths(widths, t.getRow().getWidths());
     t.edit(true);

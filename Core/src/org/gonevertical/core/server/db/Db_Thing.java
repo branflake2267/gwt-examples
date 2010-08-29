@@ -144,6 +144,8 @@ public class Db_Thing {
 		// save thing
 		long thingId = tj.save(thingData);
 		
+		// when inserting an new thing, we need a new thingid
+		filter.setThingId(thingId);
 		
 		// save thing stuff
 		ThingStuffsData tsd = thingData.getThingStuffsData();

@@ -59,15 +59,15 @@ public abstract class LoginWidget_Abs extends Composite implements ChangeHandler
 				public void onChange(ChangeEvent event) {
 					ClientPersistence cp = (ClientPersistence) event.getSource();
 					int changeEvent = cp.getChangeEvent();
-					if (cp.getChangeEvent() == EventManager.NEW_USER_CREATED || // when new user is created auto login
-							cp.getChangeEvent() == EventManager.LOGINBUTTONCLICKED) { // when the login button is clicked try logging in
+					if (cp.getChangeEvent() == EventManager.USER_NEW_CREATED || // when new user is created auto login
+							cp.getChangeEvent() == EventManager.ACCOUNT_LOGINBUTTONCLICKED) { // when the login button is clicked try logging in
 						cp.resetEvent();
 						login();
 						
-					} else if (changeEvent == EventManager.LOGOUT) {
+					} else if (changeEvent == EventManager.ACCOUNT_LOGOUT) {
 						logout();
 
-					} else if (changeEvent == EventManager.FORGOT_PASSWORD) {
+					} else if (changeEvent == EventManager.ACCOUNT_FORGOT_PASSWORD) {
 						forgotPassword();
 
 					} else if (changeEvent == EventManager.ACCOUNT_DISPLAY) {
@@ -139,6 +139,8 @@ public abstract class LoginWidget_Abs extends Composite implements ChangeHandler
 		if (token == null) {
 			Window.alert("LoginWidget_Abs.request_Request_Token_Response(): I wasn't able to use the Applications Access Token to setup the system.");
 			addDefaultsButton();
+			// let a app know that we need its defaults too
+			cp.fireChange(EventManager.APPLICATION_NEEDSDEFAULTSET);
 			return;
 		}
 
