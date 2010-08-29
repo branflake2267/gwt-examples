@@ -1,4 +1,7 @@
-package org.gonevertical.upload.client;
+package org.gonevertical.upload.client.rpc;
+
+import org.gonevertical.upload.client.blobs.BlobData;
+import org.gonevertical.upload.client.blobs.BlobDataFilter;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -11,4 +14,5 @@ public interface RpcService extends RemoteService {
 	
 	public String getBlobStoreUrl();
 	
+	 public BlobData[] getBlobs(BlobDataFilter filter);
 }

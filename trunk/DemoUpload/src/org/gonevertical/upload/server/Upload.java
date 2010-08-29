@@ -1,7 +1,6 @@
 package org.gonevertical.upload.server;
 
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -29,14 +28,14 @@ public class Upload extends HttpServlet {
 			throw new RuntimeException("Sorry that file is to large. Try < 1024 or 1MB file");
     }
 		
-		
+		/*
 		Enumeration paramNames = request.getParameterNames();
     while(paramNames.hasMoreElements()) {
       String paramName = (String)paramNames.nextElement();
       String[] paramValues = request.getParameterValues(paramName);
       System.out.println(paramName + "=" + paramValues.toString() + "\n");
     }
-		
+    */
 		
 		Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(request);
 		BlobKey blobKey = blobs.get("myFile");
