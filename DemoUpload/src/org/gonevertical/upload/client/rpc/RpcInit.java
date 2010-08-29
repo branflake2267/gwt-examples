@@ -1,4 +1,4 @@
-package org.gonevertical.upload.client;
+package org.gonevertical.upload.client.rpc;
 
 import com.google.gwt.core.client.GWT;
 
