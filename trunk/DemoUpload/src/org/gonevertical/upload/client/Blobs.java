@@ -59,7 +59,7 @@ public class Blobs extends Composite {
       }
       
       public void onFailure(Throwable caught) {
-        Window.alert("couldn't get blog list, rpc failed");
+        Window.alert("couldn't get blob list, rpc failed");
       }
     });
     
