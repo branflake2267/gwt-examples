@@ -25,13 +25,14 @@ public class ThingStuffTypeData implements IsSerializable {
 	public static final int THINGSTUFFTYPE_PHONE = 17;
 	public static final int THINGSTUFFTYPE_DESC = 18;
 	public static final int THINGSTUFFTYPE_ACCEPTTERMS = 19;
+	public static final int THINGSTUFFTYPE_FILE = 20;
 	
-	public static final int THINGSTUFFTYPE_BIBLEBOOKNAME = 20;
-	public static final int THINGSTUFFTYPE_BIBLEBOOKNUM = 21;
-	public static final int THINGSTUFFTYPE_BIBLEBOOKLINK = 22;
-	public static final int THINGSTUFFTYPE_BIBLEBOOKCHAPTERNUM = 23;
-	public static final int THINGSTUFFTYPE_BIBLEBOOKVERSENUM = 24;
-	public static final int THIGNSTUFFTYPE_BIBLEBOOKVERSECONTENT = 25;
+	public static final int THINGSTUFFTYPE_BIBLEBOOKNAME = 21;
+	public static final int THINGSTUFFTYPE_BIBLEBOOKNUM = 22;
+	public static final int THINGSTUFFTYPE_BIBLEBOOKLINK = 23;
+	public static final int THINGSTUFFTYPE_BIBLEBOOKCHAPTERNUM = 24;
+	public static final int THINGSTUFFTYPE_BIBLEBOOKVERSENUM = 25;
+	public static final int THIGNSTUFFTYPE_BIBLEBOOKVERSECONTENT = 26;
 	
 	
 	// NOTE: app engine storage types - str, int32, int64, double, bool, safest to store in text, so its exact when decimal
@@ -49,7 +50,7 @@ public class ThingStuffTypeData implements IsSerializable {
   public static final int VALUETYPE_EMAIL = 10;
   public static final int VALUETYPE_PHONE = 11;
 	public static final int VALUETYPE_LINK = 12;
-	public static final int VALUETYPE_FILE = 13;
+	public static final int VALUETYPE_FILE_BLOB = 13;
 	
 	// added - question is should I keep it basic here, and more defined in custome app builder logic
 	public static final int VALUETYPE_DECIMAL = 14; // decimal

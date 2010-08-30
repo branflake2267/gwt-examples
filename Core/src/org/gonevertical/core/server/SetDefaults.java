@@ -74,6 +74,7 @@ public class SetDefaults {
 		dbTst.createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_PHONE, "Phone", ThingStuffTypeData.VALUETYPE_PHONE);
 		dbTst.createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_DESC, "Description", ThingStuffTypeData.VALUETYPE_STRING);
 		dbTst.createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_ACCEPTTERMS, "Accept Terms", ThingStuffTypeData.VALUETYPE_BOOLEAN);
+		dbTst.createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_FILE, "File (Blob)", ThingStuffTypeData.VALUETYPE_FILE_BLOB);
     
 		dbTst.createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_BIBLEBOOKNAME, "Bible Book Name", ThingStuffTypeData.VALUETYPE_STRING);
 		dbTst.createStuffType(ThingStuffTypeData.THINGSTUFFTYPE_BIBLEBOOKCHAPTERNUM, "Bible Book Num", ThingStuffTypeData.VALUETYPE_INT);
