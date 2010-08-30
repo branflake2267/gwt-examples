@@ -380,6 +380,9 @@ public class ThingStuff extends Ui implements ClickHandler, ChangeHandler, Mouse
     		drawThingLinkName(thingStuffData.getValueLong());
     	}
       
+    } else if (typeId == ThingStuffTypeData.VALUETYPE_FILE_BLOB) { 
+    	
+    	
     } else {
       drawInputBlank();
     }

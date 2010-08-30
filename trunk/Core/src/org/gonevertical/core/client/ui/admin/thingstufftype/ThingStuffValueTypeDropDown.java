@@ -39,7 +39,7 @@ public class ThingStuffValueTypeDropDown extends Composite implements ClickHandl
 		lbStuffValueTypes.addItem("Email", Integer.toString(ThingStuffTypeData.VALUETYPE_EMAIL));
 		lbStuffValueTypes.addItem("Phone", Integer.toString(ThingStuffTypeData.VALUETYPE_PHONE));
 		lbStuffValueTypes.addItem("Link", Integer.toString(ThingStuffTypeData.VALUETYPE_LINK));
-		lbStuffValueTypes.addItem("File", Integer.toString(ThingStuffTypeData.VALUETYPE_FILE));
+		lbStuffValueTypes.addItem("File", Integer.toString(ThingStuffTypeData.VALUETYPE_FILE_BLOB));
 		
 	}
 	

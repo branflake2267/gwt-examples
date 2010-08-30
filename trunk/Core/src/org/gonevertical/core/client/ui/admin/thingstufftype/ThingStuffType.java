@@ -156,7 +156,7 @@ public class ThingStuffType extends Ui implements ChangeHandler, ClickHandler {
     lbValueType.addItem("Phone", Integer.toString(ThingStuffTypeData.VALUETYPE_PHONE));
     lbValueType.addItem("Email", Integer.toString(ThingStuffTypeData.VALUETYPE_EMAIL));
     lbValueType.addItem("Link", Integer.toString(ThingStuffTypeData.VALUETYPE_LINK));
-    lbValueType.addItem("File", Integer.toString(ThingStuffTypeData.VALUETYPE_FILE));
+    lbValueType.addItem("File", Integer.toString(ThingStuffTypeData.VALUETYPE_FILE_BLOB));
    
     Global_ListBox.setSelected(lbValueType, thingStuffTypeData.getValueTypeId());
   }
