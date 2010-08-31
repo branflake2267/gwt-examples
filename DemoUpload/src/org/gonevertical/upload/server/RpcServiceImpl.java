@@ -43,7 +43,7 @@ public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
     return r;
 	}
 
-private void test() {
+	private void test() {
     
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery pq = datastore.prepare(new Query("__BlobInfo__"));
