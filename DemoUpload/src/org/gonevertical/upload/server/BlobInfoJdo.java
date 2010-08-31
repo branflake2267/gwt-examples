@@ -1,8 +1,6 @@
 package org.gonevertical.upload.server;
 
-import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -11,8 +9,6 @@ import javax.jdo.PersistenceManager;
 import org.gonevertical.upload.client.blobs.BlobData;
 import org.gonevertical.upload.client.blobs.BlobDataFilter;
 
-import com.google.appengine.api.blobstore.BlobInfo;
-import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
