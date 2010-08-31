@@ -6,6 +6,11 @@ import org.gonevertical.upload.client.rpc.RpcService;
 
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -31,9 +36,34 @@ public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
 	 * @return
 	 */
 	public BlobData[] getBlobs(BlobDataFilter filter) {
+	  
 	  BlobInfoJdo db = new BlobInfoJdo();
 	  BlobData[] r = db.getBlobs(filter);
+	  
     return r;
+	}
+
+private void test() {
+    
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery pq = datastore.prepare(new Query("__BlobInfo__"));
+    int ce = pq.countEntities();
+    
+    System.out.println("countEntities: " + ce);
+  }
+	
+	private void test2() {
+	  
+	  DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	  Entity globalStat = datastore.prepare(new Query("__Stat_Total__")).asSingleEntity();
+	  Long totalBytes = null;
+    Long totalEntities = null;
+    if (globalStat != null) {
+      totalBytes = (Long) globalStat.getProperty("bytes");
+      totalEntities = (Long) globalStat.getProperty("count");
+	  }
+    
+    System.out.println("totalBytes: " + totalBytes + " totalEntities: " + totalEntities);
 	}
 	
 	
