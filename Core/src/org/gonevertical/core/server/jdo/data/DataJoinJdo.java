@@ -431,7 +431,6 @@ public class DataJoinJdo {
 			tx.begin();
 			Extent<DataJoinJdo> e = pm.getExtent(DataJoinJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
-			q.execute();
 			Collection<DataJoinJdo> c = (Collection<DataJoinJdo>) q.execute();
 			pm.deletePersistentAll(c);
 			tx.commit();
@@ -465,7 +464,6 @@ public class DataJoinJdo {
 			tx.begin();
 			Extent<DataJoinJdo> e = pm.getExtent(DataJoinJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
-			q.execute();
 			Collection<DataJoinJdo> c = (Collection<DataJoinJdo>) q.execute();
 			pm.deletePersistentAll(c);
 			tx.commit();
@@ -603,7 +601,6 @@ public class DataJoinJdo {
 			Query q = pm.newQuery("select thingIdKey from " + ThingJdo.class.getName());
 			q.setFilter(qfilter);
 			q.setRange(filter.getRangeStart(), filter.getRangeFinish());
-			q.execute();
 			Collection<Key> c = (Collection<Key>) q.execute();
 			keys = new Key[c.size()];
 			if (c.size() > 0) {
@@ -637,7 +634,6 @@ public class DataJoinJdo {
 		try {
 			Extent<DataJoinJdo> e = pm.getExtent(DataJoinJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
-			q.execute();
 			Collection<DataJoinJdo> c = (Collection<DataJoinJdo>) q.execute();
 			thingIds = new long[c.size()];
 			Iterator<DataJoinJdo> iter = c.iterator();

@@ -104,7 +104,6 @@ public class SessionNonceJdo {
     try {
       Extent<SessionNonceJdo> e = pm.getExtent(SessionNonceJdo.class, true);
       Query q = pm.newQuery(e, qfilter);
-      q.execute();
       Collection<SessionNonceJdo> c = (Collection<SessionNonceJdo>) q.execute();
       if (c.size() > 0) {
       	found = true;
