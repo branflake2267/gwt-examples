@@ -527,7 +527,6 @@ public class ThingStuffJdo {
 
 			Extent<ThingStuffJdo> e = pm.getExtent(ThingStuffJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
-			q.execute();
 
 			Collection<ThingStuffJdo> c = (Collection<ThingStuffJdo>) q.execute();
 
@@ -578,7 +577,6 @@ public class ThingStuffJdo {
 
 			Extent<ThingStuffJdo> e = pm.getExtent(ThingStuffJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
-			q.execute();
 
 			Collection<ThingStuffJdo> c = (Collection<ThingStuffJdo>) q.execute();
 

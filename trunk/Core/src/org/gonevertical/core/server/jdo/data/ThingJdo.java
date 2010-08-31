@@ -382,7 +382,6 @@ public class ThingJdo {
 		try {
 			Extent<ThingJdo> e = pm.getExtent(ThingJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
-			q.execute();
 			Collection<ThingJdo> c = (Collection<ThingJdo>) q.execute();
 			r = new ThingJdo[c.size()];
 			if (c.size() > 0) {
@@ -425,7 +424,6 @@ public class ThingJdo {
 			Query q = pm.newQuery(e);
 			q.setFilter(qfilter);
 			q.setRange(filter.getRangeStart(), filter.getRangeFinish());
-			q.execute();
 			Collection<ThingJdo> c = (Collection<ThingJdo>) q.execute();
 			tj = new ThingJdo[c.size()];
 			if (c.size() > 0) {
@@ -461,7 +459,6 @@ public class ThingJdo {
 			Query q = pm.newQuery("select thingIdKey from " + ThingJdo.class.getName());
 			q.setFilter(qfilter);
 			q.setRange(filter.getRangeStart(), filter.getRangeFinish());
-			q.execute();
 			Collection<Key> c = (Collection<Key>) q.execute();
 			keys = new Key[c.size()];
 			if (c.size() > 0) {

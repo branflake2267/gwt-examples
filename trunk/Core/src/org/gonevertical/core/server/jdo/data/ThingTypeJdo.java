@@ -299,7 +299,6 @@ public class ThingTypeJdo {
 		try {
 			Extent<ThingTypeJdo> e = pm.getExtent(ThingTypeJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
-			q.execute();
 			Collection<ThingTypeJdo> c = (Collection<ThingTypeJdo>) q.execute();
 			if (c.size() > 0) {
 				r = new ThingTypeJdo[c.size()];
@@ -336,7 +335,6 @@ public class ThingTypeJdo {
 			
 			//TODO q.setRange(0, 10); // TODO - finish range
 			
-			q.execute();
 			Collection<ThingTypeJdo> c = (Collection<ThingTypeJdo>) q.execute();
 			if (c.size() > 0) {
 				r = new ThingTypeJdo[c.size()];

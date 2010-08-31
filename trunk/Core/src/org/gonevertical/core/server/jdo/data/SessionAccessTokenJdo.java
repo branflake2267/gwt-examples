@@ -134,7 +134,6 @@ public class SessionAccessTokenJdo {
 		try {
 			Extent<SessionAccessTokenJdo> e = pm.getExtent(SessionAccessTokenJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
-			q.execute();
 			Collection<SessionAccessTokenJdo> c = (Collection<SessionAccessTokenJdo>) q.execute();
 			if (c.size() > 0) {
 				r = new SessionAccessTokenJdo[c.size()];

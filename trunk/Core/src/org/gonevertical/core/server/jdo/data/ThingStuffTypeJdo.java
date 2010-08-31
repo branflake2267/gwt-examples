@@ -264,7 +264,6 @@ public class ThingStuffTypeJdo {
 		try {
 			Extent<ThingStuffTypeJdo> e = pm.getExtent(ThingStuffTypeJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
-			q.execute();
 
 			Collection<ThingStuffTypeJdo> c = (Collection<ThingStuffTypeJdo>) q.execute();
 			Iterator<ThingStuffTypeJdo> iter = c.iterator();
@@ -305,7 +304,6 @@ public class ThingStuffTypeJdo {
 			Extent<ThingStuffTypeJdo> e = pm.getExtent(ThingStuffTypeJdo.class, true);
 			Query q = pm.newQuery(e, qfilter);
 			//q.setRange(0, 10); // TODO - finish range
-			q.execute();
 
 			Collection<ThingStuffTypeJdo> c = (Collection<ThingStuffTypeJdo>) q.execute();
 			Iterator<ThingStuffTypeJdo> iter = c.iterator();
