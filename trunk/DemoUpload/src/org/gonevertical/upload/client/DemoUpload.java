@@ -24,6 +24,7 @@ public class DemoUpload implements EntryPoint {
   	vp.add(blobs);
   	
   	vp.setCellHorizontalAlignment(fuw, VerticalPanel.ALIGN_CENTER);
+  	vp.setCellHorizontalAlignment(blobs, VerticalPanel.ALIGN_CENTER);
   	
   	RootPanel.get("content").add(vp);
 	  

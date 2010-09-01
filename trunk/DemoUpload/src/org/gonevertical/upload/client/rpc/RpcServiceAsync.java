@@ -12,5 +12,8 @@ public interface RpcServiceAsync {
 	
 	public void getBlobStoreUrl(AsyncCallback<String> callback);
 	
-	 public void getBlobs(BlobDataFilter filter, AsyncCallback<BlobData[]> callback);
+	public void getBlobs(BlobDataFilter filter, AsyncCallback<BlobData[]> callback);
+	 
+	public void deleteBlob(BlobDataFilter filter, AsyncCallback<Boolean> callback);
+	
 }

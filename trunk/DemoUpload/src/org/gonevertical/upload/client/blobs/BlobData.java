@@ -26,7 +26,7 @@ public class BlobData implements IsSerializable  {
     this.key = name;
   }
   
-  public String getName() {
+  public String getKey() {
     return key;
   }
   
@@ -34,7 +34,7 @@ public class BlobData implements IsSerializable  {
     this.content_type = content_type;
   }
   
-  public String getContentTYpe() {
+  public String getContentType() {
     return content_type;
   }
   

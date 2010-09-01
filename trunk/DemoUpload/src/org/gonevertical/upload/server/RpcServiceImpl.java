@@ -4,6 +4,7 @@ import org.gonevertical.upload.client.blobs.BlobData;
 import org.gonevertical.upload.client.blobs.BlobDataFilter;
 import org.gonevertical.upload.client.rpc.RpcService;
 
+import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.datastore.DatastoreService;
@@ -41,6 +42,20 @@ public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
 	  BlobData[] r = db.getBlobs(filter);
 	  
     return r;
+	}
+	
+	public boolean deleteBlob(BlobDataFilter filter) {
+	  
+	  String blobKey = filter.getBlobKey();
+	  
+	  if (blobKey == null) {
+	    return false;
+	  }
+	  
+	  BlobKey blobKeys = new BlobKey(blobKey);
+    blobstoreService.delete(blobKeys);
+	  
+	  return true;
 	}
 
 	private void test() {
