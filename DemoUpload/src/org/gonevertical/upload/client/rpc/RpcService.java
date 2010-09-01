@@ -14,5 +14,8 @@ public interface RpcService extends RemoteService {
 	
 	public String getBlobStoreUrl();
 	
-	 public BlobData[] getBlobs(BlobDataFilter filter);
+	public BlobData[] getBlobs(BlobDataFilter filter);
+	 
+	public boolean deleteBlob(BlobDataFilter filter);
+	
 }

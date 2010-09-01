@@ -5,6 +5,8 @@ import org.gonevertical.upload.client.blobs.BlobDataFilter;
 import org.gonevertical.upload.client.rpc.RpcInit;
 import org.gonevertical.upload.client.rpc.RpcServiceAsync;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
@@ -40,15 +42,42 @@ public class Blobs extends Composite {
       return;
     }
     
-    int r = blobData.length;
-    int c = 5;
+    int r = blobData.length + 1;
+    int c = 6;
     Grid grid = new Grid(r, c);
     pWidget.add(grid);
     
+    grid.setWidget(0, 0, new HTML("key/name"));
+    grid.setWidget(0, 1, new HTML("filename"));
+    grid.setWidget(0, 2, new HTML("size"));
+    grid.setWidget(0, 3, new HTML("content_type"));
+    grid.setWidget(0, 4, new HTML("creation"));
+    grid.setWidget(0, 5, new HTML("Delete"));
+    
     for (int i=0; i < blobData.length; i++) {
+      
+      HTML na = new HTML(blobData[i].getKey());
       HTML fn = new HTML(blobData[i].getFilename());
-      grid.setWidget(i, 0, fn);
+      HTML si = new HTML(Long.toString(blobData[i].getSize()));
+      HTML ct = new HTML(blobData[i].getContentType());
+      HTML cr = new HTML(blobData[i].getCreation().toGMTString());
+      
+      DeleteWidget dw = new DeleteWidget(blobData[i].getKey());
+      
+      grid.setWidget(i+1, 0, na);
+      grid.setWidget(i+1, 1, fn);
+      grid.setWidget(i+1, 2, si);
+      grid.setWidget(i+1, 3, ct);
+      grid.setWidget(i+1, 4, cr);
+      grid.setWidget(i+1, 5, dw);
+     
+      dw.addChangeHandler(new ChangeHandler() {
+        public void onChange(ChangeEvent event) {
+          getBlobsList();
+        }
+      });
     }
+    
   }
   
   public void getBlobsList() {
