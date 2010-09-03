@@ -1,0 +1,32 @@
+<configurations>
+      
+  <configuration name="Import data from Blobstore">
+  
+    <!-- My Mapper Class -->
+    <property>
+      <name>mapreduce.map.class</name>
+      <value>org.gonevertical.upload.server.mapreduce.ImportMapper</value>
+    </property>
+    
+    <!-- import system -->
+    <property>
+      <name>mapreduce.inputformat.class</name>
+      <value>com.google.appengine.tools.mapreduce.BlobstoreInputFormat</value>
+    </property>
+    
+    <!-- what blob do you want to work with? -->
+    <property>
+      <name human="Blob Keys to Map Over">mapreduce.mapper.inputformat.blobstoreinputformat.blobkeys</name>
+      <value template="optional">blobkeyhere</value>      
+    </property>        
+    
+    <!-- how many shards do you want to do the job? -->
+    <property>
+      <name human="Number of shards to use">mapreduce.mapper.shardcount</name>
+      <value template="optional">10</value>      
+    </property>        
+    
+        
+  </configuration>  
+
+</configurations>
