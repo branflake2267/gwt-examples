@@ -56,7 +56,9 @@ public class Blobs extends Composite {
     
     for (int i=0; i < blobData.length; i++) {
       
-      HTML na = new HTML(blobData[i].getKey());
+      String link = "<a target=\"_blank\" href=\"/serve?blob-key=" + blobData[i].getKey() + "\">Download</a>";
+      
+      HTML na = new HTML(link);
       HTML fn = new HTML(blobData[i].getFilename());
       HTML si = new HTML(Long.toString(blobData[i].getSize()));
       HTML ct = new HTML(blobData[i].getContentType());
