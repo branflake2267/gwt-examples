@@ -23,7 +23,7 @@
 
 
 
-
+  <!-- My gwt stuff -->
   <servlet>
     <servlet-name>Upload</servlet-name>
     <servlet-class>org.gonevertical.upload.server.Upload</servlet-class>
@@ -45,5 +45,14 @@
   </servlet-mapping>
   
   
+  <!-- this is for the map reduce lib stuff -->
+  <servlet>
+    <servlet-name>mapreduce</servlet-name>
+    <servlet-class>com.google.appengine.tools.mapreduce.MapReduceServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>mapreduce</servlet-name>
+    <url-pattern>/mapreduce/*</url-pattern>
+  </servlet-mapping>
   
 </web-app>
