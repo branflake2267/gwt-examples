@@ -21,10 +21,6 @@ public class ImportMapper extends AppEngineMapper<BlobstoreRecordKey, byte[], Nu
   @Override
   public void map(BlobstoreRecordKey key, byte[] segment, Context context) {
     
-    if (1==1) {
-      return;
-    }
-    
     String line = new String(segment);
     log.info("Offset: " + key.getOffset() + " Line: " + line);
 
