@@ -26,6 +26,11 @@
       <value template="optional">10</value>      
     </property>        
     
+    <!-- header has columns field names -->
+    <property>
+      <name human="Skip Row 1: [0|1]">skipRow1</name>
+      <value template="optional">1</value>      
+    </property>
         
   </configuration>  
 
