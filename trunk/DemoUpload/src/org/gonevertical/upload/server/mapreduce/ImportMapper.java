@@ -28,8 +28,6 @@ public class ImportMapper extends AppEngineMapper<BlobstoreRecordKey, byte[], Nu
       return;
     }
     
-    System.out.println("offset: " + key.getOffset() + " line: " + line);
-
     //book, chapter, verse, content, version
 
     String[] values = line.split(",");
