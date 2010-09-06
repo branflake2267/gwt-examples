@@ -9,7 +9,8 @@ import com.google.appengine.tools.mapreduce.BlobstoreRecordKey;
 import com.google.appengine.tools.mapreduce.DatastoreMutationPool;
 
 /**
- * http://127.0.0.1:8888/serve?blob-key=H_8TrZ0qIBsuJVT7qSNy2A
+ * ref to my bible.csv blob locally - http://127.0.0.1:8888/serve?blob-key=H_8TrZ0qIBsuJVT7qSNy2A
+ * 
  * @author branflake2267
  *
  */
@@ -19,6 +20,10 @@ public class ImportMapper extends AppEngineMapper<BlobstoreRecordKey, byte[], Nu
 
   @Override
   public void map(BlobstoreRecordKey key, byte[] segment, Context context) {
+    
+    if (1==1) {
+      return;
+    }
     
     String line = new String(segment);
     log.info("Offset: " + key.getOffset() + " Line: " + line);
