@@ -23,7 +23,7 @@
 
 
 
-  <!-- My gwt stuff -->
+  <!-- Blob stuff -->
   <servlet>
     <servlet-name>Upload</servlet-name>
     <servlet-class>org.gonevertical.upload.server.Upload</servlet-class>
