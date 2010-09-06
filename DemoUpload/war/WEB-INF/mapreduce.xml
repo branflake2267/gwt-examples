@@ -17,7 +17,7 @@
     <!-- what blob do you want to work with? -->
     <property>
       <name human="Blob Keys to Map Over">mapreduce.mapper.inputformat.blobstoreinputformat.blobkeys</name>
-      <value template="optional">blobkeyhere</value>      
+      <value template="optional">blobkeyhere [bible.csv (in root of this only, for this demo)]</value>      
     </property>        
     
     <!-- how many shards do you want to do the job? -->
