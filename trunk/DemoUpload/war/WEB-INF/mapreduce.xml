@@ -16,7 +16,7 @@
     
     <!-- what blob do you want to work with? -->
     <property>
-      <name human="Blob Keys to Map Over">mapreduce.mapper.inputformat.blobstoreinputformat.blobkeys</name>
+      <name human="Blob Key to Map Over">mapreduce.mapper.inputformat.blobstoreinputformat.blobkeys</name>
       <value template="optional">blobkeyhere [bible.csv (in root of this only, for this demo)]</value>      
     </property>        
     
@@ -32,7 +32,7 @@
       <value template="optional">,</value>      
     </property>     
     
-    <!-- header has columns field names -->
+    <!-- header has column field names -->
     <property>
       <name human="Skip Row 1: [0|1]">skipRow1</name>
       <value template="optional">1</value>      
