@@ -21,12 +21,10 @@ public class ImportMapper extends AppEngineMapper<BlobstoreRecordKey, byte[], Nu
   public void map(BlobstoreRecordKey key, byte[] segment, Context context) {
     
     String line = new String(segment);
+    log.info("Offset: " + key.getOffset() + " Line: " + line);
 
-    log.info("at offset: " + key.getOffset());
-    log.info("got line: " + line);
-    
-    if (key.getOffset() == 0) {
-      log.info("at offset: " + key.getOffset() + " skipping row 0, is the header fields line: " + line);
+    String skipRow1 = context.getConfiguration().get("skipRow1");
+    if (key.getOffset() == 0 && skipRow1 != null && skipRow1.equals("0") == true ) {
       return;
     }
     
@@ -45,15 +43,15 @@ public class ImportMapper extends AppEngineMapper<BlobstoreRecordKey, byte[], Nu
     content = content.replaceAll("\"", "");
     version = version.replaceAll("\"", "");
 
-    Entity v = new Entity("Verse");
-    v.setProperty("book", book);
-    v.setProperty("chapter", chapter);
-    v.setProperty("verse", verse);
-    v.setProperty("content", content);
-    v.setProperty("version", version);
+    Entity e = new Entity("Verse");
+    e.setProperty("book", book);
+    e.setProperty("chapter", chapter);
+    e.setProperty("verse", verse);
+    e.setProperty("content", content);
+    e.setProperty("version", version);
     
     DatastoreMutationPool mutationPool = this.getAppEngineContext(context).getMutationPool();
-    mutationPool.put(v);
+    mutationPool.put(e);
   }
 
 }
