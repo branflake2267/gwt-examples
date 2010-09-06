@@ -24,7 +24,13 @@
     <property>
       <name human="Number of shards to use">mapreduce.mapper.shardcount</name>
       <value template="optional">10</value>      
-    </property>        
+    </property>   
+    
+    <!-- what is the delimiter -->
+    <property>
+      <name human="CSV Delimiter [,|~|\t|\|]">delimiter</name>
+      <value template="optional">,</value>      
+    </property>     
     
     <!-- header has columns field names -->
     <property>

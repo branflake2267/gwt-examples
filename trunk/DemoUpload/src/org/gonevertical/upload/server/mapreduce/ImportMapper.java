@@ -30,7 +30,12 @@ public class ImportMapper extends AppEngineMapper<BlobstoreRecordKey, byte[], Nu
     
     //book, chapter, verse, content, version
 
-    String[] values = line.split(",");
+    String delimiter = context.getConfiguration().get("delimiter");
+    if (delimiter == null || delimiter.length() == 0) {
+      delimiter = ",";
+    }
+    
+    String[] values = line.split(delimiter);
 
     int book = Integer.parseInt(values[0].replaceAll("\"", "")); // book
     int chapter = Integer.parseInt(values[1].replaceAll("\"", "")); // chapter
