@@ -1,5 +1,5 @@
-#Sat Oct 24 11:52:51 PDT 2009
+#Sat Oct 23 19:54:42 PDT 2010
 eclipse.preferences.version=1
-filesCopiedToWebInfLib=appengine-api-1.0-sdk-1.2.6.jar|appengine-api-labs-1.2.6.jar|datanucleus-jpa-1.1.5.jar|jdo2-api-2.3-eb.jar|geronimo-jpa_3.0_spec-1.1.1.jar|geronimo-jta_1.1_spec-1.1.1.jar|datanucleus-appengine-1.0.3.jar|datanucleus-core-1.1.5.jar
+filesCopiedToWebInfLib=
 ormEnhancementInclusions=src/
 validationExclusions=
