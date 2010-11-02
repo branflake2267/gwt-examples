@@ -359,7 +359,7 @@ public class DmxSend {
   private void sendData() {
     boolean[] map = getMasterMap();
     cd.setChannel(map);
-    sendChannelData(cd);
+    //sendChannelData(cd);
   }
   
   private void repeatSend() {
