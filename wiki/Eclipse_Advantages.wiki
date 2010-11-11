@@ -1,6 +1,6 @@
 #summary Advantages to using Eclipse IDE
 
-<wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="92" width="730" border="0" />
+<wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="95" width="735" border="0" />
 
 = Eclipse IDE Kicks Butt =
  Compared to Microsoft Visual Developer it really kicks Butt!
