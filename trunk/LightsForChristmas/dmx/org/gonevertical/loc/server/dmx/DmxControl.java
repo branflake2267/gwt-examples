@@ -2,7 +2,9 @@ package org.gonevertical.loc.server.dmx;
 
 import java.util.ArrayList;
 
-import org.gonevertical.loc.client.ChannelData;
+import org.gonevertical.game.dmx.ChannelData;
+
+
 
 public class DmxControl {
 
