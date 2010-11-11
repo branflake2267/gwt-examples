@@ -1,6 +1,8 @@
 package org.gonevertical.loc.server.dmx;
 
-import org.gonevertical.loc.client.ChannelData;
+import org.gonevertical.game.dmx.ChannelData;
+
+
 
 public class Run_Test_DmxChannel {
 

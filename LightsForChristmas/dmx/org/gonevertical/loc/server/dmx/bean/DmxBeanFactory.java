@@ -9,7 +9,7 @@ import javax.naming.RefAddr;
 import javax.naming.Reference;
 import javax.naming.spi.ObjectFactory;
 
-import org.gonevertical.loc.client.DmxSend;
+import org.gonevertical.game.dmx.DmxSend;
 
 public class DmxBeanFactory implements ObjectFactory {
 
