@@ -1,6 +1,6 @@
 #summary Serialize a java obect for database storage
 
-<wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads.xml" height="85" width="480" border="0" />
+<wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="92" width="730" border="0" />
 
 = Java Object Serialization =
  I found I could store my java object into mysql binary field and deserialize for later use. For example, caching an object that causes huge query load each time its requested. Or you can have the server rebuild the objects every night. I do this for my charts.
