@@ -1,0 +1,12 @@
+#summary test out wiki stuff
+
+<table>
+<tr>
+<td>
+ || c1 || c2 ||
+</td>
+<td>
+ c3
+</td>
+</tr>
+</table>
