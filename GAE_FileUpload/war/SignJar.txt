@@ -1,3 +1,5 @@
+# export jar
+Right click > Export > Java/Jar File > Finish
 
 # generate a key
 keytool -genkey -alias signFiles2 -keystore compstore -keypass kpi135 -dname "cn=Brandon Donnelson" -storepass password
