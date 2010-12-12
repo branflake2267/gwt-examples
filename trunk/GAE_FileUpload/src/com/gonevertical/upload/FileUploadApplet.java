@@ -64,11 +64,6 @@ public class FileUploadApplet extends JApplet {
     JOptionPane.showMessageDialog(null, "I am an alert box!");
   }
   
-  private void testJs() {
-    JSObject window = JSObject.getWindow(this);
-    window.call("fromJava", null);
-  }
-  
   private void setup() {
     try {
       jsWin = JSObject.getWindow(this);
@@ -137,7 +132,6 @@ public class FileUploadApplet extends JApplet {
   private void finish() {
     String[] ss = new String[files.size()];
     files.toArray(ss);
-    System.out.println("length: " + ss.length);
     jsWin.call("setSelectedFiles", new Object[] {ss});
   }
 
@@ -182,4 +176,19 @@ public class FileUploadApplet extends JApplet {
       e.printStackTrace();
     }
   }
+  
+  public int getFileCount() {
+    int c = 0;
+    if (files != null) {
+      c = files.size();
+    }
+    return c;
+  }
+  
+  public String[] getFiles() {
+    String[] ss = new String[files.size()];
+    files.toArray(ss);
+    return ss;
+  }
+  
 }
