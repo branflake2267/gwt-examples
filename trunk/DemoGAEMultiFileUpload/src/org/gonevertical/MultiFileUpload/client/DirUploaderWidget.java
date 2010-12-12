@@ -30,7 +30,13 @@ public class DirUploaderWidget extends Composite {
   }
   
   private void setup() {
-    String applet = "<applet archive=\"/applet/choosedir/SSignedApplet.jar\" code=\"com.gonevertical.upload.FileUploadApplet\" jnlp_href=\"/applet/choosedir/FileUpload.jnlp\" width=\"200\" height=\"50\" id=\"applet\"></applet>";
+    String applet = "<applet archive=\"/applet/choosedir/SSignedApplet.jar\" " +
+    		"code=\"com.gonevertical.upload.FileUploadApplet\" " +
+    		"jnlp_href=\"/applet/choosedir/FileUpload.jnlp\" " +
+    		"width=\"200\" " +
+    		"height=\"50\" " +
+    		"id=\"applet\">" +
+    		"</applet>";
     html.setHTML(applet);
     
     registerSetSelectedFiles(this);
