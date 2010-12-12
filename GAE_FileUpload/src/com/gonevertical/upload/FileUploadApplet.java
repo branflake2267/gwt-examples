@@ -159,4 +159,25 @@ public class FileUploadApplet extends JApplet {
     jfc.showDialog(this, "Select Directory");
     
   }
+  
+  public void start() {
+    
+  }
+  
+  public void stop() {
+    try {
+      this.finalize();
+    } catch (Throwable e) {
+      e.printStackTrace();
+    }
+  }
+  
+  public void destroy() {
+    try {
+      this.finalize();
+    } catch (Throwable e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
 }
