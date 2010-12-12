@@ -3,7 +3,7 @@
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="100" width="735" border="0" />
 
 = Demo GAE Multi Batch File Blob Upload =
-In the works, source code being uploaded and project being configured.
+ This project is an example of using an japplet to process a directory and get the files and send them back to the gwt with JSNI javascript. We can communicate to the applet using javascript and back to javascript from the java. Although, I saved time and self signed the japplet to get this demo out the door. Check the war folder of GAE_FIleUpload for the signing instructions and other stuff. This is still in the works.
 
 = Demo =
  * [http://demogaemultifileblobupload.appspot.com/ Demo] - Multi upload demo is partially disabled b/c one could upload hundreds of files.
