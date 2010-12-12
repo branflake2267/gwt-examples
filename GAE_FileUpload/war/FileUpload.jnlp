@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+" codebase="" href="">
+    <information>
+        <title>FileUplaod</title>
+        <vendor>GoneVertical LLC</vendor>
+    </information>
+    <resources>
+        <!-- Application Resources -->
+        <j2se version="1.6+"
+              href="http://java.sun.com/products/autodl/j2se" />
+        <jar href="FileUpload.jar" main="true" />
+
+    </resources>
+    <applet-desc 
+         name="FileUpload"
+         main-class="com.gonevertical.upload.FileUploadApplet"
+         width="400"
+         height="400">
+     </applet-desc>
+     <update check="background"/>
+</jnlp>	
