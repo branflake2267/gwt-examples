@@ -89,6 +89,8 @@ public class FileUploadApplet extends JApplet {
       return;
     }
     
+    reset();
+    
     File file = new File(f);
     
     if (file.isDirectory() == false) {
