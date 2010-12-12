@@ -61,7 +61,7 @@ public class FileUploadApplet extends JApplet {
   }
   
   public void test() {
-    JOptionPane.showMessageDialog(null, "FX: I am an alert box!");
+    JOptionPane.showMessageDialog(null, "I am an alert box!");
   }
   
   private void testJs() {
