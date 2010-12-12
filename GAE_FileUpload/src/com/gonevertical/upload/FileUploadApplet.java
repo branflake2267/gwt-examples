@@ -73,7 +73,6 @@ public class FileUploadApplet extends JApplet {
     try {
       jsWin = JSObject.getWindow(this);
     } catch (JSException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     
@@ -135,8 +134,8 @@ public class FileUploadApplet extends JApplet {
 
   private void finish() {
     String[] ss = new String[files.size()];
-    System.out.println("length: " + ss.length);
     files.toArray(ss);
+    System.out.println("length: " + ss.length);
     jsWin.call("setSelectedFiles", new Object[] {ss});
   }
 
