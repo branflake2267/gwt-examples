@@ -1,4 +1,6 @@
 #summary demo GAE multi batch file blob upload
 
+<wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-middle-lower.xml" height="610" width="735" border="0" />
+
 = Demo GAE Multi Batch File Blob Upload =
 In the works, source code being uploaded and project being configured.
