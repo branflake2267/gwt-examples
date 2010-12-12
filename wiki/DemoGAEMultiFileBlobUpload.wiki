@@ -6,6 +6,6 @@
 In the works, source code being uploaded and project being configured.
 
 = Demo =
-[Demo] - Multi upload demo is partially disabled b/c one could upload hundreds of files.
-[http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/GAE_FileUpload/src/com/gonevertical/upload Applet Source] - Directory Chooser for GWT
-[http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoGAEMultiFileUpload GWT Project Source] - GWT Project source, using the file directory chooser
+ [Demo] - Multi upload demo is partially disabled b/c one could upload hundreds of files.
+ [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/GAE_FileUpload/src/com/gonevertical/upload Applet Source] - Directory Chooser for GWT
+ [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoGAEMultiFileUpload GWT Project Source] - GWT Project source, using the file directory chooser
