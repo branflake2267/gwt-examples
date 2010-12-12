@@ -1,5 +1,7 @@
 package org.gonevertical.MultiFileUpload.client.rpc;
 
+import org.gonevertical.MultiFileUpload.client.BlobData;
+
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -9,4 +11,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("rpcService")
 public interface RpcService extends RemoteService {
 
+  public String getBlobStoreUrl();
+  
 }

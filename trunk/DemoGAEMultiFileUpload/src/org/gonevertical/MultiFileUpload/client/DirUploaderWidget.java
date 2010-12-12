@@ -1,7 +1,11 @@
 package org.gonevertical.MultiFileUpload.client;
 
+import org.gonevertical.MultiFileUpload.client.rpc.RpcInit;
+import org.gonevertical.MultiFileUpload.client.rpc.RpcServiceAsync;
+
 import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -9,6 +13,7 @@ import com.google.gwt.user.client.ui.HTML;
 
 public class DirUploaderWidget extends Composite {
   private HTML html;
+  private RpcServiceAsync rpc;
 
   public DirUploaderWidget() {
     
@@ -29,6 +34,8 @@ public class DirUploaderWidget extends Composite {
     html.setHTML(applet);
     
     registerSetSelectedFiles(this);
+    
+    rpc = RpcInit.init();
   }
   
   /**
@@ -36,16 +43,44 @@ public class DirUploaderWidget extends Composite {
    * @param duw
    */
   public static native void registerSetSelectedFiles(DirUploaderWidget duw) /*-{
-    $wnd.setSelectedFiles = function(files) {
-        duw.@org.gonevertical.MultiFileUpload.client.DirUploaderWidget::setFilesSelected(Lcom/google/gwt/core/client/JsArrayString;)(files);
-      }
+    //$wnd.setSelectedFiles = function(files) {
+        //duw.@org.gonevertical.MultiFileUpload.client.DirUploaderWidget::setFilesSelected(Lcom/google/gwt/core/client/JsArrayString;)(files);
+      //}
   }-*/;
   
   public void setFilesSelected(JsArrayString files) {
-    Window.alert("setFilesSelected");
+    
+    Window.alert("setFilesSelected from applet: ");
+    
+    try {
+      for (int i=0; i < files.length(); i++) {
+        startProcess(files.get(i));
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  private void startProcess(String path) {
+    getBlobUrl(path);
+  }
+  
+  private void process(String path, String bloburl) {
+    System.out.println("path" + path + " bloblurl: " + bloburl);
   }
 
   public HTML getHtml() {
     return html;
   }
+  
+  private void getBlobUrl(final String path) {
+    rpc.getBlobStoreUrl(new AsyncCallback<String>() {
+      public void onSuccess(String bloburl) {
+        process(path, bloburl);
+      }
+      public void onFailure(Throwable caught) {
+      }
+    });
+  }
+  
 }
