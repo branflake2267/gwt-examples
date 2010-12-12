@@ -1,4 +1,0 @@
-#summary demo GAE multi file blob upload
-
-= Demo GAE Muli File Blob Upload =
-In the works, source code being uploaded and project being configured.
