@@ -1,4 +1,4 @@
-package org.gonevertical.MultiFileUpload.server;
+package org.gonevertical.MultiFileUpload.server.blob;
 
 import java.io.IOException;
 import java.util.Map;
