@@ -12,7 +12,7 @@ public class DemoGAEMultiFileUpload implements EntryPoint {
 
   public void onModuleLoad() {
 
-    DirUploaderWidget duw = new DirUploaderWidget();
+    DirUploader duw = new DirUploader();
    
     VerticalPanel vp = new VerticalPanel();
     vp.add(duw);
