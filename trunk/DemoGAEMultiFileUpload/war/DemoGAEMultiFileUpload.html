@@ -19,9 +19,20 @@
 	/*
 	* this will be registered inside of the widget instead of here.
 	*/
+	/*
 	function setSelectedFiles(files) {
-		alert("# of files in dir: " + files.length);
+		//alert("# of files in dir: " + files.length);
+		
+		var app = document.getElementById("applet");
+	    //app.test();
+	    
+	    //alert("# getFileCount: " + app.getFileCount());
+	    
+	    alert("# getFiles: " + app.getFiles().length);
+	    
+	    alert("Finished");
 	}
+	*/
 </script>
 
     <!-- OPTIONAL: include this if you want history support -->
@@ -41,7 +52,7 @@
 		<a href="http://code.google.com/p/gwt-examples/wiki/DemoGAEMultiFileBlobUpload">Back to gwt-examples wiki page about this</a>
 
 	<br/>
-	
+	    
 		<script type="text/javascript"><!--
 			google_ad_client = "ca-pub-0032065764310410";
 			/* GWT Examples Demo */
@@ -50,8 +61,10 @@
 			google_ad_height = 90;
 		//-->
 		</script>
+		 <!--
 		<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 		</script>
+		 -->
 	</center>
 	
   </body>
