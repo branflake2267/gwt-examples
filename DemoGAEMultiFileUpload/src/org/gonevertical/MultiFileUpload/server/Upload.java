@@ -19,14 +19,16 @@ public class Upload extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse res) throws ServletException, IOException {
 
+	  System.out.println("test");
+	  
 		// this has to be used in an rpc call to get the url to be used with this request
 		//String url = blobstoreService.createUploadUrl("/upload");
 		
-		int len = request.getContentLength();
-		int mb = (1024 * 1024) * 1;
-		if (len > mb) { 
-			throw new RuntimeException("Sorry that file is to large. Try < 1024 or 1MB file");
-    }
+		//int len = request.getContentLength();
+		//int mb = (1024 * 1024) * 1;
+		//if (len > mb) { 
+			//throw new RuntimeException("Sorry that file is to large. Try < 1024 or 1MB file");
+    //}
 		
 		/*
 		Enumeration paramNames = request.getParameterNames();
