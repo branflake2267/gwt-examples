@@ -25,12 +25,17 @@
   <!-- Blob Stuff -->
   <servlet>
     <servlet-name>Upload</servlet-name>
-    <servlet-class>org.gonevertical.MultiFileUpload.server.Upload</servlet-class>
+    <servlet-class>org.gonevertical.MultiFileUpload.server.blob.Upload</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>Serve</servlet-name>
-    <servlet-class>org.gonevertical.MultiFileUpload.server.Serve</servlet-class>
+    <servlet-class>org.gonevertical.MultiFileUpload.server.blob.Serve</servlet-class>
+  </servlet>
+  
+   <servlet>
+    <servlet-name>Blob</servlet-name>
+    <servlet-class>org.gonevertical.MultiFileUpload.server.blob.Blob</servlet-class>
   </servlet>
  
   <servlet-mapping>
@@ -43,5 +48,9 @@
     <url-pattern>/serve</url-pattern>
   </servlet-mapping>
 
+  <servlet-mapping>
+    <servlet-name>Blob</servlet-name>
+    <url-pattern>/blob</url-pattern>
+  </servlet-mapping>
 
 </web-app>
