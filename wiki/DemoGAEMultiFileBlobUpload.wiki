@@ -14,4 +14,4 @@
  I used the applet to get the files recursively in the directories tree and then sent those back from the applet to the javascript GWT application to process, although I didn't realized the file input was read only and setting the value wasn't possible, at least easily and with out security risks. 
 
 ==Second Try==
-I then moved the entire upload process to the applet including getting the blob url. I setup a blob url servlet so I could get the url for the upload. Then I use Apache commons HttpClient,HttpCore,HttpMime libraries to do the uploading of the file which works great. This app is just an example, so all the security measures are not implemented so to try out the process.
+ I then moved the entire upload process to the applet including getting the blob url. I setup a blob url servlet so I could get the url for the upload. Then I use Apache commons HttpClient,HttpCore,HttpMime libraries to do the uploading of the file which works great. This app is just an example, so all the security measures are not implemented so to try out the process.
