@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
@@ -32,6 +33,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.FileEntity;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.ContentBody;
+import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.util.EntityUtils;
@@ -41,6 +45,8 @@ import netscape.javascript.JSObject;
 
 public class FileUploadApplet extends JApplet {
 
+  private String url = "";
+  
   private JSObject jsWin;
   
   private ArrayList<String> files;
@@ -147,7 +153,7 @@ public class FileUploadApplet extends JApplet {
 
   private void addFile(File file) {
     String p = file.getAbsolutePath();
-    if (p.matches("\\..*") == true) {
+    if (file.getName().matches("\\..*") == true) {
       return;
     }
     files.add(p);
@@ -212,25 +218,28 @@ public class FileUploadApplet extends JApplet {
   }
   
   private void upload(String bloburl, String path) {
-    HttpClient httpclient = new DefaultHttpClient();
-    httpclient.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+    
+    HttpClient client = new DefaultHttpClient();
+    client.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
 
-    HttpPost httppost = new HttpPost("http://demogaemultifileblobupload.appspot.com/" + bloburl);
+    HttpPost post = new HttpPost(bloburl);
+    
     File file = new File(path);
 
-    FileEntity reqEntity = new FileEntity(file, "binary/octet-stream");
-
-    httppost.setEntity(reqEntity);
-    reqEntity.setContentType("binary/octet-stream");
-    System.out.println("executing request " + httppost.getRequestLine());
+    FileBody uploadFilePart = new FileBody(file);
+    MultipartEntity reqEntity = new MultipartEntity();
+    reqEntity.addPart("myFile", uploadFilePart);
+    post.setEntity(reqEntity);
+    
+    
+    System.out.println("executing request " + post.getRequestLine());
+    
     HttpResponse response = null;
     try {
-      response = httpclient.execute(httppost);
+      response = client.execute(post);
     } catch (ClientProtocolException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     } catch (IOException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     HttpEntity resEntity = response.getEntity();
@@ -240,10 +249,8 @@ public class FileUploadApplet extends JApplet {
       try {
         System.out.println(EntityUtils.toString(resEntity));
       } catch (ParseException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       } catch (IOException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
     }
@@ -251,12 +258,11 @@ public class FileUploadApplet extends JApplet {
       try {
         resEntity.consumeContent();
       } catch (IOException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
     }
 
-    httpclient.getConnectionManager().shutdown();
+    client.getConnectionManager().shutdown();
     
   }
   
@@ -264,10 +270,24 @@ public class FileUploadApplet extends JApplet {
     
     String s = null;
     HttpClient httpclient = new DefaultHttpClient();
-    HttpPost httpPost = new HttpPost("http://demogaemultifileblobupload.appspot.com/blob");
+    HttpGet httpGet = new HttpGet("http://demogaemultifileblobupload.appspot.com/blob");
     try {
-      HttpResponse response = httpclient.execute(httpPost);
-      s = response.toString();
+      HttpResponse response = httpclient.execute(httpGet);
+      HttpEntity entity = response.getEntity();
+      
+      BufferedReader in = null;
+      in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+      
+      StringBuffer sb = new StringBuffer("");
+      String line = "";
+      while ((line = in.readLine()) != null) {
+          sb.append(line);
+      }
+      in.close();
+      
+      s = sb.toString();
+      
+    
     } catch (ClientProtocolException e) {
       e.printStackTrace();
     } catch (IOException e) {
