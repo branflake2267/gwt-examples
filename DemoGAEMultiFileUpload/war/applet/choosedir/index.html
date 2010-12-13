@@ -1,12 +1,13 @@
 <html>
 <body>
 
-<applet archive="SSignedApplet.jar" 
+<applet 
+archive="SSignedApplet.jar,commons-logging-1.1.1.jar,httpclient-4.1-beta1.jar,httpcore-4.1.jar,httpcore-nio-4.1.jar,httpmime-4.1-beta1.jar" 
 code="com.gonevertical.upload.FileUploadApplet"
 jnlp_href="FileUpload.jnlp" 
 width="400" 
 height="400" 
-id="applet">
+id="applet" MAYSCRIPT>
 </applet>
 
 <br/>
@@ -15,8 +16,7 @@ id="applet">
 <script>
 	function test() {
 		var app = document.getElementById("applet");
-	    app.test();
-	    
+	    app.test();   
 	}
 	
 	function fromJava() {
