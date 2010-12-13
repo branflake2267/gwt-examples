@@ -5,7 +5,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import javax.swing.JApplet;
@@ -14,6 +22,19 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
+import org.apache.http.ParseException;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.FileEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.CoreProtocolPNames;
+import org.apache.http.util.EntityUtils;
 
 import netscape.javascript.JSException;
 import netscape.javascript.JSObject;
@@ -68,7 +89,7 @@ public class FileUploadApplet extends JApplet {
     try {
       jsWin = JSObject.getWindow(this);
     } catch (JSException e) {
-      e.printStackTrace();
+      //e.printStackTrace();
     }
     
     reset();
@@ -126,13 +147,27 @@ public class FileUploadApplet extends JApplet {
 
   private void addFile(File file) {
     String p = file.getAbsolutePath();
+    if (p.matches("\\..*") == true) {
+      return;
+    }
     files.add(p);
   }
 
   private void finish() {
     String[] ss = new String[files.size()];
     files.toArray(ss);
-    jsWin.call("setSelectedFiles", new Object[] {ss});
+    
+    for (int i=0; i < ss.length; i++) {
+      upload(ss[i]);
+    }
+    
+  }
+
+  private void upload(String path) {
+    String bloburl = getBlobUrl();
+    
+    upload(bloburl, path);
+    
   }
 
   private void click() {
@@ -172,23 +207,75 @@ public class FileUploadApplet extends JApplet {
     try {
       this.finalize();
     } catch (Throwable e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }
   
-  public int getFileCount() {
-    int c = 0;
-    if (files != null) {
-      c = files.size();
+  private void upload(String bloburl, String path) {
+    HttpClient httpclient = new DefaultHttpClient();
+    httpclient.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+
+    HttpPost httppost = new HttpPost("http://demogaemultifileblobupload.appspot.com/" + bloburl);
+    File file = new File(path);
+
+    FileEntity reqEntity = new FileEntity(file, "binary/octet-stream");
+
+    httppost.setEntity(reqEntity);
+    reqEntity.setContentType("binary/octet-stream");
+    System.out.println("executing request " + httppost.getRequestLine());
+    HttpResponse response = null;
+    try {
+      response = httpclient.execute(httppost);
+    } catch (ClientProtocolException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
-    return c;
+    HttpEntity resEntity = response.getEntity();
+
+    System.out.println(response.getStatusLine());
+    if (resEntity != null) {
+      try {
+        System.out.println(EntityUtils.toString(resEntity));
+      } catch (ParseException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
+    if (resEntity != null) {
+      try {
+        resEntity.consumeContent();
+      } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
+
+    httpclient.getConnectionManager().shutdown();
+    
   }
   
-  public String[] getFiles() {
-    String[] ss = new String[files.size()];
-    files.toArray(ss);
-    return ss;
+  private String getBlobUrl() {
+    
+    String s = null;
+    HttpClient httpclient = new DefaultHttpClient();
+    HttpPost httpPost = new HttpPost("http://demogaemultifileblobupload.appspot.com/blob");
+    try {
+      HttpResponse response = httpclient.execute(httpPost);
+      s = response.toString();
+    } catch (ClientProtocolException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    return s;
   }
+  
   
 }
