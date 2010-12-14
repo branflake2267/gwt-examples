@@ -20,7 +20,7 @@ import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
 import com.google.gwt.user.client.ui.FormPanel.SubmitHandler;
 
 public class DirUploader extends Composite {
-  private HTML html;
+  private HTML htmlImReconfiguringThe;
   private RpcServiceAsync rpc;
   private VerticalPanel verticalPanel;
   private VerticalPanel vpForm;
@@ -33,8 +33,8 @@ public class DirUploader extends Composite {
     HorizontalPanel horizontalPanel = new HorizontalPanel();
     verticalPanel.add(horizontalPanel);
 
-    html = new HTML("Choose Directory", true);
-    horizontalPanel.add(html);
+    htmlImReconfiguringThe = new HTML("I'm reconfiguring the way the applet loads. This will take me a few more days. So far it works great in debugger.", true);
+    horizontalPanel.add(htmlImReconfiguringThe);
 
     vpForm = new VerticalPanel();
     verticalPanel.add(vpForm);
@@ -43,8 +43,8 @@ public class DirUploader extends Composite {
   }
 
   private void setup() {
-    registerSetSelectedFiles(this);
-
+    
+    /* can't get it to work in applet form. applet works in debugger great. Its about including other libraries
     String applet = "<applet archive=\"/applet/choosedir/SSignedApplet.jar\" " +
     "code=\"com.gonevertical.upload.FileUploadApplet\" " +
     "jnlp_href=\"/applet/choosedir/FileUpload.jnlp\" " +
@@ -53,116 +53,25 @@ public class DirUploader extends Composite {
     "id=\"applet\" MAYSCRIPT>" +
     "</applet>";
     html.setHTML(applet);
-
+    */
 
 
     rpc = RpcInit.init();
   }
 
-  /**
-   * setup javascript method for applet to use after the directory is chosen
-   * @param duw
-   */
-  public static native void registerSetSelectedFiles(DirUploader duw) /*-{
-    $wnd.setSelectedFiles = function(files) {
-
-        var app = $wnd.document.getElementById('applet');
-        var filess = new Array();
-        filess = app.getFiles();
-
-        //$wnd.alert("test: " + files.length + " filess: " + filess.length);
-
-        // pass back to gwt
-        duw.@org.gonevertical.MultiFileUpload.client.DirUploader::setFilesSelected(Lcom/google/gwt/core/client/JsArrayString;)(filess);
-      }
-  }-*/;
-
-  public void setFilesSelected(JsArrayString files) {
-
-    if (files == null || files.length() == 0) {
-      return;
-    }
-
-    /**
-     * work around, b/c files.get(i), doesn't work. bug in gwt i think.
-     */
-    String[] s = files.toString().split(",");
-
-
-    for (int i=0; i < s.length; i++) {
-      startProcess(s[i]);
-    }
-
-  }
-
-  private void startProcess(String path) {
-    getBlobUrl(path);
-  }
-
-  private void process(String path, String bloburl) {
-    System.out.println("path" + path + " bloblurl: " + bloburl);
-    send(path, bloburl);
-  }
-
   public HTML getHtml() {
-    return html;
+    return htmlImReconfiguringThe;
   }
 
   private void getBlobUrl(final String path) {
     rpc.getBlobStoreUrl(new AsyncCallback<String>() {
       public void onSuccess(String bloburl) {
-        process(path, bloburl);
+        //process(path, bloburl);
       }
       public void onFailure(Throwable caught) {
       }
     });
   }
-
-  private void send(String file, String url) {
-    //vpForm.clear();
-    FormPanel form = new FormPanel();
-    vpForm.add(form);
-
-    form.setAction(url);
-    form.setEncoding(FormPanel.ENCODING_MULTIPART);
-    form.setMethod(FormPanel.METHOD_POST);
-    form.setWidget(getFormElements(file));
-    //form.add(getHidden());
-
-    // add submit handler
-    form.addSubmitHandler(new SubmitHandler() {
-      public void onSubmit(SubmitEvent event) {
-        //Window.alert("subby");
-      }
-    });
-
-    // add submit complete handler
-    form.addSubmitCompleteHandler(new SubmitCompleteHandler() {
-      public void onSubmitComplete(SubmitCompleteEvent event) {
-        String results = event.getResults();
-        System.out.println("results: " + results);
-      }
-    });
-
-    form.submit();
-    
-    //vpForm.clear();
-  }
-
-  private VerticalPanel getFormElements(String file) {
-
-    FileUpload f = new FileUpload();
-
-    HTML h = new HTML("<input type=\"file\" name=\"myFile\" value=\"" + file + "\">");
-
-    VerticalPanel vp = new VerticalPanel();
-    vp.add(h);
-
-
-    return vp;
-  }
-
-
 
   public VerticalPanel getVerticalPanel() {
     return verticalPanel;
