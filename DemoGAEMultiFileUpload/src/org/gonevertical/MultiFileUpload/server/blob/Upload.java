@@ -23,6 +23,13 @@ public class Upload extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse res) throws ServletException, IOException {
 	  
+	  // TODO STOP Vandalism, b/c there is no security on this example for simplicity
+	  if (1==1) {
+	    return;
+	  }
+	  
+	  // TODO - if then return it via ... serve?blob-key=...
+	  
 	  //System.out.println("uploading");
 		
 	  // limit size
