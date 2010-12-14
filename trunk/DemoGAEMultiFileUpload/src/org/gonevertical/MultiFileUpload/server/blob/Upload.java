@@ -25,13 +25,14 @@ public class Upload extends HttpServlet {
 	  
 	  //System.out.println("uploading");
 		
+	  // limit size
 		//int len = request.getContentLength();
 		//int mb = (1024 * 1024) * 1;
 		//if (len > mb) { 
 			//throw new RuntimeException("Sorry that file is to large. Try < 1024 or 1MB file");
     //}
 		
-		
+		// debug output the parameters that came in on the form
 		Enumeration paramNames = request.getParameterNames();
     while(paramNames.hasMoreElements()) {
       
@@ -52,15 +53,20 @@ public class Upload extends HttpServlet {
 		Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(request);
 		BlobKey blobKey = blobs.get("File");
 
+		//TODO does the file already exist and if so, is there duplicates of jdo or file, delete dups?
     ServerPersistence sp = new ServerPersistence();
     BlobJdo bj = new BlobJdo(sp);
     bj.save(fileName, filePath, directorySelected, virtualPath, blobKey);
 		
+    
+    // serve back if need be
+    /*
 		if (blobKey == null) {
 			res.sendRedirect("/");
 		} else {
 			res.sendRedirect("/serve?blob-key=" + blobKey.getKeyString());
 		}
+		*/
 		
 	}
 

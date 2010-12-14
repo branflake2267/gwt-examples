@@ -1,4 +1,4 @@
-package org.gonevertical.MultiFileUpload.client;
+package org.gonevertical.MultiFileUpload.client.blobs;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
