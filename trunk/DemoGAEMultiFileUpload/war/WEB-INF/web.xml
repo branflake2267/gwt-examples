@@ -45,7 +45,7 @@
 
   <servlet-mapping>
     <servlet-name>Serve</servlet-name>
-    <url-pattern>/serve</url-pattern>
+    <url-pattern>/serve/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
