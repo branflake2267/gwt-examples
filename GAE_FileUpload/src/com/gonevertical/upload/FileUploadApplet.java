@@ -1,6 +1,7 @@
 package com.gonevertical.upload;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -8,52 +9,88 @@ import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JApplet;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
+import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.ContentBody;
 import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.util.EntityUtils;
 
-import netscape.javascript.JSException;
-import netscape.javascript.JSObject;
-
 public class FileUploadApplet extends JApplet {
-
-  private String url = "";
   
-  private JSObject jsWin;
+  //private String url = "http://demogaemultifileblobupload.appspot.com";
+  private String url = "http://127.0.0.1:8888";
   
-  private ArrayList<String> files;
+  private ArrayList<File> files;
 
   private JFileChooser jfc;
   
+  private JTextField tbBase;
+  
+  private File dir;
+  
   public FileUploadApplet() {
+    getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
+    
+    JPanel panel = new JPanel();
+    panel.setSize(500, 500);
+    getContentPane().add(panel, BorderLayout.CENTER);
+    
+    JButton btnChooseDirectory = new JButton("Choose Directory");
+    btnChooseDirectory.setBounds(96, 134, 153, 29);
+    btnChooseDirectory.addMouseListener(new MouseAdapter() {
+      public void mouseClicked(MouseEvent evt) {
+        click();
+      }
+    });
+    btnChooseDirectory.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent evt) {
+        click();
+      }
+    });
+    panel.setLayout(null);
+    panel.add(btnChooseDirectory);
+    
+    tbBase = new JTextField();
+    tbBase.setText("/serve");
+    tbBase.setBounds(194, 73, 422, 28);
+    panel.add(tbBase);
+    tbBase.setColumns(10);
+    
+    JLabel lblSetGaeVirtual = new JLabel("Remote Virtual Directory");
+    lblSetGaeVirtual.setBounds(18, 79, 176, 16);
+    panel.add(lblSetGaeVirtual);
+    
+    JCheckBox chckbxRecursive = new JCheckBox("Recursive - include subdirectories");
+    chckbxRecursive.setBounds(261, 135, 257, 23);
+    panel.add(chckbxRecursive);
+        
   }
   
   public void init() {
@@ -62,23 +99,7 @@ public class FileUploadApplet extends JApplet {
         SwingUtilities.invokeAndWait(new Runnable() {
             public void run() {
               
-              JPanel panel = new JPanel();
-              getContentPane().add(panel, BorderLayout.CENTER);
-              
-              JButton btnChooseDirectory = new JButton("Choose Directory");
-              btnChooseDirectory.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent evt) {
-                  click();
-                }
-              });
-              btnChooseDirectory.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                  click();
-                }
-              });
-              panel.add(btnChooseDirectory);
-                  
-              setup();
+            
             }
         });
     } catch (Exception e) {
@@ -87,22 +108,8 @@ public class FileUploadApplet extends JApplet {
     
   }
   
-  public void test() {
-    JOptionPane.showMessageDialog(null, "I am an alert box!");
-  }
-  
-  private void setup() {
-    try {
-      jsWin = JSObject.getWindow(this);
-    } catch (JSException e) {
-      //e.printStackTrace();
-    }
-    
-    reset();
-  }
-  
   private void reset() {
-    files = new ArrayList<String>();
+    files = new ArrayList<File>();
   }
   
   public void process(String f) {
@@ -152,27 +159,23 @@ public class FileUploadApplet extends JApplet {
   }
 
   private void addFile(File file) {
-    String p = file.getAbsolutePath();
     if (file.getName().matches("\\..*") == true) {
       return;
     }
-    files.add(p);
+    files.add(file);
   }
 
   private void finish() {
-    String[] ss = new String[files.size()];
-    files.toArray(ss);
-    
-    for (int i=0; i < ss.length; i++) {
-      upload(ss[i]);
+    for (int i=0; i < files.size(); i++) {
+      upload(files.get(i));
     }
     
   }
 
-  private void upload(String path) {
+  private void upload(File file) {
     String bloburl = getBlobUrl();
     
-    upload(bloburl, path);
+    upload(bloburl, file);
     
   }
 
@@ -181,12 +184,12 @@ public class FileUploadApplet extends JApplet {
       jfc = new JFileChooser();
       jfc.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          File f = jfc.getSelectedFile();
+          dir = jfc.getSelectedFile();
           
-          if (f == null) {
+          if (dir == null) {
             return;
           }
-          process(f.getAbsolutePath());
+          process(dir.getAbsolutePath());
         }
       });
     }
@@ -217,21 +220,46 @@ public class FileUploadApplet extends JApplet {
     }
   }
   
-  private void upload(String bloburl, String path) {
+  private void upload(String bloburl, File file) {
+    if (url.contains("127.") == true) {
+      bloburl = url + bloburl;
+    }
     
     HttpClient client = new DefaultHttpClient();
     client.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
 
     HttpPost post = new HttpPost(bloburl);
-    
-    File file = new File(path);
 
     FileBody uploadFilePart = new FileBody(file);
-    MultipartEntity reqEntity = new MultipartEntity();
-    reqEntity.addPart("myFile", uploadFilePart);
-    post.setEntity(reqEntity);
+    MultipartEntity entity = new MultipartEntity();
+    entity.addPart("File", uploadFilePart);
     
+    try {
+      entity.addPart("FileName", new StringBody(file.getName(), Charset.forName("UTF-8")));
+    } catch (UnsupportedEncodingException e1) {
+      e1.printStackTrace();
+    }
     
+    try {
+      entity.addPart("FilePath", new StringBody(file.getAbsolutePath(), Charset.forName("UTF-8")));
+    } catch (UnsupportedEncodingException e1) {
+      e1.printStackTrace();
+    }
+    
+    try {
+      entity.addPart("DirectorySelected", new StringBody(getDirectorySelected(), Charset.forName("UTF-8")));
+    } catch (UnsupportedEncodingException e1) {
+      e1.printStackTrace();
+    }
+    
+    try {
+      entity.addPart("VirtualPath", new StringBody(getVirtualPath(), Charset.forName("UTF-8")));
+    } catch (UnsupportedEncodingException e1) {
+      e1.printStackTrace();
+    }
+        
+    post.setEntity(entity);
+
     System.out.println("executing request " + post.getRequestLine());
     
     HttpResponse response = null;
@@ -270,7 +298,7 @@ public class FileUploadApplet extends JApplet {
     
     String s = null;
     HttpClient httpclient = new DefaultHttpClient();
-    HttpGet httpGet = new HttpGet("http://demogaemultifileblobupload.appspot.com/blob");
+    HttpGet httpGet = new HttpGet(url + "/blob");
     try {
       HttpResponse response = httpclient.execute(httpGet);
       HttpEntity entity = response.getEntity();
@@ -297,5 +325,11 @@ public class FileUploadApplet extends JApplet {
     return s;
   }
   
+  private String getVirtualPath() {
+    return tbBase.getText();
+  }
   
+  private String getDirectorySelected() {
+    return dir.getAbsolutePath();
+  }
 }
