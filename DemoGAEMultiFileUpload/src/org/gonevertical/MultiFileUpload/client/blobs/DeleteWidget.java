@@ -32,6 +32,10 @@ public class DeleteWidget extends Composite implements ClickHandler {
     bDelete.addClickHandler(this);
     
     rpc = RpcInit.init();
+    
+    
+    bDelete.setEnabled(false); 
+    
   }
   
   private void fireChange() {

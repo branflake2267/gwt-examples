@@ -72,7 +72,9 @@ public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
     
     BlobJdo[] test = bj.query();
     
-    System.out.println("pause");
+    for (int i=0; i < test.length; i++) {
+      System.out.println(test[i].getPath());
+    }
   }
   
 }

@@ -20,6 +20,7 @@ public class Serve extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
 	  
 	  String path = req.getPathInfo();
+	  path = "/serve" + path;
 
 	  ServerPersistence sp = new ServerPersistence();
 	  BlobJdo bj = new BlobJdo(sp);
