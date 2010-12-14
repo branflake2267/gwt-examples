@@ -1,29 +1,23 @@
 package org.gonevertical.MultiFileUpload.client;
 
+import org.gonevertical.MultiFileUpload.client.blobs.Blobs;
 import org.gonevertical.MultiFileUpload.client.rpc.RpcInit;
 import org.gonevertical.MultiFileUpload.client.rpc.RpcServiceAsync;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArray;
-import com.google.gwt.core.client.JsArrayString;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FileUpload;
-import com.google.gwt.user.client.ui.FormPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
-import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
-import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
-import com.google.gwt.user.client.ui.FormPanel.SubmitHandler;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class DirUploader extends Composite {
   private HTML htmlImReconfiguringThe;
   private RpcServiceAsync rpc;
   private VerticalPanel verticalPanel;
   private VerticalPanel vpForm;
+  private Image image;
+  private Blobs blobs;
 
   public DirUploader() {
 
@@ -38,6 +32,12 @@ public class DirUploader extends Composite {
 
     vpForm = new VerticalPanel();
     verticalPanel.add(vpForm);
+    
+    image = new Image("/serve/test/folder_a/DSC_8023.JPG");
+    verticalPanel.add(image);
+    
+    blobs = new Blobs();
+    verticalPanel.add(blobs);
 
     setup();
   }
@@ -57,6 +57,8 @@ public class DirUploader extends Composite {
 
 
     rpc = RpcInit.init();
+    
+    blobs.getBlobsList();
   }
 
   public HTML getHtml() {

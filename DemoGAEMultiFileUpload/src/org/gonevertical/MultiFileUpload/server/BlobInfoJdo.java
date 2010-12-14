@@ -4,8 +4,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.gonevertical.MultiFileUpload.client.BlobData;
-import org.gonevertical.MultiFileUpload.client.BlobDataFilter;
+import org.gonevertical.MultiFileUpload.client.blobs.BlobData;
+import org.gonevertical.MultiFileUpload.client.blobs.BlobDataFilter;
+import org.gonevertical.MultiFileUpload.server.jdo.BlobJdo;
 
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
@@ -76,10 +77,25 @@ public class BlobInfoJdo {
       b[i].setFilename(fn);
       b[i].setSize(size);
       b[i].setCreation(creation);
-      
+      if (key != null) {
+        b[i].setPath(getPath(key.getName()));
+      }
     }
     
     return b;
+  }
+
+  private String getPath(String blobKey) {
+    BlobJdo bj = new BlobJdo(sp);
+    BlobJdo blobJdo = bj.queryKey(blobKey);
+    String path = "";
+    if (blobJdo != null) {
+      path = blobJdo.getPath();
+      if (path == null) {
+        path = "this is broken";
+      }
+    }
+    return path;
   }
 
   public boolean delete(BlobDataFilter filter) {

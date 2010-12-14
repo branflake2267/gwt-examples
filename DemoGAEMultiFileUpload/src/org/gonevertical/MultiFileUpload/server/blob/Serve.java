@@ -6,6 +6,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.gonevertical.MultiFileUpload.server.ServerPersistence;
+import org.gonevertical.MultiFileUpload.server.jdo.BlobJdo;
+
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
@@ -16,13 +19,22 @@ public class Serve extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
 	  
-	  String a = req.getPathInfo();
-	  String b = req.getPathTranslated();
+	  String path = req.getPathInfo();
+
+	  ServerPersistence sp = new ServerPersistence();
+	  BlobJdo bj = new BlobJdo(sp);
+	  String sblobKey = bj.queryBlobKey(path);
 	  
-	  System.out.println("test");
-		//BlobKey blobKey = new BlobKey(req.getParameter("blob-key"));
-		//blobstoreService.serve(blobKey, res);
+	  
+	  // Serve Blob
+	  if (sblobKey != null) {
+	    BlobKey blobKey = new BlobKey(sblobKey);
+		  blobstoreService.serve(blobKey, res);
+	  } else {
+	    // serve uknown pic
+	  }
 		
+	  
 	}
 	
 }

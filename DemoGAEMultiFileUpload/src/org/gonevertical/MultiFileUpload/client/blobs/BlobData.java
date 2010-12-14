@@ -1,4 +1,4 @@
-package org.gonevertical.MultiFileUpload.client;
+package org.gonevertical.MultiFileUpload.client.blobs;
 
 import java.util.Date;
 
@@ -15,6 +15,8 @@ public class BlobData implements IsSerializable  {
   private String filename;
   
   private long size;
+  
+  private String path;
   
   /**
    * init contructor - nothing to do here.
@@ -60,5 +62,13 @@ public class BlobData implements IsSerializable  {
   
   public long getSize() {
     return size;
+  }
+  
+  public void setPath(String path) {
+    this.path = path;
+  }
+  
+  public String getPath() {
+    return path;
   }
 }
