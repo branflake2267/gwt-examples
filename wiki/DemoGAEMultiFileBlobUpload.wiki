@@ -10,6 +10,9 @@
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/GAE_FileUpload/src/com/gonevertical/upload Applet Source] - Directory Chooser for GWT
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoGAEMultiFileUpload GWT Project Source] - GWT Project source, using the file directory chooser
 
+==Goal==
+ Upload a directory recursively to GAE, then serve it virtually to the web site. GAE code space limit is 150MB, so if I put the files in big table, I can then retrieve them using a servlet, like if they where uploaded into the code space.
+
 ==First Try==
  I tried JavaFX to do the file processing, like using the applet to get the files in the second try. Although, the thing that doesn't work with JavaFX is javascript communication on mac and other browsers. Applet or JApplet are more mature for doing things in the Java kingdom at least in reference to communication using Javascript to and from them. I would have loved to use JavaFX b/c I like there app state control, but whats the use if you can't use it with Javascript. 
 
