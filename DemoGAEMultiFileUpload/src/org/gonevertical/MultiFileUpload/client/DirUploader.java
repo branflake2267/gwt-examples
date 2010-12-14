@@ -15,8 +15,9 @@ public class DirUploader extends Composite {
   private HTML htmlImReconfiguringThe;
   private RpcServiceAsync rpc;
   private VerticalPanel verticalPanel;
-  private VerticalPanel vpForm;
   private Blobs blobs;
+  private Image image;
+  private HTML htmlThisImageHis;
 
   public DirUploader() {
 
@@ -26,11 +27,14 @@ public class DirUploader extends Composite {
     HorizontalPanel horizontalPanel = new HorizontalPanel();
     verticalPanel.add(horizontalPanel);
 
-    htmlImReconfiguringThe = new HTML("I'm reconfiguring the way the applet loads. This will take me a few more days. So far it works great in debugger.", true);
+    htmlImReconfiguringThe = new HTML("I'll include the applet (java app), which uploads the entire directory recurively, here later for uploading to the directory. In the meantime it works good in eclipse debugger. I have to figure out how to include the external libraries.<br/>\n<br/>\n<br/>", true);
     horizontalPanel.add(htmlImReconfiguringThe);
-
-    vpForm = new VerticalPanel();
-    verticalPanel.add(vpForm);
+    
+    htmlThisImageHis = new HTML("This image his hosted virtually in Googles Big Table, which was uploaded via the Java App.", true);
+    verticalPanel.add(htmlThisImageHis);
+    
+    image = new Image("/serve/keystonedata/keystone1/preview.jpg");
+    verticalPanel.add(image);
     
     blobs = new Blobs();
     verticalPanel.add(blobs);
@@ -74,7 +78,5 @@ public class DirUploader extends Composite {
   public VerticalPanel getVerticalPanel() {
     return verticalPanel;
   }
-  public VerticalPanel getVpForm() {
-    return vpForm;
-  }
+
 }
