@@ -109,6 +109,7 @@ public class BlobJdo {
       Extent<BlobJdo> e = pm.getExtent(BlobJdo.class, true);
       Query q = pm.newQuery(e, qfilter);
       Collection<BlobJdo> c = (Collection<BlobJdo>) q.execute();
+      int size = c.size();
       r = new BlobJdo[c.size()];
       if (c.size() > 0) {
         r = new BlobJdo[c.size()];

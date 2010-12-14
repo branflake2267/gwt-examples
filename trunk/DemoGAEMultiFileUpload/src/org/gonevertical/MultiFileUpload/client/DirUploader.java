@@ -16,7 +16,6 @@ public class DirUploader extends Composite {
   private RpcServiceAsync rpc;
   private VerticalPanel verticalPanel;
   private VerticalPanel vpForm;
-  private Image image;
   private Blobs blobs;
 
   public DirUploader() {
@@ -32,9 +31,6 @@ public class DirUploader extends Composite {
 
     vpForm = new VerticalPanel();
     verticalPanel.add(vpForm);
-    
-    image = new Image("/serve/test/folder_a/DSC_8023.JPG");
-    verticalPanel.add(image);
     
     blobs = new Blobs();
     verticalPanel.add(blobs);
