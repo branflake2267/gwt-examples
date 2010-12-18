@@ -44,8 +44,8 @@ import org.apache.http.util.EntityUtils;
 
 public class FileUploadApplet extends JApplet {
   
-  //private String url = "http://demogaemultifileblobupload.appspot.com";
-  private String url = "http://127.0.0.1:8888";
+  private String url = "http://demogaemultifileblobupload.appspot.com";
+  //private String url = "http://127.0.0.1:8888";
   
   private ArrayList<File> files;
 
