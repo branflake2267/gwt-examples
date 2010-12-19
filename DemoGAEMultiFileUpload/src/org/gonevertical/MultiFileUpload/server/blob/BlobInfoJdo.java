@@ -1,4 +1,4 @@
-package org.gonevertical.MultiFileUpload.server;
+package org.gonevertical.MultiFileUpload.server.blob;
 
 import java.util.Date;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.gonevertical.MultiFileUpload.client.blobs.BlobData;
 import org.gonevertical.MultiFileUpload.client.blobs.BlobDataFilter;
-import org.gonevertical.MultiFileUpload.server.jdo.BlobJdo;
+import org.gonevertical.MultiFileUpload.server.ServerPersistence;
 
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
@@ -78,7 +78,11 @@ public class BlobInfoJdo {
       b[i].setSize(size);
       b[i].setCreation(creation);
       if (key != null) {
-        b[i].setPath(getPath(key.getName()));
+        try {
+          b[i].setPath(getPath(key.getName()));
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
       }
     }
     
@@ -97,13 +101,36 @@ public class BlobInfoJdo {
     }
     return path;
   }
-
-  public boolean delete(BlobDataFilter filter) {
+  
+  public boolean deleteBoth(BlobDataFilter filter) {
     
-    BlobKey blobKeys = new BlobKey(filter.getBlobKey());
-    blobstoreService.delete(blobKeys);
+    // delete multi
+    if (filter.getBlobKeys() != null) {
+      
+      for (int i=0; i < filter.getBlobKeys().size(); i++) {
+        deleteBlob(filter.getBlobKeys().get(i));
+      }
+    
+    // delete single
+    } else if (filter.getBlobKey() != null) {
+      deleteBlob(filter.getBlobKey());
+      
+    } else {
+      return false;
+    }
+    
     
     return true;
+  }
+
+  private void deleteBlob(String blobKey) {
+    if (blobKey == null) {
+      return;
+    }
+    
+    BlobKey blobKeys = new BlobKey(blobKey);
+    blobstoreService.delete(blobKeys);
+    
   }
 
 }
