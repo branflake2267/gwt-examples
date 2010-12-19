@@ -21,7 +21,8 @@ public class DemoGAEMultiFileUpload implements EntryPoint {
     
     vp.setWidth("100%");
     vp.setCellHorizontalAlignment(duw, HorizontalPanel.ALIGN_CENTER);
-    
+   
+    vp.setStyleName("test1");
   }
  
 }
