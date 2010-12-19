@@ -61,6 +61,9 @@ public class FileUploadApplet extends JApplet {
   // like username and password oauth style
   public String accessToken = "accessTokenTest";
   public String accessSecret = "accessSecretTest";
+  private JLabel lbAccessToken;
+  private JLabel lbAccessSecret;
+  private JButton bChooseDir;
 
   public FileUploadApplet() {
     getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
@@ -69,20 +72,20 @@ public class FileUploadApplet extends JApplet {
     panel.setSize(500, 500);
     getContentPane().add(panel, BorderLayout.CENTER);
 
-    JButton btnChooseDirectory = new JButton("Choose Directory");
-    btnChooseDirectory.setBounds(18, 129, 153, 29);
-    btnChooseDirectory.addMouseListener(new MouseAdapter() {
+    bChooseDir = new JButton("Choose Directory");
+    bChooseDir.setBounds(18, 129, 153, 29);
+    bChooseDir.addMouseListener(new MouseAdapter() {
       public void mouseClicked(MouseEvent evt) {
         click();
       }
     });
-    btnChooseDirectory.addActionListener(new ActionListener() {
+    bChooseDir.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
         click();
       }
     });
     panel.setLayout(null);
-    panel.add(btnChooseDirectory);
+    panel.add(bChooseDir);
 
     tbBase = new JTextField();
     tbBase.setText("/serve");
@@ -101,12 +104,25 @@ public class FileUploadApplet extends JApplet {
     lbUrl = new JLabel("url");
     lbUrl.setBounds(194, 31, 422, 16);
     panel.add(lbUrl);
+    
+    lbAccessToken = new JLabel("accessToken");
+    lbAccessToken.setBounds(18, 189, 313, 16);
+    panel.add(lbAccessToken);
+    
+    lbAccessSecret = new JLabel("accessSecret");
+    lbAccessSecret.setBounds(18, 223, 329, 16);
+    panel.add(lbAccessSecret);
 
     setup();
   }
 
   private void setup() {
     getLbUrl().setText(url);
+    
+    getLbAccessToken().setText(accessToken);
+    getLbAccessSecret().setText(accessSecret);
+    
+    //getBChooseDir().setEnabled(false);
   }
 
   public void setUrl(String url) {
@@ -120,6 +136,12 @@ public class FileUploadApplet extends JApplet {
   public void setAccess(String accessToken, String accessSecret) {
     this.accessToken = accessToken;
     this.accessSecret = accessSecret;
+    
+    getLbAccessToken().setText(accessToken);
+    getLbAccessSecret().setText(accessSecret);
+    
+    // set choosedirectory enabled
+    getBChooseDir().setEnabled(true);
   }
 
   /**
@@ -414,5 +436,14 @@ public class FileUploadApplet extends JApplet {
   }
   public JLabel getLbUrl() {
     return lbUrl;
+  }
+  public JLabel getLbAccessToken() {
+    return lbAccessToken;
+  }
+  public JLabel getLbAccessSecret() {
+    return lbAccessSecret;
+  }
+  public JButton getBChooseDir() {
+    return bChooseDir;
   }
 }
