@@ -56,14 +56,15 @@ public class Blobs extends Composite {
     
     for (int i=0; i < blobData.length; i++) {
       
-      String link = "<a target=\"_blank\" href=\"/serve?blob-key=" + blobData[i].getKey() + "\">Download</a>";
+      String link = "<a target=\"_blank\" href=\"" + blobData[i].getPath() + "\">Download</a>";
+      String link2 = "<a target=\"_blank\" href=\"" + blobData[i].getPath() + "\">" + blobData[i].getPath() + "</a>";
       
       HTML na = new HTML(link);
       HTML fn = new HTML(blobData[i].getFilename());
       HTML si = new HTML(Long.toString(blobData[i].getSize()));
       HTML ct = new HTML(blobData[i].getContentType());
       HTML cr = new HTML(blobData[i].getCreation().toGMTString());
-      HTML pa = new HTML(blobData[i].getPath());
+      HTML pa = new HTML(link2);
       
       DeleteWidget dw = new DeleteWidget(blobData[i].getKey());
       

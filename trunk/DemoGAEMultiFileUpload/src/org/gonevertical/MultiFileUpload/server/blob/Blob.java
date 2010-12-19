@@ -17,6 +17,14 @@ public class Blob extends HttpServlet {
   private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 
   public void doPost(HttpServletRequest request, HttpServletResponse res) throws ServletException, IOException {
+    
+    String accessToken = request.getParameter("AccessToken");
+    String accessSecret = request.getParameter("AccessSecret");
+    if (accessToken == null || 
+        accessToken.trim().length() == 0 || 
+        accessSecret == null || accessSecret.trim().length() == 0) {
+      return;
+    }
 
     res.setContentType("text/html");
 
@@ -26,7 +34,15 @@ public class Blob extends HttpServlet {
 
   }
 
-  public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+  public void doGet(HttpServletRequest request, HttpServletResponse res) throws ServletException, IOException {
+    
+    String accessToken = request.getParameter("AccessToken");
+    String accessSecret = request.getParameter("AccessSecret");
+    if (accessToken == null || 
+        accessToken.trim().length() == 0 || 
+        accessSecret == null || accessSecret.trim().length() == 0) {
+      return;
+    }
 
     res.setContentType("text/html");
 

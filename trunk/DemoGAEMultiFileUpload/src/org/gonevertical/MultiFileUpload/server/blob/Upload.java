@@ -23,6 +23,14 @@ public class Upload extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse res) throws ServletException, IOException {
 	  
+    String accessToken = request.getParameter("AccessToken");
+    String accessSecret = request.getParameter("AccessSecret");
+    if (accessToken == null || 
+        accessToken.trim().length() == 0 || 
+        accessSecret == null || accessSecret.trim().length() == 0) {
+      return;
+    }
+	  
 	  // TODO STOP Vandalism, b/c there is no security on this example for simplicity
 	  if (1==1) {
 	    return;
