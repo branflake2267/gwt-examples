@@ -17,9 +17,17 @@ public class Serve extends HttpServlet {
 	
 	private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 
-	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse res) throws IOException {
+    
+	  String accessToken = request.getParameter("AccessToken");
+    String accessSecret = request.getParameter("AccessSecret");
+    if (accessToken == null || 
+        accessToken.trim().length() == 0 || 
+        accessSecret == null || accessSecret.trim().length() == 0) {
+      return;
+    }
 	  
-	  String path = req.getPathInfo();
+	  String path = request.getPathInfo();
 	  path = "/serve" + path;
 
 	  ServerPersistence sp = new ServerPersistence();

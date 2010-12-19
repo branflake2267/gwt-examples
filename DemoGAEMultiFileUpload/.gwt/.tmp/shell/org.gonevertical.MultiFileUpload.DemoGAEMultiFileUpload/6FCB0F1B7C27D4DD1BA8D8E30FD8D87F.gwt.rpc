@@ -1,0 +1,14 @@
+com.google.gwt.i18n.client.impl.DateRecord, true, true, false, false, com.google.gwt.i18n.client.impl.DateRecord/112389920, 112389920
+com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException, true, true, true, true, com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException/3936916533, 3936916533
+java.lang.Exception, true, false, true, false, java.lang.Exception/1920171873, 1920171873
+java.lang.RuntimeException, true, false, true, false, java.lang.RuntimeException/515124647, 515124647
+java.lang.String, true, true, true, true, java.lang.String/2004016611, 2004016611
+java.lang.Throwable, true, false, true, false, java.lang.Throwable/2953622131, 2953622131
+java.sql.Date, true, true, false, false, java.sql.Date/3996530531, 3996530531
+java.sql.Time, true, true, false, false, java.sql.Time/831929183, 831929183
+java.sql.Timestamp, true, true, false, false, java.sql.Timestamp/1769758459, 1769758459
+java.util.Date, true, true, false, false, java.util.Date/1659716317, 1659716317
+org.gonevertical.MultiFileUpload.client.BlobData, true, true, false, false, org.gonevertical.MultiFileUpload.client.BlobData/2911387166, 2911387166
+org.gonevertical.MultiFileUpload.client.BlobDataFilter, false, false, true, true, org.gonevertical.MultiFileUpload.client.BlobDataFilter/3848747897, 3848747897
+[Lorg.gonevertical.MultiFileUpload.client.BlobData;, true, true, false, false, [Lorg.gonevertical.MultiFileUpload.client.BlobData;/975296775, 975296775
+org.gonevertical.MultiFileUpload.client.rpc.RpcService, false, false, false, false, _, 3597914174
