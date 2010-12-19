@@ -9,6 +9,7 @@
  * [http://demogaemultifileblobupload.appspot.com/ Demo] - Multi upload demo is partially disabled b/c one could upload hundreds of files.
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/GAE_FileUpload/src/com/gonevertical/upload Applet Source] - Directory Chooser for GWT
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoGAEMultiFileUpload GWT Project Source] - GWT Project source, using the file directory chooser
+ * [http://ourvirtualtours.appspot.com/#vt_view?view=6012 Virtual Tour] - This Virtual Tours files are sitting virtually in the Blob Store. 
 
 ==Goal==
  Upload a directory recursively to GAE, then serve it virtually to the web site. GAE code space limit is 150MB, so if I put the files in big table, I can then retrieve them using a servlet, like if they where uploaded into the code space.
@@ -21,3 +22,7 @@
 
 ==Third Try==
  I then moved the entire upload process to the applet including getting the blob url. I setup a blob url servlet so I could get the url for the upload. Then I use Apache commons HttpClient,HttpCore,HttpMime libraries to do the uploading of the file which works great. This app is just an example, so all the security measures are not implemented so to try out the process.
+
+== Working Application ==
+ * [http://ourvirtualtours.appspot.com/#vt_view?view=6012 Virtual Tour] - This is a virtual tour of Diamond Head Oahu, using virtual file store in the blob store, which works great!
+ 
