@@ -24,7 +24,7 @@
  I then moved the entire upload process to the applet including getting the blob url. I setup a blob url servlet so I could get the url for the upload. Then I use Apache commons HttpClient,HttpCore,HttpMime libraries to do the uploading of the file which works great. This app is just an example, so all the security measures are not implemented so to try out the process.
 
 == Working Application ==
- I made a 360 degrees virtual tours site to host some of the pictures I have taken. I have used the blob store to virtually store the images. I use integrated google analytics tracking. I use my home grown oauth authentication system following the rules, except through rpc. I have also used the GWT maps api, which works awesome. I'm so pleased with GWT and all the possibilites with the Google apis stack.
+ I made a 360 degrees virtual tours site to host some of the pictures I have taken. I have used the blob store to virtually store the images. I use integrated google analytics tracking. I use my home grown oauth authentication system following the rules, except through rpc. I have also used the GWT maps api, which works awesome. I'm so pleased with GWT and all the possibilites with the Google apis stack. I also have integrated google Adsense into the application using an iframe and changing it during state changes of the virtual tours. Theres lots more I want to do with this site in time.
  * [http://ourvirtualtours.appspot.com/ Virtual Tours]
  * [http://ourvirtualtours.appspot.com/#vt_view?view=6012 360 Degree Virtual Tour] - This is a virtual tour of Diamond Head Oahu, using virtual file store in the blob store, which works great!
  
