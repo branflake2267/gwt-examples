@@ -3,7 +3,7 @@ package org.gonevertical.MultiFileUpload.server;
 import org.gonevertical.MultiFileUpload.client.blobs.BlobData;
 import org.gonevertical.MultiFileUpload.client.blobs.BlobDataFilter;
 import org.gonevertical.MultiFileUpload.client.rpc.RpcService;
-import org.gonevertical.MultiFileUpload.server.blob.BlobInfoJdo;
+import org.gonevertical.MultiFileUpload.server.blobs.BlobInfoJdo;
 import org.gonevertical.MultiFileUpload.server.jdo.BlobJdo;
 
 import com.google.appengine.api.blobstore.BlobKey;

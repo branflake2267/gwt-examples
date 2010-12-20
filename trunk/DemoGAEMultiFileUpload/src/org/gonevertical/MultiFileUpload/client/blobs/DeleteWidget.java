@@ -23,7 +23,8 @@ public class DeleteWidget extends Composite implements ClickHandler {
   private PushButton bDelete = new PushButton("Delete");
 
   private String blobKey;
-  
+
+
   public DeleteWidget(String blobKey) {
     this.blobKey = blobKey;
     
@@ -33,8 +34,8 @@ public class DeleteWidget extends Composite implements ClickHandler {
     
     rpc = RpcInit.init();
     
-    
-    bDelete.setEnabled(false); 
+
+    bDelete.setEnabled(false);
     
   }
   
@@ -74,6 +75,10 @@ public class DeleteWidget extends Composite implements ClickHandler {
       delete();
     }
     
+  }
+
+  public String getBlobKey() {
+    return blobKey;
   }
   
 }
