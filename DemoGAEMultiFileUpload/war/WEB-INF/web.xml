@@ -29,7 +29,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>Serve</servlet-name>
-    <servlet-class>org.gonevertical.core.server.db.blobs.Servlet_Serve</servlet-class>
+    <servlet-class>org.gonevertical.MultiFileUpload.server.blobs.Servlet_Serve</servlet-class>
   </servlet>
   
   <servlet-mapping>
@@ -38,7 +38,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>Upload</servlet-name>
-    <servlet-class>org.gonevertical.core.server.db.blobs.Servlet_Upload</servlet-class>
+    <servlet-class>org.gonevertical.MultiFileUpload.server.blobs.Servlet_Upload</servlet-class>
   </servlet>
     
   <servlet-mapping>
@@ -47,6 +47,6 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>Blob</servlet-name>
-    <servlet-class>org.gonevertical.core.server.db.blobs.Servlet_Blob</servlet-class>
+    <servlet-class>org.gonevertical.MultiFileUpload.server.blobs.Servlet_Blob</servlet-class>
   </servlet>
 </web-app>
