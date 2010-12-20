@@ -6,7 +6,6 @@
 	<classpathentry kind="lib" path="/System/Library/Java/Support/Deploy.bundle/Contents/Resources/Java/plugin.jar"/>
 	<classpathentry kind="lib" path="lib/httpcore-4.1.jar"/>
 	<classpathentry kind="lib" path="lib/httpcore-nio-4.1.jar"/>
-	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/httpclient-4.1-beta1.jar"/>
 	<classpathentry kind="lib" path="lib/httpclient-cache-4.1-beta1.jar"/>
 	<classpathentry kind="lib" path="lib/httpmime-4.1-beta1.jar"/>
