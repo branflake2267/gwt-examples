@@ -2,35 +2,12 @@
 <body>
 
 <applet 
-archive="SSignedApplet.jar,lib/commons-logging-1.1.1.jar,lib/httpclient-4.1-beta1.jar,lib/httpcore-4.1.jar,lib/httpcore-nio-4.1.jar,lib/httpmime-4.1-beta1.jar" 
-code="com.gonevertical.upload.FileUploadApplet"
+code="com.gonevertical.upload.FileUploadApplet" 
+archive="FileUpload.jar,lib/httpclient-4.1-beta1.jar,lib/httpcore-4.1.jar,lib/httpmime-4.1-beta1.jar,lib/httpcore-nio-4.1.jar" 
 jnlp_href="FileUpload.jnlp" 
-width="600" 
-height="200" 
-id="applet" MAYSCRIPT>
+width="700" height="300" id="applet">
+	<param name="jnlp_href" value="FileUpload.jnlp">
 </applet>
-
-<br/>
-<br/>
-
-<script>
-	function test() {
-		var app = document.getElementById("applet");
-	    app.test();   
-	}
-	
-	function fromJava() {
-		alert("from Java");
-	}
-	
-	function setSelectedFiles(files) {
-		alert("# files in dir: " + files.length);
-	}
-</script>
-
-<!--
-<input type="button" value="click me" onclick="test();"/>
--->
 
 </body>
 </html>

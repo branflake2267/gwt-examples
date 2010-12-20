@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jnlp spec="1.0+" codebase="" href="">
+<jnlp spec="1.0+" codebase="http://127.0.0.1:8888" href="FileUpload.jnlp">
     <information>
-        <title>FileUplaod</title>
-        <vendor>GoneVertical LLC</vendor>
+        <title>GAE File Uplaod</title>
+        <vendor>Gone Vertical LLC</vendor>
+        <offline-allowed />
     </information>
     <resources>
-        <!-- Application Resources -->
-        <j2se version="1.6+"
-              href="http://java.sun.com/products/autodl/j2se" />
+        <j2se version="1.6+" />
+        <jar href="lib/httpclient-4.1-beta1.jar" />
+        <jar href="lib/httpcore-4.1.jar" />
+        <jar href="lib/httpmime-4.1-beta1.jar" />
+        <jar href="lib/httpcore-nio-4.1.jar" />
         <jar href="FileUpload.jar" main="true" />
-
     </resources>
     <applet-desc 
-         name="FileUpload"
+         name="GAE File Upload"
          main-class="com.gonevertical.upload.FileUploadApplet"
-         width="400"
-         height="400">
+         width="700"
+         height="200">
      </applet-desc>
-     <update check="background"/>
+     <security>
+         <all-permissions />
+	 </security>
 </jnlp>	
