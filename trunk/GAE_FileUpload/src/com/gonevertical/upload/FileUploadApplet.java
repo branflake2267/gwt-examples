@@ -20,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -63,7 +64,7 @@ public class FileUploadApplet extends JApplet {
   public String accessSecret = "accessSecretTest";
   private JLabel lbAccessToken;
   private JLabel lbAccessSecret;
-  private JButton bChooseDir;
+  private JButton bChooseDir; 
 
   public FileUploadApplet() {
     getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
@@ -167,7 +168,7 @@ public class FileUploadApplet extends JApplet {
   }
 
   public void process(String f) {
-
+    
     if (f == null || f.trim().length() == 0) {
       return;
     }
@@ -175,7 +176,7 @@ public class FileUploadApplet extends JApplet {
     reset();
 
     File file = new File(f);
-
+    
     if (file.isDirectory() == false) {
       addFile(file);
       finish();
@@ -241,15 +242,15 @@ public class FileUploadApplet extends JApplet {
     if (jfc == null) {
       jfc = new JFileChooser();
       jfc.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent evt) {
 
-          String acction = e.getActionCommand();
-          if (acction.equals("ApproveSelection") == false) {
+          JFileChooser chooser = (JFileChooser) evt.getSource();
+          if (JFileChooser.CANCEL_SELECTION.equals(evt.getActionCommand())) {
             return;
           }
-
+          
           dir = jfc.getSelectedFile();
-
+          
           if (dir == null) {
             return;
           }
@@ -274,6 +275,7 @@ public class FileUploadApplet extends JApplet {
       this.finalize();
     } catch (Throwable e) {
       e.printStackTrace();
+      dialog(e.toString());
     }
   }
 
@@ -281,90 +283,106 @@ public class FileUploadApplet extends JApplet {
     try {
       this.finalize();
     } catch (Throwable e) {
+      dialog(e.toString());
       e.printStackTrace();
     }
   }
 
   private void upload(String bloburl, File file) {
-    if (url.contains("127.") == true) {
-      bloburl = url + bloburl;
-    }
-    
-    MultipartEntity entity = new MultipartEntity();
-    
-    FileBody uploadFilePart = new FileBody(file);
-    entity.addPart("File", uploadFilePart);
-
     try {
-      entity.addPart("FileName", new StringBody(file.getName(), Charset.forName("UTF-8")));
-    } catch (UnsupportedEncodingException e1) {
-      e1.printStackTrace();
-    }
+      if (url.contains("127.") == true) {
+        bloburl = url + bloburl;
+      }
+      
+      MultipartEntity entity = new MultipartEntity();
+      
+      FileBody uploadFilePart = new FileBody(file);
+      entity.addPart("File", uploadFilePart);
 
-    try {
-      entity.addPart("FilePath", new StringBody(file.getAbsolutePath(), Charset.forName("UTF-8")));
-    } catch (UnsupportedEncodingException e1) {
-      e1.printStackTrace();
-    }
-
-    try {
-      entity.addPart("DirectorySelected", new StringBody(getDirectorySelected(), Charset.forName("UTF-8")));
-    } catch (UnsupportedEncodingException e1) {
-      e1.printStackTrace();
-    }
-
-    try {
-      entity.addPart("VirtualPath", new StringBody(getVirtualPath(), Charset.forName("UTF-8")));
-    } catch (UnsupportedEncodingException e1) {
-      e1.printStackTrace();
-    }
-
-    if (accessToken != null) {
       try {
-        entity.addPart("AccessToken", new StringBody(getAccessToken(), Charset.forName("UTF-8")));
+        entity.addPart("FileName", new StringBody(file.getName(), Charset.forName("UTF-8")));
       } catch (UnsupportedEncodingException e1) {
         e1.printStackTrace();
+        dialog(e1.toString());
       }
-    }
 
-    if (accessSecret != null) {
       try {
-        entity.addPart("AccessSecret", new StringBody(getAccessSecret(), Charset.forName("UTF-8")));
+        entity.addPart("FilePath", new StringBody(file.getAbsolutePath(), Charset.forName("UTF-8")));
       } catch (UnsupportedEncodingException e1) {
         e1.printStackTrace();
+        dialog(e1.toString());
       }
-    }
-    
 
-    HttpClient client = new DefaultHttpClient();
-    client.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
-    HttpPost post = new HttpPost(bloburl);
-    post.setEntity(entity);
-
-    System.out.println("executing request " + post.getRequestLine());
-
-    HttpResponse response = null;
-    try {
-      response = client.execute(post);
-    } catch (ClientProtocolException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    HttpEntity resEntity = response.getEntity();
-
-    System.out.println(response.getStatusLine());
-    if (resEntity != null) {
       try {
-        System.out.println(EntityUtils.toString(resEntity));
-      } catch (ParseException e) {
+        entity.addPart("DirectorySelected", new StringBody(getDirectorySelected(), Charset.forName("UTF-8")));
+      } catch (UnsupportedEncodingException e1) {
+        e1.printStackTrace();
+        dialog(e1.toString());
+      }
+
+      try {
+        entity.addPart("VirtualPath", new StringBody(getVirtualPath(), Charset.forName("UTF-8")));
+      } catch (UnsupportedEncodingException e1) {
+        e1.printStackTrace();
+        dialog(e1.toString());
+      }
+
+      if (accessToken != null) {
+        try {
+          entity.addPart("AccessToken", new StringBody(getAccessToken(), Charset.forName("UTF-8")));
+        } catch (UnsupportedEncodingException e1) {
+          e1.printStackTrace();
+          dialog(e1.toString());
+        }
+      }
+
+      if (accessSecret != null) {
+        try {
+          entity.addPart("AccessSecret", new StringBody(getAccessSecret(), Charset.forName("UTF-8")));
+        } catch (UnsupportedEncodingException e1) {
+          e1.printStackTrace();
+          dialog(e1.toString());
+        }
+      }
+      
+
+      HttpClient client = new DefaultHttpClient();
+      client.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+      HttpPost post = new HttpPost(bloburl);
+      post.setEntity(entity);
+
+      System.out.println("executing request " + post.getRequestLine());
+
+      HttpResponse response = null;
+      try {
+        response = client.execute(post);
+      } catch (ClientProtocolException e) {
         e.printStackTrace();
+        dialog(e.toString());
       } catch (IOException e) {
         e.printStackTrace();
+        dialog(e.toString());
       }
-    }
+      HttpEntity resEntity = response.getEntity();
 
-    client.getConnectionManager().shutdown();
+      System.out.println(response.getStatusLine());
+      if (resEntity != null) {
+        try {
+          System.out.println(EntityUtils.toString(resEntity));
+        } catch (ParseException e) {
+          e.printStackTrace();
+          dialog(e.toString());
+        } catch (IOException e) {
+          e.printStackTrace();
+          dialog(e.toString());
+        }
+      }
+
+      client.getConnectionManager().shutdown();
+    } catch (Exception e) {
+      dialog(e.toString());
+      e.printStackTrace();
+    }
   }
 
   private String getAccessToken() {
@@ -377,54 +395,68 @@ public class FileUploadApplet extends JApplet {
 
   private String getBlobUrl() {
 
-    MultipartEntity entity = new MultipartEntity();
-
-    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);  
-    nameValuePairs.add(new BasicNameValuePair("AccessToken", getAccessToken()));  
-    nameValuePairs.add(new BasicNameValuePair("AccessSecret", getAccessSecret()));  
-        
-    String url = this.url + "/blob";
-
-    HttpClient client = new DefaultHttpClient();
-    client.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
-    HttpPost post = new HttpPost(url);
-    try {
-      post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-    } catch (UnsupportedEncodingException e1) {
-      e1.printStackTrace();
-    }  
-
-    System.out.println("executing request " + post.getRequestLine());
-
-    HttpResponse response = null;
-    try {
-      response = client.execute(post);
-    } catch (ClientProtocolException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    HttpEntity resEntity = response.getEntity();
-
     String s = "";
-    if (resEntity != null) {
+    try {
+      List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);  
+      nameValuePairs.add(new BasicNameValuePair("AccessToken", getAccessToken()));  
+      nameValuePairs.add(new BasicNameValuePair("AccessSecret", getAccessSecret()));  
+          
+      String url = this.url + "/blob";
+
+      HttpClient client = new DefaultHttpClient();
+      client.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+      HttpPost post = new HttpPost(url);
       try {
-        //System.out.println(EntityUtils.toString(resEntity));
-        s = EntityUtils.toString(resEntity);
-      } catch (ParseException e) {
+        post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+      } catch (UnsupportedEncodingException e1) {
+        e1.printStackTrace();
+        dialog(e1.toString());
+      }  
+      
+      System.out.println("executing request " + post.getRequestLine());
+
+      HttpResponse response = null;
+      try {
+        response = client.execute(post);
+      } catch (ClientProtocolException e) {
         e.printStackTrace();
+        dialog(e.toString());
       } catch (IOException e) {
         e.printStackTrace();
+        dialog(e.toString());
       }
-    }
+      HttpEntity resEntity = response.getEntity();
+      
+      s = "";
+      if (resEntity != null) {
+        try {
+          //System.out.println(EntityUtils.toString(resEntity));
+          s = EntityUtils.toString(resEntity);
+        } catch (ParseException e) {
+          e.printStackTrace();
+          dialog(e.toString());
+        } catch (IOException e) {
+          e.printStackTrace();
+          dialog(e.toString());
+        }
+      }
 
-    client.getConnectionManager().shutdown();
+      client.getConnectionManager().shutdown();
 
-    if (s != null) {
-      s = s.replaceAll("\n", "");
+      if (s != null) {
+        s = s.replaceAll("\n", "");
+      }
+      
+    } catch (Exception e) {
+      dialog("error: " + e.toString());
+      e.printStackTrace();
     }
     
     return s;
+  }
+  
+  public void dialog(String s) {
+    JOptionPane.showMessageDialog(null, "debug: " + s);
   }
 
   private String getVirtualPath() {
