@@ -4,6 +4,7 @@ import org.gonevertical.MultiFileUpload.client.blobs.Blobs;
 import org.gonevertical.MultiFileUpload.client.rpc.RpcInit;
 import org.gonevertical.MultiFileUpload.client.rpc.RpcServiceAsync;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
@@ -50,19 +51,12 @@ public class DirUploader extends Composite {
 
   private void setup() {
 
-    String applet = "<applet archive=\"" +
-    		"/applet/choosedir/SSignedApplet.jar," +
-    		"/applet/choosedir/lib/commons-logging-1.1.1.jar," +
-    		"/applet/choosedir/lib/httpclient-4.1-beta1.jar," +
-    		"/applet/choosedir/lib/httpcore-4.1.jar," +
-    		"/applet/choosedir/lib/httpcore-nio-4.1.jar," +
-    		"/applet/choosedir/lib/httpmime-4.1-beta1.jar\" " +
-    		"" +
+    String applet = "<applet " +
         "code=\"com.gonevertical.upload.FileUploadApplet\" " +
-        "jnlp_href=\"/applet/choosedir/FileUpload.jnlp\" " +
         "width=\"700\" " +
         "height=\"300\" " +
-        "id=\"applet\" MAYSCRIPT>" +
+        "id=\"applet\">" +
+        "  <param name=\"jnlp_href\" value=\"/FileUpload.jnlp\"> " +
         "</applet>";
     
     html.setHTML(applet);
@@ -75,7 +69,12 @@ public class DirUploader extends Composite {
       public void run() {
         String accessToken = "AccessTokenFromDirUploader";
         String accessSecret = "AccessSecretFromDirUploader";
-        setAccess(accessToken, accessSecret);
+        String url = GWT.getHostPageBaseURL();
+        if (url.matches(".*/") == true) {
+          url = url.substring(0, url.length()-1);
+        }
+        setAccess(accessToken, accessSecret, url);
+        
       }
     };
     t.schedule(2000);
@@ -87,9 +86,10 @@ public class DirUploader extends Composite {
    * @param accessToken
    * @param accessSecret
    */
-  public static native void setAccess(String accessToken, String accessSecret) /*-{
+  public static native void setAccess(String accessToken, String accessSecret, String url) /*-{
      var app = $wnd.document.getElementById("applet");
      app.setAccess(accessToken, accessSecret);
+     app.setUrl(url);
   }-*/;
 
 
