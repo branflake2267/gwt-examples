@@ -1,0 +1,2 @@
+serviceClass: org.gonevertical.MultiFileUpload.client.rpc.RpcService
+path: 3CAA995B91F7E2E54DBD183AF4FFD3B6.gwt.rpc

@@ -19,8 +19,8 @@ public class Servlet_Serve extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse res) throws IOException {
 	  
 	   // security
-    String accessToken = request.getParameter("accessToken");
-    String accessSecret = request.getParameter("accessSecret");
+    String accessToken = request.getParameter("AccessToken");
+    String accessSecret = request.getParameter("AccessSecret");
     if (accessToken == null || 
         accessToken.trim().length() == 0 || 
         accessSecret == null || accessSecret.trim().length() == 0) {

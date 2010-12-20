@@ -18,9 +18,14 @@ public class Servlet_Blob extends HttpServlet {
 
   public void doPost(HttpServletRequest request, HttpServletResponse res) throws ServletException, IOException {
 
+    
+    
     // security
-    String accessToken = request.getParameter("accessToken");
-    String accessSecret = request.getParameter("accessSecret");
+    String accessToken = request.getParameter("AccessToken");
+    String accessSecret = request.getParameter("AccessSecret");
+    
+    System.out.println("getBlob Servlet: " + accessToken + " " + accessSecret);
+    
     if (accessToken == null || 
         accessToken.trim().length() == 0 || 
         accessSecret == null || accessSecret.trim().length() == 0) {
