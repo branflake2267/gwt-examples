@@ -4,6 +4,7 @@ import org.gonevertical.MultiFileUpload.client.blobs.Blobs;
 import org.gonevertical.MultiFileUpload.client.rpc.RpcInit;
 import org.gonevertical.MultiFileUpload.client.rpc.RpcServiceAsync;
 
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
@@ -12,33 +13,34 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class DirUploader extends Composite {
-  private HTML htmlImReconfiguringThe;
   private RpcServiceAsync rpc;
   private VerticalPanel verticalPanel;
   private Blobs blobs;
   private Image image;
   private HTML htmlThisImageHis;
   private HTML html;
+  private HTML htmlnbsp_1;
+  private HTML htmlnbsp;
 
   public DirUploader() {
 
     verticalPanel = new VerticalPanel();
     initWidget(verticalPanel);
-
-    HorizontalPanel horizontalPanel = new HorizontalPanel();
-    verticalPanel.add(horizontalPanel);
-
-    htmlImReconfiguringThe = new HTML("I'll include the applet (java app), which uploads the entire directory recurively, here later for uploading to the directory. In the meantime it works good in eclipse debugger. I have to figure out how to include the external libraries.<br/>\n<br/>\n<br/>", true);
-    horizontalPanel.add(htmlImReconfiguringThe);
-    
-    htmlThisImageHis = new HTML("This image his hosted virtually in Googles Big Table, which was uploaded via the Java Applet", true);
-    verticalPanel.add(htmlThisImageHis);
     
     html = new HTML("&nbsp;", true);
     verticalPanel.add(html);
     
+    htmlnbsp = new HTML("&nbsp;", true);
+    verticalPanel.add(htmlnbsp);
+    
+    htmlThisImageHis = new HTML("This image his hosted virtually in Googles Big Table, which was uploaded via the Java Applet", true);
+    verticalPanel.add(htmlThisImageHis);
+    
     image = new Image("/serve/keystonedata/keystone1/preview.jpg");
     verticalPanel.add(image);
+    
+    htmlnbsp_1 = new HTML("&nbsp;", true);
+    verticalPanel.add(htmlnbsp_1);
     
     blobs = new Blobs();
     verticalPanel.add(blobs);
@@ -68,11 +70,28 @@ public class DirUploader extends Composite {
     rpc = RpcInit.init();
     
     blobs.getBlobsList();
+    
+    Timer t = new Timer() {
+      public void run() {
+        String accessToken = "AccessTokenFromDirUploader";
+        String accessSecret = "AccessSecretFromDirUploader";
+        setAccess(accessToken, accessSecret);
+      }
+    };
+    t.schedule(2000);
   }
 
-  public HTML getHtml() {
-    return htmlImReconfiguringThe;
-  }
+  /**
+   * interact with the applet - send it oauth access credentials
+   * 
+   * @param accessToken
+   * @param accessSecret
+   */
+  public static native void setAccess(String accessToken, String accessSecret) /*-{
+     var app = $wnd.document.getElementById("applet");
+     app.setAccess(accessToken, accessSecret);
+  }-*/;
+
 
   private void getBlobUrl(final String path) {
     rpc.getBlobStoreUrl(new AsyncCallback<String>() {

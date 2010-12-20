@@ -1,13 +1,17 @@
 package org.gonevertical.MultiFileUpload.client.blobs;
 
+import java.util.ArrayList;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class BlobDataFilter implements IsSerializable {
 
   private long start = 0;
-  private long limit = 50;
+  private long limit = 150;
   
   private String key;
+  
+  private ArrayList<String> blobKeys;
   
   public void setLimit(long start, long limit) {
     this.start = start;
@@ -37,6 +41,14 @@ public class BlobDataFilter implements IsSerializable {
   
   public String getBlobKey() {
     return key;
+  }
+
+  public void setBlobKeys(ArrayList<String> blobKeys) {
+    this.blobKeys = blobKeys;
+  }
+
+  public ArrayList<String> getBlobKeys() {
+    return blobKeys;
   }
   
   

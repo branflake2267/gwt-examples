@@ -16,7 +16,7 @@ public class BlobData implements IsSerializable  {
   
   private long size;
   
-  private String path;
+  private String path; 
   
   /**
    * init contructor - nothing to do here.
