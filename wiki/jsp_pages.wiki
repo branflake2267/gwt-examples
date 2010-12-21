@@ -9,6 +9,9 @@
 
 "virtualtours" is the project.
 {{{
+<!-- project.gwt.xml -->
+<servlet path='/test.jsp' class='org.apache.jasper.servlet.JspServlet' />
+
 <!-- WEB-INF/web.xml - configuration -->
 <servlet>
   <servlet-name>jspServlet1</servlet-name>
