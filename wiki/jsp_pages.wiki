@@ -5,9 +5,9 @@
 = JSP Page Hosting =
 
 = GWT 2.0+ GAE =
- to configure a jsp page so it will compile correctly in GWT eclipse plugin and using Google App Engine
+ For JSP to compile correctly, settings in the web.xml file have to be done so the servlet container knows how to deal with the page. 
 
- examples here. "virtualtours" is the project. like project.gwt.xml
+ "virtualtours" is the project. like project.gwt.xml
 {{{
 <!-- WEB-INF/web.xml - configuration -->
 <servlet>
