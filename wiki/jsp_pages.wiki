@@ -7,7 +7,6 @@
 = GWT 2.0+ GAE =
  For JSP to compile correctly, settings in the web.xml file have to be done so the servlet container knows how to deal with the page. 
 
- "virtualtours" is the project. like project.gwt.xml
 {{{
 <!-- WEB-INF/web.xml - configuration -->
 <servlet>
@@ -16,7 +15,7 @@
 </servlet>
 <servlet-mapping>
   <servlet-name>jspServlet1</servlet-name>
-  <url-pattern>/virtualtours/VirtualTours.jsp</url-pattern>
+  <url-pattern>/VirtualTours.jsp</url-pattern>
 </servlet-mapping>
 
 <servlet>
@@ -25,7 +24,7 @@
 </servlet>
 <servlet-mapping>
   <servlet-name>jspServlet2</servlet-name>
-  <url-pattern>/virtualtours/test.jsp</url-pattern>
+  <url-pattern>/test.jsp</url-pattern>
 </servlet-mapping>
 }}}
 
