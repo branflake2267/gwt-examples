@@ -4,7 +4,7 @@
 
 = JSP Page Hosting =
 
-== GWT 2.0+ GAE ==
+= GWT 2.0+ GAE =
  to configure a jsp page so it will compile correctly in GWT eclipse plugin and using Google App Engine
 
  examples here. "virtualtours" is the project. like project.gwt.xml
@@ -28,7 +28,7 @@
 </servlet-mapping>
 }}}
 
-== Tomcat References ==
+= Tomcat =
  * [http://tomcat.apache.org/download-55.cgi] - tomcat 5.5  (don't use tomcat 6 jasper jars yet)
 
  == Setup ==
@@ -42,7 +42,7 @@
 
 }}}
 
-== Before 1.6 Set Jsp ==
+ == Before 1.6 Set Jsp ==
 
  Add the mime type to the. This will allow jsp files to be used.
  * project > tomcat/conf/gwt/web.xml > add mime type
