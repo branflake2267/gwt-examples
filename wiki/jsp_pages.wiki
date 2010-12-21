@@ -9,6 +9,7 @@
 
  examples here. "virtualtours" is the project. like project.gwt.xml
 {{{
+<!-- WEB-INF/web.xml - configuration -->
 <servlet>
   <servlet-name>jspServlet1</servlet-name>
   <servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class>
