@@ -4,6 +4,30 @@
 
 = JSP Page Hosting =
 
+== GWT 2.0+ ==
+ to configure a jsp page so it will compile correctly in GWT eclipse plugin and using Google App Engine
+
+ examples here. "virtualtours" is the project. like project.gwt.xml
+{{{
+<servlet>
+  <servlet-name>jspServlet1</servlet-name>
+  <servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+  <servlet-name>jspServlet1</servlet-name>
+  <url-pattern>/virtualtours/VirtualTours.jsp</url-pattern>
+</servlet-mapping>
+
+<servlet>
+  <servlet-name>jspServlet2</servlet-name>
+  <servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+  <servlet-name>jspServlet2</servlet-name>
+  <url-pattern>/virtualtours/test.jsp</url-pattern>
+</servlet-mapping>
+}}}
+
  == References ==
  * [http://tomcat.apache.org/download-55.cgi] - tomcat 5.5  (don't use tomcat 6 jasper jars yet)
 
