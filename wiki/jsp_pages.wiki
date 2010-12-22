@@ -21,15 +21,6 @@
   <servlet-name>jspServlet1</servlet-name>
   <url-pattern>/virtualtours/VirtualTours.jsp</url-pattern>
 </servlet-mapping>
-
-<servlet>
-  <servlet-name>jspServlet2</servlet-name>
-  <servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class>
-</servlet>
-<servlet-mapping>
-  <servlet-name>jspServlet2</servlet-name>
-  <url-pattern>/virtualtours/test.jsp</url-pattern>
-</servlet-mapping>
 }}}
 
 = Tomcat =
