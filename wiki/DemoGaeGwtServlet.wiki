@@ -3,7 +3,7 @@
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="110" width="770" border="0" />
 
 = GWT and GAE Servlets =
- Get servlet variables like referrer and host from the GWT client.
+ Get servlet variables like referrer and host from the GWT client. Using servlets to control your home page or how the gwt application loads. You can stick in custom html with variables from the server side. You can control how your gwt loads with the servlet.
  
  * [http://demogaegwtservlet.appspot.com/ Demo] - see a gwt servlet demo here
  * [http://code.google.com/p/gwt-examples/source/browse/#svn%2Ftrunk%2FDemoGaeServlet%2Fsrc%2Forg%2Fgonevertical%2Fservlet%2Fservlets Source] - see the source for the demo
