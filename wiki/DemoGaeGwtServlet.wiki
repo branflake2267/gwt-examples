@@ -3,5 +3,5 @@
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="110" width="770" border="0" />
 
 = GWT and GAE Servlets =
- in the works
-
+ 
+ * [http://demogaegwtservlet.appspot.com/ Demo] - see a gwt servlet demo here
