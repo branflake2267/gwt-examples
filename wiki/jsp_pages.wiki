@@ -21,6 +21,11 @@
   <servlet-name>jspServlet1</servlet-name>
   <url-pattern>/virtualtours/VirtualTours.jsp</url-pattern>
 </servlet-mapping>
+
+<welcome-file-list>
+   <welcome-file>VirtualTours.html</welcome-file>
+   <welcome-file>VirtualTours.jsp</welcome-file>
+</welcome-file-list>
 }}}
 
 = Tomcat =
