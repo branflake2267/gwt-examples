@@ -5,3 +5,4 @@
 = GWT and GAE Servlets =
  
  * [http://demogaegwtservlet.appspot.com/ Demo] - see a gwt servlet demo here
+ * [http://code.google.com/p/gwt-examples/source/browse/#svn%2Ftrunk%2FDemoGaeServlet%2Fsrc%2Forg%2Fgonevertical%2Fservlet%2Fservlets Source] - see the source for the demo
