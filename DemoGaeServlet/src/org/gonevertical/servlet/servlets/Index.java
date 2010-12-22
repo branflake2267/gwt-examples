@@ -63,9 +63,9 @@ public class Index extends HttpServlet {
     
     
     
-    String ref = req.getHeader("Referer");
+    String s = req.getHeader("Host");
    
-    out.println("<input type=\"hidden\" id=\"referer\" value=\"" + ref + "\"/>");
+    out.println("<input type=\"hidden\" id=\"host\" value=\"" + s + "\"/>");
     
     out.print("</body></html>");
     
