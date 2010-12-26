@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!-- This won't work b/c it trys to use the page that it loads in, which is the iframe in gadgets (i think) -->
 <Module>
   <ModulePrefs 
     title="ShareThis Buttons" 
