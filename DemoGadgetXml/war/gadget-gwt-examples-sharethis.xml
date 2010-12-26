@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+  <ModulePrefs title="ShareThis Buttons" 
+  	author="Brandon Donnelson" 
+  	author_email="branflake2267@gmail.com" 
+  	title_url="http://code.google.com/p/gwt-examples/wiki/demogwtshare"
+  	description="Share your content easily with others."/>
+  <Content type="html">
+    <![CDATA[
+    <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+    <script type="text/javascript">stLight.options({publisher:'06ea0780-24e9-4461-8de8-ead272c60423'});</script>
+       <div align="center">
+			<span class="st_sharethis_vcount" displayText="Share"></span>
+			<span class="st_gbuzz_vcount" displayText="Share"></span>
+			<span class="st_blogger_vcount" displayText="Share"></span>
+			<span class="st_facebook_vcount" displayText="Share"></span>
+			<span class="st_twitter_vcount" displayText="Tweet"></span>
+			<span class="st_email_vcount" displayText="Email"></span>
+	  </div>
+    ]]>
+  </Content>
+</Module>
