@@ -7,7 +7,6 @@
 
  * [http://demogwtshare.appspot.com Demo] - demo google buzz and facebook share buttons.
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGwtShare/src/org/gonevertical/share/client/Share.java?r=2204 Source] - see the source
- * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGadgetXml/war/gadget-gwt-examples-sharethis.xml?r=2206 Gadget] - Gadget Xml source, so you can add it to your wiki.
 
 == Javascript Include == 
 
@@ -38,3 +37,10 @@ Google Buzz Html
     
     getHBuzz().setHTML(s);
 }}}
+
+== Gadget XML ==
+ I can't get this to work as of yet. But here is gadget include. Try 1.
+
+ * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGadgetXml/war/gadget-gwt-examples-sharethis.xml Source] - gadget xml source. (doesn't work yet)
+
+<wiki:gadget url="http://gwt-examples.googlecode.com/svn-history/trunk/DemoGadgetXml/war/gadget-gwt-examples-sharethis.xml" border="0"  width="600" height="300" />
