@@ -1,5 +1,6 @@
 #summary demo gwt share button integration
 
+<wiki:gadget url="http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGadgetXml/war/gadget-gwt-examples-sharethis.xml?r=2206" height="100" width="400" border="0" scrolling=0 />
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="100" width="740" border="0" scrolling=0 />
 
 = Reference =
