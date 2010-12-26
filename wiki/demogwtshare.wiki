@@ -6,3 +6,34 @@
  My goal is to add buttons dynamically integrated into GWT so I can add the states, instead of pages into the url link. I doing something like this on my http://c.gawkat.com
 
  * [http://demogwtshare.appspot.com Demo] - demo google buzz and facebook share buttons.
+ * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGwtShare/src/org/gonevertical/share/client/Share.java?r=2204 Source] - see the source
+
+== Javascript Include == 
+
+Google buzz javascript
+{{{
+private void setupBuzzScript() {
+    Document doc = Document.get();
+    ScriptElement script = doc.createScriptElement();
+    script.setSrc("http://www.google.com/buzz/api/button.js");
+    script.setType("text/javascript");
+    script.setLang("javascript");
+    doc.getBody().appendChild(script);
+  }
+  
+}}}
+
+Google Buzz Html
+{{{
+  String s = "<a " +
+    "href=\"http://www.google.com/buzz/post\" " +
+    "class=\"google-buzz-button\" " +
+    "title=\"Check out this GWT Share Demo\" " +
+    "data-message=\"I made this to test out some sharing buttons.\" " +
+    "data-url=\"http://demogwtshare.appspot.com\" " +
+    "data-imageurl=\"http://demogwtshare.appspot.com/images/preview.jpg\" " +
+    "data-locale=\"en\" " +
+    "data-button-style=\"normal-count\"></a>";
+    
+    getHBuzz().setHTML(s);
+}}}
