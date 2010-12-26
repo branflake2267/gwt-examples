@@ -1,3 +1,4 @@
 #summary test out wiki stuff
 
+I can't get this to work yet.
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn-history/trunk/DemoGadgetXml/war/gadget-gwt-examples-sharethis.xml" border="0"  width="600" height="300" />
