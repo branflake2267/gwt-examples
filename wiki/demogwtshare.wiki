@@ -7,6 +7,7 @@
 
  * [http://demogwtshare.appspot.com Demo] - demo google buzz and facebook share buttons.
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGwtShare/src/org/gonevertical/share/client/Share.java?r=2204 Source] - see the source
+ * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGadgetXml/war/gadget-gwt-examples-sharethis.xml?r=2206 Gadget] - Gadget Xml source, so you can add it to your wiki.
 
 == Javascript Include == 
 
