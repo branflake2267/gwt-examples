@@ -1,3 +1,3 @@
 #summary test out wiki stuff
 
-<wiki:gadget url="http://gwt-examples.googlecode.com/svn-history/r2206/trunk/DemoGadgetXml/war/gadget-gwt-examples-sharethis.xml" height="400" width="600" border="0" scrolling=0 />
+<wiki:gadget url="http://gwt-examples.googlecode.com/svn-history/trunk/DemoGadgetXml/war/gadget-gwt-examples-sharethis.xml" border="0" scrolling=0 />
