@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Module>
-  <ModulePrefs title="ShareThis Buttons" 
+  <ModulePrefs 
+    title="ShareThis Buttons" 
   	author="Brandon Donnelson" 
   	author_email="branflake2267@gmail.com" 
   	title_url="http://code.google.com/p/gwt-examples/wiki/demogwtshare"
-  	description="Share your content easily with others."/>
+  	description="Share your content easily with others." />
+    <Require feature="dynamic-height"/>
+  </ModulePrefs>
   <Content type="html">
     <![CDATA[
     <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
