@@ -2,5 +2,7 @@
 
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="100" width="740" border="0" scrolling=0 />
 
-= Introduction =
-In the works.
+= Reference =
+ My goal is to add buttons dynamically integrated into GWT so I can add the states, instead of pages into the url link. I doing something like this on my http://c.gawkat.com
+
+ * [http://demogwtshare.appspot.com Demo] - demo google buzz and facebook share buttons.
