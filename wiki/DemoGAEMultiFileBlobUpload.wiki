@@ -10,6 +10,7 @@
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/GAE_FileUpload/src/com/gonevertical/upload Applet Source] - Directory Chooser for GWT
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoGAEMultiFileUpload GWT Project Source] - GWT Project source, using the file directory chooser
  * [http://ourvirtualtours.appspot.com/#vt_view?view=6012 Virtual Tour] - This Virtual Tours files are sitting virtually in the Blob Store. 
+ * [http://code.google.com/p/gwt-examples/wiki/DemoGwtAdsene GWT Adsense Wiki] - About integrating adsense into Gawakt.com Virtual Tours site.
 
 ==Goal==
  Upload a directory recursively to GAE, then serve it virtually to the web site. GAE code space limit is 150MB, so if I put the files in big table, I can then retrieve them using a servlet, like if they where uploaded into the code space.
