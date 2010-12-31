@@ -12,6 +12,7 @@ My goal is to integrate Adsense into Java code so I coud draw or render the ad i
 == IFrame Method ==
  Its easy to do a iframe method for adsense. I load up the page with the script in it and it works fine.
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGwtAdsense/src/org/gonevertica/adsense/client/AdsWidget.java Source] - My Iframe ad widget
+ * [http://c.gawkat.com Gawkat.com] - I use it here too
 == Script Include ==
  I can't seem to get this to work yet b/c ad will erase the page and put it self on it. Google teams need to make for better Adsense integration for Applications!
 
