@@ -41,6 +41,7 @@
 == Google Docs Spreadsheet Gadget ==
  My goal was to figure out the range selection and how to integrate with Google docs spreadsheet. This gadget works in spreadsheet and you can select range.
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGwtGadgetSpreadsheet/src/org/gonevertical/demo/client/SpreadsheetGadget.java Spreadsheet Gadget Source] - Very simple gadget spreadsheet source. 
+ * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGwtGadgetSpreadsheet/src/org/gonevertical/demo/client/SpreadsheetGadgetPreferences.java Preferences for Gadget Source] - define the range preference here
 
 = Examples / Demos =
 
