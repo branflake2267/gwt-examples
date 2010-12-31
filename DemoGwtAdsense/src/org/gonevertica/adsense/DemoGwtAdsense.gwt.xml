@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='demogwtadsense'>
+
+
+  <inherits name='com.google.gwt.user.User'/>
+
+
+  <inherits name='com.google.gwt.user.theme.standard.Standard'/>
+
+
+  <entry-point class='org.gonevertica.adsense.client.DemoGwtAdsense'/>
+
+
+
+  <source path='client'/>
+
+
+
+</module>
