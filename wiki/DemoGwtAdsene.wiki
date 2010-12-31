@@ -1,0 +1,5 @@
+#summary Demo GWT Adsense Integration
+
+= How I Integrated Adsense =
+
+In the works this morning.
