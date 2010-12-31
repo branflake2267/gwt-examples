@@ -62,7 +62,7 @@ public class Layout extends Composite {
     /**
      * tell the iframe to draw the ad
      */
-    //adsWidget.draw();
+    adsWidget.draw();
     
     setupAdsenseVars();
     //setupAdsenseScript();
