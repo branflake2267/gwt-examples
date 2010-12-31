@@ -38,6 +38,10 @@
  * title_url  (suggested)
  * directory_title   (required if title contains user prefs)
 
+== Google Docs Spreadsheet Gadget ==
+ My goal was to figure out the range selection and how to integrate with Google docs spreadsheet. This gadget works in spreadsheet and you can select range.
+ * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGwtGadgetSpreadsheet/src/org/gonevertical/demo/client/SpreadsheetGadget.java Source] - gadget source
+
 = Examples / Demos =
 
 == Example of Advertising Gadget For My Wiki ==
@@ -89,7 +93,3 @@ wiki:gadget url="http://demogwtgadget.appspot.com/demogwtgadget/org.gonevertical
 <wiki:gadget url="http://demogwtjsni.appspot.com/gadget-gwt-tooltip.xml" height="100" width="400" border="1" />
 }}}
 
-
-== Google Docs Spreadsheet Gadget ==
- My goal was to figure out the range selection and how to integrate with Google docs spreadsheet. This gadget works in spreadsheet and you can select range.
- * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGwtGadgetSpreadsheet/src/org/gonevertical/demo/client/SpreadsheetGadget.java Source] - gadget source
