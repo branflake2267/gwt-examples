@@ -1,6 +1,6 @@
 #summary testing google gadgets
 
-<wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="95" width="735" border="0" />
+<wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="110" width="740" border="0" scrolling=0/>
 
 <wiki:toc max_depth="2" />
 
@@ -40,7 +40,7 @@
 
 == Google Docs Spreadsheet Gadget ==
  My goal was to figure out the range selection and how to integrate with Google docs spreadsheet. This gadget works in spreadsheet and you can select range.
- * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGwtGadgetSpreadsheet/src/org/gonevertical/demo/client/SpreadsheetGadget.java Spreadsheet Gadget Source] - gadget source
+ * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGwtGadgetSpreadsheet/src/org/gonevertical/demo/client/SpreadsheetGadget.java Spreadsheet Gadget Source] - Very simple gadget spreadsheet source. 
 
 = Examples / Demos =
 
