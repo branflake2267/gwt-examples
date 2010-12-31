@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='demogwtgadgetspreadsheet'>
+  
+  <inherits name='com.google.gwt.user.User'/>
+
+  
+  <inherits name='com.google.gwt.user.theme.standard.Standard'/>
+
+  
+  <!-- Gadget lib -->
+  <inherits name="com.google.gwt.gadgets.Gadgets" />
+
+  <!--
+  desktop entry
+  <entry-point class='org.gonevertical.demo.client.DemoGwtGadgetSpreadsheet'/> 
+  -->
+
+
+  <entry-point class='org.gonevertical.demo.client.SpreadsheetGadget'/>
+
+  <source path='client'/>
+
+
+
+</module>
