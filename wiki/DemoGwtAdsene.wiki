@@ -16,7 +16,7 @@ My goal is to integrate Adsense into Java code so I coud draw or render the ad i
 == Script Include ==
  I can't seem to get this to work yet b/c ad will erase the page and put it self on it. Google teams need to make for better Adsense integration for Applications!
 
-Script works although has bad side effect.
+ Script works although has bad side effect.
 {{{
   public static native void setupAdsenseVars() /*-{
       $wnd.google_ad_client = "ca-pub-0032065764310410";
