@@ -1,13 +1,16 @@
 package org.gonevertical.demo.client;
 
+import com.google.gwt.gadgets.client.AdsUserPreferences;
 import com.google.gwt.gadgets.client.BooleanPreference;
 import com.google.gwt.gadgets.client.StringPreference;
 import com.google.gwt.gadgets.client.UserPreferences;
+import com.google.gwt.gadgets.client.UserPreferences.PreferenceAttributes;
+import com.google.gwt.gadgets.client.UserPreferences.PreferenceAttributes.Options;
 import com.google.gwt.visualization.client.visualizations.Visualization;
 
 
 
-public interface SpreadsheetGadgetPreferences extends UserPreferences {
+public interface SpreadsheetGadgetPreferences extends UserPreferences, AdsUserPreferences {
 
   @PreferenceAttributes(display_name = "ThisWorkBolPref", default_value = "false")
   BooleanPreference workBolPref();
@@ -16,6 +19,7 @@ public interface SpreadsheetGadgetPreferences extends UserPreferences {
   @PreferenceAttributes(display_name = "Query")
   StringPreference _table_query_url();
   
-  
+  @PreferenceAttributes(display_name = "aiturl", default_value = "http://gawkat.com", options = Options.HIDDEN)
+  StringPreference aiturl();
   
 }

@@ -29,7 +29,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
     author = "Brandon Donnelson", //
     author_email = "branflake2267@gmail.com", //
     author_affiliation = "GoneVertical.org", //
-    height = 600, //
+    height = 610, //
     width = 400)
 @com.google.gwt.gadgets.client.Gadget.UseLongManifestName(false)
 @com.google.gwt.gadgets.client.Gadget.AllowHtmlQuirksMode(false)
@@ -37,16 +37,20 @@ public class SpreadsheetGadget extends Gadget<SpreadsheetGadgetPreferences> impl
     NeedsDynamicHeight, NeedsAds, NeedsGoogleAnalytics, NeedsOsapi, NeedsSetTitle, NeedsViews, 
     NeedsRpc,NeedsSetPrefs {
 
-  private GoogleAnalyticsFeature analFeature;
+  private GoogleAnalyticsFeature analyFeature;
   private AdsFeature adsFeature;
-  private DynamicHeightFeature hieghtFeature;
+  private DynamicHeightFeature heightFeature;
   private OsapiFeature osapiFeature;
   private ViewFeature viewFeature;
-  private Object titleFeature;
+  private SetTitleFeature titleFeature;
   private SetPrefsFeature setPreFeature;
   private RpcFeature rpcFeature;
-
+  
+  /**
+   * init gadget
+   */
   protected void init(SpreadsheetGadgetPreferences preferences) {
+    preferences.aiturl();
 	  
   	HTML html = new HTML("Demo GWT Gadget has loaded.");
   	
@@ -55,10 +59,12 @@ public class SpreadsheetGadget extends Gadget<SpreadsheetGadgetPreferences> impl
 	  
   	RootPanel.get().add(pWidget);
   	
+  	//analyFeature.createTracker(domainId);
+  	
   }
 
   public void initializeFeature(GoogleAnalyticsFeature feature) {
-    this.analFeature = feature;
+    this.analyFeature = feature;
   }
 
   public void initializeFeature(AdsFeature feature) {
@@ -66,11 +72,11 @@ public class SpreadsheetGadget extends Gadget<SpreadsheetGadgetPreferences> impl
   }
 
   public void initializeFeature(DynamicHeightFeature feature) {
-    this.hieghtFeature = feature;
+    this.heightFeature = feature;
   }
 
   public void initializeFeature(OsapiFeature feature) {
-    this.osapiFeature = feature;  
+    this.osapiFeature = feature;
   }
   
   public void initializeFeature(ViewFeature feature) {
