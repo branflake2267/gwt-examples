@@ -40,7 +40,7 @@
 
 == Google Docs Spreadsheet Gadget ==
  My goal was to figure out the range selection and how to integrate with Google docs spreadsheet. This gadget works in spreadsheet and you can select range.
- * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGwtGadgetSpreadsheet/src/org/gonevertical/demo/client/SpreadsheetGadget.java Source] - gadget source
+ * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGwtGadgetSpreadsheet/src/org/gonevertical/demo/client/SpreadsheetGadget.java Spreadsheet Gadget Source] - gadget source
 
 = Examples / Demos =
 
@@ -92,4 +92,3 @@ wiki:gadget url="http://demogwtgadget.appspot.com/demogwtgadget/org.gonevertical
 {{{
 <wiki:gadget url="http://demogwtjsni.appspot.com/gadget-gwt-tooltip.xml" height="100" width="400" border="1" />
 }}}
-
