@@ -8,7 +8,7 @@
  There are two ways you can get a GWT gadget to IGoogle, one through the GWT gadgets API, which is better. The second is to include a standalone module. 
 
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads.xml Source of the example on this page] - Advertising source, stored in the subversion source repository
- 
+
 == GWT Gadgets ==
  There is some serious develop going on in the source code. Not sure when the next release is.
  * [http://code.google.com/p/gwt-google-apis/wiki/GadgetsGettingStarted Google GWT Gadget Reference] - GWT Gadgets Api
@@ -88,3 +88,8 @@ wiki:gadget url="http://demogwtgadget.appspot.com/demogwtgadget/org.gonevertical
 {{{
 <wiki:gadget url="http://demogwtjsni.appspot.com/gadget-gwt-tooltip.xml" height="100" width="400" border="1" />
 }}}
+
+
+== Google Docs Spreadsheet Gadget ==
+ My goal was to figure out the range selection and how to integrate with Google docs spreadsheet. This gadget works in spreadsheet and you can select range.
+ * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGwtGadgetSpreadsheet/src/org/gonevertical/demo/client/SpreadsheetGadget.java Source] - gadget source
