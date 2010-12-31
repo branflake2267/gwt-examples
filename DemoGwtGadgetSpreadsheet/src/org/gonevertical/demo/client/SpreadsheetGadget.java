@@ -6,6 +6,7 @@ import com.google.gwt.gadgets.client.Gadget;
 import com.google.gwt.gadgets.client.Gadget.ModulePrefs;
 import com.google.gwt.gadgets.client.GadgetAds;
 import com.google.gwt.gadgets.client.GoogleAnalyticsFeature;
+import com.google.gwt.gadgets.client.GoogleAnalyticsFeature.Tracker;
 import com.google.gwt.gadgets.client.NeedsAds;
 import com.google.gwt.gadgets.client.NeedsDynamicHeight;
 import com.google.gwt.gadgets.client.NeedsGoogleAnalytics;
@@ -37,7 +38,7 @@ public class SpreadsheetGadget extends Gadget<SpreadsheetGadgetPreferences> impl
     NeedsDynamicHeight, NeedsAds, NeedsGoogleAnalytics, NeedsOsapi, NeedsSetTitle, NeedsViews, 
     NeedsRpc,NeedsSetPrefs {
 
-  private GoogleAnalyticsFeature analyFeature;
+  private Tracker tracker;
   private AdsFeature adsFeature;
   private DynamicHeightFeature heightFeature;
   private OsapiFeature osapiFeature;
@@ -46,12 +47,12 @@ public class SpreadsheetGadget extends Gadget<SpreadsheetGadgetPreferences> impl
   private SetPrefsFeature setPreFeature;
   private RpcFeature rpcFeature;
   
+  
   /**
    * init gadget
    */
   protected void init(SpreadsheetGadgetPreferences preferences) {
-    preferences.aiturl();
-	  
+   
   	HTML html = new HTML("Demo GWT Gadget has loaded.");
   	
   	VerticalPanel pWidget = new VerticalPanel();
@@ -59,12 +60,15 @@ public class SpreadsheetGadget extends Gadget<SpreadsheetGadgetPreferences> impl
 	  
   	RootPanel.get().add(pWidget);
   	
-  	//analyFeature.createTracker(domainId);
   	
+  	
+  	String eventName = "demogadgetspreadsheet";
+  	String action = "home_loaded";
+  	tracker.reportEvent(eventName, action);
   }
 
   public void initializeFeature(GoogleAnalyticsFeature feature) {
-    this.analyFeature = feature;
+    tracker = feature.createTracker("UA-2862268-9");
   }
 
   public void initializeFeature(AdsFeature feature) {
