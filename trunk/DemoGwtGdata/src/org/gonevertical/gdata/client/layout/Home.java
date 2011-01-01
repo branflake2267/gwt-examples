@@ -61,6 +61,18 @@ public class Home extends Composite {
     hAskForAccess = new HTML("&nbsp;", true);
     horizontalPanel_1.add(hAskForAccess);
     
+    VerticalPanel verticalPanel = new VerticalPanel();
+    vpMain.add(verticalPanel);
+    
+    HTML htmlnbsp = new HTML("&nbsp;", true);
+    verticalPanel.add(htmlnbsp);
+    
+    VerticalPanel verticalPanel_1 = new VerticalPanel();
+    vpMain.add(verticalPanel_1);
+    
+    HTML htmlFirstLoginTo = new HTML("First login to google. Then click ask for access, to get Google Docs acces. I'll add some document listing later.", true);
+    verticalPanel_1.add(htmlFirstLoginTo);
+    
     setup();
   }
 
