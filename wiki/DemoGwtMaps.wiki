@@ -3,6 +3,8 @@
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="96" width="740" border="0" scrolling=0/>
 
 = Demo GWT Maps =
+ The goal is to render or a map with GWT.
 
  * [http://demogwtmaps.appspot.com Demo] - Simple Maps Demo
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGWTMaps/src/org/gonevertical/demogwtmaps/client/Demo1.java Source] - find the source here
+ * [http://c.gawkat.com/#vt_home c.Gawkat.com] - I use it here for my panoramic virtual tours.
