@@ -17,4 +17,6 @@ public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
     return gl.getLoginData(currentUrl);
   }
   
+  
+  
 }

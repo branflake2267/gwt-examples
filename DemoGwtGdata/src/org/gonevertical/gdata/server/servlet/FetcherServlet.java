@@ -14,6 +14,11 @@ import javax.servlet.http.*;
 
 import org.gonevertical.gdata.server.jdo.TokenStore;
 
+/**
+ * this is from google's gdata example
+ * 
+ *
+ */
 public class FetcherServlet extends HttpServlet {
   
   private UserService userService = UserServiceFactory.getUserService();
@@ -24,7 +29,7 @@ public class FetcherServlet extends HttpServlet {
 
     String sessionToken = null;
     
- // If a user is currently signed in to the application, attempt to retrieve
+    // If a user is currently signed in to the application, attempt to retrieve
     // a previously stored session token associated with that account from App
     // Engine's datastore.
     if (userService.isUserLoggedIn()) {
@@ -77,14 +82,6 @@ public class FetcherServlet extends HttpServlet {
         "process by choosing a service from the list below:</p>");
       response.getWriter().print("<ul><li><a href=\"" + requestUrl + "\">Google Documents</a></li></ul>");
     }
-    
-    
-    
-    
-    if (userService.isUserLoggedIn()) {
-      User user = userService.getCurrentUser();
-      TokenStore.addToken(user.getUserId(), sessionToken);
-    } 
     
     
   }
