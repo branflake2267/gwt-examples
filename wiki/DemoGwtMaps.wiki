@@ -7,4 +7,4 @@
 
  * [http://demogwtmaps.appspot.com Demo] - Simple Maps Demo
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGWTMaps/src/org/gonevertical/demogwtmaps/client/Demo1.java Source] - find the source here
- * [http://c.gawkat.com/#vt_home c.Gawkat.com] - I use it here for my panoramic virtual tours.
+ * [http://c.gawkat.com/#vt_home c.Gawkat.com] - I use gwt maps api here for my panoramic virtual tours.
