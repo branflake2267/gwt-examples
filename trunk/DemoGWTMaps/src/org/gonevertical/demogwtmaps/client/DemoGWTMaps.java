@@ -10,6 +10,7 @@ import com.google.gwt.maps.client.geom.LatLng;
 import com.google.gwt.maps.client.overlay.Marker;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -26,6 +27,8 @@ public class DemoGWTMaps implements EntryPoint {
     
     VerticalPanel vp = new VerticalPanel();
     vp.add(d1);
+    vp.setWidth("100%");
+    vp.setCellHorizontalAlignment(d1, HorizontalPanel.ALIGN_CENTER);
     
     RootPanel.get().add(vp);
     
