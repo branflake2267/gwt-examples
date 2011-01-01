@@ -2,6 +2,7 @@ package org.gonevertical.demogwtmaps.client;
 
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.maps.client.InfoWindowContent;
+import com.google.gwt.maps.client.MapType;
 import com.google.gwt.maps.client.MapWidget;
 import com.google.gwt.maps.client.Maps;
 import com.google.gwt.maps.client.control.LargeMapControl;
@@ -29,7 +30,7 @@ public class Demo1 extends Composite {
   
   public void draw() {
     
-    Maps.loadMapsApi("", "2", false, new Runnable() {
+    Maps.loadMapsApi("ABQIAAAAoVxd5Qo5vFe3MnANAR_5IhRYx8axsN4AsyKitnhUfALC-LKhAxSZDF7IXgIu8dKxMD0q3HFZZusQvQ", "2", false, new Runnable() {
       public void run() {
         buildUi();
       }
@@ -43,9 +44,12 @@ public class Demo1 extends Composite {
 
     final MapWidget map = new MapWidget(cawkerCity, 2);
     map.setSize("500PX", "500px");
+    map.setUIToDefault();
+    map.addMapType(MapType.getHybridMap());
+    map.setCurrentMapType(MapType.getHybridMap());
     
     // Add some controls for the zoom level
-    map.addControl(new LargeMapControl());
+    //map.addControl(new LargeMapControl());
 
     // Add a marker
     map.addOverlay(new Marker(cawkerCity));
