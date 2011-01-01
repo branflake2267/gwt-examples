@@ -25,7 +25,7 @@ public class FetcherServlet extends HttpServlet {
 
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Initialize a client to talk to Google Data API services.
-    DocsService client = new DocsService("google-feedfetcher-v1");
+    DocsService client = new DocsService("demogwtgdata.appspot.com");
 
     String sessionToken = null;
     
