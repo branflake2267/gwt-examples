@@ -7,4 +7,4 @@
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGwtGdata/src/org/gonevertical/gdata/server/servlet/FetcherServlet.java Source] - Find the source here.
 
 = In the works =
- I got the authentication working and the code is ready for getting the feed.
+ I got the authentication working and the code is ready for getting the feed. You can see in the demo how the authentication steps work. In the code, look at the servlet. It registers the token needed to access the docs feed. I'll add more later.
