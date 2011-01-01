@@ -26,6 +26,7 @@ public class Home extends Composite {
   private boolean loggedIn;
   private LoginData loginData;
   private HTML hNick;
+  private HTML hAskForAccess;
 
   public Home() {
     
@@ -56,6 +57,9 @@ public class Home extends Composite {
     
     HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
     vp.add(horizontalPanel_1);
+    
+    hAskForAccess = new HTML("&nbsp;", true);
+    horizontalPanel_1.add(hAskForAccess);
     
     setup();
   }
@@ -97,6 +101,8 @@ public class Home extends Composite {
     String create = "<a href=\"" + url + "\">Create Account</a>";
     h1.setHTML(signIn);
     h2.setHTML(create);
+    
+    hAskForAccess.setHTML("&nbsp;");
   }
 
   private void drawLoggedIn() {
@@ -105,6 +111,9 @@ public class Home extends Composite {
     String logOut = "<a href=\"" + url + "\">Sign out</a>";
     h1.setHTML(nick);
     h2.setHTML(logOut);
+    
+    String s = "<a href=\"/askforaccess\">Ask for Docs Access</a>";
+    hAskForAccess.setHTML(s);
   }
   
   
@@ -116,5 +125,8 @@ public class Home extends Composite {
   }
   public HTML getHNick() {
     return hNick;
+  }
+  public HTML getHAskForAccess() {
+    return hAskForAccess;
   }
 }
