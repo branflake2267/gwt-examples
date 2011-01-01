@@ -23,21 +23,13 @@
   
   
   <servlet>
-    <servlet-name>Step1</servlet-name>
-    <servlet-class>org.gonevertical.gdata.server.servlet.step1.FetcherServlet</servlet-class>
+    <servlet-name>AskForAccess</servlet-name>
+    <servlet-class>org.gonevertical.gdata.server.servlet.FetcherServlet</servlet-class>
   </servlet>
-  <servlet>
-    <servlet-name>Step2</servlet-name>
-    <servlet-class>org.gonevertical.gdata.server.servlet.step2.FetcherServlet</servlet-class>
-  </servlet>
+  <servlet-mapping>
+    <servlet-name>AskForAccess</servlet-name>
+    <url-pattern>/askforaccess</url-pattern>
+  </servlet-mapping>
 
-  <servlet-mapping>
-    <servlet-name>Step1</servlet-name>
-    <url-pattern>/step1</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>Step2</servlet-name>
-    <url-pattern>/step2</url-pattern>
-  </servlet-mapping>
 
 </web-app>
