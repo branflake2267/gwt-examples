@@ -24,7 +24,7 @@ public class DemoGwtGdata implements EntryPoint {
     
     RootPanel.get().add(vp);
    
-    //bdgwtexamples@gmail.com brandon~1
+    
   }
   
 }
