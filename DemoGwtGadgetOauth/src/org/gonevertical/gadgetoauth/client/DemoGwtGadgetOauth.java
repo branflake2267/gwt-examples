@@ -14,7 +14,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
     author_affiliation = "http://gwt-examples.googlecode.com")
 @com.google.gwt.gadgets.client.Gadget.UseLongManifestName(false)
 @com.google.gwt.gadgets.client.Gadget.AllowHtmlQuirksMode(false)
-@com.google.gwt.gadgets.client.Gadget.InjectContent(files="OAuth.txt")
+@com.google.gwt.gadgets.client.Gadget.InjectModulePrefs(files="OAuth.txt")
+@com.google.gwt.gadgets.client.Gadget.InjectContent(files="")
 public class DemoGwtGadgetOauth extends Gadget<GadgetPreferences> {
 
   protected void init(GadgetPreferences preferences) {
