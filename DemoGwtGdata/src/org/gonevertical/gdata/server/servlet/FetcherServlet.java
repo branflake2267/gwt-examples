@@ -24,6 +24,7 @@ public class FetcherServlet extends HttpServlet {
   private UserService userService = UserServiceFactory.getUserService();
 
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    
     // Initialize a client to talk to Google Data API services.
     DocsService client = new DocsService("demogwtgdata.appspot.com");
 
@@ -78,8 +79,7 @@ public class FetcherServlet extends HttpServlet {
 
       // Write AuthSub URL to response
       response.getWriter().print("<h3>A Google Data session token could not be found for your account.</h3>");
-      response.getWriter().print("<p>In order to see your data, you must first authorize access to your personal feeds. Start this " +
-        "process by choosing a service from the list below:</p>");
+      response.getWriter().print("<p>In order to see your data, you must first authorize access to your personal feeds. Start this process by choosing a service from the list below:</p>");
       response.getWriter().print("<ul><li><a href=\"" + requestUrl + "\">Google Documents</a></li></ul>");
     }
     
