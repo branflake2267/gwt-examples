@@ -1,6 +1,6 @@
   
 <!-- shindig oauth popup handling code -->
-<script src="http://gwt-examples.googlecode.com/svn/trunk/DemoGwtGadgetOauth/war/popup.js"></script>
+<script src="popup.js"></script>
 
 
   <style>
@@ -92,8 +92,11 @@
       params[gadgets.io.RequestParameters.OAUTH_USE_TOKEN] = "always";
       params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.GET;
 
+      // function (response) is callback
       gadgets.io.makeRequest(url, function (response) {
-        if (response.oauthApprovalUrl) {
+    	  
+        if (response.oauthApprovalUrl) { // this should trigger on page 401 error
+        	
           // Create the popup handler. The onOpen function is called when the user
           // opens the popup window. The onClose function is called when the popup
           // window is closed.
@@ -120,8 +123,12 @@
             // The response.oauthError and response.oauthErrorText values may help debug
             // problems with your gadget.
             var main = document.getElementById('main');
-            var err = document.createTextNode('OAuth error: ' +
-              response.oauthError + ': ' + response.oauthErrorText);
+            var err = document.createTextNode(
+            		'OAuth error: ' + 
+            		' oauthError: ' + response.oauthError + 
+            		' oauthErrorText: ' + response.oauthErrorText + 
+            		' oauthApprovalUrl: ' + response.oauthApprovalUrl + 
+            		' responseToString: ' + response.toString());
             main.appendChild(err);
             showOneSection('main');
         }
