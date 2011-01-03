@@ -1,6 +1,6 @@
   
 <!-- shindig oauth popup handling code -->
-<script src="popup.js"></script>
+<script src="http://demogwtgadgetoauth.appspot.com/demogwtgadgetoauth/popup.js"></script>
 
 
   <style>
@@ -127,8 +127,7 @@
             		'OAuth error: ' + 
             		' oauthError: ' + response.oauthError + 
             		' oauthErrorText: ' + response.oauthErrorText + 
-            		' oauthApprovalUrl: ' + response.oauthApprovalUrl + 
-            		' responseToString: ' + response.toString());
+            		' oauthApprovalUrl: ' + response.oauthApprovalUrl);
             main.appendChild(err);
             showOneSection('main');
         }

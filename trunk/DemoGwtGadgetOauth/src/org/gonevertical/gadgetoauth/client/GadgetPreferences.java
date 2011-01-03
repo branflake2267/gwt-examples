@@ -1,7 +1,6 @@
 package org.gonevertical.gadgetoauth.client;
 
 import com.google.gwt.gadgets.client.BooleanPreference;
-import com.google.gwt.gadgets.client.Gadget.ModulePrefs;
 import com.google.gwt.gadgets.client.UserPreferences;
 
 public interface GadgetPreferences extends UserPreferences {
