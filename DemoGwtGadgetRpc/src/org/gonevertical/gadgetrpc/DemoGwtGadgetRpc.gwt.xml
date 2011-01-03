@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='demogwtgadgetrpc'>
+
+  
+  <inherits name='com.google.gwt.user.User'/>
+
+
+  <inherits name='com.google.gwt.user.theme.standard.Standard'/>
+
+  <inherits name="com.google.gwt.gadgets.Gadgets"/> 
+
+  <entry-point class='org.gonevertical.gadgetrpc.client.GadgetRpc'/>
+
+
+  <source path='client'/>
+  
+  
+  
+
+
+</module>
