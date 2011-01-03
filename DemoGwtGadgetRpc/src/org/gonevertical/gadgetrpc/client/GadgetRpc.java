@@ -22,7 +22,7 @@ public class GadgetRpc extends Gadget<GadgetRpcPreferences> implements NeedsLock
 
   protected void init(GadgetRpcPreferences preferences) {
     
-    HTML html = new HTML("Demo GWT Gadget has loaded. v1");
+    HTML html = new HTML("Demo GWT Gadget has loaded. v6");
     
     Home home = new Home();
     home.setWidth("600px");
