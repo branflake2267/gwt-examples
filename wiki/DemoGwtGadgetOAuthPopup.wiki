@@ -8,8 +8,7 @@
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGwtOAuthPopUp/src/org/gonevertical/demogwtoauthpopup/client/DemoGwtOAuthPopUp.java Source] - Source is here.
 
 = Demo Gadget Below =
-
-Use this for the demo. It will ask for access to your blogs list. I don't do any nefarious activity with it. Find the gadget source above.
+ Use this for the demo. It will ask for access to your blogs list. I don't do any nefarious activity with it. Find the gadget source above.
 {{{
   http://demogwtgadgetoauthpopup.appspot.com/demogwtoauthpopup/DemoGwtOAuthPopUp.gadget.xml
 }}}
