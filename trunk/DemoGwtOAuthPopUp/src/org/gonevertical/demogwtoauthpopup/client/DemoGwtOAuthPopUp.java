@@ -48,8 +48,8 @@ public class DemoGwtOAuthPopUp extends Gadget<GadgetPreferences> implements Need
     VerticalPanel pWidget = new VerticalPanel();
     pWidget.add(vpContent);
     pWidget.add(h1);
-    pWidget.add(h2);
     RootPanel.get().add(pWidget);
+    RootPanel.get().add(h2);
     
     // lets try to get some data
     makeRequest(false);
