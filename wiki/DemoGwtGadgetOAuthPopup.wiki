@@ -1,0 +1,8 @@
+#summary 100% GWT Gadget With OAuth Popup
+
+= Demo Gadget Using OAuth With Grant Popup =
+ My Goal was to use 100% GWT to make a Gadget accessing GData.
+
+ * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGwtOAuthPopUp/src/org/gonevertical/demogwtoauthpopup/client/DemoGwtOAuthPopUp.java Source] - Source is here.
+
+= Demo Gadget Below =
