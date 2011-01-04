@@ -9,6 +9,9 @@
 
 = Demo Gadget Below =
  Use this for the demo. It will ask for access to your blogs list. I don't do any nefarious activity with it. Find the gadget source above.
+
+ <a href="http://www.google.com/ig/adde?moduleurl=http://demogwtgadgetoauthpopup.appspot.com/demogwtoauthpopup/DemoGwtOAuthPopUp.gadget.xml"><img src="http://buttons.googlesyndication.com/fusion/add.gif" style="width:104px; height:17px;border:0px;" alt="Add to iGoogle" /></a>
 {{{
   http://demogwtgadgetoauthpopup.appspot.com/demogwtoauthpopup/DemoGwtOAuthPopUp.gadget.xml
 }}}
+ 
