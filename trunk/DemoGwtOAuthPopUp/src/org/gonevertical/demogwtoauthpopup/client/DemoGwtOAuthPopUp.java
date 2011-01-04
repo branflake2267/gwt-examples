@@ -32,23 +32,32 @@ public class DemoGwtOAuthPopUp extends Gadget<GadgetPreferences> implements Need
 
   private VerticalPanel vpContent = new VerticalPanel();
   
+  /**
+   * gadget initialization, then lets start a makerequest to get some data
+   */
   protected void init(GadgetPreferences preferences) {
     
-    HTML html = new HTML("Demo GWT Gadget has loaded. v19");
-    
+    // some simple ui
+    HTML html = new HTML("Demo GWT Gadget has loaded. v21");
     VerticalPanel pWidget = new VerticalPanel();
     pWidget.add(vpContent);
     pWidget.add(html);
-    
     RootPanel.get().add(pWidget);
     
+    // lets try to get some data
     makeRequest();
   }
 
+  /**
+   * if we don't have oauth
+   * 
+   * @param url
+   */
   private void drawPersonalize(final String url) {
     vpContent.clear();
-    String s = "<a>Personalize this gadget<img src=\"http://demogwtgadgetoauthpopup.appspot.com/demogwtoauthpopup/images/new.gif\"/></a>";
+    String s = "<a>Personalize this gadget&nbsp;<img src=\"http://demogwtgadgetoauthpopup.appspot.com/demogwtoauthpopup/images/new.gif\"/></a>";
     HTML h = new HTML(s);
+    h.addStyleName("demogadget_personalize");
     vpContent.add(h);
     h.addClickHandler(new ClickHandler() {
       public void onClick(ClickEvent event) {
@@ -58,50 +67,75 @@ public class DemoGwtOAuthPopUp extends Gadget<GadgetPreferences> implements Need
      
   }
 
+  /**
+   * make a request for data, and it may ask us for permission to get it
+   */
   private void makeRequest() {
     
-    ResponseReceivedHandler<String> handler = new ResponseReceivedHandler<String>() {
+    // callback
+    ResponseReceivedHandler<String> callback = new ResponseReceivedHandler<String>() {
       public void onResponseReceived(ResponseReceivedEvent<String> event) {
-        
         Response<String> response = event.getResponse();
-        
-        Window.alert("1 response. url?: " + response.getOauthApprovalUrl() + " txt: " + response.getText() + 
-            " statuscd: " + response.getStatusCode() + " oaer: " + response.getOauthError());
-        
-        if (response.getStatusCode() == 200 && response.getOauthApprovalUrl() != null) {
-          drawPersonalize(response.getOauthApprovalUrl());
-        }
-        
-        if (response.getStatusCode() == 200) {
-          //Window.alert("2 reponse == 200" + response.toString() + " d: " + response.getData().toString());
-          
-        } else {
-          if (response.getErrors() != null) {
-            String e = "";
-            JsArrayString ea = response.getErrors();
-            for (int i=0; i < response.getErrors().length(); i++) {
-              e += ea.get(i) + "\n";
-            }
-            Window.alert("errors: " + e);
-          }
-        }
-        
-        
+        processResponse(response);
       }
     };
     
+    // extended options to put in google and always oauth vars. The api needs enhancments, and may get this shortly.
     RequestOptionsExtended options = RequestOptionsExtended.newInstanceEx();
     options.setMethodType(MethodType.GET);
     options.setAuthorizationType(AuthorizationType.OAUTH);
     options.setOAuthServiceName("google");
     options.setOAuthUseToken("always");
     
+    // make request to url, that will let us in or send back an oauth approval url. This goes through the gadget proxy.
     String url = "http://www.blogger.com/feeds/default/blogs";
-    IoProvider.get().makeRequestAsText(url, handler, options);
-    
+    IoProvider.get().makeRequestAsText(url, callback, options);
   }
  
+  /**
+   * MakeRequest's callback, lets ask to personalize if no oauth url, or we shoudl have some data if its been done already.
+   * 
+   * @param response
+   */
+  protected void processResponse(Response<String> response) {
+    
+    if (response.getStatusCode() == 200 && response.getOauthApprovalUrl() != null) {
+      drawPersonalize(response.getOauthApprovalUrl());
+      
+    } else if (response.getStatusCode() == 200 && response.getOauthApprovalUrl() == null) {
+      String s = response.getData();
+      drawContent(s);
+      
+    } else if (response.getStatusCode() != 200) {
+      if (response.getErrors() != null) {
+        String s = "";
+        s += " getStatusCode(): " + response.getStatusCode() + "<br/>\n";
+        s += " getText(): " + response.getText() + "<br/>\n";
+        s += " getOauthApprovalUrl(): " + response.getOauthApprovalUrl() + "<br/>\n";
+        s += " getOauthErrorText(): " + response.getOauthErrorText() + "<br/>\n";
+        s += " getOauthError(): " + response.getOauthError() + "<br/>\n";
+        s += " getErrors(): <br/>\n";
+        JsArrayString ea = response.getErrors();
+        for (int i=0; i < response.getErrors().length(); i++) {
+          s += ea.get(i) + "<br/>\n";
+        }
+        vpContent.clear();
+        vpContent.add(new HTML(s));
+      }
+    }
+    
+  }
 
+  /**
+   * draw some data that we retrieved
+   * @param s
+   */
+  protected void drawContent(String s) {
+    s = "Your Approved to get blog data: " + s;
+    HTML h = new HTML(s);
+    vpContent.clear();
+    vpContent.add(h);
+  }
 
   /**
    * open window, then start a process to watch for it to close
