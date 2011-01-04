@@ -9,4 +9,7 @@
 
 = Demo Gadget Below =
 
-<wiki:gadget url="http://demogwtgadgetoauthpopup.appspot.com/demogwtoauthpopup/DemoGwtOAuthPopUp.gadget.xml" height="400" width="300" border="1" />
+Use this for the demo. It will ask for access to your blogs list. I don't do any nefarious activity with it. Find the gadget source above.
+{{{
+  http://demogwtgadgetoauthpopup.appspot.com/demogwtoauthpopup/DemoGwtOAuthPopUp.gadget.xml
+}}}
