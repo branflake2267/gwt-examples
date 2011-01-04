@@ -49,7 +49,8 @@ public class DemoGwtOAuthPopUp extends Gadget<GadgetPreferences> implements Need
         
         Response<String> response = event.getResponse();
         
-        Window.alert("1 response. url?: " + response.getOauthApprovalUrl() + " txt: " + response.getText() + " statuscd: " + response.getStatusCode() + " oaer: " + response.getOauthError());
+        Window.alert("1 response. url?: " + response.getOauthApprovalUrl() + " txt: " + response.getText() + 
+            " statuscd: " + response.getStatusCode() + " oaer: " + response.getOauthError());
         
         if (response.getStatusCode() == 200) {
           Window.alert("2 reponse == 200" + response.toString() + " d: " + response.getData().toString());
