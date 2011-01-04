@@ -33,6 +33,11 @@ public class DemoGwtOAuthPopUp extends Gadget<GadgetPreferences> implements Need
   private VerticalPanel vpContent = new VerticalPanel();
   
   /**
+   * lets keep track of trying 1 and 2 for makerequest
+   */
+  private boolean tryagain;
+  
+  /**
    * gadget initialization, then lets start a makerequest to get some data
    */
   protected void init(GadgetPreferences preferences) {
@@ -45,17 +50,21 @@ public class DemoGwtOAuthPopUp extends Gadget<GadgetPreferences> implements Need
     RootPanel.get().add(pWidget);
     
     // lets try to get some data
-    makeRequest();
+    makeRequest(false);
   }
 
   /**
    * if we don't have oauth
    * 
-   * @param url
+   * @param url - gdata url
    */
   private void drawPersonalize(final String url) {
+    String trya = "";
+    if (tryagain == true) {
+      trya = "Try again, you must have not granted access to this.";
+    }
     vpContent.clear();
-    String s = "<a>Personalize this gadget&nbsp;<img src=\"http://demogwtgadgetoauthpopup.appspot.com/demogwtoauthpopup/images/new.gif\"/></a>";
+    String s = "<a>Personalize this gadget&nbsp;<img src=\"http://demogwtgadgetoauthpopup.appspot.com/demogwtoauthpopup/images/new.gif\"/></a> " + trya;
     HTML h = new HTML(s);
     h.addStyleName("demogadget_personalize");
     vpContent.add(h);
@@ -70,9 +79,10 @@ public class DemoGwtOAuthPopUp extends Gadget<GadgetPreferences> implements Need
   /**
    * make a request for data, and it may ask us for permission to get it
    */
-  private void makeRequest() {
+  private void makeRequest(boolean tryagian) {
+    this.tryagain = tryagian;
     
-    // callback
+    // callback - change this handler to the data type you expect like <json return type>
     ResponseReceivedHandler<String> callback = new ResponseReceivedHandler<String>() {
       public void onResponseReceived(ResponseReceivedEvent<String> event) {
         Response<String> response = event.getResponse();
@@ -89,13 +99,14 @@ public class DemoGwtOAuthPopUp extends Gadget<GadgetPreferences> implements Need
     
     // make request to url, that will let us in or send back an oauth approval url. This goes through the gadget proxy.
     String url = "http://www.blogger.com/feeds/default/blogs";
+    // change this makeRequestAsJso - for json request. 
     IoProvider.get().makeRequestAsText(url, callback, options);
   }
  
   /**
    * MakeRequest's callback, lets ask to personalize if no oauth url, or we shoudl have some data if its been done already.
    * 
-   * @param response
+   * @param response - makerequest callback response
    */
   protected void processResponse(Response<String> response) {
     
@@ -140,7 +151,7 @@ public class DemoGwtOAuthPopUp extends Gadget<GadgetPreferences> implements Need
   /**
    * open window, then start a process to watch for it to close
    * 
-   * @param url
+   * @param url - oauth approval url
    */
   private void open(String url) {
     openWindow(url);
@@ -150,7 +161,7 @@ public class DemoGwtOAuthPopUp extends Gadget<GadgetPreferences> implements Need
   /**
    * open new window
    * 
-   * @param url
+   * @param url - oauth approval url
    * @return
    */
   private final native void openWindow(String url) /*-{
@@ -158,9 +169,9 @@ public class DemoGwtOAuthPopUp extends Gadget<GadgetPreferences> implements Need
   }-*/;
   
   /**
-   * is window still open
+   * is popup window still open
    * 
-   * @return
+   * @return - boolean
    */
   private final native boolean isWindowClosed() /*-{
     var b = false;
@@ -190,9 +201,9 @@ public class DemoGwtOAuthPopUp extends Gadget<GadgetPreferences> implements Need
    * call this when the window closes
    */
   public void setWindowClosed() {
-    Window.alert("setWindowClosed");
     
-    // TODO - did we get accesss or not
+    // lets try again - something may have been approved
+    makeRequest(true);
     
   }
   
