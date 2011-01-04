@@ -186,6 +186,7 @@ public class DemoGwtOAuthPopUp extends Gadget<GadgetPreferences> implements Need
   
   /**
    * loop over and over watching for window to close
+   * TODO - add a recursive boundary, like only check 1000 times
    */
   private void loop() {
     Timer t = new Timer() {
