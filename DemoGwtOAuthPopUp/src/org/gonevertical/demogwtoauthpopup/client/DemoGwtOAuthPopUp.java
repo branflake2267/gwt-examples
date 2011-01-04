@@ -119,7 +119,7 @@ public class DemoGwtOAuthPopUp extends Gadget<GadgetPreferences> implements Need
    * @param url
    * @return
    */
-  private final native JavaScriptObject openWindow(String url) /*-{
+  private final native void openWindow(String url) /*-{
     $wnd.winHandle = $wnd.open(url, "_blank", null);
   }-*/;
   
@@ -157,6 +157,9 @@ public class DemoGwtOAuthPopUp extends Gadget<GadgetPreferences> implements Need
    */
   public void setWindowClosed() {
     Window.alert("setWindowClosed");
+    
+    // TODO - did we get accesss or not
+    
   }
   
 }
