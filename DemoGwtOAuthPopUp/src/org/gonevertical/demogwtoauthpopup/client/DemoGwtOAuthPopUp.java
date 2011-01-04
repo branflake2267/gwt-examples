@@ -175,6 +175,7 @@ public class DemoGwtOAuthPopUp extends Gadget<GadgetPreferences> implements Need
    */
   private final native boolean isWindowClosed() /*-{
     var b = false;
+    // TODO check for undefined window
     if ($wnd.winHandle.closed == true) {
       b = true;
     }
