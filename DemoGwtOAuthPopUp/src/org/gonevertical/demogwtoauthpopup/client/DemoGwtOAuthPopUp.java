@@ -19,8 +19,8 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 @ModulePrefs(//
-    title = "Demo GWT Gadget OAuth", //
-    directory_title = "Demo GWT Gadget OAuth", //
+    title = "Demo GWT Gadget OAuth wPopup", //
+    directory_title = "Demo GWT Gadget OAuth wPopup", //
     author = "Brandon Donnelson", //
     author_email = "branflake2267@gmail.com", //
     author_affiliation = "http://gwt-examples.googlecode.com")
@@ -43,7 +43,7 @@ public class DemoGwtOAuthPopUp extends Gadget<GadgetPreferences> implements Need
   protected void init(GadgetPreferences preferences) {
     
     // some simple ui
-    HTML html = new HTML("Demo GWT Gadget has loaded. v21");
+    HTML html = new HTML("Demo GWT Gadget has loaded. v22");
     VerticalPanel pWidget = new VerticalPanel();
     pWidget.add(vpContent);
     pWidget.add(html);
