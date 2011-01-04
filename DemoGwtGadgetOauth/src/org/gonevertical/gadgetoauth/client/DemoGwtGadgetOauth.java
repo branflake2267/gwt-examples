@@ -21,7 +21,7 @@ public class DemoGwtGadgetOauth extends Gadget<GadgetPreferences> implements Nee
 
   protected void init(GadgetPreferences preferences) {
     
-    HTML html = new HTML("Demo GWT Gadget has loaded. v6");
+    HTML html = new HTML("Demo GWT Gadget has loaded. v10");
     
     VerticalPanel pWidget = new VerticalPanel();
     pWidget.add(html);
