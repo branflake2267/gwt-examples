@@ -43,10 +43,12 @@ public class DemoGwtOAuthPopUp extends Gadget<GadgetPreferences> implements Need
   protected void init(GadgetPreferences preferences) {
     
     // some simple ui
-    HTML html = new HTML("Demo GWT Gadget has loaded. v22");
+    HTML h1 = new HTML("Demo GWT Gadget has loaded. v22");
+    HTML h2 = new HTML("<a target=\"_blank\" href=\"http://code.google.com/p/gwt-examples/wiki/DemoGwtGadgetOAuthPopup\">Back To gwt-examples.googlecode.com to see more</a>");
     VerticalPanel pWidget = new VerticalPanel();
     pWidget.add(vpContent);
-    pWidget.add(html);
+    pWidget.add(h1);
+    pWidget.add(h2);
     RootPanel.get().add(pWidget);
     
     // lets try to get some data
