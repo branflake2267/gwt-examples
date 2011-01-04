@@ -3,7 +3,7 @@
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="100" width="740" border="0" scrolling=0 />
 
 = Demo Gadget Using OAuth With Grant Popup =
- My Goal was to use 100% GWT to make a Gadget accessing GData.
+ My Goal was to use 100% GWT to make a Gadget accessing GData. I use GWT to control the popup asking for access to grant privileges to the user. I have to say there is some cool opportunities using OAuth.
 
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGwtOAuthPopUp/src/org/gonevertical/demogwtoauthpopup/client/DemoGwtOAuthPopUp.java Source] - Source is here.
 
