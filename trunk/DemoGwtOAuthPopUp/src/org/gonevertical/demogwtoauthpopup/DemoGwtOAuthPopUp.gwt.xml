@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='demogwtoauthpopup'>
+
+
+  <inherits name='com.google.gwt.user.User'/>
+
+
+  <inherits name='com.google.gwt.user.theme.standard.Standard'/>
+
+  
+  <inherits name="com.google.gwt.gadgets.Gadgets"/>
+
+
+  <entry-point class='org.gonevertical.demogwtoauthpopup.client.DemoGwtOAuthPopUp'/>
+
+
+  <source path='client'/>
+
+
+
+</module>
