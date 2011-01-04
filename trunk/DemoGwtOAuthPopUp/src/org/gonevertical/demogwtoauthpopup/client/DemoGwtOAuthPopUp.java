@@ -34,7 +34,7 @@ public class DemoGwtOAuthPopUp extends Gadget<GadgetPreferences> implements Need
   
   protected void init(GadgetPreferences preferences) {
     
-    HTML html = new HTML("Demo GWT Gadget has loaded. v18");
+    HTML html = new HTML("Demo GWT Gadget has loaded. v19");
     
     VerticalPanel pWidget = new VerticalPanel();
     pWidget.add(vpContent);
@@ -47,7 +47,7 @@ public class DemoGwtOAuthPopUp extends Gadget<GadgetPreferences> implements Need
 
   private void drawPersonalize(final String url) {
     vpContent.clear();
-    String s = "<a>Personalize this gadget<img src=\"/demogwtoauthpopup/images/new.gif\"/></a>";
+    String s = "<a>Personalize this gadget<img src=\"http://demogwtgadgetoauthpopup.appspot.com/demogwtoauthpopup/images/new.gif\"/></a>";
     HTML h = new HTML(s);
     vpContent.add(h);
     h.addClickHandler(new ClickHandler() {
