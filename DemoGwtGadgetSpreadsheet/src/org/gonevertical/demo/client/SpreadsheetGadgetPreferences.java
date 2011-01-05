@@ -16,7 +16,7 @@ public interface SpreadsheetGadgetPreferences extends UserPreferences {
   BooleanPreference workBolPref();
   
   //<UserPref name="_table_query_url" display_name="Data source url" required="true"/>
-  @PreferenceAttributes(display_name = "Query")
+  @PreferenceAttributes(display_name = "Select Address Range")
   StringPreference _table_query_url();
   
   
