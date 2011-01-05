@@ -10,11 +10,6 @@
   <!-- Gadget lib -->
   <inherits name="com.google.gwt.gadgets.Gadgets" />
 
-  <!--
-  desktop entry
-  <entry-point class='org.gonevertical.demo.client.DemoGwtGadgetSpreadsheet'/> 
-  -->
-
 
   <entry-point class='org.gonevertical.demo.client.SpreadsheetGadget'/>
 
