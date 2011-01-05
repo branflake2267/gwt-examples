@@ -1,12 +1,8 @@
 package org.gonevertical.demo.client;
 
-import com.google.gwt.gadgets.client.AdsUserPreferences;
 import com.google.gwt.gadgets.client.BooleanPreference;
 import com.google.gwt.gadgets.client.StringPreference;
 import com.google.gwt.gadgets.client.UserPreferences;
-import com.google.gwt.gadgets.client.UserPreferences.PreferenceAttributes;
-import com.google.gwt.gadgets.client.UserPreferences.PreferenceAttributes.Options;
-import com.google.gwt.visualization.client.visualizations.Visualization;
 
 
 
