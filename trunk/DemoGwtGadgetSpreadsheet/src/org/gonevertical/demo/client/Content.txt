@@ -1,9 +1,0 @@
-<style>
-
-/* peronalize style link */
-.demogadget_personalize a:link {text-decoration: underline;}
-.demogadget_personalize a:visited {text-decoration: underline;}
-.demogadget_personalize a:active {text-decoration: underline;}
-.demogadget_personalize a:hover {text-decoration: underline;}
-
-</style>
