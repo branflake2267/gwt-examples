@@ -1,7 +1,5 @@
 package org.gonevertical.demo.client;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.PreAction;
-
 import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -9,7 +7,6 @@ import com.google.gwt.gadgets.client.AdsFeature;
 import com.google.gwt.gadgets.client.DynamicHeightFeature;
 import com.google.gwt.gadgets.client.Gadget;
 import com.google.gwt.gadgets.client.Gadget.ModulePrefs;
-import com.google.gwt.gadgets.client.GadgetAds;
 import com.google.gwt.gadgets.client.GoogleAnalyticsFeature;
 import com.google.gwt.gadgets.client.GoogleAnalyticsFeature.Tracker;
 import com.google.gwt.gadgets.client.NeedsAds;
@@ -26,7 +23,6 @@ import com.google.gwt.gadgets.client.io.IoProvider;
 import com.google.gwt.gadgets.client.io.MethodType;
 import com.google.gwt.gadgets.client.io.Response;
 import com.google.gwt.gadgets.client.io.ResponseReceivedHandler;
-import com.google.gwt.gadgets.client.io.ResponseReceivedHandler.ResponseReceivedEvent;
 import com.google.gwt.gadgets.client.osapi.NeedsOsapi;
 import com.google.gwt.gadgets.client.osapi.OsapiFeature;
 import com.google.gwt.gadgets.client.rpc.NeedsRpc;
