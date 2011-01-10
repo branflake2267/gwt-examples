@@ -21,7 +21,7 @@ public class Db_SpreadSheet {
   
   public void login() {
     String username = "branflake2267";
-    String password = "Hawaii*7";
+    String password = "Hawaii";
     try {
       service.setUserCredentials(username, password);
 
