@@ -31,5 +31,13 @@
     <url-pattern>/askforaccess</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>Test</servlet-name>
+    <servlet-class>org.gonevertical.gdata.server.servlet.Test</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Test</servlet-name>
+    <url-pattern>/test</url-pattern>
+  </servlet-mapping>
 
 </web-app>
