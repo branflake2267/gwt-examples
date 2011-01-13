@@ -2,7 +2,7 @@ package org.gonevertical.demo.server;
 
 import org.gonevertical.demo.client.LoginData;
 import org.gonevertical.demo.client.rpc.RpcService;
-import org.gonevertical.demo.server.jdo.AppToken;
+import org.gonevertical.demo.server.jdo.AppTokenJdo;
 import org.gonevertical.demo.server.jdo.AppTokenStore;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;

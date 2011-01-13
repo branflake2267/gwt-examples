@@ -1,9 +1,14 @@
 package org.gonevertical.demo.client.layout;
 
+import org.gonevertical.demo.client.EventManager;
 import org.gonevertical.demo.client.LoginData;
 import org.gonevertical.demo.client.rpc.RpcInit;
 import org.gonevertical.demo.client.rpc.RpcServiceAsync;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -14,9 +19,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class Home extends Composite {
-  
-  public static final int LOGGEDOUT = 1;
-  public static final int LOGGEDIN = 2;
+
   private int loginState;
   
   private HTML h1;
@@ -26,6 +29,7 @@ public class Home extends Composite {
   private LoginData loginData;
   private HTML hNick;
   private AskForAccessButton askForAccessButton;
+  private HTML hNote;
 
   public Home() {
     
@@ -69,8 +73,8 @@ public class Home extends Composite {
     VerticalPanel verticalPanel_1 = new VerticalPanel();
     vpMain.add(verticalPanel_1);
     
-    HTML htmlFirstLoginTo = new HTML("First login to google. Then click ask for access, to get Google Docs acces. I'll add some document listing later.", true);
-    verticalPanel_1.add(htmlFirstLoginTo);
+    hNote = new HTML("First login to google. Then click ask for access, to get Google Docs acces. I'll add some document listing later.", true);
+    verticalPanel_1.add(hNote);
     
     setup();
   }
@@ -80,8 +84,25 @@ public class Home extends Composite {
     
     String currentUrl = Window.Location.getPath() + Window.Location.getQueryString() + "#" + History.getToken();
     getLoginData(currentUrl);
+    
+    askForAccessButton.addChangeHandler(new ChangeHandler() {
+      public void onChange(ChangeEvent event) {
+        AskForAccessButton b = (AskForAccessButton) event.getSource();
+        int e = b.getChangeEvent();
+        if (e == EventManager.OAUTHTOKEN_RETRIEVED) {
+           setRetrieved();
+        }
+      }
+    });
+    
   }
   
+  protected void setRetrieved() {
+   
+    hNote.setHTML("Access token has been retrieved, and may be used to get data.");
+    
+  }
+
   private void getLoginData(String currentUrl) {
     rpc.getLoginData(currentUrl, new AsyncCallback<LoginData>() {
       public void onSuccess(LoginData loginData) {
@@ -97,10 +118,10 @@ public class Home extends Composite {
     this.loginData = loginData;
     
     if (loginData == null || loginData.getGoogleLoggedIn() == false) {
-      loginState = LOGGEDOUT;
+      loginState = EventManager.LOGGEDOUT;
       drawLoggedOut();
     } else {
-      loginState = LOGGEDIN;
+      loginState = EventManager.LOGGEDIN;
       drawLoggedIn();
     }
 
@@ -113,7 +134,7 @@ public class Home extends Composite {
     h1.setHTML(signIn);
     h2.setHTML(create);
     
-    askForAccessButton.getPshbtnAskForAccess().setEnabled(false);
+    askForAccessButton.getBAskForAccess().setEnabled(false);
   }
 
   private void drawLoggedIn() {
@@ -123,7 +144,7 @@ public class Home extends Composite {
     h1.setHTML(nick);
     h2.setHTML(logOut);
     
-    askForAccessButton.getPshbtnAskForAccess().setEnabled(true);
+    askForAccessButton.getBAskForAccess().setEnabled(true);
   }
   
   
@@ -137,4 +158,7 @@ public class Home extends Composite {
     return hNick;
   }
 
+  public HTML getHNote() {
+    return hNote;
+  }
 }

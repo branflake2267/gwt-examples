@@ -1,5 +1,9 @@
 package org.gonevertical.demo.client.layout;
 
+import org.gonevertical.demo.client.EventManager;
+import org.gonevertical.demo.client.rpc.RpcInit;
+import org.gonevertical.demo.client.rpc.RpcServiceAsync;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
@@ -8,19 +12,25 @@ import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 
 public class AskForAccessButton extends Composite {
-  
-  private static final int ACCOUNT_ASKFORACCESS = 1;
 
   private PushButton bAsk;
   
   private int event;
+
+  private RpcServiceAsync rpc;
+  private HTML hNote;
 
   public AskForAccessButton() {
     
@@ -38,17 +48,25 @@ public class AskForAccessButton extends Composite {
     });
     horizontalPanel.add(bAsk);
     
+    hNote = new HTML("", true);
+    horizontalPanel.add(hNote);
+    horizontalPanel.setCellHorizontalAlignment(hNote, HasHorizontalAlignment.ALIGN_CENTER);
+    horizontalPanel.setCellVerticalAlignment(hNote, HasVerticalAlignment.ALIGN_MIDDLE);
+    
+    setup();
   }
   
+  private void setup() {
+    rpc = RpcInit.init();
+    
+    bAsk.setVisible(true);
+  }
+
   private void ask() {
-    String url = GWT.getHostPageBaseURL() + "askforaccess";
+    String url = GWT.getHostPageBaseURL() + "askforaccess?do=ask";
     open(url);
   }
 
-  public PushButton getPshbtnAskForAccess() {
-    return bAsk;
-  }
-  
   /**
    * open window, then start a process to watch for it to close
    * 
@@ -104,7 +122,7 @@ public class AskForAccessButton extends Composite {
    * call this when the window closes
    */
   public void setWindowClosed() {
-    fireChange(ACCOUNT_ASKFORACCESS);
+    
   }
   
   public int getChangeEvent() {
@@ -119,5 +137,36 @@ public class AskForAccessButton extends Composite {
 
   public HandlerRegistration addChangeHandler(ChangeHandler handler) {
     return addDomHandler(handler, ChangeEvent.getType());
+  }
+  
+  private void getHasToken() {
+    rpc.getHasToken(new AsyncCallback<Boolean>() {
+      public void onSuccess(Boolean bol) {
+        processHasToken(bol);
+      }
+      public void onFailure(Throwable caught) {
+      }
+    });
+  }
+  
+  protected void processHasToken(Boolean bol) {
+    if (bol == null) {
+      hNote.setHTML(SafeHtmlUtils.fromTrustedString("Try again"));
+      
+    } else if (bol == false) {
+      hNote.setHTML(SafeHtmlUtils.fromTrustedString("Try again"));
+      
+    } else if (bol == true) {
+      bAsk.setVisible(false);
+      hNote.setHTML(SafeHtmlUtils.fromTrustedString("Granted"));
+      fireChange(EventManager.OAUTHTOKEN_RETRIEVED);
+    }
+  }
+  
+  public PushButton getBAskForAccess() {
+    return bAsk;
+  }
+  public HTML getHNote() {
+    return hNote;
   }
 }

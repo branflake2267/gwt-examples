@@ -1,11 +1,12 @@
 package org.gonevertical.demo.server.jdo;
 
+import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 @PersistenceCapable
-public class AppToken {
+public class AppTokenJdo {
 
   /**
    * user id - unique/distinct user id
@@ -32,7 +33,7 @@ public class AppToken {
    * @param accessTokenKey
    * @param accessTokenSecret
    */
-  public AppToken(String id, String accessTokenKey, String accessTokenSecret) {
+  public AppTokenJdo(String id, String accessTokenKey, String accessTokenSecret) {
     this.id = id;
     this.accessTokenKey = accessTokenKey;
     this.accessTokenSecret = accessTokenSecret;

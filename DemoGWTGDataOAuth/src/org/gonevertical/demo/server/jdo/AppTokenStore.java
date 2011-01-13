@@ -25,14 +25,14 @@ public class AppTokenStore {
     return b;
   }
 
-  public static AppToken getToken(String id) {
+  public static AppTokenJdo getToken(String id) {
     PersistenceManager pm = PMF.get().getPersistenceManager();
     
-    AppToken token = null;
+    AppTokenJdo token = null;
     try {
-      token = pm.getObjectById(AppToken.class, id);
+      token = pm.getObjectById(AppTokenJdo.class, id);
     } catch (JDOObjectNotFoundException e) {
-      e.printStackTrace();
+      //e.printStackTrace(); //skip this, b/c it will throw with none found
     } finally {
       pm.close();
     }
@@ -40,7 +40,7 @@ public class AppTokenStore {
     return token;
   }
 
-  public static void saveToken(AppToken token) {
+  public static void saveToken(AppTokenJdo token) {
     PersistenceManager pm = PMF.get().getPersistenceManager();
     
     try {
