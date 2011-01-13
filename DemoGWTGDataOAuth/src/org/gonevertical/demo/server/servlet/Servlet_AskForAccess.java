@@ -163,11 +163,11 @@ public class Servlet_AskForAccess extends HttpServlet {
 
     System.out.println("QueryString: " + request.getQueryString());
 
-    oauthParameters = new GoogleOAuthParameters();
+    GoogleOAuthParameters oauthParameters = new GoogleOAuthParameters();
     oauthParameters.setOAuthConsumerKey(CONSUMER_KEY);
     oauthParameters.setOAuthConsumerSecret(CONSUMER_SECRET);
-    oauthParameters.setScope(SCOPE);
-    oauthParameters.setOAuthCallback(callBackUrl);
+
+    GoogleOAuthHelper oauthHelper = new GoogleOAuthHelper(new OAuthHmacSha1Signer());
     oauthHelper.getOAuthParametersFromCallback(request.getQueryString(), oauthParameters);
     
     String accessToken = null;
