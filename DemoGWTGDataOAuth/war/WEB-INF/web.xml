@@ -7,11 +7,11 @@
   
   <!-- Servlets -->
   <servlet>
-    <servlet-name>greetServlet</servlet-name>
+    <servlet-name>rpcServlet</servlet-name>
     <servlet-class>org.gonevertical.demo.server.RpcServiceImpl</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
+    <servlet-name>rpcServlet</servlet-name>
     <url-pattern>/demogwtgdataoauth/rpcService</url-pattern>
   </servlet-mapping>
   
