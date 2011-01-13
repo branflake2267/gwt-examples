@@ -44,8 +44,7 @@ public class Servlet_AskForAccess extends HttpServlet {
 
 
   private UserService userService = UserServiceFactory.getUserService();
-  private GoogleOAuthParameters oauthParameters;
-  private GoogleOAuthHelper oauthHelper;
+
 
   public Servlet_AskForAccess() {
   }
@@ -63,7 +62,7 @@ public class Servlet_AskForAccess extends HttpServlet {
 
     if (getAsk(request)) { // querystring must have do=ask
       askFirst(request, response);
-      
+
     } else {
       processResponse(request, response);
     }
@@ -78,12 +77,12 @@ public class Servlet_AskForAccess extends HttpServlet {
    * @throws IOException
    */
   private void askFirst(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    
+
     // Previous Reponse - has a token already been granted?
     //AppTokenJdo appToken = getAppToken();
     //if (appToken != null) {
-      //response.getWriter().print("App Access Token has already been granted");
-      //return;
+    //response.getWriter().print("App Access Token has already been granted");
+    //return;
     //}
 
     // first setup oauth params
@@ -91,28 +90,29 @@ public class Servlet_AskForAccess extends HttpServlet {
 
     // my oauth parameters. Go get your consumer key from google, link above.
     // Be sure to get your key and secret @ https://www.google.com/accounts/ManageDomains
-    oauthParameters = new GoogleOAuthParameters();
+    GoogleOAuthParameters oauthParameters = new GoogleOAuthParameters();
     oauthParameters.setOAuthConsumerKey(CONSUMER_KEY);
     oauthParameters.setOAuthConsumerSecret(CONSUMER_SECRET);
     oauthParameters.setScope(SCOPE);
     oauthParameters.setOAuthCallback(callBackUrl);
 
     // sign them - so we can use them
-    oauthHelper = new GoogleOAuthHelper(new OAuthHmacSha1Signer());
+    GoogleOAuthHelper oauthHelper = new GoogleOAuthHelper(new OAuthHmacSha1Signer());
     try {
       oauthHelper.getUnauthorizedRequestToken(oauthParameters);
     } catch (OAuthException e) {
       e.printStackTrace();
     }
-    
+    String secret = oauthParameters.getOAuthConsumerSecret();
+
     // direct to remote site for authorization for scope
     String approvalPageUrl = oauthHelper.createUserAuthorizationUrl(oauthParameters);
     if (oauthHelper.getAccessTokenUrl() != null) {
       response.sendRedirect(approvalPageUrl);
     }
-    
+
   }
-  
+
   /**
    * callback response - is the approval response coming back, then we should extract token
    * 
@@ -121,7 +121,7 @@ public class Servlet_AskForAccess extends HttpServlet {
    * @throws IOException
    */
   private void processResponse(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    
+
     boolean b = getAccessToken(request);
     if (b == true) {
       response.getWriter().print("New App Access Token has already been granted");
@@ -138,7 +138,7 @@ public class Servlet_AskForAccess extends HttpServlet {
     }
     return b;
   }
-  
+
   /**
    * get session token
    * 
@@ -161,30 +161,33 @@ public class Servlet_AskForAccess extends HttpServlet {
    */
   private boolean getAccessToken(HttpServletRequest request) {
 
-    System.out.println("QueryString: " + request.getQueryString());
+    // For some reason I have to append the secret onto the querystring
+    // found in http://code.google.com/p/googleappengine/source/browse/trunk/java/demos/oauth/src/com/google/appengine/demos/oauth/RedirectToGoogleControllerServlet.java?r=142
+    // TODO setting this will cause it not to throw, but this is not working still
+    String qs = request.getQueryString() + "&oauth_token_secret=" + CONSUMER_SECRET;
+    System.out.println("QueryString: " + qs);
+
 
     GoogleOAuthParameters oauthParameters = new GoogleOAuthParameters();
     oauthParameters.setOAuthConsumerKey(CONSUMER_KEY);
     oauthParameters.setOAuthConsumerSecret(CONSUMER_SECRET);
 
     GoogleOAuthHelper oauthHelper = new GoogleOAuthHelper(new OAuthHmacSha1Signer());
-    oauthHelper.getOAuthParametersFromCallback(request.getQueryString(), oauthParameters);
-    
+    oauthHelper.getOAuthParametersFromCallback(qs, oauthParameters);
+
     String accessToken = null;
     try {
       accessToken = oauthHelper.getAccessToken(oauthParameters); // TODO why does this not work?
     } catch (OAuthException e) {
       e.printStackTrace();
     }
-   // You can also pull the OAuth token string from the oauthParameters:
-   // String accessToken = oauthParameters.getOAuthToken();
-   System.out.println("OAuth Access Token: " + accessToken);
-  
-   String accessTokenSecret = oauthParameters.getOAuthTokenSecret();
-   System.out.println("OAuth Access Token's Secret: " + accessTokenSecret);
+    String accessTokenSecret = oauthParameters.getOAuthTokenSecret();
+    
+    System.out.println("OAuth Access Token: " + accessToken);
+    System.out.println("OAuth Access Token's Secret: " + accessTokenSecret);
 
     // save a new app token - we can use it for our gdata calls later
-    //saveAppToken(accessTokenKey, accessTokenSecret);
+    saveAppToken(accessToken, accessTokenSecret);
 
     boolean r = false;
     if (accessToken != null) {
