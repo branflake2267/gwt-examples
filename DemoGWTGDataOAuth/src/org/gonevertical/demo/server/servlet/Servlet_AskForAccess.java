@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +40,8 @@ import com.google.gwt.core.client.GWT;
  *
  */
 public class Servlet_AskForAccess extends HttpServlet {
+  
+  private static final Logger log = Logger.getLogger(Servlet_AskForAccess.class.getName());
 
   /**
    * NOTE:Get your key and secret here: https://www.google.com/accounts/ManageDomains
@@ -66,7 +69,7 @@ public class Servlet_AskForAccess extends HttpServlet {
   private UserService userService = UserServiceFactory.getUserService();
 
   /**
-   * constructor - init nothing so far
+   * constructor
    */
   public Servlet_AskForAccess() {
   }
@@ -127,11 +130,10 @@ public class Servlet_AskForAccess extends HttpServlet {
       setGrantResponse(request, response);
     }
 
-    System.out.println("done: now what");
   }
 
   /**
-   * 1. First get a request token for upgrade
+   * 1. First get a request token
    * 
    * @param request
    * @param response
@@ -139,14 +141,11 @@ public class Servlet_AskForAccess extends HttpServlet {
    */
   private void setRequestTokenFirst(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-    String url = callBackUrl + "?do=grant";
-    
     GoogleOAuthParameters oauthParameters = new GoogleOAuthParameters();
     oauthParameters.setOAuthConsumerKey(consumerKey);
     oauthParameters.setOAuthConsumerSecret(consumerSecret);
     oauthParameters.setScope(scope);
-    oauthParameters.setOAuthCallback(url);
-
+    
     GoogleOAuthHelper oauthHelper = new GoogleOAuthHelper(new OAuthHmacSha1Signer());
     try {
       oauthHelper.getUnauthorizedRequestToken(oauthParameters);
@@ -154,9 +153,18 @@ public class Servlet_AskForAccess extends HttpServlet {
       e.printStackTrace();
     }
     
-    String token = oauthParameters.getOAuthTokenSecret();
+    String token = oauthParameters.getOAuthToken();
+    String secret = oauthParameters.getOAuthTokenSecret();
     
-    System.out.println("Retrieved a token from remote site: " + token + " now its get approval to use it.");
+    System.out.println("Retrieved a remote token: Token: " + token + " Secret: " + secret);
+    
+    String url = callBackUrl + "?do=grant" ;
+    
+    // for some reason, I need to stick the secret on, could save this and load it so we don't have to send it on.
+    // I'm not sure why yet. But this allows the next step to work. 
+    url = url + "&oauth_token_secret=" + java.net.URLEncoder.encode(secret, "UTF-8");
+    
+    oauthParameters.setOAuthCallback(url);
     
     setRedirect(oauthHelper, oauthParameters, response); 
   }
@@ -185,34 +193,28 @@ public class Servlet_AskForAccess extends HttpServlet {
    * @return
    */
   private boolean setGrantResponse(HttpServletRequest request, HttpServletResponse response) {
-    
+   
     GoogleOAuthParameters oauthParameters = new GoogleOAuthParameters();
     oauthParameters.setOAuthConsumerKey(consumerKey);
     oauthParameters.setOAuthConsumerSecret(consumerSecret);
 
     GoogleOAuthHelper oauthHelper = new GoogleOAuthHelper(new OAuthHmacSha1Signer());
     oauthHelper.getOAuthParametersFromCallback(request.getQueryString(), oauthParameters);
-
+    
     String accessToken = null;
     try {
       accessToken = oauthHelper.getAccessToken(oauthParameters);
     } catch (OAuthException e) {
       e.printStackTrace();
-      // TODO what to do
     }
+    
     String accessTokenSecret = oauthParameters.getOAuthTokenSecret();
     
-    // debug
-    System.out.println("OAuth Access Token: " + accessToken);
-    System.out.println("OAuth Access Token's Secret: " + accessTokenSecret);
-
-    boolean r = false;
-    if (accessToken != null) {
-      r = true;
-      saveAppToken(accessToken, accessTokenSecret);
-    }
+    saveAppToken(accessToken, accessTokenSecret);
+   
+    System.out.println("Retrieved a good accessToken: " + accessToken);
     
-    return r;
+    return false;
   }
 
   
