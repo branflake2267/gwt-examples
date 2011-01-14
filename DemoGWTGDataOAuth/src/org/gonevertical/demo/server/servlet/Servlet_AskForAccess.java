@@ -19,6 +19,7 @@ import com.google.gdata.client.authn.oauth.GoogleOAuthHelper;
 import com.google.gdata.client.authn.oauth.GoogleOAuthParameters;
 import com.google.gdata.client.authn.oauth.OAuthException;
 import com.google.gdata.client.authn.oauth.OAuthHmacSha1Signer;
+import com.google.gdata.client.authn.oauth.OAuthParameters;
 import com.google.gdata.client.docs.DocsService;
 import com.google.gdata.data.docs.DocumentListEntry;
 import com.google.gdata.data.docs.DocumentListFeed;
@@ -100,6 +101,8 @@ public class Servlet_AskForAccess extends HttpServlet {
   /**
    * goto /askforaccess (configuration is in web.xml)
    * 
+   * TODO more error controls
+   * 
    * @param request
    * @param response
    * @throws IOException
@@ -108,6 +111,8 @@ public class Servlet_AskForAccess extends HttpServlet {
 
     initProperties();
     initCallbackUrl(request);
+    
+    // TODO deal with previous token
     
     // use in querystring do=[what]
     String qs = request.getQueryString();
@@ -118,16 +123,11 @@ public class Servlet_AskForAccess extends HttpServlet {
     if (qs.contains("do=ask") == true) { // 1. first ask for unauthorized token.
       setRequestTokenFirst(request, response);
 
-      
-    } else if (qs.contains("do=upgrade") == true) { // 2. then upgrade the token, then send them to ask for granting access on remote site.
-      setGrant(request, response);
-      
-      
-    } else if (qs.contains("do=grant") == true) {
-      
+    } else if (qs.contains("do=grant") == true) {// 3. remote response, did we get a good token?
+      setGrantResponse(request, response);
     }
 
-    System.out.println("test");
+    System.out.println("done: now what");
   }
 
   /**
@@ -156,21 +156,35 @@ public class Servlet_AskForAccess extends HttpServlet {
     
     String token = oauthParameters.getOAuthTokenSecret();
     
-    System.out.println("Retrieved token from remote site: " + token + " now go upgrade it.");
+    System.out.println("Retrieved a token from remote site: " + token + " now its get approval to use it.");
     
-    // REDIRECT to remote site and ask for approval
-    
-    
+    setRedirect(oauthHelper, oauthParameters, response); 
+  }
+
+  /**
+   * 2. REDIRECT to remote site and ask for approval and then callback
+   *  
+   * @param oauthHelper
+   * @param oauthParameters
+   * @param response
+   * @throws IOException
+   */
+  private void setRedirect(GoogleOAuthHelper oauthHelper, OAuthParameters oauthParameters, HttpServletResponse response) throws IOException {
+    String approvalPageUrl = oauthHelper.createUserAuthorizationUrl(oauthParameters);
+    System.out.println(approvalPageUrl);
+    response.sendRedirect(approvalPageUrl);
   }
 
   /**
    * 3. grant access? This happens after remote site approval
    * 
+   * TODO deal with nongrant
+   * 
    * @param request
    * @param response 
    * @return
    */
-  private boolean setGrant(HttpServletRequest request, HttpServletResponse response) {
+  private boolean setGrantResponse(HttpServletRequest request, HttpServletResponse response) {
     
     GoogleOAuthParameters oauthParameters = new GoogleOAuthParameters();
     oauthParameters.setOAuthConsumerKey(consumerKey);
@@ -184,6 +198,7 @@ public class Servlet_AskForAccess extends HttpServlet {
       accessToken = oauthHelper.getAccessToken(oauthParameters);
     } catch (OAuthException e) {
       e.printStackTrace();
+      // TODO what to do
     }
     String accessTokenSecret = oauthParameters.getOAuthTokenSecret();
     
@@ -191,14 +206,12 @@ public class Servlet_AskForAccess extends HttpServlet {
     System.out.println("OAuth Access Token: " + accessToken);
     System.out.println("OAuth Access Token's Secret: " + accessTokenSecret);
 
-    
-    // save a new app token - we can use it for our gdata calls later
-    saveAppToken(accessToken, accessTokenSecret);
-
     boolean r = false;
     if (accessToken != null) {
       r = true;
+      saveAppToken(accessToken, accessTokenSecret);
     }
+    
     return r;
   }
 
@@ -210,7 +223,7 @@ public class Servlet_AskForAccess extends HttpServlet {
   
   
   /**
-   * get session token
+   * get previous token
    * 
    * @return
    */
@@ -223,6 +236,12 @@ public class Servlet_AskForAccess extends HttpServlet {
     return appToken;
   }
   
+  /**
+   * save a new app token - we can use it for our gdata calls later
+   * 
+   * @param accessTokenKey
+   * @param accessTokenSecret
+   */
   private void saveAppToken(String accessTokenKey, String accessTokenSecret) {
     if ((accessTokenKey == null || accessTokenKey.trim().length() == 0) || 
         (accessTokenSecret == null || accessTokenSecret.trim().length() == 0)) {
