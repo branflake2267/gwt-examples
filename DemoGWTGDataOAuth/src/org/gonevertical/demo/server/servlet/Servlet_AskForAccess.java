@@ -1,6 +1,9 @@
 package org.gonevertical.demo.server.servlet;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +19,10 @@ import com.google.gdata.client.authn.oauth.GoogleOAuthHelper;
 import com.google.gdata.client.authn.oauth.GoogleOAuthParameters;
 import com.google.gdata.client.authn.oauth.OAuthException;
 import com.google.gdata.client.authn.oauth.OAuthHmacSha1Signer;
+import com.google.gdata.client.docs.DocsService;
+import com.google.gdata.data.docs.DocumentListEntry;
+import com.google.gdata.data.docs.DocumentListFeed;
+import com.google.gdata.util.ServiceException;
 import com.google.gwt.core.client.GWT;
 
 /**
@@ -32,21 +39,62 @@ import com.google.gwt.core.client.GWT;
  */
 public class Servlet_AskForAccess extends HttpServlet {
 
-  // NOTE: GET YOUR SECRET HERE!!!!: https://www.google.com/accounts/ManageDomains
-  private static final String CONSUMER_KEY = "demogwtgdataoauth.appspot.com";
-  private static final String CONSUMER_SECRET = "4LczkVvFm4+zkWqRR5l4eJKf";
+  /**
+   * NOTE:Get your key and secret here: https://www.google.com/accounts/ManageDomains
+   */
+  private String consumerKey = "demogwtgdataoauth.appspot.com";
+  
+  /**
+   * NOTE:Get your key and secret here: https://www.google.com/accounts/ManageDomains
+   */
+  private String consumerSecret = null;
 
-  // i'll get my blogs list
-  // http://www.blogger.com/feeds/default/blogs
-  private static final String SCOPE = "http://www.blogger.com/feeds/"; 
+  /**
+   * http://www.blogger.com/feeds/default/blogs - blob feed
+   */
+  private String scope = "http://www.blogger.com/feeds/"; 
 
+  /**
+   * call back to this servlet
+   */
   private String callBackUrl = null;
 
-
+  /**
+   * google user account service for app engine
+   */
   private UserService userService = UserServiceFactory.getUserService();
 
-
+  /**
+   * constructor - init nothing so far
+   */
   public Servlet_AskForAccess() {
+  }
+  
+  /**
+   * hide my consumer secret from svn
+   */
+  private void initProperties() {
+    
+    InputStream inputStream = getServletContext().getResourceAsStream("/WEB-INF/app.properties");
+    Properties props = new Properties();
+    try {
+      props.load(inputStream);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    consumerSecret = props.getProperty("consumerSecret");
+    
+    System.out.println("consumerSecret=" + consumerSecret);
+    
+  }
+  
+  /**
+   * set the call back url to this servlet
+   * 
+   * @param request
+   */
+  private void initCallbackUrl(HttpServletRequest request) {
+    callBackUrl = request.getRequestURL().toString();
   }
 
   /**
@@ -58,87 +106,109 @@ public class Servlet_AskForAccess extends HttpServlet {
    */
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-    callBackUrl = request.getRequestURL().toString();
+    initProperties();
+    initCallbackUrl(request);
+    
+    // use in querystring do=[what]
+    String qs = request.getQueryString();
+    
+    // debug
+    System.out.println("QueryString: " + qs);
 
-    if (getAsk(request)) { // querystring must have do=ask
-      askFirst(request, response);
+    if (qs.contains("do=ask") == true) { // 1. first ask for unauthorized token.
+      setRequestTokenFirst(request, response);
 
-    } else {
-      processResponse(request, response);
+      
+    } else if (qs.contains("do=upgrade") == true) { // 2. then upgrade the token, then send them to ask for granting access on remote site.
+      setGrant(request, response);
+      
+      
+    } else if (qs.contains("do=grant") == true) {
+      
     }
 
+    System.out.println("test");
   }
 
   /**
-   * ask first
+   * 1. First get a request token for upgrade
    * 
    * @param request
    * @param response
    * @throws IOException
    */
-  private void askFirst(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  private void setRequestTokenFirst(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-    // Previous Reponse - has a token already been granted?
-    //AppTokenJdo appToken = getAppToken();
-    //if (appToken != null) {
-    //response.getWriter().print("App Access Token has already been granted");
-    //return;
-    //}
-
-    // first setup oauth params
-    System.out.println("Servlet_AskForAccess.setupOAuthParams Settup OAuth ");
-
-    // my oauth parameters. Go get your consumer key from google, link above.
-    // Be sure to get your key and secret @ https://www.google.com/accounts/ManageDomains
+    String url = callBackUrl + "?do=grant";
+    
     GoogleOAuthParameters oauthParameters = new GoogleOAuthParameters();
-    oauthParameters.setOAuthConsumerKey(CONSUMER_KEY);
-    oauthParameters.setOAuthConsumerSecret(CONSUMER_SECRET);
-    oauthParameters.setScope(SCOPE);
-    oauthParameters.setOAuthCallback(callBackUrl);
+    oauthParameters.setOAuthConsumerKey(consumerKey);
+    oauthParameters.setOAuthConsumerSecret(consumerSecret);
+    oauthParameters.setScope(scope);
+    oauthParameters.setOAuthCallback(url);
 
-    // sign them - so we can use them
     GoogleOAuthHelper oauthHelper = new GoogleOAuthHelper(new OAuthHmacSha1Signer());
     try {
       oauthHelper.getUnauthorizedRequestToken(oauthParameters);
     } catch (OAuthException e) {
       e.printStackTrace();
     }
-    String secret = oauthParameters.getOAuthConsumerSecret();
-
-    // direct to remote site for authorization for scope
-    String approvalPageUrl = oauthHelper.createUserAuthorizationUrl(oauthParameters);
-    if (oauthHelper.getAccessTokenUrl() != null) {
-      response.sendRedirect(approvalPageUrl);
-    }
-
+    
+    String token = oauthParameters.getOAuthTokenSecret();
+    
+    System.out.println("Retrieved token from remote site: " + token + " now go upgrade it.");
+    
+    // REDIRECT to remote site and ask for approval
+    
+    
   }
 
   /**
-   * callback response - is the approval response coming back, then we should extract token
+   * 3. grant access? This happens after remote site approval
    * 
    * @param request
-   * @param response
-   * @throws IOException
+   * @param response 
+   * @return
    */
-  private void processResponse(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  private boolean setGrant(HttpServletRequest request, HttpServletResponse response) {
+    
+    GoogleOAuthParameters oauthParameters = new GoogleOAuthParameters();
+    oauthParameters.setOAuthConsumerKey(consumerKey);
+    oauthParameters.setOAuthConsumerSecret(consumerSecret);
 
-    boolean b = getAccessToken(request);
-    if (b == true) {
-      response.getWriter().print("New App Access Token has already been granted");
-      return;
+    GoogleOAuthHelper oauthHelper = new GoogleOAuthHelper(new OAuthHmacSha1Signer());
+    oauthHelper.getOAuthParametersFromCallback(request.getQueryString(), oauthParameters);
+
+    String accessToken = null;
+    try {
+      accessToken = oauthHelper.getAccessToken(oauthParameters);
+    } catch (OAuthException e) {
+      e.printStackTrace();
     }
+    String accessTokenSecret = oauthParameters.getOAuthTokenSecret();
+    
+    // debug
+    System.out.println("OAuth Access Token: " + accessToken);
+    System.out.println("OAuth Access Token's Secret: " + accessTokenSecret);
 
+    
+    // save a new app token - we can use it for our gdata calls later
+    saveAppToken(accessToken, accessTokenSecret);
+
+    boolean r = false;
+    if (accessToken != null) {
+      r = true;
+    }
+    return r;
   }
 
-  private boolean getAsk(HttpServletRequest request) {
-    String qs = request.getQueryString();
-    boolean b = false;
-    if (qs.contains("do=ask")) {
-      b = true;
-    }
-    return b;
-  }
-
+  
+  
+  
+  
+  
+  
+  
   /**
    * get session token
    * 
@@ -152,53 +222,10 @@ public class Servlet_AskForAccess extends HttpServlet {
     }
     return appToken;
   }
-
-  /**
-   * this happens in callback(response), we can extract the accesstoken
-   * 
-   * @param request
-   * @return
-   */
-  private boolean getAccessToken(HttpServletRequest request) {
-
-    // For some reason I have to append the secret onto the querystring
-    // found in http://code.google.com/p/googleappengine/source/browse/trunk/java/demos/oauth/src/com/google/appengine/demos/oauth/RedirectToGoogleControllerServlet.java?r=142
-    // TODO setting this will cause it not to throw, but this is not working still
-    String qs = request.getQueryString() + "&oauth_token_secret=" + CONSUMER_SECRET;
-    System.out.println("QueryString: " + qs);
-
-
-    GoogleOAuthParameters oauthParameters = new GoogleOAuthParameters();
-    oauthParameters.setOAuthConsumerKey(CONSUMER_KEY);
-    oauthParameters.setOAuthConsumerSecret(CONSUMER_SECRET);
-
-    GoogleOAuthHelper oauthHelper = new GoogleOAuthHelper(new OAuthHmacSha1Signer());
-    oauthHelper.getOAuthParametersFromCallback(qs, oauthParameters);
-
-    String accessToken = null;
-    try {
-      accessToken = oauthHelper.getAccessToken(oauthParameters); // TODO why does this not work?
-    } catch (OAuthException e) {
-      e.printStackTrace();
-    }
-    String accessTokenSecret = oauthParameters.getOAuthTokenSecret();
-    
-    System.out.println("OAuth Access Token: " + accessToken);
-    System.out.println("OAuth Access Token's Secret: " + accessTokenSecret);
-
-    // save a new app token - we can use it for our gdata calls later
-    saveAppToken(accessToken, accessTokenSecret);
-
-    boolean r = false;
-    if (accessToken != null) {
-      r = true;
-    }
-    return r;
-  }
-
-
+  
   private void saveAppToken(String accessTokenKey, String accessTokenSecret) {
-    if (accessTokenKey == null || accessTokenSecret == null) {
+    if ((accessTokenKey == null || accessTokenKey.trim().length() == 0) || 
+        (accessTokenSecret == null || accessTokenSecret.trim().length() == 0)) {
       return;
     }
 
