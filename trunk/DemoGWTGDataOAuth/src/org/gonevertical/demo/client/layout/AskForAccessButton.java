@@ -63,6 +63,7 @@ public class AskForAccessButton extends Composite {
   }
 
   private void ask() {
+    hNote.setHTML("Close New OAuth Window To Move Forward");
     String url = GWT.getHostPageBaseURL() + "askforaccess?do=ask";
     open(url);
   }

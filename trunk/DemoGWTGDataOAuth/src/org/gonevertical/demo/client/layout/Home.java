@@ -56,7 +56,7 @@ public class Home extends Composite {
     VerticalPanel verticalPanel_1 = new VerticalPanel();
     vpMain.add(verticalPanel_1);
     
-    hNote = new HTML("First login to google. Then click ask for access, to get Google Docs acces. I'll add some document listing later.", true);
+    hNote = new HTML("First login to google. Then click on the button below.", true);
     verticalPanel_1.add(hNote);
     
     VerticalPanel vp = new VerticalPanel();
@@ -113,7 +113,7 @@ public class Home extends Composite {
 
   protected void processBlogData(String s) {
     askForAccessButton.setVisible(false);
-    hNote.setHTML("Got some Blog Data: <br/><br/>" + s);
+    hNote.setHTML("My Blogs: <br/><br/>" + s);
   }
 
   private void getLoginData(String currentUrl) {

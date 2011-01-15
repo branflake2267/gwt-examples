@@ -171,7 +171,7 @@ public class Servlet_AskForAccess extends HttpServlet {
     
     String url = callBackUrl + "?do=grant" ;
     
-    // for some reason, I need to stick the secret on, could save this and load it so we don't have to send it on.
+    // for some reason, I need to stick the secret on querystring, could save this and load it so we don't have to send it on.
     // I'm not sure why yet. But this allows the next step to work. 
     url = url + "&oauth_token_secret=" + java.net.URLEncoder.encode(secret, "UTF-8");
     
@@ -248,7 +248,7 @@ public class Servlet_AskForAccess extends HttpServlet {
   }
   
   /**
-   * save a new app token - we can use it for our gdata calls later
+   * save the authorized access token for use when I make GData calls.
    * 
    * @param accessTokenKey
    * @param accessTokenSecret
@@ -270,7 +270,7 @@ public class Servlet_AskForAccess extends HttpServlet {
   }
 
   /**
-   * revoke token
+   * revoke token - not tested yet
    * 
    * @param request
    * @param response
