@@ -40,22 +40,22 @@ public class Servlet_AskForAccess extends HttpServlet {
   /**
    * NOTE:Get your key and secret here: https://www.google.com/accounts/ManageDomains
    */
-  private String consumerKey = "demogwtgdataoauth.appspot.com";
+  private String consumerKey;
   
   /**
    * NOTE:Get your key and secret here: https://www.google.com/accounts/ManageDomains
    */
-  private String consumerSecret = null;
+  private String consumerSecret;
 
   /**
-   * http://www.blogger.com/feeds/default/blogs - blob feed
+   * gdata feed
    */
-  private String scope = "http://www.blogger.com/feeds/"; 
+  private String scope; 
 
   /**
    * call back to this servlet
    */
-  private String callBackUrl = null;
+  private String callBackUrl;
 
   /**
    * google user account service for app engine
@@ -80,19 +80,23 @@ public class Servlet_AskForAccess extends HttpServlet {
     } catch (IOException e) {
       e.printStackTrace();
     }
+    consumerKey = props.getProperty("consumerKey");
     consumerSecret = props.getProperty("consumerSecret");
     
-    System.out.println("consumerSecret=" + consumerSecret);
+    System.out.println("consumerKey=" + consumerKey + " consumerSecret=" + consumerSecret);
     
   }
   
   /**
-   * set the call back url to this servlet
+   * init parameters from servlet 
    * 
    * @param request
    */
-  private void initCallbackUrl(HttpServletRequest request) {
+  private void initParams(HttpServletRequest request) {
     callBackUrl = request.getRequestURL().toString();
+    scope = request.getParameter("scope");
+    
+    System.out.println("scope=" + scope);
   }
 
   /**
@@ -107,7 +111,7 @@ public class Servlet_AskForAccess extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
     initProperties();
-    initCallbackUrl(request);
+    initParams(request);
     
     // TODO deal with previous token
     boolean b = loadPreviousAppToken(request, response);
@@ -173,7 +177,7 @@ public class Servlet_AskForAccess extends HttpServlet {
     
     // for some reason, I need to stick the secret on querystring, could save this and load it so we don't have to send it on.
     // I'm not sure why yet. But this allows the next step to work. 
-    url = url + "&oauth_token_secret=" + java.net.URLEncoder.encode(secret, "UTF-8");
+    url = url + "&oauth_token_secret=" + java.net.URLEncoder.encode(secret, "UTF-8") + "&scope=" + scope;
     
     oauthParameters.setOAuthCallback(url);
     
@@ -241,8 +245,7 @@ public class Servlet_AskForAccess extends HttpServlet {
   private AppTokenJdo getAppToken() {
     AppTokenJdo appToken = null;
     if (userService.isUserLoggedIn()) {
-      User user = userService.getCurrentUser();
-      appToken = AppTokenStore.getToken(user.getUserId());
+      appToken = AppTokenStore.getToken(scope);
     }
     return appToken;
   }
@@ -263,7 +266,7 @@ public class Servlet_AskForAccess extends HttpServlet {
 
     if (userService.isUserLoggedIn()) {
       User user = userService.getCurrentUser();
-      AppTokenJdo appToken = new AppTokenJdo(user.getUserId(), accessTokenKey, accessTokenSecret);
+      AppTokenJdo appToken = new AppTokenJdo(user.getUserId(), accessTokenKey, accessTokenSecret, scope);
       AppTokenStore.saveToken(appToken);
     }
 
@@ -277,7 +280,7 @@ public class Servlet_AskForAccess extends HttpServlet {
    */
   private void setRevoke(HttpServletRequest request, HttpServletResponse response) throws IOException {
     
-    AppTokenJdo appToken = AppTokenStore.getToken();
+    AppTokenJdo appToken = AppTokenStore.getToken(scope);
     if (appToken == null) {
       response.getWriter().println("There is no access token to revoke.");
       return;
@@ -295,7 +298,7 @@ public class Servlet_AskForAccess extends HttpServlet {
     try {
       oauthHelper.revokeToken(oauthParameters);
       
-      AppTokenStore.deleteToken(); // get rid of stored app token
+      AppTokenStore.deleteToken(scope); // get rid of stored app token
     } catch (OAuthException e) {
       e.printStackTrace();
     }

@@ -12,6 +12,7 @@ import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -32,7 +33,10 @@ public class AskForAccessButton extends Composite {
   private RpcServiceAsync rpc;
   private HTML hNote;
 
-  public AskForAccessButton() {
+  private String scope;
+
+  public AskForAccessButton(String scope) {
+    setScope(scope);
     
     VerticalPanel verticalPanel = new VerticalPanel();
     initWidget(verticalPanel);
@@ -56,6 +60,11 @@ public class AskForAccessButton extends Composite {
     setup();
   }
   
+  private void setScope(String s) {
+    this.scope = URL.encode(s); 
+    System.out.println("scope: " + s);
+  }
+
   private void setup() {
     rpc = RpcInit.init();
     
@@ -64,7 +73,7 @@ public class AskForAccessButton extends Composite {
 
   private void ask() {
     hNote.setHTML("Close New OAuth Window To Move Forward");
-    String url = GWT.getHostPageBaseURL() + "askforaccess?do=ask";
+    String url = GWT.getHostPageBaseURL() + "askforaccess?do=ask&scope=" + scope;
     open(url);
   }
 
@@ -142,7 +151,7 @@ public class AskForAccessButton extends Composite {
   }
   
   private void getHasToken() {
-    rpc.getHasToken(new AsyncCallback<Boolean>() {
+    rpc.getHasToken(scope, new AsyncCallback<Boolean>() {
       public void onSuccess(Boolean bol) {
         processHasToken(bol);
       }

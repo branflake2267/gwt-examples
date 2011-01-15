@@ -1,4 +1,4 @@
-package org.gonevertical.demo.server;
+  package org.gonevertical.demo.server;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,14 +38,16 @@ public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
     return gl.getLoginData(currentUrl);
   }
 
-  public boolean getHasToken() {
-    return AppTokenStore.getHasToken();
+  public boolean getHasToken(String scope) {
+    return AppTokenStore.getHasToken(scope);
   }
 
   public String getBlogList() {
     initProperties();
     
-    AppTokenJdo appToken = AppTokenStore.getToken();
+    String scope = "http://www.blogger.com/feeds/";
+    
+    AppTokenJdo appToken = AppTokenStore.getToken(scope);
     if (appToken == null) {
       // TODO throw error, need a token for blogger
       return null;
@@ -60,7 +62,7 @@ public class RpcServiceImpl extends RemoteServiceServlet implements RpcService {
     oauthParameters.setOAuthToken(token);
     oauthParameters.setOAuthTokenSecret(tokenSecret);
 
-    BloggerService blogService = new BloggerService("Gone_Vertical_LLC-DemoGwtGdataOauth-v1");
+    BloggerService blogService = new BloggerService("Gone_Vertical_LLC-DemoGwtGdataOauth-v2");
     try {
       blogService.setOAuthCredentials(oauthParameters, new OAuthHmacSha1Signer());
     } catch (OAuthException e) {

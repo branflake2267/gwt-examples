@@ -9,52 +9,32 @@ import com.google.appengine.api.users.UserServiceFactory;
 
 public class AppTokenStore {
   
-  
-  
-  public static boolean getHasToken() {
+  public static boolean getHasToken(String scope) {
     UserService userService = UserServiceFactory.getUserService();  
-    User user = userService.getCurrentUser();
     if (userService.isUserLoggedIn() == false) {
       return false;
     }
     
     boolean b = false;
-    if (getToken(user.getUserId()) != null) {
+    if (getToken(scope) != null) {
       b = true;
     }
     return b;
   }
 
-  public static AppTokenJdo getToken(String id) {
-    PersistenceManager pm = PMF.get().getPersistenceManager();
-    
-    AppTokenJdo token = null;
-    try {
-      token = pm.getObjectById(AppTokenJdo.class, id);
-    } catch (JDOObjectNotFoundException e) {
-      //e.printStackTrace(); //skip this, b/c it will throw with none found
-    } finally {
-      pm.close();
-    }
-    
-    return token;
-  }
-  
-  public static AppTokenJdo getToken() {
-    
+  public static AppTokenJdo getToken(String scope) {
     UserService userService = UserServiceFactory.getUserService();  
     if (userService.isUserLoggedIn() == false) {
       return null;
     }
-    User user = userService.getCurrentUser();
+    String id = getId(userService, scope);
     
     PersistenceManager pm = PMF.get().getPersistenceManager();
-    
     AppTokenJdo token = null;
     try {
-      token = pm.getObjectById(AppTokenJdo.class, user.getUserId());
+      token = pm.getObjectById(AppTokenJdo.class, id);
     } catch (JDOObjectNotFoundException e) {
-      //e.printStackTrace(); //skip this, b/c it will throw with none found
+      //e.printStackTrace(); //skip this, b/c it will throw if no id exists
     } finally {
       pm.close();
     }
@@ -64,25 +44,24 @@ public class AppTokenStore {
 
   public static void saveToken(AppTokenJdo token) {
     PersistenceManager pm = PMF.get().getPersistenceManager();
-    
     try {
       pm.makePersistent(token);
     } finally {
       pm.close();
     }
-    
   }
   
-  public static void deleteToken() {
+  public static void deleteToken(String scope) {
     UserService userService = UserServiceFactory.getUserService();  
     if (userService.isUserLoggedIn() == false) {
       return;
     }
-    User user = userService.getCurrentUser();
-    PersistenceManager pm = PMF.get().getPersistenceManager();
     
+    String id = getId(userService, scope);
+    
+    PersistenceManager pm = PMF.get().getPersistenceManager();
     try {
-      AppTokenJdo token = pm.getObjectById(AppTokenJdo.class, user.getUserId());
+      AppTokenJdo token = pm.getObjectById(AppTokenJdo.class, id);
       pm.deletePersistent(token);
     } catch (Exception e) {
       e.printStackTrace();
@@ -90,6 +69,11 @@ public class AppTokenStore {
       pm.close();
     }
     
+  }
+
+  private static String getId(UserService userService, String scope) {
+    String id = userService.getCurrentUser().getUserId() + "_" + scope;
+    return id;
   }
   
 }
