@@ -2,7 +2,6 @@ package org.gonevertical.demo.server.servlet;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -21,11 +20,6 @@ import com.google.gdata.client.authn.oauth.GoogleOAuthParameters;
 import com.google.gdata.client.authn.oauth.OAuthException;
 import com.google.gdata.client.authn.oauth.OAuthHmacSha1Signer;
 import com.google.gdata.client.authn.oauth.OAuthParameters;
-import com.google.gdata.client.docs.DocsService;
-import com.google.gdata.data.docs.DocumentListEntry;
-import com.google.gdata.data.docs.DocumentListFeed;
-import com.google.gdata.util.ServiceException;
-import com.google.gwt.core.client.GWT;
 
 /**
  * http://code.google.com/apis/gdata/docs/auth/oauth.html - need gdata jars
@@ -116,6 +110,10 @@ public class Servlet_AskForAccess extends HttpServlet {
     initCallbackUrl(request);
     
     // TODO deal with previous token
+    boolean b = loadPreviousAppToken(request, response);
+    if (b == true) {
+      //return; // for now, lets always ask
+    }
     
     // use in querystring do=[what]
     String qs = request.getQueryString();
@@ -130,6 +128,16 @@ public class Servlet_AskForAccess extends HttpServlet {
       setGrantResponse(request, response);
     }
 
+  }
+
+  private boolean loadPreviousAppToken(HttpServletRequest request, HttpServletResponse response) throws IOException{
+    AppTokenJdo token = getAppToken();
+    boolean b = false;
+    if (token != null) {
+      response.getWriter().println("Token already has been granted. You can close this window."); // TODO auto close later
+      b = true;
+    }
+    return b;
   }
 
   /**
@@ -192,7 +200,7 @@ public class Servlet_AskForAccess extends HttpServlet {
    * @param response 
    * @return
    */
-  private boolean setGrantResponse(HttpServletRequest request, HttpServletResponse response) {
+  private boolean setGrantResponse(HttpServletRequest request, HttpServletResponse response) throws IOException {
    
     GoogleOAuthParameters oauthParameters = new GoogleOAuthParameters();
     oauthParameters.setOAuthConsumerKey(consumerKey);
@@ -213,16 +221,14 @@ public class Servlet_AskForAccess extends HttpServlet {
     saveAppToken(accessToken, accessTokenSecret);
    
     System.out.println("Retrieved a good accessToken: " + accessToken);
-    
-    return false;
+    boolean b = false;
+    if (accessToken != null) {
+      response.getWriter().println("Success, Token Granted: " + accessToken); // TODO auto close
+      response.getWriter().println("You can close this to move on.");
+      b = true;
+    }
+    return b;
   }
-
-  
-  
-  
-  
-  
-  
   
   /**
    * get previous token

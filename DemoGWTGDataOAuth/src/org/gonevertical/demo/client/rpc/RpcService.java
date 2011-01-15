@@ -14,4 +14,7 @@ public interface RpcService extends RemoteService {
   public LoginData getLoginData(String currentUrl);
   
   public boolean getHasToken();
+  
+  public String getBlogList();
+  
 }

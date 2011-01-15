@@ -16,12 +16,12 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HasVerticalAlignment;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 
 public class AskForAccessButton extends Composite {
 
@@ -122,7 +122,8 @@ public class AskForAccessButton extends Composite {
    * call this when the window closes
    */
   public void setWindowClosed() {
-    
+    hNote.setHTML(SafeHtmlUtils.fromTrustedString("Checking."));
+    getHasToken();
   }
   
   public int getChangeEvent() {

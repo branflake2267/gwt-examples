@@ -7,8 +7,6 @@ import org.gonevertical.demo.client.rpc.RpcServiceAsync;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -17,6 +15,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 
 public class Home extends Composite {
 
@@ -54,6 +53,12 @@ public class Home extends Composite {
     h2 = new HTML("&nbsp;", true);
     horizontalPanel.add(h2);
     
+    VerticalPanel verticalPanel_1 = new VerticalPanel();
+    vpMain.add(verticalPanel_1);
+    
+    hNote = new HTML("First login to google. Then click ask for access, to get Google Docs acces. I'll add some document listing later.", true);
+    verticalPanel_1.add(hNote);
+    
     VerticalPanel vp = new VerticalPanel();
     vpMain.add(vp);
     vp.setWidth("100%");
@@ -64,17 +69,15 @@ public class Home extends Composite {
     askForAccessButton = new AskForAccessButton();
     horizontalPanel_1.add(askForAccessButton);
     
+    HTML htmlYouNeedAccess = new HTML("You need access first to get blog data.", true);
+    horizontalPanel_1.add(htmlYouNeedAccess);
+    horizontalPanel_1.setCellVerticalAlignment(htmlYouNeedAccess, HasVerticalAlignment.ALIGN_MIDDLE);
+    
     VerticalPanel verticalPanel = new VerticalPanel();
     vpMain.add(verticalPanel);
     
     HTML htmlnbsp = new HTML("&nbsp;", true);
     verticalPanel.add(htmlnbsp);
-    
-    VerticalPanel verticalPanel_1 = new VerticalPanel();
-    vpMain.add(verticalPanel_1);
-    
-    hNote = new HTML("First login to google. Then click ask for access, to get Google Docs acces. I'll add some document listing later.", true);
-    verticalPanel_1.add(hNote);
     
     setup();
   }
@@ -90,17 +93,27 @@ public class Home extends Composite {
         AskForAccessButton b = (AskForAccessButton) event.getSource();
         int e = b.getChangeEvent();
         if (e == EventManager.OAUTHTOKEN_RETRIEVED) {
-           setRetrieved();
+          getSomeBlogData();
         }
       }
     });
     
   }
   
-  protected void setRetrieved() {
-   
-    hNote.setHTML("Access token has been retrieved, and may be used to get data.");
-    
+  private void getSomeBlogData() {
+    rpc.getBlogList(new AsyncCallback<String>() {
+      public void onSuccess(String s) {
+        processBlogData(s);
+      }
+      public void onFailure(Throwable caught) {
+        // TODO
+      }
+    });
+  }
+
+  protected void processBlogData(String s) {
+    askForAccessButton.setVisible(false);
+    hNote.setHTML("Got some Blog Data: <br/><br/>" + s);
   }
 
   private void getLoginData(String currentUrl) {

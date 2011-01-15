@@ -13,5 +13,7 @@ public interface RpcServiceAsync {
   public void getLoginData(String currentUrl, AsyncCallback<LoginData> callback);
 
   public void getHasToken(AsyncCallback<Boolean> callback);
+
+  public void getBlogList(AsyncCallback<String> callback);
  
 }
