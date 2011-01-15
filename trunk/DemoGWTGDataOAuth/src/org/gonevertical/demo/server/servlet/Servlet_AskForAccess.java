@@ -232,6 +232,9 @@ public class Servlet_AskForAccess extends HttpServlet {
     if (accessToken != null) {
       response.getWriter().println("Success, Token Granted: " + accessToken); // TODO auto close
       response.getWriter().println("You can close this to move on.");
+      
+      // use this to close the window, but get rid of the rest response writes (2 above and one other)
+      //response.getWriter().println("<html><body><script type=\"text/javascript\">window.close()</script></body></html>"); // close the window, to trigger the gwt widget
       b = true;
     }
     return b;
