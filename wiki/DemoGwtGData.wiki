@@ -16,7 +16,7 @@
 
  === OAuth Popup Window ===
  To setup the token to Google, I use a popup window and servlet to do the 3 steps.
-  * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGWTGDataOAuth/src/org/gonevertical/demo/server/servlet/Servlet_AskForAccess.java Source] - The OAuth Servlet
+ * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGWTGDataOAuth/src/org/gonevertical/demo/server/servlet/Servlet_AskForAccess.java Source] - The OAuth Servlet
 
 == AuthSub Authentication ==
  Although I thought this would work, oauth is much better. 
