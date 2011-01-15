@@ -3,104 +3,12 @@
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="95" width="735" border="0" />
 
 
-= Table of Contents = 
-<wiki:toc max_depth="2"/>
-
-= Current Status =
- I started building a gwt project to test oAuth. It works great. So I am going to make a user management system out of it, and include it into my other applications. (Jan/2009)
-
 
 = See My Latest Demo and Wiki =
- [DemoGwtGData] - Latest demo using GData and OAuth
+ [DemoGwtGData] - Latest demo using GData and OAuth and more
 
 
-= Deprecating the text below = 
+== Removed previous text, and moving that to the new demo and wiki page ==
 
-= oAuth and GWT =
- This is my example of using oAuth in my gwt application for user authentication to protected resources. My goal, not to pass user credentials across the web. I also want to open up the possibilities of using other oAuth applications.
 
-= Reference =
- * [http://oauth.net] - home page and documentation spec
- * [http://code.google.com/p/oauth/] - example svn repository, java, javascript, and others...
- * [http://pajhome.org.uk/crypt/md5/] - The MD4, MD5 and SHA-1 algorithms are secure hash functions
- * [http://term.ie/oauth/example/] - oauth test server
- * [http://term.ie/oauth/example/client.php] -oauth test client
 
-== My SVN Source ==
- [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/gwt-test-OAuth] - My Eclipse project 
-
-= Demo =
- [http://gawkat.com/OAuth/] - Current build - under development
-
-= Available Secure Hash Functions =
- Hashing (digest) a consomerKey, Urlbasestring or (rpc:dataobject) can be done by different methods.
-
-== Sha1 ==
- You can also use Sha1 to get a hash/digest. I am writing the sha1.js to java so I can use it both on the server and client side with ease. I rewrote sha1.js to a java method which can be used on both the client and server side.
- * [http://pajhome.org.uk/crypt/md5/sha1src.html] - sha1.js hash functions
-
- To include Sha1 in your project, you will need to import it in (...public>yourProject.gwt.xml)
-{{{
-  <!-- Include the JS file. Put the file in Project Folder > src > public > sha1.js -->
-  <!-- http://pajhome.org.uk/crypt/md5/ - SHA-1 algorithms are secure hash functions. -->
-  <script src="sha1.js"/>
-}}}
-
-= The Flow =
-[http://oauth.net/core/diagram.png]
-
-= Database =
-
- updated on 1/11/2009
-{{{
-CREATE TABLE `application` (
-  `ApplicationId` int(11) NOT NULL auto_increment,
-  `ConsumerKey` varchar(50) NOT NULL,
-  `ConsumerSecret` varbinary(150) NOT NULL COMMENT 'case sensitive',
-  `DateCreated` int(11) NOT NULL default '0',
-  `DateUpdated` int(11) default '0',
-  PRIMARY KEY  (`ApplicationId`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1
-
-CREATE TABLE `group` (
-  `GroupId` int(11) NOT NULL auto_increment,
-  `UserId` int(11) NOT NULL default '0',
-  `Name` varchar(50) NOT NULL,
-  `Description` text,
-  `DateCreated` int(11) NOT NULL default '0',
-  `DateUpdated` int(11) default '0',
-  PRIMARY KEY  (`GroupId`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1
-
-CREATE TABLE `session_accesstoken` (
-  `Id` int(11) NOT NULL auto_increment,
-  `ApplicationId` int(11) NOT NULL default '0',
-  `UserId` int(11) default '0',
-  `AccessToken` varbinary(100) NOT NULL,
-  `AccessTokenSecret` varbinary(100) NOT NULL,
-  `DateCreated` int(11) NOT NULL default '0',
-  `DateUpdated` int(11) default '0',
-  PRIMARY KEY  USING BTREE (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=117 DEFAULT CHARSET=latin1
-
-CREATE TABLE `session_nonce` (
-  `NonceId` int(11) NOT NULL auto_increment,
-  `Url` text,
-  `UserId` int(11) default '0',
-  `ApplicationId` int(11) default '0',
-  `Nonce` varbinary(30) default NULL,
-  `DateCreated` int(11) NOT NULL default '0',
-  `DateUpdated` int(11) default '0',
-  PRIMARY KEY  USING BTREE (`NonceId`)
-) ENGINE=MyISAM AUTO_INCREMENT=148 DEFAULT CHARSET=latin1
-
-CREATE TABLE `user` (
-  `UserId` int(11) NOT NULL auto_increment,
-  `ConsumerKey` varbinary(150) NOT NULL COMMENT 'case sensitive hash',
-  `ConsumerSecret` varbinary(150) NOT NULL COMMENT 'case sensitive hash',
-  `AcceptTerms` tinyint(1) default NULL,
-  `DateCreated` int(11) NOT NULL default '0',
-  `DateUpdated` int(11) default '0',
-  PRIMARY KEY  (`UserId`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1
-}}}
