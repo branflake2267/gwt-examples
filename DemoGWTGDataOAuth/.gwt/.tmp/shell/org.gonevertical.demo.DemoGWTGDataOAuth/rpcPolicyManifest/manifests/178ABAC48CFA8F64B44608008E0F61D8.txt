@@ -1,2 +1,0 @@
-serviceClass: org.gonevertical.demo.client.rpc.RpcService
-path: 43C390CC78249A4C8FA842289D043607.gwt.rpc
