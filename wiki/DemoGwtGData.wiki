@@ -8,8 +8,8 @@
 == Second Try - OAuth Authentication (Better) ==
  This time I setup a demo using GData OAuth authentication which was tough at first, because I didn't understand the 3 legged process. Although after finally figuring it out, its quite simple to use. This example demo, shows how the 3 legged process works, saving a token to the JDO data store for use later. I left off checking for a previous token, so it can be tried over and over. I'm impressed how easily the OAuth process actually is now and I am excited to work with it on my larger projects. I didn't sign this demo, so it could look suspicious. I don't do any data collecting other than your google id and authorized token.
 
- [http://demogwtgdataoauth.appspot.com OAuth Demo] - My OAuth Demo, and works to get your blogger list, if you have some blogs.
- [http://code.google.com/p/gwt-examples/source/browse/#svn%2Ftrunk%2FDemoGWTGDataOAuth%2Fsrc%2Forg%2Fgonevertical%2Fdemo%253Fstate%253Dclosed Source] - See the project source here.
+ * [http://demogwtgdataoauth.appspot.com OAuth Demo] - My OAuth Demo, and works to get your blogger list, if you have some blogs.
+ * [http://code.google.com/p/gwt-examples/source/browse/#svn%2Ftrunk%2FDemoGWTGDataOAuth%2Fsrc%2Forg%2Fgonevertical%2Fdemo%253Fstate%253Dclosed Source] - See the project source here.
 
  === Important Note - Register Application ===
  This is important, to get a application consumer key and secret, go here: https://www.google.com/accounts/ManageDomains
