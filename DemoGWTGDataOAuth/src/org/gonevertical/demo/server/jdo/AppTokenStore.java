@@ -73,4 +73,23 @@ public class AppTokenStore {
     
   }
   
+  public static void deleteToken() {
+    UserService userService = UserServiceFactory.getUserService();  
+    if (userService.isUserLoggedIn() == false) {
+      return;
+    }
+    User user = userService.getCurrentUser();
+    PersistenceManager pm = PMF.get().getPersistenceManager();
+    
+    try {
+      AppTokenJdo token = pm.getObjectById(AppTokenJdo.class, user.getUserId());
+      pm.deletePersistent(token);
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      pm.close();
+    }
+    
+  }
+  
 }
