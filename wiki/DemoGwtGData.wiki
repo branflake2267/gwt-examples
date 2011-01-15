@@ -11,10 +11,10 @@
  [http://demogwtgdataoauth.appspot.com OAuth Demo] - My OAuth Demo, and works to get your blogger list, if you have some blogs.
  [http://code.google.com/p/gwt-examples/source/browse/#svn%2Ftrunk%2FDemoGWTGDataOAuth%2Fsrc%2Forg%2Fgonevertical%2Fdemo%253Fstate%253Dclosed Source] - See the project source here.
 
+=== Important Note - Register Application ===
+ This is important, to get a application consumer key and secret, go here: https://www.google.com/accounts/ManageDomains
+
 == First Try - AuthSub Authentication ==
  Although I thought this would work, oauth is much better. 
  * [http://demogwtgdata.appspot.com/ Demo] - Demo authentication process and use. currently using authsub.
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGwtGdata/src/org/gonevertical/gdata/server/servlet/FetcherServlet.java Source] - Find the source here.
-
-= Important Note - Register Application =
- This is important, to get a application consumer key and secret, go here: https://www.google.com/accounts/ManageDomains
