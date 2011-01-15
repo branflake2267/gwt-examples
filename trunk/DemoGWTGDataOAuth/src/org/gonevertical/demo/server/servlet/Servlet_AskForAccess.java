@@ -126,6 +126,9 @@ public class Servlet_AskForAccess extends HttpServlet {
 
     } else if (qs.contains("do=grant") == true) {// 3. remote response, did we get a good token?
       setGrantResponse(request, response);
+      
+    } else if (qs.contains("do=revoke") == true) {
+      setRevoke(request, response);
     }
 
   }
@@ -266,7 +269,38 @@ public class Servlet_AskForAccess extends HttpServlet {
 
   }
 
+  /**
+   * revoke token
+   * 
+   * @param request
+   * @param response
+   */
+  private void setRevoke(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    
+    AppTokenJdo appToken = AppTokenStore.getToken();
+    if (appToken == null) {
+      response.getWriter().println("There is no access token to revoke.");
+      return;
+    }
+    
+    GoogleOAuthParameters oauthParameters = new GoogleOAuthParameters();
+    oauthParameters.setOAuthConsumerKey(consumerKey);
+    oauthParameters.setOAuthConsumerSecret(consumerSecret);
+    oauthParameters.setOAuthToken(appToken.getAccessTokenKey());
+    oauthParameters.setOAuthTokenSecret(appToken.getAccessTokenSecret());
 
+    GoogleOAuthHelper oauthHelper = new GoogleOAuthHelper(new OAuthHmacSha1Signer());
+    oauthHelper.getOAuthParametersFromCallback(request.getQueryString(), oauthParameters);
+    
+    try {
+      oauthHelper.revokeToken(oauthParameters);
+      
+      AppTokenStore.deleteToken(); // get rid of stored app token
+    } catch (OAuthException e) {
+      e.printStackTrace();
+    }
+    
+  }
 
 
 
