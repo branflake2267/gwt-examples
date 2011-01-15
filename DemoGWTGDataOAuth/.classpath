@@ -14,5 +14,7 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gdata-docs-meta-3.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/google-collect-1.0-rc1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jsr305.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gdata-blogger-2.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gdata-blogger-meta-2.0.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
