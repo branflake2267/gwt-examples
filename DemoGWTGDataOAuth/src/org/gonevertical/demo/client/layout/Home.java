@@ -66,7 +66,8 @@ public class Home extends Composite {
     HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
     vp.add(horizontalPanel_1);
     
-    askForAccessButton = new AskForAccessButton();
+    String scope = "http://www.blogger.com/feeds/";
+    askForAccessButton = new AskForAccessButton(scope);
     horizontalPanel_1.add(askForAccessButton);
     
     HTML htmlYouNeedAccess = new HTML("You need access first to get blog data.", true);

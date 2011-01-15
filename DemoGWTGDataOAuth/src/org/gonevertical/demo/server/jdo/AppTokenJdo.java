@@ -8,10 +8,22 @@ import javax.jdo.annotations.PrimaryKey;
 public class AppTokenJdo {
 
   /**
-   * user id - unique/distinct user id
+   * user id - userId + scope
    */
   @PrimaryKey
   private String id;
+  
+  /**
+   * Google UserId
+   */
+  @Persistent
+  private String userId;
+  
+  /**
+   * scope's Token
+   */
+  @Persistent
+  private String scope;
 
   /**
    * oauth access token
@@ -28,12 +40,15 @@ public class AppTokenJdo {
   /**
    * constructor - init access token
    * 
-   * @param id - unique/distinct user id
+   * @param userId - unique/distinct user id
    * @param accessTokenKey
    * @param accessTokenSecret
+   * @param scope 
    */
-  public AppTokenJdo(String id, String accessTokenKey, String accessTokenSecret) {
-    this.id = id;
+  public AppTokenJdo(String userId, String accessTokenKey, String accessTokenSecret, String scope) {
+    this.id = userId + "_" + scope;
+    this.userId = userId;
+    this.scope = scope;
     this.accessTokenKey = accessTokenKey;
     this.accessTokenSecret = accessTokenSecret;
   }
