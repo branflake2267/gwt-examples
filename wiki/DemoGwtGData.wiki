@@ -13,6 +13,7 @@
 
  === Important Note - Register Application ===
  This is important, to get a application consumer key and secret, go here: https://www.google.com/accounts/ManageDomains
+ [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGWTGDataOAuth/src/org/gonevertical/demo/server/servlet/Servlet_AskForAccess.java Source] - The OAuth Servlet
 
  === OAuth Popup Window ===
  To setup the token to Google, I use a popup window and servlet to do the 3 steps.
