@@ -10,6 +10,12 @@
  I started building a gwt project to test oAuth. It works great. So I am going to make a user management system out of it, and include it into my other applications. (Jan/2009)
 
 
+= See My Latest Demo and Wiki =
+ [DemoGwtGData] - Latest demo using GData and OAuth
+
+
+= Deprecating the text below = 
+
 = oAuth and GWT =
  This is my example of using oAuth in my gwt application for user authentication to protected resources. My goal, not to pass user credentials across the web. I also want to open up the possibilities of using other oAuth applications.
 
