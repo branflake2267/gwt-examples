@@ -11,7 +11,8 @@
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/FlashCard/src/com/gawkat/flashcard/client Source] - source for the demo application
 
 = My Goal Here =
- Show the way I manage Application navigation and state as well as widget navigation and state. 
+ Show the way I manage Application navigation and state as well as widget navigation and state. And one more thing, I also consider state management with and without the URL address system, as to you can run your application standalone. 
+
 
 
 = Application Navigation Visualization =
