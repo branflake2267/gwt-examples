@@ -3,10 +3,12 @@
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="95" width="735" border="0" />
 
 = Click Handler Demo =
+ I use bubble up change events to tell tell the parents whats going on. 
  * [http://gwtexample.appspot.com Demo] - demo application
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/gwt_handler_example/src/com/gawkat/gwt/example_handler/client Source] - source for the demo application
   
 = Math Flash Card Demo =
+ I use bubble up change events here also. 
  * [http://mathflashcard.appspot.com/ Demo] - demo application
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/FlashCard/src/com/gawkat/flashcard/client Source] - source for the demo application
 
