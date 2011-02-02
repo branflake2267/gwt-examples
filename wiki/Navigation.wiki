@@ -3,7 +3,7 @@
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="95" width="735" border="0" />
 
 = Click Handler Demo =
- * [ttp://gwtexample.appspot.com/ Demo] - demo application
+ * [http://gwtexample.appspot.com Demo] - demo application
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/gwt_handler_example/src/com/gawkat/gwt/example_handler/client Source] - source for the demo application
   
 = Math Flash Card Demo =
