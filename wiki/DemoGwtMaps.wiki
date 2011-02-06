@@ -2,6 +2,10 @@
 
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="96" width="740" border="0" scrolling=0/>
 
+= Please Tell Google We Want Version 3 !!!=
+ 
+[http://code.google.com/p/gwt-google-apis/issues/detail?id=381&q=v3&colspec=ID%20Type%20API%20Status%20Priority%20Milestone%20Owner%20Summary Goto Issue] - Please tell google we want Java Api Version 3!!!
+
 = Demo GWT Maps =
  The goal is to render or a map with GWT.
 
