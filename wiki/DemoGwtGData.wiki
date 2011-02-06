@@ -10,6 +10,7 @@
 
  * [http://demogwtgdataoauth.appspot.com Demo] - My OAuth Demo, and works to get your blogger list, if you have some blogs.
  * [http://code.google.com/p/gwt-examples/source/browse/#svn%2Ftrunk%2FDemoGWTGDataOAuth%2Fsrc%2Forg%2Fgonevertical%2Fdemo%253Fstate%253Dclosed Source] - See the project source here.
+ * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGWTGDataOAuth/src/org/gonevertical/demo/server/servlet/Servlet_AskForAccess.java OAuth Servlet] - servlet that takes care of the oauth
 
  === Important Note - Register Application ===
  This is important, to get a application consumer key and secret, go here: https://www.google.com/accounts/ManageDomains
