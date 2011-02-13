@@ -66,3 +66,9 @@ Java Syntax - this will get you the blobkey
     } finally {
     }
 }}}
+
+BlobInfoFactory Java Syntax
+{{{
+  BlobInfoFactory blobInfoFactory = new BlobInfoFactory(DatastoreServiceFactory.getDatastoreService());
+  BlobInfo blobInfo = blobInfoFactory.loadBlobInfo(blobKey);
+}}}
