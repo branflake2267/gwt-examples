@@ -43,7 +43,7 @@ Entity Query Syntax - which the java syntax below creates.
 SELECT * FROM __BlobInfo__ WHERE __key__ = __BlobInfo__("Nik60h9zR0zjTB_OnLG9Ow")
 }}}
 
-Java Syntax - this will get you the blobkey
+Java Entity  Query Syntax - this will get you the blobkey
 {{{
     Entity[] entities = null;
     try {
