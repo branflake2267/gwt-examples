@@ -42,3 +42,28 @@ Entity Query Syntax
 {{{
 SELECT * FROM __BlobInfo__ WHERE __key__ = __BlobInfo__("Nik60h9zR0zjTB_OnLG9Ow")
 }}}
+
+Java Syntax
+{{{
+    Entity[] entities = null;
+    try {
+      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+      Query q = new Query("__BlobInfo__");
+
+      if (filter.getBlobKey() != null) {
+        Key key = KeyFactory.createKey("__BlobInfo__", filter.getBlobKey());
+        q.addFilter("__key__", Query.FilterOperator.EQUAL, key);
+      }
+
+      PreparedQuery pq = datastore.prepare(q);
+      List<Entity> entList = pq.asList(FetchOptions.Builder.withLimit(limit).offset(offset));
+
+      entities = new Entity[entList.size()];
+      entList.toArray(entities);
+      
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      // TODO close stuff???
+    }
+}}}
