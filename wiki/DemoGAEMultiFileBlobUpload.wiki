@@ -29,3 +29,9 @@
  * [http://ourvirtualtours.appspot.com/ Virtual Tours]
  * [http://ourvirtualtours.appspot.com/#vt_view?view=6012 360 Degree Virtual Tour] - This is a virtual tour of Diamond Head Oahu, using virtual file store in the blob store, which works great!
  
+
+== Querying BlobInfo ==
+ To query a BlobKey in BlobInfo using the data viewer GQL syntax.
+{{{
+SELECT * FROM __BlobInfo__ WHERE __key__ = KEY('__BlobInfo__','AMIfv940prQksEQ-cbqa_T3kupYZUKj0jFS6CEWqUfW5gTjuriiJFdVsg_Z4rEBl3aldWS7ygE_Vbcl85IWRE2vtxHvB7GF5sdtE0kIkrPk6c2hsfxlqfdocpu1zeOQygEb8RslST1cF9bT37n_9X1kdQpRtu5gyPB3-AgmpZ1GtbzWyGv7Uj1M')
+}}}
