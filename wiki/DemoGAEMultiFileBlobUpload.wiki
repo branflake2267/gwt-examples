@@ -30,7 +30,7 @@
  * [http://ourvirtualtours.appspot.com/#vt_view?view=6012 360 Degree Virtual Tour] - This is a virtual tour of Diamond Head Oahu, using virtual file store in the blob store, which works great!
  
 
-== Querying BlobInfo ==
+== Querying __BlobInfo__ WHERE BobKey ==
  To query a BlobKey  from BlobInfo GQL, Entity and Java query formats below. 
 
 GQL Syntax
