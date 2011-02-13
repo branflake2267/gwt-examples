@@ -31,26 +31,26 @@
  
 
 == Querying BlobInfo ==
- To query a BlobKey in BlobInfo using the data viewer GQL syntax.
+ To query a BlobKey  from BlobInfo GQL, Entity and Java query formats below. 
 
 GQL Syntax
 {{{
 SELECT * FROM __BlobInfo__ WHERE __key__ = KEY('__BlobInfo__','AMIfv940prQksEQ-cbqa_T3kupYZUKj0jFS6CEWqUfW5gTjuriiJFdVsg_Z4rEBl3aldWS7ygE_Vbcl85IWRE2vtxHvB7GF5sdtE0kIkrPk6c2hsfxlqfdocpu1zeOQygEb8RslST1cF9bT37n_9X1kdQpRtu5gyPB3-AgmpZ1GtbzWyGv7Uj1M')
 }}}
 
-Entity Query Syntax
+Entity Query Syntax - which the java syntax below creates.
 {{{
 SELECT * FROM __BlobInfo__ WHERE __key__ = __BlobInfo__("Nik60h9zR0zjTB_OnLG9Ow")
 }}}
 
-Java Syntax
+Java Syntax - this will get you the blobkey
 {{{
     Entity[] entities = null;
     try {
       DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
       Query q = new Query("__BlobInfo__");
 
-      if (filter.getBlobKey() != null) {
+      if (filter.getBlobKey() != null) { // -> filter is my object I use to drill the blobkey
         Key key = KeyFactory.createKey("__BlobInfo__", filter.getBlobKey());
         q.addFilter("__key__", Query.FilterOperator.EQUAL, key);
       }
@@ -64,6 +64,5 @@ Java Syntax
     } catch (Exception e) {
       e.printStackTrace();
     } finally {
-      // TODO close stuff???
     }
 }}}
