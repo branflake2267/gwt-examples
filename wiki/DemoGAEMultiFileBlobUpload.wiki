@@ -32,6 +32,13 @@
 
 == Querying BlobInfo ==
  To query a BlobKey in BlobInfo using the data viewer GQL syntax.
+
+GQL Syntax
 {{{
 SELECT * FROM __BlobInfo__ WHERE __key__ = KEY('__BlobInfo__','AMIfv940prQksEQ-cbqa_T3kupYZUKj0jFS6CEWqUfW5gTjuriiJFdVsg_Z4rEBl3aldWS7ygE_Vbcl85IWRE2vtxHvB7GF5sdtE0kIkrPk6c2hsfxlqfdocpu1zeOQygEb8RslST1cF9bT37n_9X1kdQpRtu5gyPB3-AgmpZ1GtbzWyGv7Uj1M')
+}}}
+
+Entity Query Syntax
+{{{
+SELECT * FROM __BlobInfo__ WHERE __key__ = __BlobInfo__("Nik60h9zR0zjTB_OnLG9Ow")
 }}}
