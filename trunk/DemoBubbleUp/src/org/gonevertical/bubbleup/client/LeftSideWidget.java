@@ -16,7 +16,7 @@ public class LeftSideWidget extends Composite {
     VerticalPanel verticalPanel = new VerticalPanel();
     initWidget(verticalPanel);
     
-    HTML htmlLeftSideWidget = new HTML("Left Side Widget: Show Events That Happen In other Widgets. &nbsp;&nbsp;&nbsp;&nbsp;", true);
+    HTML htmlLeftSideWidget = new HTML("<b>Left Side Widget: Show Events That Happen In other Widgets.</b> &nbsp;&nbsp;&nbsp;&nbsp;", true);
     verticalPanel.add(htmlLeftSideWidget);
     
     pList = new VerticalPanel();

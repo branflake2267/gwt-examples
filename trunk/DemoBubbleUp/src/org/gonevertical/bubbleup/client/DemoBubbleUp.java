@@ -14,6 +14,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -33,8 +34,15 @@ public class DemoBubbleUp implements EntryPoint {
     // my parent widget example
     ParentTopWidget w = new ParentTopWidget(cp);
     
+    VerticalPanel vp = new VerticalPanel();
+    vp.setWidth("100%");
+    vp.add(w);
+    vp.setCellHorizontalAlignment(w, HorizontalPanel.ALIGN_CENTER);
+    
     // add to root panel
-    RootPanel.get().add(w);
+    RootPanel.get().add(vp);
+    
+    
     
     // global app observation
     cp.addChangeHandler(new ChangeHandler() {
