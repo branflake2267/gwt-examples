@@ -2,6 +2,11 @@
 
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="95" width="735" border="0" />
 
+= Bubble Up =
+ Here is another example of bubble up events.
+ * [http://demobubbleup.appspot.com Demo] - This has parent and child widgets. You can check the source out for my strategies of events. I also use Client Persistence Widget.
+ * [http://code.google.com/p/gwt-examples/source/browse/#svn%2Ftrunk%2FDemoBubbleUp%2Fsrc%2Forg%2Fgonevertical%2Fbubbleup%2Fclient Source] - source code for the bubbler
+
 = Click Handler Demo =
  I use bubble up change events to tell tell the parents whats going on. 
  * [http://gwtexample.appspot.com Demo] - demo application
