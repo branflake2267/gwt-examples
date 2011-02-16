@@ -25,7 +25,7 @@ public class Upload extends HttpServlet {
 		int len = request.getContentLength();
 		int mb = (1024 * 1024) * 1;
 		if (len > mb) { 
-			throw new RuntimeException("Sorry that file is to large. Try < 1024 or 1MB file");
+		  throw new RuntimeException("Sorry that file is too large. Try < 1024 or 1MB file");
     }
 		
 		/*
