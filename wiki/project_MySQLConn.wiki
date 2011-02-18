@@ -16,14 +16,14 @@
  * [http://gonevertical.org/DemoFeedback/ Feedback Application Demo] - hosted on tomcat
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoFeedback/src/org/gonevertical/demo/client/feedback Source]
 
-= MySql JDBC Connector =
- * Add a JDBC connector jar to your Build Path
- * I put it here. My Projects are configured like: /opt/gwt-linux/mysql-connector-java-5.0.8-bin.jar
- * Check your Eclipse referenced libraries for jar
+= The MySql JDBC Connector =
+ * 1. Move the JDBC library to your WEB-INF/lib folder
+ * 2. Add the library to your build path. Right click > \ Add to build path.
  * Example Eclipse Project Source code of Mysql Conn - http://gwt-examples.googlecode.com/svn/trunk/gwt-test-MySQLConn/src/com/tribling/gwt/test/mysqlconn/server/
- == Links ==
- * JDBC Connector - http://www.mysql.com/products/connector/j/ - download MySQL Connector/J 5.1
- * Example MySQL Database, The King James Bible [http://sourceforge.net/project/showfiles.php?group_id=186532&package_id=249676&release_id=548680 Download Bible Database Here] (It comes as a MySQL Dump)
+
+ == Reference links ==
+ *  [http://www.mysql.com/products/connector/j/] -Mysql JDBC connector
+ *  [http://sourceforge.net/project/showfiles.php?group_id=186532&package_id=249676&release_id=548680 Bible Database] - Bible table I used for example
 
  == Connection Pooling ==
  One of the things that slows down mysql is the authorization process which can take up 400ms of latency. Pooling connection keeps them alive, warm and ready for the next request, especially when you have many coming and going. I recommend using connection pooling, it will speed up your application tremendously. 
