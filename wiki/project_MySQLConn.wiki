@@ -48,7 +48,7 @@ Connection conn = dd.getConnection(); // to use the connection
 ...
 }}}
 
-=== Some of My Pooling Challenges ===
+ === Some of My Pooling Challenges ===
  * Its very important to escape your strings before inserting or updating, b/c it can kill a thread.
  * You can hit OS limits like open sockets and aborted connection failures. [http://codintips.blogspot.com/2010/02/mysql-communication-failure-and-aborted.html More on that]
  * I recommend threading queries to mysql, page request, like mapping in GAE. I do this in ParseCsv2Sql to speed processing
