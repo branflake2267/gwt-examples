@@ -27,8 +27,8 @@
  == Connection Pooling ==
  One of the things that slows down mysql is the authorization process which can take up 400ms of latency. Pooling connection keeps them alive, warm and ready for the next request, especially when you have many coming and going. I recommend using connection pooling, it will speed up your application tremendously. 
 
- * [http://code.google.com/p/gwt-examples/source/browse/trunk/sand/src/com/gawkat/server/GreetingServiceImpl.java Source] - Connection Setup
- * [http://code.google.com/p/gwt-examples/source/browse/trunk/sand/war/WEB-INF/web.xml] - web.xml context setup
+ * [http://code.google.com/p/gwt-examples/source/browse/trunk/sand/src/com/gawkat/server/GreetingServiceImpl.java Server Source] - Connection Setup
+ * [http://code.google.com/p/gwt-examples/source/browse/trunk/sand/war/WEB-INF/web.xml web.xml] - web.xml Context setup
 
  == Tomcat Setup ==
  When you use tomcat, the servlet container has to be given access outside of its container. More info here: [gwtTomcat].
