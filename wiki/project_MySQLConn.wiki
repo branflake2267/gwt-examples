@@ -27,11 +27,11 @@
 == Connection Pooling ==
  One of the things that slows down mysql is the authorization process which can take up 400ms of latency. Pooling connections keeps them alive, warm and ready for the next request, especially when you have many coming and going. I recommend using connection pooling, it will speed up your application tremendously. Below I list links to some of my code that I use connection pooling.
 
-=== Project Example (Called Sand at moment) ===
+ === Project Example (Called Sand at moment) ===
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/sand/src/com/gawkat/server/GreetingServiceImpl.java Server Source] - Connection Setup
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/sand/war/WEB-INF/web.xml web.xml] - web.xml Context setup example
 
-=== My ParseCsv2Sql System Use===
+ === My ParseCsv2Sql System Use===
  * [http://code.google.com/p/parsecsv2sql/source/browse/trunk/Csv2Sql/war/META-INF/context.xml context.xml] - Another context setup example in my parseCsv2sql library
  * [http://code.google.com/p/parsecsv2sql/source/browse/trunk/Csv2Sql/src/org/gonevertical/dts/data/DatabaseData.java My Connection Systems source] - I use this library to control all my JDBC connections when I use mysql and GWT. It can pool int and out of tomcat.
   Using the ParseCsv2Sql code. [http://code.google.com/p/parsecsv2sql/source/browse/trunk/Csv2Sql/src/org/gonevertical/dts/data/DatabaseData.java My Connection Systems source]
