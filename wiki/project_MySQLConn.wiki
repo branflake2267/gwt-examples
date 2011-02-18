@@ -9,7 +9,7 @@
  Sample an application using MySql on Apache Tomcat server. 
 
 == MySql Conn Demo == 
- * [http://gonevertical.org/DemoMySqlConn/ MySql Conn Application] - New Demo using GWT 2.03+ - hosted on tomcat
+ * [http://gonevertical.org/DemoMySqlConn/ Demo] - MySql conn application demo using GWT 2.03+ - hosted on tomcat
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoMySqlConn/src/org/gonevertical/demo/client Source] - See the code
 
 == FeedBack MySql Conn Demo ==
