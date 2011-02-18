@@ -47,6 +47,11 @@ dd.setServletContext(serverInfo, context, "jdbc/contextNameInContextXml"); //set
 Connection conn = dd.getConnection(); // to use the connection
 ...
 }}}
+ ==== Some of My Pooling Challenges ====
+ * Its very important to escape your strings before inserting or updating, b/c it can kill a thread.
+ * You can hit OS limits like open sockets and aborted connection failures. [http://codintips.blogspot.com/2010/02/mysql-communication-failure-and-aborted.html More on that]
+ * I recommend threading queries to mysql, page request, like mapping in GAE. I do this in ParseCsv2Sql to speed processing
+ * On a windows machine, it may look like a denial of service (DOS) attack and you will have to change the registry. I've wrote about this somewhere too. Beware for aborted connections.
 
 == Tomcat Setup Notes ==
  When you use tomcat, the servlet container has to be given access outside of its container.
