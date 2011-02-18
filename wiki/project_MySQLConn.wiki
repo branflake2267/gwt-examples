@@ -32,6 +32,18 @@
  * [http://code.google.com/p/parsecsv2sql/source/browse/trunk/Csv2Sql/war/META-INF/context.xml context.xml] - Another context setup example in my parseCsv2sql library
  * [http://code.google.com/p/parsecsv2sql/source/browse/trunk/Csv2Sql/src/org/gonevertical/dts/data/DatabaseData.java My Connection Systems source] - I use this library to control all my JDBC connections when I use mysql and GWT. It can pool int and out of tomcat.
 
+Using the ParseCsv2Sql code. [http://code.google.com/p/parsecsv2sql/source/browse/trunk/Csv2Sql/src/org/gonevertical/dts/data/DatabaseData.java My Connection Systems source]
+{{{
+// paired down code example. 
+String serverInfo = getServletContext().getServerInfo();
+Context context = DatabaseData.initContext();
+DatabaseData dd = DatabaseData(DatabaseData.TYPE_MYSQL, "ark_home", "3306", "test", "test#", "test"); // when using context, the parameters here don't matter.
+dd.setServletContext(serverInfo, context, "jdbc/contextNameInContextXml"); //set context, authorization parameters are retrieved from context.xml file.
+// dd.setReadOnly(true); // for slaves, no write
+Connection conn = dd.getConnection(); // to use the connection
+...
+}}}
+
  == Tomcat Setup Notes ==
  When you use tomcat, the servlet container has to be given access outside of its container.
  * [gwtTomcat] - about tomcat setup, install and more.
