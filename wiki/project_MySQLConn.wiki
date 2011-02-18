@@ -66,7 +66,7 @@ grant codeBase "file:${catalina.home}/webapps/-" {
 }}} 
 
 == My Redundancy Notes ==
- I recommend at least setting up two mysql servers at least, one master and one slave, for fail over to in the case of one of the failures. If your really worried about it, I would switch to google app engine. SQL has its limitations with large datasets and huge amount of hits all at once. 
+ I recommend at least setting up two mysql servers at least, one master and one slave, one for fail over to in the case of one of the failures. If your really worried about it, I would switch to google app engine. SQL has its limitations with large datasets and huge amount of hits all at once. 
 
 
 = MySql Code Snippets Below =
