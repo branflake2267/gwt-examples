@@ -3,7 +3,7 @@
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="95" width="735" border="0" />
 
 = Auto Text Box Expansion =
- Goal is to auto expand textbox and textarea input boxes.
+ Goal is to auto expand textbox and textarea input boxes. Grow the textbox on keyup.
  
  * [http://demogwttextexpand.appspot.com/ Demo] - Textbox auto expander demo
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoTextBoxExpand/src/org/gonevertical/textboxexpand/client/TextBoxExpandWidget.java Source] - Textbox
