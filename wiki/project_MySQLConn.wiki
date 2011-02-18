@@ -30,7 +30,7 @@
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/sand/src/com/gawkat/server/GreetingServiceImpl.java Server Source] - Connection Setup
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/sand/war/WEB-INF/web.xml web.xml] - web.xml Context setup example
  * [http://code.google.com/p/parsecsv2sql/source/browse/trunk/Csv2Sql/war/META-INF/context.xml context.xml] - Another context setup example in my parseCsv2sql library
- * [http://code.google.com/p/parsecsv2sql/source/browse/trunk/Csv2Sql/src/org/gonevertical/dts/data/DatabaseData.java My Connection Systems] - I use this library to control all my JDBC connections when I use mysql and GWT. It can pool int and out of tomcat.
+ * [http://code.google.com/p/parsecsv2sql/source/browse/trunk/Csv2Sql/src/org/gonevertical/dts/data/DatabaseData.java My Connection Systems source] - I use this library to control all my JDBC connections when I use mysql and GWT. It can pool int and out of tomcat.
 
  == Tomcat Setup Notes ==
  When you use tomcat, the servlet container has to be given access outside of its container.
