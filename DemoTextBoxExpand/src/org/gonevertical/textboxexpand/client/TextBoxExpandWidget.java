@@ -20,6 +20,7 @@ public class TextBoxExpandWidget extends Composite {
     RootPanel.get().add(vp);
     
     tb = new TextBox();
+    tb.setText("Type in this");
     vp.add(tb);
     
     tb.addKeyUpHandler(new KeyUpHandler() {
@@ -33,7 +34,7 @@ public class TextBoxExpandWidget extends Composite {
     h = new HTML();
     AbsolutePanel ap = new AbsolutePanel();
     RootPanel.get().add(ap);
-    ap.add(h, -100, -100);
+    ap.add(h, -500, -500);
   }
 
   private void setSize() {

@@ -15,17 +15,32 @@ public class DemoTextBoxExpand implements EntryPoint {
   
   public void onModuleLoad() {
   
-    TextBoxExpandWidget w = new TextBoxExpandWidget();
+    TextBoxExpandWidget tb = new TextBoxExpandWidget();
+    
+    TextAreaExpandWidget ta = new TextAreaExpandWidget();
+    
+    HorizontalPanel hp1 = new HorizontalPanel();
+    hp1.add(new HTML("TextBox"));
+    hp1.add(tb);
+    
+    HorizontalPanel hp2 = new HorizontalPanel();
+    hp2.add(new HTML("TextArea"));
+    hp2.add(ta);
+    
+    VerticalPanel vp2 = new VerticalPanel();
+    vp2.add(new HTML("Type in the input boxes continously to see the inputs expand."));
+    vp2.add(hp1);
+    vp2.add(new HTML("&nbsp;"));
+    vp2.add(hp2);
+    
     
     VerticalPanel vp = new VerticalPanel();
     vp.setWidth("100%");
-    vp.add(w);
-    vp.setCellHorizontalAlignment(w, HorizontalPanel.ALIGN_CENTER);
+    vp.add(vp2);
+    vp.setCellHorizontalAlignment(vp2, HorizontalPanel.ALIGN_CENTER);
     
     // add to root panel
     RootPanel.get().add(vp);
-    
-    
   }
 
 }
