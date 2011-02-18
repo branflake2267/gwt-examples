@@ -6,9 +6,9 @@
 <wiki:toc max_depth="2" />
 
 == Demo and Source ==
- * [http://demogwtdatetimegae.appspot.com/ Demo]
- * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoGwtDateTime_Source Source Main] 
- * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoGwtDateTime_GAE Source GAE]
+ * [http://demogwtdatetimegae.appspot.com/ Demo] - Demo DateTime Conversion
+ * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoGwtDateTime_Source Source Main]
+ * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoGwtDateTime_GAE Source GAE] 
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoGwtDateTime_Gadget Source Gadget]
 
 = How to use Date/Time with/in GWT =
