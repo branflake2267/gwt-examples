@@ -13,7 +13,7 @@
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoMySqlConn/src/org/gonevertical/demo/client Source] - See the code in the packages
 
  == MySql FeedBack Demo ==
- * [http://gonevertical.org/DemoFeedback/ Feedback Application Demo] - hosted on tomcat
+ * [http://gonevertical.org/DemoFeedback/ Demo] - Click on the button in the demo. Its hosted on my tomcat server
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoFeedback/src/org/gonevertical/demo/client/feedback Source] - See the code in the packages
 
 = The MySql JDBC Connector =
@@ -28,9 +28,10 @@
  One of the things that slows down mysql is the authorization process which can take up 400ms of latency. Pooling connection keeps them alive, warm and ready for the next request, especially when you have many coming and going. I recommend using connection pooling, it will speed up your application tremendously. 
 
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/sand/src/com/gawkat/server/GreetingServiceImpl.java Server Source] - Connection Setup
- * [http://code.google.com/p/gwt-examples/source/browse/trunk/sand/war/WEB-INF/web.xml web.xml] - web.xml Context setup
+ * [http://code.google.com/p/gwt-examples/source/browse/trunk/sand/war/WEB-INF/web.xml web.xml] - web.xml Context setup example
+ * [http://code.google.com/p/parsecsv2sql/source/browse/trunk/Csv2Sql/war/META-INF/context.xml context.xml] - Another context setup example in my parseCsv2sql library
 
- == Tomcat Setup ==
+ == Tomcat Setup Notes ==
  When you use tomcat, the servlet container has to be given access outside of its container. More info here: [gwtTomcat].
 
  * Fix this problem: java.security.AccessControlException access denied (java.net.SocketPermission localhost resolve)
@@ -47,7 +48,7 @@ grant codeBase "file:${catalina.home}/webapps/-" {
 }}} 
 
 
-= Code Snippets =
+= MySql Code Snippets Below =
 
  == MySQL Connection ==
  Connect to db. Don't forget to change the parameters.
