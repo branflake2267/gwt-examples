@@ -18,10 +18,10 @@
 
 = The MySql JDBC Connector =
  * 1. Move the JDBC library to your ./WEB-INF/lib folder
- * 2. Add the library to your build path. Right click > \ Add to build path.
+ * 2. Add the library to your build path. Right click >  Add to build path.
 
  == Reference links ==
- *  [http://www.mysql.com/products/connector/j/] -Get the Mysql JDBC connector here
+ *  [http://www.mysql.com/products/connector/j/ Connector Downloads] - Get the MySql JDBC connector here
  *  [http://sourceforge.net/project/showfiles.php?group_id=186532&package_id=249676&release_id=548680 Bible Database] - Bible table I used for the example
 
  == Connection Pooling ==
@@ -33,7 +33,8 @@
  * [http://code.google.com/p/parsecsv2sql/source/browse/trunk/Csv2Sql/src/org/gonevertical/dts/data/DatabaseData.java My Connection Systems] - I use this library to control all my JDBC connections when I use mysql and GWT. It can pool int and out of tomcat.
 
  == Tomcat Setup Notes ==
- When you use tomcat, the servlet container has to be given access outside of its container. More info here: [gwtTomcat].
+ When you use tomcat, the servlet container has to be given access outside of its container.
+ * [gwtTomcat] - about tomcat setup, install and more.
 
  * Fix this problem: java.security.AccessControlException access denied (java.net.SocketPermission localhost resolve)
  * More information on this here: [gwtTomcat]
