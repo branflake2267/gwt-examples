@@ -45,8 +45,8 @@
 
 = Examples / Demos =
 
-== Example of Advertising Gadget For My Wiki ==
- This is my first gadget using the xml editor and uploading it to the GAE in one of my demos.
+== Gooogle Code Project Wiki Advertising ==
+ Advertising in a Google project wiki advertising is quite simple. Check out the gadget xml file. All you'll need to make is a simple xml file with the advertising javascript code.
 
  This is how you add it to the wiki.
 {{{
