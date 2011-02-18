@@ -32,6 +32,8 @@
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/sand/war/WEB-INF/web.xml web.xml] - web.xml Context setup example
 
  === My ParseCsv2Sql System Use===
+  If your wondering what the heck this is. Well I got sick and tired of dealing with jdbc connections to multiple database types at one time. So I wrote this library of code, to deal with it using guice dependency injection I can run my sql connections quite effectively. The below snippet shows the generation of a connection, which simplifies it for me to access a database. If you browse the code of the parsecsv2sql, which grew to more than parsing csv automatically. it can run the mysql system, in and out of tomcat. I can use pooling inside tomcat. Or I can use pooling inside my own application.
+
  * [http://code.google.com/p/parsecsv2sql/source/browse/trunk/Csv2Sql/war/META-INF/context.xml context.xml] - Another context setup example in my parseCsv2sql library
  * [http://code.google.com/p/parsecsv2sql/source/browse/trunk/Csv2Sql/src/org/gonevertical/dts/data/DatabaseData.java My Connection Systems source] - I use this library to control all my JDBC connections when I use mysql and GWT. It can pool int and out of tomcat.
   Using the ParseCsv2Sql code. [http://code.google.com/p/parsecsv2sql/source/browse/trunk/Csv2Sql/src/org/gonevertical/dts/data/DatabaseData.java My Connection Systems source]
@@ -62,6 +64,9 @@ grant codeBase "file:${catalina.home}/webapps/-" {
       permission java.net.SocketPermission "192.168.12.81:3306", "connect";
 };
 }}} 
+
+== My Redundancy Notes ==
+ I recommend at least setting up two mysql servers at least, one master and one slave, for fail over to in the case of one of the failures. If your really worried about it, I would switch to google app engine. SQL has its limitations with large datasets and huge amount of hits all at once. 
 
 
 = MySql Code Snippets Below =
