@@ -66,3 +66,5 @@
 
 == Most annoying thing about coding with Windows ==
  * Focus on window with mouse wheel scroll. - You have to click on window to focus to scroll, not in linux. Linux wheel scroll Much better!!!!!!!!
+
+[http://www.eclipse.org/donate/donorlist.php http://www.eclipse.org/donate/images/friendslogo160.jpg] http://www.eclipse.org/helios/friends.php - I'm proud to have donated to such a awesome project!
