@@ -7,4 +7,4 @@
 
  * [http://code.google.com/support/bin/request.py?contact_type=AppEngineCPURequest AppEngineCPURequest] - GWT Advocate told me to apply here for more slots.
  * [http://code.google.com/support/bin/request.py?contact_type=AppEngineBillingSupport AppEngineBillingSupport] - App Engine Billing Support Request, could ask for slots here.
- 
+ * [http://code.google.com/appengine/kb/billing.html App Engine Billing KB] - App Engine Knowlege Base
