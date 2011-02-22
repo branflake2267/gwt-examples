@@ -5,4 +5,4 @@
 = Request For Slots =
  I'm looking for a formal way to request more slots.
 
- * [http://code.google.com/support/bin/request.py?contact_type=AppEngineBillingSupport AppEngineBillingSupport] App Engine Billing Support Request, could ask for slots here.
+ * [http://code.google.com/support/bin/request.py?contact_type=AppEngineBillingSupport AppEngineBillingSupport] - App Engine Billing Support Request, could ask for slots here.
