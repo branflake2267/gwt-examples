@@ -15,3 +15,24 @@
  * [http://demogwtmaps.appspot.com Demo] - Simple Maps Demo
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGWTMaps/src/org/gonevertical/demogwtmaps/client/Demo1.java Source] - find the source here
  * [http://c.gawkat.com/#vt_home c.Gawkat.com] - I use gwt maps api here for my panoramic virtual tours.
+
+== Custom Map Controls ==
+ Want to add your own control to the map.
+{{{
+    ControlPosition controlPosition = new ControlPosition(ControlAnchor.TOP_LEFT, 100, 100);
+    Control handControl = new Control.CustomControl(controlPosition) {
+      public boolean isSelectable() {
+        return true;
+      }
+      protected Widget initialize(MapWidget map) {
+        Image mhand = new Image(UI_IMAGES.map_hand());
+        mhand.addClickHandler(new ClickHandler() {
+          public void onClick(ClickEvent event) {
+            // do something
+          }
+        });
+        return mhand;
+      }
+    };
+    map.addControl(handControl);
+}}}
