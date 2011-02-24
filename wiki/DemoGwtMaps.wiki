@@ -2,7 +2,7 @@
 
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="96" width="740" border="0" scrolling=0/>
 
-= Version 3 Api =
+= Notes On Version 3 Api =
  * [http://code.google.com/p/gwt-google-apis/issues/detail?id=381&q=v3&colspec=ID%20Type%20API%20Status%20Priority%20Milestone%20Owner%20Summary Goto Issue] - Issue for version 3 api. 
  * I am suggesting to automate the javascript api implementation builds
  * vinray has made a v3 api, but JSIO objects have to be stripped
