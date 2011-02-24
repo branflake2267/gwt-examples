@@ -37,6 +37,7 @@
     map.addControl(handControl);
 }}}
 
+ Method example
 {{{
 private void drawMapAddItems() {
     final Image mhand = new Image(UI_IMAGES.map_hand());
