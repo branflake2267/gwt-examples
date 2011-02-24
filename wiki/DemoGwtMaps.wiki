@@ -19,7 +19,7 @@
 == Custom Map Controls ==
  Want to add your own control to the map.
 {{{
-    ControlPosition controlPosition = new ControlPosition(ControlAnchor.TOP_LEFT, 100, 100);
+    ControlPosition controlPosition = new ControlPosition(ControlAnchor.TOP_LEFT, 100, 0);
     Control handControl = new Control.CustomControl(controlPosition) {
       public boolean isSelectable() {
         return true;
@@ -35,4 +35,54 @@
       }
     };
     map.addControl(handControl);
+}}}
+
+{{{
+private void drawMapAddItems() {
+    final Image mhand = new Image(UI_IMAGES.map_hand());
+    final Image mhandsel = new Image(UI_IMAGES.map_hand_sel());
+    
+    final Image mpush = new Image(UI_IMAGES.map_add_pushpin());
+    final Image mpushsel = new Image(UI_IMAGES.map_add_pushpin_sel());
+    
+    
+    ControlPosition controlPosition = new ControlPosition(ControlAnchor.TOP_LEFT, 100, 0);
+    Control handControl = new Control.CustomControl(controlPosition) {
+      public boolean isSelectable() {
+        return true;
+      }
+      public Widget initialize(MapWidget map) {  
+        return mhand;
+      }
+    };
+    map.addControl(handControl);
+    
+    ControlPosition controlPosition2 = new ControlPosition(ControlAnchor.TOP_LEFT, 100, 0);
+    Control handControl2 = new Control.CustomControl(controlPosition2) {
+      public boolean isSelectable() {
+        return true;
+      }
+      public Widget initialize(MapWidget map) {  
+        return mhandsel;
+      }
+    };
+    map.addControl(handControl2);
+    
+    mhand.addClickHandler(new ClickHandler() {
+      public void onClick(ClickEvent event) {
+        mhand.setVisible(false);
+        mhandsel.setVisible(true);
+      }
+    });
+    
+    mhandsel.addClickHandler(new ClickHandler() {
+      public void onClick(ClickEvent event) {
+        mhand.setVisible(true);
+        mhandsel.setVisible(false);
+      }
+    });
+    
+    mhandsel.setVisible(true);
+    mhand.setVisible(false);
+  }
 }}}
