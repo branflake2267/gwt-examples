@@ -3,6 +3,7 @@
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="96" width="740" border="0" scrolling=0/>
 
 = Notes On Version 3 Api =
+ Maps V3 api needs outside help due to limited resources currently on other projects at the moment. I am suggesting automating the javascript implementation build process to help us not fall behind on future javascript api version.
  * [http://code.google.com/p/gwt-google-apis/issues/detail?id=452 Automate Issue] - Lets get the api build process automated so we don't fall behind again!
  * [http://code.google.com/p/gwt-google-apis/issues/detail?id=381&q=v3&colspec=ID%20Type%20API%20Status%20Priority%20Milestone%20Owner%20Summary Request V3 Issue] - Issue for version 3 api. 
  * [https://groups.google.com/forum/#!topic/gwt-google-apis/4e9GU638KCc] - V3 contribution, vinray has made a v3 api, but JSIO objects have to be stripped
