@@ -5,11 +5,17 @@
 =Table of Contents= 
 <wiki:toc max_depth="2" />
 
-== Demo and Source ==
+= Demo and Source =
  * [http://demogwtdatetimegae.appspot.com/ Demo] - Demo DateTime Conversion
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoGwtDateTime_Source Source Main]
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoGwtDateTime_GAE Source GAE] 
  * [http://code.google.com/p/gwt-examples/source/browse/#svn/trunk/DemoGwtDateTime_Gadget Source Gadget]
+
+= Client vs Server =
+ Its ok to use the Date Class, its going no were in the Java versions GWT supports.
+ * Calendar class is not yet available on the client side (yet). It's emulation planned for development.
+ * Its ok to use Date on client side, its going no were in Java 1.5 which GWT now supports.
+ * Below in my examples if you see Calendar, its on the server side. 
 
 = How to use Date/Time with/in GWT =
  * get unix time stamp
