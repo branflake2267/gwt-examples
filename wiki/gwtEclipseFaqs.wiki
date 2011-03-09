@@ -237,8 +237,9 @@ exec /usr/lib/eclipse/eclipse \
 eclipse -XX:PermSize=128m -XX:MaxPermSize=512m
 }}}
 
- Or (For apple/mac)
- Goto Macintosh HD Root>Applications>Library>eclipse>Show package contents of Eclipse Application icon>Contents>MacOs>eclipse.ini
+ Or 
+ === For apple/mac ===
+  Goto Macintosh HD Root>Applications>Library>eclipse>Show package contents of Eclipse Application icon>Contents>MacOs>eclipse.ini
  
 
 
