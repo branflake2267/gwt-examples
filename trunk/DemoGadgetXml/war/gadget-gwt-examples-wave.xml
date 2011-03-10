@@ -9,9 +9,9 @@
     <![CDATA[
        <div align="center">
        
-      <table border=1>
+      <table>
         <tr>
-      		<td width="130" align="center">
+      		<td width="130" align="center" valign="top">
       			<div id='leftad'>
       			
 					<script type="text/javascript"><!--
@@ -30,7 +30,7 @@
       			</div>
       		</td>
       		
-      		<td valign="top">
+      		<td valign="top" align="center">
       		    Ask me about GWT?
      			<div id="waveframe" style="width: 800px; height: 800px;"></div><script type="text/javascript"   src="http://www.google.com/jsapi"></script><script type="text/javascript">google.load("wave", "1");google.setOnLoadCallback(initialize);function initialize() {  var waveframe = document.getElementById("waveframe");  var embedOptions = {    target: waveframe,    header: true,    toolbar: true,    footer: true  };  var wavePanel = new google.wave.WavePanel(embedOptions);  wavePanel.loadWave("googlewave.com!w+mQM8zmAWA");}</script> 		 	
       		</td>  
