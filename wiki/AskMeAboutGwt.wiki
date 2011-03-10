@@ -1,5 +1,3 @@
 #summary Ask me about GWT
 
-= Ask Me About GWT =
-
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-wave.xml" border="0"  width="1000" height="950" />
