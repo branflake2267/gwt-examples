@@ -1,8 +1,7 @@
 #summary My GWT HTML5 notes
 
-<center>
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="95" width="735" border="0" />
-</center>
+
 
 = HTML5 and GWT =
  I'm going to write down my HTML5 stuff here:
