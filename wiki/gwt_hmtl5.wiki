@@ -68,3 +68,34 @@ private ImageData scaleImage(Image image, double scaleToRatio) {
     return imageData;
 }
 }}}
+
+== Crop Image ==
+ Crop an Image using the canvas element. Look at the scaling example for the image handler.
+{{{
+private ImageData cropImage(Image image, double sx, double sy, double sw, double sh) {
+    
+    Canvas canvasTmp = Canvas.createIfSupported();
+    RootPanel.get().add(canvasTmp);
+    Context2d context = canvasTmp.getContext2d();
+
+    canvasTmp.setCoordinateSpaceHeight((int) sh);
+    canvasTmp.setCoordinateSpaceWidth((int) sw);
+    
+    ImageElement imageElement = ImageElement.as(image.getElement());
+   
+    double dx = 0;
+    double dy = 0;
+    double dw = sw;
+    double dh = sh;
+    
+    // draw image to canvas
+    context.drawImage(imageElement, sx, sy, sw, sh, dx, dy, dw, dh);
+    
+    // get image data
+    double w = sw;
+    double h = sh;
+    ImageData imageData = context.getImageData(0, 0, w, h);
+
+    return imageData;
+  }
+}}}
