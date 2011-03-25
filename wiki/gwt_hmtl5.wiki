@@ -75,7 +75,7 @@ private ImageData scaleImage(Image image, double scaleToRatio) {
 private ImageData cropImage(Image image, double sx, double sy, double sw, double sh) {
     
     Canvas canvasTmp = Canvas.createIfSupported();
-    RootPanel.get().add(canvasTmp);
+    //RootPanel.get().add(canvasTmp); // debug it
     Context2d context = canvasTmp.getContext2d();
 
     canvasTmp.setCoordinateSpaceHeight((int) sh);
