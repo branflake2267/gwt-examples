@@ -11,6 +11,7 @@
  Scale an image like this:
 {{{
 
+// This is important to use a handler!
 private void loadImage() {
     final Image img = new Image("/images/test.jpg");
     RootPanel.get().add(img);
@@ -21,7 +22,6 @@ private void loadImage() {
         scale(img);
       }
     });
-    
 }
 
 private void scale(Image img) {
