@@ -4,3 +4,65 @@
 
 = HTML5 and GWT =
  I'm going to write down my HTML5 stuff here:
+
+== Image Scale / Resize ==
+ I had trouble scaling an image in app engine and HTML5 canvas has so many more options and fun things to work with. The canvas uses the imageElement, which you can get from GWT Image. Note you have to use a load handler before you can work with the Image.
+
+ Scale an image like this:
+{{{
+
+private void loadImage() {
+    final Image img = new Image("/images/test.jpg");
+    RootPanel.get().add(img);
+    img.setVisible(false);
+    
+    img.addLoadHandler(new LoadHandler() {
+      public void onLoad(LoadEvent event) {
+        scale(img);
+      }
+    });
+    
+}
+
+private void scale(Image img) {
+    ImageData imageData = scaleImage(img, .1);
+    
+    drawToScreen(imageData);
+}
+
+private ImageData scaleImage(Image image, double scaleToRatio) {
+    
+    Canvas canvasTmp = Canvas.createIfSupported();
+    Context2d context = canvasTmp.getContext2d();
+
+    canvasTmp.setCoordinateSpaceHeight((int) (image.getHeight() * scaleToRatio));
+    canvasTmp.setCoordinateSpaceWidth((int) (image.getWidth() * scaleToRatio));
+    
+    ImageElement imageElement = ImageElement.as(image.getElement());
+   
+    // s = source
+    // d = destination 
+    double sx = 0;
+    double sy = 0;
+    double sw = imageElement.getWidth();
+    double sh = imageElement.getHeight();
+    
+    double dx = 0;
+    double dy = 0;
+    double dw = imageElement.getWidth();
+    double dh = imageElement.getHeight();
+    
+    // tell it to scale image
+    context.scale(scaleToRatio, scaleToRatio);
+    
+    // draw image to canvas
+    context.drawImage(imageElement, sx, sy, sw, sh, dx, dy, dw, dh);
+    
+    // get image data
+    double w = dw * scaleToRatio;
+    double h = dh * scaleToRatio;
+    ImageData imageData = context.getImageData(0, 0, w, h);
+
+    return imageData;
+}
+}}}
