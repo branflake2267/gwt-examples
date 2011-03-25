@@ -97,5 +97,5 @@ private ImageData cropImage(Image image, double sx, double sy, double sw, double
     ImageData imageData = context.getImageData(0, 0, w, h);
 
     return imageData;
-  }
+}
 }}}
