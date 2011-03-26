@@ -12,6 +12,9 @@
 
  Scale an image like this:
 {{{
+private Canvas canvasScreen;
+private Context2d contextScreen;
+
 public void onModuleLoad() {
     canvasScreen = Canvas.createIfSupported();
      
