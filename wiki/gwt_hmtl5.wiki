@@ -102,7 +102,6 @@ private ImageData cropImage(Image image, double sx, double sy, double sw, double
 
 == Scale and Crop ==
  Scale and crop in one method. Use a load handler like the first example on this page.
-
 {{{
 private ImageData scaleAndCropImage(Image image, double scaleToRatio, double sx, double sy, double sw, double sh) {
     
