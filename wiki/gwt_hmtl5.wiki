@@ -5,7 +5,7 @@
 
 = HTML5 and GWT =
  I'm going to write down my HTML5 stuff here. I'm in love with the HTML5 stuff!!!!!!
- * [http://www.w3.org/TR/2dcontext/#canvasrenderingcontext2d HTML5 Specs] 
+ * [http://www.w3.org/TR/2dcontext/#canvasrenderingcontext2d HTML5 Canvas Specs] 
 
 == Image Scale / Resize ==
  I had trouble scaling an image in app engine and HTML5 canvas has so many more options and fun things to work with. The canvas uses the imageElement, which you can get from GWT Image. Note you have to use a load handler before you can work with the Image.
