@@ -99,3 +99,35 @@ private ImageData cropImage(Image image, double sx, double sy, double sw, double
     return imageData;
 }
 }}}
+
+== Scale and Crop ==
+ Scale and crop in one method. Use a load handler like the first example on this page.
+
+{{{
+private ImageData scaleAndCropImage(Image image, double scaleToRatio, double sx, double sy, double sw, double sh) {
+    
+    Canvas canvasTmp = Canvas.createIfSupported();
+    //RootPanel.get().add(canvasTmp);
+    Context2d context = canvasTmp.getContext2d();
+
+    canvasTmp.setCoordinateSpaceHeight((int) (image.getHeight() * scaleToRatio));
+    canvasTmp.setCoordinateSpaceWidth((int) (image.getWidth() * scaleToRatio));
+    
+    ImageElement imageElement = ImageElement.as(image.getElement());
+
+    // tell it to scale image
+    context.scale(scaleToRatio, scaleToRatio);
+    
+    // draw image to canvas
+    // s = source
+    // d = destination     
+    double dx = 0;
+    double dy = 0;
+    context.drawImage(imageElement, dx, dy);
+    
+    // get image data - if you go greater than the scaled image nothing will show up
+    ImageData imageData = context.getImageData(sx, sy, sw, sh);
+
+    return imageData;
+}
+}}}
