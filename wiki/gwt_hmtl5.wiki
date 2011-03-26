@@ -12,6 +12,22 @@
 
  Scale an image like this:
 {{{
+public void onModuleLoad() {
+    canvasScreen = Canvas.createIfSupported();
+     
+    if (canvasScreen == null) {
+      RootPanel.get().add(new Label("Sorry, your browser doesn't support the HTML5 Canvas element"));
+      return;
+    }
+    // for example
+    canvasScreen.setCoordinateSpaceHeight(1000);
+    canvasScreen.setCoordinateSpaceWidth(1000);
+    
+    contextScreen = canvasScreen.getContext2d();
+    RootPanel.get().add(canvasScreen);
+   
+   loadImage();
+}
 
 // This is important to use a handler!
 private void loadImage() {
