@@ -152,7 +152,7 @@ private ImageData scaleAndCropImage(Image image, double scaleToRatio, double sx,
 }}}
 
 == Test Canvas Base64 Mime Decoding ==
- Getting the imagedata canvas.toDataUrl("image/png") is encoded in base 64 Mime format. Here is one test I used to see if I was doing things correctly.
+ Getting the imagedata canvas.toDataUrl("image/png") is encoded in base 64 Mime format. Here is one test I used to see if I was doing things correctly. This snippet is for the server side. Although the Base64Util class can be used on the client side, I haven't tried it.
 
 {{{
     // I manually retrieved the base64 string and removed the first part up to the comma.
