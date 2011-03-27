@@ -244,3 +244,132 @@ public class Base64Util {
 
 }
 }}}
+
+== Upload Canvas Image ==
+ This is a snippet of how to upload an image to the blobstore from the base64 encoded string given by toDataUrl();
+{{{
+public class UploadTest extends Composite {
+  
+  private RpcCoreServiceAsync rpcCore;
+  private String url;
+  private ClientPersistence cp;
+
+  //private static Random random = new Random(); 
+  
+  public UploadTest(ClientPersistence cp) {
+    this.cp = cp;
+    
+    PushButton b = new PushButton("Test");
+    
+    VerticalPanel vp = new VerticalPanel();
+    vp.add(b);
+    
+    initWidget(vp);
+    
+    b.addClickHandler(new ClickHandler() {
+      public void onClick(ClickEvent event) {
+        send();
+      }
+    });
+    
+    rpcCore = RpcCore.init();
+    
+    getRpc_NewBlobKeyUrl();
+  }
+  
+  private void getRpc_NewBlobKeyUrl() {
+    
+    // TODO use this in the future
+    BlobDataFilter filter = new BlobDataFilter();
+    
+    rpcCore.getBlobStoreUrl(filter, new AsyncCallback<String>() {
+      public void onSuccess(String url) {
+        setUrl(url);
+      }
+
+      public void onFailure(Throwable caught) {
+        //cp.setRpcFailure(caught);
+      }
+    });
+    
+  }
+  
+  protected void setUrl(String url) {
+    this.url = url;
+  }
+
+  private String getFile() {
+    String s = ""; // data:image/png;base64,
+    s = "iVBORw0KGgoAAAANSUhEUgAAADIA...="; // this was a snippet grabbed from canvas.toDataUrl();
+    return s;
+  }
+  
+  private void send() {
+    
+    String boundary = createBoundary();
+    
+    String requestData = getRequestData(boundary);
+    
+    //System.out.println(requestData);
+    //url = "/TestOut/";
+    
+    RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, url);
+    builder.setHeader("Content-Type", "multipart/form-data; boundary=" + boundary);
+    //builder.setHeader("Content-Length", Long.toString(requestData.length()));
+    try {
+      builder.sendRequest(requestData, new RequestCallback() {
+        public void onResponseReceived(Request request, Response response) {
+          if (response.getStatusCode() == 200) {
+            System.out.println("response=" + response.getText());
+          }
+        }
+        public void onError(Request request, Throwable exception) {
+          exception.printStackTrace();
+        }
+      });
+    } catch (RequestException e) {
+      e.printStackTrace();
+    }
+  }
+  
+  private String createBoundary() {
+    return "----GoneVerticalBoundary" + getRandomStr() + getRandomStr();
+  }
+  
+  private String getRandomStr() {
+    return "asdfasdfasdf"; //Long.toString(random.nextLong(), 36);
+  }
+
+  private String getRequestData(String boundary) {
+    String s = "";
+    
+    s += "--" + boundary + "\r\n";
+    s += getRequestParameter("oid", cp.getUserId() + "");
+
+    s += "--" + boundary + "\r\n";
+    s += getRequestParameter("ltid", cp.getUserId() + "");
+
+    s += "--" + boundary + "\r\n";
+    s += getRequest_Image("test_new_coder_8.png", "image/png", getFile());
+    
+    s += "--" + boundary + "--\r\n"; //end
+    
+    return s;
+  }
+  
+  private String getRequestParameter(String key, String value) {
+    return "Content-Disposition: form-data; name=\"" + key + "\"\r\n\r\n" + value + "\r\n";
+  }
+
+  private String getRequest_Image(String fileName, String contentType, String file) {
+    String s = "";
+    s += "Content-Disposition: form-data; name=\"File\"; filename=\"" + fileName + "\"\r\n";
+    s += "Content-Transfer-Encoding: base64 \r\n";
+    s += "Content-Type: " + contentType + "\r\n\r\n"; //
+    s += file;
+    s += "\r\n";
+    return s;
+  }
+
+}
+}}}
