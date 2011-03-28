@@ -1,2 +1,55 @@
 #summary test out wiki stuff
 
+{{{
+private byte[] getImageBytes(BlobData blobData) {
+    if (blobData == null) {
+      return null;
+    }
+  
+    BlobKey blobKey = new BlobKey(blobData.getKey());
+    BlobInfo bi = blobInfofactory.loadBlobInfo(blobKey);
+    if (blobKey == null) {
+      return null;
+    }
+    
+    long size = bi.getSize();
+    
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    long filesize = blobData.getSize();
+    int chunkSize = 1024;
+    long offset = 0;
+    while (offset < filesize) {
+
+      long limit = offset + chunkSize - 1;
+      if (filesize < limit) {
+        limit = filesize;
+      }
+      
+      System.out.println("offset=" + offset + " limit=" + limit + " size=" + size);
+      
+      byte[] b = null;
+      try {
+        b = blobstoreService.fetchData(blobKey, offset, limit);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+      try {
+        out.write(b);
+      } catch (IOException e) {
+        e.printStackTrace();
+        return null;
+      }
+      
+      offset += chunkSize;
+      if (offset > filesize) {
+        offset = filesize;
+      }
+    }
+    
+    byte[] filebytes = out.toByteArray();
+    
+    System.out.println("getImageBytes(): filebytes size: " + filebytes.length + " blobData.size=" + blobData.getSize());
+    
+    return filebytes;
+  }
+}}}
