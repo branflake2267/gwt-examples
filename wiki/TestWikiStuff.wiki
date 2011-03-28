@@ -1,55 +1,30 @@
 #summary test out wiki stuff
 
 
-{{{
-public ThingStuffData[] query(ThingStuffDataFilter filter) {
+{{{ public SessionAccessTokenJdo[] query(String accessToken, String accessTokenSecret) {
 
-    if (filter == null) {
-      log.severe("ERROR: ThingStuffJdo.query() Set a filter");
-      return null;
-    }
+    String qfilter = "accessToken==\"" + accessToken + "\" && accessTokenSecret==\"" + accessTokenSecret + "\" ";
 
-    String qfilter = filter.getFilter();
-    System.out.println("ThingStuffJdo.query(): filter: " + qfilter);
-
-    // nullify
-    queryThingStuffJdo = new ArrayList<ThingStuffJdo>();
+    ///System.out.println("SessionAccessTokenJdo.query(): " + qfilter);
+    
+    SessionAccessTokenJdo[] r = null;
     PersistenceManager pm = sp.getPersistenceManager();
     try {
-      Query q = pm.newQuery("select stuffIdKey from " + ThingStuffJdo.class.getName());
-      q.setFilter(qfilter);
-      q.setRange(filter.getRangeStart(), filter.getRangeFinish());
-      List<Key> ids = (List<Key>) q.execute();
-      Iterator<Key> iter = ids.iterator();
-      while (iter.hasNext()) {
-        Key key = (Key) iter.next();
-        queryKey(key);
+      Extent<SessionAccessTokenJdo> e = pm.getExtent(SessionAccessTokenJdo.class, true);
+      Query q = pm.newQuery(e, qfilter);
+      Collection<SessionAccessTokenJdo> c = (Collection<SessionAccessTokenJdo>) q.execute();
+      if (c.size() > 0) {
+        r = new SessionAccessTokenJdo[c.size()];
+        c.toArray(r);
       }
       q.closeAll();
-    } catch (Exception e) { 
+    } catch (Exception e) {
       e.printStackTrace();
-      log.log(Level.SEVERE, "", e);
     } finally {
       pm.close();
     }
 
-    // work in null if need be
-    if (queryThingStuffJdo == null || queryThingStuffJdo.size() == 0) {
-      return null;
-    }
-
-    // convert to object array
-    ThingStuffJdo[] tsj = new ThingStuffJdo[queryThingStuffJdo.size()];
-    if (queryThingStuffJdo.size() > 0) {
-      tsj = new ThingStuffJdo[queryThingStuffJdo.size()];
-      queryThingStuffJdo.toArray(tsj);
-    }
-
-    // convert for transport to client
-    List<ThingStuffJdo> tjsa_list = Arrays.asList(tsj);
-    ThingStuffData[] tsd = convert(tjsa_list);
-
-    return tsd;
+    return r;
   }
 }}}
 
