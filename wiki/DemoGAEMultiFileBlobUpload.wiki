@@ -89,7 +89,7 @@ BlobInfoFactory Java Syntax
 
       long limit = offset + chunkSize - 1;
       if (filesize < limit) {
-        limit = filesize;
+        limit = filesize-1;
       }
       
       System.out.println("offset=" + offset + " limit=" + limit);
@@ -121,7 +121,7 @@ private byte[] getImageBytes(BlobData blobData) {
 
       long limit = offset + chunkSize - 1;
       if (filesize < limit) {
-        limit = filesize;
+        limit = filesize-1;
       }
       
       System.out.println("offset=" + offset + " limit=" + limit);
