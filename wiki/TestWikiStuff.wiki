@@ -1,7 +1,8 @@
 #summary test out wiki stuff
 
 
-{{{ public SessionAccessTokenJdo[] query(String accessToken, String accessTokenSecret) {
+{{{
+ public SessionAccessTokenJdo[] query(String accessToken, String accessTokenSecret) {
 
     String qfilter = "accessToken==\"" + accessToken + "\" && accessTokenSecret==\"" + accessTokenSecret + "\" ";
 
