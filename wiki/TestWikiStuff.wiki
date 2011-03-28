@@ -1,5 +1,58 @@
 #summary test out wiki stuff
 
+
+{{{
+public ThingStuffData[] query(ThingStuffDataFilter filter) {
+
+    if (filter == null) {
+      log.severe("ERROR: ThingStuffJdo.query() Set a filter");
+      return null;
+    }
+
+    String qfilter = filter.getFilter();
+    System.out.println("ThingStuffJdo.query(): filter: " + qfilter);
+
+    // nullify
+    queryThingStuffJdo = new ArrayList<ThingStuffJdo>();
+    PersistenceManager pm = sp.getPersistenceManager();
+    try {
+      Query q = pm.newQuery("select stuffIdKey from " + ThingStuffJdo.class.getName());
+      q.setFilter(qfilter);
+      q.setRange(filter.getRangeStart(), filter.getRangeFinish());
+      List<Key> ids = (List<Key>) q.execute();
+      Iterator<Key> iter = ids.iterator();
+      while (iter.hasNext()) {
+        Key key = (Key) iter.next();
+        queryKey(key);
+      }
+      q.closeAll();
+    } catch (Exception e) { 
+      e.printStackTrace();
+      log.log(Level.SEVERE, "", e);
+    } finally {
+      pm.close();
+    }
+
+    // work in null if need be
+    if (queryThingStuffJdo == null || queryThingStuffJdo.size() == 0) {
+      return null;
+    }
+
+    // convert to object array
+    ThingStuffJdo[] tsj = new ThingStuffJdo[queryThingStuffJdo.size()];
+    if (queryThingStuffJdo.size() > 0) {
+      tsj = new ThingStuffJdo[queryThingStuffJdo.size()];
+      queryThingStuffJdo.toArray(tsj);
+    }
+
+    // convert for transport to client
+    List<ThingStuffJdo> tjsa_list = Arrays.asList(tsj);
+    ThingStuffData[] tsd = convert(tjsa_list);
+
+    return tsd;
+  }
+}}}
+
 I can't get this to work yet.
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn-history/trunk/DemoGadgetXml/war/gadget-gwt-examples-sharethis.xml" border="0"  width="600" height="300" />
 
