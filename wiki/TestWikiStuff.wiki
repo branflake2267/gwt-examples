@@ -1,33 +1,7 @@
 #summary test out wiki stuff
 
 
-{{{
- public SessionAccessTokenJdo[] query(String accessToken, String accessTokenSecret) {
 
-    String qfilter = "accessToken==\"" + accessToken + "\" && accessTokenSecret==\"" + accessTokenSecret + "\" ";
-
-    ///System.out.println("SessionAccessTokenJdo.query(): " + qfilter);
-    
-    SessionAccessTokenJdo[] r = null;
-    PersistenceManager pm = sp.getPersistenceManager();
-    try {
-      Extent<SessionAccessTokenJdo> e = pm.getExtent(SessionAccessTokenJdo.class, true);
-      Query q = pm.newQuery(e, qfilter);
-      Collection<SessionAccessTokenJdo> c = (Collection<SessionAccessTokenJdo>) q.execute();
-      if (c.size() > 0) {
-        r = new SessionAccessTokenJdo[c.size()];
-        c.toArray(r);
-      }
-      q.closeAll();
-    } catch (Exception e) {
-      e.printStackTrace();
-    } finally {
-      pm.close();
-    }
-
-    return r;
-  }
-}}}
 
 I can't get this to work yet.
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn-history/trunk/DemoGadgetXml/war/gadget-gwt-examples-sharethis.xml" border="0"  width="600" height="300" />
