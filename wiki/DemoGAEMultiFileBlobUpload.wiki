@@ -121,20 +121,24 @@ private byte[] getImageBytes(BlobData blobData) {
 
       long limit = offset + chunkSize - 1;
       if (filesize < limit) {
-        limit = filesize-1;
+        limit = filesize - 1;
       }
       
-      System.out.println("offset=" + offset + " limit=" + limit);
+      System.out.println("offset=" + offset + " limit=" + limit + " size=" + filesize);
       
       byte[] b = null;
       try {
         b = blobstoreService.fetchData(blobKey, offset, limit);
       } catch (Exception e) {
-        e.printStackTrace();
-        return null;
+        //e.printStackTrace();
+        System.out.println("Ga_Service_Image.getImageBytes(): doing workaround");
+        workaround(out, blobKey, offset, filesize);
+        break;
       }
       try {
-        out.write(b);
+        if (b != null) {
+          out.write(b);
+        }
       } catch (IOException e) {
         e.printStackTrace();
         return null;
@@ -151,5 +155,38 @@ private byte[] getImageBytes(BlobData blobData) {
     System.out.println("getImageBytes(): filebytes size: " + filebytes.length + " blobData.size=" + blobData.getSize());
     
     return filebytes;
+  }
+  
+  private void workaround(ByteArrayOutputStream out, BlobKey blobKey, long offset, long filesize) {
+    int chunkSize = 1;
+    long limit = 0;
+    while (offset < filesize) {
+
+      limit = offset + chunkSize - 1;
+      if (filesize < limit) {
+        limit = filesize;
+      }
+      
+      System.out.println("offset=" + offset + " limit=" + limit + " size=" + filesize);
+      
+      byte[] b = null;
+      try {
+        b = blobstoreService.fetchData(blobKey, offset, limit);
+      } catch (Exception e) {
+        //e.printStackTrace();
+        return;
+      }
+      try {
+        out.write(b);
+      } catch (IOException e) {
+        e.printStackTrace();
+        return;
+      }
+      
+      offset += chunkSize;
+      if (offset > filesize) {
+        offset = filesize;
+      }
+    }
   }
 }}}
