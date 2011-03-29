@@ -75,6 +75,8 @@ BlobInfoFactory Java Syntax
   BlobInfo blobInfo = blobInfoFactory.loadBlobInfo(blobKey);
 }}}
 
+<wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="110" width="760" border="0" />
+
 == Blob Data Fetching ==
  Fetching blob data for.
 
