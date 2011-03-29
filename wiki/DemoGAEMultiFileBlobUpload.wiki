@@ -101,18 +101,18 @@ BlobInfoFactory Java Syntax
     }
 }}}
 
- This is the fetching in action
+ This is the fetching in action. I also have a work around for when the file size comes back wrong from blobinfo, which happens at the moment from base64 uploads.
 {{{
-private byte[] getImageBytes(BlobData blobData) {
+  private byte[] getImageBytes(BlobData blobData) {
     if (blobData == null) {
       return null;
     }
-  
+
     BlobKey blobKey = new BlobKey(blobData.getKey());
     if (blobKey == null) {
       return null;
     }
-    
+
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     long filesize = blobData.getSize();
     int chunkSize = 1024;
@@ -123,9 +123,9 @@ private byte[] getImageBytes(BlobData blobData) {
       if (filesize < limit) {
         limit = filesize - 1;
       }
-      
+
       System.out.println("offset=" + offset + " limit=" + limit + " size=" + filesize);
-      
+
       byte[] b = null;
       try {
         b = blobstoreService.fetchData(blobKey, offset, limit);
@@ -143,20 +143,20 @@ private byte[] getImageBytes(BlobData blobData) {
         e.printStackTrace();
         return null;
       }
-      
+
       offset += chunkSize;
       if (offset > filesize) {
         offset = filesize;
       }
     }
-    
+
     byte[] filebytes = out.toByteArray();
-    
+
     System.out.println("getImageBytes(): filebytes size: " + filebytes.length + " blobData.size=" + blobData.getSize());
-    
+
     return filebytes;
   }
-  
+
   private void workaround(ByteArrayOutputStream out, BlobKey blobKey, long offset, long filesize) {
     int chunkSize = 1;
     long limit = 0;
@@ -166,9 +166,9 @@ private byte[] getImageBytes(BlobData blobData) {
       if (filesize < limit) {
         limit = filesize;
       }
-      
+
       System.out.println("offset=" + offset + " limit=" + limit + " size=" + filesize);
-      
+
       byte[] b = null;
       try {
         b = blobstoreService.fetchData(blobKey, offset, limit);
@@ -182,7 +182,7 @@ private byte[] getImageBytes(BlobData blobData) {
         e.printStackTrace();
         return;
       }
-      
+
       offset += chunkSize;
       if (offset > filesize) {
         offset = filesize;
