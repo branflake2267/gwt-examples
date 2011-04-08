@@ -257,7 +257,7 @@ public class UploadTest extends Composite {
   private String url;
   private ClientPersistence cp;
 
-  //private static Random random = new Random(); 
+  private static Random random = new Random(); 
   
   public UploadTest(ClientPersistence cp) {
     this.cp = cp;
@@ -291,7 +291,7 @@ public class UploadTest extends Composite {
       }
 
       public void onFailure(Throwable caught) {
-        //cp.setRpcFailure(caught);
+        cp.setRpcFailure(caught);
       }
     });
     
@@ -303,7 +303,7 @@ public class UploadTest extends Composite {
 
   private String getFile() {
     String s = ""; // data:image/png;base64,
-    s = "iVBORw0KGgoAAAANSUhEUgAAADIA...="; // this was a snippet grabbed from canvas.toDataUrl();
+    s = "iVBORw0KGgoAAAA.........zAZa+mCYAAAAASUVORK5CYII=";
     return s;
   }
   
@@ -318,7 +318,7 @@ public class UploadTest extends Composite {
     
     RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, url);
     builder.setHeader("Content-Type", "multipart/form-data; boundary=" + boundary);
-    //builder.setHeader("Content-Length", Long.toString(requestData.length()));
+    builder.setHeader("Content-Length", Long.toString(requestData.length()));
     try {
       builder.sendRequest(requestData, new RequestCallback() {
         public void onResponseReceived(Request request, Response response) {
@@ -340,7 +340,7 @@ public class UploadTest extends Composite {
   }
   
   private String getRandomStr() {
-    return "asdfasdfasdf"; //Long.toString(random.nextLong(), 36);
+    return Long.toString(random.nextLong(), 36);
   }
 
   private String getRequestData(String boundary) {
@@ -353,7 +353,7 @@ public class UploadTest extends Composite {
     s += getRequestParameter("ltid", cp.getUserId() + "");
 
     s += "--" + boundary + "\r\n";
-    s += getRequest_Image("test_new_coder_8.png", "image/png", getFile());
+    s += getRequest_Image("test_new_coder_14.png", "image/png", getFile());
     
     s += "--" + boundary + "--\r\n"; //end
     
@@ -367,8 +367,8 @@ public class UploadTest extends Composite {
   private String getRequest_Image(String fileName, String contentType, String file) {
     String s = "";
     s += "Content-Disposition: form-data; name=\"File\"; filename=\"" + fileName + "\"\r\n";
-    s += "Content-Transfer-Encoding: base64 \r\n";
-    s += "Content-Type: " + contentType + "\r\n\r\n"; //
+    s += "Content-Type: " + contentType + "\r\n";
+    s += "Content-Transfer-Encoding: base64 \r\n\r\n";
     s += file;
     s += "\r\n";
     return s;
