@@ -99,7 +99,6 @@ private void drawToScreen(ImageData imageData) {
     canvasTmp.setCoordinateSpaceWidth((int) imageData.getWidth());
     Context2d context = canvasTmp.getContext2d();
     context.putImageData(imageData, 0, 0);
-    RootPanel.get().add(canvasTmp);
 }
 }}}
 
