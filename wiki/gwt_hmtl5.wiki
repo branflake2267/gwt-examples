@@ -90,6 +90,17 @@ private ImageData scaleImage(Image image, double scaleToRatio) {
 
     return imageData;
 }
+
+private void drawToScreen(ImageData imageData) {
+    Canvas canvasTmp = Canvas.createIfSupported();
+    RootPanel.get().add(canvasTmp);
+    canvasTmp.setStyleName("test1");
+    canvasTmp.setCoordinateSpaceHeight((int) imageData.getHeight());
+    canvasTmp.setCoordinateSpaceWidth((int) imageData.getWidth());
+    Context2d context = canvasTmp.getContext2d();
+    context.putImageData(imageData, 0, 0);
+    RootPanel.get().add(canvasTmp);
+}
 }}}
 
 == Crop Image ==
