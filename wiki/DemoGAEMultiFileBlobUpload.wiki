@@ -192,3 +192,69 @@ BlobInfoFactory Java Syntax
     }
   }
 }}}
+
+ I'm testing the file channel reader. Works on the dev side so far. 
+{{{
+private byte[] getImageBytes_v2(BlobData blobData) {
+    if (blobData == null || blobData.getKey() == null) {
+      return null;
+    }
+
+    BlobKey blobKey = new BlobKey(blobData.getKey());
+    
+    FileService fileService = FileServiceFactory.getFileService();
+    AppEngineFile file = null;
+    try {
+      file = fileService.getBlobFile(blobKey);
+    } catch (FileNotFoundException e) {
+      log.severe("getImageBytes_V2(): Error: fileService error " + e.toString());
+      e.printStackTrace();
+    }
+    
+    if (file == null) {
+      return null;
+    }
+    
+    FileReadChannel ch = null;
+    try {
+      ch = fileService.openReadChannel(file, false);
+    } catch (FileNotFoundException e) {
+      log.severe("getImageBytes_V2(): Error: file not found " + e.toString());
+      e.printStackTrace();
+    } catch (LockException e) {
+      log.severe("getImageBytes_V2(): Error: lock exception " + e.toString());
+      e.printStackTrace();
+    } catch (IOException e) {
+      log.severe("getImageBytes_V2(): Error: file read channel - io exception " + e.toString());
+      e.printStackTrace();
+    }
+
+    if (ch == null) {
+      return null;
+    }
+    
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    byte[] array = new byte[1024];
+    ByteBuffer buf = ByteBuffer.wrap(array);
+    try {
+      while (ch.read(buf) != -1) {
+        buf.rewind();
+        byte[] a = buf.array();
+        try {
+          out.write(a);
+        } catch (Exception e) {
+          log.severe("getImageBytes_V2(): Error: buffered out error " + e.toString());
+          e.printStackTrace();
+        }
+        buf.clear();
+      }
+    } catch (IOException e) {
+      log.severe("getImageBytes_V2(): Error: io exception reading channel " + e.toString());
+      e.printStackTrace();
+    }
+
+    byte[] filebytes = out.toByteArray();
+    
+    return filebytes;
+  }
+}}}
