@@ -1,66 +1,61 @@
 #summary test out wiki stuff
 
 {{{
-private byte[] getImageBytes_v2(BlobData blobData) {
-    if (blobData == null || blobData.getKey() == null) {
+private byte[] getImageBytes(BlobData blobData) {
+    if (blobData == null) {
       return null;
     }
 
     BlobKey blobKey = new BlobKey(blobData.getKey());
-    
-    FileService fileService = FileServiceFactory.getFileService();
-    AppEngineFile file = null;
-    try {
-      file = fileService.getBlobFile(blobKey);
-    } catch (FileNotFoundException e) {
-      log.severe("getImageBytes_V2(): Error: fileService error " + e.toString());
-      e.printStackTrace();
-    }
-    
-    if (file == null) {
+    if (blobKey == null) {
       return null;
     }
-    
-    FileReadChannel ch = null;
-    try {
-      ch = fileService.openReadChannel(file, false);
-    } catch (FileNotFoundException e) {
-      log.severe("getImageBytes_V2(): Error: file not found " + e.toString());
-      e.printStackTrace();
-    } catch (LockException e) {
-      log.severe("getImageBytes_V2(): Error: lock exception " + e.toString());
-      e.printStackTrace();
-    } catch (IOException e) {
-      log.severe("getImageBytes_V2(): Error: file read channel - io exception " + e.toString());
-      e.printStackTrace();
-    }
-    
-    if (ch == null) {
-      return null;
-    }
-    
+
     ByteArrayOutputStream out = new ByteArrayOutputStream();
-    long checkSum = 0L;
-    try {
-      byte[] barray = new byte[1024];
-      ByteBuffer bb = ByteBuffer.wrap(barray);
-      int nRead;
-      while ((nRead=ch.read(bb)) != -1) {
-        for (int i=0; i < nRead; i++) {
-          checkSum += barray[i];
-          out.write(barray[i]);
-        }
-        bb.clear();
+    long filesize = blobData.getSize();
+    int chunkSize = 1024;
+    long offset = 0;
+    while (offset < filesize) {
+
+      long limit = offset + chunkSize - 1;
+      if (filesize < limit) {
+        limit = filesize - 1;
       }
-    } catch (IOException e) {
-      log.severe("getImageBytes_V2(): Error: io exception reading " + e.toString());
-      e.printStackTrace();
+
+      log.info("offset=" + offset + " limit=" + limit + " size=" + filesize);
+
+      byte[] b = null;
+      try {
+        b = blobstoreService.fetchData(blobKey, offset, limit);
+      } catch (Exception e) {
+        if (e.toString().toLowerCase().contains("deadline") == false) {
+          System.out.println("Ga_Service_Image.getImageBytes(): doing workaround " + e.toString());
+          workaround(out, blobKey, offset, filesize);
+        } else {
+          log.severe("getImageBytes(): Error: Hit a deadline I think. " + e.toString());
+          e.printStackTrace();
+        }
+        break;
+      }
+      try {
+        if (b != null) {
+          out.write(b);
+        }
+      } catch (IOException e) {
+        e.printStackTrace();
+        return null;
+      }
+
+      offset += chunkSize;
+      if (offset > filesize) {
+        offset = filesize;
+      }
     }
-    
-    log.info("getImageBytes_V2(): info: long checkSum=" + checkSum);
 
     byte[] filebytes = out.toByteArray();
-    
+
+    log.info("getImageBytes(): filebytes size: " + filebytes.length + " blobData.size=" + blobData.getSize());
+
     return filebytes;
   }
 }}}
