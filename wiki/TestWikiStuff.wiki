@@ -1,134 +1,66 @@
 #summary test out wiki stuff
 
 {{{
+private byte[] getImageBytes_v2(BlobData blobData) {
+    if (blobData == null || blobData.getKey() == null) {
+      return null;
+    }
 
-Error for /task
-com.google.apphosting.runtime.HardDeadlineExceededError: This request (e031abd6a5028aad) started at 2011/04/20 14:09:27.894 UTC and was still executing at 2011/04/20 14:19:30.067 UTC.
-  at java.lang.Object.wait(Native Method)
-  at java.lang.Object.wait(Object.java:502)
-  at com.google.apphosting.runtime.AsyncFuture.get(AsyncFuture.java:54)
-  at com.google.appengine.api.utils.FutureWrapper.get(FutureWrapper.java:67)
-  at com.google.appengine.api.datastore.FutureHelper$CumulativeAggregateFuture.get(FutureHelper.java:136)
-  at com.google.appengine.api.datastore.FutureHelper$TxnAwareFuture.get(FutureHelper.java:213)
-  at com.google.appengine.api.utils.FutureWrapper.get(FutureWrapper.java:67)
-  at com.google.appengine.api.datastore.FutureHelper.getInternal(FutureHelper.java:71)
-  at com.google.appengine.api.datastore.FutureHelper.quietGet(FutureHelper.java:58)
-  at com.google.appengine.api.datastore.DatastoreServiceImpl.get(DatastoreServiceImpl.java:55)
-  at org.datanucleus.store.appengine.RuntimeExceptionWrappingDatastoreService.get(RuntimeExceptionWrappingDatastoreService.java:64)
-  at org.datanucleus.store.appengine.DatastorePersistenceHandler.get(DatastorePersistenceHandler.java:96)
-  at org.datanucleus.store.appengine.DatastorePersistenceHandler.get(DatastorePersistenceHandler.java:106)
-  at org.datanucleus.store.appengine.DatastorePersistenceHandler.fetchObject(DatastorePersistenceHandler.java:478)
-  at org.datanucleus.state.JDOStateManagerImpl.validate(JDOStateManagerImpl.java:4263)
-  at org.datanucleus.ObjectManagerImpl.findObject(ObjectManagerImpl.java:2444)
-  at org.datanucleus.jdo.JDOPersistenceManager.getObjectById(JDOPersistenceManager.java:1671)
-  at org.datanucleus.jdo.JDOPersistenceManager.getObjectById(JDOPersistenceManager.java:1767)
-  at org.datanucleus.store.appengine.jdo.DatastoreJDOPersistenceManager.getObjectById(DatastoreJDOPersistenceManager.java:73)
-  at org.gonevertical.core.server.jdo.data.ThingStuffJdo.save(ThingStuffJdo.java:333)
-  at org.gonevertical.core.server.jdo.data.ThingStuffJdo.saveUniqueValueForParentThingId(ThingStuffJdo.java:412)
-  at org.gonevertical.core.server.jdo.data.ThingStuffJdo.saveStuff_UniqueValue(ThingStuffJdo.java:1464)
-  at org.gonevertical.core.server.service.image.Ga_Service_Image.saveOldImageInfo(Ga_Service_Image.java:228)
-  at org.gonevertical.core.server.service.image.Ga_Service_Image.transform(Ga_Service_Image.java:201)
-  at org.gonevertical.core.server.servlet.Servlet_Task.startTransform(Servlet_Task.java:127)
-  at org.gonevertical.core.server.servlet.Servlet_Task.doGet(Servlet_Task.java:84)
-  at javax.servlet.http.HttpServlet.service(HttpServlet.java:617)
-  at javax.servlet.http.HttpServlet.service(HttpServlet.java:717)
-  at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:511)
-  at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1166)
-  at com.google.apphosting.utils.servlet.ParseBlobUploadFilter.doFilter(ParseBlobUploadFilter.java:97)
-  at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1157)
-  at com.google.apphosting.runtime.jetty.SaveSessionFilter.doFilter(SaveSessionFilter.java:35)
-  at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1157)
-  at com.google.apphosting.utils.servlet.TransactionCleanupFilter.doFilter(TransactionCleanupFilter.java:43)
-  at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1157)
-  at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:388)
-  at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216)
-  at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182)
-  at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:765)
-  at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:418)
-  at com.google.apphosting.runtime.jetty.AppVersionHandlerMap.handle(AppVersionHandlerMap.java:238)
-  at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)
-  at org.mortbay.jetty.Server.handle(Server.java:326)
-  at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542)
-  at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:923)
-  at com.google.apphosting.runtime.jetty.RpcRequestParser.parseAvailable(RpcRequestParser.java:76)
-  at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404)
-  at com.google.apphosting.runtime.jetty.JettyServletEngineAdapter.serviceRequest(JettyServletEngineAdapter.java:135)
-  at com.google.apphosting.runtime.JavaRuntime.handleRequest(JavaRuntime.java:261)
-  at com.google.apphosting.base.RuntimePb$EvaluationRuntime$2.handleRequest(RuntimePb.java:9285)
-  at com.google.net.rpc.impl.RpcUtil.runRpcInApplication(RpcUtil.java:437)
-  at com.google.net.rpc.impl.Server$RpcTask.runInContext(Server.java:573)
-  at com.google.tracing.TraceContext$TraceContextRunnable$1.run(TraceContext.java:448)
-  at com.google.tracing.TraceContext.runInContext(TraceContext.java:688)
-  at com.google.tracing.TraceContext$AbstractTraceContextCallback.runInInheritedContextNoUnref(TraceContext.java:326)
-  at com.google.tracing.TraceContext$AbstractTraceContextCallback.runInInheritedContext(TraceContext.java:318)
-  at com.google.tracing.TraceContext$TraceContextRunnable.run(TraceContext.java:446)
-  at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1110)
-  at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:603)
-  at java.lang.Thread.run(Thread.java:636)
-C 2011-04-20 07:19:30.084
-Uncaught exception from servlet
-com.google.apphosting.runtime.HardDeadlineExceededError: This request (e031abd6a5028aad) started at 2011/04/20 14:09:27.894 UTC and was still executing at 2011/04/20 14:19:30.067 UTC.
-  at java.lang.Object.wait(Native Method)
-  at java.lang.Object.wait(Object.java:502)
-  at com.google.apphosting.runtime.AsyncFuture.get(AsyncFuture.java:54)
-  at com.google.appengine.api.utils.FutureWrapper.get(FutureWrapper.java:67)
-  at com.google.appengine.api.datastore.FutureHelper$CumulativeAggregateFuture.get(FutureHelper.java:136)
-  at com.google.appengine.api.datastore.FutureHelper$TxnAwareFuture.get(FutureHelper.java:213)
-  at com.google.appengine.api.utils.FutureWrapper.get(FutureWrapper.java:67)
-  at com.google.appengine.api.datastore.FutureHelper.getInternal(FutureHelper.java:71)
-  at com.google.appengine.api.datastore.FutureHelper.quietGet(FutureHelper.java:58)
-  at com.google.appengine.api.datastore.DatastoreServiceImpl.get(DatastoreServiceImpl.java:55)
-  at org.datanucleus.store.appengine.RuntimeExceptionWrappingDatastoreService.get(RuntimeExceptionWrappingDatastoreService.java:64)
-  at org.datanucleus.store.appengine.DatastorePersistenceHandler.get(DatastorePersistenceHandler.java:96)
-  at org.datanucleus.store.appengine.DatastorePersistenceHandler.get(DatastorePersistenceHandler.java:106)
-  at org.datanucleus.store.appengine.DatastorePersistenceHandler.fetchObject(DatastorePersistenceHandler.java:478)
-  at org.datanucleus.state.JDOStateManagerImpl.validate(JDOStateManagerImpl.java:4263)
-  at org.datanucleus.ObjectManagerImpl.findObject(ObjectManagerImpl.java:2444)
-  at org.datanucleus.jdo.JDOPersistenceManager.getObjectById(JDOPersistenceManager.java:1671)
-  at org.datanucleus.jdo.JDOPersistenceManager.getObjectById(JDOPersistenceManager.java:1767)
-  at org.datanucleus.store.appengine.jdo.DatastoreJDOPersistenceManager.getObjectById(DatastoreJDOPersistenceManager.java:73)
-  at org.gonevertical.core.server.jdo.data.ThingStuffJdo.save(ThingStuffJdo.java:333)
-  at org.gonevertical.core.server.jdo.data.ThingStuffJdo.saveUniqueValueForParentThingId(ThingStuffJdo.java:412)
-  at org.gonevertical.core.server.jdo.data.ThingStuffJdo.saveStuff_UniqueValue(ThingStuffJdo.java:1464)
-  at org.gonevertical.core.server.service.image.Ga_Service_Image.saveOldImageInfo(Ga_Service_Image.java:228)
-  at org.gonevertical.core.server.service.image.Ga_Service_Image.transform(Ga_Service_Image.java:201)
-  at org.gonevertical.core.server.servlet.Servlet_Task.startTransform(Servlet_Task.java:127)
-  at org.gonevertical.core.server.servlet.Servlet_Task.doGet(Servlet_Task.java:84)
-  at javax.servlet.http.HttpServlet.service(HttpServlet.java:617)
-  at javax.servlet.http.HttpServlet.service(HttpServlet.java:717)
-  at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:511)
-  at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1166)
-  at com.google.apphosting.utils.servlet.ParseBlobUploadFilter.doFilter(ParseBlobUploadFilter.java:97)
-  at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1157)
-  at com.google.apphosting.runtime.jetty.SaveSessionFilter.doFilter(SaveSessionFilter.java:35)
-  at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1157)
-  at com.google.apphosting.utils.servlet.TransactionCleanupFilter.doFilter(TransactionCleanupFilter.java:43)
-  at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1157)
-  at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:388)
-  at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216)
-  at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182)
-  at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:765)
-  at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:418)
-  at com.google.apphosting.runtime.jetty.AppVersionHandlerMap.handle(AppVersionHandlerMap.java:238)
-  at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)
-  at org.mortbay.jetty.Server.handle(Server.java:326)
-  at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542)
-  at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:923)
-  at com.google.apphosting.runtime.jetty.RpcRequestParser.parseAvailable(RpcRequestParser.java:76)
-  at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404)
-  at com.google.apphosting.runtime.jetty.JettyServletEngineAdapter.serviceRequest(JettyServletEngineAdapter.java:135)
-  at com.google.apphosting.runtime.JavaRuntime.handleRequest(JavaRuntime.java:261)
-  at com.google.apphosting.base.RuntimePb$EvaluationRuntime$2.handleRequest(RuntimePb.java:9285)
-  at com.google.net.rpc.impl.RpcUtil.runRpcInApplication(RpcUtil.java:437)
-  at com.google.net.rpc.impl.Server$RpcTask.runInContext(Server.java:573)
-  at com.google.tracing.TraceContext$TraceContextRunnable$1.run(TraceContext.java:448)
-  at com.google.tracing.TraceContext.runInContext(TraceContext.java:688)
-  at com.google.tracing.TraceContext$AbstractTraceContextCallback.runInInheritedContextNoUnref(TraceContext.java:326)
-  at com.google.tracing.TraceContext$AbstractTraceContextCallback.runInInheritedContext(TraceContext.java:318)
-  at com.google.tracing.TraceContext$TraceContextRunnable.run(TraceContext.java:446)
-  at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1110)
-  at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:603)
-  at java.lang.Thread.run(Thread.java:636)
-W 2011-04-20 07:19:30.166
-A serious problem was encountered with the process that handled this request, causing it to exit. This is likely to cause a new process to be used for the next request to your application. If you see this message frequently, you may be throwing exceptions during the initialization of your application. (Error code 104)
+    BlobKey blobKey = new BlobKey(blobData.getKey());
+    
+    FileService fileService = FileServiceFactory.getFileService();
+    AppEngineFile file = null;
+    try {
+      file = fileService.getBlobFile(blobKey);
+    } catch (FileNotFoundException e) {
+      log.severe("getImageBytes_V2(): Error: fileService error " + e.toString());
+      e.printStackTrace();
+    }
+    
+    if (file == null) {
+      return null;
+    }
+    
+    FileReadChannel ch = null;
+    try {
+      ch = fileService.openReadChannel(file, false);
+    } catch (FileNotFoundException e) {
+      log.severe("getImageBytes_V2(): Error: file not found " + e.toString());
+      e.printStackTrace();
+    } catch (LockException e) {
+      log.severe("getImageBytes_V2(): Error: lock exception " + e.toString());
+      e.printStackTrace();
+    } catch (IOException e) {
+      log.severe("getImageBytes_V2(): Error: file read channel - io exception " + e.toString());
+      e.printStackTrace();
+    }
+    
+    if (ch == null) {
+      return null;
+    }
+    
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    long checkSum = 0L;
+    try {
+      byte[] barray = new byte[1024];
+      ByteBuffer bb = ByteBuffer.wrap(barray);
+      int nRead;
+      while ((nRead=ch.read(bb)) != -1) {
+        for (int i=0; i < nRead; i++) {
+          checkSum += barray[i];
+          out.write(barray[i]);
+        }
+        bb.clear();
+      }
+    } catch (IOException e) {
+      log.severe("getImageBytes_V2(): Error: io exception reading " + e.toString());
+      e.printStackTrace();
+    }
+    
+    log.info("getImageBytes_V2(): info: long checkSum=" + checkSum);
+
+    byte[] filebytes = out.toByteArray();
+    
+    return filebytes;
+  }
 }}}
