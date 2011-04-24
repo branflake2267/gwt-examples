@@ -299,7 +299,7 @@ grant codeBase "file:/srv/vhosts/gawkat.com/tomcat/-" {
 
  == Virtual Domain Listening == 
 
-  This is a snippet from my server.xml file setup. Be sure to have the folder with the domain your listening to in full in the Catalina folder. This is where the server tells it self whats setup. So I have folders "gonevertical.com", "gawkat.com", ... in Catalina folder. I aslo put the manager.xml file in each domain folder so I can use the manager to upload the ROOT.war or project.war into the system very easily.
+  This is a snippet from my server.xml file setup. Be sure to have the folder with the domain your listening to in full in the Catalina folder. This is where the server tells it self whats setup. So I have folders "gonevertical.com", "gawkat.com", ... in Catalina folder. I also put the manager.xml file in each domain folder so I can use the manager to upload the ROOT.war or project.war into the system very easily.
 {{{
        <Host name="localhost"  appBase="webapps"
             unpackWARs="true" autoDeploy="true"
@@ -363,9 +363,9 @@ grant codeBase "file:/var/lib/tomcat6/webapps_gvo/-" {
 }}}
 
  == Project Specific Context ==
-  I also enable project specific context when needed. 
+ I also enable project specific context when needed. 
 
-  I add this to the context.xml file. This will allow each project to have a context. This is so much easier to deal with when using the manager to upload the war. And you can save your context in SVN which makes for overal testing much easier all around. I use this type of context most with JDBC pooling.
+ I add this to the context.xml file. This will allow each project to have a context. This is so much easier to deal with when using the manager to upload the war. And you can save your context in SVN which makes for overal testing much easier all around. I use this type of context most with JDBC pooling.
 {{{
 <WatchedResource>META-INF/context.xml</WatchedResource>
 }}}
