@@ -384,3 +384,7 @@ grant codeBase "file:/var/lib/tomcat6/webapps_gvo/-" {
 
 </Context>
 }}}
+ * http://codintips.blogspot.com/2010/02/make-dbcp-connection-pool-using-tomcat.html - more stuff I wrote on DBCP pooling
+ * http://codintips.blogspot.com/2010/02/rough-java-dbcp-connection-pool-context.html
+ * http://codintips.blogspot.com/2010/02/mysql-communication-failure-and-aborted.html
+ * http://codintips.blogspot.com/2010/02/mysql-open-tables-and-max-linux-open.html
