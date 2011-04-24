@@ -361,3 +361,11 @@ grant codeBase "file:/var/lib/tomcat6/webapps_gvo/-" {
   permission java.security.AllPermission;
 };
 }}}
+
+ == Project Specific Context ==
+  I also enable project specific context when needed. 
+
+  I add this to the context.xml file. This will allow each project to have a context. This is so much easier to deal with when using the manager to upload the war. And you can save your context in SVN which makes for overal testing much easier all around. I use this type of context most with JDBC pooling.
+{{{
+<WatchedResource>META-INF/context.xml</WatchedResource>
+}}}
