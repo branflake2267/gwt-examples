@@ -339,7 +339,7 @@ grant codeBase "file:/srv/vhosts/gawkat.com/tomcat/-" {
 
 }}}
 
-This is my 100gwt.policy in policy folder. Now this is bad form, but what can I say, I took some shortcuts. I really should just open the 3306 ports to mysql and the folders that need classpath access. Anyway, this is good for debugging, to make sure security isn't throwing you off.
+ This is my 100gwt.policy in policy folder. Now this is bad form, but what can I say, I took some shortcuts. I really should just open the 3306 ports to mysql and the folders that need classpath access. Anyway, this is good for debugging, to make sure security isn't throwing you off.
 {{{
 // gonevertical.com vhost
 grant codeBase "file:/var/lib/tomcat6/webapps_gv/-" {
