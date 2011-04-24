@@ -389,3 +389,5 @@ grant codeBase "file:/var/lib/tomcat6/webapps_gvo/-" {
  * http://codintips.blogspot.com/2010/02/mysql-communication-failure-and-aborted.html
  * http://codintips.blogspot.com/2010/02/mysql-open-tables-and-max-linux-open.html
  * http://code.google.com/p/parsecsv2sql/source/browse/trunk/Csv2Sql/src/org/gonevertical/dts/lib/pooling/SetupInitialContext.java - another project I wrote that manages my pooling.
+
+<wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="95" width="735" border="0" />
