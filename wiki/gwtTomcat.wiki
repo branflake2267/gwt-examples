@@ -296,3 +296,45 @@ grant codeBase "file:/srv/vhosts/gawkat.com/tomcat/-" {
 
  == ROOT application ==
  Name your root application ROOT.war and it will be the root app for the virtual host.
+
+== Virtual Domain Listening == 
+
+ This is a snippet from my server.xml file setup.
+{{{
+       <Host name="localhost"  appBase="webapps"
+            unpackWARs="true" autoDeploy="true"
+            xmlValidation="false" xmlNamespaceAware="false">
+        <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"  
+               prefix="localhost_access_log." suffix=".txt" pattern="common" resolveHosts="false"/>
+      </Host>
+
+
+      <Host name="gonevertical.com"  appBase="/var/lib/tomcat6/webapps_gv"
+            unpackWARs="true" autoDeploy="true"
+            xmlValidation="false" xmlNamespaceAware="false">
+        <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
+               prefix="gonevertical_access_log." suffix=".txt" pattern="common" resolveHosts="false"/>
+      </Host>
+
+      <Host name="gawkat.com"  appBase="/var/lib/tomcat6/webapps_ga"
+            unpackWARs="true" autoDeploy="true"
+            xmlValidation="false" xmlNamespaceAware="false">
+        <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
+               prefix="gawkat_access_log." suffix=".txt" pattern="common" resolveHosts="false"/>
+      </Host>
+
+      <Host name="warmbeachwoodworking.net"  appBase="/var/lib/tomcat6/webapps_wb"
+            unpackWARs="true" autoDeploy="true"
+            xmlValidation="false" xmlNamespaceAware="false">
+        <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
+               prefix="warmbeachwoodworking_access_log." suffix=".txt" pattern="common" resolveHosts="false"/>
+      </Host>
+
+      <Host name="gonevertical.org"  appBase="/var/lib/tomcat6/webapps_gvo"
+            unpackWARs="true" autoDeploy="true"
+            xmlValidation="false" xmlNamespaceAware="false">
+        <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
+               prefix="gonevertical_org_access_log." suffix=".txt" pattern="common" resolveHosts="false"/>
+      </Host>
+
+}}}
