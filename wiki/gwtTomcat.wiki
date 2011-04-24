@@ -297,9 +297,9 @@ grant codeBase "file:/srv/vhosts/gawkat.com/tomcat/-" {
  == ROOT application ==
  Name your root application ROOT.war and it will be the root app for the virtual host.
 
-== Virtual Domain Listening == 
+ == Virtual Domain Listening == 
 
- This is a snippet from my server.xml file setup. Be sure to have the folder with the domain your listening to in full in the Catalina folder. This is where the server tells it self whats setup. So I have folders "gonevertical.com", "gawkat.com", ... in Catalina folder. I aslo put the manager.xml file in each domain folder so I can use the manager to upload the ROOT.war or project.war into the system very easily.
+  This is a snippet from my server.xml file setup. Be sure to have the folder with the domain your listening to in full in the Catalina folder. This is where the server tells it self whats setup. So I have folders "gonevertical.com", "gawkat.com", ... in Catalina folder. I aslo put the manager.xml file in each domain folder so I can use the manager to upload the ROOT.war or project.war into the system very easily.
 {{{
        <Host name="localhost"  appBase="webapps"
             unpackWARs="true" autoDeploy="true"
@@ -339,7 +339,7 @@ grant codeBase "file:/srv/vhosts/gawkat.com/tomcat/-" {
 
 }}}
 
- This is my 100gwt.policy in policy folder. Now this is bad form, but what can I say, I took some shortcuts. I really should just open the 3306 ports to mysql and the folders that need classpath access. Anyway, this is good for debugging, to make sure security isn't throwing you off.
+  This is my 100gwt.policy in policy folder. Now this is bad form, but what can I say, I took some shortcuts. I really should just open the 3306 ports to mysql and the folders that need classpath access. Anyway, this is good for debugging, to make sure security isn't throwing you off.
 {{{
 // gonevertical.com vhost
 grant codeBase "file:/var/lib/tomcat6/webapps_gv/-" {
