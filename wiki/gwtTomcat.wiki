@@ -369,3 +369,18 @@ grant codeBase "file:/var/lib/tomcat6/webapps_gvo/-" {
 {{{
 <WatchedResource>META-INF/context.xml</WatchedResource>
 }}}
+ 
+ I then use project/META-INF/context.xml like this:
+{{{
+<Context>
+
+    <!-- #1 pooling jdbc. (now there are several other things that have to be in place for this to work)-->
+    <Resource name="jdbc/ark01" auth="Container" type="javax.sql.DataSource"
+	       removeAbandoned="true" removeAbandonedTimeout="90" logAbandoned="true"
+	       maxActive="5000" maxIdle="30" maxWait="1"
+	       username="Web" password="asdf?H" driverClassName="com.mysql.jdbc.Driver"
+	       url="jdbc:mysql://ark/survey?autoReconnect=true" 
+	       testOnBorrow="true" testOnReturn="true" testWhileIdle="true"  />
+
+</Context>
+}}}
