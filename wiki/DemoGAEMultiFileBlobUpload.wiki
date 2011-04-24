@@ -258,3 +258,5 @@ private byte[] getImageBytes_v2(BlobData blobData) {
     return filebytes;
   }
 }}}
+
+<wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="110" width="760" border="0" />
