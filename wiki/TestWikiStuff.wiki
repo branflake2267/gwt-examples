@@ -1,7 +1,7 @@
 #summary test out wiki stuff
 
 {{{
-private BlobKey getBlobKey(AppEngineFile file) {
+  private BlobKey getBlobKey(AppEngineFile file) {
    
     BlobKey key = FileServiceFactory.getFileService().getBlobKey(file);
     
