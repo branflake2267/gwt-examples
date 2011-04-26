@@ -1,6 +1,7 @@
 #summary test out wiki stuff
 
-{{{public long uploadBlob_ByFile(long fileThingId, String fileName, String contentType, byte[] filebytes) {
+{{{
+public long uploadBlob_ByFile(long fileThingId, String fileName, String contentType, byte[] filebytes) {
     if (filebytes == null || filebytes.length == 0) {
       log.warning("uploadBlob_ByFile(): Warn: filebytes is null or length=0");
       return -1;
@@ -103,5 +104,6 @@
       log.severe("uploadBlob_ByFile(): Error 8: blobkey is null");
       return 0;
     }
+//...
 }
 }}}
