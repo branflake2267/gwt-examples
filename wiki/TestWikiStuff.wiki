@@ -1,109 +1,17 @@
 #summary test out wiki stuff
 
 {{{
-public long uploadBlob_ByFile(long fileThingId, String fileName, String contentType, byte[] filebytes) {
-    if (filebytes == null || filebytes.length == 0) {
-      log.warning("uploadBlob_ByFile(): Warn: filebytes is null or length=0");
-      return -1;
+private BlobKey getBlobKey(AppEngineFile file) {
+   
+    BlobKey key = FileServiceFactory.getFileService().getBlobKey(file);
+    
+    if (key == null && file.getNamePart().contains(":") == true) {
+      String[] s = file.getNamePart().split(":");
+      if (s != null && s.length == 2) {
+        key = new BlobKey(s[1]);
+      }
     }
     
-    log.info("uploadBlob_ByFile(): filebytes.length=" + filebytes.length);
-    
-    // Get a file service
-    FileService fileService = FileServiceFactory.getFileService();
-    
-    // Create a new Blob file with mime-type
-    AppEngineFile file = null;
-    try {
-      file = fileService.createNewBlobFile(contentType, fileName);
-    } catch (IOException e) {
-      log.severe("uploadBlob_ByFile(): Error 1: could not fileService.createNewBlobFile: " + e.toString());
-      e.printStackTrace();
-      return 0;
-    }
-    
-    if (file == null) {
-      log.severe("uploadBlob_ByFile(): Error: file is null. exiting file upload.");
-      return 0;
-    }
-
-    // Open a channel to write to it
-    boolean lock = true;
-    FileWriteChannel writeChannel = null;
-    try {
-      writeChannel = fileService.openWriteChannel(file, lock);
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-      log.severe("uploadBlob_ByFile(): Error 2:" + e.toString());
-      return 0;
-    } catch (FinalizationException e) {
-      e.printStackTrace();
-    } catch (LockException e) {
-      log.severe("uploadBlob_ByFile(): Error 3:" + e.toString());
-      e.printStackTrace();
-      return 0;
-    } catch (IOException e) {
-      log.severe("uploadBlob_ByFile(): Error 4:" + e.toString());
-      e.printStackTrace();
-      return 0;
-    }
-    
-    ByteBuffer bb = ByteBuffer.wrap(filebytes);
-
-    // This time we write to the channel using standard Java
-    try {
-      writeChannel.write(bb);
-    } catch (IOException e) {
-      log.severe("uploadBlob_ByFile(): Error 5:" + e.toString());
-      e.printStackTrace();
-      return 0;
-    }
-    
-    BlobKey blobKey = FileServiceFactory.getFileService().getBlobKey(file);
-    if (blobKey == null) {
-      log.severe("uploadBlob_ByFile(): Error 5.1, Testing if blobKey is null before closing channel: ");
-    } else {
-      log.info("uploadBlob_ByFile(): INFO 5.1, blobkey WORKED !!!!!!!!!!!!!!!!! ");
-    }
-    
-    try {
-      writeChannel.close();
-    } catch (IOException e) {
-      log.severe("uploadBlob_ByFile(): Error 5.5:" + e.toString());
-      e.printStackTrace();
-    }
-
-    // Now finalize
-    try {
-      writeChannel.closeFinally();
-    } catch (IllegalStateException e) {
-      log.severe("uploadBlob_ByFile(): Error 6:" + e.toString());
-      e.printStackTrace();
-      return 0;
-    } catch (IOException e) {
-      log.severe("uploadBlob_ByFile(): Error 7:" + e.toString());
-      e.printStackTrace();
-      return 0;
-    }
-    
-    blobKey = FileServiceFactory.getFileService().getBlobKey(file);
-    
-    
-    FileSystem fileSytem = file.getFileSystem();
-    String path = file.getFullPath();
-    String namePart = file.getNamePart();
-    
-    String fs = "null";
-    if (fileSytem != null) {
-      fs = fileSytem.toString();
-    }
-    
-    log.info("uploadBlob_ByFile(): Info: fileSystem: " + fs + " path=" + path + " namePart=" + namePart + " file.toString()=" + file.toString());
-    
-    if (blobKey == null) {
-      log.severe("uploadBlob_ByFile(): Error 8: blobkey is null");
-      return 0;
-    }
-//...
-}
+    return key;
+  }
 }}}
