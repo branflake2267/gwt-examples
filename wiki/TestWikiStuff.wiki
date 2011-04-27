@@ -1,17 +1,23 @@
 #summary test out wiki stuff
 
 {{{
-  private BlobKey getBlobKey(AppEngineFile file) {
+   private void setByTask(int defaultType) {
    
-    BlobKey key = FileServiceFactory.getFileService().getBlobKey(file);
+    String url = "/task?task=defaults&ownerid=" + sp.getUserThingId() + "&defaulttype=" + defaultType;
     
-    if (key == null && file.getNamePart().contains(":") == true) {
-      String[] s = file.getNamePart().split(":");
-      if (s != null && s.length == 2) {
-        key = new BlobKey(s[1]);
-      }
+    String taskName = StringUtils.getRandomString(5) + "_" + url;
+    long taskId = new Db_Feed_TaskQue(sp).saveTask(ThingData.THING_APPLICATION, taskName);
+    
+    url = url + "&taskid=" + taskId;
+    
+    try {
+      TaskOptions taskOptions = TaskOptions.Builder.withUrl(url).header("Cookie", sp.getHeader("Cookie")).method(Method.GET);
+      Queue queue = QueueFactory.getDefaultQueue();
+      queue.add(taskOptions);
+    } catch (Exception e) {
+      new Db_Feed_TaskQue(sp).deleteTask(taskId);
+      e.printStackTrace();
     }
     
-    return key;
   }
 }}}
