@@ -1,23 +1,42 @@
 #summary test out wiki stuff
 
 {{{
-   private void setByTask(int defaultType) {
-   
-    String url = "/task?task=defaults&ownerid=" + sp.getUserThingId() + "&defaulttype=" + defaultType;
-    
-    String taskName = StringUtils.getRandomString(5) + "_" + url;
-    long taskId = new Db_Feed_TaskQue(sp).saveTask(ThingData.THING_APPLICATION, taskName);
-    
-    url = url + "&taskid=" + taskId;
-    
-    try {
-      TaskOptions taskOptions = TaskOptions.Builder.withUrl(url).header("Cookie", sp.getHeader("Cookie")).method(Method.GET);
-      Queue queue = QueueFactory.getDefaultQueue();
-      queue.add(taskOptions);
-    } catch (Exception e) {
-      new Db_Feed_TaskQue(sp).deleteTask(taskId);
-      e.printStackTrace();
-    }
-    
+public class Servlet_Index extends HttpServlet {
+
+
+  public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException  {
+
+    home(req, res);
+
   }
+
+  public void home(HttpServletRequest req, HttpServletResponse res) throws IOException {
+
+    res.setContentType("text/html"); 
+    PrintWriter out = res.getWriter();
+
+    drawTop(req, res, out);
+
+    drawReferer(req, res, out);
+
+    drawBottom(req, res, out);
+
+  }
+
+  private void drawTop(HttpServletRequest req, HttpServletResponse res, PrintWriter out) throws IOException {
+    File file = new File("Index_Top.html");
+    InputStream in = null;
+    try {
+      in = new BufferedInputStream(new FileInputStream(file));
+      int ch;
+      while ((ch = in.read()) !=-1) {
+        out.print((char)ch);
+      }
+    }
+    finally {
+      if (in != null) in.close(); 
+    }
+  }
+//...
+}
 }}}
