@@ -420,6 +420,8 @@ public void draw() {
       var files = evt.target.files;
       var output = [];
       for (var i = 0, f; f = files[i]; i++) {
+         //var name = f.name;
+         //var type = f.type; 
          var reader = new FileReader();  
          reader.onload = function (evt) {  
            fuw.@org.gonevertical.core.client.ui.admin.blobs.FileUploaderWidget_v2::setImage(Ljava/lang/String;)(evt.target.result);
