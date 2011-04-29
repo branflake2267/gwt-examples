@@ -393,4 +393,67 @@ public class UploadTest extends Composite {
 }
 }}}
 
+
+== File Upload (Input) To Canvas - readAsDataURL ==
+ When I want to use GWT FileUpload widget and then observe changes in native javascript so to use the FileReader to get the readAsDataURL.
+
+ Use a file input to get an image to canvas.
+{{{
+public void draw() {
+    
+    FileUpload fu = new FileUpload();
+    pUpload.add(fu);
+    
+    Element e = fu.getElement();
+    
+    observeImageData(this, e);
+  }
+
+  /**
+   * observe changes on the file upload input
+   * 
+   * @param fuw this class (widget)
+   * @param e
+   */
+  public static native void observeImageData(FileUploaderWidget_v2 fuw, Element e) /*-{
+    function handleFileSelect(evt) {
+      var files = evt.target.files;
+      var output = [];
+      for (var i = 0, f; f = files[i]; i++) {
+         var reader = new FileReader();  
+         reader.onload = function (evt) {  
+           fuw.@org.gonevertical.core.client.ui.admin.blobs.FileUploaderWidget_v2::setImage(Ljava/lang/String;)(evt.target.result);
+         }  
+         reader.readAsDataURL(files[i]);
+      }
+    }
+    e.addEventListener('change', handleFileSelect, false);
+  }-*/;
+
+  /**
+   * process base64 mime imagedata content string
+   * 
+   * @param imageData
+   */
+  public void setImage(String imageData) {
+    final Image image = new Image(imageData);
+    pProcess.add(image);
+    image.addLoadHandler(new LoadHandler() {
+      public void onLoad(LoadEvent event) {
+        drawToCanvas(image);
+      }
+    });
+  }
+  
+  private void drawToCanvas(Image image) {
+
+    // Tdraw full size, then upload
+    drawFullSize(image);
+    
+    // draw scaled image, then upload
+    createThumbnail(image, 150);
+    
+  }
+}}}
+
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="95" width="735" border="0" />
