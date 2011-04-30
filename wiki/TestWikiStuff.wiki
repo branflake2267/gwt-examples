@@ -6,3 +6,23 @@ http://gwt-examples.googlecode.com
 http://c.gawkat.com
 Challenge is to: Spice up the java forum with some profile pictures, lets beat the python community. :)
 }}}
+
+
+{{{
+public long queryTotal() {
+    long total = 0;
+    PersistenceManager pm = sp.getPersistenceManager();
+    try {
+      Query q = pm.newQuery("select stuffIdKey from " + ThingStuffJdo.class.getName());
+      List<Key> ids = (List<Key>) q.execute();
+      total = ids.size();
+      q.closeAll();
+    } catch (Exception e) { 
+      e.printStackTrace();
+      log.log(Level.SEVERE, "", e);
+    } finally {
+      pm.close();
+    }
+    return total;
+  }
+}}}
