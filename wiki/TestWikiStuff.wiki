@@ -9,20 +9,29 @@ Challenge is to: Spice up the java forum with some profile pictures, lets beat t
 
 
 {{{
-  public long queryTotal() {
-    long total = 0;
-    PersistenceManager pm = sp.getPersistenceManager();
-    try {
-      Query q = pm.newQuery("select stuffIdKey from " + ThingStuffJdo.class.getName());
-      List<Key> ids = (List<Key>) q.execute();
-      total = ids.size();
-      q.closeAll();
-    } catch (Exception e) { 
-      e.printStackTrace();
-      log.log(Level.SEVERE, "", e);
-    } finally {
-      pm.close();
+  private String getGoogleLoginUrl() {
+    if (cp.getAccessToken() == null && cp.getAccessToken().getThirdPartyLoginData() == null) {
+      return null;
     }
-    return total;
+    
+    String domain = GWT.getHostPageBaseURL();
+    String path = Window.Location.getPath();
+    String qs = Window.Location.getQueryString();
+    String historyToken = History.getToken();
+    if (qs == null) {
+      qs = "";
+    }
+    if (domain.matches(".*/") == true) {
+      domain = domain.substring(0,domain.length()-1);
+    }
+    
+    String url = domain + path + qs + "#" + historyToken;
+    url = URL.encode(url);
+    url = Global_String.encodeUrlDelimiters(url);
+
+    String baseUrl = cp.getAccessToken().getThirdPartyLoginData().getGoogleLoginUrl();
+    baseUrl = baseUrl.replaceAll("=%2F.*", "=" + url);
+    
+    return baseUrl;
   }
 }}}
