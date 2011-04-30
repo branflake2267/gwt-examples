@@ -8,6 +8,18 @@
  I'm going to write down my HTML5 stuff here. I'm in love with the HTML5 stuff!!!!!!
  * [http://www.w3.org/TR/2dcontext/#canvasrenderingcontext2d HTML5 Canvas Specs] 
 
+== Demo ==
+ Here is a rough demo.
+
+ * [http://demogwtcanvas.appspot.com/ Demo] - I made this to test GAE base64 uploading (which is broken at the moment)
+ * [http://code.google.com/p/gwt-examples/source/browse/#svn%2Ftrunk%2FDemoGwtCanvas Source] - Source for the stuff. I made this demo to show GAE has a bug uploading base64
+
+ === Issues with Base64 on GAE ===
+  Some issues exist with base64 upload encoding.
+ * http://code.google.com/p/googleappengine/issues/detail?id=4265
+ * http://code.google.com/p/googleappengine/issues/detail?id=4806
+ * [http://code.google.com/appengine/forum/java-forum.html?place=topic%2Fgoogle-appengine-java%2FYWKZekpSpc0%2Fdiscussion Group Discussion About Issues]
+
 == Image Scale / Resize ==
  I had trouble scaling an image in app engine and HTML5 canvas has so many more options and fun things to work with. The canvas uses the imageElement, which you can get from GWT Image. Note you have to use a load handler before you can work with the Image.
 
