@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+  
+  <!-- Servlets -->
+  <servlet>
+    <servlet-name>greetServlet</servlet-name>
+    <servlet-class>org.gonevertical.democanvas.server.RpcServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>greetServlet</servlet-name>
+    <url-pattern>/demogwtcanvas/rpc</url-pattern>
+  </servlet-mapping>
+  
+  <!-- Default page to serve -->
+  <welcome-file-list>
+    <welcome-file>DemoGwtCanvas.html</welcome-file>
+  </welcome-file-list>
+
+
+  <!-- Test Output -->
+  <servlet>
+    <servlet-name>TestOut</servlet-name>
+    <servlet-class>org.gonevertical.democanvas.server.Servlet_TestOut</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TestOut</servlet-name>
+    <url-pattern>/TestOut/*</url-pattern>
+  </servlet-mapping>
+  
+  <!-- Upload files -->
+  <servlet>
+    <servlet-name>Upload</servlet-name>
+    <servlet-class>org.gonevertical.democanvas.server.Servlet_Upload</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Upload</servlet-name>
+    <url-pattern>/upload/*</url-pattern>
+  </servlet-mapping>
+
+</web-app>
