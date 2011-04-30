@@ -14,8 +14,8 @@
  * [http://demogwtcanvas.appspot.com/ Demo] - I made this to test GAE base64 uploading (which is broken at the moment)
  * [http://code.google.com/p/gwt-examples/source/browse/#svn%2Ftrunk%2FDemoGwtCanvas Source] - Source for the stuff. I made this demo to show GAE has a bug uploading base64
 
- === Issues with Base64 on GAE ===
-  Some issues exist with base64 upload encoding.
+=== Some Issues with Base64 on GAE ===
+ Some issues exist with base64 upload encoding. So if you working with images and want to upload them, there could be some challenges. I haven't found work arounds to them yet. I thought I had it working, but for some reason I can't.
  * http://code.google.com/p/googleappengine/issues/detail?id=4265
  * http://code.google.com/p/googleappengine/issues/detail?id=4806
  * [http://code.google.com/appengine/forum/java-forum.html?place=topic%2Fgoogle-appengine-java%2FYWKZekpSpc0%2Fdiscussion Group Discussion About Issues]
