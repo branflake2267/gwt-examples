@@ -9,7 +9,7 @@ Challenge is to: Spice up the java forum with some profile pictures, lets beat t
 
 
 {{{
-public long queryTotal() {
+  public long queryTotal() {
     long total = 0;
     PersistenceManager pm = sp.getPersistenceManager();
     try {
