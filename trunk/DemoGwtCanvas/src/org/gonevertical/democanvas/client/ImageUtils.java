@@ -106,7 +106,7 @@ public class ImageUtils {
     Canvas canvasTmp = Canvas.createIfSupported();
     Context2d context = canvasTmp.getContext2d();
 
-    double ch = (image.getHeight() * scaleToRatio) + 100;
+    double ch = (image.getHeight() * scaleToRatio) + 100; // 100 is offset so it doesn't throw
     double cw = (image.getWidth() * scaleToRatio) + 100;
     
     canvasTmp.setCoordinateSpaceHeight((int) ch);
@@ -135,7 +135,7 @@ public class ImageUtils {
     // get image data
     double w = dw * scaleToRatio;
     double h = dh * scaleToRatio;
-    ImageData imageData = context.getImageData(0, 0, w, h);
+    ImageData imageData = context.getImageData(0, 0, w, h); // this won't get the extra 100
 
     return imageData;
   }

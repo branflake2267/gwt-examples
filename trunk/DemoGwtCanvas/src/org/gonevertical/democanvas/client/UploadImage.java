@@ -6,6 +6,7 @@ import java.util.Random;
 import org.gonevertical.democanvas.client.rpc.RpcInit;
 import org.gonevertical.democanvas.client.rpc.RpcServiceAsync;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -63,6 +64,29 @@ public class UploadImage extends Composite {
       return;
     }
     fileBase64 = fileBase64Split[1].trim();
+
+    // work around to binary
+    //Window.alert("javaBase64{{" + fileBase64 + "}}javaBase64");
+    //decodeBase64(this, fileBase64);
+    //Window.alert("javaBinary{{" + fileBase64 + "}}javaBinary");
+  }
+
+  /**
+   * http://developers.whatwg.org/webappapis.html#dom-windowbase64-btoa
+   * @param ui 
+   *  
+   * @param base64
+   * @return
+   */
+  private static native void decodeBase64(UploadImage ui, String base64) /*-{
+    var bin = window.atob(base64);   
+    ui.@org.gonevertical.democanvas.client.UploadImage::setBinary(Ljava/lang/String;)(bin);
+  }-*/;
+
+  private void setBinary(String bin) {
+    fileBase64 = bin;
+    System.out.println("test=" + bin);
+    RootPanel.get().add(new HTML("<br>"+bin+"<br>"));
   }
 
   public void upload() {
@@ -140,14 +164,14 @@ public class UploadImage extends Composite {
   private String getRequestData(String boundary) {
     String s = "";
 
-    
+
     s += "--" + boundary + "\r\n";
     s += getRequestParameter("oid", 1234567890 + "");
 
     /*
     s += "--" + boundary + "\r\n";
     s += getRequestParameter("ltid", parentId + "");
-    */
+     */
 
     s += "--" + boundary + "\r\n";
     s += getRequest_Image(fileName, fileContentType, fileBase64);
@@ -166,7 +190,7 @@ public class UploadImage extends Composite {
     s += "Content-Disposition: form-data; name=\"File\"; filename=\"" + fileName.trim() + "\"\r\n";
     s += "Content-Type: " + contentType.trim() + "\r\n";
     s += "Content-Transfer-Encoding: base64 \r\n\r\n";
-    s += file.trim();
+    s += file.trim(); 
     s += "\r\n";
     return s;
   }
@@ -186,11 +210,11 @@ public class UploadImage extends Composite {
   }
 
   private void processResponse(Response response) {
-    
+
     if (1==1) {
       return;
     }
-    
+
     if (response == null) {
       // TODO error
       return;
@@ -245,5 +269,5 @@ public class UploadImage extends Composite {
 
   }
 
- 
+
 }
