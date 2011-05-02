@@ -472,7 +472,7 @@ public void draw() {
 }}}
 
 == Decoding Base64 ==
- I'm experimenting with this. I haven't been able to get this to work for me yet.
+ I'm experimenting with this in chrome.
  * [http://developers.whatwg.org/webappapis.html#dom-windowbase64-atob]
 {{{
   private static native void decodeBase64(UploadImage ui, String base64) /*-{
