@@ -9,29 +9,27 @@ Challenge is to: Spice up the java forum with some profile pictures, lets beat t
 
 
 {{{
-  private String getGoogleLoginUrl() {
-    if (cp.getAccessToken() == null && cp.getAccessToken().getThirdPartyLoginData() == null) {
-      return null;
+  /**
+   * this will send parmeters back to client for use
+   * 
+   * @param response
+   * @param s
+   */
+  private void sendRedirect(HttpServletResponse response, String s) {
+    if (s==null) {
+      log.severe("sendRedirect(): Error, nothing to redirect. s=" + s);
+      return;
     }
+    String base = sp.getUrl(true);
+    String url = base + "/serve?" + s;
     
-    String domain = GWT.getHostPageBaseURL();
-    String path = Window.Location.getPath();
-    String qs = Window.Location.getQueryString();
-    String historyToken = History.getToken();
-    if (qs == null) {
-      qs = "";
+    log.info("SendRedirect url=" + url + " base=" + base);
+    
+    try {
+      response.sendRedirect(url);
+    } catch (IOException e) {
+      log.warning("Servlet_Upload.sendRedirect(): ERROR: url" + url);
+      e.printStackTrace();
     }
-    if (domain.matches(".*/") == true) {
-      domain = domain.substring(0,domain.length()-1);
-    }
-    
-    String url = domain + path + qs + "#" + historyToken;
-    url = URL.encode(url);
-    url = Global_String.encodeUrlDelimiters(url);
-
-    String baseUrl = cp.getAccessToken().getThirdPartyLoginData().getGoogleLoginUrl();
-    baseUrl = baseUrl.replaceAll("=%2F.*", "=" + url);
-    
-    return baseUrl;
   }
 }}}
