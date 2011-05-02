@@ -482,7 +482,6 @@ public void draw() {
   
   private void setBinary(String bin) {
     binaryData = bin;
-    System.out.println("test=" + bin);
   }
 }}}
 
