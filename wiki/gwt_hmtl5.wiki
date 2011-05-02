@@ -471,4 +471,19 @@ public void draw() {
   }
 }}}
 
+== Decoding Base64 ==
+ I'm experimenting with this. I haven't been able to get this to work for me yet.
+ * [http://developers.whatwg.org/webappapis.html#dom-windowbase64-atob]
+{{{
+  private static native void decodeBase64(UploadImage ui, String base64) /*-{
+    var bin = window.atob(base64); 
+    ui.@org.gonevertical.democanvas.client.UploadImage::setBinary(Ljava/lang/String;)(bin);
+  }-*/;
+  
+  private void setBinary(String bin) {
+    fileBase64 = bin;
+    System.out.println("test=" + bin);
+  }
+}}}
+
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="95" width="735" border="0" />
