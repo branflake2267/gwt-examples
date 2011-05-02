@@ -30,6 +30,12 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 
+/**
+ * this is a bit messy from experimentation
+ * 
+ * @author branflake2267
+ *
+ */
 public class FileUploaderWidget_v2 extends Composite {
 
   public static final int thumbsizeHeight = 150;
@@ -84,7 +90,7 @@ public class FileUploaderWidget_v2 extends Composite {
     
     //pWidget.addStyleName("test2");
     //hp.addStyleName("test3");
-    pFullSize.addStyleName("test3");
+    //pFullSize.addStyleName("test3");
     
     setup();
   }
@@ -126,14 +132,15 @@ public class FileUploaderWidget_v2 extends Composite {
          var type = f.type; 
          var reader = new FileReader();  
          reader.onload = function (evt) { 
-           fuw.@org.gonevertical.democanvas.client.FileUploaderWidget_v2::setImage(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)(evt.target.result, name, type);
+           var base64 = evt.target.result;
+           fuw.@org.gonevertical.democanvas.client.FileUploaderWidget_v2::setImage(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)(base64, name, type);
          }  
-         reader.readAsDataURL(files[i]);
+         reader.readAsDataURL(files[i]); 
       }
     }
     e.addEventListener('change', handleFileSelect, false);
   }-*/;
-
+  
   /**
    * process base64 mime imagedata content string
    * 
@@ -151,6 +158,7 @@ public class FileUploaderWidget_v2 extends Composite {
     fireChange(EventManager.FILE_UPLOADING);
     
     final Image image = new Image(imageData);
+    image.addStyleName("test1");
     //pProcess.setVisible(false);
     pFullSize.add(image);
     image.addLoadHandler(new LoadHandler() {
@@ -175,17 +183,19 @@ public class FileUploaderWidget_v2 extends Composite {
     int width = image.getWidth();
     int height = image.getHeight();
     
-    double scaleToRatio = 0.50D; // TODO oops, getting image loading problem
+    double scaleToRatio = 0.50D; // TODO oops, getting image loading problem. event loading, fix later...
     
     ImageData imageDataForThumb = ImageUtils.scaleImage(image, scaleToRatio);
     
     // for debugging
     Canvas canvasTmp = Canvas.createIfSupported();
-    canvasTmp.setCoordinateSpaceHeight((int) imageDataForThumb.getHeight()+10);
-    canvasTmp.setCoordinateSpaceWidth((int) imageDataForThumb.getWidth()+10);
+    canvasTmp.setCoordinateSpaceHeight((int) imageDataForThumb.getHeight());
+    canvasTmp.setCoordinateSpaceWidth((int) imageDataForThumb.getWidth());
     Context2d context = canvasTmp.getContext2d();
     context.putImageData(imageDataForThumb, 0, 0);
     pThumb.add(canvasTmp);
+    
+    canvasTmp.addStyleName("test2");
   }
 
   private void upload(final Image image) {
@@ -206,7 +216,7 @@ public class FileUploaderWidget_v2 extends Composite {
     
     
     // TODO enable this if your testing it!!!!!!!!!!
-    iu.upload();
+    //iu.upload();
     
     
     
