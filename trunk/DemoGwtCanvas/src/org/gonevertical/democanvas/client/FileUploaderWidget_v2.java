@@ -201,8 +201,8 @@ public class FileUploaderWidget_v2 extends Composite {
   private void upload(final Image image) {
 
     Canvas canvasTmp = Canvas.createIfSupported();
-    canvasTmp.setCoordinateSpaceHeight((int) image.getHeight()+10);
-    canvasTmp.setCoordinateSpaceWidth((int) image.getWidth()+10);
+    canvasTmp.setCoordinateSpaceHeight((int) image.getHeight());
+    canvasTmp.setCoordinateSpaceWidth((int) image.getWidth());
     Context2d context = canvasTmp.getContext2d();
     ImageElement imageElement = ImageElement.as(image.getElement());
     context.drawImage(imageElement, 0, 0);
@@ -216,7 +216,7 @@ public class FileUploaderWidget_v2 extends Composite {
     
     
     // TODO enable this if your testing it!!!!!!!!!!
-    //iu.upload();
+    iu.upload();
     
     
     
