@@ -14,6 +14,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class DemoGwtCanvas implements EntryPoint {
 
   private LoadingWidget wLoading;
+  
+  private String version = "demo version 7";
 
   public void onModuleLoad() {
 
@@ -39,6 +41,24 @@ public class DemoGwtCanvas implements EntryPoint {
     pWidget.add(new HTML("Try uploading an image in chrome only. Due to FileReader API availability."));
     pWidget.add(fuw);
     fuw.draw();
+    
+    pWidget.add(new HTML("&nbsp;"));
+    pWidget.add(new HTML("&nbsp;"));
+    
+    /*
+    pWidget.add(new HTML("<hr width=\"100px;\"/>"));
+    
+    pWidget.add(new HTML("&nbsp;"));
+    pWidget.add(new HTML("&nbsp;"));
+    
+    pWidget.add(new HTML("This uses a HTML form"));
+    pWidget.add(new TestForm());
+    
+    pWidget.add(new HTML("&nbsp;"));
+    pWidget.add(new HTML("&nbsp;"));
+    */
+    
+    pWidget.add(new HTML(version));
 
     fuw.addChangeHandler(new ChangeHandler() {
       public void onChange(ChangeEvent event) {

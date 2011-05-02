@@ -50,7 +50,7 @@ public class UploadImage extends Composite {
   }
 
   private void fixExt() {
-    fileName = fileName.replaceFirst("\\..*", ".jpg");
+    fileName = fileName.replaceFirst("\\..*", ".png");
     System.out.println("UploadImage.fixExt(): " + fileName);
   }
 
@@ -140,11 +140,14 @@ public class UploadImage extends Composite {
   private String getRequestData(String boundary) {
     String s = "";
 
+    
     s += "--" + boundary + "\r\n";
-    s += getRequestParameter("oid", cp.getUserId() + "");
+    s += getRequestParameter("oid", 1234567890 + "");
 
+    /*
     s += "--" + boundary + "\r\n";
     s += getRequestParameter("ltid", parentId + "");
+    */
 
     s += "--" + boundary + "\r\n";
     s += getRequest_Image(fileName, fileContentType, fileBase64);

@@ -2,6 +2,7 @@ package org.gonevertical.democanvas.server;
 
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
@@ -15,29 +16,74 @@ import com.google.appengine.repackaged.com.google.common.util.Base64DecoderExcep
 public class Servlet_TestOut extends HttpServlet {
 
   
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  //public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     
-    echo(request);
+    //echo(request);
     
-  }
+  //}
   
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
+    String contenType = request.getContentType();
+    System.out.println("ContentType=" + contenType);
+    
+    String method = request.getMethod();
+    System.out.println("Method=" + method);
+
     
     echoHeaders(request);
     
     echo(request);
     
+    echoParameters(request);
     
+    echoAttributes(request);
+    
+    /*
     String strBase64 = request.getParameter("FileBase64");
-    byte[] fileBytes = null;
-    try {
-      fileBytes = Base64.decode(strBase64.getBytes());
-    } catch (Base64DecoderException e) {
-      e.printStackTrace();
+    if (strBase64 != null) {
+      byte[] fileBytes = null;
+      try {
+        fileBytes = Base64.decode(strBase64.getBytes());
+      } catch (Base64DecoderException e) {
+        e.printStackTrace();
+      }
+      System.out.println("filebytes: " + fileBytes);
     }
+    */
     
-    
-    System.out.println("filebytes: " + fileBytes);
+    String s = request.getParameter("oid");
+    System.out.println("oid=" + s);
+  }
+  
+  private void echoAttributes(HttpServletRequest request) {
+    System.out.println("~~~~~~~~~~~~Echo Attributes START");
+    Enumeration<String> attrs = request.getAttributeNames();
+    if (attrs == null) {
+      return;
+    }
+    while(attrs.hasMoreElements()) {
+      String headerName = attrs.nextElement();
+      String value = request.getHeader(headerName);
+      System.out.println("Attribute::: " + headerName + "=" + value);
+    }
+    System.out.println("~~~~~~~~~~~~Echo Attributes End");
+  }
+
+  private void echoParameters(HttpServletRequest request) {
+    System.out.println("");
+    System.out.println("~~~~~~~~~~~~Echo Parameters START");
+    Enumeration<String> names = request.getParameterNames();
+    if (names == null) {
+      System.out.println("why are the parameters null???");
+      return;
+    }
+    while(names.hasMoreElements()) {
+      String name = names.nextElement();
+      String value = request.getParameter(name);
+      System.out.println("Parameter::: name=" + name + " value=" + value);
+    }
+    System.out.println("~~~~~~~~~~~~Echo Parameters END");
   }
 
   private void echoHeaders(HttpServletRequest request) {

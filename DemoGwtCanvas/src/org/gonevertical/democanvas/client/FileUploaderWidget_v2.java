@@ -206,7 +206,7 @@ public class FileUploaderWidget_v2 extends Composite {
     
     
     // TODO enable this if your testing it!!!!!!!!!!
-    //iu.upload();
+    iu.upload();
     
     
     

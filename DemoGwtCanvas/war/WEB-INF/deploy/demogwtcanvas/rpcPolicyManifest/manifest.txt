@@ -1,3 +1,2 @@
 # Module demogwtcanvas
 # RPC service class, partial path of RPC policy file
-org.gonevertical.democanvas.client.rpc.RpcService, 78821863906217A96FC1502E7AB8667E.gwt.rpc
