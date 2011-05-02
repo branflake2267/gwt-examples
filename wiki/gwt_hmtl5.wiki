@@ -481,7 +481,7 @@ public void draw() {
   }-*/;
   
   private void setBinary(String bin) {
-    fileBase64 = bin;
+    binaryData = bin;
     System.out.println("test=" + bin);
   }
 }}}
