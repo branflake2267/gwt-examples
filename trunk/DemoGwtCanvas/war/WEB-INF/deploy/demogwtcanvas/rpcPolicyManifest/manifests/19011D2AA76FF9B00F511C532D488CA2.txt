@@ -1,0 +1,2 @@
+serviceClass: org.gonevertical.democanvas.client.rpc.RpcService
+path: 4D3B5D02F43916BB6EEB65C389946C30.gwt.rpc
