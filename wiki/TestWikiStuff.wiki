@@ -9,26 +9,27 @@ Challenge is to: Spice up the java forum with some profile pictures, lets beat t
 
 
 {{{
-package com.google.gwt.user.server;
-
-/**
- * A utility to decode and encode byte arrays as Strings, using only "safe"
- * characters.
- */
-public class Base64Utils {
-
-  /**
-   * An array mapping size but values to the characters that will be used to
-   * represent them. Note that this is not identical to the set of characters
-   * used by MIME-Base64.
-   */
-  private static final char[] base64Chars = new char[] {
-      'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
-      'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b',
-      'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
-      'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3',
-      '4', '5', '6', '7', '8', '9', '$', '_'};
-
-//...
-}
+  private String query(FileByteData fbd) {
+    String base64 = null;
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    try {
+      Query q = new Query("BlobTmpJdo");
+      q.addFilter("key", FilterOperator.EQUAL, fbd.getKey());
+      q.addSort("index");
+      PreparedQuery e = datastore.prepare(q);
+      Iterator<Entity> itr = e.asIterator();
+      while (itr.hasNext()) {
+        if (base64 == null) {
+          base64 = "";
+        }
+        Entity entity = itr.next();
+        base64 += entity.getProperty("base64");
+        log.info("query(): index=" + entity.getProperty("index") + " base64=" + entity.getProperty("base64"));
+      }
+    } catch (Exception e) { 
+      e.printStackTrace();
+      log.log(Level.SEVERE, "", e);
+    } 
+    return base64;
+  }
 }}}
