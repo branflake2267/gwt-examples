@@ -338,7 +338,7 @@ private byte[] getImageBytes_v2(BlobData blobData) {
 }}}
   
   === Upload By Servlet ===
-   This is how I post an upload to servlet.
+   This is one way I send a post of a file to a servlet in the blobstore. This works great for me, to get a file to the blobstore.
 {{{
 public long uploadBlob_ByServlet(long linkTypeId, long linkToThingId, String fileName, String contentType, byte[] filebytes) {
     
