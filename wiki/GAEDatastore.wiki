@@ -3,5 +3,6 @@
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="110" width="760" border="0" />
 
 = Writing in progress... =
+  I'm putting stuff together to put in here. Should be up over the weekend.
 
  * [DemoGAEMultiFileBlobUpload] - Notes about blobbing
