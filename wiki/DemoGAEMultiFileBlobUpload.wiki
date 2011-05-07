@@ -262,7 +262,8 @@ private byte[] getImageBytes_v2(BlobData blobData) {
 == Writing to the Blob Store ==
  I've found this to be a bit easier to write to the blobstore.
 
- You can write to the blob store like this too.
+ === Upload by File ===
+  You can write to the blob store like this too.
 {{{
   public long uploadBlob_ByFile(long linkTypeId, long linkToThingId, String fileName, String contentType, byte[] filebytes) {
     if (filebytes == null) {
@@ -334,5 +335,102 @@ private byte[] getImageBytes_v2(BlobData blobData) {
     }
 //... 
 }
+}}}
+  
+  === Upload By Servlet ===
+   This is how I post an upload to servlet.
+{{{
+public long uploadBlob_ByServlet(long linkTypeId, long linkToThingId, String fileName, String contentType, byte[] filebytes) {
+    
+    blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+    
+    // setup url - for new blobkey
+    String surl = blobstoreService.createUploadUrl("/upload");
+   
+    String base = sp.getUrl(true);
+    if (base.contains("127")) {
+      System.out.println("base added to url in uploadBlob");
+      surl = base + surl; // this isn't need on production side
+    }
+    
+    System.out.println("uploadBlob(): fetch url=" + surl);
+    
+    URL url = null;
+    try {
+      url = new URL(surl);
+    } catch (MalformedURLException e) {
+      log.warning("uploadBlob() Could not setup url: " + e.toString());
+      e.printStackTrace();
+      return 0;
+    }
+
+    String boundary = createBoundary();
+    
+    URLFetchService urlFetch = URLFetchServiceFactory.getURLFetchService();
+    FetchOptions fetchOptions = FetchOptions.Builder.withDefaults().setDeadline(6000.00).followRedirects();
+    HTTPRequest request = new HTTPRequest(url, HTTPMethod.POST, fetchOptions);
+    request.addHeader(new HTTPHeader("Content-Type", "multipart/form-data; boundary=" + boundary));
+    request.addHeader(new HTTPHeader("Cookie", sp.getHeader("Cookie")));
+    //request.addHeader(new HTTPHeader("Host", "127.0.0.1:8888"));
+    //request.addHeader(new HTTPHeader("Origin", "http://127.0.0.1:8888"));
+    //request.addHeader(new HTTPHeader("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_6; en-us) AppleWebKit/533.19.4 (KHTML, like Gecko)"));
+    //request.addHeader(new HTTPHeader("Referer", "http://127.0.0.1:8888/index.html?gwt.codesvr=127.0.0.1:9997"));
+    //request.addHeader(new HTTPHeader("Accept", "application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5"));
+    //request.addHeader(new HTTPHeader("Accept-Language", "en-us"));
+    //request.addHeader(new HTTPHeader("Accept-Encoding", "gzip, deflate"));
+    //request.addHeader(new HTTPHeader("Connection", "keep-alive"));
+    
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    write(out, "--" + boundary + "\r\n");
+    writeParameter(out, "oid", Long.toString(sp.getUserThingId()));
+    write(out, "--" + boundary + "\r\n");
+    writeParameter(out, "ltype", Long.toString(linkTypeId));
+    write(out, "--" + boundary + "\r\n");
+    writeParameter(out, "ltid", Long.toString(linkToThingId));
+    write(out, "--" + boundary + "\r\n");
+    writeImage(out, fileName, contentType, filebytes);
+    write(out, "--" + boundary + "--\r\n"); // end boundary!!!!
+
+    int len = out.toByteArray().length;
+    request.addHeader(new HTTPHeader("Content-Length", "" + len));
+    request.setPayload(out.toByteArray());
+    
+    // DEBUG
+    //echo(request.getHeaders());
+    //echo(request.getPayload());
+
+    // send request
+    HTTPResponse response = null;
+    try {
+      response = urlFetch.fetch(request);
+    } catch (Exception e) {
+      log.severe("uploadBlob() Error: urlFetch.fetch(request) - Response Error: " + e.toString());
+      e.printStackTrace();
+    }
+    
+    if (response == null) {
+      log.warning("uploadBlob() Error: response is null");
+      return 0;
+    }
+
+    String sfileid = null;
+    try {
+      InputStream in = new ByteArrayInputStream(response.getContent());
+      BufferedInputStream bis = new BufferedInputStream(in);
+      ByteArrayOutputStream buf = new ByteArrayOutputStream();
+      int result = bis.read();
+      while(result != -1) {
+        byte b = (byte)result;
+        buf.write(b);
+        result = bis.read();
+      }
+      sfileid = buf.toString();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    
+    long thingFileId = parseResponse(sfileid);
+    return thingFileId;
+  }
 }}}
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="110" width="760" border="0" />
