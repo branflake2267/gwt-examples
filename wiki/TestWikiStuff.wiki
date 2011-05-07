@@ -9,30 +9,28 @@ Challenge is to: Spice up the java forum with some profile pictures, lets beat t
 
 
 {{{
-  @Persistent 
-  private double index;
-
-  private String query(FileByteData fbd) {
-    String base64 = null;
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    try {
-      Query q = new Query("BlobTmpJdo");
-      q.addFilter("key", FilterOperator.EQUAL, fbd.getKey());
-      q.addSort("index");
-      PreparedQuery e = datastore.prepare(q);
-      Iterator<Entity> itr = e.asIterator();
-      while (itr.hasNext()) {
-        if (base64 == null) {
-          base64 = "";
-        }
-        Entity entity = itr.next();
-        base64 += entity.getProperty("base64");
-        log.info("query(): index=" + entity.getProperty("index") + " base64=" + entity.getProperty("base64"));
-      }
-    } catch (Exception e) { 
-      e.printStackTrace();
-      log.log(Level.SEVERE, "", e);
-    } 
-    return base64;
-  }
+query(): index=45.0 base64=null
+query(): index=45.01 base64=null
+query(): index=45.02 base64=null
+query(): index=45.03 base64=null
+query(): index=45.04 base64=null
+query(): index=45.05 base64=null
+query(): index=45.06 base64=null
+query(): index=45.07 base64=null
+query(): index=45.08 base64=null
+query(): index=45.09 base64=null
+query(): index=45.1 base64=null
+query(): index=45.11 base64=null
+query(): index=45.12 base64=null
+query(): index=45.13 base64=null
+query(): index=45.14 base64=null
+query(): index=45.15 base64=null
+query(): index=45.16 base64=null
+query(): index=45.17 base64=null
+query(): index=45.18 base64=null
+query(): index=45.19 base64=null
+query(): index=45.2 base64=null
+query(): index=45.21 base64=null
+query(): index=45.22 base64=null
+qu
 }}}
