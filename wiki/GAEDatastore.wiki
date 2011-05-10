@@ -11,6 +11,128 @@
 == Glimpse Into My Chunking Experiment ==
  I am chunking base64 from GWT client into the blobstore and decoding and writing on the fly. I haven't added error checking in yet.
  
+ My chunking transport object.
+{{{
+public class FileByteData implements IsSerializable {
+
+  public static final int ENCODING_BASE64 = 1;
+  public static final int ENCODING_BYTES = 2;
+  
+  long linkTypeId;
+  long linkToThingId;
+  
+  private String key;
+  
+  private double index;
+  
+  private int encodingType;
+  
+  private String filename;
+  
+  private String contentType;
+  
+  private String base64;
+  
+  private byte[] filebytes;
+  private int width;
+  private int height;
+  
+  public FileByteData() {
+  }
+  
+  public String toString() {
+    String s = "";
+    s += "linkTypeId=" + linkTypeId + " ";
+    s += "linkToThingId=" + linkToThingId + " ";
+    s += "key=" + key + " ";
+    s += "index=" + index + " ";
+    s += "encodingType=" + encodingType + " ";
+    s += "filename" + filename + " ";
+    s += "contentType=" + contentType + " ";
+    s += "base64=" + base64 + " ";
+    s += "filebytes=" + filebytes + " ";
+    return s;
+  }
+  
+  public void setLinkToFileThingId(long linkTypeId, long linkToThingId) {
+    this.linkTypeId = linkTypeId;
+    this.linkToThingId = linkToThingId; 
+  }
+  
+  public long getLinkTypeId() {
+    return linkTypeId;
+  }
+  
+  public long getLinkToThingId() {
+    return linkToThingId;
+  }
+  
+  public void setEncodingType(int encodingType) {
+    this.encodingType = encodingType;
+  }
+  
+  public void setData(String key, double index, String filename, String contentType) {
+    this.key = key;
+    this.index = index;
+    this.filename = filename;
+    this.contentType = contentType;
+  }
+  
+  public void setFile(String base64) {
+    this.base64 = base64;
+  }
+  
+  public void setFile(byte[] filebytes) {
+    this.filebytes = filebytes;
+  }
+  
+  public String getKey() {
+    return key;
+  }
+  
+  public double getIndex() {
+    return index;
+  }
+  
+  public int getEncodingType() {
+    return encodingType;
+  }
+  
+  public String getFileName() {
+    return filename;
+  }
+  
+  public String getContentType() {
+    return contentType;
+  }
+  
+  public String getBase64() {
+    return base64;
+  }
+  
+  public byte[] getBytes() {
+    return filebytes;
+  }
+  
+  public String getId() {
+    return key + "_" + index;
+  }
+
+  public void setFacts(int width, int height) {
+    this.width = width;
+    this.height = height;
+  }
+  
+  public int getWidth() {
+    return width;
+  }
+  
+  public int getHeight() {
+    return height;
+  }
+}
+}}}
+
  This is what I write the tmp blob chunks to, which has to be divisible by 4. 
 {{{
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
