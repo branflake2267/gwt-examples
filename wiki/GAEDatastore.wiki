@@ -13,8 +13,8 @@
 == Glimpse Into My Chunking Experiment ==
  I am chunking base64 from GWT client into the blobstore and decoding and writing on the fly. I haven't added error checking in yet.
  
-=== FileByteData ===
- My chunking transport object.
+ === FileByteData ===
+  My chunking transport object.
 
 {{{
 public class FileByteData implements IsSerializable {
