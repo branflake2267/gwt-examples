@@ -182,17 +182,7 @@ public class BlobTmpJdo {
       return 0;
     }
 
-    saveFileFacts(newFileId, fbd);
-
     return newFileId;
-  }
-
-  private void saveFileFacts(long thingId, FileByteData fbd) {
-
-    ThingStuffJdo tsj = new ThingStuffJdo(sp);
-    tsj.saveStuff_UniqueValue(ThingStuffTypeData.THINGSTUFFTYPE_WIDTH, thingId, new Decimal(fbd.getWidth())); // width
-    tsj.saveStuff_UniqueValue(ThingStuffTypeData.THINGSTUFFTYPE_HEIGHT, thingId, new Decimal(fbd.getHeight())); // height
-
   }
 
   /**
