@@ -400,43 +400,6 @@ public class BlobTmpJdo {
  This is where I query the tmp chunks and decode while writing them to a decoded blob.
 
 {{{
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.jdo.annotations.NotPersistent;
-
-import org.gonevertical.core.client.ui.admin.blobs.BlobData;
-import org.gonevertical.core.client.ui.admin.blobs.FileByteData;
-import org.gonevertical.core.client.ui.admin.blobs.file.FileData;
-import org.gonevertical.core.client.ui.admin.thingstuff.ThingStuffData;
-import org.gonevertical.core.client.ui.admin.thingstufftype.ThingStuffTypeData;
-import org.gonevertical.core.client.ui.admin.thingtype.ThingTypeData;
-import org.gonevertical.core.server.ServerPersistence;
-import org.gonevertical.core.server.db.Db_Thing;
-import org.gonevertical.core.server.jdo.data.BlobTmpJdo;
-import org.gonevertical.core.server.jdo.data.ThingStuffJdo;
-
-import com.google.appengine.api.blobstore.BlobKey;
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.PreparedQuery;
-import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.datastore.Text;
-import com.google.appengine.api.datastore.Query.FilterOperator;
-import com.google.appengine.api.datastore.Query.SortDirection;
-import com.google.appengine.api.files.AppEngineFile;
-import com.google.appengine.api.files.FileService;
-import com.google.appengine.api.files.FileServiceFactory;
-import com.google.appengine.api.files.FileWriteChannel;
-import com.google.appengine.api.files.FinalizationException;
-import com.google.appengine.api.files.LockException;
-
 public class WriteBase64 {
   
   private final char[] BASE64ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".toCharArray();
