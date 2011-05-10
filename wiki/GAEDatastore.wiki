@@ -20,13 +20,13 @@ public class BlobTmpJdo {
   private static final Logger log = Logger.getLogger(BlobTmpJdo.class.getName());
 
   @NotPersistent 
-  private ServerPersistence sp = null;
+  private ServerPersistence sp;
 
   @PrimaryKey
   private String id; // random key I make up, [randomkey_index]
 
   @Persistent
-  private String key = null;
+  private String key;
 
   @Persistent
   private String filename;
