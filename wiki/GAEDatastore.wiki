@@ -2,7 +2,7 @@
 
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="110" width="760" border="0" />
 
-<wiki:toc max_depth="2" />
+<wiki:toc max_depth="3" />
 
 = Writing in progress... =
   I'm putting stuff together to put in here. Should be up over the weekend.
@@ -13,8 +13,9 @@
 == Glimpse Into My Chunking Experiment ==
  I am chunking base64 from GWT client into the blobstore and decoding and writing on the fly. I haven't added error checking in yet.
  
-== FileByteData Transport ==
+=== FileByteData ===
  My chunking transport object.
+
 {{{
 public class FileByteData implements IsSerializable {
 
@@ -136,8 +137,9 @@ public class FileByteData implements IsSerializable {
 }
 }}}
 
-== BlobTmpJdo ==
+=== BlobTmpJdo ===
  This is what I write the tmp blob chunks to, which has to be divisible by 4. 
+
 {{{
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable="true")
 public class BlobTmpJdo {
@@ -394,8 +396,9 @@ public class BlobTmpJdo {
 }}}
 
 
-== WriteBase64 ==
+=== WriteBase64 ===
  This is where I query the tmp chunks and decode while writing them to a decoded blob.
+
 {{{
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
