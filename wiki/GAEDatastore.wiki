@@ -23,7 +23,7 @@ public class BlobTmpJdo {
   private ServerPersistence sp = null;
 
   @PrimaryKey
-  private String id; // blobkey_index
+  private String id; // random key I made up
 
   @Persistent
   private String key = null;
