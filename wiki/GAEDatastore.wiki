@@ -5,7 +5,7 @@
 <wiki:toc max_depth="3" />
 
 = Writing in progress... =
-  I'm putting stuff together to put in here. Should be up over the weekend.
+  I'm putting stuff together to put in here. May 2011
 
  * [DemoGAEMultiFileBlobUpload] - Notes about blobbing
 
