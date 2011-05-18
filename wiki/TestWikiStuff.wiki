@@ -9,28 +9,12 @@ Challenge is to: Spice up the java forum with some profile pictures, lets beat t
 
 
 {{{
-query(): index=45.0 base64=null
-query(): index=45.01 base64=null
-query(): index=45.02 base64=null
-query(): index=45.03 base64=null
-query(): index=45.04 base64=null
-query(): index=45.05 base64=null
-query(): index=45.06 base64=null
-query(): index=45.07 base64=null
-query(): index=45.08 base64=null
-query(): index=45.09 base64=null
-query(): index=45.1 base64=null
-query(): index=45.11 base64=null
-query(): index=45.12 base64=null
-query(): index=45.13 base64=null
-query(): index=45.14 base64=null
-query(): index=45.15 base64=null
-query(): index=45.16 base64=null
-query(): index=45.17 base64=null
-query(): index=45.18 base64=null
-query(): index=45.19 base64=null
-query(): index=45.2 base64=null
-query(): index=45.21 base64=null
-query(): index=45.22 base64=null
-qu
+private void setupMapKeys() {
+    mapKeys.put("127.0.0.1", "ABQIAAAAoVxd5Qo5vFe3MnANAR_5IhQut5BYGsXaKcYHX37p2pavmULAtxSFzIgIf5XclMi1W5kghyXOwf-VUg");
+    mapKeys.put("gonevertical.com", "ABQIAAAAoVxd5Qo5vFe3MnANAR_5IhQphlQfJAaFfNmxI4FuVxjeFxifYRRdtHuXGBi6-b_XkACur3vqvm7hZw");
+    mapKeys.put("gawkat.com", "ABQIAAAAoVxd5Qo5vFe3MnANAR_5IhTpiOMSQJ-HeDKz5f78rwbj0pMtrBRj8coy9zcSzgfg39sYmgnmBfJ8Mg");
+    mapKeys.put("7maps.com", "ABQIAAAAoVxd5Qo5vFe3MnANAR_5IhSqEwTLADlsNERmq2DfYPupKnlC1RQySM-i_AkowaUkOHlezQrL45hIBQ");
+    mapKeys.put("gonevertical-llc-v3.appspot.com", "ABQIAAAAoVxd5Qo5vFe3MnANAR_5IhQut5BYGsXaKcYHX37p2pavmULAtxSFzIgIf5XclMi1W5kghyXOwf-VUg");
+    mapKeys.put("gonevertical-hr.appspot.com", "ABQIAAAAoVxd5Qo5vFe3MnANAR_5IhQxCceSENF_HaZfo0ifoN9qfEWwqxSEhIJxBj4NX2EdlfHgp85_vQAd0Q");
+  }
 }}}
