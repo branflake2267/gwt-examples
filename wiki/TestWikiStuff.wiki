@@ -9,21 +9,7 @@ Challenge is to: Spice up the java forum with some profile pictures, lets beat t
 
 
 {{{
-  private void setupMapKeys() {
-    mapKeys.put("127.0.0.1", "ABQIAAAAoVxd5Qo5vFe3MnANAR_5IhQut5BYGs]");
-    mapKeys.put("abc.com", "ABQIAAAAoVxd5Qo5vFe3MnANAR_5I");
-    mapKeys.put("gawkat.com", "ABQIAAAAoVxd5Qo5vFe3MnANAR_5IhTp");
-    mapKeys.put("asdfsdfaps.com", "ABQIAAAAoVxd5Qo5vFe3MnANAR_5IQ");
-    mapKeys.put("v3asdfasdf3.appspot.com", "ABQIAAAAoVxd5Qo5vFe3MnANAR_5");
-    mapKeys.put("asdfasdf-hr.appspot.com", "ABQIAAAAoVxd5Qo5vFe3MnAN");
-  }
-
- public String getMapKey() {
-    String url = Window.Location.getHost();
-    if (url.contains(":")) {
-      url = url.replaceAll(":.*", "");
-    }
-    String s = mapKeys.get(url);
-    return s;
-  }
+      Query q = new Query("BlobTmpJdo");
+      q.addFilter("key", FilterOperator.EQUAL, fbd.getKey());
+      q.addSort("index");
 }}}
