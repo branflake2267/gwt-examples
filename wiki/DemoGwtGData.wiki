@@ -19,10 +19,10 @@
  To setup the token to Google, I use a popup window and servlet to do the 3 steps.
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGWTGDataOAuth/src/org/gonevertical/demo/server/servlet/Servlet_AskForAccess.java Source] - The OAuth Servlet
 
+== OAuth Playground ==
+ * [http://googlecodesamples.com/oauth_playground/] - OAuth playground, sniff to see whats going on.
+
 == AuthSub Authentication ==
  Although I thought this would work, oauth is much better. 
  * [http://demogwtgdata.appspot.com/ Demo] - Demo authentication process and use. currently using authsub.
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGwtGdata/src/org/gonevertical/gdata/server/servlet/FetcherServlet.java Source] - Find the source here.
-
-== Playground ==
- * [http://googlecodesamples.com/oauth_playground/] - OAuth playground, sniff to see whats going on.
