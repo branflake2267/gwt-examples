@@ -68,7 +68,7 @@ public class WriteBase64 {
   private String filename;
 
   private boolean success;
-
+ 
   /**
    * constructor - init the write
    * @param sp
@@ -79,6 +79,47 @@ public class WriteBase64 {
     for (int i=0; i < BASE64ALPHA.length; i++){
       toInt[BASE64ALPHA[i]] = i;
     }
+  }
+  
+  private boolean initBlobWrite() {
+    if (fbd == null) {
+      log.severe("initBlobWrite(): ERROR: fbd=null");
+      return false;
+    }
+    filename = fbd.getFileName();
+    
+    // WORKAROUND - this will help, when blobkey is found to be null
+    filename = StringUtils.getRandomString(4) + "_" + filename; 
+    
+    fileService = FileServiceFactory.getFileService();
+    try {
+      file = fileService.createNewBlobFile(fbd.getContentType(), filename);
+      success = true;
+      log.info("initBlobWrite(): INFO: success in setting up file.");
+    } catch (IOException e) {
+      success = false;
+      log.severe("initBlobWrite(): Error 1:" + e.toString());
+    }
+    
+    try {
+      writeChannel = fileService.openWriteChannel(file, true);
+      success = true;
+      log.info("initBlobWrite(): INFO: success in setting up writechannel.");
+    } catch (FileNotFoundException e) {
+      success = false;
+      log.severe("initBlobWrite(): Error 2:" + e.toString());
+    } catch (FinalizationException e) {
+      success = false;
+      log.severe("initBlobWrite(): Error 2.5:" + e.toString());
+    } catch (LockException e) {
+      success = false;
+      log.severe("initBlobWrite(): Error 3:" + e.toString());
+    } catch (IOException e) {
+      success = false;
+      log.severe("initBlobWrite(): Error 4:" + e.toString());
+    }
+    
+    return success;
   }
   
   /**
@@ -112,113 +153,6 @@ public class WriteBase64 {
     
     // close and create a newFileThingId
     close();
-    
-    return success;
-  }
-  
-  private void close() {
-    try {
-      writeChannel.closeFinally();
-    } catch (IllegalStateException e) {
-      success = false;
-      log.severe("close(): Error 6: writeChannel.closeFinally() error " + e.toString());
-    } catch (IOException e) {
-      success = false;
-      log.severe("close(): Error 7: writeChannel.closeFinally() error " + e.toString());
-    }
-    
-    if (success == false) {
-      log.severe("close(): Error 8: quitting...");
-      return;
-    }
-    
-    BlobKey blobKey = fileService.getBlobKey(file);
-    
-    if (blobKey == null) {
-      log.severe("close(): Blobkey was null. trying workaround.");
-      
-      blobKey = tryfindingBlobKey();
-      if (blobKey == null) {
-        success = false;
-        log.severe("close(): Blobkey was null. agian.");
-        return;
-      }
-    }
-    
-    
-    // create file thing
-    Db_Thing dbT = new Db_Thing(sp);
-    long fid = dbT.createThing(ThingTypeData.TYPE_BLOBS);
-    setNewFileThingId(fid);
-    
-    // link file to parentthingid
-    ThingStuffJdo tsj = new ThingStuffJdo(sp);
-    //tsj.saveStuff_ThingLink(fbd.getLinkTypeId(), fbd.getLinkToThingId(), fid); // this can't be done here, due to not saving the links
-    
-    BlobData blobData = new BlobData();
-    blobData.setKey(blobKey.getKeyString());
-    
-    FileData fileData = new FileData();
-    fileData.setBlobData(blobData);
-    
-    ThingStuffData tsd = new ThingStuffData();
-    tsd.setParentThingId(fid);
-    tsd.setStuffTypeId(ThingStuffTypeData.THINGSTUFFTYPE_BLOB);
-    tsd.setFileData(fileData);
-    tsj.saveUniqueStuffTypeIdForParentThingId(tsd);
-    
-    //log.info("newFileThingId=" + newfileThingId);
-  }
-
-  private BlobKey tryfindingBlobKey() {
-    
-    // TODO!!!!
-    
-    return null;
-  }
-
-  private void setNewFileThingId(long fid) {
-    this.newfileThingId = fid;
-  }
-
-  private boolean initBlobWrite() {
-    if (fbd == null) {
-      log.severe("initBlobWrite(): ERROR: fbd=null");
-      return false;
-    }
-    filename = fbd.getFileName();
-    
-    // WORKAROUND - this will help, when blobkey is found to be null
-    filename = StringUtils.getRandomString(4) + "_" + filename; 
-    
-    fileService = FileServiceFactory.getFileService();
-    try {
-      file = fileService.createNewBlobFile(fbd.getContentType(), filename);
-      success = true;
-      log.info("initBlobWrite(): INFO: success in setting up file.");
-    } catch (IOException e) {
-      success = false;
-      log.severe("initBlobWrite(): Error 1:" + e.toString());
-    }
-    
-    boolean lock = true;
-    try {
-      writeChannel = fileService.openWriteChannel(file, lock);
-      success = true;
-      log.info("initBlobWrite(): INFO: success in setting up writechannel.");
-    } catch (FileNotFoundException e) {
-      success = false;
-      log.severe("initBlobWrite(): Error 2:" + e.toString());
-    } catch (FinalizationException e) {
-      success = false;
-      log.severe("initBlobWrite(): Error 2.5:" + e.toString());
-    } catch (LockException e) {
-      success = false;
-      log.severe("initBlobWrite(): Error 3:" + e.toString());
-    } catch (IOException e) {
-      success = false;
-      log.severe("initBlobWrite(): Error 4:" + e.toString());
-    }
     
     return success;
   }
@@ -306,22 +240,30 @@ public class WriteBase64 {
     writeToBlob(out);
   }
 
+  /**
+   * write bytes to blob in datastore
+   * 
+   * @param out
+   */
   private void writeToBlob(ByteArrayOutputStream out) {
     if (out == null) {
       success = false;
-      log.severe("writeToBlob(): INFO: ByteArrayOutputStream is null.");
+      log.severe("writeToBlob(): ERROR: ByteArrayOutputStream is null.");
       return;
     }
     if (out.toByteArray() == null) {
       success = false;
-      log.severe("writeToBlob(): INFO: ByteArrayOutputStream out.toByteArray() is null.");
+      log.severe("writeToBlob(): ERROR: ByteArrayOutputStream out.toByteArray() is null.");
       return;
     }
     if (out.toByteArray().length == 0) {
       success = false;
-      log.severe("writeToBlob(): INFO: ByteArrayOutputStream out.toByteArray().length is 0.");
+      log.severe("writeToBlob(): ERROR: ByteArrayOutputStream out.toByteArray().length is 0.");
       return;
     }
+    
+    log.info("writeToBlob(): INFO: out.toByteArray().length=" + out.toByteArray().length);
+    
     ByteBuffer bb = null;
     try {
       bb = ByteBuffer.wrap(out.toByteArray());
@@ -335,6 +277,125 @@ public class WriteBase64 {
       success = false;
       log.severe("writeToBlob(): Error 5: writeChannel.write(bb): bb.toString()=" + bb.toString() +" error=" + e.toString());
     }
+    out.reset();
+    try {
+      out.close();
+    } catch (IOException e) {
+      log.severe("writeToBlob(): Error 5: writeChannel.write(bb): out.close() error: bb.toString()=" + bb.toString() +" error=" + e.toString());
+      e.printStackTrace();
+    }
+    out = null;
+  }
+
+  /**
+   * close up and connect a thingId to blob
+   */
+  private void close() {
+    try {
+      writeChannel.closeFinally();
+    } catch (IllegalStateException e) {
+      success = false;
+      log.severe("close(): Error 6: writeChannel.closeFinally() error " + e.toString());
+    } catch (IOException e) {
+      success = false;
+      log.severe("close(): Error 7: writeChannel.closeFinally() error " + e.toString());
+    }
+    
+    if (success == false) {
+      log.severe("close(): Error 8: quitting...");
+      return;
+    }
+    
+    BlobKey blobKey = fileService.getBlobKey(file);
+    if (blobKey == null) {
+      log.severe("close(): Blobkey was null. trying workaround.");
+      
+      blobKey = tryfindingBlobKey();
+      if (blobKey == null) {
+        success = false;
+        log.severe("close(): Blobkey was null. agian.");
+        return;
+      }
+    }
+    
+    // create file thing
+    Db_Thing dbT = new Db_Thing(sp);
+    long fid = dbT.createThing(ThingTypeData.TYPE_BLOBS);
+    setNewFileThingId(fid);
+    
+    // link file to parentthingid
+    ThingStuffJdo tsj = new ThingStuffJdo(sp);
+    //tsj.saveStuff_ThingLink(fbd.getLinkTypeId(), fbd.getLinkToThingId(), fid); // this can't be done here, due to not saving the links
+    
+    BlobData blobData = new BlobData();
+    blobData.setKey(blobKey.getKeyString());
+    
+    FileData fileData = new FileData();
+    fileData.setBlobData(blobData);
+    
+    ThingStuffData tsd = new ThingStuffData();
+    tsd.setParentThingId(fid);
+    tsd.setStuffTypeId(ThingStuffTypeData.THINGSTUFFTYPE_BLOB);
+    tsd.setFileData(fileData);
+    tsj.saveUniqueStuffTypeIdForParentThingId(tsd);
+    
+    //log.info("newFileThingId=" + newfileThingId);
+  }
+  
+  private void retry(ByteArrayOutputStream out) {
+    log.warning("retry(): out.toByteArray().length=" + out.toByteArray().length);
+    try {
+      writeChannel.closeFinally();
+    } catch (IllegalStateException e) {
+      success = false;
+      log.severe("close(): Error 6: writeChannel.closeFinally() error " + e.toString());
+    } catch (IOException e) {
+      success = false;
+      log.severe("close(): Error 7: writeChannel.closeFinally() error " + e.toString());
+    }
+    
+    try {
+      writeChannel = fileService.openWriteChannel(file, true);
+      success = true;
+      log.info("initBlobWrite(): INFO: success in setting up writechannel.");
+    } catch (FileNotFoundException e) {
+      success = false;
+      log.severe("initBlobWrite(): Error 2:" + e.toString());
+    } catch (FinalizationException e) {
+      success = false;
+      log.severe("initBlobWrite(): Error 2.5:" + e.toString());
+    } catch (LockException e) {
+      success = false;
+      log.severe("initBlobWrite(): Error 3:" + e.toString());
+    } catch (IOException e) {
+      success = false;
+      log.severe("initBlobWrite(): Error 4:" + e.toString());
+    }
+    
+    ByteBuffer bb = null;
+    try {
+      bb = ByteBuffer.wrap(out.toByteArray());
+    } catch (Exception e) {
+      success = false;
+      log.severe("writeToBlob(): Error 4: writeChannel.write(bb): bb failure");
+    }
+    try {
+      writeChannel.write(bb);
+    } catch (IOException e) {
+      success = false;
+      log.severe("writeToBlob(): Error 6: RETRY writeChannel.write(bb): bb.toString()=" + bb.toString() +" error=" + e.toString());
+    }
+  }
+
+  private BlobKey tryfindingBlobKey() {
+    
+    // TODO!!!!
+    
+    return null;
+  }
+  
+  private void setNewFileThingId(long fid) {
+    this.newfileThingId = fid;
   }
   
   /**
@@ -346,5 +407,4 @@ public class WriteBase64 {
   }
   
 }
-
 }}}
