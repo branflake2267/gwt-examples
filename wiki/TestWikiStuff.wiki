@@ -8,7 +8,8 @@ Challenge is to: Spice up the java forum with some profile pictures, lets beat t
 }}}
 
 
-{{{com.gonevertical.server.jdo.data.base64.BlobTmpJdo deleteTmpBlobAll_FromTask: 
+{{{
+com.gonevertical.server.jdo.data.base64.BlobTmpJdo deleteTmpBlobAll_FromTask: 
 org.datanucleus.store.appengine.query.QueryExceptionWrappers$JDOQueryTimeoutException
 	at org.datanucleus.store.appengine.query.QueryExceptionWrappers$2.get(QueryExceptionWrappers.java:88)
 	at org.datanucleus.store.appengine.query.RuntimeExceptionWrappingIterator.hasNext(RuntimeExceptionWrappingIterator.java:105)
