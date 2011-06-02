@@ -9,28 +9,60 @@ Challenge is to: Spice up the java forum with some profile pictures, lets beat t
 
 
 {{{
- public void deleteTmpBlobAll_FromTask(long taskId) {
-    log.info("BlobTmpJdo.deleteTmpBlobAll(): deleting all the tmp blob records.");
+public void deleteTmpBlobAll_FromTask(long taskId) {
+    log.info("BlobTmpJdo.deleteTmpBlobAll(): deleting all the tmp blob records. taskId=" + taskId);
+    doSomeExist(); // output the total to log
+    int i=0; 
+    do { // batch query, otherwise timeout happens
+      log.info("deleteTmpBlobAll_FromTask() loop index i=" + i);
+      delteTmpBlobAll(1000);
+      i++;
+    } while (doSomeExist());
+    new Db_Feed_TaskQue(sp).deleteTask(taskId);
+  }
+
+  public void delteTmpBlobAll(int limit) {
     PersistenceManager pm = sp.getPersistenceManager();
     try {
       javax.jdo.Query q = pm.newQuery("select id from " + BlobTmpJdo.class.getName());
-      List<String> ids = (List<String>) q.execute();
-      Iterator<String> itr = ids.iterator();
+      q.setRange(0, limit);
+      List<String> results = (List<String>) q.execute();
+      Iterator<String> itr = results.iterator();
       while(itr.hasNext()) {
         String id = itr.next();
         delete(id);
       }
+    } catch (Exception e) {
+      log.severe("delteTmpBlobAll(): ERROR: " + e.toString());
+      e.printStackTrace();
+    } finally {
+      pm.close();
+    }
+  }
+
+  public boolean doSomeExist() {
+    int size = 0;
+    PersistenceManager pm = sp.getPersistenceManager();
+    try {
+      javax.jdo.Query q = pm.newQuery("select id from " + BlobTmpJdo.class.getName());
+      q.setRange(0, 10);
+      List<String> ids = (List<String>) q.execute();      
+      size = ids.size();
       q.closeAll();
     } catch (Exception e) { 
-      new Db_Feed_TaskQue(sp).deleteTask(taskId);
       log.log(Level.SEVERE, "", e);
     } finally {
       pm.close();
     }
-    new Db_Feed_TaskQue(sp).deleteTask(taskId);
+    log.info("BlobTmpJdo.getTotal() total=" + size);
+    boolean b = false;
+    if (size > 0) {
+      b = true;
+    }
+    return b;
   }
 
- private void delete(String id) {
+  private void delete(String id) {
     PersistenceManager pm = sp.getPersistenceManager();
     Transaction tx = pm.currentTransaction();
     try {
@@ -44,5 +76,4 @@ Challenge is to: Spice up the java forum with some profile pictures, lets beat t
       }
       pm.close();
     }
-  }
 }}}
