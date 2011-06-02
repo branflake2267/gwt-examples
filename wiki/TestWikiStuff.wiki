@@ -20,4 +20,25 @@ Challenge is to: Spice up the java forum with some profile pictures, lets beat t
     }
     return b;
   }
+
+  private boolean doSomeExist() {
+    PersistenceManager pm = sp.getPersistenceManager();
+    boolean b = false;
+    try {
+      javax.jdo.Query q = pm.newQuery("select id from " + BlobTmpJdo.class.getName());
+      List<String> ids = (List<String>) q.execute();
+      Iterator<String> itr = ids.iterator();
+      while(itr.hasNext()) {
+        b = true;
+        break;
+      }
+      q.closeAll();
+    } catch (Exception e) { 
+      e.printStackTrace();
+      log.log(Level.SEVERE, "", e);
+    } finally {
+      pm.close();
+    }
+    return b;
+  }
 }}}
