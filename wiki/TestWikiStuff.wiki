@@ -42,3 +42,19 @@ Challenge is to: Spice up the java forum with some profile pictures, lets beat t
     return b;
   }
 }}}
+
+{{{
+  <!--  WEB-INF/web.xml -->
+  <servlet-mapping>
+    <servlet-name>index</servlet-name>
+    <url-pattern>/index.html</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>index</servlet-name>
+    <servlet-class>com.gonevertical.server.servlet.Servlet_Index</servlet-class>
+  </servlet>
+
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+}}}
