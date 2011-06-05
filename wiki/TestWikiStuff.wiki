@@ -44,17 +44,37 @@ Challenge is to: Spice up the java forum with some profile pictures, lets beat t
 }}}
 
 {{{
-  <!--  WEB-INF/web.xml -->
-  <servlet-mapping>
-    <servlet-name>index</servlet-name>
-    <url-pattern>/index.html</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>index</servlet-name>
-    <servlet-class>com.gonevertical.server.servlet.Servlet_Index</servlet-class>
-  </servlet>
-
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-  </welcome-file-list>
+  private BlobKey tryfindingBlobKey() {
+    log.info("tryfindingBlobKey(): filename=" + filename);
+    
+    String skey = null;
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    try {
+      Query q = new Query("__BlobInfo__");
+      q.addFilter("filename", FilterOperator.EQUAL, filename);
+      PreparedQuery e = datastore.prepare(q);
+      Iterator<Entity> itr = e.asIterator();
+      while (itr.hasNext()) {
+        Entity entity = itr.next();
+        Key k = entity.getKey(); 
+        // #GAE needs a k.getStringId(); // only has k.getId();
+        String sk = k.toString();
+        String sbk = sk.replaceFirst(".*?\"", "");
+        sbk = sbk.replaceFirst("\".*", "");
+        skey = sbk;
+      }
+    } catch (Exception e) {
+      success = false;
+      log.log(Level.SEVERE, "decode(): ERROR: ", e);
+    } 
+    
+    BlobKey blobKey = null;
+    if (skey != null) {
+      blobKey = new BlobKey(skey);
+    } else {
+      log.warning("tryfindingBlobKey(): warn: wasn't able to parse the blobkey or find the file: skey=" + skey);
+    }
+    
+    return blobKey;
+  }
 }}}
