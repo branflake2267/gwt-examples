@@ -44,6 +44,56 @@ Challenge is to: Spice up the java forum with some profile pictures, lets beat t
 }}}
 
 {{{
+  private void close() {
+    try {
+      writeChannel.closeFinally();
+    } catch (IllegalStateException e) {
+      success = false;
+      log.severe("close(): Error 6: writeChannel.closeFinally() error " + e.toString());
+    } catch (IOException e) {
+      success = false;
+      log.severe("close(): Error 7: writeChannel.closeFinally() error " + e.toString());
+    }
+    
+    if (success == false) {
+      log.severe("close(): Error 8: quitting...");
+      return;
+    }
+    
+    BlobKey blobKey = fileService.getBlobKey(file);
+    
+    // try by finding filename
+    if (blobKey == null) {
+      log.severe("close(): Blobkey was null. 1. trying workaround.");
+      blobKey = tryfindingBlobKey();
+    }
+    
+    // try waiting then check fileservice again
+    if (blobKey == null) {
+      log.info("close(): 2. trying to get it from fileservice again.");
+      try {
+        wait(2000);
+      } catch (InterruptedException e) {
+        log.warning("close(): 3. couldn't wait 2 seconds.");
+        e.printStackTrace();
+      }
+      blobKey = fileService.getBlobKey(file);
+    }
+    
+    // try finding the filename again
+    if (blobKey == null) {
+      log.severe("close(): 4. Blobkey was null. trying workaround.");
+      blobKey = tryfindingBlobKey();
+    }
+    
+    // quit if haven't found it
+    if (blobKey == null) {
+      success = false;
+      log.severe("close(): 5. Workaround, Blobkey was null agian. Couldn't find the blobkey using the filename");
+      return;
+    }
+  }
+
   private BlobKey tryfindingBlobKey() {
     log.info("tryfindingBlobKey(): filename=" + filename);
     
