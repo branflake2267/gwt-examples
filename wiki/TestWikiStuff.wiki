@@ -128,3 +128,27 @@ Challenge is to: Spice up the java forum with some profile pictures, lets beat t
     return blobKey;
   }
 }}}
+
+
+{{{
+    Icon icon = Icon.getDefaultIcon();
+    
+    Point anchor = Point.newInstance(16, 0); 
+    icon.setInfoWindowAnchor(anchor);
+    
+    MarkerOptions options = MarkerOptions.newInstance(icon);
+    options.setBouncy(true);
+    options.setAutoPan(true);
+    options.setDraggable(draggable);
+    options.setTitle(mapItemData.getName());
+    
+    LatLng position = LatLng.newInstance(lat, lng);
+    marker = new Marker(position, options);
+    map.addOverlay(marker);
+    
+    marker.addMarkerDragEndHandler(new MarkerDragEndHandler() {
+      public void onDragEnd(MarkerDragEndEvent event) {
+        setPosition();
+      }
+    });
+}}}
