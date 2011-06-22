@@ -8,5 +8,5 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  */
 @RemoteServiceRelativePath("rpcService")
 public interface RpcService extends RemoteService {
-
+  //test
 }
