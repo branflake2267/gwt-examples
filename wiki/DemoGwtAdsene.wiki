@@ -5,7 +5,7 @@
 = IFraming is Against Adsense Policy =
  Currently I see no options for integrated Adsense + GWT. I am suggesting GWT Lib for the job. 
  * Please ask for GWT lib here: [http://www.google.com/support/forum/p/AdSense/thread?tid=1f8b1d2b86c2cedc&hl=en&fid=1f8b1d2b86c2cedc0004a6699f76b8c6 Please ask here]
- * I hope Google figures hits out quicky!!! 
+ * I hope Google figures hits out quickly!!! 
 
 = How I Integrated Adsense =
 My goal is to integrate Adsense into Java code so I coud draw or render the ad into the area I would like it and when the application state changes like a page loads or reloads I would like to redraw or refresh the ad like a page would.
