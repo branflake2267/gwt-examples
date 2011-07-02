@@ -3,7 +3,7 @@
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="100" width="740" border="0" scrolling=0 />
 
 = My Use Of SafeHTML =
- My example use of using safe HTML. 
+ fromString escapes the string.
 
 {{{
   private void test() {
