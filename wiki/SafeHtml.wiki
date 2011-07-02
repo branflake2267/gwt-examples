@@ -1,0 +1,22 @@
+#summary Example use of SafeHTML
+
+= My Use Of SafeHtml =
+ My example use of safeHTML. 
+
+{{{
+  private void test() {
+    
+    String s = "<script>//TODO nothing</script> This is my text.";
+    
+    System.out.println("raw s=" + s);
+    
+    SafeHtml s_safe = SafeHtmlUtils.fromString(s);
+
+    System.out.println("escaped now -> SafeHtml=" + s_safe.asString());
+    
+    RichTextArea rta = new RichTextArea();
+    rta.setHTML(s_safe);
+    
+    RootPanel.get().add(rta);
+  }
+}}}
