@@ -1,7 +1,7 @@
 #summary How I start tasks with App Engine.
 
-= Tasking =
- This is how I'm starting tasks with app engine. I use one servlet to coordinate the starts. 
+= Tasking with App Engine =
+ This is how I'm starting tasks with app engine. I use one servlet to coordinate the starts. I also use another class on the GWT client side to monitor the task through polling and looking at the TaskId.
 
 {{{
 public class Db_Task {
