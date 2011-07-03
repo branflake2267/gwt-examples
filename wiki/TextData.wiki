@@ -1,0 +1,37 @@
+#summary Simple Way to Build a Static TextData Type
+
+<wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="100" width="740" border="0" scrolling=0 />
+
+= TextData =
+ I build specific class/object static types to match the Google App Engine value types for RPC data transport.
+
+{{{
+public class TextData implements IsSerializable {
+
+  /**
+   * store larger datastore text
+   */
+  private String text;
+
+  public TextData() {
+  }
+  
+  public TextData(String text) {
+    this.text = text;
+  }
+  
+  public void setText(String text) {
+    this.text = text;
+  }
+  
+  public String getText() {
+    return text;
+  }
+  
+  public String toString() {
+    String s = "";
+    s += "text=" + text + " ";
+    return s;
+  }
+}
+}}}
