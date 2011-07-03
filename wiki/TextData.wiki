@@ -2,7 +2,7 @@
 
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="100" width="740" border="0" scrolling=0 />
 
-= TextData =
+= Text Data =
  I build specific class/object static types to match the Google App Engine value types for RPC data transport.
 
 {{{
