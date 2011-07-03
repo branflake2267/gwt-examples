@@ -13,6 +13,7 @@ public class TextData implements IsSerializable {
    */
   private String text;
 
+  // must have an empty constructor for serialization policy
   public TextData() {
   }
   
