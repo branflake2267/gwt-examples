@@ -23,7 +23,7 @@
   }
 }}}
 
-= Black List Tags =
+= Black List HTML Tags =
  Tags to black list from dynamic html content:
 
 {{{
@@ -55,7 +55,7 @@ title
 xml
 }}}
 
-= White List Tags =
+= White List HTML Tags =
  Tags ok to set
 
 {{{
