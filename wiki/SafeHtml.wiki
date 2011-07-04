@@ -261,7 +261,7 @@ public class HtmlSanitizerUtil implements HtmlSanitizer {
     
     // get rid weird style stuff - style="&#97;&#110;&#121;&#58;..." or style="&#x61;&#x6e;&#x79;&#x3a;..."
     s = s.replaceAll("style=\".*?&.*?\"", "");
-    s = s.replaceAll("style=\".*?java*?\"", "");
+    s = s.replaceAll("style=\".*?java.*?\"", "");
      
     return s;
   }
