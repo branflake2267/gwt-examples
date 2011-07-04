@@ -23,7 +23,7 @@
   }
 }}}
 
-= Black list =
+= Black List Tags =
  Tags to black list from dynamic html content:
 
 {{{
@@ -53,4 +53,88 @@ script
 style  
 title
 xml
+}}}
+
+= White List Tags =
+ Tags ok to set
+
+{{{
+a
+abbr
+acronym
+address
+area
+b
+big
+blockquote
+br
+button
+caption
+center
+cite
+code
+col
+colgroup
+dd
+del
+dfn
+dir
+div
+dl
+dt
+em
+fieldset
+font
+form
+h1
+h2
+h3
+h4
+h5
+h6
+hr
+i
+img
+input
+ins
+kbd
+label
+legend
+li
+map
+menu
+ol
+optgroup
+option
+p
+pre
+q
+s
+samp
+select
+small
+span
+strike
+strong
+sub
+sup
+table
+tbody
+td
+textarea
+tfoot
+th
+thead
+tr
+tt
+u
+ul
+var
+}}}
+
+= Attributes =
+ Attributes that can contain bad stuff.
+
+{{{
+ style="background: url(javascript:window.location='http://test.org/')"
 }}}
