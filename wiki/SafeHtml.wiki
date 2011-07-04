@@ -24,21 +24,33 @@
 }}}
 
 = Black list =
- Black listing html tags
+ Tags to black list from dynamic html content:
 
 {{{
 <applet>  
 <base>  
-<basefont>  
+<basefont>
+<bgsound>  
+<body>
 <embed>  
 <frame>  
-<frameset>  
-<iframe>  
+<frameset>
+<head>
+<html>
+<id>  
+<iframe>
+<ilayer>
+<layer>
+<link>
 <isindex>  
-<meta>  
+<meta>
+<name>  
 <noframes>  
 <noscript>  
 <object>  
-<param>  
-<title> 
+<param>
+<script>
+<style>  
+<title>
+<xml>
 }}}
