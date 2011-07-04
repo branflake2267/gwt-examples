@@ -133,7 +133,7 @@ var
 }}}
 
 = Attributes =
-
+ Hidden javascript in attributes
 {{{
 style="background: url(javascript:window.location='http://test.org/')"
 style="any: expression(window.location='http://example.org/')"
