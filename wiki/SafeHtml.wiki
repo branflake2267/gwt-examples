@@ -137,6 +137,6 @@ var
 {{{
 style="background: url(javascript:window.location='http://test.org/')"
 style="any: expression(window.location='http://example.org/')"
-style="&#97;&#110;&#121;&#58;... 
-style="&#x61;&#x6e;&#x79;&#x3a;...
+style="&#97;&#110;&#121;&#58;..."
+style="&#x61;&#x6e;&#x79;&#x3a;..."
 }}}
