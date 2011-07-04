@@ -144,7 +144,8 @@ style="&#x61;&#x6e;&#x79;&#x3a;..."
 = Sanitizing HTML =
  I hacked the simple sanitizer. I added style as approved and check it for & chars. I also added tags to the list. I also had to fix the white list tag comparison to nix attributes.
 
-{{{public class HtmlSanitizerUtil implements HtmlSanitizer {
+{{{
+public class HtmlSanitizerUtil implements HtmlSanitizer {
 
   private static final HtmlSanitizerUtil INSTANCE = new HtmlSanitizerUtil();
 
