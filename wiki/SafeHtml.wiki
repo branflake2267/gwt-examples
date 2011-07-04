@@ -22,3 +22,23 @@
     RootPanel.get().add(rta);
   }
 }}}
+
+= Black list =
+ Black listing html tags
+
+{{{
+<applet>  
+<base>  
+<basefont>  
+<embed>  
+<frame>  
+<frameset>  
+<iframe>  
+<isindex>  
+<meta>  
+<noframes>  
+<noscript>  
+<object>  
+<param>  
+<title> 
+}}}
