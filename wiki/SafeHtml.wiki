@@ -133,8 +133,8 @@ var
 }}}
 
 = Attributes =
- Attributes that can contain bad stuff.
 
 {{{
- style="background: url(javascript:window.location='http://test.org/')"
+style="background: url(javascript:window.location='http://test.org/')"
+style="any: expression(window.location='http://example.org/')"
 }}}
