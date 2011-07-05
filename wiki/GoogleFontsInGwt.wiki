@@ -6,6 +6,7 @@
  I (copy) add my css files to [project.gwt.xml location]/public/css/standard/standard.css
 {{{
   <!-- include style sheets in project.gwt.xml file -->
+  <!-- ref: ./src/com/gonevertical/GoneVertical.gwt.xml or ./src/com/gonevertical/public/gwt/css/fonts.css -->
   <!-- css - the relative root directory is that of the project.gwt.xml directory -->
   <stylesheet src="gwt/css/fonts.css"/>  
   <stylesheet src="gwt/css/standard/standard.css"/>
