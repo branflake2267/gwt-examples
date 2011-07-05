@@ -14,6 +14,8 @@
 
  Insead of using the link tag, I include it like this:
 {{{
+/* fonts.css file - this is retrieved from the google fonts link */
+/* like <link href='http://fonts.googleapis.com/css?family=Ubuntu&v1' rel='stylesheet' type='text/css'> */
 @font-face {
   font-family: 'Ubuntu';
   font-style: normal;
