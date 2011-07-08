@@ -38,6 +38,27 @@ Google Buzz Html
     getHBuzz().setHTML(s);
 }}}
 
+== Twitter Include ==
+ Here is how I dynamically add the twitter javascript into the gwt app. 
+
+{{{
+private void drawTwitter() {
+    //<a href="http://twitter.com/Gawkat" class="twitter-follow-button" data-show-count="false">Follow @Gawkat</a>
+    //<script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>
+    
+    String s = "<a href=\"http://twitter.com/Gawkat\" class=\"twitter-follow-button\" data-show-count=\"false\">Follow @Gawkat</a>";
+    HTML h = new HTML(s);
+    fpTwitter.add(h);
+    
+    Document doc = Document.get();
+    ScriptElement script = doc.createScriptElement();
+    script.setSrc("http://platform.twitter.com/widgets.js");
+    script.setType("text/javascript");
+    script.setLang("javascript");
+    doc.getBody().appendChild(script);
+  }
+}}}
+
 == Gadget XML ==
  I can't get this to work as of yet. But here is gadget include. Try 1.
 
