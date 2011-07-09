@@ -59,6 +59,28 @@ private void drawTwitter() {
   }
 }}}
 
+== Google Plus One +1 ==
+ Simple way to add +1 to your GWT App. Include the script tag into the java code like this:
+{{{
+private void drawPlusOne() {
+    //<!-- Place this tag in your head or just before your close body tag -->
+    //<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+    //<!-- Place this tag where you want the +1 button to render -->
+    //<g:plusone></g:plusone>
+   
+    String s = "<g:plusone href=\"http://gawkat.com\"></g:plusone>";
+    HTML h = new HTML(s);
+    fpPlusOne.add(h);
+    
+    Document doc = Document.get();
+    ScriptElement script = doc.createScriptElement();
+    script.setSrc("https://apis.google.com/js/plusone.js");
+    script.setType("text/javascript");
+    script.setLang("javascript");
+    doc.getBody().appendChild(script);
+  }
+}}}
+
 == Gadget XML ==
  I can't get this to work as of yet. But here is gadget include. Try 1.
 
