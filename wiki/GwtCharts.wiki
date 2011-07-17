@@ -6,6 +6,7 @@
 
 == Tools ==
  * http://imagecharteditor.appspot.com/ - Very nice chart editor!
+ * http://code.google.com/apis/chart/image/docs/gallery/qr_codes.html - reference
 
 == Create a QR Bar Code ==
  Create a QR bar code using the java code in GWT.
