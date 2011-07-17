@@ -1,5 +1,7 @@
 #summary test out wiki stuff
 
+<g:plusone size="medium"></g:plusone>
+
 {{{
 package org.gonevertical.dictionary;
 
