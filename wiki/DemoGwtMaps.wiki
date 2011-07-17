@@ -1,5 +1,6 @@
 #summary Demo GWT Maps api
 
+<g:plusone size="medium"></g:plusone>
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="96" width="740" border="0" scrolling=0/>
 
 = Notes On Version 3 Api =
