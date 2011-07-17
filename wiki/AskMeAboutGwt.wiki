@@ -1,5 +1,7 @@
 #summary Ask me about GWT
 
+<g:plusone size="medium"></g:plusone>
+
 Ask me on twitter:
 https://twitter.com/#!/branflake2267
 
