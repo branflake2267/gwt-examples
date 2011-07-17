@@ -1,6 +1,7 @@
 #summary How to configure eclipse for these projects.
 #labels Featured
 
+<g:plusone size="medium"></g:plusone>
 <wiki:gadget url="http://gwt-examples.googlecode.com/svn/trunk/DemoGadgetXml/war/gadget-gwt-examples-ads-v2-atf.xml" height="95" width="735" border="0" />
 
 = Verion 2 Documentation For Eclipse =
