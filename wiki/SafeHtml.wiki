@@ -286,3 +286,16 @@ public class HtmlSanitizerUtil implements HtmlSanitizer {
   }
 }
 }}}
+
+== Escape and Unescape ==
+ Escape and Unescape, or Encode and decode html for safe url parameter. This is one way to do it.
+
+{{{
+ public native String encodeURIComponent(String s) /*-{
+    return encodeURIComponent(s);
+  }-*/;
+  
+  public native String decodeURIComponent(String s) /*-{
+    return decodeURIComponent(s);
+  }-*/;
+}}}
