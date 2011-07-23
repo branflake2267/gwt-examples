@@ -3,338 +3,96 @@
 <g:plusone size="medium"></g:plusone>
 
 {{{
-package org.gonevertical.dictionary;
+Starting Jetty on port 0
+   [WARN] failed org.mortbay.jetty.nio.SelectChannelConnector$1@9c6d8a
+java.lang.NoSuchMethodError: org.mortbay.thread.Timeout.<init>(Ljava/lang/Object;)V
+	at org.mortbay.io.nio.SelectorManager$SelectSet.<init>(SelectorManager.java:306)
+	at org.mortbay.io.nio.SelectorManager.doStart(SelectorManager.java:223)
+	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:39)
+	at org.mortbay.jetty.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:303)
+	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:39)
+	at org.mortbay.jetty.Server.doStart(Server.java:233)
+	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:39)
+	at com.google.gwt.dev.shell.jetty.JettyLauncher.start(JettyLauncher.java:672)
+	at com.google.gwt.dev.DevMode.doStartUpServer(DevMode.java:509)
+	at com.google.gwt.dev.DevModeBase.startUp(DevModeBase.java:1065)
+	at com.google.gwt.junit.JUnitShell.getUnitTestShell(JUnitShell.java:708)
+	at com.google.gwt.junit.JUnitShell.runTest(JUnitShell.java:653)
+	at com.google.gwt.junit.client.GWTTestCase.runTest(GWTTestCase.java:441)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at com.google.gwt.junit.client.GWTTestCase.run(GWTTestCase.java:296)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.junit.internal.runners.JUnit38ClassRunner.run(JUnit38ClassRunner.java:83)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+   [WARN] failed SelectChannelConnector@0.0.0.0:0
+java.lang.NoSuchMethodError: org.mortbay.thread.Timeout.<init>(Ljava/lang/Object;)V
+	at org.mortbay.io.nio.SelectorManager$SelectSet.<init>(SelectorManager.java:306)
+	at org.mortbay.io.nio.SelectorManager.doStart(SelectorManager.java:223)
+	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:39)
+	at org.mortbay.jetty.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:303)
+	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:39)
+	at org.mortbay.jetty.Server.doStart(Server.java:233)
+	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:39)
+	at com.google.gwt.dev.shell.jetty.JettyLauncher.start(JettyLauncher.java:672)
+	at com.google.gwt.dev.DevMode.doStartUpServer(DevMode.java:509)
+	at com.google.gwt.dev.DevModeBase.startUp(DevModeBase.java:1065)
+	at com.google.gwt.junit.JUnitShell.getUnitTestShell(JUnitShell.java:708)
+	at com.google.gwt.junit.JUnitShell.runTest(JUnitShell.java:653)
+	at com.google.gwt.junit.client.GWTTestCase.runTest(GWTTestCase.java:441)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at com.google.gwt.junit.client.GWTTestCase.run(GWTTestCase.java:296)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.junit.internal.runners.JUnit38ClassRunner.run(JUnit38ClassRunner.java:83)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+   [WARN] failed Server@1db8998
+java.lang.NoSuchMethodError: org.mortbay.thread.Timeout.<init>(Ljava/lang/Object;)V
+	at org.mortbay.io.nio.SelectorManager$SelectSet.<init>(SelectorManager.java:306)
+	at org.mortbay.io.nio.SelectorManager.doStart(SelectorManager.java:223)
+	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:39)
+	at org.mortbay.jetty.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:303)
+	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:39)
+	at org.mortbay.jetty.Server.doStart(Server.java:233)
+	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:39)
+	at com.google.gwt.dev.shell.jetty.JettyLauncher.start(JettyLauncher.java:672)
+	at com.google.gwt.dev.DevMode.doStartUpServer(DevMode.java:509)
+	at com.google.gwt.dev.DevModeBase.startUp(DevModeBase.java:1065)
+	at com.google.gwt.junit.JUnitShell.getUnitTestShell(JUnitShell.java:708)
+	at com.google.gwt.junit.JUnitShell.runTest(JUnitShell.java:653)
+	at com.google.gwt.junit.client.GWTTestCase.runTest(GWTTestCase.java:441)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at com.google.gwt.junit.client.GWTTestCase.run(GWTTestCase.java:296)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.junit.internal.runners.JUnit38ClassRunner.run(JUnit38ClassRunner.java:83)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
 
-import java.io.BufferedInputStream;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-public class FileParser {
-  
-  BufferedWriter out = null;
-  private int index;
-
-  public static void main(String[] args) {
-    new FileParser().run();
-  }
-  
-  public FileParser() {
-  }
-  
-  public void run() {
-    
-    File f = new File("/Users/branflake2267/Downloads/andrewdictionary.txt");
-    
-    f.delete();
-    
-    openFile(f);
-    
-    writeToFile("word", "defintion");
-    
-    loop();
-    
-    closeFile();
-    
-  }
-
-  private void openFile(File fsave) {
-    boolean success = false;
-    try {
-      out = new BufferedWriter(new FileWriter(fsave, false));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }    
-  }
-
-  private void closeFile() {
-    try {
-      out.close();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-
-  private void loop() {
-
-    // get file
-    File dir = new File("/Users/branflake2267/Downloads/andrew");
-    
-    if (dir == null) {
-      return;
-    }
-    
-    File[] files = dir.listFiles();
-    if (files == null) {
-      return;
-    }
-    
-    index = files.length;
-    for (int i=0; i < files.length; i++) {
-      parseFile(files[i]);
-      index--;
-    }
-  }
-
-  private void parseFile(File f) {
-    
-    String sf = null;
-    try {
-      sf = getFileText(f);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    
-    if (sf == null) {
-      System.out.println("parseFile() Error:");
-      return;
-    }
-    
-    // <span id="ctl00_ContentPlaceHolder1_lblWord">Inductively</span>
-    String word = getValue("lblWord\">(.*?)</", sf);
-    
-    // <span id="ctl00_ContentPlaceHolder1_RepeaterDefinition_ctl00_lblDefinition">adv.  By induction or inference.</span>
-    String def = getValue("lblDefinition\">(.*?)</", sf);
-    
-    System.out.println(index + ". word=" + word + ", def=" + def);
-    
-    boolean b = writeToFile(word, def);
-    if (b == false) {
-      return;
-    }
-    
-    boolean moved = moveDir(f, new File("/Users/branflake2267/Downloads/andrew/done"));
-    
-    //System.out.println("***Moved=" + moved);
-    
-  }
-  
-  private boolean writeToFile(String word, String def) {
-    if (word == null || def == null) {
-      return false;
-    }
-    
-    word = word.trim(); 
-    def = def.trim();
-    
-    String s = "\"" + word + "\",\"" + def + "\"\n";
-    try {
-      out.write(s);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    return true;
-  }
-  
-  private boolean moveDir(File file, File moveTo) {
-    
-    String path = moveTo + "/" + file.getName();
-    
-    File destFile = new File(path);
-    
-    return file.renameTo(destFile);
-    //System.out.println("***Moved=" + moved);
-  }
-
-  public String getFileText(File f) throws IOException{
-    String s = "";
-    InputStream in = null;
-    try {
-      in = new BufferedInputStream(new FileInputStream(f));
-      int ch;
-      while ((ch = in.read()) !=-1) {
-        s += (char) ch;
-      }
-    }
-    finally {
-      if (in != null) in.close(); 
-    }
-    return s;
-  }
-  
-  public static String getValue(String regex, String value) {
-    if (regex == null | value == null) {
-      return null;
-    }
-
-    if (regex != null && regex.contains(")") == false) {
-      System.err.println("oops!!! - you forgot to use parentheses to catch a group"); 
-    }
-
-    String v = null;
-    try {
-      Pattern p = Pattern.compile(regex);
-      Matcher m = p.matcher(value);
-      boolean found = m.find();
-      if (found == true) {
-        v = m.group(1);
-      }
-    } catch (Exception e) {
-      System.out.println("findMatch: regex error (check to see if you have a (group)");
-      e.printStackTrace();
-    }
-
-    return v;
-  }
-  
-}
-
-}}}
-
-{{{
-Brandon Donnelson
-http://gwt-examples.googlecode.com
-http://c.gawkat.com
-Challenge is to: Spice up the java forum with some profile pictures, lets beat the python community. :)
-}}}
-
-
-{{{
-  private boolean doSomeExist() {
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Query q = new Query("BlobTmpJdo");
-    PreparedQuery pq = datastore.prepare(q);
-    long l = pq.countEntities(FetchOptions.Builder.withLimit(1));
-    boolean b = false;
-    if (l > 0) {
-      b = true;
-    }
-    return b;
-  }
-
-  private boolean doSomeExist() {
-    PersistenceManager pm = sp.getPersistenceManager();
-    boolean b = false;
-    try {
-      javax.jdo.Query q = pm.newQuery("select id from " + BlobTmpJdo.class.getName());
-      List<String> ids = (List<String>) q.execute();
-      Iterator<String> itr = ids.iterator();
-      while(itr.hasNext()) {
-        b = true;
-        break;
-      }
-      q.closeAll();
-    } catch (Exception e) { 
-      e.printStackTrace();
-      log.log(Level.SEVERE, "", e);
-    } finally {
-      pm.close();
-    }
-    return b;
-  }
-}}}
-
-{{{
-  private void close() {
-    try {
-      writeChannel.closeFinally();
-    } catch (IllegalStateException e) {
-      success = false;
-      log.severe("close(): Error 6: writeChannel.closeFinally() error " + e.toString());
-    } catch (IOException e) {
-      success = false;
-      log.severe("close(): Error 7: writeChannel.closeFinally() error " + e.toString());
-    }
-    
-    if (success == false) {
-      log.severe("close(): Error 8: quitting...");
-      return;
-    }
-    
-    BlobKey blobKey = fileService.getBlobKey(file);
-    
-    // try by finding filename
-    if (blobKey == null) {
-      log.severe("close(): Blobkey was null. 1. trying workaround.");
-      blobKey = tryfindingBlobKey();
-    }
-    
-    // try waiting then check fileservice again
-    if (blobKey == null) {
-      log.info("close(): 2. trying to get it from fileservice again.");
-      try {
-        wait(2000);
-      } catch (InterruptedException e) {
-        log.warning("close(): 3. couldn't wait 2 seconds.");
-        e.printStackTrace();
-      }
-      blobKey = fileService.getBlobKey(file);
-    }
-    
-    // try finding the filename again
-    if (blobKey == null) {
-      log.severe("close(): 4. Blobkey was null. trying workaround.");
-      blobKey = tryfindingBlobKey();
-    }
-    
-    // quit if haven't found it
-    if (blobKey == null) {
-      success = false;
-      log.severe("close(): 5. Workaround, Blobkey was null agian. Couldn't find the blobkey using the filename");
-      return;
-    }
-  }
-
-  private BlobKey tryfindingBlobKey() {
-    log.info("tryfindingBlobKey(): filename=" + filename);
-    
-    String skey = null;
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    try {
-      Query q = new Query("__BlobInfo__");
-      q.addFilter("filename", FilterOperator.EQUAL, filename);
-      PreparedQuery e = datastore.prepare(q);
-      Iterator<Entity> itr = e.asIterator();
-      while (itr.hasNext()) {
-        Entity entity = itr.next();
-        Key k = entity.getKey(); 
-        // #GAE needs a k.getStringId(); // only has k.getId();
-        String sk = k.toString();
-        String sbk = sk.replaceFirst(".*?\"", "");
-        sbk = sbk.replaceFirst("\".*", "");
-        skey = sbk;
-      }
-    } catch (Exception e) {
-      success = false;
-      log.log(Level.SEVERE, "decode(): ERROR: ", e);
-    } 
-    
-    BlobKey blobKey = null;
-    if (skey != null) {
-      blobKey = new BlobKey(skey);
-    } else {
-      log.warning("tryfindingBlobKey(): warn: wasn't able to parse the blobkey or find the file: skey=" + skey);
-    }
-    
-    return blobKey;
-  }
-}}}
-
-
-{{{
-    Icon icon = Icon.getDefaultIcon();
-    
-    Point anchor = Point.newInstance(16, 0); 
-    icon.setInfoWindowAnchor(anchor);
-    
-    MarkerOptions options = MarkerOptions.newInstance(icon);
-    options.setBouncy(true);
-    options.setAutoPan(true);
-    options.setDraggable(draggable);
-    options.setTitle(mapItemData.getName());
-    
-    LatLng position = LatLng.newInstance(lat, lng);
-    marker = new Marker(position, options);
-    map.addOverlay(marker);
-    
-    marker.addMarkerDragEndHandler(new MarkerDragEndHandler() {
-      public void onDragEnd(MarkerDragEndEvent event) {
-        setPosition();
-      }
-    });
 }}}
