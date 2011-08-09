@@ -1,0 +1,2 @@
+# Module imagemod
+# RPC service class, partial path of RPC policy file

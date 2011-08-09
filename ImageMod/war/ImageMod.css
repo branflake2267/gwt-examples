@@ -1,0 +1,99 @@
+html {
+    background:
+	  linear-gradient(63deg, #151515 5px, transparent 5px) 0 5px,
+	  linear-gradient(243deg, #151515 5px, transparent 5px) 10px 0px,
+	  linear-gradient(63deg, #222 5px, transparent 5px) 0px 10px,
+	  linear-gradient(243deg, #222 5px, transparent 5px) 10px 5px,
+	  linear-gradient(0deg, #1b1b1b 10px, transparent 10px),
+	  linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+	background-color: #131313;
+	background-size: 20px 20px;
+}
+body {
+	background:
+	  linear-gradient(63deg, #151515 5px, transparent 5px) 0 5px,
+	  linear-gradient(243deg, #151515 5px, transparent 5px) 10px 0px,
+	  linear-gradient(63deg, #222 5px, transparent 5px) 0px 10px,
+	  linear-gradient(243deg, #222 5px, transparent 5px) 10px 5px,
+	  linear-gradient(0deg, #1b1b1b 10px, transparent 10px),
+	  linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+	background-color: #131313;
+	background-size: 20px 20px;
+}
+
+.WaterMarkWidget {
+	background:
+	  linear-gradient(63deg, #151515 5px, transparent 5px) 0 5px,
+	  linear-gradient(243deg, #151515 5px, transparent 5px) 10px 0px,
+	  linear-gradient(63deg, #222 5px, transparent 5px) 0px 10px,
+	  linear-gradient(243deg, #222 5px, transparent 5px) 10px 5px,
+	  linear-gradient(0deg, #1b1b1b 10px, transparent 10px),
+	  linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+	background-color: #131313;
+	background-size: 20px 20px;
+}
+
+.uploadedimage {
+	float:  right;
+	/* background-color: rgb(255, 255, 255); */
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	width: 62%;
+	margin:1%;
+    -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, .5);
+    -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, .5);
+    -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, .5);
+}
+
+.uploadedimage h1 {
+	font-face: 'Open Sans', sans-serif;
+	font-weight: 600;
+    text-align : center;
+	padding:  5%;
+}
+.typewindow {
+	float: left;
+	background-color: #26557f;
+	color: #fff;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	width: 30%;
+	margin: 1%;
+	padding:  2%;
+    -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, .5);
+    -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, .5);
+    -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, .5);
+}
+
+.textbox {
+	
+}
+
+.fontspecs {
+	font-face: 'Open Sans', sans-serif;
+	font-weight: 400;
+	font-size: 12px;
+}
+
+label {
+	font-face: 'Open Sans', sans-serif;
+	font-weight: 400;
+	font-size: 10pt;
+	display: block;
+	margin-top: 4px;
+}
+
+
+#caption {
+	width: 98%;
+	padding: 0;
+	height: 50px;
+	margin: 1% 1% 10px;
+}
+
+button {
+	margin-top: 8px;
+	margin-bottom: 4px;
+}
