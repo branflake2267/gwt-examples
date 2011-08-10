@@ -21,7 +21,7 @@
 
 
 == Water Marker Widget Source ==
- The main part of the app happens here:
+ The main part of the app happens here: [http://code.google.com/p/gwt-examples/source/browse/trunk/ImageMod/src/local/hackathon/client/watermark/WaterMarkWidget.java LinkToClass]
 {{{
 import com.google.gwt.canvas.client.Canvas;
 
