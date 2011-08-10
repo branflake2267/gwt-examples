@@ -1,8 +1,10 @@
 #summary HTML5 hackathon Team Build
 
 = Image Water Marker Using HTML5 & GWT =
+ This app was produced using HTML5 elements. Canvas, CSS3 corners, FileApi, Input Range. 
 
-
-* [http://waterbughack.appspot.com/ Water Marker App] - The finished app at the end of the hackathon
-* [http://code.google.com/p/gwt-examples/source/browse/trunk/ImageMod/src/local/hackathon/client/watermark/ Source] - The finished source at the end of the hackathon
+ * [http://waterbughack.appspot.com/ Water Marker App] - The finished app at the end of the hackathon
+ * [http://code.google.com/p/gwt-examples/source/browse/trunk/ImageMod/src/local/hackathon/client/watermark/ Source] - The finished source at the end of the hackathon
  
+== Team ==
+ Brandon Donnelson, Mikhail Fassakhov, Matthew Synder, Daniel Sofer, Clive Boulton
