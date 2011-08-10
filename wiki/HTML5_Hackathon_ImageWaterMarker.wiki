@@ -3,6 +3,6 @@
 = Image Water Marker Using HTML5 & GWT =
 
 
-* [http://waterbughack.appspot.com/] - The finished app at the end of the hackathon
-* [http://code.google.com/p/gwt-examples/source/browse/trunk/ImageMod/src/local/hackathon/client/watermark/] - The finished source at the end of the hackathon
+* [http://waterbughack.appspot.com/ Water Marker App] - The finished app at the end of the hackathon
+* [http://code.google.com/p/gwt-examples/source/browse/trunk/ImageMod/src/local/hackathon/client/watermark/ Source] - The finished source at the end of the hackathon
  
