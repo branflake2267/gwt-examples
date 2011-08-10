@@ -14,3 +14,7 @@
 
 = Our Hackathon HTML5 Goal =
  We tried to make an app that could put a copyright and/or water mark on an image quickly using HTML5 canvas. This was a challenge given we had a short amount of time. We came up with a working prototype in this version. 
+
+= Where =
+ Google Kirkland. 
+ * [https://plus.google.com/111739836936169749229/posts/Kwre7fB5CCk Pictures] - Event Pictures
