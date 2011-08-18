@@ -101,9 +101,8 @@ public class HashMapJdo {
 }}} 
 
 == How I Use It ==
- In my TaskJdo persistance entity storage I use it like this:
+ In my TaskJdo persistance entity storage I use it like this.
  
- * 
 {{{
 import java.math.BigDecimal;
 import java.util.Date;
@@ -163,6 +162,9 @@ public class TaskJdo {
   @Persistent
   private Date dateFinished;
 
+  /**
+  * this is my hashmap stored as an ancestor collection HashSet
+  */
   @Persistent
   private HashSet<HashMapJdo> hashmap;
 
