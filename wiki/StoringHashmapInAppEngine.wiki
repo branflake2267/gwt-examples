@@ -6,7 +6,7 @@
 <wiki:toc max_depth="2" />
 
 = Storing a HashMap into an Entity as a HashSet =
- What I do is setup an ancestor collection of HashSet{HashMapJdo} in my entity. The Hashset is a unique set of objects based on hashCode(), which I use HashMapJdo. 
+ What I do is setup an ancestor collection of HashSet{HashMapJdo} in my entity. The Hashset is a unique set of objects based on hashCode(), which I use in the class HashMapJdo below. 
 
  * this is what I store the mapped key and values into and becomes my HashSet{HashMapJdo} in the parent entity.
 {{{
