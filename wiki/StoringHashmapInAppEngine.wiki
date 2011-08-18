@@ -412,3 +412,133 @@ public class TaskJdo {
   
 }
 }}}
+
+ This is my GWT data RPC transport class/object. I send this to the client side. I use enum to static type my generic hashmap system. This should help clarify the above class if your wondering what KEYTYPE is.
+{{{
+public class TaskData implements IsSerializable {
+
+  public enum KeyType {
+    BLOBID;
+    public String value() {
+      return name();
+    }
+    public static KeyType fromValue(String v) {
+      return valueOf(v);
+    }
+  }
+  
+  /**
+   * unique id that was created in jdo
+   */
+  private Long id;
+  
+  /**
+   * who created it
+   */
+  private Long userCreated;
+  
+  /**
+   * creation
+   */
+  private Date dateCreated;
+  
+  /**
+   * task url
+   */
+  private String name;
+  
+  /**
+   * is the task finished, and no longer needed
+   */
+  private Boolean finished;
+  
+  /**
+   * send a note with the task
+   */
+  private TextData note;
+  
+  /**
+   * percent completed
+   */
+  private BigDecimal completed;
+  
+  /**
+   * finished at this time
+   */
+  private Date dateFinished;
+  
+  /**
+   * when done remember these attributes
+   */
+  private HashMap<KeyType, String> hashmap;
+  
+  /**
+   * constructor
+   */
+  public TaskData() {
+  }
+  
+  public void setId(Long id) {
+    this.id = id;
+  }
+  public Long getId() {
+    return id;
+  }
+  
+  public void setUserCreated(Long userCreated) {
+    this.userCreated = userCreated;
+  }
+  public Long getUserCreated() {
+    return userCreated;
+  }
+  
+  public void setDateCreated(Date dateCreated) {
+    this.dateCreated = dateCreated;
+  }
+  public Date getDateCreated() {
+    return dateCreated;
+  }
+  
+  public void setName(String name) {
+    this.name = name;
+  }
+  public String getName() {
+    return name;
+  }
+  
+  public void setFinished(Boolean finished) {
+    this.finished = finished;
+  }
+  public Boolean getFinished() {
+    return finished;
+  }
+  
+  public void setNote(TextData note) {
+    this.note = note;
+  }
+  public TextData getNote() {
+    return note;
+  }
+
+  public void setCompleted(BigDecimal completed) {
+    this.completed = completed;
+  }
+  public BigDecimal getCompleted() {
+    return completed;
+  }
+  
+  public void setDateFinished(Date dateFinished) {
+    this.dateFinished = dateFinished;
+  }
+  public Date getDateFinished() {
+    return dateFinished;
+  }
+ 
+  public void setHashMap(HashMap<KeyType, String> hashmap) {
+    this.hashmap = hashmap;
+  }
+  public HashMap<KeyType, String> getHashMap() {
+    return hashmap;
+  }
+}
+}}}
