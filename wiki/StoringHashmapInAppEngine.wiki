@@ -249,9 +249,11 @@ public class TaskJdo {
     TaskData taskData = tj.getData();
 
     // can view?
+    /*
     if (taskData.getUserCreated() != sp.getUserId()) {
       return null;
     }
+    */
 
     return taskData;
   }
