@@ -103,6 +103,7 @@ public class HashMapJdo {
 == How I Use It ==
  In my TaskJdo persistance entity storage I use it like this.
  
+ * This is my TaskJdo Class which I use for monitoring tasks generated in App Engine.
 {{{
 import java.math.BigDecimal;
 import java.util.Date;
@@ -413,7 +414,7 @@ public class TaskJdo {
 }
 }}}
 
- This is my GWT data RPC transport class/object. I send this to the client side. I use enum to static type my generic hashmap system. This should help clarify the above class if your wondering what KEYTYPE is.
+ * This is my GWT data RPC transport class/object. I send this to the client side. I use enum to static type my generic hashmap system. This should help clarify the above class if your wondering what KEYTYPE is.
 {{{
 public class TaskData implements IsSerializable {
 
