@@ -3,8 +3,60 @@
 
 
 {{{
-       if (j != null) {
-          classJdo detatched = pm.detachCopy(j);
+private SchoolPeopleData[] queryPeoples(SchoolPeopleDataFilter filter) {
+    
+    String qfilter = null;
+    
+    // filter a batch of ids
+    List<Key> keysList = null;
+    if (filter.getUseIds() == true) {
+      keysList = getFilterForIds(filter);
+      if (keysList != null) {
+        qfilter = ":keys.contains(key)";
+      }
+      if (keysList == null || keysList.size() == 0) {
+        return null;
+      }
+    }
+
+    ArrayList<SchoolPeopleData> a = new ArrayList<SchoolPeopleData>(); 
+    PersistenceManager pm = sp.getPersistenceManager();
+    try {
+      Query q = pm.newQuery("select from " + SchoolPeopleJdo.class.getName());
+      if (qfilter != null) {
+        q.setFilter(qfilter);
+      }
+      q.setRange(filter.getRangeStart(), filter.getRangeFinish());
+      
+      List<SchoolPeopleJdo> ids = null;
+      if (filter.getUseIds() == true && keysList != null) {
+        ids = (List<SchoolPeopleJdo>) q.execute(keysList);
+        
+      } else {
+        ids = (List<SchoolPeopleJdo>) q.execute();
+      }
+      
+      Iterator<SchoolPeopleJdo> itr = ids.iterator();
+      while (itr.hasNext()) {
+        SchoolPeopleJdo j = itr.next();
+        if (j != null) {
+          SchoolPeopleJdo detatched = pm.detachCopy(j);
           a.add(detatched.getData());
         }
+      }
+      q.closeAll();
+    } catch (Exception e) { 
+      e.printStackTrace();
+      log.log(Level.SEVERE, "", e);
+    } finally {
+      pm.close();
+    }
+    if (a.size() == 0) {
+      return null;
+    }
+    SchoolPeopleData[] r = new SchoolPeopleData[a.size()];
+    a.toArray(r);
+    
+    return r;
+  }
 }}}
