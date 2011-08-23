@@ -4,7 +4,7 @@
 
 {{{
        if (j != null) {
-          SchoolPeopleJdo detatched = pm.detachCopy(j);
+          classJdo detatched = pm.detachCopy(j);
           a.add(detatched.getData());
         }
 }}}
