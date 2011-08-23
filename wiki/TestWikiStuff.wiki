@@ -1,66 +1,24 @@
 #summary test out wiki stuff
 
 
-{{{
-[ERROR] javax.servlet.ServletContext log: Exception while dispatching incoming RPC call
-com.google.gwt.user.client.rpc.SerializationException: Type 'org.datanucleus.sco.backed.HashSet' was not included in the set of types which can be serialized by this SerializationPolicy or its Class object could not be loaded. For security purposes, this type will not be serialized.: instance = [282]
-	at com.google.gwt.user.server.rpc.impl.ServerSerializationStreamWriter.serialize(ServerSerializationStreamWriter.java:615)
-	at com.google.gwt.user.client.rpc.impl.AbstractSerializationStreamWriter.writeObject(AbstractSerializationStreamWriter.java:126)
-	at com.google.gwt.user.server.rpc.impl.ServerSerializationStreamWriter$ValueWriter$8.write(ServerSerializationStreamWriter.java:153)
-	at com.google.gwt.user.server.rpc.impl.ServerSerializationStreamWriter.serializeValue(ServerSerializationStreamWriter.java:535)
-	at com.google.gwt.user.server.rpc.impl.ServerSerializationStreamWriter.serializeClass(ServerSerializationStreamWriter.java:705)
-	at com.google.gwt.user.server.rpc.impl.ServerSerializationStreamWriter.serializeImpl(ServerSerializationStreamWriter.java:744)
-	at com.google.gwt.user.server.rpc.impl.ServerSerializationStreamWriter.serialize(ServerSerializationStreamWriter.java:617)
-	at com.google.gwt.user.client.rpc.impl.AbstractSerializationStreamWriter.writeObject(AbstractSerializationStreamWriter.java:126)
-	at com.google.gwt.user.server.rpc.impl.ServerSerializationStreamWriter$VectorWriter$8.write(ServerSerializationStreamWriter.java:254)
-	at com.google.gwt.user.server.rpc.impl.ServerSerializationStreamWriter.serializeArray(ServerSerializationStreamWriter.java:637)
-	at com.google.gwt.user.server.rpc.impl.ServerSerializationStreamWriter.serializeImpl(ServerSerializationStreamWriter.java:739)
-	at com.google.gwt.user.server.rpc.impl.ServerSerializationStreamWriter.serialize(ServerSerializationStreamWriter.java:617)
-	at com.google.gwt.user.client.rpc.impl.AbstractSerializationStreamWriter.writeObject(AbstractSerializationStreamWriter.java:126)
-	at com.google.gwt.user.server.rpc.impl.ServerSerializationStreamWriter$ValueWriter$8.write(ServerSerializationStreamWriter.java:153)
-	at com.google.gwt.user.server.rpc.impl.ServerSerializationStreamWriter.serializeValue(ServerSerializationStreamWriter.java:535)
-	at com.google.gwt.user.server.rpc.impl.ServerSerializationStreamWriter.serializeClass(ServerSerializationStreamWriter.java:705)
-	at com.google.gwt.user.server.rpc.impl.ServerSerializationStreamWriter.serializeImpl(ServerSerializationStreamWriter.java:744)
-	at com.google.gwt.user.server.rpc.impl.ServerSerializationStreamWriter.serialize(ServerSerializationStreamWriter.java:617)
-	at com.google.gwt.user.client.rpc.impl.AbstractSerializationStreamWriter.writeObject(AbstractSerializationStreamWriter.java:126)
-	at com.google.gwt.user.server.rpc.impl.ServerSerializationStreamWriter$ValueWriter$8.write(ServerSerializationStreamWriter.java:153)
-	at com.google.gwt.user.server.rpc.impl.ServerSerializationStreamWriter.serializeValue(ServerSerializationStreamWriter.java:535)
-	at com.google.gwt.user.server.rpc.RPC.encodeResponse(RPC.java:616)
-	at com.google.gwt.user.server.rpc.RPC.encodeResponseForSuccess(RPC.java:474)
-	at com.google.gwt.user.server.rpc.RPC.invokeAndEncodeResponse(RPC.java:571)
-	at com.google.gwt.user.server.rpc.RemoteServiceServlet.processCall(RemoteServiceServlet.java:208)
-	at com.google.gwt.user.server.rpc.RemoteServiceServlet.processPost(RemoteServiceServlet.java:248)
-	at com.google.gwt.user.server.rpc.AbstractRemoteServiceServlet.doPost(AbstractRemoteServiceServlet.java:62)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:637)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:717)
-	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:511)
-	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1166)
-	at com.google.appengine.tools.development.HeaderVerificationFilter.doFilter(HeaderVerificationFilter.java:35)
-	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1157)
-	at com.google.appengine.api.blobstore.dev.ServeBlobFilter.doFilter(ServeBlobFilter.java:58)
-	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1157)
-	at com.google.apphosting.utils.servlet.TransactionCleanupFilter.doFilter(TransactionCleanupFilter.java:43)
-	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1157)
-	at com.google.appengine.tools.development.StaticFileFilter.doFilter(StaticFileFilter.java:122)
-	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1157)
-	at com.google.appengine.tools.development.BackendServersFilter.doFilter(BackendServersFilter.java:97)
-	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1157)
-	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:388)
-	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216)
-	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182)
-	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:765)
-	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:418)
-	at com.google.apphosting.utils.jetty.DevAppEngineWebAppContext.handle(DevAppEngineWebAppContext.java:70)
-	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)
-	at com.google.appengine.tools.development.JettyContainerService$ApiProxyHandler.handle(JettyContainerService.java:351)
-	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)
-	at org.mortbay.jetty.Server.handle(Server.java:326)
-	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542)
-	at org.mortbay.jetty.HttpConnection$RequestHandler.content(HttpConnection.java:938)
-	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:755)
-	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:218)
-	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404)
-	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:409)
-	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582)
 
+{{{
+  // this wont work
+  java.util.HashSet<Long> hs = jdoIds;
+
+  // work around
+  private HashSet<Long> getChildren() {
+    if (jdoIds == null || jdoIds.size() == 0) {
+      return null;
+    }
+    java.util.HashSet<Long> r = new java.util.HashSet<Long>();
+    Iterator<Long> itr = jdoIds.iterator();
+    while (itr.hasNext()) {
+      Long l = itr.next();
+      if (l != null) {
+        r.add(l);
+      }
+    }
+    return r;
+  }
 }}}
