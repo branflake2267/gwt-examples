@@ -3,22 +3,8 @@
 
 
 {{{
-  // this wont work
-  java.util.HashSet<Long> hs = jdoIds;
-
-  // work around
-  private HashSet<Long> getChildren() {
-    if (jdoIds == null || jdoIds.size() == 0) {
-      return null;
-    }
-    java.util.HashSet<Long> r = new java.util.HashSet<Long>();
-    Iterator<Long> itr = jdoIds.iterator();
-    while (itr.hasNext()) {
-      Long l = itr.next();
-      if (l != null) {
-        r.add(l);
-      }
-    }
-    return r;
-  }
+       if (j != null) {
+          SchoolPeopleJdo detatched = pm.detachCopy(j);
+          a.add(detatched.getData());
+        }
 }}}
