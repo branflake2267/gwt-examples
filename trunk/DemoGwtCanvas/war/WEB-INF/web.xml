@@ -41,5 +41,16 @@
     <servlet-name>Upload</servlet-name>
     <url-pattern>/upload/*</url-pattern>
   </servlet-mapping>
+  
+  
+    <!-- Upload files -->
+  <servlet>
+    <servlet-name>Serve</servlet-name>
+    <servlet-class>org.gonevertical.democanvas.server.Servlet_Serve</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Serve</servlet-name>
+    <url-pattern>/serve/*</url-pattern>
+  </servlet-mapping>
 
 </web-app>
