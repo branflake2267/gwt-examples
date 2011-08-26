@@ -207,7 +207,7 @@ public class FileUploaderWidget_v2 extends Composite {
     ImageElement imageElement = ImageElement.as(image.getElement());
     context.drawImage(imageElement, 0, 0);
     
-    String contentType = "image/png";
+    String contentType = "image/jpeg";
     
     String fileBase64 = canvasTmp.toDataUrl(contentType);
     

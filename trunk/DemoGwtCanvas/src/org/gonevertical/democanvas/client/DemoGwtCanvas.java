@@ -15,7 +15,7 @@ public class DemoGwtCanvas implements EntryPoint {
 
   private LoadingWidget wLoading;
   
-  private String version = "demo version 8";
+  private String version = "demo version 10";
 
   public void onModuleLoad() {
 

@@ -51,7 +51,7 @@ public class UploadImage extends Composite {
   }
 
   private void fixExt() {
-    fileName = fileName.replaceFirst("\\..*", ".png");
+    fileName = fileName.replaceFirst("\\..*", ".jpg");
     System.out.println("UploadImage.fixExt(): " + fileName);
   }
 
@@ -165,8 +165,8 @@ public class UploadImage extends Composite {
     String s = "";
 
 
-    s += "--" + boundary + "\r\n";
-    s += getRequestParameter("oid", 1234567890 + "");
+    //s += "--" + boundary + "\r\n";
+    //s += getRequestParameter("oid", 1234567890 + "");
 
     /*
     s += "--" + boundary + "\r\n";
@@ -211,10 +211,11 @@ public class UploadImage extends Composite {
 
   private void processResponse(Response response) {
 
+    // not being used, keeping code for looksee
     if (1==1) {
       return;
     }
-
+    
     if (response == null) {
       // TODO error
       return;
@@ -242,29 +243,6 @@ public class UploadImage extends Composite {
       return;
     }
 
-    String stid = params.get("tid");
-    long tId = 0;
-    if (stid != null) {
-      try {
-        tId = Long.parseLong(stid);
-      } catch (NumberFormatException e) {
-        e.printStackTrace();
-        Window.alert(err);
-        return;
-      }
-    }
-
-    String ssid = params.get("sid");
-    long stuffId = 0;
-    if (ssid != null) {
-      try {
-        stuffId = Long.parseLong(ssid);
-      } catch (NumberFormatException e) {
-        e.printStackTrace();
-        Window.alert(err);
-        return;
-      }
-    }
 
 
   }
