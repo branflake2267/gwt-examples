@@ -9,24 +9,38 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+
 public class Servlet_Upload extends HttpServlet {
+  
+  private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
   
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     
-    String contenType = request.getContentType();
-    System.out.println("ContentType=" + contenType);
+    String key = request.getParameter("File");
+    if (key == null) {
+      return;
+    }
     
-    String method = request.getMethod();
-    System.out.println("Method=" + method);
+    BlobKey blobKey = new BlobKey(key);
+    blobstoreService.serve(blobKey, response);
+    
+    //String contenType = request.getContentType();
+    //System.out.println("ContentType=" + contenType);
+    
+    //String method = request.getMethod();
+    //System.out.println("Method=" + method);
 
     
-    echoHeaders(request);
+    //echoHeaders(request);
     
-    echo(request);
+    //echo(request);
     
-    echoParameters(request);
+    //echoParameters(request);
     
-    echoAttributes(request);
+    //echoAttributes(request);
     
     
   }
