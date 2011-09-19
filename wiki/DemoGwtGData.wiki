@@ -27,12 +27,6 @@
  More instructions made by others
  * [http://ikaisays.com/2011/05/26/setting-up-an-oauth-provider-on-google-app-engine/ Setting up an OAuth provider on Google App Engine] - Very simple instructions made by 'Guru' Ikai.
 
-== AuthSub Authentication ==
- Although I thought this would work, oauth is much better. 
- * [http://demogwtgdata.appspot.com/ Demo] - Demo authentication process and use. currently using authsub.
- * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGwtGdata/src/org/gonevertical/gdata/server/servlet/FetcherServlet.java Source] - Find the source here.
-
-
 == GData SpreadSheet Example Use == 
  This is how I use the oauth token once I set it up.
 
@@ -85,3 +79,10 @@ public void test() {
 
   }
 }}}
+
+
+
+== !AuthSub Authentication ==
+ Although I thought this would work, oauth is much better. 
+ * [http://demogwtgdata.appspot.com/ Demo] - Demo authentication process and use. currently using authsub.
+ * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGwtGdata/src/org/gonevertical/gdata/server/servlet/FetcherServlet.java Source] - Find the source here.
