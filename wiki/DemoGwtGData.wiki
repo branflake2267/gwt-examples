@@ -31,3 +31,57 @@
  Although I thought this would work, oauth is much better. 
  * [http://demogwtgdata.appspot.com/ Demo] - Demo authentication process and use. currently using authsub.
  * [http://code.google.com/p/gwt-examples/source/browse/trunk/DemoGwtGdata/src/org/gonevertical/gdata/server/servlet/FetcherServlet.java Source] - Find the source here.
+
+
+== GData SpreadSheet Example Use == 
+ This is how I use the oauth token once I set it up.
+
+{{{
+public void test() {
+
+    String scope = "https://spreadsheets.google.com/feeds/";
+    AppTokenJdo appToken = AppTokenStore.getToken(scope);
+
+    String consumerKey = sp.getOAuthConsumerKey();
+    String consumerSecret = sp.getOAuthConsumerSecret();
+
+    String token = appToken.getAccessTokenKey();
+    String tokenSecret = appToken.getAccessTokenSecret();
+
+    GoogleOAuthParameters oauthParameters = new GoogleOAuthParameters();
+    oauthParameters.setOAuthConsumerKey(consumerKey);
+    oauthParameters.setOAuthConsumerSecret(consumerSecret);
+    oauthParameters.setOAuthToken(token);
+    oauthParameters.setOAuthTokenSecret(tokenSecret);
+
+    //log.info("Token " + token + " TokenSecret: " + tokenSecret + " ConsumerKey: " + consumerKey + " ConsumerSecret: " + consumerSecret);
+
+    SpreadsheetService service = new SpreadsheetService("Gone_Vertical_LLC-CoreSystem_v1");
+    try {
+      service.setOAuthCredentials(oauthParameters, new OAuthHmacSha1Signer());
+    } catch (OAuthException e) {
+      e.printStackTrace();
+    }
+
+    URL url = null;
+    try {                    
+      url = new URL("https://spreadsheets.google.com/feeds/spreadsheets/private/full");
+    } catch (MalformedURLException e1) {
+      e1.printStackTrace();
+    }
+    SpreadsheetFeed feed = null;
+    try {
+      feed = service.getFeed(url, SpreadsheetFeed.class);
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (ServiceException e) {
+      e.printStackTrace();
+    }
+    List<SpreadsheetEntry> spreadsheets = feed.getEntries();
+    for (int i = 0; i < spreadsheets.size(); i++) {
+      SpreadsheetEntry entry = spreadsheets.get(i);
+      //System.out.println("\t" + entry.getTitle().getPlainText());
+    }
+
+  }
+}}}
