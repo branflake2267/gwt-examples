@@ -3,60 +3,51 @@
 
 
 {{{
-private SchoolPeopleData[] queryPeoples(SchoolPeopleDataFilter filter) {
-    
-    String qfilter = null;
-    
-    // filter a batch of ids
-    List<Key> keysList = null;
-    if (filter.getUseIds() == true) {
-      keysList = getFilterForIds(filter);
-      if (keysList != null) {
-        qfilter = ":keys.contains(key)";
-      }
-      if (keysList == null || keysList.size() == 0) {
-        return null;
-      }
+public void test() {
+
+    String scope = "https://spreadsheets.google.com/feeds/";
+    AppTokenJdo appToken = AppTokenStore.getToken(scope);
+
+    String consumerKey = sp.getOAuthConsumerKey();
+    String consumerSecret = sp.getOAuthConsumerSecret();
+
+    String token = appToken.getAccessTokenKey();
+    String tokenSecret = appToken.getAccessTokenSecret();
+
+    GoogleOAuthParameters oauthParameters = new GoogleOAuthParameters();
+    oauthParameters.setOAuthConsumerKey(consumerKey);
+    oauthParameters.setOAuthConsumerSecret(consumerSecret);
+    oauthParameters.setOAuthToken(token);
+    oauthParameters.setOAuthTokenSecret(tokenSecret);
+
+    //log.info("Token " + token + " TokenSecret: " + tokenSecret + " ConsumerKey: " + consumerKey + " ConsumerSecret: " + consumerSecret);
+
+    SpreadsheetService service = new SpreadsheetService("Gone_Vertical_LLC-CoreSystem_v1");
+    try {
+      service.setOAuthCredentials(oauthParameters, new OAuthHmacSha1Signer());
+    } catch (OAuthException e) {
+      e.printStackTrace();
     }
 
-    ArrayList<SchoolPeopleData> a = new ArrayList<SchoolPeopleData>(); 
-    PersistenceManager pm = sp.getPersistenceManager();
+    URL url = null;
+    try {                    
+      url = new URL("https://spreadsheets.google.com/feeds/spreadsheets/private/full");
+    } catch (MalformedURLException e1) {
+      e1.printStackTrace();
+    }
+    SpreadsheetFeed feed = null;
     try {
-      Query q = pm.newQuery("select from " + SchoolPeopleJdo.class.getName());
-      if (qfilter != null) {
-        q.setFilter(qfilter);
-      }
-      q.setRange(filter.getRangeStart(), filter.getRangeFinish());
-      
-      List<SchoolPeopleJdo> ids = null;
-      if (filter.getUseIds() == true && keysList != null) {
-        ids = (List<SchoolPeopleJdo>) q.execute(keysList);
-        
-      } else {
-        ids = (List<SchoolPeopleJdo>) q.execute();
-      }
-      
-      Iterator<SchoolPeopleJdo> itr = ids.iterator();
-      while (itr.hasNext()) {
-        SchoolPeopleJdo j = itr.next();
-        if (j != null) {
-          SchoolPeopleJdo detatched = pm.detachCopy(j);
-          a.add(detatched.getData());
-        }
-      }
-      q.closeAll();
-    } catch (Exception e) { 
+      feed = service.getFeed(url, SpreadsheetFeed.class);
+    } catch (IOException e) {
       e.printStackTrace();
-      log.log(Level.SEVERE, "", e);
-    } finally {
-      pm.close();
+    } catch (ServiceException e) {
+      e.printStackTrace();
     }
-    if (a.size() == 0) {
-      return null;
+    List<SpreadsheetEntry> spreadsheets = feed.getEntries();
+    for (int i = 0; i < spreadsheets.size(); i++) {
+      SpreadsheetEntry entry = spreadsheets.get(i);
+      //System.out.println("\t" + entry.getTitle().getPlainText());
     }
-    SchoolPeopleData[] r = new SchoolPeopleData[a.size()];
-    a.toArray(r);
-    
-    return r;
+
   }
 }}}
