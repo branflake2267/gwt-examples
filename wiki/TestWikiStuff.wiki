@@ -3,7 +3,7 @@
 
 
 {{{
-META-INF/web.xml
+    <!-- META-INF/web.xml -->
     <!-- ssl -->
     <security-constraint>
         <web-resource-collection>
@@ -23,9 +23,9 @@ META-INF/web.xml
 		<servlet-name>Task</servlet-name>
 		<servlet-class>com.gonevertical.server.servlet.Servlet_Task</servlet-class>
 	</servlet>
+}}}
 
-
-
+{{{
 // task start reqeust setup 
  String url = "/task?task=" + task;
  try {
