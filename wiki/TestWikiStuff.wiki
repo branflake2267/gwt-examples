@@ -95,6 +95,12 @@ public class AuthEvent extends GwtEvent<AuthEventHandler> {
 }}}
 
 {{{
+public interface AuthEventHandler extends EventHandler {
+  public void onAuthEvent(AuthEvent event);
+}
+}}}
+
+{{{
 public class UserData implements IsSerializable {
 
   /**
