@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+  <ModulePrefs title="GWT Examples Gadget Ads" 
+  	author="Brandon Donnelson" 
+  	author_email="branflake2267@gmail.com" 
+  	title_url="http://gwt-examples.googlecode.com"
+  	description="Putting advertising on my google code wiki - gwt-examples.googlecode.com"/>
+  <Content type="html">
+    <![CDATA[
+       <div align="center">
+		    <!-- Kontera(TM);-->
+			<script type='text/javascript'>
+			var dc_AdLinkColor = 'blue' ; 
+			var dc_PublisherID = 191312 ; 
+			 
+			</script>
+			<script type='text/javascript' src='http://kona.kontera.com/javascript/lib/KonaLibInline.js'>
+			</script>
+			<!-- end Kontera(TM) --> 
+
+	  </div>
+    ]]>
+  </Content>
+</Module>
