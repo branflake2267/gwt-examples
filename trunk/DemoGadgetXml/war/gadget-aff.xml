@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+  <ModulePrefs title="GWT Examples Gadget Ads" 
+  	author="Brandon Donnelson" 
+  	author_email="branflake2267@gmail.com" 
+  	title_url="http://gwt-examples.googlecode.com"
+  	description="Putting advertising on my google code wiki - gwt-examples.googlecode.com"/>
+  <Content type="html">
+    <![CDATA[
+       <div align="center">
+		    <!-- Amazon -->
+			<iframe src="http://rcm.amazon.com/e/cm?t=foreclo07-20&o=1&p=48&l=ur1&category=dvd&banner=0DE2PBSZ1XXT9HH45SG2&f=ifr" width="728" height="90" scrolling="no" border="0" marginwidth="0" style="border:none;" frameborder="0"></iframe>
+	  </div>
+    ]]>
+  </Content>
+</Module>
